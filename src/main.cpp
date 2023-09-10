@@ -1,12 +1,11 @@
+#include "manejo_rutas.h"
+#include "paths.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <iostream>
 #include <string>
-#include "paths.h"
-#include "manejo_rutas.h"
 
-int main()
-{
+int main() {
     sf::RenderWindow window(sf::VideoMode(1800, 920), "Pizzería");
     window.setFramerateLimit(60);
 
@@ -15,9 +14,11 @@ int main()
 
     // Fuente
     sf::Font font;
-    if (!font.loadFromFile(getResourcePath(FONT_PATH).string()))
-    {
-        std::cout << "No se encontró ninguna fuente válida en \"" << FONT_PATH << "\". Por favor, proporcione una fuente en esa ruta para ejecutar el programa." << std::endl;
+    if (!font.loadFromFile(getResourcePath(FONT_PATH).string())) {
+        std::cout << "No se encontró ninguna fuente válida en \"" << FONT_PATH
+                  << "\". Por favor, proporcione una fuente en esa ruta para "
+                     "ejecutar el programa."
+                  << std::endl;
         return EXIT_FAILURE;
     }
 
@@ -40,23 +41,22 @@ int main()
     textoBoton.setString("Aumentar");
     textoBoton.setPosition(60, 160);
 
-    while (window.isOpen())
-    {
+    while (window.isOpen()) {
         sf::Event event;
-        while (window.pollEvent(event))
-        {
+        while (window.pollEvent(event)) {
             // Cierre de ventana
             if (event.type == sf::Event::Closed)
                 window.close();
 
             // Pulsación botón
-            if (event.type == sf::Event::MouseButtonPressed)
-            {
+            if (event.type == sf::Event::MouseButtonPressed) {
                 sf::Vector2i mousePos = sf::Mouse::getPosition(window);
                 sf::FloatRect botonBounds = boton.getGlobalBounds();
 
-                if (botonBounds.contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)))
-                {
+                if (botonBounds.contains(
+                        static_cast<float>(mousePos.x),
+                        static_cast<float>(mousePos.y)
+                    )) {
                     contador++;
                 }
             }
