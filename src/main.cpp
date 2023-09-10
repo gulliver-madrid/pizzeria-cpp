@@ -79,6 +79,18 @@ void procesarEvento(
     }
 }
 
+// Actualiza el interfaz gráfico
+void actualizarIU(
+    sf::RenderWindow &ventana, Botones &botones, sf::Text &textoContador,
+    int contador
+) {
+    textoContador.setString("Contador: " + std::to_string(contador));
+    ventana.clear();
+    ventana.draw(textoContador);
+    botones.dibujar(ventana);
+    ventana.display();
+}
+
 int main() {
     sf::RenderWindow window(sf::VideoMode(1800, 920), TITLE);
     window.setFramerateLimit(60);
@@ -124,13 +136,7 @@ int main() {
         while (window.pollEvent(event)) {
             procesarEvento(event, contador, window, botones);
         }
-
-        textoContador.setString("Contador: " + std::to_string(contador));
-
-        window.clear();
-        window.draw(textoContador);
-        botones.dibujar(window);
-        window.display();
+        actualizarIU(window, botones, textoContador, contador);
     }
 
     return 0;
