@@ -1,18 +1,23 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
+#include <iostream>
 #include <string>
+#include "paths.h"
+#include "manejo_rutas.h"
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(1920, 1080), "Pizzería");
-    window.setFramerateLimit(144);
+    sf::RenderWindow window(sf::VideoMode(1800, 920), "Pizzería");
+    window.setFramerateLimit(60);
 
     // Contador
     int contador = 0;
 
     // Fuente y Texto para el contador
     sf::Font font;
-    if (!font.loadFromFile("C:\\Windows\\Fonts\\arial.ttf")) {
+    if (!font.loadFromFile(getResourcePath(FONT_PATH).string()))
+    {
+        std::cout << "No se encontró ninguna fuente válida en \"" << FONT_PATH << "\". Por favor, proporcione una fuente en esa ruta para ejecutar el programa." << std::endl;
         return EXIT_FAILURE;
     }
 
