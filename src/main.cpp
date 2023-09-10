@@ -85,16 +85,14 @@ int main() {
                 window.close();
 
             // Pulsación botón
-            if (event.type == sf::Event::MouseButtonPressed) {
+            else if (event.type == sf::Event::MouseButtonPressed) {
                 sf::Vector2i mousePos = sf::Mouse::getPosition(window);
 
                 if (botonAumentar.colisiona(mousePos)) {
                     contador++;
-                }
-                if (botonReducir.colisiona(mousePos)) {
+                } else if (botonReducir.colisiona(mousePos)) {
                     contador--;
-                }
-                if (botonSalir.colisiona(mousePos)) {
+                } else if (botonSalir.colisiona(mousePos)) {
                     window.close();
                 }
             }
