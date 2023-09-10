@@ -74,6 +74,8 @@ int main() {
         crearBotonConTexto("Aumentar", sf::Color::Green, 250, 150, font);
     auto botonReducir =
         crearBotonConTexto("Reducir", sf::Color::Red, 50, 150, font);
+    auto botonSalir =
+        crearBotonConTexto("Salir", sf::Color::Blue, 150, 250, font);
 
     while (window.isOpen()) {
         sf::Event event;
@@ -92,6 +94,9 @@ int main() {
                 if (botonReducir.colisiona(mousePos)) {
                     contador--;
                 }
+                if (botonSalir.colisiona(mousePos)) {
+                    window.close();
+                }
             }
         }
 
@@ -101,6 +106,7 @@ int main() {
         window.draw(texto);
         botonAumentar.dibujar(window);
         botonReducir.dibujar(window);
+        botonSalir.dibujar(window);
         window.display();
     }
 
