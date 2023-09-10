@@ -13,7 +13,7 @@ int main()
     // Contador
     int contador = 0;
 
-    // Fuente y Texto para el contador
+    // Fuente
     sf::Font font;
     if (!font.loadFromFile(getResourcePath(FONT_PATH).string()))
     {
@@ -21,6 +21,7 @@ int main()
         return EXIT_FAILURE;
     }
 
+    // Texto para el contador
     sf::Text texto;
     texto.setFont(font);
     texto.setCharacterSize(48);
@@ -37,9 +38,11 @@ int main()
         sf::Event event;
         while (window.pollEvent(event))
         {
+            // Cierre de ventana
             if (event.type == sf::Event::Closed)
                 window.close();
 
+            // Pulsación botón
             if (event.type == sf::Event::MouseButtonPressed)
             {
                 sf::Vector2i mousePos = sf::Mouse::getPosition(window);
