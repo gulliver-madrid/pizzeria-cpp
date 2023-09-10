@@ -29,9 +29,16 @@ int main()
     texto.setFillColor(sf::Color::White);
 
     // Botón para incrementar el contador
-    sf::RectangleShape boton(sf::Vector2f(100, 50));
+    sf::RectangleShape boton(sf::Vector2f(150, 50));
     boton.setFillColor(sf::Color::Green);
     boton.setPosition(50, 150);
+
+    sf::Text textoBoton;
+    textoBoton.setFont(font);
+    textoBoton.setCharacterSize(24);
+    textoBoton.setFillColor(sf::Color::White);
+    textoBoton.setString("Aumentar");
+    textoBoton.setPosition(60, 160);
 
     while (window.isOpen())
     {
@@ -60,6 +67,7 @@ int main()
         window.clear();
         window.draw(texto);
         window.draw(boton);
+        window.draw(textoBoton);
         window.display();
     }
 
