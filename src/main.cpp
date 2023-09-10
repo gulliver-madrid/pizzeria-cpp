@@ -5,6 +5,8 @@
 #include <iostream>
 #include <string>
 
+#define TITLE "Pizzería"
+
 struct BotonConTexto {
     sf::RectangleShape boton;
     sf::Text texto;
@@ -46,7 +48,7 @@ BotonConTexto crearBotonConTexto(
 };
 
 int main() {
-    sf::RenderWindow window(sf::VideoMode(1800, 920), "Pizzería");
+    sf::RenderWindow window(sf::VideoMode(1800, 920), TITLE);
     window.setFramerateLimit(60);
 
     // Contador
@@ -63,19 +65,23 @@ int main() {
     }
 
     // Texto para el contador
-    sf::Text texto;
-    texto.setFont(font);
-    texto.setCharacterSize(48);
-    texto.setPosition(50, 50);
-    texto.setFillColor(sf::Color::White);
+    sf::Text textoContador;
+    textoContador.setFont(font);
+    textoContador.setCharacterSize(48);
+    textoContador.setPosition(50, 50);
+    textoContador.setFillColor(sf::Color::White);
+
+    int primeraFila = 150;
+    int segundaFila = 250;
 
     // Botones para incrementar o reducir el contador
-    auto botonAumentar =
-        crearBotonConTexto("Aumentar", sf::Color::Green, 250, 150, font);
+    auto botonAumentar = crearBotonConTexto(
+        "Aumentar", sf::Color::Green, 250, primeraFila, font
+    );
     auto botonReducir =
-        crearBotonConTexto("Reducir", sf::Color::Red, 50, 150, font);
+        crearBotonConTexto("Reducir", sf::Color::Red, 50, primeraFila, font);
     auto botonSalir =
-        crearBotonConTexto("Salir", sf::Color::Blue, 150, 250, font);
+        crearBotonConTexto("Salir", sf::Color::Blue, 150, segundaFila, font);
 
     while (window.isOpen()) {
         sf::Event event;
@@ -98,10 +104,10 @@ int main() {
             }
         }
 
-        texto.setString("Contador: " + std::to_string(contador));
+        textoContador.setString("Contador: " + std::to_string(contador));
 
         window.clear();
-        window.draw(texto);
+        window.draw(textoContador);
         botonAumentar.dibujar(window);
         botonReducir.dibujar(window);
         botonSalir.dibujar(window);
