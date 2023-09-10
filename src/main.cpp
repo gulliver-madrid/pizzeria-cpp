@@ -35,34 +35,39 @@ struct Botones {
     }
 };
 
+sf::Text crearEtiqueta(int tamano, sf::Color color, sf::Font &font) {
+    sf::Text etiqueta;
+    etiqueta.setFont(font);
+    etiqueta.setCharacterSize(tamano);
+    etiqueta.setFillColor(color);
+    return etiqueta;
+}
+
 // Crea un botón rectangular con texto
 BotonConTexto crearBotonConTexto(
     std::string texto, sf::Color color, sf::Vector2i posicion, sf::Font &font
 ) {
+    int tamano_texto = 24;
+    sf::Color color_texto = sf::Color::White;
     int x = posicion.x;
     int y = posicion.y;
+    int margin = 10;
     // Rect
     sf::RectangleShape rect(sf::Vector2f(150, 50));
     rect.setFillColor(color);
     rect.setPosition(x, y);
     // Etiqueta
-    sf::Text etiqueta;
-    etiqueta.setFont(font);
-    etiqueta.setCharacterSize(24);
-    etiqueta.setFillColor(sf::Color::White);
+    sf::Text etiqueta = crearEtiqueta(tamano_texto, color_texto, font);
     etiqueta.setString(texto);
-    etiqueta.setPosition(x + 10, y + 10);
+    etiqueta.setPosition(x + margin, y + margin);
 
     BotonConTexto boton = {rect, etiqueta};
     return boton;
 };
 
+// Crea la etiqueta de texto que mostrará el contador
 sf::Text crearEtiquetaContador(sf::Font &font) {
-    // Texto para el contador
-    sf::Text etiqueta;
-    etiqueta.setFont(font);
-    etiqueta.setCharacterSize(48);
-    etiqueta.setFillColor(sf::Color::White);
+    sf::Text etiqueta = crearEtiqueta(48, sf::Color::White, font);
     etiqueta.setPosition(50, 50);
     return etiqueta;
 }
