@@ -29,17 +29,31 @@ int main() {
     texto.setPosition(50, 50);
     texto.setFillColor(sf::Color::White);
 
-    // Botón para incrementar el contador
-    sf::RectangleShape boton(sf::Vector2f(150, 50));
-    boton.setFillColor(sf::Color::Green);
-    boton.setPosition(50, 150);
+    // Botón para reducir el contador
+    sf::RectangleShape botonReducir(sf::Vector2f(150, 50));
+    botonReducir.setFillColor(sf::Color::Red);
+    botonReducir.setPosition(50, 150);
 
-    sf::Text textoBoton;
-    textoBoton.setFont(font);
-    textoBoton.setCharacterSize(24);
-    textoBoton.setFillColor(sf::Color::White);
-    textoBoton.setString("Aumentar");
-    textoBoton.setPosition(60, 160);
+    // Botón para incrementar el contador
+    sf::RectangleShape botonAumentar(sf::Vector2f(150, 50));
+    botonAumentar.setFillColor(sf::Color::Green);
+    botonAumentar.setPosition(250, 150);
+
+    // Texto del botón Reducir
+    sf::Text textoBotonReducir;
+    textoBotonReducir.setFont(font);
+    textoBotonReducir.setCharacterSize(24);
+    textoBotonReducir.setFillColor(sf::Color::White);
+    textoBotonReducir.setString("Reducir");
+    textoBotonReducir.setPosition(60, 160);
+
+    // Texto del botón Aumentar
+    sf::Text textoBotonAumentar;
+    textoBotonAumentar.setFont(font);
+    textoBotonAumentar.setCharacterSize(24);
+    textoBotonAumentar.setFillColor(sf::Color::White);
+    textoBotonAumentar.setString("Aumentar");
+    textoBotonAumentar.setPosition(260, 160);
 
     while (window.isOpen()) {
         sf::Event event;
@@ -51,13 +65,23 @@ int main() {
             // Pulsación botón
             if (event.type == sf::Event::MouseButtonPressed) {
                 sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-                sf::FloatRect botonBounds = boton.getGlobalBounds();
+                sf::FloatRect botonAumentarBounds =
+                    botonAumentar.getGlobalBounds();
+                sf::FloatRect botonReducirBounds =
+                    botonReducir.getGlobalBounds();
 
-                if (botonBounds.contains(
+                if (botonAumentarBounds.contains(
                         static_cast<float>(mousePos.x),
                         static_cast<float>(mousePos.y)
                     )) {
                     contador++;
+                }
+
+                if (botonReducirBounds.contains(
+                        static_cast<float>(mousePos.x),
+                        static_cast<float>(mousePos.y)
+                    )) {
+                    contador--;
                 }
             }
         }
@@ -66,8 +90,10 @@ int main() {
 
         window.clear();
         window.draw(texto);
-        window.draw(boton);
-        window.draw(textoBoton);
+        window.draw(botonAumentar);
+        window.draw(textoBotonAumentar);
+        window.draw(botonReducir);
+        window.draw(textoBotonReducir);
         window.display();
     }
 
