@@ -1,0 +1,17 @@
+BasedOnStyle: LLVM # Available: LLVM, Google, Chromium, Mozilla, WebKit, Microsoft, GNU
+IndentWidth: 4
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterClass:      false
+  AfterControlStatement: false
+  AfterEnum:       false
+  AfterFunction:   false
+  AfterNamespace:  false
+  AfterObjCDeclaration: false
+  AfterStruct:     false
+  AfterUnion:      false
+  BeforeCatch:     false
+  BeforeElse:      false
+  IndentBraces:    false
+AlignAfterOpenBracket: BlockIndent
+ColumnLimit: 80
