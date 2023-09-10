@@ -40,9 +40,12 @@ struct Botones {
     }
 };
 
+// Crea un botón rectangular con texto
 BotonConTexto crearBotonConTexto(
-    std::string texto, sf::Color color, int x, int y, sf::Font &font
+    std::string texto, sf::Color color, sf::Vector2i posicion, sf::Font &font
 ) {
+    int x = posicion.x;
+    int y = posicion.y;
     // Rect
     sf::RectangleShape rect(sf::Vector2f(150, 50));
     rect.setFillColor(color);
@@ -59,6 +62,7 @@ BotonConTexto crearBotonConTexto(
     return boton;
 };
 
+// Incluye toda la lógica para procesar un evento
 void procesarEvento(
     sf::Event evento, int &contador, sf::RenderWindow &ventana, Botones &botones
 ) {
@@ -109,12 +113,14 @@ int main() {
 
     // Botones para incrementar o reducir el contador
     auto botonAumentar = crearBotonConTexto(
-        "Aumentar", sf::Color::Green, 250, primeraFila, font
+        "Aumentar", sf::Color::Green, sf::Vector2i(250, primeraFila), font
     );
-    auto botonReducir =
-        crearBotonConTexto("Reducir", sf::Color::Red, 50, primeraFila, font);
-    auto botonSalir =
-        crearBotonConTexto("Salir", sf::Color::Blue, 150, segundaFila, font);
+    auto botonReducir = crearBotonConTexto(
+        "Reducir", sf::Color::Red, sf::Vector2i(50, primeraFila), font
+    );
+    auto botonSalir = crearBotonConTexto(
+        "Salir", sf::Color::Blue, sf::Vector2i(150, segundaFila), font
+    );
 
     Botones botones = {botonAumentar, botonReducir, botonSalir};
 
