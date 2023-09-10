@@ -12,14 +12,9 @@ struct BotonConTexto {
     sf::Text texto;
 
     bool colisiona(sf::Vector2i &mousePos) {
-        sf::FloatRect bounds = boton.getGlobalBounds();
-
-        if (bounds.contains(
-                static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)
-            )) {
-            return true;
-        }
-        return false;
+        return boton.getGlobalBounds().contains(
+            static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)
+        );
     }
 
     void dibujar(sf::RenderWindow &window) {
