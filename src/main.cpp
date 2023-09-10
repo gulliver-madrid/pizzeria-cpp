@@ -19,6 +19,11 @@ struct BotonConTexto {
         }
         return false;
     }
+
+    void dibujar(sf::RenderWindow &window) {
+        window.draw(boton);
+        window.draw(texto);
+    }
 };
 
 BotonConTexto crearBotonConTexto(
@@ -94,10 +99,8 @@ int main() {
 
         window.clear();
         window.draw(texto);
-        window.draw(botonAumentar.boton);
-        window.draw(botonAumentar.texto);
-        window.draw(botonReducir.boton);
-        window.draw(botonReducir.texto);
+        botonAumentar.dibujar(window);
+        botonReducir.dibujar(window);
         window.display();
     }
 
