@@ -28,6 +28,18 @@ struct BotonConTexto {
     }
 };
 
+struct Botones {
+    BotonConTexto aumentar;
+    BotonConTexto reducir;
+    BotonConTexto salir;
+
+    void dibujar(sf::RenderWindow &w) {
+        aumentar.dibujar(w);
+        reducir.dibujar(w);
+        salir.dibujar(w);
+    }
+};
+
 BotonConTexto crearBotonConTexto(
     std::string texto, sf::Color color, int x, int y, sf::Font &font
 ) {
@@ -46,6 +58,27 @@ BotonConTexto crearBotonConTexto(
     BotonConTexto boton = {rect, etiqueta};
     return boton;
 };
+
+void procesarEvento(
+    sf::Event evento, int &contador, sf::RenderWindow &ventana, Botones &botones
+) {
+    // Cierre de ventana
+    if (evento.type == sf::Event::Closed)
+        ventana.close();
+
+    // Pulsación botón
+    else if (evento.type == sf::Event::MouseButtonPressed) {
+        sf::Vector2i mousePos = sf::Mouse::getPosition(ventana);
+
+        if (botones.aumentar.colisiona(mousePos)) {
+            contador++;
+        } else if (botones.reducir.colisiona(mousePos)) {
+            contador--;
+        } else if (botones.salir.colisiona(mousePos)) {
+            ventana.close();
+        }
+    }
+}
 
 int main() {
     sf::RenderWindow window(sf::VideoMode(1800, 920), TITLE);
@@ -83,34 +116,19 @@ int main() {
     auto botonSalir =
         crearBotonConTexto("Salir", sf::Color::Blue, 150, segundaFila, font);
 
+    Botones botones = {botonAumentar, botonReducir, botonSalir};
+
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
-            // Cierre de ventana
-            if (event.type == sf::Event::Closed)
-                window.close();
-
-            // Pulsación botón
-            else if (event.type == sf::Event::MouseButtonPressed) {
-                sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-
-                if (botonAumentar.colisiona(mousePos)) {
-                    contador++;
-                } else if (botonReducir.colisiona(mousePos)) {
-                    contador--;
-                } else if (botonSalir.colisiona(mousePos)) {
-                    window.close();
-                }
-            }
+            procesarEvento(event, contador, window, botones);
         }
 
         textoContador.setString("Contador: " + std::to_string(contador));
 
         window.clear();
         window.draw(textoContador);
-        botonAumentar.dibujar(window);
-        botonReducir.dibujar(window);
-        botonSalir.dibujar(window);
+        botones.dibujar(window);
         window.display();
     }
 
