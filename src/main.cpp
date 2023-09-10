@@ -3,9 +3,20 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <iostream>
+#include <sstream>
 #include <string>
 
 #define TITLE "Pizzería"
+#define FPS 30
+
+#define A_ACUTE "\u00E1"
+#define E_ACUTE "\u00E9"
+#define I_ACUTE "\u00ED"
+#define O_ACUTE "\u00F3"
+#define U_ACUTE "\u00FA"
+#define N_TILDE "\u00F1"
+#define START_EXCLAMATION "\u00A1"
+#define START_QUESTION "\u00BF"
 
 struct BotonConTexto {
     sf::RectangleShape boton;
@@ -24,13 +35,11 @@ struct BotonConTexto {
 };
 
 struct Botones {
-    BotonConTexto aumentar;
-    BotonConTexto reducir;
+    BotonConTexto despachar;
     BotonConTexto salir;
 
     void dibujar(sf::RenderWindow &w) {
-        aumentar.dibujar(w);
-        reducir.dibujar(w);
+        despachar.dibujar(w);
         salir.dibujar(w);
     }
 };
@@ -78,22 +87,22 @@ Botones crearBotones(sf::Font &font) {
 
     // Botones para incrementar o reducir el contador
     auto botonAumentar = crearBotonConTexto(
-        "Aumentar", sf::Color::Green, sf::Vector2i(250, primeraFila), font
+        "Despachar pizza", sf::Color::Green, sf::Vector2i(250, primeraFila),
+        font
     );
-    auto botonReducir = crearBotonConTexto(
-        "Reducir", sf::Color::Red, sf::Vector2i(50, primeraFila), font
-    );
+
     auto botonSalir = crearBotonConTexto(
         "Salir", sf::Color::Blue, sf::Vector2i(150, segundaFila), font
     );
 
-    Botones botones = {botonAumentar, botonReducir, botonSalir};
+    Botones botones = {botonAumentar, botonSalir};
     return botones;
 }
 
 // Incluye toda la lógica para procesar un evento
 void procesarEvento(
-    sf::Event evento, int &contador, sf::RenderWindow &ventana, Botones &botones
+    sf::Event evento, int &contador, sf::RenderWindow &ventana,
+    Botones &botones, BotonConTexto boton_empezar, bool &mostrando_instrucciones
 ) {
     // Cierre de ventana
     if (evento.type == sf::Event::Closed)
@@ -102,13 +111,16 @@ void procesarEvento(
     // Pulsación botón
     else if (evento.type == sf::Event::MouseButtonPressed) {
         sf::Vector2i mousePos = sf::Mouse::getPosition(ventana);
-
-        if (botones.aumentar.colisiona(mousePos)) {
-            contador++;
-        } else if (botones.reducir.colisiona(mousePos)) {
-            contador--;
-        } else if (botones.salir.colisiona(mousePos)) {
-            ventana.close();
+        if (mostrando_instrucciones) {
+            if (boton_empezar.colisiona(mousePos)) {
+                mostrando_instrucciones = false;
+            }
+        } else {
+            if (botones.despachar.colisiona(mousePos)) {
+                contador++;
+            } else if (botones.salir.colisiona(mousePos)) {
+                ventana.close();
+            }
         }
     }
 }
@@ -116,21 +128,45 @@ void procesarEvento(
 // Actualiza el interfaz gráfico
 void actualizarIU(
     sf::RenderWindow &ventana, Botones &botones, sf::Text &textoContador,
-    int contador
+    int contador, BotonConTexto boton_empezar, sf::Text instrucciones,
+    bool mostrando_instrucciones
 ) {
-    textoContador.setString("Contador: " + std::to_string(contador));
+    textoContador.setString("Clientes servidos: " + std::to_string(contador));
     ventana.clear();
-    ventana.draw(textoContador);
-    botones.dibujar(ventana);
+    if (mostrando_instrucciones) {
+        ventana.draw(instrucciones);
+        boton_empezar.dibujar(ventana);
+    } else {
+        ventana.draw(textoContador);
+        botones.dibujar(ventana);
+    }
     ventana.display();
+}
+
+std::string construir_instrucciones() {
+    std::ostringstream oss;
+    oss << "Pizzer" << I_ACUTE
+        << "a\nEl objetivo del juego es gestionar con exito tu "
+           "pizzer"
+        << I_ACUTE << "a.\n"
+        << "Tu primera misi" << O_ACUTE
+        << "n es conseguir 5 clientes satisfechos.\n"
+        << START_EXCLAMATION << "Suerte!";
+    return oss.str();
+}
+
+sf::Text generar_instrucciones(sf::Font &font) {
+    auto etiqueta = crearEtiqueta(36, sf::Color::Yellow, font);
+
+    etiqueta.setString(construir_instrucciones());
+    etiqueta.setPosition(200, 200);
+    return etiqueta;
 }
 
 int main() {
     sf::RenderWindow window(sf::VideoMode(1800, 920), TITLE);
-    window.setFramerateLimit(60);
-
-    // Contador
-    int contador = 0;
+    window.setFramerateLimit(FPS);
+    bool mostrando_instrucciones = true;
 
     // Fuente
     sf::Font font;
@@ -142,6 +178,14 @@ int main() {
         return EXIT_FAILURE;
     }
 
+    auto instrucciones = generar_instrucciones(font);
+    auto botonEmpezar = crearBotonConTexto(
+        "Empezar", sf::Color::Green, sf::Vector2i(500, 450), font
+    );
+
+    // Contador
+    int contador_clientes = 0;
+
     sf::Text textoContador = crearEtiquetaContador(font);
 
     Botones botones = crearBotones(font);
@@ -149,9 +193,15 @@ int main() {
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
-            procesarEvento(event, contador, window, botones);
+            procesarEvento(
+                event, contador_clientes, window, botones, botonEmpezar,
+                mostrando_instrucciones
+            );
         }
-        actualizarIU(window, botones, textoContador, contador);
+        actualizarIU(
+            window, botones, textoContador, contador_clientes, botonEmpezar,
+            instrucciones, mostrando_instrucciones
+        );
     }
 
     return 0;
