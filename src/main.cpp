@@ -57,6 +57,35 @@ BotonConTexto crearBotonConTexto(
     return boton;
 };
 
+sf::Text crearEtiquetaContador(sf::Font &font) {
+    // Texto para el contador
+    sf::Text etiqueta;
+    etiqueta.setFont(font);
+    etiqueta.setCharacterSize(48);
+    etiqueta.setFillColor(sf::Color::White);
+    etiqueta.setPosition(50, 50);
+    return etiqueta;
+}
+
+Botones crearBotones(sf::Font &font) {
+    int primeraFila = 150;
+    int segundaFila = 250;
+
+    // Botones para incrementar o reducir el contador
+    auto botonAumentar = crearBotonConTexto(
+        "Aumentar", sf::Color::Green, sf::Vector2i(250, primeraFila), font
+    );
+    auto botonReducir = crearBotonConTexto(
+        "Reducir", sf::Color::Red, sf::Vector2i(50, primeraFila), font
+    );
+    auto botonSalir = crearBotonConTexto(
+        "Salir", sf::Color::Blue, sf::Vector2i(150, segundaFila), font
+    );
+
+    Botones botones = {botonAumentar, botonReducir, botonSalir};
+    return botones;
+}
+
 // Incluye toda la lógica para procesar un evento
 void procesarEvento(
     sf::Event evento, int &contador, sf::RenderWindow &ventana, Botones &botones
@@ -108,28 +137,9 @@ int main() {
         return EXIT_FAILURE;
     }
 
-    // Texto para el contador
-    sf::Text textoContador;
-    textoContador.setFont(font);
-    textoContador.setCharacterSize(48);
-    textoContador.setPosition(50, 50);
-    textoContador.setFillColor(sf::Color::White);
+    sf::Text textoContador = crearEtiquetaContador(font);
 
-    int primeraFila = 150;
-    int segundaFila = 250;
-
-    // Botones para incrementar o reducir el contador
-    auto botonAumentar = crearBotonConTexto(
-        "Aumentar", sf::Color::Green, sf::Vector2i(250, primeraFila), font
-    );
-    auto botonReducir = crearBotonConTexto(
-        "Reducir", sf::Color::Red, sf::Vector2i(50, primeraFila), font
-    );
-    auto botonSalir = crearBotonConTexto(
-        "Salir", sf::Color::Blue, sf::Vector2i(150, segundaFila), font
-    );
-
-    Botones botones = {botonAumentar, botonReducir, botonSalir};
+    Botones botones = crearBotones(font);
 
     while (window.isOpen()) {
         sf::Event event;
