@@ -5,6 +5,11 @@
 #include <iostream>
 #include <string>
 
+struct BotonConTexto {
+    sf::RectangleShape boton;
+    sf::Text texto;
+};
+
 int main() {
     sf::RenderWindow window(sf::VideoMode(1800, 920), "Pizzería");
     window.setFramerateLimit(60);
@@ -30,14 +35,14 @@ int main() {
     texto.setFillColor(sf::Color::White);
 
     // Botón para reducir el contador
-    sf::RectangleShape botonReducir(sf::Vector2f(150, 50));
-    botonReducir.setFillColor(sf::Color::Red);
-    botonReducir.setPosition(50, 150);
+    sf::RectangleShape rectBotonReducir(sf::Vector2f(150, 50));
+    rectBotonReducir.setFillColor(sf::Color::Red);
+    rectBotonReducir.setPosition(50, 150);
 
     // Botón para incrementar el contador
-    sf::RectangleShape botonAumentar(sf::Vector2f(150, 50));
-    botonAumentar.setFillColor(sf::Color::Green);
-    botonAumentar.setPosition(250, 150);
+    sf::RectangleShape rectBotonAumentar(sf::Vector2f(150, 50));
+    rectBotonAumentar.setFillColor(sf::Color::Green);
+    rectBotonAumentar.setPosition(250, 150);
 
     // Texto del botón Reducir
     sf::Text textoBotonReducir;
@@ -55,6 +60,9 @@ int main() {
     textoBotonAumentar.setString("Aumentar");
     textoBotonAumentar.setPosition(260, 160);
 
+    BotonConTexto botonAumentar = {rectBotonAumentar, textoBotonAumentar};
+    BotonConTexto botonReducir = {rectBotonReducir, textoBotonReducir};
+
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
@@ -66,9 +74,9 @@ int main() {
             if (event.type == sf::Event::MouseButtonPressed) {
                 sf::Vector2i mousePos = sf::Mouse::getPosition(window);
                 sf::FloatRect botonAumentarBounds =
-                    botonAumentar.getGlobalBounds();
+                    botonAumentar.boton.getGlobalBounds();
                 sf::FloatRect botonReducirBounds =
-                    botonReducir.getGlobalBounds();
+                    botonReducir.boton.getGlobalBounds();
 
                 if (botonAumentarBounds.contains(
                         static_cast<float>(mousePos.x),
@@ -90,10 +98,10 @@ int main() {
 
         window.clear();
         window.draw(texto);
-        window.draw(botonAumentar);
-        window.draw(textoBotonAumentar);
-        window.draw(botonReducir);
-        window.draw(textoBotonReducir);
+        window.draw(botonAumentar.boton);
+        window.draw(botonAumentar.texto);
+        window.draw(botonReducir.boton);
+        window.draw(botonReducir.texto);
         window.display();
     }
 
