@@ -10,6 +10,25 @@ struct BotonConTexto {
     sf::Text texto;
 };
 
+BotonConTexto crearBotonConTexto(
+    std::string texto, sf::Color color, int x, int y, sf::Font &font
+) {
+    // Rect
+    sf::RectangleShape rect(sf::Vector2f(150, 50));
+    rect.setFillColor(color);
+    rect.setPosition(x, y);
+    // Etiqueta
+    sf::Text etiqueta;
+    etiqueta.setFont(font);
+    etiqueta.setCharacterSize(24);
+    etiqueta.setFillColor(sf::Color::White);
+    etiqueta.setString(texto);
+    etiqueta.setPosition(x + 10, y + 10);
+
+    BotonConTexto boton = {rect, etiqueta};
+    return boton;
+};
+
 int main() {
     sf::RenderWindow window(sf::VideoMode(1800, 920), "Pizzería");
     window.setFramerateLimit(60);
@@ -34,34 +53,11 @@ int main() {
     texto.setPosition(50, 50);
     texto.setFillColor(sf::Color::White);
 
-    // Botón para reducir el contador
-    sf::RectangleShape rectBotonReducir(sf::Vector2f(150, 50));
-    rectBotonReducir.setFillColor(sf::Color::Red);
-    rectBotonReducir.setPosition(50, 150);
-
-    // Botón para incrementar el contador
-    sf::RectangleShape rectBotonAumentar(sf::Vector2f(150, 50));
-    rectBotonAumentar.setFillColor(sf::Color::Green);
-    rectBotonAumentar.setPosition(250, 150);
-
-    // Texto del botón Reducir
-    sf::Text textoBotonReducir;
-    textoBotonReducir.setFont(font);
-    textoBotonReducir.setCharacterSize(24);
-    textoBotonReducir.setFillColor(sf::Color::White);
-    textoBotonReducir.setString("Reducir");
-    textoBotonReducir.setPosition(60, 160);
-
-    // Texto del botón Aumentar
-    sf::Text textoBotonAumentar;
-    textoBotonAumentar.setFont(font);
-    textoBotonAumentar.setCharacterSize(24);
-    textoBotonAumentar.setFillColor(sf::Color::White);
-    textoBotonAumentar.setString("Aumentar");
-    textoBotonAumentar.setPosition(260, 160);
-
-    BotonConTexto botonAumentar = {rectBotonAumentar, textoBotonAumentar};
-    BotonConTexto botonReducir = {rectBotonReducir, textoBotonReducir};
+    // Botones para incrementar o reducir el contador
+    auto botonAumentar =
+        crearBotonConTexto("Aumentar", sf::Color::Green, 250, 150, font);
+    auto botonReducir =
+        crearBotonConTexto("Reducir", sf::Color::Red, 50, 150, font);
 
     while (window.isOpen()) {
         sf::Event event;
