@@ -8,6 +8,17 @@
 struct BotonConTexto {
     sf::RectangleShape boton;
     sf::Text texto;
+
+    bool colisiona(sf::Vector2i &mousePos) {
+        sf::FloatRect bounds = boton.getGlobalBounds();
+
+        if (bounds.contains(
+                static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)
+            )) {
+            return true;
+        }
+        return false;
+    }
 };
 
 BotonConTexto crearBotonConTexto(
@@ -69,22 +80,11 @@ int main() {
             // Pulsación botón
             if (event.type == sf::Event::MouseButtonPressed) {
                 sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-                sf::FloatRect botonAumentarBounds =
-                    botonAumentar.boton.getGlobalBounds();
-                sf::FloatRect botonReducirBounds =
-                    botonReducir.boton.getGlobalBounds();
 
-                if (botonAumentarBounds.contains(
-                        static_cast<float>(mousePos.x),
-                        static_cast<float>(mousePos.y)
-                    )) {
+                if (botonAumentar.colisiona(mousePos)) {
                     contador++;
                 }
-
-                if (botonReducirBounds.contains(
-                        static_cast<float>(mousePos.x),
-                        static_cast<float>(mousePos.y)
-                    )) {
+                if (botonReducir.colisiona(mousePos)) {
                     contador--;
                 }
             }
