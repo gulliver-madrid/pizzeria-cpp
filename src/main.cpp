@@ -5,6 +5,7 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
+#include <cassert>
 #include <chrono>
 #include <iostream>
 #include <optional>
@@ -15,6 +16,13 @@
 #define FPS 12
 #define RETARDO_ANTES_DE_RESULTADO 0.6
 
+enum EstadoJuego {
+    MostrandoInstrucciones,
+    Activo,
+    EsperaAntesDeResultado,
+    MostrandoResultado,
+};
+
 struct Botones {
     BotonConTexto empezar;
     BotonConTexto despachar;
@@ -23,9 +31,7 @@ struct Botones {
 };
 
 struct Estado {
-    bool mostrando_instrucciones = true;
-    bool espera_antes_de_resultado = false;
-    bool mostrando_resultado = false;
+    EstadoJuego actual = MostrandoInstrucciones;
 };
 
 sf::Text
@@ -115,20 +121,19 @@ void procesarEvento(
             ventana.close();
         } else if (botones.reiniciar.colisiona(mousePos)) {
             contador = 0;
-            estado.mostrando_instrucciones = true;
-            estado.espera_antes_de_resultado = false;
-            estado.mostrando_resultado = false;
+            estado.actual = MostrandoInstrucciones;
+            return;
         }
         // Dependientes del estado
-        if (estado.mostrando_instrucciones) {
+        if (estado.actual == MostrandoInstrucciones) {
             if (botones.empezar.colisiona(mousePos)) {
-                estado.mostrando_instrucciones = false;
+                estado.actual = Activo;
             }
-        } else if (!estado.espera_antes_de_resultado && !estado.mostrando_resultado) {
+        } else if (estado.actual == Activo) {
             if (botones.despachar.colisiona(mousePos)) {
                 contador++;
                 if (contador >= 5) {
-                    estado.espera_antes_de_resultado = true;
+                    estado.actual = EsperaAntesDeResultado;
                     clock.restart();
                 }
             }
@@ -143,13 +148,14 @@ void actualizarIU(
 ) {
     textoContador.setString("Clientes servidos: " + std::to_string(contador));
     ventana.clear();
-    if (estado.mostrando_instrucciones) {
+    if (estado.actual == MostrandoInstrucciones) {
         ventana.draw(instrucciones);
         botones.empezar.dibujar(ventana);
-    } else if (!estado.mostrando_resultado) {
+    } else if (estado.actual == Activo || estado.actual == EsperaAntesDeResultado) {
         ventana.draw(textoContador);
         botones.despachar.dibujar(ventana);
     } else {
+        assert(estado.actual == MostrandoResultado);
         ventana.draw(resultado);
     }
     botones.reiniciar.dibujar(ventana);
@@ -209,7 +215,6 @@ int main() {
     auto instrucciones = generar_instrucciones(font);
     auto resultado = generar_resultado(font);
 
-    // Contador
     int contador_clientes = 0;
 
     sf::Text textoContador = crearEtiquetaContador(font);
@@ -226,11 +231,11 @@ int main() {
                 event, contador_clientes, window, botones, clock, estado
             );
         }
-        if (estado.espera_antes_de_resultado &&
-            (clock.getElapsedTime().asSeconds() >= RETARDO_ANTES_DE_RESULTADO
-            )) {
-            estado.espera_antes_de_resultado = false;
-            estado.mostrando_resultado = true;
+        if ( //
+            estado.actual == EsperaAntesDeResultado &&
+            clock.getElapsedTime().asSeconds() >= RETARDO_ANTES_DE_RESULTADO
+        ) {
+            estado.actual = MostrandoResultado;
             if (opt_buffer) {
                 sound.setBuffer(opt_buffer.value());
                 sound.play();
