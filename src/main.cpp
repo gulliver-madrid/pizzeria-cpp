@@ -12,7 +12,7 @@
 
 #define TITLE "Pizzer%ia"
 #define FPS 12
-#define RETARDO_ANTES_DE_RESULTADO 1
+#define RETARDO_ANTES_DE_RESULTADO 0.6
 
 struct BotonConTexto {
     sf::RectangleShape boton;
@@ -166,7 +166,7 @@ std::string construir_instrucciones() {
 }
 std::string construir_resultado() {
     std::string plantilla =
-        "Pizzer%ia\n%!Enhorabuena! Todos los clientes est%an satisfechos.";
+        "%!Enhorabuena! Todos los clientes est%an satisfechos.";
     return interpolar(plantilla);
 }
 
