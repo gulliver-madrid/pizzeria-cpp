@@ -3,12 +3,13 @@
 #include "paths.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
+#include <chrono>
 #include <iostream>
-#include <sstream>
 #include <string>
+#include <thread>
 
-#define TITLE "Pizzería"
-#define FPS 30
+#define TITLE "Pizzer%ia"
+#define FPS 12
 
 struct BotonConTexto {
     sf::RectangleShape boton;
@@ -34,6 +35,7 @@ struct Botones {
 
 struct Estado {
     bool mostrando_instrucciones = true;
+    bool espera_antes_de_resultado = false;
     bool mostrando_resultado = false;
 };
 
@@ -104,7 +106,7 @@ Botones crearBotones(sf::Font &font) {
 // Incluye toda la lógica para procesar un evento
 void procesarEvento(
     sf::Event evento, int &contador, sf::RenderWindow &ventana,
-    Botones &botones, Estado &estado
+    Botones &botones, sf::Clock &clock, Estado &estado
 ) {
     // Cierre de ventana
     if (evento.type == sf::Event::Closed)
@@ -120,11 +122,12 @@ void procesarEvento(
             if (botones.empezar.colisiona(mousePos)) {
                 estado.mostrando_instrucciones = false;
             }
-        } else {
+        } else if (!estado.espera_antes_de_resultado) {
             if (botones.despachar.colisiona(mousePos)) {
                 contador++;
                 if (contador >= 5) {
-                    estado.mostrando_resultado = true;
+                    estado.espera_antes_de_resultado = true;
+                    clock.restart();
                 }
             }
         }
@@ -178,7 +181,8 @@ sf::Text generar_resultado(sf::Font &font) {
 }
 
 int main() {
-    sf::RenderWindow window(sf::VideoMode(1800, 920), TITLE);
+    std::string title = TITLE;
+    sf::RenderWindow window(sf::VideoMode(1800, 920), interpolar(title));
     window.setFramerateLimit(FPS);
     Estado estado;
 
@@ -202,10 +206,19 @@ int main() {
 
     Botones botones = crearBotones(font);
 
+    sf::Clock clock;
+
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
-            procesarEvento(event, contador_clientes, window, botones, estado);
+            procesarEvento(
+                event, contador_clientes, window, botones, clock, estado
+            );
+        }
+        if (estado.espera_antes_de_resultado &&
+            (clock.getElapsedTime().asSeconds() >= 2)) {
+            estado.espera_antes_de_resultado = false;
+            estado.mostrando_resultado = true;
         }
         actualizarIU(
             window, botones, textoContador, contador_clientes, instrucciones,
