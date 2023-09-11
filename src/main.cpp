@@ -44,7 +44,8 @@ struct Botones {
     }
 };
 
-sf::Text crearEtiqueta(int tamano, sf::Color color, sf::Font &font) {
+sf::Text
+crearEtiqueta(int tamano, sf::Font &font, sf::Color color = sf::Color::White) {
     sf::Text etiqueta;
     etiqueta.setFont(font);
     etiqueta.setCharacterSize(tamano);
@@ -54,19 +55,19 @@ sf::Text crearEtiqueta(int tamano, sf::Color color, sf::Font &font) {
 
 // Crea un botón rectangular con texto
 BotonConTexto crearBotonConTexto(
-    std::string texto, sf::Color color, sf::Vector2i posicion, sf::Font &font
+    std::string texto, sf::Color color_fondo, sf::Vector2i posicion,
+    sf::Font &font, sf::Color color_texto = sf::Color::White
 ) {
     int tamano_texto = 24;
-    sf::Color color_texto = sf::Color::White;
     int x = posicion.x;
     int y = posicion.y;
     int margin = 10;
     // Rect
     sf::RectangleShape rect(sf::Vector2f(150, 50));
-    rect.setFillColor(color);
+    rect.setFillColor(color_fondo);
     rect.setPosition(x, y);
     // Etiqueta
-    sf::Text etiqueta = crearEtiqueta(tamano_texto, color_texto, font);
+    sf::Text etiqueta = crearEtiqueta(tamano_texto, font, color_texto);
     etiqueta.setString(texto);
     etiqueta.setPosition(x + margin, y + margin);
 
@@ -76,7 +77,7 @@ BotonConTexto crearBotonConTexto(
 
 // Crea la etiqueta de texto que mostrará el contador
 sf::Text crearEtiquetaContador(sf::Font &font) {
-    sf::Text etiqueta = crearEtiqueta(48, sf::Color::White, font);
+    sf::Text etiqueta = crearEtiqueta(48, font, sf::Color::White);
     etiqueta.setPosition(50, 50);
     return etiqueta;
 }
@@ -88,7 +89,7 @@ Botones crearBotones(sf::Font &font) {
     // Botones para incrementar o reducir el contador
     auto botonAumentar = crearBotonConTexto(
         "Despachar pizza", sf::Color::Green, sf::Vector2i(250, primeraFila),
-        font
+        font, sf::Color::Black
     );
 
     auto botonSalir = crearBotonConTexto(
@@ -156,8 +157,7 @@ std::string construir_instrucciones() {
 }
 
 sf::Text generar_instrucciones(sf::Font &font) {
-    auto etiqueta = crearEtiqueta(36, sf::Color::Yellow, font);
-
+    auto etiqueta = crearEtiqueta(36, font, sf::Color::Yellow);
     etiqueta.setString(construir_instrucciones());
     etiqueta.setPosition(200, 200);
     return etiqueta;
@@ -180,7 +180,8 @@ int main() {
 
     auto instrucciones = generar_instrucciones(font);
     auto botonEmpezar = crearBotonConTexto(
-        "Empezar", sf::Color::Green, sf::Vector2i(500, 450), font
+        "Empezar", sf::Color::Green, sf::Vector2i(500, 450), font,
+        sf::Color::Black
     );
 
     // Contador
