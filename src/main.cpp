@@ -35,13 +35,9 @@ struct BotonConTexto {
 };
 
 struct Botones {
+    BotonConTexto empezar;
     BotonConTexto despachar;
     BotonConTexto salir;
-
-    void dibujar(sf::RenderWindow &w) {
-        despachar.dibujar(w);
-        salir.dibujar(w);
-    }
 };
 
 sf::Text
@@ -61,15 +57,20 @@ BotonConTexto crearBotonConTexto(
     int tamano_texto = 24;
     int x = posicion.x;
     int y = posicion.y;
-    int margin = 10;
-    // Rect
-    sf::RectangleShape rect(sf::Vector2f(150, 50));
-    rect.setFillColor(color_fondo);
-    rect.setPosition(x, y);
+    int margin = 25;
+
     // Etiqueta
     sf::Text etiqueta = crearEtiqueta(tamano_texto, font, color_texto);
     etiqueta.setString(texto);
     etiqueta.setPosition(x + margin, y + margin);
+
+    sf::FloatRect textRect = etiqueta.getGlobalBounds();
+    // Rect
+    sf::RectangleShape rect(
+        sf::Vector2f(textRect.width + margin * 2, textRect.height + margin * 2)
+    );
+    rect.setFillColor(color_fondo);
+    rect.setPosition(x, y);
 
     BotonConTexto boton = {rect, etiqueta};
     return boton;
@@ -84,26 +85,29 @@ sf::Text crearEtiquetaContador(sf::Font &font) {
 
 Botones crearBotones(sf::Font &font) {
     int primeraFila = 150;
-    int segundaFila = 250;
+    int bottom = 800;
 
-    // Botones para incrementar o reducir el contador
+    auto botonEmpezar = crearBotonConTexto(
+        "Empezar", sf::Color::Green, sf::Vector2i(500, 450), font,
+        sf::Color::Black
+    );
     auto botonAumentar = crearBotonConTexto(
         "Despachar pizza", sf::Color::Green, sf::Vector2i(250, primeraFila),
         font, sf::Color::Black
     );
 
     auto botonSalir = crearBotonConTexto(
-        "Salir", sf::Color::Blue, sf::Vector2i(150, segundaFila), font
+        "Salir", sf::Color::Blue, sf::Vector2i(150, bottom), font
     );
 
-    Botones botones = {botonAumentar, botonSalir};
+    Botones botones = {botonEmpezar, botonAumentar, botonSalir};
     return botones;
 }
 
 // Incluye toda la lógica para procesar un evento
 void procesarEvento(
     sf::Event evento, int &contador, sf::RenderWindow &ventana,
-    Botones &botones, BotonConTexto boton_empezar, bool &mostrando_instrucciones
+    Botones &botones, bool &mostrando_instrucciones
 ) {
     // Cierre de ventana
     if (evento.type == sf::Event::Closed)
@@ -112,15 +116,16 @@ void procesarEvento(
     // Pulsación botón
     else if (evento.type == sf::Event::MouseButtonPressed) {
         sf::Vector2i mousePos = sf::Mouse::getPosition(ventana);
+        if (botones.salir.colisiona(mousePos)) {
+            ventana.close();
+        }
         if (mostrando_instrucciones) {
-            if (boton_empezar.colisiona(mousePos)) {
+            if (botones.empezar.colisiona(mousePos)) {
                 mostrando_instrucciones = false;
             }
         } else {
             if (botones.despachar.colisiona(mousePos)) {
                 contador++;
-            } else if (botones.salir.colisiona(mousePos)) {
-                ventana.close();
             }
         }
     }
@@ -129,18 +134,18 @@ void procesarEvento(
 // Actualiza el interfaz gráfico
 void actualizarIU(
     sf::RenderWindow &ventana, Botones &botones, sf::Text &textoContador,
-    int contador, BotonConTexto boton_empezar, sf::Text instrucciones,
-    bool mostrando_instrucciones
+    int contador, sf::Text instrucciones, bool mostrando_instrucciones
 ) {
     textoContador.setString("Clientes servidos: " + std::to_string(contador));
     ventana.clear();
     if (mostrando_instrucciones) {
         ventana.draw(instrucciones);
-        boton_empezar.dibujar(ventana);
+        botones.empezar.dibujar(ventana);
     } else {
         ventana.draw(textoContador);
-        botones.dibujar(ventana);
+        botones.despachar.dibujar(ventana);
     }
+    botones.salir.dibujar(ventana);
     ventana.display();
 }
 
@@ -179,10 +184,6 @@ int main() {
     }
 
     auto instrucciones = generar_instrucciones(font);
-    auto botonEmpezar = crearBotonConTexto(
-        "Empezar", sf::Color::Green, sf::Vector2i(500, 450), font,
-        sf::Color::Black
-    );
 
     // Contador
     int contador_clientes = 0;
@@ -195,13 +196,13 @@ int main() {
         sf::Event event;
         while (window.pollEvent(event)) {
             procesarEvento(
-                event, contador_clientes, window, botones, botonEmpezar,
+                event, contador_clientes, window, botones,
                 mostrando_instrucciones
             );
         }
         actualizarIU(
-            window, botones, textoContador, contador_clientes, botonEmpezar,
-            instrucciones, mostrando_instrucciones
+            window, botones, textoContador, contador_clientes, instrucciones,
+            mostrando_instrucciones
         );
     }
 
