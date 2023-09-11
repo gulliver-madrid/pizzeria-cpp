@@ -1,9 +1,9 @@
-#include "demo_map.h"
+#include "map.h"
 
 #include <iostream>
 #include <map>
 
-int demo() { //
+int demo_map() { //
     std::cout << "Demo map" << std::endl;
     // Declara e inicializa un map que mapea strings a enteros
     std::map<std::string, int> edad;
