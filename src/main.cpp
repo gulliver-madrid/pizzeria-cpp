@@ -1,3 +1,4 @@
+#include "cadenas.h"
 #include "manejo_rutas.h"
 #include "paths.h"
 #include <SFML/Graphics.hpp>
@@ -8,15 +9,6 @@
 
 #define TITLE "Pizzería"
 #define FPS 30
-
-#define A_ACUTE "\u00E1"
-#define E_ACUTE "\u00E9"
-#define I_ACUTE "\u00ED"
-#define O_ACUTE "\u00F3"
-#define U_ACUTE "\u00FA"
-#define N_TILDE "\u00F1"
-#define START_EXCLAMATION "\u00A1"
-#define START_QUESTION "\u00BF"
 
 struct BotonConTexto {
     sf::RectangleShape boton;
@@ -160,22 +152,16 @@ void actualizarIU(
 }
 
 std::string construir_instrucciones() {
-    std::ostringstream oss;
-    oss << "Pizzer" << I_ACUTE
-        << "a\nEl objetivo del juego es gestionar con exito tu "
-           "pizzer"
-        << I_ACUTE << "a.\n"
-        << "Tu primera misi" << O_ACUTE
-        << "n es conseguir 5 clientes satisfechos.\n"
-        << START_EXCLAMATION << "Suerte!";
-    return oss.str();
+    std::string plantilla =
+        "Pizzer%ia.\nEl objetivo del juego es gestionar con exito tu "
+        "pizzer%ia.\nTu primera misi%on es conseguir 5 clientes "
+        "satisfechos.\n%!Suerte!";
+    return interpolar(plantilla);
 }
 std::string construir_resultado() {
-    std::ostringstream oss;
-    oss << "Pizzer" << I_ACUTE << "a\n"
-        << START_EXCLAMATION << "Enhorabuena!"
-        << "Todos los clientes est" << A_ACUTE << "n satisfechos.\n";
-    return oss.str();
+    std::string plantilla =
+        "Pizzer%ia\n%!Enhorabuena! Todos los clientes est%an satisfechos.";
+    return interpolar(plantilla);
 }
 
 sf::Text generar_instrucciones(sf::Font &font) {
