@@ -1,15 +1,18 @@
 #include "cadenas.h"
 #include "manejo_rutas.h"
 #include "paths.h"
+#include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <chrono>
 #include <iostream>
+#include <optional>
 #include <string>
 #include <thread>
 
 #define TITLE "Pizzer%ia"
 #define FPS 12
+#define RETARDO_ANTES_DE_RESULTADO 1
 
 struct BotonConTexto {
     sf::RectangleShape boton;
@@ -196,6 +199,13 @@ int main() {
         return EXIT_FAILURE;
     }
 
+    std::optional<sf::SoundBuffer> opt_buffer;
+    {
+        sf::SoundBuffer buffer;
+        if (buffer.loadFromFile(getResourcePath(SUCCESS_SOUND_PATH).string()))
+            opt_buffer = buffer;
+    }
+
     auto instrucciones = generar_instrucciones(font);
     auto resultado = generar_resultado(font);
 
@@ -207,6 +217,7 @@ int main() {
     Botones botones = crearBotones(font);
 
     sf::Clock clock;
+    sf::Sound sound;
 
     while (window.isOpen()) {
         sf::Event event;
@@ -216,9 +227,14 @@ int main() {
             );
         }
         if (estado.espera_antes_de_resultado &&
-            (clock.getElapsedTime().asSeconds() >= 2)) {
+            (clock.getElapsedTime().asSeconds() >= RETARDO_ANTES_DE_RESULTADO
+            )) {
             estado.espera_antes_de_resultado = false;
             estado.mostrando_resultado = true;
+            if (opt_buffer) {
+                sound.setBuffer(opt_buffer.value());
+                sound.play();
+            }
         }
         actualizarIU(
             window, botones, textoContador, contador_clientes, instrucciones,

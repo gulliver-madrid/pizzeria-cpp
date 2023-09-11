@@ -10,7 +10,7 @@ FetchContent_Declare(SFML
 FetchContent_MakeAvailable(SFML)
 
 add_executable(pizzeria src/main.cpp src/cadenas.cpp)
-target_link_libraries(pizzeria PRIVATE sfml-graphics)
+target_link_libraries(pizzeria PRIVATE sfml-graphics sfml-audio)
 target_compile_features(pizzeria PRIVATE cxx_std_17)
 
 if(WIN32)
