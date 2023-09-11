@@ -40,6 +40,11 @@ struct Botones {
     BotonConTexto salir;
 };
 
+struct Estado {
+    bool mostrando_instrucciones = true;
+    bool mostrando_resultado = false;
+};
+
 sf::Text
 crearEtiqueta(int tamano, sf::Font &font, sf::Color color = sf::Color::White) {
     sf::Text etiqueta;
@@ -107,7 +112,7 @@ Botones crearBotones(sf::Font &font) {
 // Incluye toda la lógica para procesar un evento
 void procesarEvento(
     sf::Event evento, int &contador, sf::RenderWindow &ventana,
-    Botones &botones, bool &mostrando_instrucciones
+    Botones &botones, Estado &estado
 ) {
     // Cierre de ventana
     if (evento.type == sf::Event::Closed)
@@ -119,13 +124,16 @@ void procesarEvento(
         if (botones.salir.colisiona(mousePos)) {
             ventana.close();
         }
-        if (mostrando_instrucciones) {
+        if (estado.mostrando_instrucciones) {
             if (botones.empezar.colisiona(mousePos)) {
-                mostrando_instrucciones = false;
+                estado.mostrando_instrucciones = false;
             }
         } else {
             if (botones.despachar.colisiona(mousePos)) {
                 contador++;
+                if (contador >= 5) {
+                    estado.mostrando_resultado = true;
+                }
             }
         }
     }
@@ -134,16 +142,18 @@ void procesarEvento(
 // Actualiza el interfaz gráfico
 void actualizarIU(
     sf::RenderWindow &ventana, Botones &botones, sf::Text &textoContador,
-    int contador, sf::Text instrucciones, bool mostrando_instrucciones
+    int contador, sf::Text instrucciones, sf::Text resultado, Estado &estado
 ) {
     textoContador.setString("Clientes servidos: " + std::to_string(contador));
     ventana.clear();
-    if (mostrando_instrucciones) {
+    if (estado.mostrando_instrucciones) {
         ventana.draw(instrucciones);
         botones.empezar.dibujar(ventana);
-    } else {
+    } else if (!estado.mostrando_resultado) {
         ventana.draw(textoContador);
         botones.despachar.dibujar(ventana);
+    } else {
+        ventana.draw(resultado);
     }
     botones.salir.dibujar(ventana);
     ventana.display();
@@ -160,6 +170,13 @@ std::string construir_instrucciones() {
         << START_EXCLAMATION << "Suerte!";
     return oss.str();
 }
+std::string construir_resultado() {
+    std::ostringstream oss;
+    oss << "Pizzer" << I_ACUTE << "a\n"
+        << START_EXCLAMATION << "Enhorabuena!"
+        << "Todos los clientes est" << A_ACUTE << "n satisfechos.\n";
+    return oss.str();
+}
 
 sf::Text generar_instrucciones(sf::Font &font) {
     auto etiqueta = crearEtiqueta(36, font, sf::Color::Yellow);
@@ -167,11 +184,17 @@ sf::Text generar_instrucciones(sf::Font &font) {
     etiqueta.setPosition(200, 200);
     return etiqueta;
 }
+sf::Text generar_resultado(sf::Font &font) {
+    auto etiqueta = crearEtiqueta(36, font, sf::Color::Green);
+    etiqueta.setString(construir_resultado());
+    etiqueta.setPosition(200, 200);
+    return etiqueta;
+}
 
 int main() {
     sf::RenderWindow window(sf::VideoMode(1800, 920), TITLE);
     window.setFramerateLimit(FPS);
-    bool mostrando_instrucciones = true;
+    Estado estado;
 
     // Fuente
     sf::Font font;
@@ -184,6 +207,7 @@ int main() {
     }
 
     auto instrucciones = generar_instrucciones(font);
+    auto resultado = generar_resultado(font);
 
     // Contador
     int contador_clientes = 0;
@@ -195,14 +219,11 @@ int main() {
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
-            procesarEvento(
-                event, contador_clientes, window, botones,
-                mostrando_instrucciones
-            );
+            procesarEvento(event, contador_clientes, window, botones, estado);
         }
         actualizarIU(
             window, botones, textoContador, contador_clientes, instrucciones,
-            mostrando_instrucciones
+            resultado, estado
         );
     }
 
