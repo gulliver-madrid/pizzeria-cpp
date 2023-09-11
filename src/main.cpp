@@ -19,6 +19,7 @@ struct Botones {
     BotonConTexto empezar;
     BotonConTexto despachar;
     BotonConTexto salir;
+    BotonConTexto reiniciar;
 };
 
 struct Estado {
@@ -70,6 +71,8 @@ sf::Text crearEtiquetaContador(sf::Font &font) {
     return etiqueta;
 }
 
+// Crea todos los botones del juego
+// Se mostrarán o no dependiendo del Estado
 Botones crearBotones(sf::Font &font) {
     int primeraFila = 150;
     int bottom = 800;
@@ -83,11 +86,14 @@ Botones crearBotones(sf::Font &font) {
         font, sf::Color::Black
     );
 
+    auto botonReiniciar = crearBotonConTexto(
+        "Reiniciar", sf::Color::Blue, sf::Vector2i(150, bottom), font
+    );
     auto botonSalir = crearBotonConTexto(
-        "Salir", sf::Color::Blue, sf::Vector2i(150, bottom), font
+        "Salir", sf::Color::Red, sf::Vector2i(400, bottom), font
     );
 
-    Botones botones = {botonEmpezar, botonAumentar, botonSalir};
+    Botones botones = {botonEmpezar, botonAumentar, botonSalir, botonReiniciar};
     return botones;
 }
 
@@ -103,14 +109,22 @@ void procesarEvento(
     // Pulsación botón
     else if (evento.type == sf::Event::MouseButtonPressed) {
         sf::Vector2i mousePos = sf::Mouse::getPosition(ventana);
+
+        // Fijos
         if (botones.salir.colisiona(mousePos)) {
             ventana.close();
+        } else if (botones.reiniciar.colisiona(mousePos)) {
+            contador = 0;
+            estado.mostrando_instrucciones = true;
+            estado.espera_antes_de_resultado = false;
+            estado.mostrando_resultado = false;
         }
+        // Dependientes del estado
         if (estado.mostrando_instrucciones) {
             if (botones.empezar.colisiona(mousePos)) {
                 estado.mostrando_instrucciones = false;
             }
-        } else if (!estado.espera_antes_de_resultado) {
+        } else if (!estado.espera_antes_de_resultado && !estado.mostrando_resultado) {
             if (botones.despachar.colisiona(mousePos)) {
                 contador++;
                 if (contador >= 5) {
@@ -138,6 +152,7 @@ void actualizarIU(
     } else {
         ventana.draw(resultado);
     }
+    botones.reiniciar.dibujar(ventana);
     botones.salir.dibujar(ventana);
     ventana.display();
 }
