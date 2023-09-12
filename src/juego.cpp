@@ -16,7 +16,7 @@
 
 #define TITLE "Pizzer%ia"
 #define FPS 12
-#define RETARDO_ANTES_DE_RESULTADO 0.6
+#define RETARDO_ANTES_DE_RESULTADO 1
 
 struct Globales {
     sf::RenderWindow window;
@@ -166,7 +166,8 @@ void actualizarIU(             //
         botones.empezar.dibujar(ventana);
     } else if (estado.actual == Activo || estado.actual == EsperaAntesDeResultado) {
         ventana.draw(textoContador);
-        botones.despachar.dibujar(ventana);
+        if (estado.actual == Activo)
+            botones.despachar.dibujar(ventana);
     } else {
         assert(estado.actual == MostrandoResultado);
         ventana.draw(resultado);
