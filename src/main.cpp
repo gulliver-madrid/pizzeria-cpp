@@ -7,8 +7,12 @@
 #define APP 0
 
 int main(int argc, char *argv[]) { //
+    std::cout << std::endl;
     if (argc > 2) {
-        std::cout << "Uso: " << argv[0] << " <app>\n";
+        std::cout
+            << "Uso: " << argv[0]
+            << " <num_app>, donde <num_app> es el número de app que se desea "
+               "ejecutar\n  Actualmente disponibles: 0, 1";
         return 1;
     }
     int app;
