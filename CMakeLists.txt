@@ -16,6 +16,7 @@ add_executable(pizzeria
     src/juego.cpp
     src/textos.cpp
     src/demos/map.cpp
+    src/demos/visual.cpp
 )
 target_link_libraries(pizzeria PRIVATE sfml-graphics sfml-audio)
 target_compile_features(pizzeria PRIVATE cxx_std_17)

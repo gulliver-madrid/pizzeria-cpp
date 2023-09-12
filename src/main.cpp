@@ -1,4 +1,5 @@
 #include "demos/map.h"
+#include "demos/visual.h"
 #include "juego.h"
 #include <cassert>
 #include <cstdlib> // Para std::atoi
@@ -24,6 +25,9 @@ int main(int argc, char *argv[]) { //
     switch (app) {
     case 1:
         return demo_map();
+        break;
+    case 2:
+        return demo_visual();
         break;
 
     default:
