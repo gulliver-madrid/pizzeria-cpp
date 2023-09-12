@@ -42,12 +42,28 @@ struct Estado {
     EstadoJuego actual = MostrandoInstrucciones;
 };
 
+struct Reloj {
+  private:
+    std::optional<sf::Clock> clock;
+
+  public:
+    void start() { //
+        clock.emplace();
+    }
+    float get_seconds() {
+        assert(clock.has_value());
+        float seconds = clock.value().getElapsedTime().asSeconds();
+        return seconds;
+    }
+};
+
 sf::Text
 crearEtiqueta(int tamano, sf::Font &font, sf::Color color = sf::Color::White) {
     sf::Text etiqueta;
     etiqueta.setFont(font);
     etiqueta.setCharacterSize(tamano);
     etiqueta.setFillColor(color);
+    etiqueta.setString("<Placeholder>"); // Para poder obtener la altura
     return etiqueta;
 }
 
@@ -68,6 +84,7 @@ BotonConTexto crearBotonConTexto(
 
     sf::FloatRect textRect = etiqueta.getGlobalBounds();
     // Rect
+    // std::cout << "textRect.height: " << textRect.height << std::endl;
     sf::RectangleShape rect(
         sf::Vector2f(textRect.width + margin * 2, textRect.height + margin * 2)
     );
@@ -84,20 +101,25 @@ sf::Text crearEtiquetaContador(sf::Font &font) {
     etiqueta.setPosition(50, 50);
     return etiqueta;
 }
+sf::Text crearEtiquetaPizzasPreparadas(sf::Font &font) {
+    sf::Text etiqueta = crearEtiqueta(48, font, sf::Color::White);
+    etiqueta.setPosition(50, 250);
+    return etiqueta;
+}
 
 // Crea todos los botones del juego
 // Se mostrarán o no dependiendo del Estado
-Botones crearBotones(sf::Font &font) {
-    int primeraFila = 150;
+Botones crearBotones(sf::Font &font, int pos_y_bajo_etiquetas) {
+    int filaBotonesEjecutivos = pos_y_bajo_etiquetas + 50;
     int bottom = 800;
 
     auto botonEmpezar = crearBotonConTexto(
         "Empezar", sf::Color::Green, sf::Vector2i(500, 450), font,
         sf::Color::Black
     );
-    auto botonAumentar = crearBotonConTexto(
-        "Despachar pizza", sf::Color::Green, sf::Vector2i(250, primeraFila),
-        font, sf::Color::Black
+    auto botonDespachar = crearBotonConTexto(
+        "Despachar pizza", sf::Color::Green,
+        sf::Vector2i(250, filaBotonesEjecutivos), font, sf::Color::Black
     );
 
     auto botonReiniciar = crearBotonConTexto(
@@ -107,14 +129,16 @@ Botones crearBotones(sf::Font &font) {
         "Salir", sf::Color::Red, sf::Vector2i(400, bottom), font
     );
 
-    Botones botones = {botonEmpezar, botonAumentar, botonSalir, botonReiniciar};
+    Botones botones = {
+        botonEmpezar, botonDespachar, botonSalir, botonReiniciar
+    };
     return botones;
 }
 
 // Incluye toda la lógica para procesar un evento
 void procesarEvento(
     sf::Event evento, int &contador, sf::RenderWindow &ventana,
-    Botones &botones, sf::Clock &clock, Estado &estado
+    Botones &botones, Reloj &reloj, Estado &estado
 ) {
     // Cierre de ventana
     if (evento.type == sf::Event::Closed)
@@ -142,7 +166,7 @@ void procesarEvento(
                 contador++;
                 if (contador >= 5) {
                     estado.actual = EsperaAntesDeResultado;
-                    clock.restart();
+                    reloj.start();
                 }
             }
         }
@@ -177,9 +201,10 @@ void actualizarIU(             //
     ventana.display();
 }
 
-sf::Text generar_instrucciones(sf::Font &font) {
+sf::Text
+generar_instrucciones(sf::Font &font, std::string plantilla_instrucciones) {
     auto etiqueta = crearEtiqueta(36, font, sf::Color::Yellow);
-    etiqueta.setString(construir_instrucciones());
+    etiqueta.setString(construir_instrucciones(plantilla_instrucciones));
     etiqueta.setPosition(200, 200);
     return etiqueta;
 }
@@ -189,7 +214,6 @@ sf::Text generar_resultado(sf::Font &font) {
     etiqueta.setPosition(200, 200);
     return etiqueta;
 }
-#include <optional>
 struct ResultadoSetup {
   private:
     // Constructor privado
@@ -224,37 +248,60 @@ ResultadoSetup setup_juego(Globales &globales) {
     return ResultadoSetup(estado);
 }
 
-void nivel_1(Globales &globales, Estado &estado) {
+struct DatosNivel {
+    bool usar_pizzas_preparadas;
+    std::string instrucciones;
+};
 
-    auto instrucciones = generar_instrucciones(globales.font);
+void nivel(Globales &globales, Estado &estado, DatosNivel &datos_nivel) {
+    estado.actual = MostrandoInstrucciones;
+
+    auto instrucciones =
+        generar_instrucciones(globales.font, datos_nivel.instrucciones);
     auto resultado = generar_resultado(globales.font);
 
     int contador_clientes = 0;
-
+    sf::Text last;
     sf::Text textoContador = crearEtiquetaContador(globales.font);
+    last = textoContador;
+    if (datos_nivel.usar_pizzas_preparadas) {
+        sf::Text etiquetaPizzasPreparadas =
+            crearEtiquetaPizzasPreparadas(globales.font);
+        last = etiquetaPizzasPreparadas;
+    }
 
-    Botones botones = crearBotones(globales.font);
+    sf::FloatRect bounds = last.getGlobalBounds();
+    auto pos_y_bajo_etiquetas = bounds.top + bounds.height;
 
-    sf::Clock clock;
+    Botones botones = crearBotones(globales.font, pos_y_bajo_etiquetas);
+
+    Reloj reloj;
+    Reloj reloj_fin_nivel;
     sf::Sound sound;
 
     while (globales.window.isOpen()) {
         sf::Event event;
         while (globales.window.pollEvent(event)) {
             procesarEvento(
-                event, contador_clientes, globales.window, botones, clock,
+                event, contador_clientes, globales.window, botones, reloj,
                 estado
             );
         }
         if ( //
             estado.actual == EsperaAntesDeResultado &&
-            clock.getElapsedTime().asSeconds() >= RETARDO_ANTES_DE_RESULTADO
+            reloj.get_seconds()>= RETARDO_ANTES_DE_RESULTADO
         ) {
             estado.actual = MostrandoResultado;
             if (globales.opt_buffer) {
                 sound.setBuffer(globales.opt_buffer.value());
                 sound.play();
             }
+            reloj_fin_nivel.start();
+        } else if (estado.actual == MostrandoResultado) {
+            float seconds = reloj_fin_nivel.get_seconds();
+            if (seconds >= 1.5) {
+                break;
+            };
         }
         actualizarIU(
             globales.window, botones, textoContador, contador_clientes,
@@ -269,10 +316,18 @@ int juego() {
     if (!resultado_setup.ok)
         return EXIT_FAILURE;
 
-    // Desreferenciamos; esto será UB si estado fuese nulo
-    auto estado = *resultado_setup.estado;
+    if (!resultado_setup.estado.has_value())
+        return EXIT_FAILURE;
 
-    nivel_1(globales, estado);
+    auto estado = resultado_setup.estado.value();
+
+    DatosNivel datos[] = {
+        {false, INSTRUCCIONES_NIVEL_1},
+        {true, INSTRUCCIONES_NIVEL_2},
+    };
+    for (int i = 0; i < std::size(datos); i++) {
+        nivel(globales, estado, datos[i]);
+    }
 
     return 0;
 }
