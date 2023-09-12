@@ -3,6 +3,7 @@
 #include "componentes.h"
 #include "manejo_rutas.h"
 #include "paths.h"
+#include "textos.h"
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
@@ -173,19 +174,6 @@ void actualizarIU(             //
     botones.reiniciar.dibujar(ventana);
     botones.salir.dibujar(ventana);
     ventana.display();
-}
-
-std::string construir_instrucciones() {
-    std::string plantilla =
-        "Pizzer%ia.\nEl objetivo del juego es gestionar con exito tu "
-        "pizzer%ia.\nTu primera misi%on es conseguir 5 clientes "
-        "satisfechos.\n%!Suerte!";
-    return interpolar(plantilla);
-}
-std::string construir_resultado() {
-    std::string plantilla =
-        "%!Enhorabuena! Todos los clientes est%an satisfechos.";
-    return interpolar(plantilla);
 }
 
 sf::Text generar_instrucciones(sf::Font &font) {
