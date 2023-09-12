@@ -17,6 +17,12 @@
 #define FPS 12
 #define RETARDO_ANTES_DE_RESULTADO 0.6
 
+struct Globales {
+    sf::RenderWindow window;
+    sf::Font font;
+    std::optional<sf::SoundBuffer> opt_buffer;
+};
+
 enum EstadoJuego {
     MostrandoInstrucciones,
     Activo,
@@ -194,43 +200,61 @@ sf::Text generar_resultado(sf::Font &font) {
     etiqueta.setPosition(200, 200);
     return etiqueta;
 }
+#include <optional>
+struct ResultadoSetup {
+  private:
+    // Constructor privado
+    ResultadoSetup(bool ok, std::optional<Estado> estado)
+        : ok(ok), estado(estado) {}
 
-int juego() {
+  public:
+    bool ok;
+    std::optional<Estado> estado;
+
+    static ResultadoSetup err() { return {false, std::nullopt}; }
+    ResultadoSetup(Estado estado) : ok(true), estado(estado) {}
+};
+
+// Inicia los elementos del juego que permanecerán entre niveles
+// Inicializa las variables globales window, font y buffer
+ResultadoSetup setup_juego(Globales &globales) {
     std::string title = TITLE;
-    sf::RenderWindow window(sf::VideoMode(1800, 920), interpolar(title));
-    window.setFramerateLimit(FPS);
+    globales.window.create(sf::VideoMode(1800, 920), interpolar(title));
+    globales.window.setFramerateLimit(FPS);
     Estado estado;
 
-    // Fuente
-    sf::Font font;
-    if (!font.loadFromFile(getResourcePath(FONT_PATH).string())) {
-        return EXIT_FAILURE;
-    }
+    if (!globales.font.loadFromFile(getResourcePath(FONT_PATH).string()))
+        return ResultadoSetup::err();
 
-    std::optional<sf::SoundBuffer> opt_buffer;
     {
         sf::SoundBuffer buffer;
         if (buffer.loadFromFile(getResourcePath(SUCCESS_SOUND_PATH).string()))
-            opt_buffer = buffer;
+            globales.opt_buffer = buffer;
     }
 
-    auto instrucciones = generar_instrucciones(font);
-    auto resultado = generar_resultado(font);
+    return ResultadoSetup(estado);
+}
+
+void nivel_1(Globales &globales, Estado &estado) {
+
+    auto instrucciones = generar_instrucciones(globales.font);
+    auto resultado = generar_resultado(globales.font);
 
     int contador_clientes = 0;
 
-    sf::Text textoContador = crearEtiquetaContador(font);
+    sf::Text textoContador = crearEtiquetaContador(globales.font);
 
-    Botones botones = crearBotones(font);
+    Botones botones = crearBotones(globales.font);
 
     sf::Clock clock;
     sf::Sound sound;
 
-    while (window.isOpen()) {
+    while (globales.window.isOpen()) {
         sf::Event event;
-        while (window.pollEvent(event)) {
+        while (globales.window.pollEvent(event)) {
             procesarEvento(
-                event, contador_clientes, window, botones, clock, estado
+                event, contador_clientes, globales.window, botones, clock,
+                estado
             );
         }
         if ( //
@@ -238,16 +262,28 @@ int juego() {
             clock.getElapsedTime().asSeconds() >= RETARDO_ANTES_DE_RESULTADO
         ) {
             estado.actual = MostrandoResultado;
-            if (opt_buffer) {
-                sound.setBuffer(opt_buffer.value());
+            if (globales.opt_buffer) {
+                sound.setBuffer(globales.opt_buffer.value());
                 sound.play();
             }
         }
         actualizarIU(
-            window, botones, textoContador, contador_clientes, instrucciones,
-            resultado, estado
+            globales.window, botones, textoContador, contador_clientes,
+            instrucciones, resultado, estado
         );
     }
+}
+
+int juego() {
+    Globales globales;
+    ResultadoSetup resultado_setup = setup_juego(globales);
+    if (!resultado_setup.ok)
+        return EXIT_FAILURE;
+
+    // Desreferenciamos; esto será UB si estado fuese nulo
+    auto estado = *resultado_setup.estado;
+
+    nivel_1(globales, estado);
 
     return 0;
 }
