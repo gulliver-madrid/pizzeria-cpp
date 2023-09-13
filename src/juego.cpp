@@ -138,7 +138,7 @@ Botones crearBotones(sf::Font &font, int pos_y_bajo_etiquetas) {
 // Incluye toda la lógica para procesar un evento
 void procesarEvento(
     sf::Event evento, int &contador, sf::RenderWindow &ventana,
-    Botones &botones, Reloj &reloj, Estado &estado
+    Botones &botones, Reloj &reloj_espera_antes_de_resultado, Estado &estado
 ) {
     // Cierre de ventana
     if (evento.type == sf::Event::Closed)
@@ -166,7 +166,7 @@ void procesarEvento(
                 contador++;
                 if (contador >= 5) {
                     estado.actual = EsperaAntesDeResultado;
-                    reloj.start();
+                    reloj_espera_antes_de_resultado.start();
                 }
             }
         }
@@ -216,7 +216,6 @@ sf::Text generar_resultado(sf::Font &font) {
 }
 struct ResultadoSetup {
   private:
-    // Constructor privado
     ResultadoSetup(bool ok, std::optional<Estado> estado)
         : ok(ok), estado(estado) {}
 
@@ -275,7 +274,7 @@ void nivel(Globales &globales, Estado &estado, DatosNivel &datos_nivel) {
 
     Botones botones = crearBotones(globales.font, pos_y_bajo_etiquetas);
 
-    Reloj reloj;
+    Reloj reloj_espera_antes_de_resultado;
     Reloj reloj_fin_nivel;
     sf::Sound sound;
 
@@ -283,13 +282,13 @@ void nivel(Globales &globales, Estado &estado, DatosNivel &datos_nivel) {
         sf::Event event;
         while (globales.window.pollEvent(event)) {
             procesarEvento(
-                event, contador_clientes, globales.window, botones, reloj,
-                estado
+                event, contador_clientes, globales.window, botones,
+                reloj_espera_antes_de_resultado, estado
             );
         }
         if ( //
             estado.actual == EsperaAntesDeResultado &&
-            reloj.get_seconds()>= RETARDO_ANTES_DE_RESULTADO
+            reloj_espera_antes_de_resultado.get_seconds()>= RETARDO_ANTES_DE_RESULTADO
         ) {
             estado.actual = MostrandoResultado;
             if (globales.opt_buffer) {
