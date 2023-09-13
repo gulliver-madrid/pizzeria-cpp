@@ -1,4 +1,5 @@
 #include "demos/map.h"
+#include "demos/unicode.h"
 #include "demos/visual.h"
 #include "juego.h"
 #include <cassert>
@@ -28,6 +29,9 @@ int main(int argc, char *argv[]) { //
         break;
     case 2:
         return demo_visual();
+        break;
+    case 3:
+        return demo_unicode();
         break;
 
     default:
