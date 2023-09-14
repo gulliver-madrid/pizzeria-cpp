@@ -46,6 +46,9 @@ struct Etiquetas {
 
 struct Estado {
     EstadoJuego actual = MostrandoInstrucciones;
+    int contador_pizzas_servidas = 0;
+    int contador_pizzas_preparadas = 0;
+    int objetivo = 5;
 };
 
 struct Reloj {
@@ -142,8 +145,8 @@ Botones crearBotones(sf::Font &font, int pos_y_bajo_etiquetas) {
 
 // Incluye toda la lógica para procesar un evento
 void procesarEvento(
-    sf::Event evento, int &contador, sf::RenderWindow &ventana,
-    Botones &botones, Reloj &reloj_espera_antes_de_resultado, Estado &estado
+    sf::Event evento, sf::RenderWindow &ventana, Botones &botones,
+    Reloj &reloj_espera_antes_de_resultado, Estado &estado
 ) {
     // Cierre de ventana
     if (evento.type == sf::Event::Closed)
@@ -157,7 +160,7 @@ void procesarEvento(
         if (botones.salir.colisiona(mousePos)) {
             ventana.close();
         } else if (botones.reiniciar.colisiona(mousePos)) {
-            contador = 0;
+            estado.contador_pizzas_servidas = 0;
             estado.actual = MostrandoInstrucciones;
             return;
         }
@@ -168,8 +171,9 @@ void procesarEvento(
             }
         } else if (estado.actual == Activo) {
             if (botones.despachar.colisiona(mousePos)) {
-                contador++;
-                if (contador >= 5) {
+                estado.contador_pizzas_preparadas--;
+                estado.contador_pizzas_servidas++;
+                if (estado.contador_pizzas_servidas >= estado.objetivo) {
                     estado.actual = EsperaAntesDeResultado;
                     reloj_espera_antes_de_resultado.start();
                 }
@@ -183,17 +187,17 @@ void actualizarIU(             //
     sf::RenderWindow &ventana, //
     Botones &botones,          //
     Etiquetas &etiquetas,      //
-    int contador,              //
     sf::Text instrucciones,    //
     sf::Text resultado,        //
     Estado &estado
 ) {
     etiquetas.texto_contador.setString(
-        "Clientes servidos: " + std::to_string(contador)
+        "Clientes servidos: " + std::to_string(estado.contador_pizzas_servidas)
     );
     if (etiquetas.texto_pizzas_preparadas.has_value())
         etiquetas.texto_pizzas_preparadas.value().setString(
-            "Pizzas preparadas: <desconocido>"
+            "Pizzas preparadas: " +
+            std::to_string(estado.contador_pizzas_preparadas)
         );
     ventana.clear();
 
@@ -233,15 +237,13 @@ sf::Text generar_resultado(sf::Font &font) {
 }
 struct ResultadoSetup {
   private:
-    ResultadoSetup(bool ok, std::optional<Estado> estado)
-        : ok(ok), estado(estado) {}
+    ResultadoSetup(bool ok) : ok(ok) {}
 
   public:
     bool ok;
-    std::optional<Estado> estado;
 
-    static ResultadoSetup err() { return {false, std::nullopt}; }
-    ResultadoSetup(Estado estado) : ok(true), estado(estado) {}
+    static ResultadoSetup err() { return {false}; }
+    ResultadoSetup() : ok(true) {}
 };
 
 // Inicia los elementos del juego que permanecerán entre niveles
@@ -250,7 +252,6 @@ ResultadoSetup setup_juego(Globales &globales) {
     std::string title = TITLE;
     globales.window.create(sf::VideoMode(1800, 920), interpolar(title));
     globales.window.setFramerateLimit(FPS);
-    Estado estado;
 
     if (!globales.font.loadFromFile(getResourcePath(FONT_PATH).string()))
         return ResultadoSetup::err();
@@ -261,22 +262,25 @@ ResultadoSetup setup_juego(Globales &globales) {
             globales.opt_buffer = buffer;
     }
 
-    return ResultadoSetup(estado);
+    return ResultadoSetup();
 }
 
 struct DatosNivel {
     bool usar_pizzas_preparadas;
     std::string instrucciones;
+    int pizzas_preparadas_iniciales = 0;
+    int objetivo_pizzas = 5;
 };
 
 void nivel(Globales &globales, Estado &estado, DatosNivel &datos_nivel) {
     estado.actual = MostrandoInstrucciones;
+    estado.contador_pizzas_preparadas = datos_nivel.pizzas_preparadas_iniciales;
+    estado.objetivo = datos_nivel.objetivo_pizzas;
 
     auto instrucciones =
         generar_instrucciones(globales.font, datos_nivel.instrucciones);
     auto resultado = generar_resultado(globales.font);
 
-    int contador_clientes = 0;
     sf::Text last;
     sf::Text textoContador = crearEtiquetaContador(globales.font);
     Etiquetas etiquetas = {textoContador};
@@ -302,7 +306,7 @@ void nivel(Globales &globales, Estado &estado, DatosNivel &datos_nivel) {
         sf::Event event;
         while (globales.window.pollEvent(event)) {
             procesarEvento(
-                event, contador_clientes, globales.window, botones,
+                event, globales.window, botones,
                 reloj_espera_antes_de_resultado, estado
             );
         }
@@ -323,8 +327,8 @@ void nivel(Globales &globales, Estado &estado, DatosNivel &datos_nivel) {
             };
         }
         actualizarIU(
-            globales.window, botones, etiquetas, contador_clientes,
-            instrucciones, resultado, estado
+            globales.window, botones, etiquetas, instrucciones, resultado,
+            estado
         );
     }
 }
@@ -335,16 +339,12 @@ int juego() {
     if (!resultado_setup.ok)
         return EXIT_FAILURE;
 
-    if (!resultado_setup.estado.has_value())
-        return EXIT_FAILURE;
-
-    auto estado = resultado_setup.estado.value();
-
     DatosNivel datos[] = {
         {false, INSTRUCCIONES_NIVEL_1},
-        {true, INSTRUCCIONES_NIVEL_2},
+        {true, INSTRUCCIONES_NIVEL_2, 10, 10},
     };
     for (int i = 0; i < std::size(datos); i++) {
+        Estado estado = {};
         nivel(globales, estado, datos[i]);
     }
 
