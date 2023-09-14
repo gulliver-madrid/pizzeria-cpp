@@ -165,6 +165,8 @@ void procesarEvento(
     // Pulsación botón
     else if (evento.type == sf::Event::MouseButtonPressed) {
         sf::Vector2i mousePos = sf::Mouse::getPosition(ventana);
+        std::cout << "mousePos: " << mousePos.x << ", " << mousePos.y
+                  << std::endl;
 
         // Fijos
         if (botones.salir.colisiona(mousePos)) {
@@ -199,7 +201,8 @@ void actualizarIU(             //
     Etiquetas &etiquetas,      //
     sf::Text instrucciones,    //
     sf::Text resultado,        //
-    Estado &estado
+    Estado &estado,            //
+    Grid &grid
 ) {
     etiquetas.texto_contador.setString(
         "Clientes servidos: " + std::to_string(estado.contador_pizzas_servidas)
@@ -211,7 +214,8 @@ void actualizarIU(             //
         );
     ventana.clear();
 
-    draw_grid(ventana);
+    // Dibuja la cuadrícula con la textura almacenada
+    draw_grid(ventana, grid);
 
     if (estado.actual == MostrandoInstrucciones) {
         ventana.draw(instrucciones);
@@ -284,7 +288,12 @@ struct DatosNivel {
     int objetivo_pizzas = 5;
 };
 
-void nivel(Globales &globales, Estado &estado, DatosNivel &datos_nivel) {
+void nivel(                  //
+    Globales &globales,      //
+    Estado &estado,          //
+    DatosNivel &datos_nivel, //
+    Grid &grid
+) {
     estado.actual = MostrandoInstrucciones;
     estado.contador_pizzas_preparadas = datos_nivel.pizzas_preparadas_iniciales;
     estado.objetivo = datos_nivel.objetivo_pizzas;
@@ -340,13 +349,14 @@ void nivel(Globales &globales, Estado &estado, DatosNivel &datos_nivel) {
         }
         actualizarIU(
             globales.window, botones, etiquetas, instrucciones, resultado,
-            estado
+            estado, grid
         );
     }
 }
 
 int juego() {
     Globales globales;
+    Grid grid{};
     ResultadoSetup resultado_setup = setup_juego(globales);
     if (!resultado_setup.ok)
         return EXIT_FAILURE;
@@ -357,7 +367,7 @@ int juego() {
     };
     for (int i = 0; i < std::size(datos); i++) {
         Estado estado = {};
-        nivel(globales, estado, datos[i]);
+        nivel(globales, estado, datos[i], grid);
     }
 
     return 0;

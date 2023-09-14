@@ -25,6 +25,7 @@ int demo_visual_textos() {
     std::cout << std::endl << "Demo Visual Textos" << std::endl << std::endl;
     sf::RenderWindow window;
     sf::Font font;
+    Grid grid;
     window.create(sf::VideoMode(1800, 920), "Demo visual textos");
     window.setFramerateLimit(FPS);
     if (!font.loadFromFile(FONT_PATH))
@@ -83,7 +84,11 @@ int demo_visual_textos() {
                 window.close();
         }
         window.clear();
-        draw_grid(window);
+        draw_grid(window, grid);
+        std::cout << grid.sprite.getPosition().x << grid.sprite.getPosition().y
+                  << std::endl;
+        std::cout << grid.texture.getSize().x << grid.texture.getSize().y
+                  << std::endl;
         window.draw(bg_rect);
         window.draw(bg_rect_2);
         window.draw(etiqueta_dos_lineas);
