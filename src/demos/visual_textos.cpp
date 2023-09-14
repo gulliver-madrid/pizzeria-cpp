@@ -1,5 +1,6 @@
 #include "visual_textos.h"
 #include "../debug.h"
+#include "../grid.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <cassert>
@@ -54,6 +55,9 @@ int demo_visual_textos() {
     // superior e inferior
     int altura_con_margenes = alto_frase_dos_lineas - altura_linea_abajo;
     std::cout << "Altura con margenes: " << altura_con_margenes << std::endl;
+    std::cout << "font.getLineSpacing(): " << font.getLineSpacing(tamano_letra)
+              << std::endl;
+    assert(altura_con_margenes == font.getLineSpacing(tamano_letra));
 
     sf::Vector2f tamano_con_margenes_verticales(
         ancho_frase, altura_con_margenes
@@ -79,6 +83,7 @@ int demo_visual_textos() {
                 window.close();
         }
         window.clear();
+        draw_grid(window);
         window.draw(bg_rect);
         window.draw(bg_rect_2);
         window.draw(etiqueta_dos_lineas);

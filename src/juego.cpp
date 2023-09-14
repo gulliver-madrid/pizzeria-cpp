@@ -1,6 +1,7 @@
 #include "juego.h"
 #include "cadenas.h"
 #include "componentes.h"
+#include "grid.h"
 #include "manejo_rutas.h"
 #include "paths.h"
 #include "textos.h"
@@ -184,6 +185,9 @@ void actualizarIU(             //
 ) {
     textoContador.setString("Clientes servidos: " + std::to_string(contador));
     ventana.clear();
+
+    draw_grid(ventana);
+
     if (estado.actual == MostrandoInstrucciones) {
         ventana.draw(instrucciones);
         botones.empezar.dibujar(ventana);
