@@ -16,8 +16,13 @@
 #include <thread>
 
 #define TITLE "Pizzer%ia"
+#define TAMANO_FUENTE_INFO 36
+#define TAMANO_FUENTE_ETIQUETAS 48
+#define MARGEN_IZQ_ETIQUETAS 50
+#define TAMANO_INICIAL_VENTANA 1800, 920
 #define FPS 12
 #define RETARDO_ANTES_DE_RESULTADO 1
+#define ESPERA_ENTRE_NIVELES 1.5
 
 struct Globales {
     sf::RenderWindow window;
@@ -105,13 +110,18 @@ BotonConTexto crearBotonConTexto(
 
 // Crea la etiqueta de texto que mostrará el contador
 sf::Text crearEtiquetaContador(sf::Font &font) {
-    sf::Text etiqueta = crearEtiqueta(48, font, sf::Color::White);
-    etiqueta.setPosition(50, 50);
+    sf::Text etiqueta =
+        crearEtiqueta(TAMANO_FUENTE_ETIQUETAS, font, sf::Color::White);
+    etiqueta.setPosition(MARGEN_IZQ_ETIQUETAS, 50);
     return etiqueta;
 }
 sf::Text crearEtiquetaPizzasPreparadas(sf::Font &font, float prev_position) {
-    sf::Text etiqueta = crearEtiqueta(48, font, sf::Color::White);
-    etiqueta.setPosition(50, prev_position + font.getLineSpacing(48));
+    sf::Text etiqueta =
+        crearEtiqueta(TAMANO_FUENTE_ETIQUETAS, font, sf::Color::White);
+    etiqueta.setPosition(
+        MARGEN_IZQ_ETIQUETAS,
+        prev_position + font.getLineSpacing(TAMANO_FUENTE_ETIQUETAS)
+    );
     return etiqueta;
 }
 
@@ -224,13 +234,13 @@ void actualizarIU(             //
 
 sf::Text
 generar_instrucciones(sf::Font &font, std::string plantilla_instrucciones) {
-    auto etiqueta = crearEtiqueta(36, font, sf::Color::Yellow);
+    auto etiqueta = crearEtiqueta(TAMANO_FUENTE_INFO, font, sf::Color::Yellow);
     etiqueta.setString(construir_instrucciones(plantilla_instrucciones));
     etiqueta.setPosition(200, 200);
     return etiqueta;
 }
 sf::Text generar_resultado(sf::Font &font) {
-    auto etiqueta = crearEtiqueta(36, font, sf::Color::Green);
+    auto etiqueta = crearEtiqueta(TAMANO_FUENTE_INFO, font, sf::Color::Green);
     etiqueta.setString(construir_resultado());
     etiqueta.setPosition(200, 200);
     return etiqueta;
@@ -250,7 +260,9 @@ struct ResultadoSetup {
 // Inicializa las variables globales window, font y buffer
 ResultadoSetup setup_juego(Globales &globales) {
     std::string title = TITLE;
-    globales.window.create(sf::VideoMode(1800, 920), interpolar(title));
+    globales.window.create(
+        sf::VideoMode(TAMANO_INICIAL_VENTANA), interpolar(title)
+    );
     globales.window.setFramerateLimit(FPS);
 
     if (!globales.font.loadFromFile(getResourcePath(FONT_PATH).string()))
@@ -322,7 +334,7 @@ void nivel(Globales &globales, Estado &estado, DatosNivel &datos_nivel) {
             reloj_fin_nivel.start();
         } else if (estado.actual == MostrandoResultado) {
             float seconds = reloj_fin_nivel.get_seconds();
-            if (seconds >= 1.5) {
+            if (seconds >= ESPERA_ENTRE_NIVELES) {
                 break;
             };
         }
