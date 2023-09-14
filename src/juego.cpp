@@ -35,6 +35,7 @@ enum EstadoJuego {
     Activo,
     EsperaAntesDeResultado,
     MostrandoResultado,
+    Reiniciando
 };
 
 struct Botones {
@@ -73,11 +74,9 @@ struct Reloj {
 
 sf::Text
 crearEtiqueta(int tamano, sf::Font &font, sf::Color color = sf::Color::White) {
-    sf::Text etiqueta;
-    etiqueta.setFont(font);
-    etiqueta.setCharacterSize(tamano);
+    // Usamos un placeholder para poder obtener la altura
+    sf::Text etiqueta("<Placeholder>", font, tamano);
     etiqueta.setFillColor(color);
-    etiqueta.setString("<Placeholder>"); // Para poder obtener la altura
     return etiqueta;
 }
 
@@ -118,10 +117,9 @@ sf::Text crearEtiquetaContador(sf::Font &font) {
 sf::Text crearEtiquetaPizzasPreparadas(sf::Font &font, float prev_position) {
     sf::Text etiqueta =
         crearEtiqueta(TAMANO_FUENTE_ETIQUETAS, font, sf::Color::White);
-    etiqueta.setPosition(
-        MARGEN_IZQ_ETIQUETAS,
-        prev_position + font.getLineSpacing(TAMANO_FUENTE_ETIQUETAS)
-    );
+    auto pos_x = MARGEN_IZQ_ETIQUETAS;
+    auto pos_y = prev_position + font.getLineSpacing(TAMANO_FUENTE_ETIQUETAS);
+    etiqueta.setPosition(pos_x, pos_y);
     return etiqueta;
 }
 
@@ -177,8 +175,7 @@ void procesarEvento(
         if (botones.salir.colisiona(mousePos)) {
             ventana.close();
         } else if (botones.reiniciar.colisiona(mousePos)) {
-            estado.contador_pizzas_servidas = 0;
-            estado.actual = MostrandoInstrucciones;
+            estado.actual = Reiniciando;
             return;
         }
         // Dependientes del estado
@@ -294,7 +291,10 @@ struct DatosNivel {
     int objetivo_pizzas = 5;
 };
 
-void nivel(                  //
+/* Devuelve true si se debe pasar al siguiente nivel,
+ * false para reiniciar
+ */
+bool nivel(                  //
     Globales &globales,      //
     Estado &estado,          //
     DatosNivel &datos_nivel, //
@@ -352,12 +352,15 @@ void nivel(                  //
             if (seconds >= ESPERA_ENTRE_NIVELES) {
                 break;
             };
+        } else if (estado.actual == Reiniciando) {
+            return false;
         }
         actualizarIU(
             globales.window, botones, etiquetas, instrucciones, resultado,
             estado, grid
         );
     }
+    return true;
 }
 
 int juego() {
@@ -371,9 +374,20 @@ int juego() {
         {false, INSTRUCCIONES_NIVEL_1},
         {true, INSTRUCCIONES_NIVEL_2, 10, 10},
     };
-    for (int i = 0; i < std::size(datos); i++) {
-        Estado estado = {};
-        nivel(globales, estado, datos[i], grid);
+    while (true) {
+        bool reiniciar = false;
+        for (int i = 0; i < std::size(datos); i++) {
+            Estado estado = {};
+            auto res = nivel(globales, estado, datos[i], grid);
+            if (!res) {
+                reiniciar = true;
+                break;
+            }
+        }
+        if (reiniciar) {
+            continue;
+        }
+        break;
     }
 
     return 0;
