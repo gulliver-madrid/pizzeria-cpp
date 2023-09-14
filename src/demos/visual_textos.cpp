@@ -85,10 +85,6 @@ int demo_visual_textos() {
         }
         window.clear();
         draw_grid(window, grid);
-        std::cout << grid.sprite.getPosition().x << grid.sprite.getPosition().y
-                  << std::endl;
-        std::cout << grid.texture.getSize().x << grid.texture.getSize().y
-                  << std::endl;
         window.draw(bg_rect);
         window.draw(bg_rect_2);
         window.draw(etiqueta_dos_lineas);

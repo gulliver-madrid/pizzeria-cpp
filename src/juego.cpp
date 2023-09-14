@@ -162,11 +162,19 @@ void procesarEvento(
     if (evento.type == sf::Event::Closed)
         ventana.close();
 
+    else if (evento.type == sf::Event::Resized) {
+        std::cout << "botones.empezar.getSize(): "
+                  << botones.empezar.boton.getSize().x << ", "
+                  << botones.empezar.boton.getSize().y << std::endl;
+        std::cout << "botones.empezar.getGlobalBounds(): "
+                  << botones.empezar.boton.getGlobalBounds().width << ", "
+                  << botones.empezar.boton.getGlobalBounds().height
+                  << std::endl;
+    }
+
     // Pulsación botón
     else if (evento.type == sf::Event::MouseButtonPressed) {
         sf::Vector2i mousePos = sf::Mouse::getPosition(ventana);
-        std::cout << "mousePos: " << mousePos.x << ", " << mousePos.y
-                  << std::endl;
 
         // Fijos
         if (botones.salir.colisiona(mousePos)) {
@@ -178,6 +186,9 @@ void procesarEvento(
         }
         // Dependientes del estado
         if (estado.actual == MostrandoInstrucciones) {
+            auto bounds = botones.empezar.boton.getGlobalBounds();
+            std::cout << bounds.left << std::endl;
+            std::cout << bounds.top << std::endl;
             if (botones.empezar.colisiona(mousePos)) {
                 estado.actual = Activo;
             }
@@ -318,6 +329,9 @@ void nivel(                  //
     auto pos_y_bajo_etiquetas = bounds.top + bounds.height;
 
     Botones botones = crearBotones(globales.font, pos_y_bajo_etiquetas);
+    std::cout << "botones.empezar.getSize(): "
+              << botones.empezar.boton.getSize().x << ", "
+              << botones.empezar.boton.getSize().y << std::endl;
 
     Reloj reloj_espera_antes_de_resultado;
     Reloj reloj_fin_nivel;

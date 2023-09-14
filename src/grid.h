@@ -5,6 +5,8 @@
 struct Grid {
     sf::Sprite sprite;
     sf::Texture texture;
+    sf::RenderTexture renderTexture;
+    bool construido = false;
 };
 
 void draw_grid(
