@@ -31,8 +31,7 @@ int demo_visual_textos() {
     int tamano_letra = 128;
 
     // Representa la línea de abajo
-    auto etiqueta_invisible_una_linea =
-        sf::Text("Que tal?", font, tamano_letra);
+    sf::Text etiqueta_invisible_una_linea("Que tal?", font, tamano_letra);
     // Para poder obtener la altura
     sf::FloatRect bounds = etiqueta_invisible_una_linea.getGlobalBounds();
     int altura_linea_abajo = bounds.top + bounds.height;
@@ -47,19 +46,23 @@ int demo_visual_textos() {
     assert(etiqueta.getPosition() == sf::Vector2f(0, 0));
     debug_float_rect(bounds);
 
+    int ancho_frase = bounds.left + bounds.width;
     int altura_con_margenes = bounds.top + bounds.height - altura_linea_abajo;
     std::cout << "Altura con margenes: " << altura_con_margenes << std::endl;
 
-    sf::RectangleShape bg_rect(
-        sf::Vector2f(bounds.left + bounds.width, altura_con_margenes)
-    );
+    sf::RectangleShape bg_rect(sf::Vector2f(ancho_frase, altura_con_margenes));
     bg_rect.setPosition(0, 0);
     bg_rect.setFillColor(sf::Color::Blue);
+
+    sf::RectangleShape bg_rect_2(sf::Vector2f(ancho_frase, altura_con_margenes)
+    );
+    bg_rect_2.setPosition(0, altura_con_margenes);
+    bg_rect_2.setFillColor(sf::Color::Green);
 
     sf::RectangleShape first_rect(sf::Vector2f(bounds.left, bounds.top));
     first_rect.setFillColor(sf::Color::Red);
     sf::RectangleShape last_rect(sf::Vector2f(bounds.width, bounds.height));
-    last_rect.setFillColor(sf::Color::Blue);
+    last_rect.setFillColor(sf::Color::Red);
     last_rect.setPosition(
         bounds.left + bounds.width, bounds.top + bounds.height
     );
@@ -72,6 +75,7 @@ int demo_visual_textos() {
         }
         window.clear();
         window.draw(bg_rect);
+        window.draw(bg_rect_2);
         window.draw(etiqueta);
         window.draw(first_rect);
         window.draw(last_rect);
