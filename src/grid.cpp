@@ -2,8 +2,6 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
-int contador_color = 40;
-
 void _draw_grid(
     sf::RenderTexture &render_texture, sf::Vector2u tamano_u, int distancia,
     int tono_gris
@@ -17,7 +15,7 @@ void _draw_grid(
 
     // Líneas horizontales
     for (int j = 0; j < tamano.y; j += distancia) {
-        sf::RectangleShape rect(sf::Vector2f(tamano.x, 2));
+        sf::RectangleShape rect(sf::Vector2f(tamano.x, 1));
         rect.setFillColor(color);
         rect.setPosition(0, j);
         render_texture.draw(rect);
@@ -25,7 +23,7 @@ void _draw_grid(
 
     // Líneas verticales
     for (int i = 0; i < tamano.x; i += distancia) {
-        sf::RectangleShape rect(sf::Vector2f(2, tamano.y));
+        sf::RectangleShape rect(sf::Vector2f(1, tamano.y));
         rect.setFillColor(color);
         rect.setPosition(i, 0);
         render_texture.draw(rect);
@@ -37,7 +35,6 @@ void _draw_grid(
 void draw_grid(
     sf::RenderWindow &ventana, Grid &grid, int distancia, int tono_gris
 ) {
-    // std::cout << ventana.getSize().x << std::endl;
     // Verificamos si ya se ha creado la textura
     bool diff_tamano =
         (grid.texture.getSize().x != ventana.getSize().x ||
