@@ -4,7 +4,7 @@
 #include <map>
 
 int demo_map() { //
-    std::cout << "Demo map" << std::endl;
+    std::cout << std::endl << "Demo map" << std::endl << std::endl;
     // Declara e inicializa un map que mapea strings a enteros
     std::map<std::string, int> edad;
 

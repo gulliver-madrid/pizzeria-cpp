@@ -1,6 +1,7 @@
 #include "demos/map.h"
 #include "demos/unicode.h"
 #include "demos/visual.h"
+#include "demos/visual_textos.h"
 #include "juego.h"
 #include <cassert>
 #include <cstdlib> // Para std::atoi
@@ -31,6 +32,9 @@ int main(int argc, char *argv[]) { //
         return demo_visual();
         break;
     case 3:
+        return demo_visual_textos();
+        break;
+    case 4:
         return demo_unicode();
         break;
 

@@ -81,10 +81,9 @@ BotonConTexto crearBotonConTexto(
     sf::Text etiqueta = crearEtiqueta(tamano_texto, font, color_texto);
     etiqueta.setString(texto);
     etiqueta.setPosition(x + margin, y + margin);
-
     sf::FloatRect textRect = etiqueta.getGlobalBounds();
+
     // Rect
-    // std::cout << "textRect.height: " << textRect.height << std::endl;
     sf::RectangleShape rect(
         sf::Vector2f(textRect.width + margin * 2, textRect.height + margin * 2)
     );
