@@ -39,6 +39,11 @@ struct Botones {
     BotonConTexto reiniciar;
 };
 
+struct Etiquetas {
+    sf::Text texto_contador;
+    std::optional<sf::Text> texto_pizzas_preparadas = std::nullopt;
+};
+
 struct Estado {
     EstadoJuego actual = MostrandoInstrucciones;
 };
@@ -101,9 +106,9 @@ sf::Text crearEtiquetaContador(sf::Font &font) {
     etiqueta.setPosition(50, 50);
     return etiqueta;
 }
-sf::Text crearEtiquetaPizzasPreparadas(sf::Font &font) {
+sf::Text crearEtiquetaPizzasPreparadas(sf::Font &font, float prev_position) {
     sf::Text etiqueta = crearEtiqueta(48, font, sf::Color::White);
-    etiqueta.setPosition(50, 250);
+    etiqueta.setPosition(50, prev_position + font.getLineSpacing(48));
     return etiqueta;
 }
 
@@ -173,17 +178,23 @@ void procesarEvento(
     }
 }
 
-// Actualiza el interfaz gráfico
+/* Actualiza el interfaz gráfico */
 void actualizarIU(             //
     sf::RenderWindow &ventana, //
     Botones &botones,          //
-    sf::Text &textoContador,   //
+    Etiquetas &etiquetas,      //
     int contador,              //
     sf::Text instrucciones,    //
     sf::Text resultado,        //
     Estado &estado
 ) {
-    textoContador.setString("Clientes servidos: " + std::to_string(contador));
+    etiquetas.texto_contador.setString(
+        "Clientes servidos: " + std::to_string(contador)
+    );
+    if (etiquetas.texto_pizzas_preparadas.has_value())
+        etiquetas.texto_pizzas_preparadas.value().setString(
+            "Pizzas preparadas: <desconocido>"
+        );
     ventana.clear();
 
     draw_grid(ventana);
@@ -192,7 +203,10 @@ void actualizarIU(             //
         ventana.draw(instrucciones);
         botones.empezar.dibujar(ventana);
     } else if (estado.actual == Activo || estado.actual == EsperaAntesDeResultado) {
-        ventana.draw(textoContador);
+        ventana.draw(etiquetas.texto_contador);
+        if (etiquetas.texto_pizzas_preparadas.has_value()) {
+            ventana.draw(etiquetas.texto_pizzas_preparadas.value());
+        }
         if (estado.actual == Activo)
             botones.despachar.dibujar(ventana);
     } else {
@@ -265,11 +279,14 @@ void nivel(Globales &globales, Estado &estado, DatosNivel &datos_nivel) {
     int contador_clientes = 0;
     sf::Text last;
     sf::Text textoContador = crearEtiquetaContador(globales.font);
+    Etiquetas etiquetas = {textoContador};
     last = textoContador;
+    auto prev_position = textoContador.getPosition().y;
     if (datos_nivel.usar_pizzas_preparadas) {
         sf::Text etiquetaPizzasPreparadas =
-            crearEtiquetaPizzasPreparadas(globales.font);
+            crearEtiquetaPizzasPreparadas(globales.font, prev_position);
         last = etiquetaPizzasPreparadas;
+        etiquetas.texto_pizzas_preparadas = etiquetaPizzasPreparadas;
     }
 
     sf::FloatRect bounds = last.getGlobalBounds();
@@ -306,7 +323,7 @@ void nivel(Globales &globales, Estado &estado, DatosNivel &datos_nivel) {
             };
         }
         actualizarIU(
-            globales.window, botones, textoContador, contador_clientes,
+            globales.window, botones, etiquetas, contador_clientes,
             instrucciones, resultado, estado
         );
     }
