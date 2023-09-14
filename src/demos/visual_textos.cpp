@@ -43,22 +43,32 @@ int demo_visual_textos() {
     assert(etiqueta_dos_lineas.getPosition() == sf::Vector2f(0, 0));
     debug_float_rect(bounds);
 
+    // Sin transformaciones, el tamano de los limites locales y
+    // globales es el mismo
+    assert(bounds.getSize() == etiqueta_dos_lineas.getLocalBounds().getSize());
+
     int ancho_frase = bounds.left + bounds.width;
     int alto_frase_dos_lineas = bounds.top + bounds.height;
+
+    // Altura con margenes nos da la altura de una linea incluyendo sus margenes
+    // superior e inferior
     int altura_con_margenes = alto_frase_dos_lineas - altura_linea_abajo;
     std::cout << "Altura con margenes: " << altura_con_margenes << std::endl;
 
-    sf::RectangleShape bg_rect(sf::Vector2f(ancho_frase, altura_con_margenes));
+    sf::Vector2f tamano_con_margenes_verticales(
+        ancho_frase, altura_con_margenes
+    );
+    sf::RectangleShape bg_rect(tamano_con_margenes_verticales);
     bg_rect.setFillColor(sf::Color::Blue);
 
-    sf::RectangleShape bg_rect_2(sf::Vector2f(ancho_frase, altura_con_margenes)
-    );
+    sf::RectangleShape bg_rect_2(tamano_con_margenes_verticales);
     bg_rect_2.setPosition(0, altura_con_margenes);
     bg_rect_2.setFillColor(sf::Color::Green);
 
-    sf::RectangleShape first_rect(sf::Vector2f(bounds.left, bounds.top));
+    // Rects que visibilizan los límites
+    sf::RectangleShape first_rect(bounds.getPosition());
     first_rect.setFillColor(sf::Color::Red);
-    sf::RectangleShape last_rect(sf::Vector2f(bounds.width, bounds.height));
+    sf::RectangleShape last_rect(bounds.getSize());
     last_rect.setFillColor(sf::Color::Red);
     last_rect.setPosition(ancho_frase, alto_frase_dos_lineas);
 
