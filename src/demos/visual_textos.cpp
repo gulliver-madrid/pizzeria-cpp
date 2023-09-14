@@ -36,22 +36,19 @@ int demo_visual_textos() {
     sf::FloatRect bounds = etiqueta_invisible_una_linea.getGlobalBounds();
     int altura_linea_abajo = bounds.top + bounds.height;
 
-    sf::Text etiqueta;
-    etiqueta.setFont(font);
-    etiqueta.setCharacterSize(tamano_letra);
-    etiqueta.setFillColor(sf::Color::Yellow);
-    etiqueta.setString("Hola mundo\nQue tal?"); // Para poder obtener la altura
+    sf::Text etiqueta_dos_lineas("Hola mundo\nQue tal?", font, tamano_letra);
+    etiqueta_dos_lineas.setFillColor(sf::Color::Yellow);
 
-    bounds = etiqueta.getGlobalBounds();
-    assert(etiqueta.getPosition() == sf::Vector2f(0, 0));
+    bounds = etiqueta_dos_lineas.getGlobalBounds();
+    assert(etiqueta_dos_lineas.getPosition() == sf::Vector2f(0, 0));
     debug_float_rect(bounds);
 
     int ancho_frase = bounds.left + bounds.width;
-    int altura_con_margenes = bounds.top + bounds.height - altura_linea_abajo;
+    int alto_frase_dos_lineas = bounds.top + bounds.height;
+    int altura_con_margenes = alto_frase_dos_lineas - altura_linea_abajo;
     std::cout << "Altura con margenes: " << altura_con_margenes << std::endl;
 
     sf::RectangleShape bg_rect(sf::Vector2f(ancho_frase, altura_con_margenes));
-    bg_rect.setPosition(0, 0);
     bg_rect.setFillColor(sf::Color::Blue);
 
     sf::RectangleShape bg_rect_2(sf::Vector2f(ancho_frase, altura_con_margenes)
@@ -63,9 +60,7 @@ int demo_visual_textos() {
     first_rect.setFillColor(sf::Color::Red);
     sf::RectangleShape last_rect(sf::Vector2f(bounds.width, bounds.height));
     last_rect.setFillColor(sf::Color::Red);
-    last_rect.setPosition(
-        bounds.left + bounds.width, bounds.top + bounds.height
-    );
+    last_rect.setPosition(ancho_frase, alto_frase_dos_lineas);
 
     while (window.isOpen()) {
         sf::Event event;
@@ -76,7 +71,7 @@ int demo_visual_textos() {
         window.clear();
         window.draw(bg_rect);
         window.draw(bg_rect_2);
-        window.draw(etiqueta);
+        window.draw(etiqueta_dos_lineas);
         window.draw(first_rect);
         window.draw(last_rect);
         window.display();
