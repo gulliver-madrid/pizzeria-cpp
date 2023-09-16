@@ -14,6 +14,7 @@
 #include <optional>
 #include <string>
 #include <thread>
+#include <vector>
 
 #define TITLE "Pizzer%ia"
 #define TAMANO_FUENTE_INFO 36
@@ -36,13 +37,6 @@ enum EstadoJuego {
     EsperaAntesDeResultado,
     MostrandoResultado,
     Reiniciando
-};
-
-struct Botones {
-    BotonConTexto empezar;
-    BotonConTexto despachar;
-    BotonConTexto salir;
-    BotonConTexto reiniciar;
 };
 
 struct Etiquetas {
@@ -107,6 +101,44 @@ BotonConTexto crearBotonConTexto(
     return boton;
 };
 
+struct Botones {
+
+    BotonConTexto empezar;
+    BotonConTexto despachar;
+    BotonConTexto reiniciar;
+    BotonConTexto salir;
+    std::vector<BotonConTexto *> todos;
+
+    // Crea todos los botones del juego
+    // Se mostrarán o no dependiendo del Estado
+    Botones(sf::Font &font, int pos_y_bajo_etiquetas) {
+        int filaBotonesEjecutivos = pos_y_bajo_etiquetas + 50;
+        int bottom = 800;
+
+        auto botonEmpezar = crearBotonConTexto(
+            "Empezar", sf::Color::Green, sf::Vector2i(500, 450), font,
+            sf::Color::Black
+        );
+        auto botonDespachar = crearBotonConTexto(
+            "Despachar pizza", sf::Color::Green,
+            sf::Vector2i(250, filaBotonesEjecutivos), font, sf::Color::Black
+        );
+
+        auto botonReiniciar = crearBotonConTexto(
+            "Reiniciar", sf::Color::Blue, sf::Vector2i(150, bottom), font
+        );
+        auto botonSalir = crearBotonConTexto(
+            "Salir", sf::Color::Red, sf::Vector2i(400, bottom), font
+        );
+        empezar = botonEmpezar;
+        despachar = botonDespachar;
+        reiniciar = botonReiniciar;
+        salir = botonSalir;
+        todos = {&empezar, &despachar, &reiniciar, &salir};
+        assert(todos.size() == 4);
+    }
+};
+
 // Crea la etiqueta de texto que mostrará el contador
 sf::Text crearEtiquetaContador(sf::Font &font) {
     sf::Text etiqueta =
@@ -121,34 +153,6 @@ sf::Text crearEtiquetaPizzasPreparadas(sf::Font &font, float prev_position) {
     auto pos_y = prev_position + font.getLineSpacing(TAMANO_FUENTE_ETIQUETAS);
     etiqueta.setPosition(pos_x, pos_y);
     return etiqueta;
-}
-
-// Crea todos los botones del juego
-// Se mostrarán o no dependiendo del Estado
-Botones crearBotones(sf::Font &font, int pos_y_bajo_etiquetas) {
-    int filaBotonesEjecutivos = pos_y_bajo_etiquetas + 50;
-    int bottom = 800;
-
-    auto botonEmpezar = crearBotonConTexto(
-        "Empezar", sf::Color::Green, sf::Vector2i(500, 450), font,
-        sf::Color::Black
-    );
-    auto botonDespachar = crearBotonConTexto(
-        "Despachar pizza", sf::Color::Green,
-        sf::Vector2i(250, filaBotonesEjecutivos), font, sf::Color::Black
-    );
-
-    auto botonReiniciar = crearBotonConTexto(
-        "Reiniciar", sf::Color::Blue, sf::Vector2i(150, bottom), font
-    );
-    auto botonSalir = crearBotonConTexto(
-        "Salir", sf::Color::Red, sf::Vector2i(400, bottom), font
-    );
-
-    Botones botones = {
-        botonEmpezar, botonDespachar, botonSalir, botonReiniciar
-    };
-    return botones;
 }
 
 // Incluye toda la lógica para procesar un evento
@@ -183,6 +187,8 @@ void procesarEvento(
             auto bounds = botones.empezar.boton.getGlobalBounds();
             if (botones.empezar.colisiona(mousePos)) {
                 estado.actual = Activo;
+                botones.empezar.visible = false;
+                botones.despachar.visible = true;
             }
         } else if (estado.actual == Activo) {
             if (botones.despachar.colisiona(mousePos)) {
@@ -191,6 +197,7 @@ void procesarEvento(
                     estado.contador_pizzas_servidas++;
                     if (estado.contador_pizzas_servidas >= estado.objetivo) {
                         estado.actual = EsperaAntesDeResultado;
+                        botones.despachar.visible = false;
                         reloj_espera_antes_de_resultado.start();
                     }
                 }
@@ -218,23 +225,23 @@ void actualizarIU(             //
     );
     ventana.clear();
 
-    // Dibuja la cuadrícula con la textura almacenada
     draw_grid(ventana, grid);
+
+    for (auto boton_ptr : botones.todos) {
+        assert(boton_ptr != nullptr);
+        boton_ptr->dibujar(ventana);
+    }
 
     if (estado.actual == MostrandoInstrucciones) {
         ventana.draw(instrucciones);
-        botones.empezar.dibujar(ventana);
     } else if (estado.actual == Activo || estado.actual == EsperaAntesDeResultado) {
         ventana.draw(etiquetas.texto_contador);
         ventana.draw(etiquetas.texto_pizzas_preparadas);
-        if (estado.actual == Activo)
-            botones.despachar.dibujar(ventana);
     } else {
         assert(estado.actual == MostrandoResultado);
         ventana.draw(resultado);
     }
-    botones.reiniciar.dibujar(ventana);
-    botones.salir.dibujar(ventana);
+
     ventana.display();
 }
 
@@ -310,6 +317,7 @@ bool nivel(                  //
     );
     auto resultado = generar_resultado(globales.font);
 
+    // Etiquetas
     sf::Text last;
     sf::Text textoContador = crearEtiquetaContador(globales.font);
     Etiquetas etiquetas = {textoContador};
@@ -323,7 +331,12 @@ bool nivel(                  //
     sf::FloatRect bounds = last.getGlobalBounds();
     auto pos_y_bajo_etiquetas = bounds.top + bounds.height;
 
-    Botones botones = crearBotones(globales.font, pos_y_bajo_etiquetas);
+    // Botones
+    Botones botones(globales.font, pos_y_bajo_etiquetas);
+
+    botones.reiniciar.visible = true;
+    botones.salir.visible = true;
+    botones.empezar.visible = true;
 
     Reloj reloj_espera_antes_de_resultado;
     Reloj reloj_fin_nivel;
@@ -373,6 +386,7 @@ int juego() {
     DatosNivel datos[] = {
         {INSTRUCCIONES_NIVEL_1, 10, 10},
     };
+
     while (true) {
         bool reiniciar = false;
         for (int i = 0; i < std::size(datos); i++) {
