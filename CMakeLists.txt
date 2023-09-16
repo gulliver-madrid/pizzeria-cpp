@@ -18,6 +18,7 @@ add_executable(pizzeria
     src/juego.cpp
     src/textos.cpp
     src/tiempo.cpp
+    src/vista.cpp
     src/demos/map.cpp
     src/demos/unicode.cpp
     src/demos/visual.cpp

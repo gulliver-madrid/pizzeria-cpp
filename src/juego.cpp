@@ -6,6 +6,8 @@
 #include "paths.h"
 #include "textos.h"
 #include "tiempo.h"
+#include "vista.h"
+#include "vista_data.h"
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
@@ -18,10 +20,7 @@
 
 #define TITLE "Pizzer%ia"
 #define TAMANO_FUENTE_INFO 36
-#define TAMANO_FUENTE_ETIQUETAS 48
-#define MARGEN_IZQ_ETIQUETAS 50
-#define TAMANO_INICIAL_VENTANA 1800, 920
-#define FPS 12
+
 #define RETARDO_ANTES_DE_RESULTADO 1
 #define ESPERA_ENTRE_NIVELES 1.5
 
@@ -50,95 +49,6 @@ struct Estado {
     int contador_pizzas_preparadas = 0;
     int objetivo = 0;
 };
-
-sf::Text
-crearEtiqueta(int tamano, sf::Font &font, sf::Color color = sf::Color::White) {
-    // Usamos un placeholder para poder obtener la altura
-    sf::Text etiqueta("<Placeholder>", font, tamano);
-    etiqueta.setFillColor(color);
-    return etiqueta;
-}
-
-// Crea un botón rectangular con texto
-BotonConTexto crearBotonConTexto(
-    std::string texto, sf::Color color_fondo, sf::Vector2i posicion,
-    sf::Font &font, sf::Color color_texto = sf::Color::White
-) {
-    int tamano_texto = 24;
-    int x = posicion.x;
-    int y = posicion.y;
-    int margin = 25;
-
-    // Primero creamos la etiqueta para usar sus límites en el Rect
-    sf::Text etiqueta = crearEtiqueta(tamano_texto, font, color_texto);
-    etiqueta.setString(texto);
-    etiqueta.setPosition(x + margin, y + margin);
-    sf::FloatRect textRect = etiqueta.getGlobalBounds();
-
-    // Rect
-    sf::RectangleShape rect(
-        sf::Vector2f(textRect.width + margin * 2, textRect.height + margin * 2)
-    );
-    rect.setFillColor(color_fondo);
-    rect.setPosition(x, y);
-
-    BotonConTexto boton = {rect, etiqueta};
-    return boton;
-};
-
-struct Botones {
-
-    BotonConTexto empezar;
-    BotonConTexto despachar;
-    BotonConTexto reiniciar;
-    BotonConTexto salir;
-    std::vector<BotonConTexto *> todos;
-
-    // Crea todos los botones del juego
-    // Se mostrarán o no dependiendo del Estado
-    Botones(sf::Font &font, int pos_y_bajo_etiquetas) {
-        int filaBotonesEjecutivos = pos_y_bajo_etiquetas + 50;
-        int bottom = 800;
-
-        auto botonEmpezar = crearBotonConTexto(
-            "Empezar", sf::Color::Green, sf::Vector2i(500, 450), font,
-            sf::Color::Black
-        );
-        auto botonDespachar = crearBotonConTexto(
-            "Despachar pizza", sf::Color::Green,
-            sf::Vector2i(250, filaBotonesEjecutivos), font, sf::Color::Black
-        );
-
-        auto botonReiniciar = crearBotonConTexto(
-            "Reiniciar", sf::Color::Blue, sf::Vector2i(150, bottom), font
-        );
-        auto botonSalir = crearBotonConTexto(
-            "Salir", sf::Color::Red, sf::Vector2i(400, bottom), font
-        );
-        empezar = botonEmpezar;
-        despachar = botonDespachar;
-        reiniciar = botonReiniciar;
-        salir = botonSalir;
-        todos = {&empezar, &despachar, &reiniciar, &salir};
-        assert(todos.size() == 4);
-    }
-};
-
-// Crea la etiqueta de texto que mostrará el contador
-sf::Text crearEtiquetaContador(sf::Font &font) {
-    sf::Text etiqueta =
-        crearEtiqueta(TAMANO_FUENTE_ETIQUETAS, font, sf::Color::White);
-    etiqueta.setPosition(MARGEN_IZQ_ETIQUETAS, 50);
-    return etiqueta;
-}
-sf::Text crearEtiquetaPizzasPreparadas(sf::Font &font, float prev_position) {
-    sf::Text etiqueta =
-        crearEtiqueta(TAMANO_FUENTE_ETIQUETAS, font, sf::Color::White);
-    auto pos_x = MARGEN_IZQ_ETIQUETAS;
-    auto pos_y = prev_position + font.getLineSpacing(TAMANO_FUENTE_ETIQUETAS);
-    etiqueta.setPosition(pos_x, pos_y);
-    return etiqueta;
-}
 
 // Incluye toda la lógica para procesar un evento
 std::optional<EstadoJuego> procesarEvento(
