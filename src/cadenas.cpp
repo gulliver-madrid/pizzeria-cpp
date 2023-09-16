@@ -1,4 +1,5 @@
 #include "cadenas.h"
+#include <cassert>
 #include <map>
 #include <sstream>
 
@@ -40,4 +41,17 @@ std::string interpolar(std::string plantilla) {
     std::ostringstream oss;
     oss << plantilla;
     return oss.str();
+}
+std::string replace_placeholder(
+    const std::string &template_str, const std::string &key,
+    const std::string &value
+) {
+    std::string result = template_str;
+    std::string placeholder = "{" + key + "}";
+    size_t pos = result.find(placeholder);
+    assert(pos != std::string::npos);
+    if (pos != std::string::npos) {
+        result.replace(pos, placeholder.length(), value);
+    }
+    return result;
 }

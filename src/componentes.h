@@ -6,6 +6,7 @@
 struct BotonConTexto {
     sf::RectangleShape boton;
     sf::Text texto;
+    bool activo = true;
 
     bool colisiona(sf::Vector2i &mousePos);
 

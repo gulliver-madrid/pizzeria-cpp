@@ -47,14 +47,14 @@ struct Botones {
 
 struct Etiquetas {
     sf::Text texto_contador;
-    std::optional<sf::Text> texto_pizzas_preparadas = std::nullopt;
+    sf::Text texto_pizzas_preparadas;
 };
 
 struct Estado {
     EstadoJuego actual = MostrandoInstrucciones;
     int contador_pizzas_servidas = 0;
     int contador_pizzas_preparadas = 0;
-    int objetivo = 5;
+    int objetivo = 0;
 };
 
 struct Reloj {
@@ -186,11 +186,13 @@ void procesarEvento(
             }
         } else if (estado.actual == Activo) {
             if (botones.despachar.colisiona(mousePos)) {
-                estado.contador_pizzas_preparadas--;
-                estado.contador_pizzas_servidas++;
-                if (estado.contador_pizzas_servidas >= estado.objetivo) {
-                    estado.actual = EsperaAntesDeResultado;
-                    reloj_espera_antes_de_resultado.start();
+                if (estado.contador_pizzas_preparadas > 0) {
+                    estado.contador_pizzas_preparadas--;
+                    estado.contador_pizzas_servidas++;
+                    if (estado.contador_pizzas_servidas >= estado.objetivo) {
+                        estado.actual = EsperaAntesDeResultado;
+                        reloj_espera_antes_de_resultado.start();
+                    }
                 }
             }
         }
@@ -210,11 +212,10 @@ void actualizarIU(             //
     etiquetas.texto_contador.setString(
         "Clientes servidos: " + std::to_string(estado.contador_pizzas_servidas)
     );
-    if (etiquetas.texto_pizzas_preparadas.has_value())
-        etiquetas.texto_pizzas_preparadas.value().setString(
-            "Pizzas preparadas: " +
-            std::to_string(estado.contador_pizzas_preparadas)
-        );
+    etiquetas.texto_pizzas_preparadas.setString(
+        "Pizzas preparadas: " +
+        std::to_string(estado.contador_pizzas_preparadas)
+    );
     ventana.clear();
 
     // Dibuja la cuadrícula con la textura almacenada
@@ -225,9 +226,7 @@ void actualizarIU(             //
         botones.empezar.dibujar(ventana);
     } else if (estado.actual == Activo || estado.actual == EsperaAntesDeResultado) {
         ventana.draw(etiquetas.texto_contador);
-        if (etiquetas.texto_pizzas_preparadas.has_value()) {
-            ventana.draw(etiquetas.texto_pizzas_preparadas.value());
-        }
+        ventana.draw(etiquetas.texto_pizzas_preparadas);
         if (estado.actual == Activo)
             botones.despachar.dibujar(ventana);
     } else {
@@ -239,10 +238,13 @@ void actualizarIU(             //
     ventana.display();
 }
 
-sf::Text
-generar_instrucciones(sf::Font &font, std::string plantilla_instrucciones) {
+sf::Text generar_instrucciones(
+    sf::Font &font, std::string plantilla_instrucciones, int objetivo
+) {
     auto etiqueta = crearEtiqueta(TAMANO_FUENTE_INFO, font, sf::Color::Yellow);
-    etiqueta.setString(construir_instrucciones(plantilla_instrucciones));
+    etiqueta.setString(
+        construir_instrucciones(plantilla_instrucciones, objetivo)
+    );
     etiqueta.setPosition(200, 200);
     return etiqueta;
 }
@@ -285,10 +287,9 @@ ResultadoSetup setup_juego(Globales &globales) {
 }
 
 struct DatosNivel {
-    bool usar_pizzas_preparadas;
     std::string instrucciones;
     int pizzas_preparadas_iniciales = 0;
-    int objetivo_pizzas = 5;
+    int objetivo_pizzas = 0;
 };
 
 /* Devuelve true si se debe pasar al siguiente nivel,
@@ -304,21 +305,20 @@ bool nivel(                  //
     estado.contador_pizzas_preparadas = datos_nivel.pizzas_preparadas_iniciales;
     estado.objetivo = datos_nivel.objetivo_pizzas;
 
-    auto instrucciones =
-        generar_instrucciones(globales.font, datos_nivel.instrucciones);
+    auto instrucciones = generar_instrucciones(
+        globales.font, datos_nivel.instrucciones, estado.objetivo
+    );
     auto resultado = generar_resultado(globales.font);
 
     sf::Text last;
     sf::Text textoContador = crearEtiquetaContador(globales.font);
     Etiquetas etiquetas = {textoContador};
-    last = textoContador;
+
     auto prev_position = textoContador.getPosition().y;
-    if (datos_nivel.usar_pizzas_preparadas) {
-        sf::Text etiquetaPizzasPreparadas =
-            crearEtiquetaPizzasPreparadas(globales.font, prev_position);
-        last = etiquetaPizzasPreparadas;
-        etiquetas.texto_pizzas_preparadas = etiquetaPizzasPreparadas;
-    }
+    sf::Text etiquetaPizzasPreparadas =
+        crearEtiquetaPizzasPreparadas(globales.font, prev_position);
+    last = etiquetaPizzasPreparadas;
+    etiquetas.texto_pizzas_preparadas = etiquetaPizzasPreparadas;
 
     sf::FloatRect bounds = last.getGlobalBounds();
     auto pos_y_bajo_etiquetas = bounds.top + bounds.height;
@@ -371,8 +371,7 @@ int juego() {
         return EXIT_FAILURE;
 
     DatosNivel datos[] = {
-        {false, INSTRUCCIONES_NIVEL_1},
-        {true, INSTRUCCIONES_NIVEL_2, 10, 10},
+        {INSTRUCCIONES_NIVEL_1, 10, 10},
     };
     while (true) {
         bool reiniciar = false;
