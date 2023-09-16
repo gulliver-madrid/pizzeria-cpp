@@ -36,9 +36,13 @@ enum EstadoJuego {
     Reiniciando
 };
 
-struct Etiquetas {
+struct EtiquetasContadores {
     sf::Text texto_contador;
     sf::Text texto_pizzas_preparadas;
+};
+struct EtiquetasInfo {
+    sf::Text instrucciones;
+    sf::Text resultado;
 };
 
 struct Estado {
@@ -95,19 +99,18 @@ std::optional<EstadoJuego> procesarEvento(
 }
 
 /* Actualiza el interfaz gráfico */
-void actualizarIU(             //
-    sf::RenderWindow &ventana, //
-    Botones &botones,          //
-    Etiquetas &etiquetas,      //
-    sf::Text instrucciones,    //
-    sf::Text resultado,        //
-    Estado &estado,            //
+void actualizarIU(                   //
+    sf::RenderWindow &ventana,       //
+    Botones &botones,                //
+    EtiquetasContadores &contadores, //
+    EtiquetasInfo &etiquetas_info,   //
+    Estado &estado,                  //
     Grid &grid
 ) {
-    etiquetas.texto_contador.setString(
+    contadores.texto_contador.setString(
         "Clientes servidos: " + std::to_string(estado.contador_pizzas_servidas)
     );
-    etiquetas.texto_pizzas_preparadas.setString(
+    contadores.texto_pizzas_preparadas.setString(
         "Pizzas preparadas: " +
         std::to_string(estado.contador_pizzas_preparadas)
     );
@@ -121,13 +124,13 @@ void actualizarIU(             //
     }
 
     if (estado.actual == MostrandoInstrucciones) {
-        ventana.draw(instrucciones);
+        ventana.draw(etiquetas_info.instrucciones);
     } else if (estado.actual == Activo || estado.actual == EsperaAntesDeResultado) {
-        ventana.draw(etiquetas.texto_contador);
-        ventana.draw(etiquetas.texto_pizzas_preparadas);
+        ventana.draw(contadores.texto_contador);
+        ventana.draw(contadores.texto_pizzas_preparadas);
     } else {
         assert(estado.actual == MostrandoResultado);
-        ventana.draw(resultado);
+        ventana.draw(etiquetas_info.resultado);
     }
 
     ventana.display();
@@ -197,6 +200,7 @@ bool nivel(                  //
     Grid &grid,              //
     bool es_el_ultimo
 ) {
+    // Iniciamos el estado
     estado.actual = MostrandoInstrucciones;
     estado.contador_pizzas_preparadas = datos_nivel.pizzas_preparadas_iniciales;
     estado.objetivo = datos_nivel.objetivo_pizzas;
@@ -206,16 +210,16 @@ bool nivel(                  //
     );
     auto resultado = generar_resultado(globales.font);
 
-    // Etiquetas
-    sf::Text last;
+    EtiquetasInfo etiquetas_info = {instrucciones, resultado};
+
+    // Contadores
     sf::Text textoContador = crearEtiquetaContador(globales.font);
-    Etiquetas etiquetas = {textoContador};
+    EtiquetasContadores contadores = {textoContador};
 
     auto prev_position = textoContador.getPosition().y;
-    sf::Text etiquetaPizzasPreparadas =
+    contadores.texto_pizzas_preparadas =
         crearEtiquetaPizzasPreparadas(globales.font, prev_position);
-    last = etiquetaPizzasPreparadas;
-    etiquetas.texto_pizzas_preparadas = etiquetaPizzasPreparadas;
+    auto last = contadores.texto_pizzas_preparadas;
 
     sf::FloatRect bounds = last.getGlobalBounds();
     auto pos_y_bajo_etiquetas = bounds.top + bounds.height;
@@ -223,12 +227,13 @@ bool nivel(                  //
     // Botones
     Botones botones(globales.font, pos_y_bajo_etiquetas);
 
+    // Mostrar botones iniciales
     botones.reiniciar.visible = true;
     botones.salir.visible = true;
     botones.empezar.visible = true;
 
-    Timer reloj_espera_antes_de_resultado;
-    Timer reloj_fin_nivel;
+    Timer timer_espera_antes_de_resultado;
+    Timer timer_fin_nivel;
     sf::Sound sound;
     int frame = 0;
 
@@ -249,7 +254,7 @@ bool nivel(                  //
                     case EsperaAntesDeResultado:
                         assert(estado.actual == Activo);
                         botones.despachar.visible = false;
-                        reloj_espera_antes_de_resultado.start(
+                        timer_espera_antes_de_resultado.start(
                             RETARDO_ANTES_DE_RESULTADO
                         );
                         break;
@@ -262,25 +267,24 @@ bool nivel(                  //
         // En función del estado (no necesariamente reciente)
         switch (estado.actual) {
             case EsperaAntesDeResultado:
-                if (reloj_espera_antes_de_resultado.termino()) {
+                if (timer_espera_antes_de_resultado.termino()) {
                     estado.actual = MostrandoResultado;
                     if (globales.opt_buffer) {
                         sound.setBuffer(globales.opt_buffer.value());
                         sound.play();
                     }
-                    reloj_fin_nivel.start(ESPERA_ENTRE_NIVELES);
+                    timer_fin_nivel.start(ESPERA_ENTRE_NIVELES);
                 }
                 break;
             case MostrandoResultado: {
-                if (!es_el_ultimo && reloj_fin_nivel.termino()) {
+                if (!es_el_ultimo && timer_fin_nivel.termino()) {
                     return true;
                 };
                 break;
             }
         }
         actualizarIU(
-            globales.window, botones, etiquetas, instrucciones, resultado,
-            estado, grid
+            globales.window, botones, contadores, etiquetas_info, estado, grid
         );
     }
     return true;
