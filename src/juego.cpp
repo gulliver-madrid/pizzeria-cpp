@@ -51,18 +51,25 @@ struct Estado {
     int objetivo = 0;
 };
 
-struct Reloj {
+struct Timer {
   private:
     std::optional<sf::Clock> clock;
-
-  public:
-    void start() { //
-        clock.emplace();
-    }
+    float finalizacion = 0;
     float get_seconds() {
         assert(clock.has_value());
         float seconds = clock.value().getElapsedTime().asSeconds();
         return seconds;
+    }
+
+  public:
+    void start(float finalizacion) { //
+        assert(finalizacion > 0);
+        this->finalizacion = finalizacion;
+        clock.emplace();
+    }
+    bool termino() {
+        assert(finalizacion);
+        return get_seconds() > finalizacion;
     }
 };
 
@@ -334,8 +341,8 @@ bool nivel(                  //
     botones.salir.visible = true;
     botones.empezar.visible = true;
 
-    Reloj reloj_espera_antes_de_resultado;
-    Reloj reloj_fin_nivel;
+    Timer reloj_espera_antes_de_resultado;
+    Timer reloj_fin_nivel;
     sf::Sound sound;
     int frame = 0;
 
@@ -356,12 +363,12 @@ bool nivel(                  //
                 case EsperaAntesDeResultado:
                     assert(estado.actual == Activo);
                     botones.despachar.visible = false;
-                    reloj_espera_antes_de_resultado.start();
+                    reloj_espera_antes_de_resultado.start(
+                        RETARDO_ANTES_DE_RESULTADO
+                    );
                     break;
                 case Reiniciando:
                     return false;
-                default:
-                    break;
                 }
                 estado.actual = nuevo_estado.value();
             }
@@ -369,21 +376,18 @@ bool nivel(                  //
 
         if ( //
             estado.actual == EsperaAntesDeResultado &&
-            reloj_espera_antes_de_resultado.get_seconds() >= RETARDO_ANTES_DE_RESULTADO
+            reloj_espera_antes_de_resultado.termino()
         ) {
             estado.actual = MostrandoResultado;
             if (globales.opt_buffer) {
                 sound.setBuffer(globales.opt_buffer.value());
                 sound.play();
             }
-            reloj_fin_nivel.start();
+            reloj_fin_nivel.start(ESPERA_ENTRE_NIVELES);
         } else if (estado.actual == MostrandoResultado) {
-            if (!es_el_ultimo) {
-                float seconds = reloj_fin_nivel.get_seconds();
-                if (seconds >= ESPERA_ENTRE_NIVELES) {
-                    break;
-                };
-            }
+            if (!es_el_ultimo && reloj_fin_nivel.termino()) {
+                break;
+            };
         }
         actualizarIU(
             globales.window, botones, etiquetas, instrucciones, resultado,
