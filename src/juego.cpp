@@ -15,8 +15,6 @@
 #include <iostream>
 #include <optional>
 #include <string>
-#include <thread>
-#include <vector>
 
 #define TITLE "Pizzer%ia"
 #define TAMANO_FUENTE_INFO 36

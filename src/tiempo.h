@@ -1,8 +1,6 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include <cassert>
-#include <chrono>
 #include <optional>
 
 struct Timer {

@@ -1,6 +1,5 @@
-#include <SFML/Graphics.hpp>
+#include "debug.h"
 #include <iostream>
-#include <string>
 
 void debug_rect(sf::RectangleShape &rect, std::string name) {
     std::cout << name << ".getPosition(): " << rect.getPosition().x << ", "

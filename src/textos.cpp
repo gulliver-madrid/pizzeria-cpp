@@ -1,8 +1,6 @@
 #include "textos.h"
 #include "cadenas.h"
 
-#include <string>
-
 #define RESULTADO_NIVEL_1                                                      \
     "%!Enhorabuena! Todos los clientes est%an satisfechos."
 
