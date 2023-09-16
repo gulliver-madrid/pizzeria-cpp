@@ -5,11 +5,11 @@
 #include "manejo_rutas.h"
 #include "paths.h"
 #include "textos.h"
+#include "tiempo.h"
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <cassert>
-#include <chrono>
 #include <iostream>
 #include <optional>
 #include <string>
@@ -49,28 +49,6 @@ struct Estado {
     int contador_pizzas_servidas = 0;
     int contador_pizzas_preparadas = 0;
     int objetivo = 0;
-};
-
-struct Timer {
-  private:
-    std::optional<sf::Clock> clock;
-    float finalizacion = 0;
-    float get_seconds() {
-        assert(clock.has_value());
-        float seconds = clock.value().getElapsedTime().asSeconds();
-        return seconds;
-    }
-
-  public:
-    void start(float finalizacion) { //
-        assert(finalizacion > 0);
-        this->finalizacion = finalizacion;
-        clock.emplace();
-    }
-    bool termino() {
-        assert(finalizacion);
-        return get_seconds() > finalizacion;
-    }
 };
 
 sf::Text
