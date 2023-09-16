@@ -241,42 +241,42 @@ bool nivel(                  //
             // Cambio de estado reciente
             if (nuevo_estado.has_value()) {
                 switch (nuevo_estado.value()) {
-                case Activo:
-                    assert(estado.actual == MostrandoInstrucciones);
-                    botones.empezar.visible = false;
-                    botones.despachar.visible = true;
-                    break;
-                case EsperaAntesDeResultado:
-                    assert(estado.actual == Activo);
-                    botones.despachar.visible = false;
-                    reloj_espera_antes_de_resultado.start(
-                        RETARDO_ANTES_DE_RESULTADO
-                    );
-                    break;
-                case Reiniciando:
-                    return false;
+                    case Activo:
+                        assert(estado.actual == MostrandoInstrucciones);
+                        botones.empezar.visible = false;
+                        botones.despachar.visible = true;
+                        break;
+                    case EsperaAntesDeResultado:
+                        assert(estado.actual == Activo);
+                        botones.despachar.visible = false;
+                        reloj_espera_antes_de_resultado.start(
+                            RETARDO_ANTES_DE_RESULTADO
+                        );
+                        break;
+                    case Reiniciando:
+                        return false;
                 }
                 estado.actual = nuevo_estado.value();
             }
         }
         // En función del estado (no necesariamente reciente)
         switch (estado.actual) {
-        case EsperaAntesDeResultado:
-            if (reloj_espera_antes_de_resultado.termino()) {
-                estado.actual = MostrandoResultado;
-                if (globales.opt_buffer) {
-                    sound.setBuffer(globales.opt_buffer.value());
-                    sound.play();
+            case EsperaAntesDeResultado:
+                if (reloj_espera_antes_de_resultado.termino()) {
+                    estado.actual = MostrandoResultado;
+                    if (globales.opt_buffer) {
+                        sound.setBuffer(globales.opt_buffer.value());
+                        sound.play();
+                    }
+                    reloj_fin_nivel.start(ESPERA_ENTRE_NIVELES);
                 }
-                reloj_fin_nivel.start(ESPERA_ENTRE_NIVELES);
+                break;
+            case MostrandoResultado: {
+                if (!es_el_ultimo && reloj_fin_nivel.termino()) {
+                    return true;
+                };
+                break;
             }
-            break;
-        case MostrandoResultado: {
-            if (!es_el_ultimo && reloj_fin_nivel.termino()) {
-                return true;
-            };
-            break;
-        }
         }
         actualizarIU(
             globales.window, botones, etiquetas, instrucciones, resultado,

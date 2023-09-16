@@ -25,22 +25,22 @@ int main(int argc, char *argv[]) { //
         app = APP;
 
     switch (app) {
-    case 1:
-        return demo_map();
-        break;
-    case 2:
-        return demo_visual();
-        break;
-    case 3:
-        return demo_visual_textos();
-        break;
-    case 4:
-        return demo_unicode();
-        break;
+        case 1:
+            return demo_map();
+            break;
+        case 2:
+            return demo_visual();
+            break;
+        case 3:
+            return demo_visual_textos();
+            break;
+        case 4:
+            return demo_unicode();
+            break;
 
-    default:
-        assert(app == 0);
-        return juego();
-        break;
+        default:
+            assert(app == 0);
+            return juego();
+            break;
     }
 }

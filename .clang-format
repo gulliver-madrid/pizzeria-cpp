@@ -14,4 +14,5 @@ BraceWrapping:
   BeforeElse:      false
   IndentBraces:    false
 AlignAfterOpenBracket: BlockIndent
+IndentCaseLabels:  true
 ColumnLimit: 80
