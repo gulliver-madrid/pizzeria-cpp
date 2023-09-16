@@ -306,7 +306,8 @@ bool nivel(                  //
     Globales &globales,      //
     Estado &estado,          //
     DatosNivel &datos_nivel, //
-    Grid &grid
+    Grid &grid,              //
+    bool es_el_ultimo
 ) {
     estado.actual = MostrandoInstrucciones;
     estado.contador_pizzas_preparadas = datos_nivel.pizzas_preparadas_iniciales;
@@ -361,10 +362,12 @@ bool nivel(                  //
             }
             reloj_fin_nivel.start();
         } else if (estado.actual == MostrandoResultado) {
-            float seconds = reloj_fin_nivel.get_seconds();
-            if (seconds >= ESPERA_ENTRE_NIVELES) {
-                break;
-            };
+            if (!es_el_ultimo) {
+                float seconds = reloj_fin_nivel.get_seconds();
+                if (seconds >= ESPERA_ENTRE_NIVELES) {
+                    break;
+                };
+            }
         } else if (estado.actual == Reiniciando) {
             return false;
         }
@@ -391,7 +394,8 @@ int juego() {
         bool reiniciar = false;
         for (int i = 0; i < std::size(datos); i++) {
             Estado estado = {};
-            auto res = nivel(globales, estado, datos[i], grid);
+            bool es_el_ultimo = (i == std::size(datos) - 1);
+            bool res = nivel(globales, estado, datos[i], grid, es_el_ultimo);
             if (!res) {
                 reiniciar = true;
                 break;
