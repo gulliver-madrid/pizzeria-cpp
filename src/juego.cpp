@@ -238,7 +238,7 @@ bool nivel(                  //
             auto nuevo_estado =
                 procesarEvento(event, globales.window, botones, estado);
 
-            // Cambio de estado
+            // Cambio de estado reciente
             if (nuevo_estado.has_value()) {
                 switch (nuevo_estado.value()) {
                 case Activo:
@@ -259,21 +259,24 @@ bool nivel(                  //
                 estado.actual = nuevo_estado.value();
             }
         }
-
-        if ( //
-            estado.actual == EsperaAntesDeResultado &&
-            reloj_espera_antes_de_resultado.termino()
-        ) {
-            estado.actual = MostrandoResultado;
-            if (globales.opt_buffer) {
-                sound.setBuffer(globales.opt_buffer.value());
-                sound.play();
+        // En función del estado (no necesariamente reciente)
+        switch (estado.actual) {
+        case EsperaAntesDeResultado:
+            if (reloj_espera_antes_de_resultado.termino()) {
+                estado.actual = MostrandoResultado;
+                if (globales.opt_buffer) {
+                    sound.setBuffer(globales.opt_buffer.value());
+                    sound.play();
+                }
+                reloj_fin_nivel.start(ESPERA_ENTRE_NIVELES);
             }
-            reloj_fin_nivel.start(ESPERA_ENTRE_NIVELES);
-        } else if (estado.actual == MostrandoResultado) {
+            break;
+        case MostrandoResultado: {
             if (!es_el_ultimo && reloj_fin_nivel.termino()) {
-                break;
+                return true;
             };
+            break;
+        }
         }
         actualizarIU(
             globales.window, botones, etiquetas, instrucciones, resultado,
