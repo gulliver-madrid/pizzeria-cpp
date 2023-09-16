@@ -156,18 +156,17 @@ sf::Text crearEtiquetaPizzasPreparadas(sf::Font &font, float prev_position) {
 }
 
 // Incluye toda la lógica para procesar un evento
-void procesarEvento(
+std::optional<EstadoJuego> procesarEvento(
     sf::Event evento, sf::RenderWindow &ventana, Botones &botones,
-    Reloj &reloj_espera_antes_de_resultado, Estado &estado
+    Estado &estado
 ) {
     // Cierre de ventana
     if (evento.type == sf::Event::Closed)
         ventana.close();
 
     else if (evento.type == sf::Event::Resized) {
-        // update the view to the new size of the window
+        // Actualiza la View al nuevo tamaño de la ventana
         sf::FloatRect visibleArea(0, 0, evento.size.width, evento.size.height);
-
         ventana.setView(sf::View(visibleArea));
     }
 
@@ -179,31 +178,27 @@ void procesarEvento(
         if (botones.salir.colisiona(mousePos)) {
             ventana.close();
         } else if (botones.reiniciar.colisiona(mousePos)) {
-            estado.actual = Reiniciando;
-            return;
+            return Reiniciando;
         }
         // Dependientes del estado
         if (estado.actual == MostrandoInstrucciones) {
             auto bounds = botones.empezar.boton.getGlobalBounds();
             if (botones.empezar.colisiona(mousePos)) {
-                estado.actual = Activo;
-                botones.empezar.visible = false;
-                botones.despachar.visible = true;
+                return Activo;
             }
         } else if (estado.actual == Activo) {
-            if (botones.despachar.colisiona(mousePos)) {
-                if (estado.contador_pizzas_preparadas > 0) {
-                    estado.contador_pizzas_preparadas--;
-                    estado.contador_pizzas_servidas++;
-                    if (estado.contador_pizzas_servidas >= estado.objetivo) {
-                        estado.actual = EsperaAntesDeResultado;
-                        botones.despachar.visible = false;
-                        reloj_espera_antes_de_resultado.start();
-                    }
+            if (botones.despachar.colisiona(mousePos) &&
+                estado.contador_pizzas_preparadas > 0) {
+                estado.contador_pizzas_preparadas--;
+                estado.contador_pizzas_servidas++;
+
+                if (estado.contador_pizzas_servidas >= estado.objetivo) {
+                    return EsperaAntesDeResultado;
                 }
             }
         }
     }
+    return std::nullopt;
 }
 
 /* Actualiza el interfaz gráfico */
@@ -342,18 +337,39 @@ bool nivel(                  //
     Reloj reloj_espera_antes_de_resultado;
     Reloj reloj_fin_nivel;
     sf::Sound sound;
+    int frame = 0;
 
     while (globales.window.isOpen()) {
         sf::Event event;
         while (globales.window.pollEvent(event)) {
-            procesarEvento(
-                event, globales.window, botones,
-                reloj_espera_antes_de_resultado, estado
-            );
+            auto nuevo_estado =
+                procesarEvento(event, globales.window, botones, estado);
+
+            // Cambio de estado
+            if (nuevo_estado.has_value()) {
+                switch (nuevo_estado.value()) {
+                case Activo:
+                    assert(estado.actual == MostrandoInstrucciones);
+                    botones.empezar.visible = false;
+                    botones.despachar.visible = true;
+                    break;
+                case EsperaAntesDeResultado:
+                    assert(estado.actual == Activo);
+                    botones.despachar.visible = false;
+                    reloj_espera_antes_de_resultado.start();
+                    break;
+                case Reiniciando:
+                    return false;
+                default:
+                    break;
+                }
+                estado.actual = nuevo_estado.value();
+            }
         }
+
         if ( //
             estado.actual == EsperaAntesDeResultado &&
-            reloj_espera_antes_de_resultado.get_seconds()>= RETARDO_ANTES_DE_RESULTADO
+            reloj_espera_antes_de_resultado.get_seconds() >= RETARDO_ANTES_DE_RESULTADO
         ) {
             estado.actual = MostrandoResultado;
             if (globales.opt_buffer) {
@@ -368,8 +384,6 @@ bool nivel(                  //
                     break;
                 };
             }
-        } else if (estado.actual == Reiniciando) {
-            return false;
         }
         actualizarIU(
             globales.window, botones, etiquetas, instrucciones, resultado,
