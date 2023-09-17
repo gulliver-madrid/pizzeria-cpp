@@ -12,6 +12,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <cassert>
+#include <chrono>
 #include <iostream>
 #include <optional>
 #include <string>
@@ -21,6 +22,7 @@
 
 #define RETARDO_ANTES_DE_RESULTADO 1
 #define ESPERA_ENTRE_NIVELES 1.5
+#define DRAW_GRID false
 
 struct Globales {
     sf::RenderWindow window;
@@ -50,6 +52,17 @@ struct Estado {
     int contador_pizzas_servidas = 0;
     int contador_pizzas_preparadas = 0;
     int objetivo = 0;
+    std::vector<int> encargadas = {};
+};
+
+int obtener_milisegundos_actuales() {
+    auto ahora = std::chrono::system_clock::now();
+    auto duracion = ahora.time_since_epoch();
+    auto milisegundos =
+        std::chrono::duration_cast<std::chrono::milliseconds>(duracion).count(
+        ) %
+        1'000'000;
+    return milisegundos;
 };
 
 // Incluye toda la lógica para procesar un evento
@@ -92,11 +105,15 @@ std::optional<EstadoJuego> procesarEvento(
                 if (estado.contador_pizzas_servidas >= estado.objetivo) {
                     return EsperaAntesDeResultado;
                 }
+            } else if (botones.encargar.colisiona(mousePos)) {
+                estado.encargadas.push_back(
+                    obtener_milisegundos_actuales() + 2000
+                );
             }
         }
     }
     return std::nullopt;
-}
+};
 
 /* Actualiza el interfaz gráfico */
 void actualizarIU(                   //
@@ -115,8 +132,8 @@ void actualizarIU(                   //
         std::to_string(estado.contador_pizzas_preparadas)
     );
     ventana.clear();
-
-    draw_grid(ventana, grid);
+    if (DRAW_GRID)
+        draw_grid(ventana, grid);
 
     if (estado.contador_pizzas_preparadas == 0) {
         if (botones.despachar.activo)
@@ -124,6 +141,14 @@ void actualizarIU(                   //
     } else {
         if (!botones.despachar.activo)
             botones.despachar.activo = true;
+    }
+    if (estado.contador_pizzas_preparadas + estado.contador_pizzas_servidas <
+        estado.objetivo) {
+        if (!botones.encargar.activo)
+            botones.encargar.activo = true;
+    } else {
+        if (botones.encargar.activo)
+            botones.encargar.activo = false;
     }
 
     for (auto boton_ptr : botones.todos) {
@@ -261,10 +286,12 @@ bool nivel(                  //
                         assert(estado.actual == MostrandoInstrucciones);
                         botones.empezar.visible = false;
                         botones.despachar.visible = true;
+                        botones.encargar.visible = true;
                         break;
                     case EsperaAntesDeResultado:
                         assert(estado.actual == Activo);
                         botones.despachar.visible = false;
+                        botones.encargar.visible = false;
                         timer_espera_antes_de_resultado.start(
                             RETARDO_ANTES_DE_RESULTADO
                         );
@@ -275,6 +302,19 @@ bool nivel(                  //
                 estado.actual = nuevo_estado.value();
             }
         }
+
+        auto tiempo_actual = obtener_milisegundos_actuales();
+        std::vector<int> restantes = {};
+        for (size_t i = 0; i < estado.encargadas.size(); i++) {
+            auto elem = estado.encargadas[i];
+            if (tiempo_actual < elem) {
+                restantes.push_back(elem);
+            }
+        }
+        int listas = estado.encargadas.size() - restantes.size();
+        estado.encargadas = std::move(restantes);
+        estado.contador_pizzas_preparadas += listas;
+
         // En función del estado (no necesariamente reciente)
         switch (estado.actual) {
             case EsperaAntesDeResultado:

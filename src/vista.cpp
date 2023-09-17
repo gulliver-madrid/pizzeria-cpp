@@ -45,9 +45,13 @@ Botones::Botones(sf::Font &font, int pos_y_bajo_etiquetas) {
         "Empezar", sf::Color::Green, sf::Vector2i(500, 450), font,
         sf::Color::Black
     );
+    auto botonEncargar = crearBotonConTexto(
+        "Encargar pizza", sf::Color::Green,
+        sf::Vector2i(50, filaBotonesEjecutivos), font, sf::Color::Black
+    );
     auto botonDespachar = crearBotonConTexto(
         "Despachar pizza", sf::Color::Green,
-        sf::Vector2i(250, filaBotonesEjecutivos), font, sf::Color::Black
+        sf::Vector2i(300, filaBotonesEjecutivos), font, sf::Color::Black
     );
 
     auto botonReiniciar = crearBotonConTexto(
@@ -57,11 +61,12 @@ Botones::Botones(sf::Font &font, int pos_y_bajo_etiquetas) {
         "Salir", sf::Color::Red, sf::Vector2i(400, bottom), font
     );
     empezar = botonEmpezar;
+    encargar = botonEncargar;
     despachar = botonDespachar;
     reiniciar = botonReiniciar;
     salir = botonSalir;
-    todos = {&empezar, &despachar, &reiniciar, &salir};
-    assert(todos.size() == 4);
+    todos = {&empezar, &encargar, &despachar, &reiniciar, &salir};
+    assert(todos.size() == 5);
 }
 
 // Crea la etiqueta de texto que mostrará el contador

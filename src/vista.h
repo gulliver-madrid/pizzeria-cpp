@@ -14,6 +14,7 @@ sf::Text crearEtiquetaPizzasPreparadas(sf::Font &font, float prev_position);
 struct Botones {
 
     BotonConTexto empezar;
+    BotonConTexto encargar;
     BotonConTexto despachar;
     BotonConTexto reiniciar;
     BotonConTexto salir;
