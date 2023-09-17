@@ -168,7 +168,7 @@ struct ResultadoSetup {
 ResultadoSetup setup_juego(Globales &globales) {
     std::string title = TITLE;
     globales.window.create(
-        sf::VideoMode(TAMANO_INICIAL_VENTANA), interpolar(title)
+        sf::VideoMode(TAMANO_INICIAL_VENTANA), interpolar_unicode(title)
     );
     globales.window.setFramerateLimit(FPS);
 
@@ -188,6 +188,9 @@ struct DatosNivel {
     std::string instrucciones;
     int pizzas_preparadas_iniciales = 0;
     int objetivo_pizzas = 0;
+    DatosNivel(std::string instr, int pizzas_iniciales, int obj_pizzas)
+        : instrucciones(instr), pizzas_preparadas_iniciales(pizzas_iniciales),
+          objetivo_pizzas(obj_pizzas) {}
 };
 
 /* Devuelve true si se debe pasar al siguiente nivel,
@@ -299,6 +302,7 @@ int juego() {
 
     DatosNivel datos[] = {
         {INSTRUCCIONES_NIVEL_1, 10, 10},
+        {INSTRUCCIONES_NIVEL_2, 5, 10},
     };
 
     while (true) {

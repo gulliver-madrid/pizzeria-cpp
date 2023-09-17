@@ -23,7 +23,7 @@ const std::map<std::string, std::string> reemplazos = {
     {"%!", START_EXCLAMATION}, //
 };
 
-std::string interpolar(std::string plantilla) {
+std::string interpolar_unicode(std::string plantilla) {
     while (true) {
         std::string prev = plantilla;
 
@@ -42,16 +42,16 @@ std::string interpolar(std::string plantilla) {
     oss << plantilla;
     return oss.str();
 }
-std::string replace_placeholder(
-    const std::string &template_str, const std::string &key,
-    const std::string &value
+
+CadenaJuego &CadenaJuego::interpolar_por_clave(
+    const std::string &key, const std::string &value
 ) {
-    std::string result = template_str;
+    std::string &result = this->value;
     std::string placeholder = "{" + key + "}";
     size_t pos = result.find(placeholder);
-    assert(pos != std::string::npos);
     if (pos != std::string::npos) {
         result.replace(pos, placeholder.length(), value);
     }
-    return result;
+
+    return *this;
 }

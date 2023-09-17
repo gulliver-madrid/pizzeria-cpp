@@ -10,3 +10,8 @@ std::string construir_resultado();
     "pizzer%ia.\nTu primera misi%on es servir a {num_clientes} clientes.\n"    \
     "Recuerda que solo puedes despachar pizzas que ya tengas "                 \
     "preparadas.\n%!Suerte!"
+
+#define INSTRUCCIONES_NIVEL_2                                                  \
+    "Pizzer%ia.\nEn esta ocasi%on los clientes llegan cuando todav%ia no hay " \
+    "suficientes pizzas preparadas.\n"                                         \
+    "%?Podr%as resolver el reto?"
