@@ -34,8 +34,7 @@ BotonConTexto crearBotonConTexto(
     rect.setFillColor(color_fondo);
     rect.setPosition(x, y);
 
-    BotonConTexto boton = {rect, etiqueta};
-    return boton;
+    return BotonConTexto(rect, etiqueta);
 };
 
 Botones::Botones(sf::Font &font, int pos_y_bajo_etiquetas) {

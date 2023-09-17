@@ -118,6 +118,14 @@ void actualizarIU(                   //
 
     draw_grid(ventana, grid);
 
+    if (estado.contador_pizzas_preparadas == 0) {
+        if (botones.despachar.activo)
+            botones.despachar.activo = false;
+    } else {
+        if (!botones.despachar.activo)
+            botones.despachar.activo = true;
+    }
+
     for (auto boton_ptr : botones.todos) {
         assert(boton_ptr != nullptr);
         boton_ptr->dibujar(ventana);
