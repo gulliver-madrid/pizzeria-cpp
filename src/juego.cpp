@@ -22,7 +22,7 @@
 
 #define RETARDO_ANTES_DE_RESULTADO 1
 #define ESPERA_ENTRE_NIVELES 1.5
-#define DRAW_GRID false
+#define DRAW_GRID true
 
 struct Globales {
     sf::RenderWindow window;
@@ -119,6 +119,7 @@ std::optional<EstadoJuego> procesarEvento(
 void actualizarIU(                   //
     sf::RenderWindow &ventana,       //
     Botones &botones,                //
+    Paneles &paneles,                //
     EtiquetasContadores &contadores, //
     EtiquetasInfo &etiquetas_info,   //
     Estado &estado,                  //
@@ -135,6 +136,9 @@ void actualizarIU(                   //
     if (DRAW_GRID)
         draw_grid(ventana, grid);
 
+    paneles.dibujar(ventana);
+
+    // Update buttons state
     if (estado.contador_pizzas_preparadas == 0) {
         if (botones.despachar.activo)
             botones.despachar.activo = false;
@@ -252,16 +256,13 @@ bool nivel(                  //
     sf::Text textoContador = crearEtiquetaContador(globales.font);
     EtiquetasContadores contadores = {textoContador};
 
-    auto prev_position = textoContador.getPosition().y;
     contadores.texto_pizzas_preparadas =
-        crearEtiquetaPizzasPreparadas(globales.font, prev_position);
-    auto last = contadores.texto_pizzas_preparadas;
-
-    sf::FloatRect bounds = last.getGlobalBounds();
-    auto pos_y_bajo_etiquetas = bounds.top + bounds.height;
+        crearEtiquetaPizzasPreparadas(globales.font);
 
     // Botones
-    Botones botones(globales.font, pos_y_bajo_etiquetas);
+    Botones botones(globales.font);
+
+    Paneles paneles;
 
     // Mostrar botones iniciales
     botones.reiniciar.visible = true;
@@ -287,6 +288,7 @@ bool nivel(                  //
                         botones.empezar.visible = false;
                         botones.despachar.visible = true;
                         botones.encargar.visible = true;
+                        paneles.visible = true;
                         break;
                     case EsperaAntesDeResultado:
                         assert(estado.actual == Activo);
@@ -296,6 +298,7 @@ bool nivel(                  //
                             RETARDO_ANTES_DE_RESULTADO
                         );
                         break;
+
                     case Reiniciando:
                         return false;
                 }
@@ -325,6 +328,7 @@ bool nivel(                  //
                         sound.play();
                     }
                     timer_fin_nivel.start(ESPERA_ENTRE_NIVELES);
+                    paneles.visible = false;
                 }
                 break;
             case MostrandoResultado: {
@@ -334,8 +338,10 @@ bool nivel(                  //
                 break;
             }
         }
+
         actualizarIU(
-            globales.window, botones, contadores, etiquetas_info, estado, grid
+            globales.window, botones, paneles, contadores, etiquetas_info,
+            estado, grid
         );
     }
     return true;

@@ -1,7 +1,8 @@
 #include "vista.h"
 #include <cassert>
+#include <iostream>
 
-#define TAMANO_FUENTE_ETIQUETAS 48
+#define TAMANO_FUENTE_ETIQUETAS 36
 #define MARGEN_IZQ_ETIQUETAS 50
 
 sf::Text crearEtiqueta(int tamano, sf::Font &font, sf::Color color) {
@@ -37,8 +38,8 @@ BotonConTexto crearBotonConTexto(
     return BotonConTexto(rect, etiqueta);
 };
 
-Botones::Botones(sf::Font &font, int pos_y_bajo_etiquetas) {
-    int filaBotonesEjecutivos = pos_y_bajo_etiquetas + 50;
+Botones::Botones(sf::Font &font) {
+    int filaBotonesEjecutivos = 600;
     int bottom = 800;
 
     empezar = crearBotonConTexto(
@@ -47,11 +48,18 @@ Botones::Botones(sf::Font &font, int pos_y_bajo_etiquetas) {
     );
     encargar = crearBotonConTexto(
         "Encargar pizza", sf::Color::Green,
-        sf::Vector2i(50, filaBotonesEjecutivos), font, sf::Color::Black
+        sf::Vector2i(
+            margen_izq_paneles + MARGEN_IZQ_ETIQUETAS, filaBotonesEjecutivos
+        ),
+        font, sf::Color::Black
     );
     despachar = crearBotonConTexto(
         "Despachar pizza", sf::Color::Green,
-        sf::Vector2i(300, filaBotonesEjecutivos), font, sf::Color::Black
+        sf::Vector2i(
+            margen_izq_paneles + MARGEN_IZQ_ETIQUETAS + desplazamiento_lateral,
+            filaBotonesEjecutivos
+        ),
+        font, sf::Color::Black
     );
 
     reiniciar = crearBotonConTexto(
@@ -69,14 +77,37 @@ Botones::Botones(sf::Font &font, int pos_y_bajo_etiquetas) {
 sf::Text crearEtiquetaContador(sf::Font &font) {
     sf::Text etiqueta =
         crearEtiqueta(TAMANO_FUENTE_ETIQUETAS, font, sf::Color::White);
-    etiqueta.setPosition(MARGEN_IZQ_ETIQUETAS, 50);
+    etiqueta.setPosition(
+        margen_izq_paneles + desplazamiento_lateral * 2 + MARGEN_IZQ_ETIQUETAS,
+        100
+    );
     return etiqueta;
 }
-sf::Text crearEtiquetaPizzasPreparadas(sf::Font &font, float prev_position) {
+sf::Text crearEtiquetaPizzasPreparadas(sf::Font &font) {
     sf::Text etiqueta =
         crearEtiqueta(TAMANO_FUENTE_ETIQUETAS, font, sf::Color::White);
-    auto pos_x = MARGEN_IZQ_ETIQUETAS;
-    auto pos_y = prev_position + font.getLineSpacing(TAMANO_FUENTE_ETIQUETAS);
+    auto pos_x =
+        margen_izq_paneles + desplazamiento_lateral + MARGEN_IZQ_ETIQUETAS;
+    auto pos_y = 100;
     etiqueta.setPosition(pos_x, pos_y);
     return etiqueta;
+}
+
+sf::RectangleShape
+crearPanelVertical(float x, float y, float ancho, float alto) {
+    auto rect = sf::RectangleShape(sf::Vector2f(ancho, alto));
+    rect.setPosition(sf::Vector2f(x, y));
+    rect.setFillColor(sf::Color::Transparent);
+    rect.setOutlineColor(sf::Color::Green);
+    rect.setOutlineThickness(5);
+    return rect;
+}
+
+void Paneles::dibujar(sf::RenderWindow &window) {
+    // std::cout << "visible: " << visible << std::endl;
+    if (visible) {
+        window.draw(en_preparacion);
+        window.draw(preparadas);
+        window.draw(pedidos);
+    }
 }
