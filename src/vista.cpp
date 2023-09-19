@@ -41,30 +41,26 @@ Botones::Botones(sf::Font &font, int pos_y_bajo_etiquetas) {
     int filaBotonesEjecutivos = pos_y_bajo_etiquetas + 50;
     int bottom = 800;
 
-    auto botonEmpezar = crearBotonConTexto(
+    empezar = crearBotonConTexto(
         "Empezar", sf::Color::Green, sf::Vector2i(500, 450), font,
         sf::Color::Black
     );
-    auto botonEncargar = crearBotonConTexto(
+    encargar = crearBotonConTexto(
         "Encargar pizza", sf::Color::Green,
         sf::Vector2i(50, filaBotonesEjecutivos), font, sf::Color::Black
     );
-    auto botonDespachar = crearBotonConTexto(
+    despachar = crearBotonConTexto(
         "Despachar pizza", sf::Color::Green,
         sf::Vector2i(300, filaBotonesEjecutivos), font, sf::Color::Black
     );
 
-    auto botonReiniciar = crearBotonConTexto(
-        "Reiniciar", sf::Color::Blue, sf::Vector2i(150, bottom), font
+    reiniciar = crearBotonConTexto(
+        "Reiniciar", sf::Color::Blue, sf::Vector2i(1350, bottom), font
     );
-    auto botonSalir = crearBotonConTexto(
-        "Salir", sf::Color::Red, sf::Vector2i(400, bottom), font
+    salir = crearBotonConTexto(
+        "Salir", sf::Color::Red, sf::Vector2i(1600, bottom), font
     );
-    empezar = botonEmpezar;
-    encargar = botonEncargar;
-    despachar = botonDespachar;
-    reiniciar = botonReiniciar;
-    salir = botonSalir;
+
     todos = {&empezar, &encargar, &despachar, &reiniciar, &salir};
     assert(todos.size() == 5);
 }
