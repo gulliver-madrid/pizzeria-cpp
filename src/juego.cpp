@@ -9,7 +9,6 @@
 #include "vista.h"
 #include "vista_data.h"
 #include <SFML/Audio.hpp>
-#include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <cassert>
 #include <chrono>
@@ -22,7 +21,7 @@
 
 #define RETARDO_ANTES_DE_RESULTADO 1
 #define ESPERA_ENTRE_NIVELES 1.5
-#define DRAW_GRID true
+#define DRAW_GRID false
 
 struct Globales {
     sf::RenderWindow window;
@@ -120,23 +119,25 @@ void actualizarIU(                   //
     sf::RenderWindow &ventana,       //
     Botones &botones,                //
     Paneles &paneles,                //
+    TitulosPaneles &titulos_paneles, //
     EtiquetasContadores &contadores, //
     EtiquetasInfo &etiquetas_info,   //
     Estado &estado,                  //
     Grid &grid
 ) {
     contadores.texto_contador.setString(
-        "Clientes servidos: " + std::to_string(estado.contador_pizzas_servidas)
+        "Pizza Margarita: " + std::to_string(estado.contador_pizzas_servidas) +
+        "/" + std::to_string(estado.objetivo)
     );
     contadores.texto_pizzas_preparadas.setString(
-        "Pizzas preparadas: " +
-        std::to_string(estado.contador_pizzas_preparadas)
+        "Pizza Margarita: " + std::to_string(estado.contador_pizzas_preparadas)
     );
     ventana.clear();
     if (DRAW_GRID)
         draw_grid(ventana, grid);
 
     paneles.dibujar(ventana);
+    titulos_paneles.dibujar(ventana);
 
     // Update buttons state
     if (estado.contador_pizzas_preparadas == 0) {
@@ -230,6 +231,14 @@ struct DatosNivel {
           objetivo_pizzas(obj_pizzas) {}
 };
 
+void TitulosPaneles::dibujar(sf::RenderWindow &window) {
+    if (visible) {
+        window.draw(en_preparacion);
+        window.draw(preparadas);
+        window.draw(pedidos);
+    }
+}
+
 /* Devuelve true si se debe pasar al siguiente nivel,
  * false para reiniciar
  */
@@ -252,6 +261,20 @@ bool nivel(                  //
 
     EtiquetasInfo etiquetas_info = {instrucciones, resultado};
 
+    Paneles paneles;
+
+    // Títulos paneles
+    sf::Text titulo_1 = crearEtiquetaTituloPanel(
+        globales.font, IndicePanel::PANEL_EN_PREPARACION, "En preparaci%on"
+    );
+    sf::Text titulo_2 = crearEtiquetaTituloPanel(
+        globales.font, IndicePanel::PANEL_PREPARADAS, "Preparadas"
+    );
+    sf::Text titulo_3 = crearEtiquetaTituloPanel(
+        globales.font, IndicePanel::PANEL_PEDIDOS, "Pedidos"
+    );
+    TitulosPaneles titulos_paneles = {titulo_1, titulo_2, titulo_3};
+
     // Contadores
     sf::Text textoContador = crearEtiquetaContador(globales.font);
     EtiquetasContadores contadores = {textoContador};
@@ -261,8 +284,6 @@ bool nivel(                  //
 
     // Botones
     Botones botones(globales.font);
-
-    Paneles paneles;
 
     // Mostrar botones iniciales
     botones.reiniciar.visible = true;
@@ -289,6 +310,7 @@ bool nivel(                  //
                         botones.despachar.visible = true;
                         botones.encargar.visible = true;
                         paneles.visible = true;
+                        titulos_paneles.visible = true;
                         break;
                     case EsperaAntesDeResultado:
                         assert(estado.actual == Activo);
@@ -329,6 +351,7 @@ bool nivel(                  //
                     }
                     timer_fin_nivel.start(ESPERA_ENTRE_NIVELES);
                     paneles.visible = false;
+                    titulos_paneles.visible = false;
                 }
                 break;
             case MostrandoResultado: {
@@ -340,8 +363,8 @@ bool nivel(                  //
         }
 
         actualizarIU(
-            globales.window, botones, paneles, contadores, etiquetas_info,
-            estado, grid
+            globales.window, botones, paneles, titulos_paneles, contadores,
+            etiquetas_info, estado, grid
         );
     }
     return true;
