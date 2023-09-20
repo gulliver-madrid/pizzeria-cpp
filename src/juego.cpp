@@ -126,11 +126,8 @@ void actualizarIU(                       //
     contadores.texto_pizzas_preparadas.setString(
         "Pizza Margarita: " + std::to_string(estado.contador_pizzas_preparadas)
     );
-    ventana.clear();
-    if (DRAW_GRID)
-        draw_grid(ventana, grid);
 
-    // Update buttons state
+    // Actualiza el estado de los botones
     if (estado.contador_pizzas_preparadas == 0) {
         if (botones.despachar.activo)
             botones.despachar.activo = false;
@@ -148,11 +145,14 @@ void actualizarIU(                       //
             botones.encargar.activo = false;
     }
 
-    for (auto boton_ptr : botones.todos) {
-        assert(boton_ptr != nullptr);
-        boton_ptr->dibujar(ventana);
-    }
+    // Limpia la ventana y empieza a pintar los componentes visuales
+    ventana.clear();
+    if (DRAW_GRID)
+        draw_grid(ventana, grid);
 
+    botones.dibujar(ventana);
+
+    // Textos
     if (estado.actual == MostrandoInstrucciones) {
         ventana.draw(etiquetas_info.instrucciones);
     } else if (estado.actual == Activo || estado.actual == EsperaAntesDeResultado) {
@@ -162,6 +162,8 @@ void actualizarIU(                       //
         assert(estado.actual == MostrandoResultado);
         ventana.draw(etiquetas_info.resultado);
     }
+
+    // Paneles
     if (estado.actual == Activo || estado.actual == EsperaAntesDeResultado) {
         std::vector<int> porcentajes;
         for (auto &tp : estado.encargadas) {
@@ -183,6 +185,7 @@ sf::Text generar_instrucciones(
     etiqueta.setPosition(200, 200);
     return etiqueta;
 }
+
 sf::Text generar_resultado(sf::Font &font) {
     auto etiqueta = crearEtiqueta(TAMANO_FUENTE_INFO, font, sf::Color::Green);
     etiqueta.setString(construir_resultado());

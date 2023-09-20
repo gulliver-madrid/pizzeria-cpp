@@ -29,6 +29,7 @@ struct Botones {
     std::vector<BotonConTexto *> todos;
 
     Botones(sf::Font &);
+    void dibujar(sf::RenderWindow &ventana);
 };
 
 struct PorcentajeVisual {
@@ -61,6 +62,7 @@ struct PanelesCompletos {
     TitulosPaneles titulos_paneles;
     std::vector<PorcentajeVisual> porcentajes_visuales;
     bool visible = false;
+
     PanelesCompletos(sf::Font &font);
     void dibujar(sf::RenderWindow &ventana, std::vector<int> &porcentajes);
 };

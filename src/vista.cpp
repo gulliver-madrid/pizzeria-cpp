@@ -96,6 +96,13 @@ Botones::Botones(sf::Font &font) {
     assert(todos.size() == 5);
 }
 
+void Botones::dibujar(sf::RenderWindow &ventana) {
+    for (auto boton_ptr : todos) {
+        assert(boton_ptr != nullptr);
+        boton_ptr->dibujar(ventana);
+    }
+}
+
 sf::Text crearEtiquetaTituloPanel(
     const sf::Font &font, IndicePanel indice_panel, const std::string &texto
 ) {
