@@ -199,15 +199,15 @@ PanelesCompletos::PanelesCompletos(sf::Font &font) {
 void PanelesCompletos::dibujar(
     sf::RenderWindow &ventana, std::vector<int> &porcentajes
 ) {
-    if (visible) {
-        paneles.dibujar(ventana);
-        titulos_paneles.dibujar(ventana);
-        porcentajes_visuales = crear_visualizaciones_porcentajes(porcentajes);
-        int i = 0;
-        for (auto &tpv : porcentajes_visuales) {
-            ventana.draw(tpv.fondo);
-            ventana.draw(tpv.relleno);
-            i++;
-        }
+    if (!visible)
+        return;
+    paneles.dibujar(ventana);
+    titulos_paneles.dibujar(ventana);
+    porcentajes_visuales = crear_visualizaciones_porcentajes(porcentajes);
+    int i = 0;
+    for (auto &tpv : porcentajes_visuales) {
+        ventana.draw(tpv.fondo);
+        ventana.draw(tpv.relleno);
+        i++;
     }
 }
