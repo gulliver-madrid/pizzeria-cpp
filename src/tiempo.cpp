@@ -21,11 +21,10 @@ bool Timer::termino() {
 }
 
 int TiempoPreparacion::obtener_porcentaje() const {
-    const int total = this->total.obtener_milisegundos();
-    const int inicio = finalizacion.obtener_milisegundos() - total;
-    const int actual = obtener_tiempo_actual().obtener_milisegundos();
-    const int transcurrido = actual - inicio;
-    int porcentaje = transcurrido * 100 / total;
+    const auto inicio = finalizacion - total;
+    const auto actual = obtener_tiempo_actual();
+    const auto transcurrido = actual - inicio;
+    int porcentaje = Tiempo::calcular_porcentaje(transcurrido, total);
     if (porcentaje > 100) {
         porcentaje = 100;
     }
@@ -49,6 +48,9 @@ Tiempo::Tiempo(int ms) : _ms(ms) {}
 Tiempo Tiempo::desde_milisegundos(int valor) { return Tiempo{valor}; }
 Tiempo Tiempo::desde_segundos(float valor) {
     return Tiempo{static_cast<int>(valor * 1000)};
+}
+int Tiempo::calcular_porcentaje(const Tiempo &parte, const Tiempo &total) {
+    return parte._ms * 100 / total._ms;
 }
 
 const Tiempo Tiempo::CERO = Tiempo::desde_milisegundos(0);
