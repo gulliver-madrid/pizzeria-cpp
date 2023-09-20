@@ -20,9 +20,9 @@
 #define TAMANO_FUENTE_INFO 36
 
 namespace tiempos {
-    constexpr int TIEMPO_PREPARACION = 2;
-    constexpr int RETARDO_ANTES_DE_RESULTADO = 1;
-    constexpr int ESPERA_ENTRE_NIVELES = 1.5;
+    const auto TIEMPO_PREPARACION = Tiempo::desde_segundos(2);
+    const auto RETARDO_ANTES_DE_RESULTADO = Tiempo::desde_segundos(1);
+    const auto ESPERA_ENTRE_NIVELES = Tiempo::desde_segundos(1.5);
 } // namespace tiempos
 
 struct Globales {
@@ -97,10 +97,10 @@ std::optional<EstadoJuego> procesarEvento(
                     return EsperaAntesDeResultado;
                 }
             } else if (botones.encargar.colisiona(mousePos)) {
-                auto total = tiempos::TIEMPO_PREPARACION * 1000;
-                estado.encargadas.push_back(TiempoPreparacion{
-                    obtener_milisegundos_actuales() + total, total
-                });
+                auto total = tiempos::TIEMPO_PREPARACION;
+                estado.encargadas.push_back(
+                    TiempoPreparacion{obtener_tiempo_actual() + total, total}
+                );
             }
         }
     }
@@ -341,11 +341,11 @@ bool nivel(                  //
             }
         }
 
-        auto tiempo_actual = obtener_milisegundos_actuales();
+        auto tiempo_actual = obtener_tiempo_actual();
         std::vector<TiempoPreparacion> restantes = {};
         for (size_t i = 0; i < estado.encargadas.size(); i++) {
             auto elem = estado.encargadas[i];
-            if (tiempo_actual < elem.lista) {
+            if (tiempo_actual < elem.finalizacion) {
                 restantes.push_back(elem);
             }
         }
