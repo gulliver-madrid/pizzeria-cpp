@@ -1,5 +1,4 @@
 #include "tiempo.h"
-#include <SFML/Graphics.hpp>
 #include <cassert>
 #include <chrono>
 #include <optional>
@@ -22,11 +21,14 @@ bool Timer::termino() {
 }
 
 int TiempoPreparacion::obtener_porcentaje() const {
-    int restante = finalizacion.obtener_milisegundos() -
-                   obtener_tiempo_actual().obtener_milisegundos();
-    if (restante < 0)
-        restante = 0;
-    int porcentaje = 100 - (restante * 100 / total.obtener_milisegundos());
+    const int total = this->total.obtener_milisegundos();
+    const int inicio = finalizacion.obtener_milisegundos() - total;
+    const int actual = obtener_tiempo_actual().obtener_milisegundos();
+    const int transcurrido = actual - inicio;
+    int porcentaje = transcurrido * 100 / total;
+    if (porcentaje > 100) {
+        porcentaje = 100;
+    }
     assert(porcentaje >= 0);
     return porcentaje;
 };
