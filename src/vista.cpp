@@ -153,11 +153,9 @@ Paneles::Paneles() {
 }
 
 void Paneles::dibujar(sf::RenderWindow &window) {
-    if (visible) {
-        window.draw(en_preparacion);
-        window.draw(preparadas);
-        window.draw(pedidos);
-    }
+    window.draw(en_preparacion);
+    window.draw(preparadas);
+    window.draw(pedidos);
 }
 
 std::vector<PorcentajeVisual>
@@ -178,4 +176,38 @@ crear_visualizaciones_porcentajes(const std::vector<int> porcentajes) {
         i++;
     }
     return vect;
+}
+
+void TitulosPaneles::dibujar(sf::RenderWindow &ventana) {
+    ventana.draw(en_preparacion);
+    ventana.draw(preparadas);
+    ventana.draw(pedidos);
+}
+
+PanelesCompletos::PanelesCompletos(sf::Font &font) {
+    sf::Text titulo_1 = crearEtiquetaTituloPanel(
+        font, IndicePanel::PANEL_EN_PREPARACION, "En preparaci%on"
+    );
+    sf::Text titulo_2 = crearEtiquetaTituloPanel(
+        font, IndicePanel::PANEL_PREPARADAS, "Preparadas"
+    );
+    sf::Text titulo_3 =
+        crearEtiquetaTituloPanel(font, IndicePanel::PANEL_PEDIDOS, "Pedidos");
+    titulos_paneles = {titulo_1, titulo_2, titulo_3};
+}
+
+void PanelesCompletos::dibujar(
+    sf::RenderWindow &ventana, std::vector<int> &porcentajes
+) {
+    if (visible) {
+        paneles.dibujar(ventana);
+        titulos_paneles.dibujar(ventana);
+        porcentajes_visuales = crear_visualizaciones_porcentajes(porcentajes);
+        int i = 0;
+        for (auto &tpv : porcentajes_visuales) {
+            ventana.draw(tpv.fondo);
+            ventana.draw(tpv.relleno);
+            i++;
+        }
+    }
 }

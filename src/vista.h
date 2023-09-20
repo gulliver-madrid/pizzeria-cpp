@@ -2,6 +2,7 @@
 
 #include "componentes.h"
 #include "tiempo.h"
+#include <vector>
 
 enum IndicePanel {
     PANEL_EN_PREPARACION,
@@ -39,8 +40,6 @@ struct Paneles {
     sf::RectangleShape en_preparacion;
     sf::RectangleShape preparadas;
     sf::RectangleShape pedidos;
-    std::vector<PorcentajeVisual> porcentajes_visuales;
-    bool visible = false;
     Paneles();
 
     void dibujar(sf::RenderWindow &window);
@@ -48,3 +47,20 @@ struct Paneles {
 
 std::vector<PorcentajeVisual>
 crear_visualizaciones_porcentajes(const std::vector<int> porcentajes);
+
+struct TitulosPaneles {
+    sf::Text en_preparacion;
+    sf::Text preparadas;
+    sf::Text pedidos;
+
+    void dibujar(sf::RenderWindow &window);
+};
+
+struct PanelesCompletos {
+    Paneles paneles;
+    TitulosPaneles titulos_paneles;
+    std::vector<PorcentajeVisual> porcentajes_visuales;
+    bool visible = false;
+    PanelesCompletos(sf::Font &font);
+    void dibujar(sf::RenderWindow &ventana, std::vector<int> &porcentajes);
+};

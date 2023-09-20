@@ -20,7 +20,7 @@
 #define TAMANO_FUENTE_INFO 36
 
 namespace tiempos {
-    const auto TIEMPO_PREPARACION = Tiempo::desde_segundos(2);
+    const auto TIEMPO_PREPARACION = Tiempo::desde_segundos(3.5);
     const auto RETARDO_ANTES_DE_RESULTADO = Tiempo::desde_segundos(1);
     const auto ESPERA_ENTRE_NIVELES = Tiempo::desde_segundos(1.5);
 } // namespace tiempos
@@ -110,14 +110,13 @@ std::optional<EstadoJuego> procesarEvento(
 /*
  * Actualiza el interfaz gráfico
  */
-void actualizarIU(                   //
-    sf::RenderWindow &ventana,       //
-    Botones &botones,                //
-    Paneles &paneles,                //
-    TitulosPaneles &titulos_paneles, //
-    EtiquetasContadores &contadores, //
-    EtiquetasInfo &etiquetas_info,   //
-    Estado &estado,                  //
+void actualizarIU(                       //
+    sf::RenderWindow &ventana,           //
+    Botones &botones,                    //
+    PanelesCompletos &paneles_completos, //
+    EtiquetasContadores &contadores,     //
+    EtiquetasInfo &etiquetas_info,       //
+    Estado &estado,                      //
     Grid &grid
 ) {
     contadores.texto_contador.setString(
@@ -130,9 +129,6 @@ void actualizarIU(                   //
     ventana.clear();
     if (DRAW_GRID)
         draw_grid(ventana, grid);
-
-    paneles.dibujar(ventana);
-    titulos_paneles.dibujar(ventana);
 
     // Update buttons state
     if (estado.contador_pizzas_preparadas == 0) {
@@ -166,26 +162,12 @@ void actualizarIU(                   //
         assert(estado.actual == MostrandoResultado);
         ventana.draw(etiquetas_info.resultado);
     }
-    if (estado.actual == Activo) {
+    if (estado.actual == Activo || estado.actual == EsperaAntesDeResultado) {
         std::vector<int> porcentajes;
         for (auto &tp : estado.encargadas) {
             porcentajes.push_back(tp.obtener_porcentaje());
         }
-        auto porcentajes_visuales =
-            crear_visualizaciones_porcentajes(porcentajes);
-        // std::cout << "hay " << porcentajes_visuales.size() << "
-        // visualizaciones"
-        //           << std::endl;
-        paneles.porcentajes_visuales = porcentajes_visuales;
-        int i = 0;
-        for (auto &tpv : paneles.porcentajes_visuales) {
-            // std::cout << "Creando visualizacion de los tiempos de
-            // preparación: "
-            //           << i << std::endl;
-            ventana.draw(tpv.fondo);
-            ventana.draw(tpv.relleno);
-            i++;
-        }
+        paneles_completos.dibujar(ventana, porcentajes);
     }
 
     ventana.display();
@@ -248,14 +230,6 @@ struct DatosNivel {
           objetivo_pizzas(obj_pizzas) {}
 };
 
-void TitulosPaneles::dibujar(sf::RenderWindow &window) {
-    if (visible) {
-        window.draw(en_preparacion);
-        window.draw(preparadas);
-        window.draw(pedidos);
-    }
-}
-
 /* Devuelve true si se debe pasar al siguiente nivel,
  * false para reiniciar
  */
@@ -278,19 +252,7 @@ bool nivel(                  //
 
     EtiquetasInfo etiquetas_info = {instrucciones, resultado};
 
-    Paneles paneles;
-
-    // Títulos paneles
-    sf::Text titulo_1 = crearEtiquetaTituloPanel(
-        globales.font, IndicePanel::PANEL_EN_PREPARACION, "En preparaci%on"
-    );
-    sf::Text titulo_2 = crearEtiquetaTituloPanel(
-        globales.font, IndicePanel::PANEL_PREPARADAS, "Preparadas"
-    );
-    sf::Text titulo_3 = crearEtiquetaTituloPanel(
-        globales.font, IndicePanel::PANEL_PEDIDOS, "Pedidos"
-    );
-    TitulosPaneles titulos_paneles = {titulo_1, titulo_2, titulo_3};
+    PanelesCompletos paneles_completos(globales.font);
 
     // Contadores
     sf::Text textoContador = crearEtiquetaContador(globales.font);
@@ -326,8 +288,7 @@ bool nivel(                  //
                         botones.empezar.visible = false;
                         botones.despachar.visible = true;
                         botones.encargar.visible = true;
-                        paneles.visible = true;
-                        titulos_paneles.visible = true;
+                        paneles_completos.visible = true;
                         break;
                     case EsperaAntesDeResultado:
                         assert(estado.actual == Activo);
@@ -367,8 +328,7 @@ bool nivel(                  //
                         sound.play();
                     }
                     timer_fin_nivel.start(tiempos::ESPERA_ENTRE_NIVELES);
-                    paneles.visible = false;
-                    titulos_paneles.visible = false;
+                    paneles_completos.visible = false;
                 }
                 break;
             case MostrandoResultado: {
@@ -380,7 +340,7 @@ bool nivel(                  //
         }
 
         actualizarIU(
-            globales.window, botones, paneles, titulos_paneles, contadores,
+            globales.window, botones, paneles_completos, contadores,
             etiquetas_info, estado, grid
         );
     }
