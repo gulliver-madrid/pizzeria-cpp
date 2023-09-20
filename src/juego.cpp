@@ -142,7 +142,8 @@ void actualizarIU(                   //
         if (!botones.despachar.activo)
             botones.despachar.activo = true;
     }
-    if (estado.contador_pizzas_preparadas + estado.contador_pizzas_servidas <
+    if (estado.contador_pizzas_preparadas + estado.contador_pizzas_servidas +
+            estado.encargadas.size() <
         estado.objetivo) {
         if (!botones.encargar.activo)
             botones.encargar.activo = true;
