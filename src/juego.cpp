@@ -11,17 +11,19 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Window.hpp>
 #include <cassert>
-#include <chrono>
 #include <iostream>
 #include <optional>
 #include <string>
+#include <vector>
 
 #define TITLE "Pizzer%ia"
 #define TAMANO_FUENTE_INFO 36
 
-#define RETARDO_ANTES_DE_RESULTADO 1
-#define ESPERA_ENTRE_NIVELES 1.5
-#define DRAW_GRID false
+namespace tiempos {
+    constexpr int TIEMPO_PREPARACION = 2;
+    constexpr int RETARDO_ANTES_DE_RESULTADO = 1;
+    constexpr int ESPERA_ENTRE_NIVELES = 1.5;
+} // namespace tiempos
 
 struct Globales {
     sf::RenderWindow window;
@@ -51,17 +53,7 @@ struct Estado {
     int contador_pizzas_servidas = 0;
     int contador_pizzas_preparadas = 0;
     int objetivo = 0;
-    std::vector<int> encargadas = {};
-};
-
-int obtener_milisegundos_actuales() {
-    auto ahora = std::chrono::system_clock::now();
-    auto duracion = ahora.time_since_epoch();
-    auto milisegundos =
-        std::chrono::duration_cast<std::chrono::milliseconds>(duracion).count(
-        ) %
-        1'000'000;
-    return milisegundos;
+    std::vector<TiempoPreparacion> encargadas = {};
 };
 
 // Incluye toda la lógica para procesar un evento
@@ -105,16 +97,19 @@ std::optional<EstadoJuego> procesarEvento(
                     return EsperaAntesDeResultado;
                 }
             } else if (botones.encargar.colisiona(mousePos)) {
-                estado.encargadas.push_back(
-                    obtener_milisegundos_actuales() + 2000
-                );
+                auto total = tiempos::TIEMPO_PREPARACION * 1000;
+                estado.encargadas.push_back(TiempoPreparacion{
+                    obtener_milisegundos_actuales() + total, total
+                });
             }
         }
     }
     return std::nullopt;
 };
 
-/* Actualiza el interfaz gráfico */
+/*
+ * Actualiza el interfaz gráfico
+ */
 void actualizarIU(                   //
     sf::RenderWindow &ventana,       //
     Botones &botones,                //
@@ -169,6 +164,23 @@ void actualizarIU(                   //
     } else {
         assert(estado.actual == MostrandoResultado);
         ventana.draw(etiquetas_info.resultado);
+    }
+    if (estado.actual == Activo) {
+        auto porcentajes_visuales =
+            crear_visualizaciones_tiempos_preparacion(estado.encargadas);
+        // std::cout << "hay " << porcentajes_visuales.size() << "
+        // visualizaciones"
+        //           << std::endl;
+        paneles.porcentajes_visuales = porcentajes_visuales;
+        int i = 0;
+        for (auto &tpv : paneles.porcentajes_visuales) {
+            // std::cout << "Creando visualizacion de los tiempos de
+            // preparación: "
+            //           << i << std::endl;
+            ventana.draw(tpv.fondo);
+            ventana.draw(tpv.relleno);
+            i++;
+        }
     }
 
     ventana.display();
@@ -317,7 +329,7 @@ bool nivel(                  //
                         botones.despachar.visible = false;
                         botones.encargar.visible = false;
                         timer_espera_antes_de_resultado.start(
-                            RETARDO_ANTES_DE_RESULTADO
+                            tiempos::RETARDO_ANTES_DE_RESULTADO
                         );
                         break;
 
@@ -329,10 +341,10 @@ bool nivel(                  //
         }
 
         auto tiempo_actual = obtener_milisegundos_actuales();
-        std::vector<int> restantes = {};
+        std::vector<TiempoPreparacion> restantes = {};
         for (size_t i = 0; i < estado.encargadas.size(); i++) {
             auto elem = estado.encargadas[i];
-            if (tiempo_actual < elem) {
+            if (tiempo_actual < elem.lista) {
                 restantes.push_back(elem);
             }
         }
@@ -349,7 +361,7 @@ bool nivel(                  //
                         sound.setBuffer(globales.opt_buffer.value());
                         sound.play();
                     }
-                    timer_fin_nivel.start(ESPERA_ENTRE_NIVELES);
+                    timer_fin_nivel.start(tiempos::ESPERA_ENTRE_NIVELES);
                     paneles.visible = false;
                     titulos_paneles.visible = false;
                 }
@@ -378,8 +390,8 @@ int juego() {
         return EXIT_FAILURE;
 
     DatosNivel datos[] = {
-        {INSTRUCCIONES_NIVEL_1, 10, 10},
-        {INSTRUCCIONES_NIVEL_2, 5, 10},
+        {INSTRUCCIONES_NIVEL_1, 4, 6},
+        {INSTRUCCIONES_NIVEL_2, 2, 6},
     };
 
     while (true) {

@@ -13,3 +13,13 @@ struct Timer {
     void start(float finalizacion);
     bool termino();
 };
+
+struct TiempoPreparacion {
+    // Tiempo unix en milisegundos
+    int lista;
+    // Tiempo de preparación en milisegundos
+    int total;
+    int obtener_porcentaje() const;
+};
+
+int obtener_milisegundos_actuales();

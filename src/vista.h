@@ -1,6 +1,7 @@
 #pragma once
 
 #include "componentes.h"
+#include "tiempo.h"
 
 enum IndicePanel {
     PANEL_EN_PREPARACION,
@@ -29,12 +30,22 @@ struct Botones {
     Botones(sf::Font &);
 };
 
+struct PorcentajeVisual {
+    sf::RectangleShape fondo;
+    sf::RectangleShape relleno;
+};
+
 struct Paneles {
     sf::RectangleShape en_preparacion;
     sf::RectangleShape preparadas;
     sf::RectangleShape pedidos;
+    std::vector<PorcentajeVisual> porcentajes_visuales;
     bool visible = false;
     Paneles();
 
     void dibujar(sf::RenderWindow &window);
 };
+
+std::vector<PorcentajeVisual> crear_visualizaciones_tiempos_preparacion(
+    const std::vector<TiempoPreparacion> tiempos
+);

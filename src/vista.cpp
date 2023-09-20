@@ -1,5 +1,6 @@
 #include "vista.h"
 #include "cadenas.h"
+#include <SFML/Graphics.hpp>
 #include <cassert>
 #include <iostream>
 
@@ -157,4 +158,26 @@ void Paneles::dibujar(sf::RenderWindow &window) {
         window.draw(preparadas);
         window.draw(pedidos);
     }
+}
+
+std::vector<PorcentajeVisual> crear_visualizaciones_tiempos_preparacion(
+    const std::vector<TiempoPreparacion> tiempos
+) {
+    std::vector<PorcentajeVisual> vect{};
+    int i = 0;
+    for (auto &tp : tiempos) {
+        PorcentajeVisual pv;
+        int porcentaje = tp.obtener_porcentaje();
+        pv.fondo = sf::RectangleShape(sf::Vector2f(300, 40));
+        // std::cout << "Porcentaje: " << porcentaje << std::endl;
+        pv.relleno =
+            sf::RectangleShape(sf::Vector2f(300 * porcentaje / 100, 40));
+        pv.fondo.setFillColor(sf::Color::Cyan);
+        pv.relleno.setFillColor(sf::Color::Blue);
+        pv.fondo.setPosition(100, 200 + i * 100);
+        pv.relleno.setPosition(100, 200 + i * 100);
+        vect.push_back(pv);
+        i++;
+    }
+    return vect;
 }
