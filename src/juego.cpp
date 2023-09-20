@@ -167,8 +167,12 @@ void actualizarIU(                   //
         ventana.draw(etiquetas_info.resultado);
     }
     if (estado.actual == Activo) {
+        std::vector<int> porcentajes;
+        for (auto &tp : estado.encargadas) {
+            porcentajes.push_back(tp.obtener_porcentaje());
+        }
         auto porcentajes_visuales =
-            crear_visualizaciones_tiempos_preparacion(estado.encargadas);
+            crear_visualizaciones_porcentajes(porcentajes);
         // std::cout << "hay " << porcentajes_visuales.size() << "
         // visualizaciones"
         //           << std::endl;

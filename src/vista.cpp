@@ -160,14 +160,12 @@ void Paneles::dibujar(sf::RenderWindow &window) {
     }
 }
 
-std::vector<PorcentajeVisual> crear_visualizaciones_tiempos_preparacion(
-    const std::vector<TiempoPreparacion> tiempos
-) {
+std::vector<PorcentajeVisual>
+crear_visualizaciones_porcentajes(const std::vector<int> porcentajes) {
     std::vector<PorcentajeVisual> vect{};
     int i = 0;
-    for (auto &tp : tiempos) {
+    for (auto porcentaje : porcentajes) {
         PorcentajeVisual pv;
-        int porcentaje = tp.obtener_porcentaje();
         pv.fondo = sf::RectangleShape(sf::Vector2f(300, 40));
         // std::cout << "Porcentaje: " << porcentaje << std::endl;
         pv.relleno =
