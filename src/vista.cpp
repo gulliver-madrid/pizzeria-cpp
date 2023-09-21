@@ -5,7 +5,7 @@
 #include <iostream>
 
 #define COLOR_BARRA_PROGRESO_FONDO 230, 230, 230
-#define COLOR_BARRA_PROGRESO_RELLENO 30, 144, 255
+#define COLOR_BARRA_PROGRESO_RELLENO 255, 140, 0 // 30, 144, 255
 #define COLOR_BARRA_PROGRESO_TEXTO 0, 0, 0
 
 namespace medidas {
@@ -170,34 +170,34 @@ void Paneles::dibujar(sf::RenderWindow &window) {
     window.draw(pedidos);
 }
 
-std::vector<PorcentajeVisualConNombre> crear_visualizaciones_porcentajes(
+std::vector<BarraProgresoConNombre> crear_visualizaciones_porcentajes(
     const std::vector<int> &porcentajes,
     const std::vector<std::string> &nombres, sf::Font &font
 ) {
     assert(porcentajes.size() == nombres.size());
-    std::vector<PorcentajeVisualConNombre> vect{};
+    std::vector<BarraProgresoConNombre> vect{};
     int i = 0;
     int pos_x = 100;
     int pos_y_inicial = 240;
     int ancho = 300;
     int largo = 40;
     for (auto porcentaje : porcentajes) {
-        PorcentajeVisualConNombre pvn;
-        PorcentajeVisual &pv = pvn.pv;
-        pv.fondo = sf::RectangleShape(sf::Vector2f(ancho, largo));
-        pv.relleno =
+        BarraProgresoConNombre bpn;
+        BarraProgreso &bp = bpn.bp;
+        bp.fondo = sf::RectangleShape(sf::Vector2f(ancho, largo));
+        bp.relleno =
             sf::RectangleShape(sf::Vector2f(ancho * porcentaje / 100, largo));
-        pv.fondo.setFillColor(sf::Color(COLOR_BARRA_PROGRESO_FONDO));
-        pv.relleno.setFillColor(sf::Color(COLOR_BARRA_PROGRESO_RELLENO));
+        bp.fondo.setFillColor(sf::Color(COLOR_BARRA_PROGRESO_FONDO));
+        bp.relleno.setFillColor(sf::Color(COLOR_BARRA_PROGRESO_RELLENO));
         int offset_y =
             i * medidas::DIFERENCIA_VERTICAL_ENTRE_PORCENTAJES_VISUALES;
         int pos_y = pos_y_inicial + offset_y;
-        pv.fondo.setPosition(pos_x, pos_y);
-        pv.relleno.setPosition(pos_x, pos_y);
-        pvn.etiqueta = sf::Text(nombres[i], font, 24);
-        pvn.etiqueta.setFillColor(sf::Color(COLOR_BARRA_PROGRESO_TEXTO));
-        pvn.etiqueta.setPosition(pos_x + 20, pos_y + 5);
-        vect.push_back(pvn);
+        bp.fondo.setPosition(pos_x, pos_y);
+        bp.relleno.setPosition(pos_x, pos_y);
+        bpn.etiqueta = sf::Text(nombres[i], font, 24);
+        bpn.etiqueta.setFillColor(sf::Color(COLOR_BARRA_PROGRESO_TEXTO));
+        bpn.etiqueta.setPosition(pos_x + 20, pos_y + 5);
+        vect.push_back(bpn);
         i++;
     }
     return vect;
@@ -232,8 +232,8 @@ void PanelesCompletos::dibujar(
     porcentajes_visuales_con_nombres =
         crear_visualizaciones_porcentajes(porcentajes, nombres, font);
     for (auto &tpv : porcentajes_visuales_con_nombres) {
-        ventana.draw(tpv.pv.fondo);
-        ventana.draw(tpv.pv.relleno);
+        ventana.draw(tpv.bp.fondo);
+        ventana.draw(tpv.bp.relleno);
         ventana.draw(tpv.etiqueta);
     }
 }

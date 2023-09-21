@@ -32,13 +32,13 @@ struct Botones {
     void dibujar(sf::RenderWindow &ventana);
 };
 
-struct PorcentajeVisual {
+struct BarraProgreso {
     sf::RectangleShape fondo;
     sf::RectangleShape relleno;
 };
-struct PorcentajeVisualConNombre {
+struct BarraProgresoConNombre {
     sf::Text etiqueta;
-    PorcentajeVisual pv;
+    BarraProgreso bp;
 };
 
 struct Paneles {
@@ -50,7 +50,7 @@ struct Paneles {
     void dibujar(sf::RenderWindow &window);
 };
 
-std::vector<PorcentajeVisualConNombre> crear_visualizaciones_porcentajes(
+std::vector<BarraProgresoConNombre> crear_visualizaciones_porcentajes(
     const std::vector<int> &porcentajes,
     const std::vector<std::string> &nombres, sf::Font &font
 );
@@ -66,7 +66,7 @@ struct TitulosPaneles {
 struct PanelesCompletos {
     Paneles paneles;
     TitulosPaneles titulos_paneles;
-    std::vector<PorcentajeVisualConNombre> porcentajes_visuales_con_nombres;
+    std::vector<BarraProgresoConNombre> porcentajes_visuales_con_nombres;
     bool visible = false;
 
     PanelesCompletos(sf::Font &font);
