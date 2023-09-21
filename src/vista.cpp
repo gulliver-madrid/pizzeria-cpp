@@ -18,6 +18,7 @@ namespace medidas {
     constexpr int MARGEN_IZQ_PANELES = 50;
     constexpr int DESPLAZAMIENTO_LATERAL = 520;
     constexpr int MARGEN_TOP_PANELES = 50;
+    constexpr int DIFERENCIA_VERTICAL_ENTRE_PORCENTAJES_VISUALES = 60;
 } // namespace medidas
 
 int obtener_posicion_x_panel(IndicePanel indice_panel) {
@@ -169,16 +170,20 @@ std::vector<PorcentajeVisual>
 crear_visualizaciones_porcentajes(const std::vector<int> porcentajes) {
     std::vector<PorcentajeVisual> vect{};
     int i = 0;
+    int pos_x = 100;
+    int pos_y_inicial = 240;
     for (auto porcentaje : porcentajes) {
         PorcentajeVisual pv;
         pv.fondo = sf::RectangleShape(sf::Vector2f(300, 40));
-        // std::cout << "Porcentaje: " << porcentaje << std::endl;
         pv.relleno =
             sf::RectangleShape(sf::Vector2f(300 * porcentaje / 100, 40));
         pv.fondo.setFillColor(sf::Color::Cyan);
         pv.relleno.setFillColor(sf::Color::Blue);
-        pv.fondo.setPosition(100, 200 + i * 100);
-        pv.relleno.setPosition(100, 200 + i * 100);
+        int offset_y =
+            i * medidas::DIFERENCIA_VERTICAL_ENTRE_PORCENTAJES_VISUALES;
+        int pos_y = pos_y_inicial + offset_y;
+        pv.fondo.setPosition(pos_x, pos_y);
+        pv.relleno.setPosition(pos_x, pos_y);
         vect.push_back(pv);
         i++;
     }
@@ -211,10 +216,8 @@ void PanelesCompletos::dibujar(
     paneles.dibujar(ventana);
     titulos_paneles.dibujar(ventana);
     porcentajes_visuales = crear_visualizaciones_porcentajes(porcentajes);
-    int i = 0;
     for (auto &tpv : porcentajes_visuales) {
         ventana.draw(tpv.fondo);
         ventana.draw(tpv.relleno);
-        i++;
     }
 }
