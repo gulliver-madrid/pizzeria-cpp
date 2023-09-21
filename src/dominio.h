@@ -3,8 +3,8 @@
 #include <string>
 #include <unordered_map>
 
-#define TIPOS_DE_PIZZA Margarita, Pepperoni
-#define NUMERO_DE_TIPOS_DE_PIZZA 2
+#define TIPOS_DE_PIZZA Margarita, Pepperoni, CuatroQuesos
+#define NUMERO_DE_TIPOS_DE_PIZZA 3
 
 enum TipoPizza { TIPOS_DE_PIZZA };
 extern TipoPizza tipos_de_pizza[NUMERO_DE_TIPOS_DE_PIZZA];
