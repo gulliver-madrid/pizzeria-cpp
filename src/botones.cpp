@@ -5,7 +5,6 @@
 namespace medidas {
     constexpr int MARGEN_BOTON = 20;
     constexpr int TAMANO_TEXTO_BOTONES = 32;
-
 } // namespace medidas
 
 /* Crea un botón rectangular con texto */
@@ -42,24 +41,33 @@ Botones::Botones(sf::Font &font) {
         "Empezar", sf::Color::Green, sf::Vector2i(500, 450), font,
         sf::Color::Black
     );
-    encargar_margarita = crearBotonConTexto(
-        "Margarita", sf::Color::Green,
-        sf::Vector2i(
-            obtener_posicion_x_panel(PANEL_ENCARGAR) +
-                medidas::MARGEN_IZQ_ETIQUETAS,
-            medidas::FILA_CONTENIDO_PANEL
-        ),
-        font, sf::Color::Black
-    );
-    despachar = crearBotonConTexto(
-        "Despachar", sf::Color::Green,
-        sf::Vector2i(
-            obtener_posicion_x_panel(PANEL_PREPARADAS) +
-                medidas::MARGEN_IZQ_ETIQUETAS + (medidas::ANCHO_PANEL * 0.55),
-            medidas::FILA_CONTENIDO_PANEL
-        ),
-        font, sf::Color::Black, 0.7
-    );
+    int i = 0;
+    for (auto tp : tipos_de_pizza) {
+        encargar[tp] = crearBotonConTexto(
+            tipo_pizza_to_string[tp], sf::Color::Green,
+            sf::Vector2i(
+                obtener_posicion_x_panel(PANEL_ENCARGAR) +
+                    medidas::MARGEN_IZQ_ETIQUETAS,
+                medidas::FILA_CONTENIDO_PANEL + 80 * i
+            ),
+            font, sf::Color::Black
+        );
+        i++;
+    }
+    i = 0;
+    for (auto tp : tipos_de_pizza) {
+        despachar[tp] = crearBotonConTexto(
+            "Despachar", sf::Color::Green,
+            sf::Vector2i(
+                obtener_posicion_x_panel(PANEL_PREPARADAS) +
+                    medidas::MARGEN_IZQ_ETIQUETAS +
+                    (medidas::ANCHO_PANEL * 0.55),
+                medidas::FILA_CONTENIDO_PANEL + 50 * i
+            ),
+            font, sf::Color::Black, 0.7
+        );
+        i++;
+    }
 
     reiniciar = crearBotonConTexto(
         "Reiniciar", sf::Color::Blue,
@@ -70,11 +78,17 @@ Botones::Botones(sf::Font &font) {
         sf::Vector2i(1640, medidas::FILA_BOTONES_GENERALES), font
     );
 
-    todos = {&empezar, &encargar_margarita, &despachar, &reiniciar, &salir};
-    assert(todos.size() == 5);
+    todos = {&empezar, &reiniciar, &salir};
+    for (auto &par : despachar) {
+        todos.push_back(&par.second);
+    }
+    for (auto &par : encargar) {
+        todos.push_back(&par.second);
+    }
+    assert(todos.size() == 3 + NUMERO_DE_TIPOS_DE_PIZZA * 2);
 }
 
-void Botones::dibujar(sf::RenderWindow &ventana) {
+void Botones::dibujar(sf::RenderWindow &ventana) const {
     for (auto boton_ptr : todos) {
         assert(boton_ptr != nullptr);
         boton_ptr->dibujar(ventana);

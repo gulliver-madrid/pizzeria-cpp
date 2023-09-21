@@ -23,21 +23,21 @@ sf::Text crearEtiquetaTituloPanel(
 }
 
 // Crea la etiqueta de texto que mostrará el contador
-sf::Text crearEtiquetaContador(const sf::Font &font) {
+sf::Text crearEtiquetaContador(const sf::Font &font, int indice) {
     sf::Text etiqueta =
         crearEtiqueta(medidas::TAMANO_FUENTE_ETIQUETAS, font, sf::Color::White);
     etiqueta.setPosition(
         obtener_posicion_x_panel(PANEL_PEDIDOS) + medidas::MARGEN_IZQ_ETIQUETAS,
-        medidas::FILA_CONTENIDO_PANEL
+        medidas::FILA_CONTENIDO_PANEL + 50 * indice
     );
     return etiqueta;
 }
-sf::Text crearEtiquetaPizzasPreparadas(const sf::Font &font) {
+sf::Text crearEtiquetaPizzasPreparadas(const sf::Font &font, int indice) {
     sf::Text etiqueta =
         crearEtiqueta(medidas::TAMANO_FUENTE_ETIQUETAS, font, sf::Color::White);
     auto pos_x = obtener_posicion_x_panel(PANEL_PREPARADAS) +
                  medidas::MARGEN_IZQ_ETIQUETAS;
-    etiqueta.setPosition(pos_x, medidas::FILA_CONTENIDO_PANEL);
+    etiqueta.setPosition(pos_x, medidas::FILA_CONTENIDO_PANEL + 50 * indice);
     return etiqueta;
 }
 
@@ -73,10 +73,8 @@ void Paneles::dibujar(sf::RenderWindow &window) {
 }
 
 std::vector<BarraProgresoConNombre> crear_visualizaciones_porcentajes(
-    const std::vector<int> &porcentajes,
-    const std::vector<std::string> &nombres, sf::Font &font
+    const std::vector<PorcentajeConTipoPizza> &porcentajes, sf::Font &font
 ) {
-    assert(porcentajes.size() == nombres.size());
     std::vector<BarraProgresoConNombre> vect{};
     int pos_x = obtener_posicion_x_panel(PANEL_EN_PREPARACION) +
                 medidas::MARGEN_IZQ_ETIQUETAS;
@@ -84,19 +82,21 @@ std::vector<BarraProgresoConNombre> crear_visualizaciones_porcentajes(
     int ancho = 300;
     int largo = 40;
     int i = 0;
-    for (auto porcentaje : porcentajes) {
+    for (auto &porcentaje : porcentajes) {
         BarraProgresoConNombre bpn;
         BarraProgreso &bp = bpn.bp;
         bp.fondo = sf::RectangleShape(sf::Vector2f(ancho, largo));
-        bp.relleno =
-            sf::RectangleShape(sf::Vector2f(ancho * porcentaje / 100, largo));
+        bp.relleno = sf::RectangleShape(
+            sf::Vector2f(ancho * porcentaje.porcentaje / 100, largo)
+        );
         bp.fondo.setFillColor(sf::Color(COLOR_BARRA_PROGRESO_FONDO));
         bp.relleno.setFillColor(sf::Color(COLOR_BARRA_PROGRESO_RELLENO));
         int offset_y = i * medidas::DIFERENCIA_VERTICAL_ENTRE_BARRAS_PROGRESO;
         int pos_y = pos_y_inicial + offset_y;
         bp.fondo.setPosition(pos_x, pos_y);
         bp.relleno.setPosition(pos_x, pos_y);
-        bpn.etiqueta = sf::Text(nombres[i], font, 24);
+        bpn.etiqueta =
+            sf::Text(tipo_pizza_to_string[porcentaje.tipo], font, 24);
         bpn.etiqueta.setFillColor(sf::Color(COLOR_BARRA_PROGRESO_TEXTO));
         bpn.etiqueta.setPosition(pos_x + 20, pos_y + 5);
         vect.push_back(bpn);
@@ -125,15 +125,15 @@ PanelesCompletos::PanelesCompletos(sf::Font &font) {
 }
 
 void PanelesCompletos::dibujar(
-    sf::RenderWindow &ventana, std::vector<int> &porcentajes,
-    std::vector<std::string> &nombres, sf::Font &font
+    sf::RenderWindow &ventana, std::vector<PorcentajeConTipoPizza> &porcentajes,
+    sf::Font &font
 ) {
     if (!visible)
         return;
     paneles.dibujar(ventana);
     titulos_paneles.dibujar(ventana);
     porcentajes_visuales_con_nombres =
-        crear_visualizaciones_porcentajes(porcentajes, nombres, font);
+        crear_visualizaciones_porcentajes(porcentajes, font);
     for (auto &tpv : porcentajes_visuales_con_nombres) {
         ventana.draw(tpv.bp.fondo);
         ventana.draw(tpv.bp.relleno);

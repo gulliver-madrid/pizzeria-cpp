@@ -15,6 +15,7 @@ add_executable(pizzeria
     src/cadenas.cpp
     src/componentes.cpp
     src/debug.cpp
+    src/dominio.cpp
     src/grid.cpp
     src/juego.cpp
     src/textos.cpp

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "componentes.h"
+#include "dominio.h"
 
 BotonConTexto crearBotonConTexto(
     const std::string &, const sf::Color &color_fondo, const sf::Vector2i &,
@@ -9,13 +10,16 @@ BotonConTexto crearBotonConTexto(
 );
 
 struct Botones {
-    BotonConTexto empezar;
-    BotonConTexto encargar_margarita;
-    BotonConTexto despachar;
-    BotonConTexto reiniciar;
-    BotonConTexto salir;
+  private:
     std::vector<BotonConTexto *> todos;
 
+  public:
+    BotonConTexto empezar;
+    std::map<TipoPizza, BotonConTexto> encargar;
+    std::map<TipoPizza, BotonConTexto> despachar;
+    BotonConTexto reiniciar;
+    BotonConTexto salir;
+
     Botones(sf::Font &);
-    void dibujar(sf::RenderWindow &ventana);
+    void dibujar(sf::RenderWindow &ventana) const;
 };

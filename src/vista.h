@@ -1,14 +1,15 @@
 #pragma once
 
 #include "componentes.h"
+#include "dominio.h"
 #include "tiempo.h"
 #include "vista_basics.h"
 #include <vector>
 
 sf::Text
 crearEtiquetaTituloPanel(const sf::Font &, IndicePanel, const std::string &);
-sf::Text crearEtiquetaContador(const sf::Font &);
-sf::Text crearEtiquetaPizzasPreparadas(const sf::Font &);
+sf::Text crearEtiquetaContador(const sf::Font &, int indice);
+sf::Text crearEtiquetaPizzasPreparadas(const sf::Font &, int indice);
 
 struct BarraProgreso {
     sf::RectangleShape fondo;
@@ -30,8 +31,7 @@ struct Paneles {
 };
 
 std::vector<BarraProgresoConNombre> crear_visualizaciones_porcentajes(
-    const std::vector<int> &porcentajes,
-    const std::vector<std::string> &nombres, sf::Font &font
+    const std::vector<PorcentajeConTipoPizza> &porcentajes, sf::Font &font
 );
 
 struct TitulosPaneles {
@@ -51,7 +51,7 @@ struct PanelesCompletos {
 
     PanelesCompletos(sf::Font &font);
     void dibujar(
-        sf::RenderWindow &ventana, std::vector<int> &porcentajes,
-        std::vector<std::string> &nombres, sf::Font &font
+        sf::RenderWindow &ventana,
+        std::vector<PorcentajeConTipoPizza> &porcentajes, sf::Font &font
     );
 };
