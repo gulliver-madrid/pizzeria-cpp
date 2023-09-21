@@ -21,6 +21,8 @@
 #define TAMANO_FUENTE_INFO 36
 #define TAMANO_FUENTE_RESULTADO 48
 
+#define MAXIMO_PIZZAS_EN_PREPARACION 3
+
 namespace colores {
     const auto COLOR_FONDO = sf::Color(60, 0, 150);
     const auto COLOR_TEXTO_INSTRUCCIONES = sf::Color::Yellow;
@@ -200,12 +202,22 @@ void actualizarIU(                       //
                 botones.despachar[tp].activo = true;
         }
     }
-    for (auto &tp : tipos_de_pizza) {
+    int total_en_preparacion = estado.encargadas.size();
 
-        if (estado.contadores[tp].contador_pizzas_preparadas +
-                estado.contadores[tp].contador_pizzas_servidas +
-                encargadas_del_tipo(estado.encargadas, tp) <
-            estado.contadores[tp].objetivo) {
+    for (auto &tp : tipos_de_pizza) {
+        if (total_en_preparacion == MAXIMO_PIZZAS_EN_PREPARACION) {
+            if (botones.encargar[tp].activo) {
+                botones.encargar[tp].activo = false;
+            }
+            continue;
+        } else {
+            if (!botones.encargar[tp].activo)
+                botones.encargar[tp].activo = true;
+        }
+        int potenciales = estado.contadores[tp].contador_pizzas_preparadas +
+                          estado.contadores[tp].contador_pizzas_servidas +
+                          encargadas_del_tipo(estado.encargadas, tp);
+        if (potenciales < estado.contadores[tp].objetivo) {
             if (!botones.encargar[tp].activo)
                 botones.encargar[tp].activo = true;
         } else {
