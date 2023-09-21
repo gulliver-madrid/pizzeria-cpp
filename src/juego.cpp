@@ -151,9 +151,9 @@ void actualizarIU(                       //
     }
 
     // Limpia la ventana y empieza a pintar los componentes visuales
-    ventana.clear();
+    ventana.clear(sf::Color(60, 0, 150));
     if (DRAW_GRID)
-        draw_grid(ventana, grid, GRID_SIZE);
+        draw_grid(ventana, grid, GRID_SIZE, GRID_TONE);
 
     // Paneles
     if (estado.actual == Activo || estado.actual == EsperaAntesDeResultado) {

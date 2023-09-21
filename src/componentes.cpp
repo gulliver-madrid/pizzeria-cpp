@@ -25,5 +25,7 @@ void BotonConTexto::dibujar(sf::RenderWindow &window) {
 BotonConTexto::BotonConTexto(sf::RectangleShape rectShape, sf::Text txt)
     : boton(rectShape), texto(txt) {
     colorBotonActivo = boton.getFillColor();
+    boton.setOutlineColor(sf::Color::Black);
+    boton.setOutlineThickness(2);
 };
 BotonConTexto::BotonConTexto(){};
