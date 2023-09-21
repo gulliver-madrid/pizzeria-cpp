@@ -36,6 +36,10 @@ struct PorcentajeVisual {
     sf::RectangleShape fondo;
     sf::RectangleShape relleno;
 };
+struct PorcentajeVisualConNombre {
+    sf::Text etiqueta;
+    PorcentajeVisual pv;
+};
 
 struct Paneles {
     sf::RectangleShape en_preparacion;
@@ -46,8 +50,10 @@ struct Paneles {
     void dibujar(sf::RenderWindow &window);
 };
 
-std::vector<PorcentajeVisual>
-crear_visualizaciones_porcentajes(const std::vector<int> porcentajes);
+std::vector<PorcentajeVisualConNombre> crear_visualizaciones_porcentajes(
+    const std::vector<int> &porcentajes,
+    const std::vector<std::string> &nombres, sf::Font &font
+);
 
 struct TitulosPaneles {
     sf::Text en_preparacion;
@@ -60,9 +66,12 @@ struct TitulosPaneles {
 struct PanelesCompletos {
     Paneles paneles;
     TitulosPaneles titulos_paneles;
-    std::vector<PorcentajeVisual> porcentajes_visuales;
+    std::vector<PorcentajeVisualConNombre> porcentajes_visuales_con_nombres;
     bool visible = false;
 
     PanelesCompletos(sf::Font &font);
-    void dibujar(sf::RenderWindow &ventana, std::vector<int> &porcentajes);
+    void dibujar(
+        sf::RenderWindow &ventana, std::vector<int> &porcentajes,
+        std::vector<std::string> &nombres, sf::Font &font
+    );
 };

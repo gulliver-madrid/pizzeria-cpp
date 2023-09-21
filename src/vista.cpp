@@ -4,6 +4,10 @@
 #include <cassert>
 #include <iostream>
 
+#define COLOR_BARRA_PROGRESO_FONDO 230, 230, 230
+#define COLOR_BARRA_PROGRESO_RELLENO 30, 144, 255
+#define COLOR_BARRA_PROGRESO_TEXTO 0, 0, 0
+
 namespace medidas {
     constexpr int TAMANO_FUENTE_ETIQUETAS = 36;
     constexpr int MARGEN_IZQ_ETIQUETAS = 50;
@@ -16,7 +20,7 @@ namespace medidas {
     constexpr int FILA_BOTONES_EJECUTIVOS = 600;
     constexpr int FILA_BOTONES_GENERALES = 800;
     constexpr int MARGEN_IZQ_PANELES = 50;
-    constexpr int DESPLAZAMIENTO_LATERAL = 520;
+    constexpr int DESPLAZAMIENTO_LATERAL = 560;
     constexpr int MARGEN_TOP_PANELES = 50;
     constexpr int DIFERENCIA_VERTICAL_ENTRE_PORCENTAJES_VISUALES = 60;
 } // namespace medidas
@@ -142,7 +146,7 @@ sf::RectangleShape crearPanelVertical(float x, float y) {
         sf::Vector2f(medidas::ANCHO_PANEL, medidas::ALTO_PANEL)
     );
     rect.setPosition(sf::Vector2f(x, y));
-    rect.setFillColor(sf::Color::Transparent);
+    rect.setFillColor(sf::Color(40, 40, 40, 200));
     rect.setOutlineColor(sf::Color::Green);
     rect.setOutlineThickness(medidas::GROSOR_BORDE_PANEL);
     return rect;
@@ -166,25 +170,34 @@ void Paneles::dibujar(sf::RenderWindow &window) {
     window.draw(pedidos);
 }
 
-std::vector<PorcentajeVisual>
-crear_visualizaciones_porcentajes(const std::vector<int> porcentajes) {
-    std::vector<PorcentajeVisual> vect{};
+std::vector<PorcentajeVisualConNombre> crear_visualizaciones_porcentajes(
+    const std::vector<int> &porcentajes,
+    const std::vector<std::string> &nombres, sf::Font &font
+) {
+    assert(porcentajes.size() == nombres.size());
+    std::vector<PorcentajeVisualConNombre> vect{};
     int i = 0;
     int pos_x = 100;
     int pos_y_inicial = 240;
+    int ancho = 300;
+    int largo = 40;
     for (auto porcentaje : porcentajes) {
-        PorcentajeVisual pv;
-        pv.fondo = sf::RectangleShape(sf::Vector2f(300, 40));
+        PorcentajeVisualConNombre pvn;
+        PorcentajeVisual &pv = pvn.pv;
+        pv.fondo = sf::RectangleShape(sf::Vector2f(ancho, largo));
         pv.relleno =
-            sf::RectangleShape(sf::Vector2f(300 * porcentaje / 100, 40));
-        pv.fondo.setFillColor(sf::Color::Cyan);
-        pv.relleno.setFillColor(sf::Color::Blue);
+            sf::RectangleShape(sf::Vector2f(ancho * porcentaje / 100, largo));
+        pv.fondo.setFillColor(sf::Color(COLOR_BARRA_PROGRESO_FONDO));
+        pv.relleno.setFillColor(sf::Color(COLOR_BARRA_PROGRESO_RELLENO));
         int offset_y =
             i * medidas::DIFERENCIA_VERTICAL_ENTRE_PORCENTAJES_VISUALES;
         int pos_y = pos_y_inicial + offset_y;
         pv.fondo.setPosition(pos_x, pos_y);
         pv.relleno.setPosition(pos_x, pos_y);
-        vect.push_back(pv);
+        pvn.etiqueta = sf::Text(nombres[i], font, 24);
+        pvn.etiqueta.setFillColor(sf::Color(COLOR_BARRA_PROGRESO_TEXTO));
+        pvn.etiqueta.setPosition(pos_x + 20, pos_y + 5);
+        vect.push_back(pvn);
         i++;
     }
     return vect;
@@ -209,15 +222,18 @@ PanelesCompletos::PanelesCompletos(sf::Font &font) {
 }
 
 void PanelesCompletos::dibujar(
-    sf::RenderWindow &ventana, std::vector<int> &porcentajes
+    sf::RenderWindow &ventana, std::vector<int> &porcentajes,
+    std::vector<std::string> &nombres, sf::Font &font
 ) {
     if (!visible)
         return;
     paneles.dibujar(ventana);
     titulos_paneles.dibujar(ventana);
-    porcentajes_visuales = crear_visualizaciones_porcentajes(porcentajes);
-    for (auto &tpv : porcentajes_visuales) {
-        ventana.draw(tpv.fondo);
-        ventana.draw(tpv.relleno);
+    porcentajes_visuales_con_nombres =
+        crear_visualizaciones_porcentajes(porcentajes, nombres, font);
+    for (auto &tpv : porcentajes_visuales_con_nombres) {
+        ventana.draw(tpv.pv.fondo);
+        ventana.draw(tpv.pv.relleno);
+        ventana.draw(tpv.etiqueta);
     }
 }

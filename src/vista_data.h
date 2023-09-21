@@ -5,3 +5,4 @@
 
 // Grid
 #define DRAW_GRID false
+#define GRID_SIZE 40

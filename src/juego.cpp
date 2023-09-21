@@ -36,7 +36,11 @@ enum EstadoJuego {
     Activo,
     EsperaAntesDeResultado,
     MostrandoResultado,
-    Reiniciando
+    Reiniciando,
+};
+
+enum TipoPizza {
+    Margarita,
 };
 
 struct EtiquetasContadores {
@@ -117,14 +121,15 @@ void actualizarIU(                       //
     EtiquetasContadores &contadores,     //
     EtiquetasInfo &etiquetas_info,       //
     Estado &estado,                      //
-    Grid &grid
+    Grid &grid,                          //
+    sf::Font font                        //
 ) {
     contadores.texto_contador.setString(
-        "Pizza Margarita: " + std::to_string(estado.contador_pizzas_servidas) +
-        "/" + std::to_string(estado.objetivo)
+        "Margarita: " + std::to_string(estado.contador_pizzas_servidas) + "/" +
+        std::to_string(estado.objetivo)
     );
     contadores.texto_pizzas_preparadas.setString(
-        "Pizza Margarita: " + std::to_string(estado.contador_pizzas_preparadas)
+        "Margarita: " + std::to_string(estado.contador_pizzas_preparadas)
     );
 
     // Actualiza el estado de los botones
@@ -148,9 +153,21 @@ void actualizarIU(                       //
     // Limpia la ventana y empieza a pintar los componentes visuales
     ventana.clear();
     if (DRAW_GRID)
-        draw_grid(ventana, grid);
+        draw_grid(ventana, grid, GRID_SIZE);
 
-    botones.dibujar(ventana);
+    // Paneles
+    if (estado.actual == Activo || estado.actual == EsperaAntesDeResultado) {
+        std::vector<int> porcentajes;
+        for (auto &tp : estado.encargadas) {
+            porcentajes.push_back(tp.obtener_porcentaje());
+        }
+        auto n = porcentajes.size();
+        std::vector<std::string> nombres;
+        for (auto p : porcentajes) {
+            nombres.push_back("Margarita");
+        }
+        paneles_completos.dibujar(ventana, porcentajes, nombres, font);
+    }
 
     // Textos
     if (estado.actual == MostrandoInstrucciones) {
@@ -163,14 +180,7 @@ void actualizarIU(                       //
         ventana.draw(etiquetas_info.resultado);
     }
 
-    // Paneles
-    if (estado.actual == Activo || estado.actual == EsperaAntesDeResultado) {
-        std::vector<int> porcentajes;
-        for (auto &tp : estado.encargadas) {
-            porcentajes.push_back(tp.obtener_porcentaje());
-        }
-        paneles_completos.dibujar(ventana, porcentajes);
-    }
+    botones.dibujar(ventana);
 
     ventana.display();
 }
@@ -344,7 +354,7 @@ bool nivel(                  //
 
         actualizarIU(
             globales.window, botones, paneles_completos, contadores,
-            etiquetas_info, estado, grid
+            etiquetas_info, estado, grid, globales.font
         );
     }
     return true;
@@ -352,13 +362,13 @@ bool nivel(                  //
 
 int juego() {
     Globales globales;
-    Grid grid{};
+    Grid grid;
     ResultadoSetup resultado_setup = setup_juego(globales);
     if (!resultado_setup.ok)
         return EXIT_FAILURE;
 
     DatosNivel datos[] = {
-        {INSTRUCCIONES_NIVEL_1, 4, 6},
+        {INSTRUCCIONES_NIVEL_1, 2, 8},
         {INSTRUCCIONES_NIVEL_2, 2, 6},
     };
 
