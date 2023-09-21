@@ -294,13 +294,19 @@ ResultadoSetup setup_juego(Globales &globales) {
     return ResultadoSetup();
 }
 
-struct DatosNivel {
-    std::string instrucciones;
+struct DatosNivelTipoPizza {
+    TipoPizza tipo;
     int pizzas_preparadas_iniciales = 0;
     int objetivo_pizzas = 0;
-    DatosNivel(std::string instr, int pizzas_iniciales, int obj_pizzas)
-        : instrucciones(instr), pizzas_preparadas_iniciales(pizzas_iniciales),
-          objetivo_pizzas(obj_pizzas) {}
+};
+
+struct DatosNivel {
+    std::string instrucciones;
+    std::map<TipoPizza, DatosNivelTipoPizza> pizzas;
+    DatosNivel(
+        std::string instr, std::map<TipoPizza, DatosNivelTipoPizza> pizzas
+    )
+        : instrucciones(instr), pizzas(pizzas) {}
 };
 
 /* Devuelve true si se debe pasar al siguiente nivel,
@@ -317,13 +323,15 @@ bool nivel(                  //
     estado.actual = MostrandoInstrucciones;
     for (auto tp : tipos_de_pizza) {
         estado.contadores[tp].contador_pizzas_preparadas =
-            datos_nivel.pizzas_preparadas_iniciales;
-        estado.contadores[tp].objetivo = datos_nivel.objetivo_pizzas;
+            datos_nivel.pizzas[tp].pizzas_preparadas_iniciales;
+        estado.contadores[tp].objetivo = datos_nivel.pizzas[tp].objetivo_pizzas;
     }
-    // TODO: cambiar esto
-    int temp = 0;
+    int total = 0;
+    for (auto tp : tipos_de_pizza) {
+        total += estado.contadores[tp].objetivo;
+    }
     auto instrucciones =
-        generar_instrucciones(globales.font, datos_nivel.instrucciones, temp);
+        generar_instrucciones(globales.font, datos_nivel.instrucciones, total);
     auto resultado = generar_resultado(globales.font);
 
     EtiquetasInfo etiquetas_info = {instrucciones, resultado};
@@ -442,8 +450,36 @@ int juego() {
         return EXIT_FAILURE;
 
     DatosNivel datos[] = {
-        {INSTRUCCIONES_NIVEL_1, 2, 8},
-        {INSTRUCCIONES_NIVEL_2, 2, 6},
+        {INSTRUCCIONES_NIVEL_1,
+         {
+             {
+                 Margarita,
+                 DatosNivelTipoPizza{Margarita, 2, 8},
+             },
+             {
+                 Pepperoni,
+                 DatosNivelTipoPizza{Pepperoni, 0, 4},
+             },
+             {
+                 CuatroQuesos,
+                 DatosNivelTipoPizza{CuatroQuesos, 0, 3},
+             },
+         }},
+        {INSTRUCCIONES_NIVEL_2,
+         {
+             {
+                 Margarita,
+                 DatosNivelTipoPizza{Margarita, 2, 6},
+             },
+             {
+                 Pepperoni,
+                 DatosNivelTipoPizza{Pepperoni, 1, 3},
+             },
+             {
+                 CuatroQuesos,
+                 DatosNivelTipoPizza{CuatroQuesos, 0, 6},
+             },
+         }},
     };
 
     while (true) {
