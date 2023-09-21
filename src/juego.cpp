@@ -19,6 +19,13 @@
 
 #define TITLE "Pizzer%ia"
 #define TAMANO_FUENTE_INFO 36
+#define TAMANO_FUENTE_RESULTADO 48
+
+namespace colores {
+    const auto COLOR_FONDO = sf::Color(60, 0, 150);
+    const auto COLOR_TEXTO_INSTRUCCIONES = sf::Color::Yellow;
+    const auto COLOR_TEXTO_RESULTADO = sf::Color(255, 160, 0);
+} // namespace colores
 
 namespace tiempos {
     const auto TIEMPO_PREPARACION = Tiempo::desde_segundos(3.5);
@@ -150,7 +157,7 @@ void actualizarIU(                       //
     }
 
     // Limpia la ventana y empieza a pintar los componentes visuales
-    ventana.clear(sf::Color(60, 0, 150));
+    ventana.clear(colores::COLOR_FONDO);
     if (DRAW_GRID)
         draw_grid(ventana, grid, GRID_SIZE, GRID_TONE);
 
@@ -187,7 +194,9 @@ void actualizarIU(                       //
 sf::Text generar_instrucciones(
     sf::Font &font, std::string plantilla_instrucciones, int objetivo
 ) {
-    auto etiqueta = crearEtiqueta(TAMANO_FUENTE_INFO, font, sf::Color::Yellow);
+    auto etiqueta = crearEtiqueta(
+        TAMANO_FUENTE_INFO, font, colores::COLOR_TEXTO_INSTRUCCIONES
+    );
     etiqueta.setString(
         construir_instrucciones(plantilla_instrucciones, objetivo)
     );
@@ -196,7 +205,9 @@ sf::Text generar_instrucciones(
 }
 
 sf::Text generar_resultado(sf::Font &font) {
-    auto etiqueta = crearEtiqueta(TAMANO_FUENTE_INFO, font, sf::Color::Green);
+    auto etiqueta = crearEtiqueta(
+        TAMANO_FUENTE_RESULTADO, font, colores::COLOR_TEXTO_RESULTADO
+    );
     etiqueta.setString(construir_resultado());
     etiqueta.setPosition(200, 200);
     return etiqueta;
