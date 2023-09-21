@@ -27,8 +27,14 @@ namespace colores {
     const auto COLOR_TEXTO_RESULTADO = sf::Color(255, 160, 0);
 } // namespace colores
 
+// En segundos
+std::map<TipoPizza, float> tiempos_preparacion = {
+    {Margarita, 2.5f},
+    {Pepperoni, 4.0f},
+    {CuatroQuesos, 7.0f},
+};
+
 namespace tiempos {
-    const auto TIEMPO_PREPARACION = Tiempo::desde_segundos(3.5);
     const auto RETARDO_ANTES_DE_RESULTADO = Tiempo::desde_segundos(2.5);
     const auto ESPERA_ENTRE_NIVELES = Tiempo::desde_segundos(2);
 } // namespace tiempos
@@ -141,7 +147,8 @@ std::optional<EstadoJuego> procesarEvento(
             for (auto &tp : tipos_de_pizza) {
 
                 if (botones.encargar[tp].colisiona(mousePos)) {
-                    auto total = tiempos::TIEMPO_PREPARACION;
+                    auto total =
+                        Tiempo::desde_segundos(tiempos_preparacion[tp]);
                     EncargoACocina encargo{
                         tp, //
                         TiempoPreparacion{
