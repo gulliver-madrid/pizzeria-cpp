@@ -94,11 +94,11 @@ Botones::Botones(sf::Font &font) {
 
     reiniciar = crearBotonConTexto(
         "Reiniciar", sf::Color::Blue,
-        sf::Vector2i(1350, medidas::FILA_BOTONES_GENERALES), font
+        sf::Vector2i(1440, medidas::FILA_BOTONES_GENERALES), font
     );
     salir = crearBotonConTexto(
         "Salir", sf::Color::Red,
-        sf::Vector2i(1600, medidas::FILA_BOTONES_GENERALES), font
+        sf::Vector2i(1640, medidas::FILA_BOTONES_GENERALES), font
     );
 
     todos = {&empezar, &encargar_margarita, &despachar, &reiniciar, &salir};
