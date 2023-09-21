@@ -2,37 +2,13 @@
 
 #include "componentes.h"
 #include "tiempo.h"
+#include "vista_basics.h"
 #include <vector>
 
-enum IndicePanel {
-    PANEL_ENCARGAR,
-    PANEL_EN_PREPARACION,
-    PANEL_PREPARADAS,
-    PANEL_PEDIDOS,
-};
-
-sf::Text crearEtiqueta(int, const sf::Font &, const sf::Color &);
-BotonConTexto crearBotonConTexto(
-    const std::string &, const sf::Color &color_fondo, const sf::Vector2i &,
-    const sf::Font &, const sf::Color &color_texto = sf::Color::White,
-    float escala = 1
-);
 sf::Text
 crearEtiquetaTituloPanel(const sf::Font &, IndicePanel, const std::string &);
 sf::Text crearEtiquetaContador(const sf::Font &);
 sf::Text crearEtiquetaPizzasPreparadas(const sf::Font &);
-
-struct Botones {
-    BotonConTexto empezar;
-    BotonConTexto encargar_margarita;
-    BotonConTexto despachar;
-    BotonConTexto reiniciar;
-    BotonConTexto salir;
-    std::vector<BotonConTexto *> todos;
-
-    Botones(sf::Font &);
-    void dibujar(sf::RenderWindow &ventana);
-};
 
 struct BarraProgreso {
     sf::RectangleShape fondo;

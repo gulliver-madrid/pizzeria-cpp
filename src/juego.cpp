@@ -1,6 +1,6 @@
 #include "juego.h"
+#include "botones.h"
 #include "cadenas.h"
-#include "componentes.h"
 #include "dominio.h"
 #include "grid.h"
 #include "manejo_rutas.h"

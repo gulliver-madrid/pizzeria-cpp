@@ -18,3 +18,5 @@ struct BotonConTexto {
   private:
     std::optional<sf::Color> colorBotonActivo;
 };
+
+sf::Text crearEtiqueta(int, const sf::Font &, const sf::Color &);

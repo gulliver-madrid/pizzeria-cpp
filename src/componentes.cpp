@@ -29,3 +29,11 @@ BotonConTexto::BotonConTexto(sf::RectangleShape rectShape, sf::Text txt)
     boton.setOutlineThickness(2);
 };
 BotonConTexto::BotonConTexto(){};
+
+sf::Text
+crearEtiqueta(int tamano, const sf::Font &font, const sf::Color &color) {
+    // Usamos un placeholder para poder obtener la altura
+    sf::Text etiqueta("<Placeholder>", font, tamano);
+    etiqueta.setFillColor(color);
+    return etiqueta;
+}

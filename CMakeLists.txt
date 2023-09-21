@@ -11,6 +11,7 @@ FetchContent_MakeAvailable(SFML)
 
 add_executable(pizzeria
     src/main.cpp
+    src/botones.cpp
     src/cadenas.cpp
     src/componentes.cpp
     src/debug.cpp
@@ -19,6 +20,7 @@ add_executable(pizzeria
     src/textos.cpp
     src/tiempo.cpp
     src/vista.cpp
+    src/vista_basics.cpp
     src/demos/map.cpp
     src/demos/unicode.cpp
     src/demos/visual.cpp
