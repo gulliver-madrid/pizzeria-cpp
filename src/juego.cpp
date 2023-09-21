@@ -1,6 +1,7 @@
 #include "juego.h"
 #include "cadenas.h"
 #include "componentes.h"
+#include "dominio.h"
 #include "grid.h"
 #include "manejo_rutas.h"
 #include "paths.h"
@@ -37,10 +38,6 @@ enum EstadoJuego {
     EsperaAntesDeResultado,
     MostrandoResultado,
     Reiniciando,
-};
-
-enum TipoPizza {
-    Margarita,
 };
 
 struct EtiquetasContadores {
@@ -125,11 +122,13 @@ void actualizarIU(                       //
     sf::Font font                        //
 ) {
     contadores.texto_contador.setString(
-        "Margarita: " + std::to_string(estado.contador_pizzas_servidas) + "/" +
+        tipo_pizza_to_string[TipoPizza::Margarita] + ": " +
+        std::to_string(estado.contador_pizzas_servidas) + "/" +
         std::to_string(estado.objetivo)
     );
     contadores.texto_pizzas_preparadas.setString(
-        "Margarita: " + std::to_string(estado.contador_pizzas_preparadas)
+        tipo_pizza_to_string[TipoPizza::Margarita] + ": " +
+        std::to_string(estado.contador_pizzas_preparadas)
     );
 
     // Actualiza el estado de los botones
@@ -164,7 +163,7 @@ void actualizarIU(                       //
         auto n = porcentajes.size();
         std::vector<std::string> nombres;
         for (auto p : porcentajes) {
-            nombres.push_back("Margarita");
+            nombres.push_back(tipo_pizza_to_string[TipoPizza::Margarita]);
         }
         paneles_completos.dibujar(ventana, porcentajes, nombres, font);
     }
