@@ -5,6 +5,7 @@
 #include <vector>
 
 enum IndicePanel {
+    PANEL_ENCARGAR,
     PANEL_EN_PREPARACION,
     PANEL_PREPARADAS,
     PANEL_PEDIDOS,
@@ -13,7 +14,8 @@ enum IndicePanel {
 sf::Text crearEtiqueta(int, const sf::Font &, const sf::Color &);
 BotonConTexto crearBotonConTexto(
     const std::string &, const sf::Color &color_fondo, const sf::Vector2i &,
-    const sf::Font &, const sf::Color &color_texto = sf::Color::White
+    const sf::Font &, const sf::Color &color_texto = sf::Color::White,
+    float escala = 1
 );
 sf::Text
 crearEtiquetaTituloPanel(const sf::Font &, IndicePanel, const std::string &);
@@ -22,7 +24,7 @@ sf::Text crearEtiquetaPizzasPreparadas(const sf::Font &);
 
 struct Botones {
     BotonConTexto empezar;
-    BotonConTexto encargar;
+    BotonConTexto encargar_margarita;
     BotonConTexto despachar;
     BotonConTexto reiniciar;
     BotonConTexto salir;
@@ -42,11 +44,12 @@ struct BarraProgresoConNombre {
 };
 
 struct Paneles {
+    sf::RectangleShape encargar;
     sf::RectangleShape en_preparacion;
     sf::RectangleShape preparadas;
     sf::RectangleShape pedidos;
-    Paneles();
 
+    Paneles();
     void dibujar(sf::RenderWindow &window);
 };
 
@@ -56,6 +59,7 @@ std::vector<BarraProgresoConNombre> crear_visualizaciones_porcentajes(
 );
 
 struct TitulosPaneles {
+    sf::Text encargar;
     sf::Text en_preparacion;
     sf::Text preparadas;
     sf::Text pedidos;

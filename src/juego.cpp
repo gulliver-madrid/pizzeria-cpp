@@ -29,8 +29,8 @@ namespace colores {
 
 namespace tiempos {
     const auto TIEMPO_PREPARACION = Tiempo::desde_segundos(3.5);
-    const auto RETARDO_ANTES_DE_RESULTADO = Tiempo::desde_segundos(1);
-    const auto ESPERA_ENTRE_NIVELES = Tiempo::desde_segundos(1.5);
+    const auto RETARDO_ANTES_DE_RESULTADO = Tiempo::desde_segundos(1.6);
+    const auto ESPERA_ENTRE_NIVELES = Tiempo::desde_segundos(1.8);
 } // namespace tiempos
 
 struct Globales {
@@ -104,7 +104,7 @@ std::optional<EstadoJuego> procesarEvento(
                 if (estado.contador_pizzas_servidas >= estado.objetivo) {
                     return EsperaAntesDeResultado;
                 }
-            } else if (botones.encargar.colisiona(mousePos)) {
+            } else if (botones.encargar_margarita.colisiona(mousePos)) {
                 auto total = tiempos::TIEMPO_PREPARACION;
                 estado.encargadas.push_back(
                     TiempoPreparacion{obtener_tiempo_actual() + total, total}
@@ -149,11 +149,11 @@ void actualizarIU(                       //
     if (estado.contador_pizzas_preparadas + estado.contador_pizzas_servidas +
             estado.encargadas.size() <
         estado.objetivo) {
-        if (!botones.encargar.activo)
-            botones.encargar.activo = true;
+        if (!botones.encargar_margarita.activo)
+            botones.encargar_margarita.activo = true;
     } else {
-        if (botones.encargar.activo)
-            botones.encargar.activo = false;
+        if (botones.encargar_margarita.activo)
+            botones.encargar_margarita.activo = false;
     }
 
     // Limpia la ventana y empieza a pintar los componentes visuales
@@ -310,13 +310,13 @@ bool nivel(                  //
                         assert(estado.actual == MostrandoInstrucciones);
                         botones.empezar.visible = false;
                         botones.despachar.visible = true;
-                        botones.encargar.visible = true;
+                        botones.encargar_margarita.visible = true;
                         paneles_completos.visible = true;
                         break;
                     case EsperaAntesDeResultado:
                         assert(estado.actual == Activo);
                         botones.despachar.visible = false;
-                        botones.encargar.visible = false;
+                        botones.encargar_margarita.visible = false;
                         timer_espera_antes_de_resultado.start(
                             tiempos::RETARDO_ANTES_DE_RESULTADO
                         );

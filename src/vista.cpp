@@ -10,19 +10,20 @@
 
 namespace medidas {
     constexpr int TAMANO_FUENTE_ETIQUETAS = 36;
-    constexpr int MARGEN_IZQ_ETIQUETAS = 50;
-    constexpr int TAMANO_TEXTO_BOTONES = 24;
-    constexpr int MARGEN_LATERAL_BOTON = 25;
-    constexpr int ANCHO_PANEL = 480;
+    constexpr int MARGEN_IZQ_ETIQUETAS = 30;
+    constexpr int TAMANO_TEXTO_BOTONES = 32;
+    constexpr int MARGEN_BOTON = 20;
+    constexpr int ANCHO_PANEL = 390;
     constexpr int ALTO_PANEL = 700;
-    constexpr int GROSOR_BORDE_PANEL = 5;
-    constexpr int POSICION_Y_ETIQUETAS = 200;
+    constexpr int GROSOR_BORDE_PANEL = 3;
+    constexpr int FILA_CONTENIDO_PANEL = 200;
+    constexpr int MARGEN_TOP_PANELES = 50;
+    constexpr int DIFERENCIA_VERTICAL_ENTRE_BARRAS_PROGRESO = 60;
+    constexpr int FILA_TITULOS_PANELES = 100;
     constexpr int FILA_BOTONES_EJECUTIVOS = 600;
     constexpr int FILA_BOTONES_GENERALES = 800;
     constexpr int MARGEN_IZQ_PANELES = 50;
-    constexpr int DESPLAZAMIENTO_LATERAL = 560;
-    constexpr int MARGEN_TOP_PANELES = 50;
-    constexpr int DIFERENCIA_VERTICAL_ENTRE_PORCENTAJES_VISUALES = 60;
+    constexpr int DESPLAZAMIENTO_LATERAL = ANCHO_PANEL + 42;
 } // namespace medidas
 
 int obtener_posicion_x_panel(IndicePanel indice_panel) {
@@ -42,16 +43,19 @@ crearEtiqueta(int tamano, const sf::Font &font, const sf::Color &color) {
 BotonConTexto crearBotonConTexto(
     const std::string &texto, const sf::Color &color_fondo,
     const sf::Vector2i &posicion, const sf::Font &font,
-    const sf::Color &color_texto
+    const sf::Color &color_texto, float escala
 ) {
     int x = posicion.x;
     int y = posicion.y;
-    int margen = medidas::MARGEN_LATERAL_BOTON;
+    // La escala del margen es proporcional al cuadrado de la escala del botón
+    int margen = medidas::MARGEN_BOTON * (escala * escala);
     // Primero creamos la etiqueta para usar sus límites en el Rect
-    sf::Text etiqueta =
-        crearEtiqueta(medidas::TAMANO_TEXTO_BOTONES, font, color_texto);
+    sf::Text etiqueta = crearEtiqueta(
+        medidas::TAMANO_TEXTO_BOTONES * escala, font, color_texto
+    );
     etiqueta.setString(texto);
-    etiqueta.setPosition(x + margen, y + margen);
+    // Ajustamos para evitar un margen excesivo arriba y a la izquierda
+    etiqueta.setPosition(x + margen * 0.7, y + margen * 0.7);
     sf::FloatRect textRect = etiqueta.getGlobalBounds();
 
     // Rect
@@ -69,23 +73,23 @@ Botones::Botones(sf::Font &font) {
         "Empezar", sf::Color::Green, sf::Vector2i(500, 450), font,
         sf::Color::Black
     );
-    encargar = crearBotonConTexto(
-        "Encargar pizza", sf::Color::Green,
+    encargar_margarita = crearBotonConTexto(
+        "Margarita", sf::Color::Green,
         sf::Vector2i(
-            obtener_posicion_x_panel(PANEL_EN_PREPARACION) +
+            obtener_posicion_x_panel(PANEL_ENCARGAR) +
                 medidas::MARGEN_IZQ_ETIQUETAS,
-            medidas::FILA_BOTONES_EJECUTIVOS
+            medidas::FILA_CONTENIDO_PANEL
         ),
         font, sf::Color::Black
     );
     despachar = crearBotonConTexto(
-        "Despachar pizza", sf::Color::Green,
+        "Despachar", sf::Color::Green,
         sf::Vector2i(
             obtener_posicion_x_panel(PANEL_PREPARADAS) +
-                medidas::MARGEN_IZQ_ETIQUETAS,
-            medidas::FILA_BOTONES_EJECUTIVOS
+                medidas::MARGEN_IZQ_ETIQUETAS + (medidas::ANCHO_PANEL * 0.55),
+            medidas::FILA_CONTENIDO_PANEL
         ),
-        font, sf::Color::Black
+        font, sf::Color::Black, 0.7
     );
 
     reiniciar = crearBotonConTexto(
@@ -97,7 +101,7 @@ Botones::Botones(sf::Font &font) {
         sf::Vector2i(1600, medidas::FILA_BOTONES_GENERALES), font
     );
 
-    todos = {&empezar, &encargar, &despachar, &reiniciar, &salir};
+    todos = {&empezar, &encargar_margarita, &despachar, &reiniciar, &salir};
     assert(todos.size() == 5);
 }
 
@@ -113,10 +117,10 @@ sf::Text crearEtiquetaTituloPanel(
 ) {
     sf::Text etiqueta =
         crearEtiqueta(medidas::TAMANO_FUENTE_ETIQUETAS, font, sf::Color::White);
-    etiqueta.setPosition(
-        obtener_posicion_x_panel(indice_panel) + medidas::MARGEN_IZQ_ETIQUETAS,
-        100
-    );
+    int pos_x =
+        obtener_posicion_x_panel(indice_panel) + medidas::MARGEN_IZQ_ETIQUETAS;
+    int pos_y = medidas::FILA_TITULOS_PANELES;
+    etiqueta.setPosition(pos_x, pos_y);
     etiqueta.setString(interpolar_unicode(texto));
     etiqueta.setFillColor(sf::Color::Green);
     return etiqueta;
@@ -128,7 +132,7 @@ sf::Text crearEtiquetaContador(const sf::Font &font) {
         crearEtiqueta(medidas::TAMANO_FUENTE_ETIQUETAS, font, sf::Color::White);
     etiqueta.setPosition(
         obtener_posicion_x_panel(PANEL_PEDIDOS) + medidas::MARGEN_IZQ_ETIQUETAS,
-        medidas::POSICION_Y_ETIQUETAS
+        medidas::FILA_CONTENIDO_PANEL
     );
     return etiqueta;
 }
@@ -137,7 +141,7 @@ sf::Text crearEtiquetaPizzasPreparadas(const sf::Font &font) {
         crearEtiqueta(medidas::TAMANO_FUENTE_ETIQUETAS, font, sf::Color::White);
     auto pos_x = obtener_posicion_x_panel(PANEL_PREPARADAS) +
                  medidas::MARGEN_IZQ_ETIQUETAS;
-    etiqueta.setPosition(pos_x, medidas::POSICION_Y_ETIQUETAS);
+    etiqueta.setPosition(pos_x, medidas::FILA_CONTENIDO_PANEL);
     return etiqueta;
 }
 
@@ -159,12 +163,14 @@ sf::RectangleShape crear_panel_estandar(IndicePanel indice) {
 }
 
 Paneles::Paneles() {
+    encargar = crear_panel_estandar(PANEL_ENCARGAR);
     en_preparacion = crear_panel_estandar(PANEL_EN_PREPARACION);
     preparadas = crear_panel_estandar(PANEL_PREPARADAS);
     pedidos = crear_panel_estandar(PANEL_PEDIDOS);
 }
 
 void Paneles::dibujar(sf::RenderWindow &window) {
+    window.draw(encargar);
     window.draw(en_preparacion);
     window.draw(preparadas);
     window.draw(pedidos);
@@ -177,8 +183,9 @@ std::vector<BarraProgresoConNombre> crear_visualizaciones_porcentajes(
     assert(porcentajes.size() == nombres.size());
     std::vector<BarraProgresoConNombre> vect{};
     int i = 0;
-    int pos_x = 100;
-    int pos_y_inicial = 240;
+    int pos_x = obtener_posicion_x_panel(PANEL_EN_PREPARACION) +
+                medidas::MARGEN_IZQ_ETIQUETAS;
+    int pos_y_inicial = medidas::FILA_CONTENIDO_PANEL;
     int ancho = 300;
     int largo = 40;
     for (auto porcentaje : porcentajes) {
@@ -189,8 +196,7 @@ std::vector<BarraProgresoConNombre> crear_visualizaciones_porcentajes(
             sf::RectangleShape(sf::Vector2f(ancho * porcentaje / 100, largo));
         bp.fondo.setFillColor(sf::Color(COLOR_BARRA_PROGRESO_FONDO));
         bp.relleno.setFillColor(sf::Color(COLOR_BARRA_PROGRESO_RELLENO));
-        int offset_y =
-            i * medidas::DIFERENCIA_VERTICAL_ENTRE_PORCENTAJES_VISUALES;
+        int offset_y = i * medidas::DIFERENCIA_VERTICAL_ENTRE_BARRAS_PROGRESO;
         int pos_y = pos_y_inicial + offset_y;
         bp.fondo.setPosition(pos_x, pos_y);
         bp.relleno.setPosition(pos_x, pos_y);
@@ -204,21 +210,22 @@ std::vector<BarraProgresoConNombre> crear_visualizaciones_porcentajes(
 }
 
 void TitulosPaneles::dibujar(sf::RenderWindow &ventana) {
+    ventana.draw(encargar);
     ventana.draw(en_preparacion);
     ventana.draw(preparadas);
     ventana.draw(pedidos);
 }
 
 PanelesCompletos::PanelesCompletos(sf::Font &font) {
-    sf::Text titulo_1 = crearEtiquetaTituloPanel(
-        font, IndicePanel::PANEL_EN_PREPARACION, "En preparaci%on"
-    );
-    sf::Text titulo_2 = crearEtiquetaTituloPanel(
-        font, IndicePanel::PANEL_PREPARADAS, "Preparadas"
-    );
-    sf::Text titulo_3 =
-        crearEtiquetaTituloPanel(font, IndicePanel::PANEL_PEDIDOS, "Pedidos");
-    titulos_paneles = {titulo_1, titulo_2, titulo_3};
+    titulos_paneles = {
+        crearEtiquetaTituloPanel(font, IndicePanel::PANEL_ENCARGAR, "Encargar"),
+        crearEtiquetaTituloPanel(
+            font, IndicePanel::PANEL_EN_PREPARACION, "En preparaci%on"
+        ),
+        crearEtiquetaTituloPanel(
+            font, IndicePanel::PANEL_PREPARADAS, "Preparadas"
+        ),
+        crearEtiquetaTituloPanel(font, IndicePanel::PANEL_PEDIDOS, "Pedidos")};
 }
 
 void PanelesCompletos::dibujar(
