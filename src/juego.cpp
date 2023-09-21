@@ -29,8 +29,8 @@ namespace colores {
 
 namespace tiempos {
     const auto TIEMPO_PREPARACION = Tiempo::desde_segundos(3.5);
-    const auto RETARDO_ANTES_DE_RESULTADO = Tiempo::desde_segundos(1.6);
-    const auto ESPERA_ENTRE_NIVELES = Tiempo::desde_segundos(1.8);
+    const auto RETARDO_ANTES_DE_RESULTADO = Tiempo::desde_segundos(2.5);
+    const auto ESPERA_ENTRE_NIVELES = Tiempo::desde_segundos(2);
 } // namespace tiempos
 
 struct Globales {
