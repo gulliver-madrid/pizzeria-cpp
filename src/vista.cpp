@@ -11,8 +11,9 @@
 sf::Text crearEtiquetaTituloPanel(
     const sf::Font &font, IndicePanel indice_panel, const std::string &texto
 ) {
-    sf::Text etiqueta =
-        crearEtiqueta(medidas::TAMANO_FUENTE_ETIQUETAS, font, sf::Color::White);
+    sf::Text etiqueta = crearEtiqueta(
+        medidas::TAMANO_FUENTE_TITULO_PANELES, font, sf::Color::White
+    );
     int pos_x =
         obtener_posicion_x_panel(indice_panel) + medidas::MARGEN_IZQ_ETIQUETAS;
     int pos_y = medidas::FILA_TITULOS_PANELES;

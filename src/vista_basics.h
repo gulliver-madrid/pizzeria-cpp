@@ -8,7 +8,8 @@ enum IndicePanel {
 };
 
 namespace medidas {
-    constexpr int TAMANO_FUENTE_ETIQUETAS = 36;
+    constexpr int TAMANO_FUENTE_TITULO_PANELES = 36;
+    constexpr int TAMANO_FUENTE_ETIQUETAS = 24;
     constexpr int MARGEN_IZQ_ETIQUETAS = 30;
     constexpr int ANCHO_PANEL = 390;
     constexpr int ALTO_PANEL = 700;
