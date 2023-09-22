@@ -16,4 +16,6 @@ template <typename Derived> class Comparable {
     bool operator<=(const Derived &otro) const { return !(*this > otro); }
 
     bool operator>=(const Derived &otro) const { return !(*this < otro); }
+    // Para permitir la llamada a la clase derivada
+    virtual bool operator<(const Derived &other) const = 0;
 };

@@ -1,4 +1,5 @@
 #include "demos/map.h"
+#include "demos/min_ex.h"
 #include "demos/unicode.h"
 #include "demos/visual.h"
 #include "demos/visual_textos.h"
@@ -36,6 +37,9 @@ int main(int argc, char *argv[]) { //
             break;
         case 4:
             return demo_unicode();
+            break;
+        case 5:
+            return min_example();
             break;
 
         default:

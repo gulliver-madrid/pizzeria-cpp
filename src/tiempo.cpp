@@ -9,6 +9,8 @@ Tiempo Timer::obtener_tiempo_transcurrido() {
     return Tiempo::desde_segundos(segundos);
 }
 
+bool Tiempo::operator<(const Tiempo &otro) const { return _ms < otro._ms; }
+
 void Timer::start(Tiempo finalizacion) { //
     assert(finalizacion > Tiempo::CERO);
     this->finalizacion = finalizacion;

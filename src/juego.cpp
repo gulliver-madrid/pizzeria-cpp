@@ -232,16 +232,22 @@ void actualizarIU(                       //
     }
 
     // Textos
-    if (estado.actual == MostrandoInstrucciones) {
-        ventana.draw(etiquetas_info.instrucciones);
-    } else if (estado.actual == Activo || estado.actual == EsperaAntesDeResultado) {
-        for (auto &tp : tipos_de_pizza) {
-            ventana.draw(contadores.texto_contador[tp]);
-            ventana.draw(contadores.texto_pizzas_preparadas[tp]);
-        }
-    } else {
-        assert(estado.actual == MostrandoResultado);
-        ventana.draw(etiquetas_info.resultado);
+    switch (estado.actual) {
+        case MostrandoInstrucciones:
+            ventana.draw(etiquetas_info.instrucciones);
+            break;
+        case Activo:
+        case EsperaAntesDeResultado:
+            for (auto &tp : tipos_de_pizza) {
+                ventana.draw(contadores.texto_contador[tp]);
+                ventana.draw(contadores.texto_pizzas_preparadas[tp]);
+            }
+            break;
+
+        default:
+            assert(estado.actual == MostrandoResultado);
+            ventana.draw(etiquetas_info.resultado);
+            break;
     }
 
     botones.dibujar(ventana);
@@ -274,30 +280,55 @@ sf::Text generar_resultado(sf::Font &font) {
 /*
  * Evalua si hay pizzas ya preparadas y modifica el estado en consecuencia
  * maximo es el maximo de pizzas que podrán pasar
+ * Las pizzas que lleven más tiempo preparadas pasan antes
  */
 void evaluar_preparacion(Estado &estado, int maximo) {
-    // TODO: el orden debería ser en función del tiempo que lleven preparadas
     auto tiempo_actual = obtener_tiempo_actual();
-    std::vector<EncargoACocina> restantes = {};
-    std::vector<EncargoACocina> listas = {};
-    int restantes_por_pasar = maximo;
+
+    std::vector<std::pair<size_t, int>> listas_con_indice = {};
+    // Primero hago una ronda paro saber cuales son las ya hechas
     for (size_t i = 0; i < estado.encargadas.size(); i++) {
-        auto elem = estado.encargadas[i];
+        auto encargo = estado.encargadas[i];
         if ( //
-            (tiempo_actual < elem.tiempo_preparacion.finalizacion) ||
-            (restantes_por_pasar == 0) //
+            tiempo_actual >= encargo.tiempo_preparacion.finalizacion
         ) {
-            restantes.push_back(elem);
-        } else {
-            listas.push_back(elem);
-            restantes_por_pasar--;
+            // Exceso de tiempo que lleva preparada
+            Tiempo diff =
+                (tiempo_actual - encargo.tiempo_preparacion.finalizacion);
+            listas_con_indice.push_back({i, diff.obtener_milisegundos()});
         }
     }
 
-    estado.encargadas = std::move(restantes);
-    for (auto &encargo : listas) {
-        estado.contadores[encargo.tipo].preparadas++;
+    if (listas_con_indice.size() > maximo) {
+        // Ordenamos la lista de manera descendente
+        // Las que llevan más tiempo preparadas salen antes
+        std::sort(
+            listas_con_indice.begin(), listas_con_indice.end(),
+            [](const auto &a, const auto &b) { return a.second > b.second; }
+        );
+        listas_con_indice.resize(maximo);
     }
+
+    // Nos quedamos solo con los indices de las pizzas que pasan
+    std::vector<size_t> pasan;
+    for (const auto &par : listas_con_indice) {
+        pasan.push_back(par.first);
+    }
+
+    std::vector<EncargoACocina> restantes = {};
+
+    // Segunda ronda
+    for (size_t i = 0; i < estado.encargadas.size(); i++) {
+        auto encargo = estado.encargadas[i];
+        auto it = std::find(pasan.begin(), pasan.end(), i);
+        if (it != pasan.end()) {
+            // Se encontro
+            estado.contadores[encargo.tipo].preparadas++;
+        } else {
+            restantes.push_back(encargo);
+        }
+    }
+    estado.encargadas = std::move(restantes);
 }
 
 struct ResultadoSetup {
