@@ -23,6 +23,7 @@
 #define TAMANO_FUENTE_RESULTADO 48
 
 #define MAXIMO_PIZZAS_EN_PREPARACION 3
+#define MAXIMO_PIZZAS_PREPARADAS 4
 
 namespace colores {
     const auto COLOR_FONDO = sf::Color(60, 0, 150);
@@ -269,6 +270,36 @@ sf::Text generar_resultado(sf::Font &font) {
     etiqueta.setPosition(200, 200);
     return etiqueta;
 }
+
+/*
+ * Evalua si hay pizzas ya preparadas y modifica el estado en consecuencia
+ * maximo es el maximo de pizzas que podrán pasar
+ */
+void evaluar_preparacion(Estado &estado, int maximo) {
+    // TODO: el orden debería ser en función del tiempo que lleven preparadas
+    auto tiempo_actual = obtener_tiempo_actual();
+    std::vector<EncargoACocina> restantes = {};
+    std::vector<EncargoACocina> listas = {};
+    int restantes_por_pasar = maximo;
+    for (size_t i = 0; i < estado.encargadas.size(); i++) {
+        auto elem = estado.encargadas[i];
+        if ( //
+            (tiempo_actual < elem.tiempo_preparacion.finalizacion) ||
+            (restantes_por_pasar == 0) //
+        ) {
+            restantes.push_back(elem);
+        } else {
+            listas.push_back(elem);
+            restantes_por_pasar--;
+        }
+    }
+
+    estado.encargadas = std::move(restantes);
+    for (auto &encargo : listas) {
+        estado.contadores[encargo.tipo].preparadas++;
+    }
+}
+
 struct ResultadoSetup {
   private:
     ResultadoSetup(bool ok) : ok(ok) {}
@@ -403,21 +434,14 @@ bool nivel(                  //
             }
         }
 
-        auto tiempo_actual = obtener_tiempo_actual();
-        std::vector<EncargoACocina> restantes = {};
-        std::vector<EncargoACocina> listas = {};
-        for (size_t i = 0; i < estado.encargadas.size(); i++) {
-            auto elem = estado.encargadas[i];
-            if (tiempo_actual < elem.tiempo_preparacion.finalizacion) {
-                restantes.push_back(elem);
-            } else {
-                listas.push_back(elem);
-            }
+        int total_preparadas = 0;
+        for (auto tp : tipos_de_pizza) {
+            total_preparadas += estado.contadores[tp].preparadas;
         }
 
-        estado.encargadas = std::move(restantes);
-        for (auto &encargo : listas) {
-            estado.contadores[encargo.tipo].preparadas++;
+        if (total_preparadas < MAXIMO_PIZZAS_PREPARADAS) {
+            int maximo = MAXIMO_PIZZAS_PREPARADAS - total_preparadas;
+            evaluar_preparacion(estado, maximo);
         }
 
         // En función del estado (no necesariamente reciente)
