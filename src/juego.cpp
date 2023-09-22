@@ -60,8 +60,8 @@ struct EtiquetasInfo {
 };
 
 struct Contadores {
-    int contador_pizzas_servidas = 0;
-    int contador_pizzas_preparadas = 0;
+    int servidas = 0;
+    int preparadas = 0;
     int objetivo = 0;
 };
 
@@ -123,15 +123,14 @@ std::optional<EstadoJuego> procesarEvento(
             for (auto &par : botones.despachar) {
                 auto boton = par.second;
                 auto &contador = estado.contadores[par.first];
-                if (boton.colisiona(mousePos) &&
-                    contador.contador_pizzas_preparadas > 0) {
-                    contador.contador_pizzas_preparadas--;
-                    contador.contador_pizzas_servidas++;
+                if (boton.colisiona(mousePos) && contador.preparadas > 0) {
+                    contador.preparadas--;
+                    contador.servidas++;
                 }
             }
             bool faltan = false;
             for (auto tp : tipos_de_pizza) {
-                if (estado.contadores[tp].contador_pizzas_servidas <
+                if (estado.contadores[tp].servidas <
                     estado.contadores[tp].objetivo) {
                     faltan = true;
                     break;
@@ -141,7 +140,6 @@ std::optional<EstadoJuego> procesarEvento(
                 return EsperaAntesDeResultado;
             }
             for (auto &tp : tipos_de_pizza) {
-
                 if (botones.encargar[tp].colisiona(mousePos)) {
                     auto total =
                         Tiempo::desde_segundos(tiempos_preparacion[tp]);
@@ -175,48 +173,44 @@ void actualizarIU(                       //
     for (auto tp : tipos_de_pizza) {
         contadores.texto_contador[tp].setString(
             tipo_pizza_to_string[tp] + ": " +
-            std::to_string(estado.contadores[tp].contador_pizzas_servidas) +
-            "/" + std::to_string(estado.contadores[tp].objetivo)
+            std::to_string(estado.contadores[tp].servidas) + "/" +
+            std::to_string(estado.contadores[tp].objetivo)
         );
     }
     for (auto tp : tipos_de_pizza) {
         contadores.texto_pizzas_preparadas[tp].setString(
             tipo_pizza_to_string[tp] + ": " +
-            std::to_string(estado.contadores[tp].contador_pizzas_preparadas)
+            std::to_string(estado.contadores[tp].preparadas)
         );
     }
 
     // Actualiza el estado de los botones
     for (auto tp : tipos_de_pizza) {
-        if (estado.contadores[tp].contador_pizzas_preparadas == 0) {
-            if (botones.despachar[tp].activo)
-                botones.despachar[tp].activo = false;
+        auto &boton_despachar = botones.despachar[tp];
+        if (estado.contadores[tp].preparadas == 0) {
+            boton_despachar.desactivar();
+
         } else {
-            if (!botones.despachar[tp].activo)
-                botones.despachar[tp].activo = true;
+            boton_despachar.activar();
         }
     }
     int total_en_preparacion = estado.encargadas.size();
 
     for (auto &tp : tipos_de_pizza) {
+        auto &boton_encargar = botones.encargar[tp];
         if (total_en_preparacion == MAXIMO_PIZZAS_EN_PREPARACION) {
-            if (botones.encargar[tp].activo) {
-                botones.encargar[tp].activo = false;
-            }
+            boton_encargar.desactivar();
             continue;
         } else {
-            if (!botones.encargar[tp].activo)
-                botones.encargar[tp].activo = true;
+            boton_encargar.activar();
         }
-        int potenciales = estado.contadores[tp].contador_pizzas_preparadas +
-                          estado.contadores[tp].contador_pizzas_servidas +
+        auto contadores = estado.contadores[tp];
+        int potenciales = contadores.preparadas + contadores.servidas +
                           encargadas_del_tipo(estado.encargadas, tp);
-        if (potenciales < estado.contadores[tp].objetivo) {
-            if (!botones.encargar[tp].activo)
-                botones.encargar[tp].activo = true;
+        if (potenciales < contadores.objetivo) {
+            boton_encargar.activar();
         } else {
-            if (botones.encargar[tp].activo)
-                botones.encargar[tp].activo = false;
+            boton_encargar.desactivar();
         }
     }
 
@@ -335,7 +329,7 @@ bool nivel(                  //
     // Iniciamos el estado
     estado.actual = MostrandoInstrucciones;
     for (auto tp : tipos_de_pizza) {
-        estado.contadores[tp].contador_pizzas_preparadas =
+        estado.contadores[tp].preparadas =
             datos_nivel.pizzas[tp].pizzas_preparadas_iniciales;
         estado.contadores[tp].objetivo = datos_nivel.pizzas[tp].objetivo_pizzas;
     }
@@ -423,7 +417,7 @@ bool nivel(                  //
 
         estado.encargadas = std::move(restantes);
         for (auto &encargo : listas) {
-            estado.contadores[encargo.tipo].contador_pizzas_preparadas++;
+            estado.contadores[encargo.tipo].preparadas++;
         }
 
         // En función del estado (no necesariamente reciente)

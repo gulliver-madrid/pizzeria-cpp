@@ -1,5 +1,8 @@
 #include "componentes.h"
 
+/*
+ * Solo se detectará la colisión si el botón está visible y activo
+ */
 bool BotonConTexto::colisiona(sf::Vector2i &mousePos) {
     if (!visible || !activo)
         return false;
@@ -36,4 +39,20 @@ crearEtiqueta(int tamano, const sf::Font &font, const sf::Color &color) {
     sf::Text etiqueta("<Placeholder>", font, tamano);
     etiqueta.setFillColor(color);
     return etiqueta;
+}
+
+/**
+ * Activa el botón solo si está actualmente inactivo.
+ */
+void BotonConTexto::activar() {
+    if (!activo)
+        activo = true;
+}
+
+/**
+ * Desactiva el botón solo si está actualmente activo.
+ */
+void BotonConTexto::desactivar() {
+    if (activo)
+        activo = false;
 }

@@ -14,6 +14,8 @@ struct BotonConTexto {
     BotonConTexto(sf::RectangleShape rectShape, sf::Text txt);
     bool colisiona(sf::Vector2i &mousePos);
     void dibujar(sf::RenderWindow &window);
+    void activar();
+    void desactivar();
 
   private:
     std::optional<sf::Color> colorBotonActivo;
