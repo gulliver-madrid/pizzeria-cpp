@@ -1,5 +1,4 @@
 #include "debug.h"
-#include <iostream>
 
 void debug_rect(sf::RectangleShape &rect, std::string name) {
     std::cout << name << ".getPosition(): " << rect.getPosition().x << ", "
