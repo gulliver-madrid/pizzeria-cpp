@@ -1,13 +1,11 @@
 #include "juego.h"
 #include "botones.h"
 #include "cadenas.h"
-#include "dominio.h"
 #include "grid.h"
 #include "manejo_rutas.h"
 #include "modelo.h"
 #include "paths.h"
 #include "textos.h"
-#include "tiempo.h"
 #include "vista.h"
 #include "vista_data.h"
 #include <SFML/Audio.hpp>
@@ -64,11 +62,6 @@ struct Contadores {
     int servidas = 0;
     int preparadas = 0;
     int objetivo = 0;
-};
-
-struct EncargoACocina {
-    TipoPizza tipo;
-    TiempoPreparacion tiempo_preparacion;
 };
 
 struct Estado {

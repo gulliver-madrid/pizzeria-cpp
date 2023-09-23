@@ -63,7 +63,7 @@ add_executable(
     runUnitTests
 
     # tests
-    src/tests/test_1.cpp
+    src/tests/test_encargadas.cpp
 
     # archivos del proyecto
     src/botones.cpp
