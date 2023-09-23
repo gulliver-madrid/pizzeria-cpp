@@ -51,8 +51,8 @@ enum EstadoJuego {
 };
 
 struct EtiquetasContadores {
-    std::map<TipoPizza, sf::Text> texto_contador;
-    std::map<TipoPizza, sf::Text> texto_pizzas_preparadas;
+    std::map<TipoPizza, sf::Text> texto_servidas;
+    std::map<TipoPizza, sf::Text> texto_preparadas;
 };
 
 struct EtiquetasInfo {
@@ -87,6 +87,18 @@ int encargadas_del_tipo(
         }
     }
     return c;
+}
+
+void poblar_porcentajes_de_preparacion(
+    const std::vector<EncargoACocina> &encargos,
+    std::vector<PorcentajeConTipoPizza> &porcentajes
+) {
+    assert(porcentajes.empty());
+    for (auto &encargo : encargos) {
+        porcentajes.push_back(PorcentajeConTipoPizza{
+            encargo.tiempo_preparacion.obtener_porcentaje(), encargo.tipo
+        });
+    }
 }
 
 // Incluye toda la lógica para procesar un evento
@@ -161,28 +173,26 @@ std::optional<EstadoJuego> procesarEvento(
 /*
  * Actualiza el interfaz gráfico
  */
-void actualizarIU(                       //
-    sf::RenderWindow &ventana,           //
-    Botones &botones,                    //
-    PanelesCompletos &paneles_completos, //
-    EtiquetasContadores &contadores,     //
-    EtiquetasInfo &etiquetas_info,       //
-    Estado &estado,                      //
-    Grid &grid,                          //
-    sf::Font font                        //
+void actualizarIU(                             //
+    sf::RenderWindow &ventana,                 //
+    Botones &botones,                          //
+    PanelesCompletos &paneles_completos,       //
+    EtiquetasContadores &etiquetas_contadores, //
+    EtiquetasInfo &etiquetas_info,             //
+    Estado &estado,                            //
+    Grid &grid,                                //
+    sf::Font font                              //
 ) {
     for (auto tp : tipos_de_pizza) {
-        contadores.texto_contador[tp].setString(
-            tipo_pizza_to_string[tp] + ": " +
-            std::to_string(estado.contadores[tp].servidas) + "/" +
-            std::to_string(estado.contadores[tp].objetivo)
-        );
-    }
-    for (auto tp : tipos_de_pizza) {
-        contadores.texto_pizzas_preparadas[tp].setString(
-            tipo_pizza_to_string[tp] + ": " +
-            std::to_string(estado.contadores[tp].preparadas)
-        );
+        auto &contadores = estado.contadores[tp];
+        auto &nombre_pizza = tipo_pizza_to_string[tp];
+        std::string preparadas =
+            nombre_pizza + ": " + std::to_string(contadores.preparadas);
+        std::string servidas = nombre_pizza + ": " +
+                               std::to_string(contadores.servidas) + "/" +
+                               std::to_string(contadores.objetivo);
+        etiquetas_contadores.texto_preparadas[tp].setString(preparadas);
+        etiquetas_contadores.texto_servidas[tp].setString(servidas);
     }
 
     // Actualiza el estado de los botones
@@ -190,21 +200,24 @@ void actualizarIU(                       //
         auto &boton_despachar = botones.despachar[tp];
         if (estado.contadores[tp].preparadas == 0) {
             boton_despachar.desactivar();
-
         } else {
             boton_despachar.activar();
         }
     }
+
     int total_en_preparacion = estado.encargadas.size();
+    assert(total_en_preparacion <= MAXIMO_PIZZAS_EN_PREPARACION);
 
     for (auto &tp : tipos_de_pizza) {
         auto &boton_encargar = botones.encargar[tp];
+        // Desactivar los botones si se alcanzó el máximo en preparación
         if (total_en_preparacion == MAXIMO_PIZZAS_EN_PREPARACION) {
             boton_encargar.desactivar();
             continue;
         } else {
             boton_encargar.activar();
         }
+        // Desactivar los botones que harían sobrepasar los objetivos
         auto contadores = estado.contadores[tp];
         int potenciales = contadores.preparadas + contadores.servidas +
                           encargadas_del_tipo(estado.encargadas, tp);
@@ -223,11 +236,7 @@ void actualizarIU(                       //
     // Paneles
     if (estado.actual == Activo || estado.actual == EsperaAntesDeResultado) {
         std::vector<PorcentajeConTipoPizza> porcentajes;
-        for (auto &encargo : estado.encargadas) {
-            porcentajes.push_back(PorcentajeConTipoPizza{
-                encargo.tiempo_preparacion.obtener_porcentaje(), encargo.tipo
-            });
-        }
+        poblar_porcentajes_de_preparacion(estado.encargadas, porcentajes);
         paneles_completos.dibujar(ventana, porcentajes, font);
     }
 
@@ -239,8 +248,8 @@ void actualizarIU(                       //
         case Activo:
         case EsperaAntesDeResultado:
             for (auto &tp : tipos_de_pizza) {
-                ventana.draw(contadores.texto_contador[tp]);
-                ventana.draw(contadores.texto_pizzas_preparadas[tp]);
+                ventana.draw(etiquetas_contadores.texto_servidas[tp]);
+                ventana.draw(etiquetas_contadores.texto_preparadas[tp]);
             }
             break;
 
@@ -410,8 +419,8 @@ bool nivel(                  //
     // Contadores
     int i = 0;
     for (auto tp : tipos_de_pizza) {
-        contadores.texto_contador[tp] = crearEtiquetaContador(globales.font, i);
-        contadores.texto_pizzas_preparadas[tp] =
+        contadores.texto_servidas[tp] = crearEtiquetaContador(globales.font, i);
+        contadores.texto_preparadas[tp] =
             crearEtiquetaPizzasPreparadas(globales.font, i);
         i++;
     }
