@@ -65,6 +65,7 @@ add_executable(
     # tests
     src/tests/test_main.cpp
     src/tests/test_encargadas.cpp
+    src/tests/test_evaluar_preparacion.cpp
 
     # archivos del proyecto
     src/botones.cpp

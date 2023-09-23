@@ -40,14 +40,6 @@ struct Globales {
     std::optional<sf::SoundBuffer> opt_buffer;
 };
 
-enum EstadoJuego {
-    MostrandoInstrucciones,
-    Activo,
-    EsperaAntesDeResultado,
-    MostrandoResultado,
-    Reiniciando,
-};
-
 struct EtiquetasContadores {
     std::map<TipoPizza, sf::Text> texto_servidas;
     std::map<TipoPizza, sf::Text> texto_preparadas;
@@ -56,18 +48,6 @@ struct EtiquetasContadores {
 struct EtiquetasInfo {
     sf::Text instrucciones;
     sf::Text resultado;
-};
-
-struct Contadores {
-    int servidas = 0;
-    int preparadas = 0;
-    int objetivo = 0;
-};
-
-struct Estado {
-    EstadoJuego actual = MostrandoInstrucciones;
-    std::map<TipoPizza, Contadores> contadores;
-    std::vector<EncargoACocina> encargadas = {};
 };
 
 int encargadas_del_tipo(
