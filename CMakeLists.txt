@@ -63,6 +63,7 @@ add_executable(
     runUnitTests
 
     # tests
+    src/tests/test_main.cpp
     src/tests/test_encargadas.cpp
 
     # archivos del proyecto

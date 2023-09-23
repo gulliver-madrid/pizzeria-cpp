@@ -11,18 +11,20 @@ TEST(Juego, EncargadasDelTipoConVectorVacio) {
 }
 
 TEST(Juego, EncargadasDelTipoConDosMargaritasYUnaPepperoni) {
-    std::vector<EncargoACocina> encargadas;
+    // El TiempoPreparacion deberia ser irrelevante aqui
     auto tp = TiempoPreparacion{Tiempo::CERO, Tiempo::CERO};
+
+    std::vector<EncargoACocina> encargadas;
     encargadas.push_back(EncargoACocina{Margarita, tp});
     encargadas.push_back(EncargoACocina{Margarita, tp});
     encargadas.push_back(EncargoACocina{Pepperoni, tp});
-    auto result = encargadas_del_tipo(encargadas, Margarita);
-    EXPECT_EQ(result, 2);
-    result = encargadas_del_tipo(encargadas, Pepperoni);
-    EXPECT_EQ(result, 1);
-}
 
-int main(int argc, char **argv) {
-    ::testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
+    EXPECT_EQ(                                      //
+        encargadas_del_tipo(encargadas, Margarita), //
+        2
+    );
+    EXPECT_EQ(                                      //
+        encargadas_del_tipo(encargadas, Pepperoni), //
+        1
+    );
 }
