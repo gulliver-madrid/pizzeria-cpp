@@ -9,6 +9,16 @@ FetchContent_Declare(SFML
     GIT_TAG 2.6.x)
 FetchContent_MakeAvailable(SFML)
 
+# GoogleTest
+include(FetchContent)
+FetchContent_Declare(
+    googletest
+    GIT_REPOSITORY https://github.com/google/googletest.git
+    GIT_TAG        v1.14.0
+)
+FetchContent_MakeAvailable(googletest)
+
+
 add_executable(pizzeria
     src/main.cpp
     src/botones.cpp
@@ -40,3 +50,29 @@ if(WIN32)
 endif()
 
 install(TARGETS pizzeria)
+
+# Unit tests
+enable_testing()
+add_executable(
+    runUnitTests
+
+    # tests
+    src/tests/test_1.cpp
+
+    # archivos del proyecto
+    src/botones.cpp
+    src/cadenas.cpp
+    src/componentes.cpp
+    src/debug.cpp
+    src/dominio.cpp
+    src/grid.cpp
+    src/juego.cpp
+    src/textos.cpp
+    src/tiempo.cpp
+    src/vista.cpp
+    src/vista_basics.cpp
+)
+target_link_libraries(runUnitTests PRIVATE sfml-graphics sfml-audio )
+target_link_libraries(runUnitTests PUBLIC gtest gtest_main)
+target_compile_features(runUnitTests PRIVATE cxx_std_17)
+add_test(NAME runUnitTests COMMAND runUnitTests)
