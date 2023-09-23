@@ -281,16 +281,17 @@ sf::Text generar_resultado(sf::Font &font) {
 
 /*
  * Evalua si hay pizzas ya preparadas y modifica el estado en consecuencia
- * maximo es el maximo de pizzas que podrán pasar
- * Las pizzas que lleven más tiempo preparadas pasan antes
+ * `maximo` es el maximo de pizzas que podrán salir de la cocina.
+ * Las pizzas que lleven más tiempo preparadas pasan antes.
+ * Modifica estado.contadores y estado.encargadas.
  */
-void evaluar_preparacion(Estado &estado, int maximo) {
-    auto tiempo_actual = obtener_tiempo_actual();
+void evaluar_preparacion(Estado &estado, int maximo, Tiempo tiempo_actual) {
+    const auto encargos = estado.encargadas;
 
     std::vector<std::pair<size_t, int>> listas_con_indice = {};
-    // Primero hago una ronda paro saber cuales son las ya hechas
-    for (size_t i = 0; i < estado.encargadas.size(); i++) {
-        auto encargo = estado.encargadas[i];
+    // Primero hago una ronda para saber cuales son las ya hechas
+    for (size_t i = 0; i < encargos.size(); i++) {
+        auto encargo = encargos[i];
         if ( //
             tiempo_actual >= encargo.tiempo_preparacion.finalizacion
         ) {
@@ -320,8 +321,8 @@ void evaluar_preparacion(Estado &estado, int maximo) {
     std::vector<EncargoACocina> restantes = {};
 
     // Segunda ronda
-    for (size_t i = 0; i < estado.encargadas.size(); i++) {
-        auto encargo = estado.encargadas[i];
+    for (size_t i = 0; i < encargos.size(); i++) {
+        auto encargo = encargos[i];
         auto it = std::find(pasan.begin(), pasan.end(), i);
         if (it != pasan.end()) {
             // Se encontro
@@ -474,7 +475,8 @@ bool nivel(                  //
 
         if (total_preparadas < MAXIMO_PIZZAS_PREPARADAS) {
             int maximo = MAXIMO_PIZZAS_PREPARADAS - total_preparadas;
-            evaluar_preparacion(estado, maximo);
+            auto tiempo_actual = obtener_tiempo_actual();
+            evaluar_preparacion(estado, maximo, tiempo_actual);
         }
 
         // En función del estado (no necesariamente reciente)
