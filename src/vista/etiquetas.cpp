@@ -53,6 +53,13 @@ void EtiquetasContadores::setup(sf::Font &font) {
     }
 };
 
+void EtiquetasContadores::dibujar(sf::RenderWindow &ventana) {
+    for (auto &tp : tipos_de_pizza) {
+        ventana.draw(texto_servidas[tp]);
+        ventana.draw(texto_preparadas[tp]);
+    }
+}
+
 sf::Text generar_etiqueta_instrucciones(
     sf::Font &font, std::string plantilla_instrucciones, int objetivo
 ) {

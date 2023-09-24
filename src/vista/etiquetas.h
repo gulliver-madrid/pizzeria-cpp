@@ -7,6 +7,7 @@ struct EtiquetasContadores {
     std::map<TipoPizza, sf::Text> texto_servidas;
     std::map<TipoPizza, sf::Text> texto_preparadas;
     void setup(sf::Font &font);
+    void dibujar(sf::RenderWindow &ventana);
 };
 
 struct EtiquetasInfo {
