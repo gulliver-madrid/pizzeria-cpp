@@ -84,6 +84,7 @@ std::optional<FaseNivel> procesarEvento(
                 if (boton.colisiona(mousePos) && contador.preparadas > 0) {
                     contador.preparadas--;
                     contador.servidas++;
+                    break;
                 }
             }
             bool faltan = false;
@@ -102,6 +103,7 @@ std::optional<FaseNivel> procesarEvento(
                     EncargoACocina encargo =
                         crear_encargo(tp, obtener_tiempo_actual());
                     estado.encargadas.push_back(encargo);
+                    break;
                 }
             }
         }
