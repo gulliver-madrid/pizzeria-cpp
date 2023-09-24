@@ -278,6 +278,31 @@ struct DatosNivel {
         : instrucciones(instr), pizzas(pizzas) {}
 };
 
+/* Procesa un cambio de fase reciente */
+void procesa_cambio_de_fase(
+    EstadoJuego nueva_fase,                 //
+    Botones &botones,                       //
+    PanelesCompletos &paneles_completos,    //
+    Timer &timer_espera_antes_de_resultado, //
+    EstadoJuego fase_previa                 //
+) {
+    switch (nueva_fase) {
+        case Activo:
+            assert(fase_previa == MostrandoInstrucciones);
+            botones.empezar.visible = false;
+            botones.mostrar_botones_nivel(true);
+            paneles_completos.visible = true;
+            break;
+        case EsperaAntesDeResultado:
+            assert(fase_previa == Activo);
+            botones.mostrar_botones_nivel(false);
+            timer_espera_antes_de_resultado.start(
+                tiempos::RETARDO_ANTES_DE_RESULTADO
+            );
+            break;
+    }
+}
+
 /* Devuelve true si se debe pasar al siguiente nivel,
  * false para reiniciar
  */
@@ -327,28 +352,16 @@ bool nivel(                  //
         while (globales.window.pollEvent(event)) {
             auto nuevo_estado =
                 procesarEvento(event, globales.window, botones, estado);
-            const auto &previo = estado.actual;
             // Cambio de estado reciente
             if (nuevo_estado.has_value()) {
-                switch (nuevo_estado.value()) {
-                    case Activo:
-                        assert(previo == MostrandoInstrucciones);
-                        botones.empezar.visible = false;
-                        botones.mostrar_botones_nivel(true);
-                        paneles_completos.visible = true;
-                        break;
-                    case EsperaAntesDeResultado:
-                        assert(previo == Activo);
-                        botones.mostrar_botones_nivel(false);
-                        timer_espera_antes_de_resultado.start(
-                            tiempos::RETARDO_ANTES_DE_RESULTADO
-                        );
-                        break;
-
-                    case Reiniciando:
-                        return false;
-                }
+                procesa_cambio_de_fase(
+                    nuevo_estado.value(), botones, paneles_completos,
+                    timer_espera_antes_de_resultado, estado.actual
+                );
                 estado.actual = nuevo_estado.value();
+                if (estado.actual == Reiniciando) {
+                    return false;
+                }
             }
         }
 
