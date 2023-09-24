@@ -30,6 +30,7 @@ add_executable(pizzeria
     src/vista/botones.cpp
     src/cadenas.cpp
     src/vista/componentes.cpp
+    src/vista/etiquetas.cpp
     src/vista/grid.cpp
     src/vista/vista.cpp
     src/vista/vista_basics.cpp

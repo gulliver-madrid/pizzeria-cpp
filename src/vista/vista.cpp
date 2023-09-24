@@ -8,43 +8,6 @@
 #define COLOR_BARRA_PROGRESO_RELLENO 255, 140, 0 // 30, 144, 255
 #define COLOR_BARRA_PROGRESO_TEXTO 0, 0, 0
 
-sf::Text crearEtiquetaTituloPanel(
-    const sf::Font &font, IndicePanel indice_panel, const std::string &texto
-) {
-    sf::Text etiqueta = crearEtiqueta(
-        medidas::TAMANO_FUENTE_TITULO_PANELES, font, sf::Color::White
-    );
-    int pos_x =
-        obtener_posicion_x_panel(indice_panel) + medidas::MARGEN_IZQ_ETIQUETAS;
-    int pos_y = medidas::FILA_TITULOS_PANELES;
-    etiqueta.setPosition(pos_x, pos_y);
-    etiqueta.setString(interpolar_unicode(texto));
-    etiqueta.setFillColor(sf::Color::Green);
-    return etiqueta;
-}
-
-// Crea la etiqueta de texto que mostrará el contador
-sf::Text crearEtiquetaContador(const sf::Font &font, int indice_etiqueta) {
-    sf::Text etiqueta =
-        crearEtiqueta(medidas::TAMANO_FUENTE_ETIQUETAS, font, sf::Color::White);
-    etiqueta.setPosition(
-        obtener_posicion_x_panel(PANEL_PEDIDOS) + medidas::MARGEN_IZQ_ETIQUETAS,
-        medidas::FILA_CONTENIDO_PANEL + 50 * indice_etiqueta
-    );
-    return etiqueta;
-}
-sf::Text
-crearEtiquetaPizzasPreparadas(const sf::Font &font, int indice_etiqueta) {
-    sf::Text etiqueta =
-        crearEtiqueta(medidas::TAMANO_FUENTE_ETIQUETAS, font, sf::Color::White);
-    auto pos_x = obtener_posicion_x_panel(PANEL_PREPARADAS) +
-                 medidas::MARGEN_IZQ_ETIQUETAS;
-    etiqueta.setPosition(
-        pos_x, medidas::FILA_CONTENIDO_PANEL + 50 * indice_etiqueta
-    );
-    return etiqueta;
-}
-
 sf::RectangleShape crearPanelVertical(float x, float y) {
     auto rect = sf::RectangleShape(
         sf::Vector2f(medidas::ANCHO_PANEL, medidas::ALTO_PANEL)

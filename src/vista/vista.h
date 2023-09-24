@@ -2,7 +2,10 @@
 
 #include "../modelo/dominio.h"
 #include "../tiempo.h"
+#include "botones.h"
 #include "componentes.h"
+#include "etiquetas.h"
+#include "grid.h"
 #include "vista_basics.h"
 #include <vector>
 

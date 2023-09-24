@@ -1,10 +1,11 @@
 #include "juego.h"
 #include "cadenas.h"
 #include "manejo_rutas.h"
+#include "modelo/dominio.h"
+#include "modelo/modelo.h"
 #include "paths.h"
 #include "textos.h"
-#include "vista/botones.h"
-#include "vista/grid.h"
+#include "tiempo.h"
 #include "vista/vista.h"
 #include "vista/vista_data.h"
 #include <SFML/Audio.hpp>
@@ -51,24 +52,6 @@ struct Estado {
     FaseNivel actual = MostrandoInstrucciones;
     std::map<TipoPizza, Contadores> contadores;
     std::vector<EncargoACocina> encargadas;
-};
-
-struct EtiquetasContadores {
-    std::map<TipoPizza, sf::Text> texto_servidas;
-    std::map<TipoPizza, sf::Text> texto_preparadas;
-    void setup(sf::Font &font) {
-        int i = 0;
-        for (auto tp : tipos_de_pizza) {
-            texto_servidas[tp] = crearEtiquetaContador(font, i);
-            texto_preparadas[tp] = crearEtiquetaPizzasPreparadas(font, i);
-            i++;
-        }
-    }
-};
-
-struct EtiquetasInfo {
-    sf::Text instrucciones;
-    sf::Text resultado;
 };
 
 // Incluye toda la lógica para procesar un evento
