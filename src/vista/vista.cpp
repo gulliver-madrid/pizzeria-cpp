@@ -24,21 +24,24 @@ sf::Text crearEtiquetaTituloPanel(
 }
 
 // Crea la etiqueta de texto que mostrará el contador
-sf::Text crearEtiquetaContador(const sf::Font &font, int indice) {
+sf::Text crearEtiquetaContador(const sf::Font &font, int indice_etiqueta) {
     sf::Text etiqueta =
         crearEtiqueta(medidas::TAMANO_FUENTE_ETIQUETAS, font, sf::Color::White);
     etiqueta.setPosition(
         obtener_posicion_x_panel(PANEL_PEDIDOS) + medidas::MARGEN_IZQ_ETIQUETAS,
-        medidas::FILA_CONTENIDO_PANEL + 50 * indice
+        medidas::FILA_CONTENIDO_PANEL + 50 * indice_etiqueta
     );
     return etiqueta;
 }
-sf::Text crearEtiquetaPizzasPreparadas(const sf::Font &font, int indice) {
+sf::Text
+crearEtiquetaPizzasPreparadas(const sf::Font &font, int indice_etiqueta) {
     sf::Text etiqueta =
         crearEtiqueta(medidas::TAMANO_FUENTE_ETIQUETAS, font, sf::Color::White);
     auto pos_x = obtener_posicion_x_panel(PANEL_PREPARADAS) +
                  medidas::MARGEN_IZQ_ETIQUETAS;
-    etiqueta.setPosition(pos_x, medidas::FILA_CONTENIDO_PANEL + 50 * indice);
+    etiqueta.setPosition(
+        pos_x, medidas::FILA_CONTENIDO_PANEL + 50 * indice_etiqueta
+    );
     return etiqueta;
 }
 
@@ -133,10 +136,10 @@ void PanelesCompletos::dibujar(
         return;
     paneles.dibujar(ventana);
     titulos_paneles.dibujar(ventana);
-    porcentajes_visuales_con_nombres = crear_barras_progreso(porcentajes, font);
-    for (auto &tpv : porcentajes_visuales_con_nombres) {
-        ventana.draw(tpv.bp.fondo);
-        ventana.draw(tpv.bp.relleno);
-        ventana.draw(tpv.etiqueta);
+    barras_progreso_con_nombres = crear_barras_progreso(porcentajes, font);
+    for (auto &bpn : barras_progreso_con_nombres) {
+        ventana.draw(bpn.bp.fondo);
+        ventana.draw(bpn.bp.relleno);
+        ventana.draw(bpn.etiqueta);
     }
 }

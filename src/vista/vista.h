@@ -46,7 +46,7 @@ struct TitulosPaneles {
 struct PanelesCompletos {
     Paneles paneles;
     TitulosPaneles titulos_paneles;
-    std::vector<BarraProgresoConNombre> porcentajes_visuales_con_nombres;
+    std::vector<BarraProgresoConNombre> barras_progreso_con_nombres;
     bool visible = false;
 
     PanelesCompletos(sf::Font &font);

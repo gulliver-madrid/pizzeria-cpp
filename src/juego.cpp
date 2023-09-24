@@ -42,6 +42,14 @@ struct Globales {
 struct EtiquetasContadores {
     std::map<TipoPizza, sf::Text> texto_servidas;
     std::map<TipoPizza, sf::Text> texto_preparadas;
+    void setup(sf::Font &font) {
+        int i = 0;
+        for (auto tp : tipos_de_pizza) {
+            texto_servidas[tp] = crearEtiquetaContador(font, i);
+            texto_preparadas[tp] = crearEtiquetaPizzasPreparadas(font, i);
+            i++;
+        }
+    }
 };
 
 struct EtiquetasInfo {
@@ -298,15 +306,8 @@ bool nivel(                  //
     EtiquetasInfo etiquetas_info = {instrucciones, resultado};
 
     PanelesCompletos paneles_completos(globales.font);
-    EtiquetasContadores contadores;
-    // Contadores
-    int i = 0;
-    for (auto tp : tipos_de_pizza) {
-        contadores.texto_servidas[tp] = crearEtiquetaContador(globales.font, i);
-        contadores.texto_preparadas[tp] =
-            crearEtiquetaPizzasPreparadas(globales.font, i);
-        i++;
-    }
+    EtiquetasContadores etiquetas_contadores;
+    etiquetas_contadores.setup(globales.font);
 
     // Botones
     Botones botones(globales.font);
@@ -392,7 +393,7 @@ bool nivel(                  //
         }
 
         actualizarIU(
-            globales.window, botones, paneles_completos, contadores,
+            globales.window, botones, paneles_completos, etiquetas_contadores,
             etiquetas_info, estado, grid, globales.font
         );
     }
