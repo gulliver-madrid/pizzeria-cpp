@@ -1,5 +1,5 @@
 
-#include "../juego.h"
+#include "../modelo/modelo.h"
 #include <cassert>
 #include <gtest/gtest.h>
 

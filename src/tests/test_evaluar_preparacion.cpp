@@ -1,4 +1,4 @@
-#include "../juego.h"
+#include "../modelo/modelo.h"
 #include <gtest/gtest.h>
 
 TEST(EvaluarPreparacionTest, NoHayPizzasEncargadas) {

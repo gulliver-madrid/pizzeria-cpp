@@ -1,7 +1,7 @@
 #pragma once
 
 #include "componentes.h"
-#include "dominio.h"
+#include "modelo/dominio.h"
 #include "tiempo.h"
 #include "vista_basics.h"
 #include <vector>

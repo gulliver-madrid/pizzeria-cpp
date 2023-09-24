@@ -25,10 +25,10 @@ add_executable(pizzeria
     src/cadenas.cpp
     src/componentes.cpp
     src/debug.cpp
-    src/dominio.cpp
-    src/modelo.cpp
     src/grid.cpp
     src/juego.cpp
+    src/modelo/dominio.cpp
+    src/modelo/modelo.cpp
     src/textos.cpp
     src/tiempo.cpp
     src/vista.cpp
@@ -72,9 +72,10 @@ add_executable(
     src/cadenas.cpp
     src/componentes.cpp
     src/debug.cpp
-    src/dominio.cpp
     src/grid.cpp
     src/juego.cpp
+    src/modelo/dominio.cpp
+    src/modelo/modelo.cpp
     src/textos.cpp
     src/tiempo.cpp
     src/vista.cpp
