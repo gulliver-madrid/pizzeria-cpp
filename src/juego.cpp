@@ -234,20 +234,10 @@ sf::Text generar_resultado(sf::Font &font) {
     return etiqueta;
 }
 
-struct ResultadoSetup {
-  private:
-    ResultadoSetup(bool ok) : ok(ok) {}
-
-  public:
-    bool ok;
-
-    static ResultadoSetup err() { return {false}; }
-    ResultadoSetup() : ok(true) {}
-};
-
 // Inicia los elementos del juego que permanecerán entre niveles
 // Inicializa las variables globales window, font y buffer
-ResultadoSetup setup_juego(Globales &globales) {
+// Devuelve un booleano indicando si se completo con exito
+bool setup_juego(Globales &globales) {
     std::string title = TITLE;
     globales.window.create(
         sf::VideoMode(TAMANO_INICIAL_VENTANA), interpolar_unicode(title)
@@ -255,15 +245,14 @@ ResultadoSetup setup_juego(Globales &globales) {
     globales.window.setFramerateLimit(FPS);
 
     if (!globales.font.loadFromFile(getResourcePath(FONT_PATH).string()))
-        return ResultadoSetup::err();
+        return false;
 
     {
         sf::SoundBuffer buffer;
         if (buffer.loadFromFile(getResourcePath(SUCCESS_SOUND_PATH).string()))
             globales.opt_buffer = buffer;
     }
-
-    return ResultadoSetup();
+    return true;
 }
 
 struct DatosNivelTipoPizza {
@@ -413,8 +402,8 @@ bool nivel(                  //
 int juego() {
     Globales globales;
     Grid grid;
-    ResultadoSetup resultado_setup = setup_juego(globales);
-    if (!resultado_setup.ok)
+    bool resultado_setup = setup_juego(globales);
+    if (!resultado_setup)
         return EXIT_FAILURE;
 
     DatosNivel datos[] = {
