@@ -36,6 +36,16 @@ struct Estado {
     std::vector<EncargoACocina> encargadas;
 };
 
+EncargoACocina crear_encargo(const TipoPizza &tipo, Tiempo tiempo_actual) {
+    auto total = Tiempo::desde_segundos(tiempos_preparacion[tipo]);
+    return EncargoACocina{
+        tipo, //
+        TiempoPreparacion{
+            tiempo_actual + total, total //
+        }
+    };
+}
+
 // Incluye toda la lógica para procesar un evento
 std::optional<FaseNivel> procesarEvento(
     sf::Event evento, sf::RenderWindow &ventana, Botones &botones,
@@ -87,16 +97,10 @@ std::optional<FaseNivel> procesarEvento(
             if (!faltan) {
                 return EsperaAntesDeResultado;
             }
-            for (auto &tp : tipos_de_pizza) {
+            for (const auto &tp : tipos_de_pizza) {
                 if (botones.encargar[tp].colisiona(mousePos)) {
-                    auto total =
-                        Tiempo::desde_segundos(tiempos_preparacion[tp]);
-                    EncargoACocina encargo{
-                        tp, //
-                        TiempoPreparacion{
-                            obtener_tiempo_actual() + total, total //
-                        }
-                    };
+                    EncargoACocina encargo =
+                        crear_encargo(tp, obtener_tiempo_actual());
                     estado.encargadas.push_back(encargo);
                 }
             }
