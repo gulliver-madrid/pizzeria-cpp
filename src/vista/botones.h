@@ -1,7 +1,7 @@
 #pragma once
 
+#include "../modelo/dominio.h"
 #include "componentes.h"
-#include "modelo/dominio.h"
 
 BotonConTexto crearBotonConTexto(
     const std::string &, const sf::Color &color_fondo, const sf::Vector2i &,

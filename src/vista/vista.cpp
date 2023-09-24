@@ -1,5 +1,5 @@
 #include "vista.h"
-#include "cadenas.h"
+#include "../cadenas.h"
 #include <SFML/Graphics.hpp>
 #include <cassert>
 #include <iostream>
@@ -73,7 +73,7 @@ void Paneles::dibujar(sf::RenderWindow &window) {
     window.draw(pedidos);
 }
 
-std::vector<BarraProgresoConNombre> crear_visualizaciones_porcentajes(
+std::vector<BarraProgresoConNombre> crear_barras_progreso(
     const std::vector<PorcentajeConTipoPizza> &porcentajes, sf::Font &font
 ) {
     std::vector<BarraProgresoConNombre> vect{};
@@ -133,8 +133,7 @@ void PanelesCompletos::dibujar(
         return;
     paneles.dibujar(ventana);
     titulos_paneles.dibujar(ventana);
-    porcentajes_visuales_con_nombres =
-        crear_visualizaciones_porcentajes(porcentajes, font);
+    porcentajes_visuales_con_nombres = crear_barras_progreso(porcentajes, font);
     for (auto &tpv : porcentajes_visuales_con_nombres) {
         ventana.draw(tpv.bp.fondo);
         ventana.draw(tpv.bp.relleno);

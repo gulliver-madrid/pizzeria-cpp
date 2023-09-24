@@ -1,12 +1,12 @@
 #include "juego.h"
-#include "botones.h"
 #include "cadenas.h"
-#include "grid.h"
 #include "manejo_rutas.h"
 #include "paths.h"
 #include "textos.h"
-#include "vista.h"
-#include "vista_data.h"
+#include "vista/botones.h"
+#include "vista/grid.h"
+#include "vista/vista.h"
+#include "vista/vista_data.h"
 #include <SFML/Audio.hpp>
 #include <SFML/Window.hpp>
 #include <cassert>

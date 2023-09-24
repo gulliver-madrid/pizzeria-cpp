@@ -1,8 +1,8 @@
 #pragma once
 
+#include "../modelo/dominio.h"
+#include "../tiempo.h"
 #include "componentes.h"
-#include "modelo/dominio.h"
-#include "tiempo.h"
 #include "vista_basics.h"
 #include <vector>
 
@@ -30,7 +30,7 @@ struct Paneles {
     void dibujar(sf::RenderWindow &window);
 };
 
-std::vector<BarraProgresoConNombre> crear_visualizaciones_porcentajes(
+std::vector<BarraProgresoConNombre> crear_barras_progreso(
     const std::vector<PorcentajeConTipoPizza> &porcentajes, sf::Font &font
 );
 

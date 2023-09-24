@@ -21,18 +21,18 @@ FetchContent_MakeAvailable(googletest)
 
 add_executable(pizzeria
     src/main.cpp
-    src/botones.cpp
-    src/cadenas.cpp
-    src/componentes.cpp
     src/debug.cpp
-    src/grid.cpp
     src/juego.cpp
     src/modelo/dominio.cpp
     src/modelo/modelo.cpp
     src/textos.cpp
     src/tiempo.cpp
-    src/vista.cpp
-    src/vista_basics.cpp
+    src/vista/botones.cpp
+    src/cadenas.cpp
+    src/vista/componentes.cpp
+    src/vista/grid.cpp
+    src/vista/vista.cpp
+    src/vista/vista_basics.cpp
     src/demos/map.cpp
     src/demos/unicode.cpp
     src/demos/visual.cpp
@@ -68,18 +68,12 @@ add_executable(
     src/tests/test_evaluar_preparacion.cpp
 
     # archivos del proyecto
-    src/botones.cpp
     src/cadenas.cpp
-    src/componentes.cpp
     src/debug.cpp
-    src/grid.cpp
-    src/juego.cpp
     src/modelo/dominio.cpp
     src/modelo/modelo.cpp
     src/textos.cpp
     src/tiempo.cpp
-    src/vista.cpp
-    src/vista_basics.cpp
 )
 target_link_libraries(runUnitTests PRIVATE sfml-graphics sfml-audio )
 target_link_libraries(runUnitTests PUBLIC gtest gtest_main)

@@ -1,6 +1,6 @@
 #include "visual_textos.h"
 #include "../debug.h"
-#include "../grid.h"
+#include "../vista/grid.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <cassert>
