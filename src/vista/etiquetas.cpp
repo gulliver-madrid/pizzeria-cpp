@@ -1,7 +1,11 @@
 #include "etiquetas.h"
 #include "../cadenas.h"
+#include "../textos.h"
 #include "componentes.h"
 #include "vista_basics.h"
+
+#define TAMANO_FUENTE_INFO 36
+#define TAMANO_FUENTE_RESULTADO 48
 
 sf::Text crearEtiquetaTituloPanel(
     const sf::Font &font, IndicePanel indice_panel, const std::string &texto
@@ -48,3 +52,25 @@ void EtiquetasContadores::setup(sf::Font &font) {
         i++;
     }
 };
+
+sf::Text generar_etiqueta_instrucciones(
+    sf::Font &font, std::string plantilla_instrucciones, int objetivo
+) {
+    auto etiqueta = crearEtiqueta(
+        TAMANO_FUENTE_INFO, font, colores::COLOR_TEXTO_INSTRUCCIONES
+    );
+    etiqueta.setString(
+        construir_instrucciones(plantilla_instrucciones, objetivo)
+    );
+    etiqueta.setPosition(200, 200);
+    return etiqueta;
+}
+
+sf::Text generar_etiqueta_resultado(sf::Font &font) {
+    auto etiqueta = crearEtiqueta(
+        TAMANO_FUENTE_RESULTADO, font, colores::COLOR_TEXTO_RESULTADO
+    );
+    etiqueta.setString(construir_resultado());
+    etiqueta.setPosition(200, 200);
+    return etiqueta;
+}

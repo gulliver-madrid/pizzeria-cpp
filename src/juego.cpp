@@ -17,17 +17,9 @@
 #include <vector>
 
 #define TITLE "Pizzer%ia"
-#define TAMANO_FUENTE_INFO 36
-#define TAMANO_FUENTE_RESULTADO 48
 
 #define MAXIMO_PIZZAS_EN_PREPARACION 3
 #define MAXIMO_PIZZAS_PREPARADAS 4
-
-namespace colores {
-    const auto COLOR_FONDO = sf::Color(60, 0, 150);
-    const auto COLOR_TEXTO_INSTRUCCIONES = sf::Color::Yellow;
-    const auto COLOR_TEXTO_RESULTADO = sf::Color(255, 160, 0);
-} // namespace colores
 
 namespace tiempos {
     const auto RETARDO_ANTES_DE_RESULTADO = Tiempo::desde_segundos(2.5);
@@ -217,28 +209,6 @@ void actualizarIU(                             //
     ventana.display();
 }
 
-sf::Text generar_instrucciones(
-    sf::Font &font, std::string plantilla_instrucciones, int objetivo
-) {
-    auto etiqueta = crearEtiqueta(
-        TAMANO_FUENTE_INFO, font, colores::COLOR_TEXTO_INSTRUCCIONES
-    );
-    etiqueta.setString(
-        construir_instrucciones(plantilla_instrucciones, objetivo)
-    );
-    etiqueta.setPosition(200, 200);
-    return etiqueta;
-}
-
-sf::Text generar_resultado(sf::Font &font) {
-    auto etiqueta = crearEtiqueta(
-        TAMANO_FUENTE_RESULTADO, font, colores::COLOR_TEXTO_RESULTADO
-    );
-    etiqueta.setString(construir_resultado());
-    etiqueta.setPosition(200, 200);
-    return etiqueta;
-}
-
 // Inicia los elementos del juego que permanecerán entre niveles
 // Inicializa las variables globales window, font y buffer
 // Devuelve un booleano indicando si se completo con exito
@@ -260,6 +230,7 @@ bool setup_juego(Globales &globales) {
     return true;
 }
 
+// Datos para un nivel determinado de un tipo concreto de pizza
 struct DatosNivelTipoPizza {
     TipoPizza tipo;
     int pizzas_preparadas_iniciales = 0;
@@ -321,9 +292,10 @@ bool nivel(                  //
     for (auto tp : tipos_de_pizza) {
         total += estado.contadores[tp].objetivo;
     }
-    auto instrucciones =
-        generar_instrucciones(globales.font, datos_nivel.instrucciones, total);
-    auto resultado = generar_resultado(globales.font);
+    auto instrucciones = generar_etiqueta_instrucciones(
+        globales.font, datos_nivel.instrucciones, total
+    );
+    auto resultado = generar_etiqueta_resultado(globales.font);
 
     EtiquetasInfo etiquetas_info = {instrucciones, resultado};
 

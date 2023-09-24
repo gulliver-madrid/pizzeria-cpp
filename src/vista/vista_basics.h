@@ -1,5 +1,7 @@
 #pragma once
 
+#include <SFML/Graphics.hpp>
+
 enum IndicePanel {
     PANEL_ENCARGAR,
     PANEL_EN_PREPARACION,
@@ -23,5 +25,11 @@ namespace medidas {
     constexpr int MARGEN_IZQ_PANELES = 50;
     constexpr int DESPLAZAMIENTO_LATERAL = ANCHO_PANEL + 42;
 } // namespace medidas
+
+namespace colores {
+    const auto COLOR_FONDO = sf::Color(60, 0, 150);
+    const auto COLOR_TEXTO_INSTRUCCIONES = sf::Color::Yellow;
+    const auto COLOR_TEXTO_RESULTADO = sf::Color(255, 160, 0);
+} // namespace colores
 
 int obtener_posicion_x_panel(IndicePanel indice_panel);

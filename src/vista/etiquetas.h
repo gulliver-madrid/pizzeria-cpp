@@ -13,3 +13,8 @@ struct EtiquetasInfo {
     sf::Text instrucciones;
     sf::Text resultado;
 };
+
+sf::Text generar_etiqueta_instrucciones(
+    sf::Font &font, std::string plantilla_instrucciones, int objetivo
+);
+sf::Text generar_etiqueta_resultado(sf::Font &font);
