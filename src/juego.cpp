@@ -39,6 +39,20 @@ struct Globales {
     std::optional<sf::SoundBuffer> opt_buffer;
 };
 
+enum FaseNivel {
+    MostrandoInstrucciones,
+    Activo,
+    EsperaAntesDeResultado,
+    MostrandoResultado,
+    Reiniciando,
+};
+
+struct Estado {
+    FaseNivel actual = MostrandoInstrucciones;
+    std::map<TipoPizza, Contadores> contadores;
+    std::vector<EncargoACocina> encargadas;
+};
+
 struct EtiquetasContadores {
     std::map<TipoPizza, sf::Text> texto_servidas;
     std::map<TipoPizza, sf::Text> texto_preparadas;
@@ -58,7 +72,7 @@ struct EtiquetasInfo {
 };
 
 // Incluye toda la lógica para procesar un evento
-std::optional<EstadoJuego> procesarEvento(
+std::optional<FaseNivel> procesarEvento(
     sf::Event evento, sf::RenderWindow &ventana, Botones &botones,
     Estado &estado
 ) {
@@ -280,11 +294,11 @@ struct DatosNivel {
 
 /* Procesa un cambio de fase reciente */
 void procesa_cambio_de_fase(
-    EstadoJuego nueva_fase,                 //
+    FaseNivel nueva_fase,                   //
     Botones &botones,                       //
     PanelesCompletos &paneles_completos,    //
     Timer &timer_espera_antes_de_resultado, //
-    EstadoJuego fase_previa                 //
+    FaseNivel fase_previa                   //
 ) {
     switch (nueva_fase) {
         case Activo:
