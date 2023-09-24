@@ -327,25 +327,19 @@ bool nivel(                  //
         while (globales.window.pollEvent(event)) {
             auto nuevo_estado =
                 procesarEvento(event, globales.window, botones, estado);
-
+            const auto &previo = estado.actual;
             // Cambio de estado reciente
             if (nuevo_estado.has_value()) {
                 switch (nuevo_estado.value()) {
                     case Activo:
-                        assert(estado.actual == MostrandoInstrucciones);
+                        assert(previo == MostrandoInstrucciones);
                         botones.empezar.visible = false;
-                        for (auto tp : tipos_de_pizza) {
-                            botones.despachar[tp].visible = true;
-                            botones.encargar[tp].visible = true;
-                        }
+                        botones.mostrar_botones_nivel(true);
                         paneles_completos.visible = true;
                         break;
                     case EsperaAntesDeResultado:
-                        assert(estado.actual == Activo);
-                        for (auto tp : tipos_de_pizza) {
-                            botones.despachar[tp].visible = false;
-                            botones.encargar[tp].visible = false;
-                        }
+                        assert(previo == Activo);
+                        botones.mostrar_botones_nivel(false);
                         timer_espera_antes_de_resultado.start(
                             tiempos::RETARDO_ANTES_DE_RESULTADO
                         );
