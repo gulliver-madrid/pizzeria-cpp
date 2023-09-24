@@ -14,6 +14,7 @@
 #include <iostream>
 #include <optional>
 #include <string>
+#include <unordered_set>
 #include <vector>
 
 #define TITLE "Pizzer%ia"
@@ -260,58 +261,63 @@ sf::Text generar_resultado(sf::Font &font) {
 }
 
 /*
- * Evalua si hay pizzas ya preparadas y modifica el estado en consecuencia
- * `maximo` es el maximo de pizzas que podrán salir de la cocina.
- * Las pizzas que lleven más tiempo preparadas pasan antes.
- * Modifica estado.contadores y estado.encargadas.
+ * Evalua si hay pizzas ya preparadas y actualiza encargos y contadores en
+ * consecuencia. Las pizzas que lleven más tiempo preparadas pasan antes.
+ *
+ * [in, out] encargos: Lista de encargos en la cocina
+ * [out] contadores: Mapa de contadores para cada tipo de pizza
+ * [in] maximo: Número máximo de pizzas que pueden salir de la cocina
+ * [in] tiempo_actual: Tiempo actual para comparar con el tiempo de finalización
+ * de la preparación
  */
-void evaluar_preparacion(Estado &estado, int maximo, Tiempo tiempo_actual) {
-    const auto encargos = estado.encargadas;
+void evaluar_preparacion(
+    std::vector<EncargoACocina> &encargos,       //
+    std::map<TipoPizza, Contadores> &contadores, //
+    int maximo,                                  //
+    Tiempo tiempo_actual                         //
+) {
+    std::vector<std::pair<size_t, int>> pizzas_listas_con_tiempo;
+    std::vector<EncargoACocina> restantes;
 
-    std::vector<std::pair<size_t, int>> listas_con_indice = {};
-    // Primero hago una ronda para saber cuales son las ya hechas
+    // Primera ronda para identificar pizzas listas
     for (size_t i = 0; i < encargos.size(); i++) {
-        auto encargo = encargos[i];
-        if ( //
-            tiempo_actual >= encargo.tiempo_preparacion.finalizacion
-        ) {
-            // Exceso de tiempo que lleva preparada
-            Tiempo diff =
-                (tiempo_actual - encargo.tiempo_preparacion.finalizacion);
-            listas_con_indice.push_back({i, diff.obtener_milisegundos()});
+        const auto &encargo = encargos[i];
+        Tiempo exceso_tiempo =
+            (tiempo_actual - encargo.tiempo_preparacion.finalizacion);
+        if (exceso_tiempo >= Tiempo::CERO) {
+            pizzas_listas_con_tiempo.push_back(
+                {i, exceso_tiempo.obtener_milisegundos()}
+            );
         }
     }
 
-    if (listas_con_indice.size() > maximo) {
-        // Ordenamos la lista de manera descendente
-        // Las que llevan más tiempo preparadas salen antes
+    // Ordenar y limitar las pizzas que pueden salir
+    if (pizzas_listas_con_tiempo.size() > maximo) {
+        // Ordenamos la lista de manera descendente para que
+        // las que llevan más tiempo preparadas salgan antes
         std::sort(
-            listas_con_indice.begin(), listas_con_indice.end(),
+            pizzas_listas_con_tiempo.begin(), pizzas_listas_con_tiempo.end(),
             [](const auto &a, const auto &b) { return a.second > b.second; }
         );
-        listas_con_indice.resize(maximo);
+        pizzas_listas_con_tiempo.resize(maximo);
     }
 
-    // Nos quedamos solo con los indices de las pizzas que pasan
-    std::vector<size_t> pasan;
-    for (const auto &par : listas_con_indice) {
-        pasan.push_back(par.first);
+    std::unordered_set<size_t> indices_para_pasar;
+    for (const auto &par : pizzas_listas_con_tiempo) {
+        indices_para_pasar.insert(par.first);
     }
 
-    std::vector<EncargoACocina> restantes = {};
-
-    // Segunda ronda
+    // Segunda ronda para actualizar contadores y lista de encargos
     for (size_t i = 0; i < encargos.size(); i++) {
-        auto encargo = encargos[i];
-        auto it = std::find(pasan.begin(), pasan.end(), i);
-        if (it != pasan.end()) {
-            // Se encontro
-            estado.contadores[encargo.tipo].preparadas++;
+        const auto &encargo = encargos[i];
+        if (indices_para_pasar.find(i) != indices_para_pasar.end()) {
+            contadores[encargo.tipo].preparadas++;
         } else {
             restantes.push_back(encargo);
         }
     }
-    estado.encargadas = std::move(restantes);
+
+    encargos = std::move(restantes);
 }
 
 struct ResultadoSetup {
@@ -456,7 +462,9 @@ bool nivel(                  //
         if (total_preparadas < MAXIMO_PIZZAS_PREPARADAS) {
             int maximo = MAXIMO_PIZZAS_PREPARADAS - total_preparadas;
             auto tiempo_actual = obtener_tiempo_actual();
-            evaluar_preparacion(estado, maximo, tiempo_actual);
+            evaluar_preparacion(
+                estado.encargadas, estado.contadores, maximo, tiempo_actual
+            );
         }
 
         // En función del estado (no necesariamente reciente)

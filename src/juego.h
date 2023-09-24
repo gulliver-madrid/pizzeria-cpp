@@ -29,9 +29,13 @@ int encargadas_del_tipo(
 struct Estado {
     EstadoJuego actual = MostrandoInstrucciones;
     std::map<TipoPizza, Contadores> contadores;
-    std::vector<EncargoACocina> encargadas = {};
+    std::vector<EncargoACocina> encargadas;
 };
 
-void evaluar_preparacion(Estado &estado, int maximo, Tiempo tiempo_actual);
+void evaluar_preparacion(
+    std::vector<EncargoACocina> &encargos,
+    std::map<TipoPizza, Contadores> &contadores, int maximo,
+    Tiempo tiempo_actual
+);
 
 int juego();
