@@ -15,6 +15,7 @@
 #include <iostream>
 #include <optional>
 #include <string>
+#include <unordered_set>
 #include <vector>
 
 #define TITLE "Pizzer%ia"
@@ -220,14 +221,27 @@ struct DatosNivelTipoPizza {
     int objetivo_pizzas = 0;
 };
 
+struct PedidosEstaticos {
+    std::map<TipoPizza, DatosNivelTipoPizza> pizzas;
+};
+
 struct DatosNivel {
     std::string instrucciones;
-    std::map<TipoPizza, DatosNivelTipoPizza> pizzas;
-    DatosNivel(
-        std::string instr, std::map<TipoPizza, DatosNivelTipoPizza> pizzas
-    )
-        : instrucciones(instr), pizzas(pizzas) {}
+    PedidosEstaticos pedidos;
+    DatosNivel(std::string instr, PedidosEstaticos pizzas)
+        : instrucciones(instr), pedidos(pizzas) {}
 };
+
+PedidosEstaticos construir_pedidos(std::vector<DatosNivelTipoPizza> datos) {
+    std::map<TipoPizza, DatosNivelTipoPizza> pedidos;
+    std::unordered_set<TipoPizza> anadidos;
+    for (auto dato : datos) {
+        assert(anadidos.find(dato.tipo) == anadidos.end());
+        pedidos[dato.tipo] = dato;
+        anadidos.insert(dato.tipo);
+    }
+    return {pedidos};
+}
 
 /* Procesa un cambio de fase reciente */
 void procesa_cambio_de_fase(
@@ -268,8 +282,9 @@ bool nivel(                  //
     estado.actual = MostrandoInstrucciones;
     for (auto tp : tipos_de_pizza) {
         estado.contadores[tp].preparadas =
-            datos_nivel.pizzas[tp].pizzas_preparadas_iniciales;
-        estado.contadores[tp].objetivo = datos_nivel.pizzas[tp].objetivo_pizzas;
+            datos_nivel.pedidos.pizzas[tp].pizzas_preparadas_iniciales;
+        estado.contadores[tp].objetivo =
+            datos_nivel.pedidos.pizzas[tp].objetivo_pizzas;
     }
     int total = 0;
     for (auto tp : tipos_de_pizza) {
@@ -367,36 +382,33 @@ int juego() {
         return EXIT_FAILURE;
 
     DatosNivel datos[] = {
-        {INSTRUCCIONES_NIVEL_1,
-         {
+        {INSTRUCCIONES_NIVEL_1, //
+         construir_pedidos({
              {
-                 Margarita,
+
                  DatosNivelTipoPizza{Margarita, 2, 8},
              },
              {
-                 Pepperoni,
+
                  DatosNivelTipoPizza{Pepperoni, 0, 4},
              },
              {
-                 CuatroQuesos,
+
                  DatosNivelTipoPizza{CuatroQuesos, 0, 3},
              },
-         }},
-        {INSTRUCCIONES_NIVEL_2,
-         {
+         })},
+        {INSTRUCCIONES_NIVEL_2, //
+         construir_pedidos({
              {
-                 Margarita,
                  DatosNivelTipoPizza{Margarita, 2, 6},
              },
              {
-                 Pepperoni,
                  DatosNivelTipoPizza{Pepperoni, 1, 3},
              },
              {
-                 CuatroQuesos,
                  DatosNivelTipoPizza{CuatroQuesos, 0, 6},
              },
-         }},
+         })},
     };
 
     while (true) {
