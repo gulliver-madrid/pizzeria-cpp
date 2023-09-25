@@ -53,10 +53,27 @@ void EtiquetasContadores::setup(sf::Font &font) {
     }
 };
 
-void EtiquetasContadores::dibujar(sf::RenderWindow &ventana) {
+void EtiquetasContadores::actualizar(
+    const std::map<TipoPizza, Contadores> &pizzas_a_contadores
+) {
+    for (auto tp : tipos_de_pizza) {
+        auto it = pizzas_a_contadores.find(tp);
+        const auto &contadores = it->second;
+        auto &nombre_pizza = tipo_pizza_to_string[tp];
+        std::string preparadas =
+            nombre_pizza + ": " + std::to_string(contadores.preparadas);
+        std::string servidas = nombre_pizza + ": " +
+                               std::to_string(contadores.servidas) + "/" +
+                               std::to_string(contadores.objetivo);
+        texto_preparadas[tp].setString(preparadas);
+        texto_servidas[tp].setString(servidas);
+    }
+}
+
+void EtiquetasContadores::dibujar(sf::RenderWindow &ventana) const {
     for (auto &tp : tipos_de_pizza) {
-        ventana.draw(texto_servidas[tp]);
-        ventana.draw(texto_preparadas[tp]);
+        ventana.draw(texto_servidas.find(tp)->second);
+        ventana.draw(texto_preparadas.find(tp)->second);
     }
 }
 

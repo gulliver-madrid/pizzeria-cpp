@@ -177,17 +177,7 @@ void actualizarIU(                             //
             break;
         case Activo:
         case EsperaAntesDeResultado:
-            for (auto tp : tipos_de_pizza) {
-                auto &contadores = estado.contadores[tp];
-                auto &nombre_pizza = tipo_pizza_to_string[tp];
-                std::string preparadas =
-                    nombre_pizza + ": " + std::to_string(contadores.preparadas);
-                std::string servidas =
-                    nombre_pizza + ": " + std::to_string(contadores.servidas) +
-                    "/" + std::to_string(contadores.objetivo);
-                etiquetas_contadores.texto_preparadas[tp].setString(preparadas);
-                etiquetas_contadores.texto_servidas[tp].setString(servidas);
-            }
+            etiquetas_contadores.actualizar(estado.contadores);
             etiquetas_contadores.dibujar(ventana);
             break;
 

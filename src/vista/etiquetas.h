@@ -1,13 +1,14 @@
 #pragma once
 
-#include "../modelo/dominio.h"
+#include "../modelo/modelo.h"
 #include <SFML/Graphics.hpp>
 
 struct EtiquetasContadores {
     std::map<TipoPizza, sf::Text> texto_servidas;
     std::map<TipoPizza, sf::Text> texto_preparadas;
     void setup(sf::Font &font);
-    void dibujar(sf::RenderWindow &ventana);
+    void actualizar(const std::map<TipoPizza, Contadores> &pizzas_a_contadores);
+    void dibujar(sf::RenderWindow &ventana) const;
 };
 
 struct EtiquetasInfo {
