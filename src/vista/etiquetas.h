@@ -17,6 +17,7 @@ struct EtiquetasInfo {
 };
 
 sf::Text generar_etiqueta_instrucciones(
-    sf::Font &font, std::string plantilla_instrucciones, int objetivo
+    const sf::Font &font, const std::string &plantilla_instrucciones,
+    int objetivo
 );
-sf::Text generar_etiqueta_resultado(sf::Font &font);
+sf::Text generar_etiqueta_resultado(const sf::Font &font);

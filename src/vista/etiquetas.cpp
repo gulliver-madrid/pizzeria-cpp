@@ -87,7 +87,8 @@ void EtiquetasContadores::dibujar(sf::RenderWindow &ventana) const {
 }
 
 sf::Text generar_etiqueta_instrucciones(
-    sf::Font &font, std::string plantilla_instrucciones, int objetivo
+    const sf::Font &font, const std::string &plantilla_instrucciones,
+    int objetivo
 ) {
     auto etiqueta = crearEtiqueta(
         TAMANO_FUENTE_INFO, font, colores::COLOR_TEXTO_INSTRUCCIONES
@@ -99,7 +100,7 @@ sf::Text generar_etiqueta_instrucciones(
     return etiqueta;
 }
 
-sf::Text generar_etiqueta_resultado(sf::Font &font) {
+sf::Text generar_etiqueta_resultado(const sf::Font &font) {
     auto etiqueta = crearEtiqueta(
         TAMANO_FUENTE_RESULTADO, font, colores::COLOR_TEXTO_RESULTADO
     );
