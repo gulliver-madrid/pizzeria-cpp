@@ -1,6 +1,5 @@
 #pragma once
 
-#include "modelo/modelo.h"
 #include "tiempo.h"
 #include <SFML/Audio.hpp>
 #include <map>

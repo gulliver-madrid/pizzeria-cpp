@@ -13,16 +13,6 @@
 #define MAXIMO_PIZZAS_EN_PREPARACION 3
 #define MAXIMO_PIZZAS_PREPARADAS 4
 
-EncargoACocina crear_encargo(const TipoPizza &tipo, Tiempo tiempo_actual) {
-    auto total = Tiempo::desde_segundos(tiempos_preparacion[tipo]);
-    return EncargoACocina{
-        tipo, //
-        TiempoPreparacion{
-            tiempo_actual + total, total //
-        }
-    };
-}
-
 // Incluye toda la lógica para procesar un evento
 std::optional<FaseNivel> procesarEvento(
     sf::Event evento, sf::RenderWindow &ventana, Botones &botones,

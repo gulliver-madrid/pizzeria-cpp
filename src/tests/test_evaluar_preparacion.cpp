@@ -17,19 +17,11 @@ TEST(EvaluarPreparacionTest, VariasPizzasPreparadas) {
     // 2 de los 3 encargos estan listos
     std::map<TipoPizza, Contadores> contadores;
     std::vector<EncargoACocina> encargos;
+    encargos.push_back(crear_encargo(TipoPizza::Margarita, Tiempo::CERO));
+    encargos.push_back(crear_encargo(TipoPizza::Pepperoni, Tiempo::CERO));
     encargos.push_back(
-        {TipoPizza::Margarita,
-         {Tiempo::desde_segundos(2.5f), Tiempo::desde_segundos(2.5f)}}
+        crear_encargo(TipoPizza::Pepperoni, Tiempo::desde_segundos(2))
     );
-    encargos.push_back(
-        {TipoPizza::Pepperoni,
-         {Tiempo::desde_segundos(4.0f), Tiempo::desde_segundos(4.0f)}}
-    );
-    encargos.push_back(
-        {TipoPizza::Pepperoni,
-         {Tiempo::desde_segundos(6.0f), Tiempo::desde_segundos(4.0f)}}
-    );
-
     Tiempo tiempo_actual = Tiempo::desde_segundos(5);
 
     evaluar_preparacion(encargos, contadores, 3, tiempo_actual);

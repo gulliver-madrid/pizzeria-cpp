@@ -91,3 +91,12 @@ void evaluar_preparacion(
 
     encargos = std::move(restantes);
 }
+
+EncargoACocina crear_encargo(const TipoPizza &tipo, Tiempo tiempo_actual) {
+    auto total = Tiempo::desde_segundos(tiempos_preparacion[tipo]);
+    return EncargoACocina{
+        tipo, //
+        TiempoPreparacion{
+            tiempo_actual + total, total //
+        }};
+}

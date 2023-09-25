@@ -30,3 +30,7 @@ void evaluar_preparacion(
     std::map<TipoPizza, Contadores> &contadores, int maximo,
     Tiempo tiempo_actual
 );
+
+EncargoACocina crear_encargo(const TipoPizza &tipo, Tiempo tiempo_actual);
+
+extern std::map<TipoPizza, float> tiempos_preparacion;
