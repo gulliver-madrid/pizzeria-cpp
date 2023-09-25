@@ -1,6 +1,6 @@
 #pragma once
 
-#include "comparable.h"
+#include "templates.h"
 #include <SFML/Graphics.hpp>
 #include <optional>
 
