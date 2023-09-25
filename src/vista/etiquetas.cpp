@@ -58,7 +58,7 @@ void EtiquetasContadores::actualizar(
     const std::map<TipoPizza, Contadores> &pizzas_a_contadores
 ) {
     for (auto tp : tipos_de_pizza) {
-        const auto &contadores = get_value_or_throw(pizzas_a_contadores, tp);
+        const auto &contadores = pizzas_a_contadores.at(tp);
         auto &nombre_pizza = tipo_pizza_to_string[tp];
         std::string preparadas =
             nombre_pizza + ": " + std::to_string(contadores.preparadas);
@@ -72,8 +72,8 @@ void EtiquetasContadores::actualizar(
 
 void EtiquetasContadores::dibujar(sf::RenderWindow &ventana) const {
     for (auto &tp : tipos_de_pizza) {
-        ventana.draw(get_value_or_throw(texto_servidas, tp));
-        ventana.draw(get_value_or_throw(texto_preparadas, tp));
+        ventana.draw(texto_servidas.at(tp));
+        ventana.draw(texto_preparadas.at(tp));
     }
 }
 
