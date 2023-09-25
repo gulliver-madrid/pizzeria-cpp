@@ -3,15 +3,6 @@
 #include <map>
 #include <sstream>
 
-#define A_ACUTE "\u00E1"
-#define E_ACUTE "\u00E9"
-#define I_ACUTE "\u00ED"
-#define O_ACUTE "\u00F3"
-#define U_ACUTE "\u00FA"
-#define N_TILDE "\u00F1"
-#define START_EXCLAMATION "\u00A1"
-#define START_QUESTION "\u00BF"
-
 const std::map<std::string, std::string> reemplazos = {
     {"%a", A_ACUTE},           //
     {"%i", I_ACUTE},           //
@@ -23,23 +14,23 @@ const std::map<std::string, std::string> reemplazos = {
     {"%!", START_EXCLAMATION}, //
 };
 
-std::string interpolar_unicode(std::string plantilla) {
+std::string interpolar_unicode(const std::string plantilla) {
+    std::string nueva = plantilla;
     while (true) {
-        std::string prev = plantilla;
+        std::string prev = nueva;
 
         for (const auto &par : reemplazos) {
             size_t posicion;
-            while ((posicion = plantilla.find(par.first)) != std::string::npos
-            ) {
-                plantilla.replace(posicion, 2, par.second);
+            while ((posicion = nueva.find(par.first)) != std::string::npos) {
+                nueva.replace(posicion, 2, par.second);
             }
         }
-        if (prev == plantilla) {
+        if (prev == nueva) {
             break;
         }
     }
     std::ostringstream oss;
-    oss << plantilla;
+    oss << nueva;
     return oss.str();
 }
 
