@@ -11,6 +11,7 @@ namespace tiempos {
 struct Globales {
     sf::RenderWindow window;
     sf::Font font;
-    std::optional<sf::SoundBuffer> opt_buffer;
+    std::optional<sf::SoundBuffer> success_buffer;
+    std::optional<sf::SoundBuffer> button_click_buffer;
     sf::Music music;
 };

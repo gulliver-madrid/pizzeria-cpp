@@ -3,12 +3,20 @@
 /*
  * Solo se detectará la colisión si el botón está visible y activo
  */
-bool BotonConTexto::colisiona(sf::Vector2i &mousePos) {
+bool BotonConTexto::colisiona(sf::Vector2i &mousePos, Globales &globales) {
     if (!visible || !activo)
         return false;
-    return boton.getGlobalBounds().contains(
+    bool colisiona = boton.getGlobalBounds().contains(
         static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)
     );
+    if (!colisiona) {
+        return false;
+    }
+    if (globales.button_click_buffer) {
+        sound.setBuffer(globales.button_click_buffer.value());
+        sound.play();
+    }
+    return true;
 }
 
 void BotonConTexto::dibujar(sf::RenderWindow &window) {

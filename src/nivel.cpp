@@ -10,9 +10,9 @@
 
 // Incluye toda la lógica para procesar un evento
 std::optional<FaseNivel> procesarEvento(
-    sf::Event evento, sf::RenderWindow &ventana, Botones &botones,
-    Estado &estado
+    sf::Event evento, Globales &globales, Botones &botones, Estado &estado
 ) {
+    auto &ventana = globales.window;
     // Cierre de ventana
     if (evento.type == sf::Event::Closed)
         ventana.close();
@@ -28,22 +28,23 @@ std::optional<FaseNivel> procesarEvento(
         sf::Vector2i mousePos = sf::Mouse::getPosition(ventana);
 
         // Fijos
-        if (botones.salir.colisiona(mousePos)) {
+        if (botones.salir.colisiona(mousePos, globales)) {
             ventana.close();
-        } else if (botones.reiniciar.colisiona(mousePos)) {
+        } else if (botones.reiniciar.colisiona(mousePos, globales)) {
             return Reiniciando;
         }
         // Dependientes del estado
         if (estado.actual == MostrandoInstrucciones) {
             auto bounds = botones.empezar.boton.getGlobalBounds();
-            if (botones.empezar.colisiona(mousePos)) {
+            if (botones.empezar.colisiona(mousePos, globales)) {
                 return Activo;
             }
         } else if (estado.actual == Activo) {
             for (auto &par : botones.despachar) {
-                auto boton = par.second;
+                auto &boton = par.second;
                 auto &contador = estado.contadores[par.first];
-                if (boton.colisiona(mousePos) && contador.preparadas > 0) {
+                if (boton.colisiona(mousePos, globales) &&
+                    contador.preparadas > 0) {
                     contador.preparadas--;
                     contador.servidas++;
                     break;
@@ -61,7 +62,7 @@ std::optional<FaseNivel> procesarEvento(
                 return EsperaAntesDeResultado;
             }
             for (const auto &tp : tipos_de_pizza) {
-                if (botones.encargar[tp].colisiona(mousePos)) {
+                if (botones.encargar[tp].colisiona(mousePos, globales)) {
                     EncargoACocina encargo =
                         crear_encargo(tp, obtener_tiempo_actual());
                     estado.encargadas.push_back(encargo);
@@ -229,7 +230,7 @@ bool nivel(                  //
         sf::Event event;
         while (globales.window.pollEvent(event)) {
             auto nuevo_estado =
-                procesarEvento(event, globales.window, botones, estado);
+                procesarEvento(event, globales, botones, estado);
             // Cambio de estado reciente
             if (nuevo_estado.has_value()) {
                 procesa_cambio_de_fase(
@@ -261,8 +262,8 @@ bool nivel(                  //
             case EsperaAntesDeResultado:
                 if (timer_espera_antes_de_resultado.termino()) {
                     estado.actual = MostrandoResultado;
-                    if (globales.opt_buffer) {
-                        sound.setBuffer(globales.opt_buffer.value());
+                    if (globales.success_buffer) {
+                        sound.setBuffer(globales.success_buffer.value());
                         sound.play();
                     }
                     timer_fin_nivel.start(tiempos::ESPERA_ENTRE_NIVELES);

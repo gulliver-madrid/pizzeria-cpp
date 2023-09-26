@@ -38,7 +38,15 @@ bool setup_juego(Globales &globales) {
     {
         sf::SoundBuffer buffer;
         if (buffer.loadFromFile(getResourcePath(SUCCESS_SOUND_PATH).string()))
-            globales.opt_buffer = buffer;
+            globales.success_buffer = buffer;
+    }
+
+    {
+        sf::SoundBuffer buffer;
+        if (buffer.loadFromFile(
+                getResourcePath(BUTTON_CLICK_SOUND_PATH).string()
+            ))
+            globales.button_click_buffer = buffer;
     }
 
     if (globales.music.openFromFile(getResourcePath(MUSIC_PATH).string())) {
