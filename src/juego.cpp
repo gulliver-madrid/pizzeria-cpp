@@ -1,5 +1,6 @@
 #include "juego.h"
 #include "cadenas.h"
+#include "general.h"
 #include "manejo_rutas.h"
 #include "modelo/dominio.h"
 #include "modelo/modelo.h"
@@ -20,17 +21,6 @@
 
 #define MAXIMO_PIZZAS_EN_PREPARACION 3
 #define MAXIMO_PIZZAS_PREPARADAS 4
-
-namespace tiempos {
-    const auto RETARDO_ANTES_DE_RESULTADO = Tiempo::desde_segundos(2.5);
-    const auto ESPERA_ENTRE_NIVELES = Tiempo::desde_segundos(2);
-} // namespace tiempos
-
-struct Globales {
-    sf::RenderWindow window;
-    sf::Font font;
-    std::optional<sf::SoundBuffer> opt_buffer;
-};
 
 enum FaseNivel {
     MostrandoInstrucciones,

@@ -21,6 +21,7 @@ FetchContent_MakeAvailable(googletest)
 
 add_executable(pizzeria
     src/main.cpp
+    src/cadenas.cpp
     src/debug.cpp
     src/juego.cpp
     src/modelo/dominio.cpp
@@ -28,7 +29,6 @@ add_executable(pizzeria
     src/textos.cpp
     src/tiempo.cpp
     src/vista/botones.cpp
-    src/cadenas.cpp
     src/vista/componentes.cpp
     src/vista/etiquetas.cpp
     src/vista/grid.cpp
