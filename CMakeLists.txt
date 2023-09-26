@@ -22,11 +22,13 @@ FetchContent_MakeAvailable(googletest)
 add_executable(pizzeria
     src/main.cpp
     src/cadenas.cpp
+    src/datos_niveles.cpp
     src/debug.cpp
     src/juego.cpp
     src/modelo/dominio.cpp
     src/modelo/modelo.cpp
     src/nivel.cpp
+    src/setup_juego.cpp
     src/textos.cpp
     src/tiempo.cpp
     src/vista/botones.cpp
@@ -35,6 +37,7 @@ add_executable(pizzeria
     src/vista/grid.cpp
     src/vista/vista.cpp
     src/vista/vista_basics.cpp
+    src/demos/demo_nivel.cpp
     src/demos/map.cpp
     src/demos/unicode.cpp
     src/demos/visual.cpp

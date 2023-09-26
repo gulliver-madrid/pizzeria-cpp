@@ -10,6 +10,7 @@ enum FaseNivel {
     EsperaAntesDeResultado,
     MostrandoResultado,
     Reiniciando,
+    Saliendo
 };
 
 struct Estado {
@@ -36,9 +37,9 @@ struct DatosNivel {
         : instrucciones(instr), pedidos(pizzas) {}
 };
 
-PedidosEstaticos construir_pedidos(std::vector<DatosNivelTipoPizza> datos);
+enum AccionGeneral { SiguienteNivel, Reiniciar, Salir };
 
-bool nivel(                  //
+AccionGeneral nivel(         //
     Globales &globales,      //
     Estado &estado,          //
     DatosNivel &datos_nivel, //

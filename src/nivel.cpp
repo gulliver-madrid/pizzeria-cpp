@@ -14,8 +14,10 @@ std::optional<FaseNivel> procesarEvento(
 ) {
     auto &ventana = globales.window;
     // Cierre de ventana
-    if (evento.type == sf::Event::Closed)
+    if (evento.type == sf::Event::Closed) {
         ventana.close();
+        return FaseNivel::Saliendo;
+    }
 
     else if (evento.type == sf::Event::Resized) {
         // Actualiza la View al nuevo tamaño de la ventana
@@ -30,6 +32,7 @@ std::optional<FaseNivel> procesarEvento(
         // Fijos
         if (botones.salir.colisiona(mousePos, globales)) {
             ventana.close();
+            return FaseNivel::Saliendo;
         } else if (botones.reiniciar.colisiona(mousePos, globales)) {
             return Reiniciando;
         }
@@ -180,10 +183,7 @@ void procesa_cambio_de_fase(
     }
 }
 
-/* Devuelve true si se debe pasar al siguiente nivel,
- * false para reiniciar
- */
-bool nivel(                  //
+AccionGeneral nivel(         //
     Globales &globales,      //
     Estado &estado,          //
     DatosNivel &datos_nivel, //
@@ -238,8 +238,10 @@ bool nivel(                  //
                     timer_espera_antes_de_resultado, estado.actual
                 );
                 estado.actual = nuevo_estado.value();
-                if (estado.actual == Reiniciando) {
-                    return false;
+                if (estado.actual == FaseNivel::Reiniciando) {
+                    return AccionGeneral::Reiniciar;
+                } else if (estado.actual == FaseNivel::Saliendo) {
+                    return AccionGeneral::Salir;
                 }
             }
         }
@@ -272,7 +274,7 @@ bool nivel(                  //
                 break;
             case MostrandoResultado: {
                 if (!es_el_ultimo && timer_fin_nivel.termino()) {
-                    return true;
+                    return AccionGeneral::SiguienteNivel;
                 };
                 break;
             }
@@ -283,5 +285,6 @@ bool nivel(                  //
             etiquetas_info, estado, grid, globales.font
         );
     }
-    return true;
+    assert(false); // No deberiamos llegar aqui
+    return AccionGeneral::Salir;
 }

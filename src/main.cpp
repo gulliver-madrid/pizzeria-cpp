@@ -1,3 +1,4 @@
+#include "demos/demo_nivel.h"
 #include "demos/map.h"
 #include "demos/min_ex.h"
 #include "demos/unicode.h"
@@ -12,7 +13,7 @@
 
 int main(int argc, char *argv[]) { //
     std::cout << std::endl;
-    if (argc > 2) {
+    if (argc > 3) {
         std::cout
             << "Uso: " << argv[0]
             << " <num_app>, donde <num_app> es el número de app que se desea "
@@ -20,14 +21,14 @@ int main(int argc, char *argv[]) { //
         return 1;
     }
     int app;
-    if (argc == 2)
+    if (argc >= 2)
         app = std::atoi(argv[1]);
     else
         app = APP;
 
     switch (app) {
         case 1:
-            return demo_map();
+            return demo_nivel(std::atoi(argv[2]) - 1);
             break;
         case 2:
             return demo_visual();
@@ -40,6 +41,9 @@ int main(int argc, char *argv[]) { //
             break;
         case 5:
             return min_example();
+            break;
+        case 6:
+            return demo_map();
             break;
 
         default:
