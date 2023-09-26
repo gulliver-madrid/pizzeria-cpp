@@ -12,4 +12,5 @@ struct Globales {
     sf::RenderWindow window;
     sf::Font font;
     std::optional<sf::SoundBuffer> opt_buffer;
+    sf::Music music;
 };

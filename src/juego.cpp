@@ -40,6 +40,11 @@ bool setup_juego(Globales &globales) {
         if (buffer.loadFromFile(getResourcePath(SUCCESS_SOUND_PATH).string()))
             globales.opt_buffer = buffer;
     }
+
+    if (globales.music.openFromFile(getResourcePath(MUSIC_PATH).string())) {
+        globales.music.setVolume(50);
+        globales.music.play();
+    }
     return true;
 }
 
