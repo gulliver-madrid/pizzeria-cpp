@@ -1,7 +1,6 @@
 #pragma once
 
 #include "general.h"
-#include "modelo/dominio.h"
 #include "modelo/modelo.h"
 #include "vista/grid.h"
 
@@ -15,7 +14,7 @@ enum FaseNivel {
 
 struct Estado {
     FaseNivel actual = MostrandoInstrucciones;
-    std::map<TipoPizza, Contadores> contadores;
+    PizzasAContadores contadores;
     std::vector<EncargoACocina> encargadas;
 };
 

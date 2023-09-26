@@ -43,10 +43,10 @@ int encargadas_del_tipo(
  * de la preparación
  */
 void evaluar_preparacion(
-    std::vector<EncargoACocina> &encargos,       //
-    std::map<TipoPizza, Contadores> &contadores, //
-    int maximo,                                  //
-    Tiempo tiempo_actual                         //
+    std::vector<EncargoACocina> &encargos, //
+    PizzasAContadores &contadores,         //
+    int maximo,                            //
+    Tiempo tiempo_actual                   //
 ) {
     std::vector<std::pair<size_t, int>> pizzas_listas_con_tiempo;
     std::vector<EncargoACocina> restantes;

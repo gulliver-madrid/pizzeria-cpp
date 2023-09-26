@@ -2,7 +2,6 @@
 
 #include "tiempo.h"
 #include <SFML/Audio.hpp>
-#include <map>
 
 namespace tiempos {
     const auto RETARDO_ANTES_DE_RESULTADO = Tiempo::desde_segundos(2.5);

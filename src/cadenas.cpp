@@ -1,5 +1,4 @@
 #include "cadenas.h"
-#include <cassert>
 #include <map>
 #include <sstream>
 

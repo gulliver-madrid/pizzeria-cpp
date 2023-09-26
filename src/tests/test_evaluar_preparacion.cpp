@@ -3,7 +3,7 @@
 
 TEST(EvaluarPreparacionTest, NoHayPizzasEncargadas) {
     // No hay pizzas encargadas
-    std::map<TipoPizza, Contadores> contadores;
+    PizzasAContadores contadores;
     std::vector<EncargoACocina> encargos;
     Tiempo tiempo_actual = Tiempo::desde_segundos(5);
 
@@ -15,7 +15,7 @@ TEST(EvaluarPreparacionTest, NoHayPizzasEncargadas) {
 
 TEST(EvaluarPreparacionTest, VariasPizzasPreparadas) {
     // 2 de los 3 encargos estan listos
-    std::map<TipoPizza, Contadores> contadores;
+    PizzasAContadores contadores;
     std::vector<EncargoACocina> encargos;
     encargos.push_back(crear_encargo(TipoPizza::Margarita, Tiempo::CERO));
     encargos.push_back(crear_encargo(TipoPizza::Pepperoni, Tiempo::CERO));
@@ -33,7 +33,7 @@ TEST(EvaluarPreparacionTest, VariasPizzasPreparadas) {
 
 TEST(EvaluarPreparacionTest, LimiteMaximoDePizzas) {
     // Se preparan 3 pizzas pero el maximo que pueden salir de cocina es 2
-    std::map<TipoPizza, Contadores> contadores;
+    PizzasAContadores contadores;
     std::vector<EncargoACocina> encargos;
     encargos.push_back(
         {TipoPizza::Margarita,

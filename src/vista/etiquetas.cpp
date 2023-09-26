@@ -64,7 +64,7 @@ void EtiquetasContadores::setup(sf::Font &font) {
 };
 
 void EtiquetasContadores::actualizar(
-    const std::map<TipoPizza, Contadores> &pizzas_a_contadores
+    const PizzasAContadores &pizzas_a_contadores
 ) {
     for (auto tp : tipos_de_pizza) {
         const auto &contadores = pizzas_a_contadores.at(tp);

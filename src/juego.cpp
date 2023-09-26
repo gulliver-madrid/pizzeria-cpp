@@ -1,6 +1,5 @@
 #include "juego.h"
 #include "cadenas.h"
-#include "general.h"
 #include "manejo_rutas.h"
 #include "nivel.h"
 #include "paths.h"

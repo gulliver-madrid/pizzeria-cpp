@@ -1,14 +1,9 @@
 #include "nivel.h"
-#include "modelo/dominio.h"
 #include "tiempo.h"
 #include "vista/vista.h"
 #include "vista/vista_data.h"
 #include <SFML/Window.hpp>
 #include <cassert>
-#include <iostream>
-#include <optional>
-#include <string>
-#include <vector>
 
 #define MAXIMO_PIZZAS_EN_PREPARACION 3
 #define MAXIMO_PIZZAS_PREPARADAS 4
