@@ -16,6 +16,7 @@ add_executable(pizzeria
     src/componentes.cpp
     src/debug.cpp
     src/dominio.cpp
+    src/modelo.cpp
     src/grid.cpp
     src/juego.cpp
     src/textos.cpp

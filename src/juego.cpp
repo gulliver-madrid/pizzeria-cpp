@@ -4,6 +4,7 @@
 #include "dominio.h"
 #include "grid.h"
 #include "manejo_rutas.h"
+#include "modelo.h"
 #include "paths.h"
 #include "textos.h"
 #include "tiempo.h"
@@ -28,13 +29,6 @@ namespace colores {
     const auto COLOR_TEXTO_INSTRUCCIONES = sf::Color::Yellow;
     const auto COLOR_TEXTO_RESULTADO = sf::Color(255, 160, 0);
 } // namespace colores
-
-// En segundos
-std::map<TipoPizza, float> tiempos_preparacion = {
-    {Margarita, 2.5f},
-    {Pepperoni, 4.0f},
-    {CuatroQuesos, 7.0f},
-};
 
 namespace tiempos {
     const auto RETARDO_ANTES_DE_RESULTADO = Tiempo::desde_segundos(2.5);
