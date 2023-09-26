@@ -1,7 +1,6 @@
 #include "tiempo.h"
 #include <cassert>
 #include <chrono>
-#include <optional>
 
 Tiempo Timer::obtener_tiempo_transcurrido() {
     assert(clock.has_value());

@@ -26,6 +26,7 @@ add_executable(pizzeria
     src/juego.cpp
     src/modelo/dominio.cpp
     src/modelo/modelo.cpp
+    src/nivel.cpp
     src/textos.cpp
     src/tiempo.cpp
     src/vista/botones.cpp
