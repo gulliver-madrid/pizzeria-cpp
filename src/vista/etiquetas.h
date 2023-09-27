@@ -16,6 +16,11 @@ struct EtiquetasInfo {
     sf::Text resultado;
 };
 
+struct EtiquetasGenerales {
+    EtiquetasContadores contadores;
+    EtiquetasInfo info;
+};
+
 sf::Text generar_etiqueta_instrucciones(
     const sf::Font &font, const std::string &plantilla_instrucciones,
     int objetivo

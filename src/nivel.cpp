@@ -142,11 +142,11 @@ AccionGeneral nivel(               //
     );
     auto resultado = generar_etiqueta_resultado(globales.font);
 
-    EtiquetasInfo etiquetas_info = {instrucciones, resultado};
+    EtiquetasGenerales etiquetas;
+    etiquetas.info = {instrucciones, resultado};
+    etiquetas.contadores.setup(globales.font);
 
     PanelesCompletos paneles_completos(globales.font);
-    EtiquetasContadores etiquetas_contadores;
-    etiquetas_contadores.setup(globales.font);
 
     // Botones
     Botones botones(globales.font);
@@ -216,8 +216,8 @@ AccionGeneral nivel(               //
         }
 
         actualizarIU(
-            globales.window, botones, paneles_completos, etiquetas_contadores,
-            etiquetas_info, estado, grid, globales.font
+            globales.window, botones, paneles_completos, etiquetas, estado,
+            grid, globales.font
         );
     }
     assert(false); // No deberiamos llegar aqui

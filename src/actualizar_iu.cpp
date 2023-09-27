@@ -4,10 +4,9 @@
 
 void actualizar_estado_botones(Botones &botones, const Estado &estado);
 void actualizar_etiquetas(
-    sf::RenderWindow &ventana,                 //
-    EtiquetasContadores &etiquetas_contadores, //
-    EtiquetasInfo &etiquetas_info,             //
-    const Estado &estado                       //
+    sf::RenderWindow &ventana,               //
+    EtiquetasGenerales &etiquetas_generales, //
+    const Estado &estado                     //
 );
 void actualizar_paneles(
     sf::RenderWindow &ventana,           //
@@ -19,15 +18,14 @@ void actualizar_paneles(
 /*
  * Actualiza el interfaz gráfico
  */
-void actualizarIU(                             //
-    sf::RenderWindow &ventana,                 //
-    Botones &botones,                          //
-    PanelesCompletos &paneles_completos,       //
-    EtiquetasContadores &etiquetas_contadores, //
-    EtiquetasInfo &etiquetas_info,             //
-    Estado &estado,                            //
-    Grid &grid,                                //
-    sf::Font font                              //
+void actualizarIU(                       //
+    sf::RenderWindow &ventana,           //
+    Botones &botones,                    //
+    PanelesCompletos &paneles_completos, //
+    EtiquetasGenerales &etiquetas,       //
+    Estado &estado,                      //
+    Grid &grid,                          //
+    sf::Font font                        //
 ) {
     actualizar_estado_botones(botones, estado);
 
@@ -43,7 +41,7 @@ void actualizarIU(                             //
         actualizar_paneles(ventana, paneles_completos, estado, font);
     }
 
-    actualizar_etiquetas(ventana, etiquetas_contadores, etiquetas_info, estado);
+    actualizar_etiquetas(ventana, etiquetas, estado);
 
     botones.dibujar(ventana);
 
@@ -85,24 +83,23 @@ void actualizar_estado_botones(Botones &botones, const Estado &estado) {
 }
 
 void actualizar_etiquetas(
-    sf::RenderWindow &ventana,                 //
-    EtiquetasContadores &etiquetas_contadores, //
-    EtiquetasInfo &etiquetas_info,             //
-    const Estado &estado                       //
+    sf::RenderWindow &ventana,     //
+    EtiquetasGenerales &etiquetas, //
+    const Estado &estado           //
 ) {
     switch (estado.fase_actual) {
         case FaseNivel::MostrandoInstrucciones:
-            ventana.draw(etiquetas_info.instrucciones);
+            ventana.draw(etiquetas.info.instrucciones);
             break;
         case FaseNivel::Activa:
         case FaseNivel::EsperaAntesDeResultado:
-            etiquetas_contadores.actualizar(estado.contadores);
-            etiquetas_contadores.dibujar(ventana);
+            etiquetas.contadores.actualizar(estado.contadores);
+            etiquetas.contadores.dibujar(ventana);
             break;
 
         default:
             assert(estado.fase_actual == FaseNivel::MostrandoResultado);
-            ventana.draw(etiquetas_info.resultado);
+            ventana.draw(etiquetas.info.resultado);
             break;
     }
 }

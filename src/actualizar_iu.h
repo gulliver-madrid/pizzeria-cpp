@@ -2,13 +2,12 @@
 
 #include "vista/vista.h"
 
-void actualizarIU(                             //
-    sf::RenderWindow &ventana,                 //
-    Botones &botones,                          //
-    PanelesCompletos &paneles_completos,       //
-    EtiquetasContadores &etiquetas_contadores, //
-    EtiquetasInfo &etiquetas_info,             //
-    Estado &estado,                            //
-    Grid &grid,                                //
-    sf::Font font                              //
+void actualizarIU(                       //
+    sf::RenderWindow &ventana,           //
+    Botones &botones,                    //
+    PanelesCompletos &paneles_completos, //
+    EtiquetasGenerales &etiquetas,       //
+    Estado &estado,                      //
+    Grid &grid,                          //
+    sf::Font font                        //
 );
