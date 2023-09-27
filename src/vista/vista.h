@@ -54,7 +54,7 @@ struct PanelesCompletos {
 
     PanelesCompletos(sf::Font &font);
     void dibujar(
-        sf::RenderWindow &ventana,
-        std::vector<PorcentajeConTipoPizza> &porcentajes, sf::Font &font
+        sf::RenderWindow &ventana, const EstadoPreparacionPizzas &preparacion,
+        sf::Font &font
     );
 };

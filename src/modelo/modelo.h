@@ -18,11 +18,6 @@ struct Contadores {
 
 using PizzasAContadores = std::map<TipoPizza, Contadores>;
 
-void poblar_porcentajes_de_preparacion(
-    const std::vector<EncargoACocina> &encargos,
-    std::vector<PorcentajeConTipoPizza> &porcentajes
-);
-
 int encargadas_del_tipo(
     const std::vector<EncargoACocina> &encargadas, TipoPizza tipo
 );
@@ -35,3 +30,8 @@ void evaluar_preparacion(
 EncargoACocina crear_encargo(const TipoPizza &tipo, Tiempo tiempo_actual);
 
 extern std::map<TipoPizza, float> tiempos_preparacion;
+
+struct EstadoPreparacionPizzas {
+    std::vector<PorcentajeConTipoPizza> porcentajes;
+    void actualizar(const std::vector<EncargoACocina> &encargos);
+};

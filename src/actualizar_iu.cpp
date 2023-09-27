@@ -110,7 +110,7 @@ void actualizar_paneles(
     Estado &estado,                      //
     sf::Font font                        //
 ) {
-    std::vector<PorcentajeConTipoPizza> porcentajes;
-    poblar_porcentajes_de_preparacion(estado.encargadas, porcentajes);
-    paneles_completos.dibujar(ventana, porcentajes, font);
+    EstadoPreparacionPizzas preparacion;
+    preparacion.actualizar(estado.encargadas);
+    paneles_completos.dibujar(ventana, preparacion, font);
 }

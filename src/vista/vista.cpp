@@ -92,14 +92,15 @@ PanelesCompletos::PanelesCompletos(sf::Font &font) {
 }
 
 void PanelesCompletos::dibujar(
-    sf::RenderWindow &ventana, std::vector<PorcentajeConTipoPizza> &porcentajes,
+    sf::RenderWindow &ventana, const EstadoPreparacionPizzas &preparacion,
     sf::Font &font
 ) {
     if (!visible)
         return;
     paneles.dibujar(ventana);
     titulos_paneles.dibujar(ventana);
-    barras_progreso_con_nombres = crear_barras_progreso(porcentajes, font);
+    barras_progreso_con_nombres =
+        crear_barras_progreso(preparacion.porcentajes, font);
     for (auto &bpn : barras_progreso_con_nombres) {
         ventana.draw(bpn.bp.fondo);
         ventana.draw(bpn.bp.relleno);
