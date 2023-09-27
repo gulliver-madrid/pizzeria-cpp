@@ -4,21 +4,6 @@
 #include "modelo/modelo.h"
 #include "vista/grid.h"
 
-enum FaseNivel {
-    MostrandoInstrucciones,
-    Activa,
-    EsperaAntesDeResultado,
-    MostrandoResultado,
-    Reiniciando,
-    Saliendo
-};
-
-struct Estado {
-    FaseNivel fase_actual = MostrandoInstrucciones;
-    PizzasAContadores contadores;
-    std::vector<EncargoACocina> encargadas;
-};
-
 // Datos para un nivel determinado de un tipo concreto de pizza
 struct DatosNivelTipoPizza {
     TipoPizza tipo;

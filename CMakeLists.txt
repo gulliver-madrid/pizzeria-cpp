@@ -21,6 +21,7 @@ FetchContent_MakeAvailable(googletest)
 
 add_executable(pizzeria
     src/main.cpp
+    src/actualizar_iu.cpp
     src/cadenas.cpp
     src/datos_niveles.cpp
     src/debug.cpp
