@@ -24,7 +24,7 @@ void poblar_porcentajes_de_preparacion(
 );
 
 int encargadas_del_tipo(
-    std::vector<EncargoACocina> &encargadas, TipoPizza tipo
+    const std::vector<EncargoACocina> &encargadas, TipoPizza tipo
 );
 
 void evaluar_preparacion(
