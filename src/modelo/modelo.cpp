@@ -4,9 +4,9 @@
 
 // En segundos
 std::map<TipoPizza, float> tiempos_preparacion = {
-    {Margarita, 2.5f},
-    {Pepperoni, 4.0f},
-    {CuatroQuesos, 7.0f},
+    {TipoPizza::Margarita, 2.5f},
+    {TipoPizza::Pepperoni, 4.0f},
+    {TipoPizza::CuatroQuesos, 7.0f},
 };
 
 void poblar_porcentajes_de_preparacion(

@@ -1,6 +1,10 @@
 #include "dominio.h"
 
-TipoPizza tipos_de_pizza[] = {TIPOS_DE_PIZZA};
+TipoPizza tipos_de_pizza[] = {
+    TipoPizza::Margarita,
+    TipoPizza::Pepperoni,
+    TipoPizza::CuatroQuesos,
+};
 
 std::map<TipoPizza, std::string> tipo_pizza_to_string = {
     {TipoPizza::Margarita, "Margarita"},

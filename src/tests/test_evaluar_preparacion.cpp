@@ -10,7 +10,7 @@ TEST(EvaluarPreparacionTest, NoHayPizzasEncargadas) {
     evaluar_preparacion(encargos, contadores, 3, tiempo_actual);
 
     EXPECT_EQ(encargos.size(), 0);
-    EXPECT_EQ(contadores[Margarita].preparadas, 0);
+    EXPECT_EQ(contadores[TipoPizza::Margarita].preparadas, 0);
 }
 
 TEST(EvaluarPreparacionTest, VariasPizzasPreparadas) {
