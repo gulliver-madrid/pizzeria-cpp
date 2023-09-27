@@ -15,9 +15,9 @@ TEST(Juego, EncargadasDelTipoConDosMargaritasYUnaPepperoni) {
     auto tp = TiempoPreparacion{Tiempo::CERO, Tiempo::CERO};
 
     Encargos encargos;
-    encargos.datos.push_back(EncargoACocina{TipoPizza::Margarita, tp});
-    encargos.datos.push_back(EncargoACocina{TipoPizza::Margarita, tp});
-    encargos.datos.push_back(EncargoACocina{TipoPizza::Pepperoni, tp});
+    encargos.anadir(EncargoACocina{TipoPizza::Margarita, tp});
+    encargos.anadir(EncargoACocina{TipoPizza::Margarita, tp});
+    encargos.anadir(EncargoACocina{TipoPizza::Pepperoni, tp});
 
     EXPECT_EQ(                                   //
         encargos.del_tipo(TipoPizza::Margarita), //

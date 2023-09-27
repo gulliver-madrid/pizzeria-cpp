@@ -19,6 +19,10 @@ int Encargos::del_tipo(TipoPizza tipo) const {
     return contador;
 }
 
+void Encargos::anadir(const EncargoACocina encargo) {
+    datos.push_back(encargo);
+}
+
 EstadoPreparacionPizzas::EstadoPreparacionPizzas(const Encargos &encargos) {
     assert(datos.empty());
     for (auto &encargo : encargos.datos) {
@@ -80,7 +84,7 @@ void evaluar_preparacion(
         if (indices_para_pasar.find(i) != indices_para_pasar.end()) {
             contadores[encargo.tipo].preparadas++;
         } else {
-            restantes.datos.push_back(encargo);
+            restantes.anadir(encargo);
         }
     }
 

@@ -13,6 +13,7 @@ struct EncargoACocina {
 struct Encargos {
     std::vector<EncargoACocina> datos;
     int del_tipo(TipoPizza) const;
+    void anadir(const EncargoACocina);
 };
 
 struct Contadores {
