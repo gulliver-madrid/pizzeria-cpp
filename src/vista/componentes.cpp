@@ -3,7 +3,9 @@
 /*
  * Solo se detectará la colisión si el botón está visible y activo
  */
-bool BotonConTexto::colisiona(sf::Vector2i &mousePos, Globales &globales) {
+bool BotonConTexto::colisiona(
+    const sf::Vector2i &mousePos, const Globales &globales
+) {
     if (!visible || !activo)
         return false;
     bool colisiona = boton.getGlobalBounds().contains(

@@ -6,6 +6,14 @@
 #include <SFML/Window.hpp>
 #include <cassert>
 
+/* Procesa un click realizado durante la fase activa.
+ * Devuelve la nueva fase, en caso de que debiera cambiar
+ */
+std::optional<FaseNivel> procesar_click_fase_activa(
+    const Globales &globales, Botones &botones, Estado &estado,
+    const sf::Vector2i mouse_pos
+);
+
 // Incluye toda la lógica para procesar un evento
 std::optional<FaseNivel> procesarEvento(
     sf::Event evento, Globales &globales, Botones &botones, Estado &estado
@@ -32,48 +40,58 @@ std::optional<FaseNivel> procesarEvento(
             ventana.close();
             return FaseNivel::Saliendo;
         } else if (botones.reiniciar.colisiona(mousePos, globales)) {
-            return Reiniciando;
+            return FaseNivel::Reiniciando;
         }
         // Dependientes del estado
         if (estado.fase_actual == MostrandoInstrucciones) {
             auto bounds = botones.empezar.boton.getGlobalBounds();
             if (botones.empezar.colisiona(mousePos, globales)) {
-                return Activa;
+                return FaseNivel::Activa;
             }
         } else if (estado.fase_actual == Activa) {
-            for (auto &par : botones.despachar) {
-                auto &boton = par.second;
-                auto &contador = estado.contadores[par.first];
-                if (boton.colisiona(mousePos, globales) &&
-                    contador.preparadas > 0) {
-                    contador.preparadas--;
-                    contador.servidas++;
-                    break;
-                }
-            }
-            bool faltan = false;
-            for (auto tp : tipos_de_pizza) {
-                if (estado.contadores[tp].servidas <
-                    estado.contadores[tp].objetivo) {
-                    faltan = true;
-                    break;
-                }
-            }
-            if (!faltan) {
-                return EsperaAntesDeResultado;
-            }
-            for (const auto &tp : tipos_de_pizza) {
-                if (botones.encargar[tp].colisiona(mousePos, globales)) {
-                    EncargoACocina encargo =
-                        crear_encargo(tp, obtener_tiempo_actual());
-                    estado.encargadas.push_back(encargo);
-                    break;
-                }
+            auto nueva_fase =
+                procesar_click_fase_activa(globales, botones, estado, mousePos);
+            if (nueva_fase.has_value()) {
+                return nueva_fase;
             }
         }
     }
     return std::nullopt;
 };
+
+std::optional<FaseNivel> procesar_click_fase_activa(
+    const Globales &globales, Botones &botones, Estado &estado,
+    const sf::Vector2i mouse_pos
+) {
+    for (auto &par : botones.despachar) {
+        auto &boton = par.second;
+        auto &contador = estado.contadores[par.first];
+        if (boton.colisiona(mouse_pos, globales)) {
+            assert(contador.preparadas > 0);
+            contador.preparadas--;
+            contador.servidas++;
+            return std::nullopt;
+        }
+    }
+    bool faltan = false;
+    for (auto tp : tipos_de_pizza) {
+        if (estado.contadores[tp].servidas < estado.contadores[tp].objetivo) {
+            faltan = true;
+            break;
+        }
+    }
+    if (!faltan) {
+        return EsperaAntesDeResultado;
+    }
+    for (const auto &tp : tipos_de_pizza) {
+        if (botones.encargar[tp].colisiona(mouse_pos, globales)) {
+            EncargoACocina encargo = crear_encargo(tp, obtener_tiempo_actual());
+            estado.encargadas.push_back(encargo);
+            return std::nullopt;
+        }
+    }
+    return std::nullopt;
+}
 
 /* Procesa un cambio de fase reciente */
 void procesa_cambio_de_fase(

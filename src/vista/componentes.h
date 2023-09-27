@@ -14,7 +14,7 @@ struct BotonConTexto {
 
     BotonConTexto();
     BotonConTexto(sf::RectangleShape rectShape, sf::Text txt);
-    bool colisiona(sf::Vector2i &mousePos, Globales &globales);
+    bool colisiona(const sf::Vector2i &mousePos, const Globales &globales);
     void dibujar(sf::RenderWindow &window);
     void activar();
     void desactivar();
