@@ -3,6 +3,18 @@
 #include <cassert>
 
 void actualizar_estado_botones(Botones &botones, const Estado &estado);
+void actualizar_etiquetas(
+    sf::RenderWindow &ventana,                 //
+    EtiquetasContadores &etiquetas_contadores, //
+    EtiquetasInfo &etiquetas_info,             //
+    const Estado &estado                       //
+);
+void actualizar_paneles(
+    sf::RenderWindow &ventana,           //
+    PanelesCompletos &paneles_completos, //
+    Estado &estado,                      //
+    sf::Font font                        //
+);
 
 /*
  * Actualiza el interfaz gráfico
@@ -17,7 +29,6 @@ void actualizarIU(                             //
     Grid &grid,                                //
     sf::Font font                              //
 ) {
-
     actualizar_estado_botones(botones, estado);
 
     // Limpia la ventana y empieza a pintar los componentes visuales
@@ -25,32 +36,14 @@ void actualizarIU(                             //
     if (DRAW_GRID)
         draw_grid(ventana, grid, GRID_SIZE, GRID_TONE);
 
-    // Paneles
     if ( //
         estado.fase_actual == Activa ||
         estado.fase_actual == EsperaAntesDeResultado
     ) {
-        std::vector<PorcentajeConTipoPizza> porcentajes;
-        poblar_porcentajes_de_preparacion(estado.encargadas, porcentajes);
-        paneles_completos.dibujar(ventana, porcentajes, font);
+        actualizar_paneles(ventana, paneles_completos, estado, font);
     }
 
-    // Textos
-    switch (estado.fase_actual) {
-        case MostrandoInstrucciones:
-            ventana.draw(etiquetas_info.instrucciones);
-            break;
-        case Activa:
-        case EsperaAntesDeResultado:
-            etiquetas_contadores.actualizar(estado.contadores);
-            etiquetas_contadores.dibujar(ventana);
-            break;
-
-        default:
-            assert(estado.fase_actual == MostrandoResultado);
-            ventana.draw(etiquetas_info.resultado);
-            break;
-    }
+    actualizar_etiquetas(ventana, etiquetas_contadores, etiquetas_info, estado);
 
     botones.dibujar(ventana);
 
@@ -89,4 +82,38 @@ void actualizar_estado_botones(Botones &botones, const Estado &estado) {
             boton_encargar.desactivar();
         }
     }
+}
+
+void actualizar_etiquetas(
+    sf::RenderWindow &ventana,                 //
+    EtiquetasContadores &etiquetas_contadores, //
+    EtiquetasInfo &etiquetas_info,             //
+    const Estado &estado                       //
+) {
+    switch (estado.fase_actual) {
+        case MostrandoInstrucciones:
+            ventana.draw(etiquetas_info.instrucciones);
+            break;
+        case Activa:
+        case EsperaAntesDeResultado:
+            etiquetas_contadores.actualizar(estado.contadores);
+            etiquetas_contadores.dibujar(ventana);
+            break;
+
+        default:
+            assert(estado.fase_actual == MostrandoResultado);
+            ventana.draw(etiquetas_info.resultado);
+            break;
+    }
+}
+
+void actualizar_paneles(
+    sf::RenderWindow &ventana,           //
+    PanelesCompletos &paneles_completos, //
+    Estado &estado,                      //
+    sf::Font font                        //
+) {
+    std::vector<PorcentajeConTipoPizza> porcentajes;
+    poblar_porcentajes_de_preparacion(estado.encargadas, porcentajes);
+    paneles_completos.dibujar(ventana, porcentajes, font);
 }
