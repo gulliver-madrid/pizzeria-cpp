@@ -37,12 +37,12 @@ std::optional<FaseNivel> procesarEvento(
             return Reiniciando;
         }
         // Dependientes del estado
-        if (estado.actual == MostrandoInstrucciones) {
+        if (estado.fase_actual == MostrandoInstrucciones) {
             auto bounds = botones.empezar.boton.getGlobalBounds();
             if (botones.empezar.colisiona(mousePos, globales)) {
-                return Activo;
+                return Activa;
             }
-        } else if (estado.actual == Activo) {
+        } else if (estado.fase_actual == Activa) {
             for (auto &par : botones.despachar) {
                 auto &boton = par.second;
                 auto &contador = estado.contadores[par.first];
@@ -130,25 +130,28 @@ void actualizarIU(                             //
         draw_grid(ventana, grid, GRID_SIZE, GRID_TONE);
 
     // Paneles
-    if (estado.actual == Activo || estado.actual == EsperaAntesDeResultado) {
+    if ( //
+        estado.fase_actual == Activa ||
+        estado.fase_actual == EsperaAntesDeResultado
+    ) {
         std::vector<PorcentajeConTipoPizza> porcentajes;
         poblar_porcentajes_de_preparacion(estado.encargadas, porcentajes);
         paneles_completos.dibujar(ventana, porcentajes, font);
     }
 
     // Textos
-    switch (estado.actual) {
+    switch (estado.fase_actual) {
         case MostrandoInstrucciones:
             ventana.draw(etiquetas_info.instrucciones);
             break;
-        case Activo:
+        case Activa:
         case EsperaAntesDeResultado:
             etiquetas_contadores.actualizar(estado.contadores);
             etiquetas_contadores.dibujar(ventana);
             break;
 
         default:
-            assert(estado.actual == MostrandoResultado);
+            assert(estado.fase_actual == MostrandoResultado);
             ventana.draw(etiquetas_info.resultado);
             break;
     }
@@ -167,14 +170,14 @@ void procesa_cambio_de_fase(
     FaseNivel fase_previa                   //
 ) {
     switch (nueva_fase) {
-        case Activo:
+        case Activa:
             assert(fase_previa == MostrandoInstrucciones);
             botones.empezar.visible = false;
             botones.mostrar_botones_nivel(true);
             paneles_completos.visible = true;
             break;
         case EsperaAntesDeResultado:
-            assert(fase_previa == Activo);
+            assert(fase_previa == Activa);
             botones.mostrar_botones_nivel(false);
             timer_espera_antes_de_resultado.start(
                 tiempos::RETARDO_ANTES_DE_RESULTADO
@@ -191,7 +194,7 @@ AccionGeneral nivel(         //
     bool es_el_ultimo
 ) {
     // Iniciamos el estado
-    estado.actual = MostrandoInstrucciones;
+    estado.fase_actual = MostrandoInstrucciones;
     for (auto tp : tipos_de_pizza) {
         estado.contadores[tp].preparadas =
             datos_nivel.pedidos.pizzas[tp].pizzas_preparadas_iniciales;
@@ -235,12 +238,12 @@ AccionGeneral nivel(         //
             if (nuevo_estado.has_value()) {
                 procesa_cambio_de_fase(
                     nuevo_estado.value(), botones, paneles_completos,
-                    timer_espera_antes_de_resultado, estado.actual
+                    timer_espera_antes_de_resultado, estado.fase_actual
                 );
-                estado.actual = nuevo_estado.value();
-                if (estado.actual == FaseNivel::Reiniciando) {
+                estado.fase_actual = nuevo_estado.value();
+                if (estado.fase_actual == FaseNivel::Reiniciando) {
                     return AccionGeneral::Reiniciar;
-                } else if (estado.actual == FaseNivel::Saliendo) {
+                } else if (estado.fase_actual == FaseNivel::Saliendo) {
                     return AccionGeneral::Salir;
                 }
             }
@@ -260,10 +263,10 @@ AccionGeneral nivel(         //
         }
 
         // En función del estado (no necesariamente reciente)
-        switch (estado.actual) {
+        switch (estado.fase_actual) {
             case EsperaAntesDeResultado:
                 if (timer_espera_antes_de_resultado.termino()) {
-                    estado.actual = MostrandoResultado;
+                    estado.fase_actual = MostrandoResultado;
                     if (globales.success_buffer) {
                         sound.setBuffer(globales.success_buffer.value());
                         sound.play();

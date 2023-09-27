@@ -6,7 +6,7 @@
 
 enum FaseNivel {
     MostrandoInstrucciones,
-    Activo,
+    Activa,
     EsperaAntesDeResultado,
     MostrandoResultado,
     Reiniciando,
@@ -14,7 +14,7 @@ enum FaseNivel {
 };
 
 struct Estado {
-    FaseNivel actual = MostrandoInstrucciones;
+    FaseNivel fase_actual = MostrandoInstrucciones;
     PizzasAContadores contadores;
     std::vector<EncargoACocina> encargadas;
 };
