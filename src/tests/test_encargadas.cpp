@@ -11,13 +11,11 @@ TEST(Juego, EncargadasDelTipoConVectorVacio) {
 }
 
 TEST(Juego, EncargadasDelTipoConDosMargaritasYUnaPepperoni) {
-    // El TiempoPreparacion deberia ser irrelevante aqui
-    auto tp = TiempoPreparacion{Tiempo::CERO, Tiempo::CERO};
 
     Encargos encargos;
-    encargos.anadir(EncargoACocina{TipoPizza::Margarita, tp});
-    encargos.anadir(EncargoACocina{TipoPizza::Margarita, tp});
-    encargos.anadir(EncargoACocina{TipoPizza::Pepperoni, tp});
+    encargos.anadir(EncargoACocina::crear(TipoPizza::Margarita, Tiempo::CERO));
+    encargos.anadir(EncargoACocina::crear(TipoPizza::Margarita, Tiempo::CERO));
+    encargos.anadir(EncargoACocina::crear(TipoPizza::Pepperoni, Tiempo::CERO));
 
     EXPECT_EQ(                                   //
         encargos.del_tipo(TipoPizza::Margarita), //

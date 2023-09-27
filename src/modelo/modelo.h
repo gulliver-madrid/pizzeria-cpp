@@ -8,6 +8,7 @@ extern std::map<TipoPizza, float> tiempos_preparacion;
 struct EncargoACocina {
     TipoPizza tipo;
     TiempoPreparacion tiempo_preparacion;
+    static EncargoACocina crear(const TipoPizza &tipo, Tiempo tiempo_actual);
 };
 
 struct Encargos {
@@ -35,8 +36,6 @@ void evaluar_preparacion(
     Encargos &encargos, PizzasAContadores &contadores, int maximo,
     Tiempo tiempo_actual
 );
-
-EncargoACocina crear_encargo(const TipoPizza &tipo, Tiempo tiempo_actual);
 
 extern std::map<TipoPizza, float> tiempos_preparacion;
 
