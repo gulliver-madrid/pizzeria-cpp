@@ -40,7 +40,7 @@ void Paneles::dibujar(sf::RenderWindow &window) {
 }
 
 std::vector<BarraProgresoConNombre> crear_barras_progreso(
-    const std::vector<PorcentajeConTipoPizza> &porcentajes, sf::Font &font
+    const EstadoPreparacionPizzas &preparacion, sf::Font &font
 ) {
     std::vector<BarraProgresoConNombre> vect{};
     int pos_x = obtener_posicion_x_panel(IndicePanel::PANEL_EN_PREPARACION) +
@@ -49,7 +49,7 @@ std::vector<BarraProgresoConNombre> crear_barras_progreso(
     int ancho = 300;
     int largo = 40;
     int i = 0;
-    for (auto &porcentaje : porcentajes) {
+    for (auto &porcentaje : preparacion.datos) {
         BarraProgresoConNombre bpn;
         BarraProgreso &bp = bpn.bp;
         bp.fondo = sf::RectangleShape(sf::Vector2f(ancho, largo));
@@ -99,8 +99,7 @@ void PanelesCompletos::dibujar(
         return;
     paneles.dibujar(ventana);
     titulos_paneles.dibujar(ventana);
-    barras_progreso_con_nombres =
-        crear_barras_progreso(preparacion.porcentajes, font);
+    barras_progreso_con_nombres = crear_barras_progreso(preparacion, font);
     for (auto &bpn : barras_progreso_con_nombres) {
         ventana.draw(bpn.bp.fondo);
         ventana.draw(bpn.bp.relleno);

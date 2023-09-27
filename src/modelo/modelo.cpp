@@ -12,9 +12,9 @@ std::map<TipoPizza, float> tiempos_preparacion = {
 EstadoPreparacionPizzas::EstadoPreparacionPizzas(
     const std::vector<EncargoACocina> &encargos
 ) {
-    assert(porcentajes.empty());
+    assert(datos.empty());
     for (auto &encargo : encargos) {
-        porcentajes.push_back(PorcentajeConTipoPizza{
+        datos.push_back(EstadoPreparacionPizzaIndividual{
             encargo.tiempo_preparacion.obtener_porcentaje(), encargo.tipo});
     }
 }

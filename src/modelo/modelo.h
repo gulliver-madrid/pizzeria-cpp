@@ -32,6 +32,6 @@ EncargoACocina crear_encargo(const TipoPizza &tipo, Tiempo tiempo_actual);
 extern std::map<TipoPizza, float> tiempos_preparacion;
 
 struct EstadoPreparacionPizzas {
-    std::vector<PorcentajeConTipoPizza> porcentajes;
+    std::vector<EstadoPreparacionPizzaIndividual> datos;
     EstadoPreparacionPizzas(const std::vector<EncargoACocina> &encargos);
 };

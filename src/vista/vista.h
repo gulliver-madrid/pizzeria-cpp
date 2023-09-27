@@ -34,7 +34,7 @@ struct Paneles {
 };
 
 std::vector<BarraProgresoConNombre> crear_barras_progreso(
-    const std::vector<PorcentajeConTipoPizza> &porcentajes, sf::Font &font
+    const EstadoPreparacionPizzas &preparacion, sf::Font &font
 );
 
 struct TitulosPaneles {
