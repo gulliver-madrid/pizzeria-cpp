@@ -41,7 +41,7 @@ sf::Text crearEtiquetaContadorPizzas(
 sf::Text
 crearEtiquetaPizzasPreparadas(const sf::Font &font, int indice_etiqueta) {
     return crearEtiquetaContadorPizzas(
-        font, indice_etiqueta, PANEL_PREPARADAS,
+        font, indice_etiqueta, IndicePanel::PANEL_PREPARADAS,
         medidas::DESPLAZAMIENTO_VERTICAL_ETIQUETAS_PIZZAS_PREPARADAS
     );
 }
@@ -49,7 +49,7 @@ crearEtiquetaPizzasPreparadas(const sf::Font &font, int indice_etiqueta) {
 sf::Text
 crearEtiquetaPizzasServidas(const sf::Font &font, int indice_etiqueta) {
     return crearEtiquetaContadorPizzas(
-        font, indice_etiqueta, PANEL_PEDIDOS,
+        font, indice_etiqueta, IndicePanel::PANEL_PEDIDOS,
         medidas::DESPLAZAMIENTO_VERTICAL_ETIQUETAS_PIZZAS_SERVIDAS
     );
 }

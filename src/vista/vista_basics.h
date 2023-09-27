@@ -2,7 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 
-enum IndicePanel {
+enum class IndicePanel {
     PANEL_ENCARGAR,
     PANEL_EN_PREPARACION,
     PANEL_PREPARADAS,

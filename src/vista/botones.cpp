@@ -46,7 +46,7 @@ Botones::Botones(sf::Font &font) {
         encargar[tp] = crearBotonConTexto(
             tipo_pizza_to_string[tp], sf::Color::Green,
             sf::Vector2i(
-                obtener_posicion_x_panel(PANEL_ENCARGAR) +
+                obtener_posicion_x_panel(IndicePanel::PANEL_ENCARGAR) +
                     medidas::MARGEN_IZQ_ETIQUETAS,
                 medidas::FILA_CONTENIDO_PANEL + 80 * i
             ),
@@ -59,7 +59,7 @@ Botones::Botones(sf::Font &font) {
         despachar[tp] = crearBotonConTexto(
             "Despachar", sf::Color::Green,
             sf::Vector2i(
-                obtener_posicion_x_panel(PANEL_PREPARADAS) +
+                obtener_posicion_x_panel(IndicePanel::PANEL_PREPARADAS) +
                     medidas::MARGEN_IZQ_ETIQUETAS +
                     (medidas::ANCHO_PANEL * 0.55),
                 medidas::FILA_CONTENIDO_PANEL + 50 * i

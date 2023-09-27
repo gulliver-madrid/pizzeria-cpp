@@ -26,10 +26,10 @@ sf::RectangleShape crear_panel_estandar(IndicePanel indice) {
 }
 
 Paneles::Paneles() {
-    encargar = crear_panel_estandar(PANEL_ENCARGAR);
-    en_preparacion = crear_panel_estandar(PANEL_EN_PREPARACION);
-    preparadas = crear_panel_estandar(PANEL_PREPARADAS);
-    pedidos = crear_panel_estandar(PANEL_PEDIDOS);
+    encargar = crear_panel_estandar(IndicePanel::PANEL_ENCARGAR);
+    en_preparacion = crear_panel_estandar(IndicePanel::PANEL_EN_PREPARACION);
+    preparadas = crear_panel_estandar(IndicePanel::PANEL_PREPARADAS);
+    pedidos = crear_panel_estandar(IndicePanel::PANEL_PEDIDOS);
 }
 
 void Paneles::dibujar(sf::RenderWindow &window) {
@@ -43,7 +43,7 @@ std::vector<BarraProgresoConNombre> crear_barras_progreso(
     const std::vector<PorcentajeConTipoPizza> &porcentajes, sf::Font &font
 ) {
     std::vector<BarraProgresoConNombre> vect{};
-    int pos_x = obtener_posicion_x_panel(PANEL_EN_PREPARACION) +
+    int pos_x = obtener_posicion_x_panel(IndicePanel::PANEL_EN_PREPARACION) +
                 medidas::MARGEN_IZQ_ETIQUETAS;
     int pos_y_inicial = medidas::FILA_CONTENIDO_PANEL;
     int ancho = 300;
