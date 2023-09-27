@@ -17,10 +17,11 @@ int juego() {
 
     while (true) {
         bool reiniciar = false;
-        for (int i = 0; i < std::size(datos); i++) {
+        for (int i = 0; i < NUM_DATOS_NIVELES; i++) {
             Estado estado;
-            bool es_el_ultimo = (i == std::size(datos) - 1);
-            auto res = nivel(globales, estado, datos[i], grid, es_el_ultimo);
+            bool es_el_ultimo = (i == NUM_DATOS_NIVELES - 1);
+            auto res =
+                nivel(globales, estado, datos_niveles[i], grid, es_el_ultimo);
             if (res == AccionGeneral::Reiniciar) {
                 reiniciar = true;
                 break;

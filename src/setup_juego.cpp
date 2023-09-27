@@ -6,7 +6,8 @@
 #include <cassert>
 #include <unordered_set>
 
-PedidosEstaticos construir_pedidos(std::vector<DatosNivelTipoPizza> datos) {
+PedidosEstaticos construir_pedidos(const std::vector<DatosNivelTipoPizza> datos
+) {
     std::map<TipoPizza, DatosNivelTipoPizza> pedidos;
     std::unordered_set<TipoPizza> anadidos;
     for (auto dato : datos) {

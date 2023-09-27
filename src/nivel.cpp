@@ -118,20 +118,20 @@ void procesa_cambio_de_fase(
     }
 }
 
-AccionGeneral nivel(         //
-    Globales &globales,      //
-    Estado &estado,          //
-    DatosNivel &datos_nivel, //
-    Grid &grid,              //
+AccionGeneral nivel(               //
+    Globales &globales,            //
+    Estado &estado,                //
+    const DatosNivel &datos_nivel, //
+    Grid &grid,                    //
     bool es_el_ultimo
 ) {
     // Iniciamos el estado
     estado.fase_actual = FaseNivel::MostrandoInstrucciones;
     for (auto tp : tipos_de_pizza) {
         estado.contadores[tp].preparadas =
-            datos_nivel.pedidos.pizzas[tp].pizzas_preparadas_iniciales;
+            datos_nivel.pedidos.pizzas.at(tp).pizzas_preparadas_iniciales;
         estado.contadores[tp].objetivo =
-            datos_nivel.pedidos.pizzas[tp].objetivo_pizzas;
+            datos_nivel.pedidos.pizzas.at(tp).objetivo_pizzas;
     }
     int total = 0;
     for (auto tp : tipos_de_pizza) {

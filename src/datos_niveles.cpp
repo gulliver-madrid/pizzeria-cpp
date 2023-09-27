@@ -2,7 +2,7 @@
 #include "setup_juego.h"
 #include "textos.h"
 
-DatosNivel datos[2] = {
+const DatosNivel datos_niveles[] = {
     {INSTRUCCIONES_NIVEL_1, //
      construir_pedidos({
          {
@@ -31,3 +31,4 @@ DatosNivel datos[2] = {
          },
      })},
 };
+const int NUM_DATOS_NIVELES = sizeof(datos_niveles) / sizeof(datos_niveles[0]);

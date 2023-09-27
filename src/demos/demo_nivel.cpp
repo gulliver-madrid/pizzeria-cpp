@@ -11,7 +11,7 @@ int demo_nivel(int indice_nivel) {
     bool resultado_setup = setup_juego(globales);
     if (!resultado_setup)
         return EXIT_FAILURE;
-    if (indice_nivel >= std::size(datos)) {
+    if (indice_nivel >= NUM_DATOS_NIVELES) {
         std::cout << "No existe el nivel solicitado" << std::endl;
         return EXIT_FAILURE;
     }
@@ -20,7 +20,7 @@ int demo_nivel(int indice_nivel) {
         Estado estado;
 
         AccionGeneral res =
-            nivel(globales, estado, datos[indice_nivel], grid, true);
+            nivel(globales, estado, datos_niveles[indice_nivel], grid, true);
         if (res == AccionGeneral::Reiniciar) {
             continue;
         } else {
