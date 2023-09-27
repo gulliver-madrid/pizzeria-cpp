@@ -110,7 +110,6 @@ void actualizar_paneles(
     Estado &estado,                      //
     sf::Font font                        //
 ) {
-    EstadoPreparacionPizzas preparacion;
-    preparacion.actualizar(estado.encargadas);
+    EstadoPreparacionPizzas preparacion(estado.encargadas);
     paneles_completos.dibujar(ventana, preparacion, font);
 }

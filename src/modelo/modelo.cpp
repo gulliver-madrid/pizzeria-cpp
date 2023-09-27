@@ -9,7 +9,7 @@ std::map<TipoPizza, float> tiempos_preparacion = {
     {TipoPizza::CuatroQuesos, 7.0f},
 };
 
-void EstadoPreparacionPizzas::actualizar(
+EstadoPreparacionPizzas::EstadoPreparacionPizzas(
     const std::vector<EncargoACocina> &encargos
 ) {
     assert(porcentajes.empty());
