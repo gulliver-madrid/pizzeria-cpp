@@ -43,12 +43,12 @@ std::optional<FaseNivel> procesarEvento(
             return FaseNivel::Reiniciando;
         }
         // Dependientes del estado
-        if (estado.fase_actual == MostrandoInstrucciones) {
+        if (estado.fase_actual == FaseNivel::MostrandoInstrucciones) {
             auto bounds = botones.empezar.boton.getGlobalBounds();
             if (botones.empezar.colisiona(mousePos, globales)) {
                 return FaseNivel::Activa;
             }
-        } else if (estado.fase_actual == Activa) {
+        } else if (estado.fase_actual == FaseNivel::Activa) {
             auto nueva_fase =
                 procesar_click_fase_activa(globales, botones, estado, mousePos);
             if (nueva_fase.has_value()) {
@@ -81,7 +81,7 @@ std::optional<FaseNivel> procesar_click_fase_activa(
         }
     }
     if (!faltan) {
-        return EsperaAntesDeResultado;
+        return FaseNivel::EsperaAntesDeResultado;
     }
     for (const auto &tp : tipos_de_pizza) {
         if (botones.encargar[tp].colisiona(mouse_pos, globales)) {
@@ -102,14 +102,14 @@ void procesa_cambio_de_fase(
     FaseNivel fase_previa                   //
 ) {
     switch (nueva_fase) {
-        case Activa:
-            assert(fase_previa == MostrandoInstrucciones);
+        case FaseNivel::Activa:
+            assert(fase_previa == FaseNivel::MostrandoInstrucciones);
             botones.empezar.visible = false;
             botones.mostrar_botones_nivel(true);
             paneles_completos.visible = true;
             break;
-        case EsperaAntesDeResultado:
-            assert(fase_previa == Activa);
+        case FaseNivel::EsperaAntesDeResultado:
+            assert(fase_previa == FaseNivel::Activa);
             botones.mostrar_botones_nivel(false);
             timer_espera_antes_de_resultado.start(
                 tiempos::RETARDO_ANTES_DE_RESULTADO
@@ -126,7 +126,7 @@ AccionGeneral nivel(         //
     bool es_el_ultimo
 ) {
     // Iniciamos el estado
-    estado.fase_actual = MostrandoInstrucciones;
+    estado.fase_actual = FaseNivel::MostrandoInstrucciones;
     for (auto tp : tipos_de_pizza) {
         estado.contadores[tp].preparadas =
             datos_nivel.pedidos.pizzas[tp].pizzas_preparadas_iniciales;
@@ -196,9 +196,9 @@ AccionGeneral nivel(         //
 
         // En función del estado (no necesariamente reciente)
         switch (estado.fase_actual) {
-            case EsperaAntesDeResultado:
+            case FaseNivel::EsperaAntesDeResultado:
                 if (timer_espera_antes_de_resultado.termino()) {
-                    estado.fase_actual = MostrandoResultado;
+                    estado.fase_actual = FaseNivel::MostrandoResultado;
                     if (globales.success_buffer) {
                         sound.setBuffer(globales.success_buffer.value());
                         sound.play();
@@ -207,7 +207,7 @@ AccionGeneral nivel(         //
                     paneles_completos.visible = false;
                 }
                 break;
-            case MostrandoResultado: {
+            case FaseNivel::MostrandoResultado: {
                 if (!es_el_ultimo && timer_fin_nivel.termino()) {
                     return AccionGeneral::SiguienteNivel;
                 };

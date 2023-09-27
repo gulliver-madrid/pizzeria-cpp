@@ -37,8 +37,8 @@ void actualizarIU(                             //
         draw_grid(ventana, grid, GRID_SIZE, GRID_TONE);
 
     if ( //
-        estado.fase_actual == Activa ||
-        estado.fase_actual == EsperaAntesDeResultado
+        estado.fase_actual == FaseNivel::Activa ||
+        estado.fase_actual == FaseNivel::EsperaAntesDeResultado
     ) {
         actualizar_paneles(ventana, paneles_completos, estado, font);
     }
@@ -91,17 +91,17 @@ void actualizar_etiquetas(
     const Estado &estado                       //
 ) {
     switch (estado.fase_actual) {
-        case MostrandoInstrucciones:
+        case FaseNivel::MostrandoInstrucciones:
             ventana.draw(etiquetas_info.instrucciones);
             break;
-        case Activa:
-        case EsperaAntesDeResultado:
+        case FaseNivel::Activa:
+        case FaseNivel::EsperaAntesDeResultado:
             etiquetas_contadores.actualizar(estado.contadores);
             etiquetas_contadores.dibujar(ventana);
             break;
 
         default:
-            assert(estado.fase_actual == MostrandoResultado);
+            assert(estado.fase_actual == FaseNivel::MostrandoResultado);
             ventana.draw(etiquetas_info.resultado);
             break;
     }

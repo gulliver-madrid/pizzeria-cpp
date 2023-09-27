@@ -20,7 +20,7 @@ struct Globales {
     sf::Music music;
 };
 
-enum FaseNivel {
+enum class FaseNivel {
     MostrandoInstrucciones,
     Activa,
     EsperaAntesDeResultado,
@@ -30,7 +30,7 @@ enum FaseNivel {
 };
 
 struct Estado {
-    FaseNivel fase_actual = MostrandoInstrucciones;
+    FaseNivel fase_actual = FaseNivel::MostrandoInstrucciones;
     PizzasAContadores contadores;
     std::vector<EncargoACocina> encargadas;
 };
