@@ -22,7 +22,7 @@ struct DatosNivel {
         : instrucciones(instr), pedidos(pizzas) {}
 };
 
-enum AccionGeneral { SiguienteNivel, Reiniciar, Salir };
+enum class AccionGeneral { SiguienteNivel, Reiniciar, Salir };
 
 AccionGeneral nivel(         //
     Globales &globales,      //
