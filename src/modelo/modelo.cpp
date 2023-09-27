@@ -9,26 +9,22 @@ std::map<TipoPizza, float> tiempos_preparacion = {
     {TipoPizza::CuatroQuesos, 7.0f},
 };
 
-EstadoPreparacionPizzas::EstadoPreparacionPizzas(
-    const std::vector<EncargoACocina> &encargos
-) {
+int Encargos::del_tipo(TipoPizza tipo) const {
+    int contador = 0;
+    for (auto &encargo : datos) {
+        if (encargo.tipo == tipo) {
+            contador++;
+        }
+    }
+    return contador;
+}
+
+EstadoPreparacionPizzas::EstadoPreparacionPizzas(const Encargos &encargos) {
     assert(datos.empty());
-    for (auto &encargo : encargos) {
+    for (auto &encargo : encargos.datos) {
         datos.push_back(EstadoPreparacionPizzaIndividual{
             encargo.tiempo_preparacion.obtener_porcentaje(), encargo.tipo});
     }
-}
-
-int encargadas_del_tipo(
-    const std::vector<EncargoACocina> &encargadas, TipoPizza tipo
-) {
-    int c = 0;
-    for (auto &encargo : encargadas) {
-        if (encargo.tipo == tipo) {
-            c++;
-        }
-    }
-    return c;
 }
 
 /*
@@ -42,17 +38,17 @@ int encargadas_del_tipo(
  * de la preparación
  */
 void evaluar_preparacion(
-    std::vector<EncargoACocina> &encargos, //
-    PizzasAContadores &contadores,         //
-    int maximo,                            //
-    Tiempo tiempo_actual                   //
+    Encargos &encargos,            //
+    PizzasAContadores &contadores, //
+    int maximo,                    //
+    Tiempo tiempo_actual           //
 ) {
     std::vector<std::pair<size_t, int>> pizzas_listas_con_tiempo;
-    std::vector<EncargoACocina> restantes;
+    Encargos restantes;
 
     // Primera ronda para identificar pizzas listas
-    for (size_t i = 0; i < encargos.size(); i++) {
-        const auto &encargo = encargos[i];
+    for (size_t i = 0; i < encargos.datos.size(); i++) {
+        const auto &encargo = encargos.datos[i];
         Tiempo exceso_tiempo =
             (tiempo_actual - encargo.tiempo_preparacion.finalizacion);
         if (exceso_tiempo >= Tiempo::CERO) {
@@ -79,12 +75,12 @@ void evaluar_preparacion(
     }
 
     // Segunda ronda para actualizar contadores y lista de encargos
-    for (size_t i = 0; i < encargos.size(); i++) {
-        const auto &encargo = encargos[i];
+    for (size_t i = 0; i < encargos.datos.size(); i++) {
+        const auto &encargo = encargos.datos[i];
         if (indices_para_pasar.find(i) != indices_para_pasar.end()) {
             contadores[encargo.tipo].preparadas++;
         } else {
-            restantes.push_back(encargo);
+            restantes.datos.push_back(encargo);
         }
     }
 

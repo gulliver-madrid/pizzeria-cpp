@@ -58,7 +58,7 @@ void actualizar_estado_botones(Botones &botones, const Estado &estado) {
         }
     }
 
-    int total_en_preparacion = estado.encargadas.size();
+    int total_en_preparacion = estado.encargos.datos.size();
     assert(total_en_preparacion <= MAXIMO_PIZZAS_EN_PREPARACION);
 
     for (auto &tp : tipos_de_pizza) {
@@ -73,7 +73,7 @@ void actualizar_estado_botones(Botones &botones, const Estado &estado) {
         // Desactivar los botones que harían sobrepasar los objetivos
         auto contadores = estado.contadores.at(tp);
         int potenciales = contadores.preparadas + contadores.servidas +
-                          encargadas_del_tipo(estado.encargadas, tp);
+                          estado.encargos.del_tipo(tp);
         if (potenciales < contadores.objetivo) {
             boton_encargar.activar();
         } else {
@@ -110,6 +110,6 @@ void actualizar_paneles(
     Estado &estado,                      //
     sf::Font font                        //
 ) {
-    EstadoPreparacionPizzas preparacion(estado.encargadas);
+    EstadoPreparacionPizzas preparacion(estado.encargos);
     paneles_completos.dibujar(ventana, preparacion, font);
 }

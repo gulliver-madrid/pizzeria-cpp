@@ -4,22 +4,22 @@
 TEST(EvaluarPreparacionTest, NoHayPizzasEncargadas) {
     // No hay pizzas encargadas
     PizzasAContadores contadores;
-    std::vector<EncargoACocina> encargos;
+    Encargos encargos;
     Tiempo tiempo_actual = Tiempo::desde_segundos(5);
 
     evaluar_preparacion(encargos, contadores, 3, tiempo_actual);
 
-    EXPECT_EQ(encargos.size(), 0);
+    EXPECT_TRUE(encargos.datos.empty());
     EXPECT_EQ(contadores[TipoPizza::Margarita].preparadas, 0);
 }
 
 TEST(EvaluarPreparacionTest, VariasPizzasPreparadas) {
     // 2 de los 3 encargos estan listos
     PizzasAContadores contadores;
-    std::vector<EncargoACocina> encargos;
-    encargos.push_back(crear_encargo(TipoPizza::Margarita, Tiempo::CERO));
-    encargos.push_back(crear_encargo(TipoPizza::Pepperoni, Tiempo::CERO));
-    encargos.push_back(
+    Encargos encargos;
+    encargos.datos.push_back(crear_encargo(TipoPizza::Margarita, Tiempo::CERO));
+    encargos.datos.push_back(crear_encargo(TipoPizza::Pepperoni, Tiempo::CERO));
+    encargos.datos.push_back(
         crear_encargo(TipoPizza::Pepperoni, Tiempo::desde_segundos(2))
     );
     Tiempo tiempo_actual = Tiempo::desde_segundos(5);
@@ -28,22 +28,22 @@ TEST(EvaluarPreparacionTest, VariasPizzasPreparadas) {
 
     EXPECT_EQ(contadores[TipoPizza::Margarita].preparadas, 1);
     EXPECT_EQ(contadores[TipoPizza::Pepperoni].preparadas, 1);
-    EXPECT_EQ(encargos.size(), 1);
+    EXPECT_EQ(encargos.datos.size(), 1);
 }
 
 TEST(EvaluarPreparacionTest, LimiteMaximoDePizzas) {
     // Se preparan 3 pizzas pero el maximo que pueden salir de cocina es 2
     PizzasAContadores contadores;
-    std::vector<EncargoACocina> encargos;
-    encargos.push_back(
+    Encargos encargos;
+    encargos.datos.push_back(
         {TipoPizza::Margarita,
          {Tiempo::desde_segundos(4.5f), Tiempo::desde_segundos(2.5f)}}
     );
-    encargos.push_back(
+    encargos.datos.push_back(
         {TipoPizza::Pepperoni,
          {Tiempo::desde_segundos(7.0f), Tiempo::desde_segundos(4.0f)}}
     );
-    encargos.push_back(
+    encargos.datos.push_back(
         {TipoPizza::CuatroQuesos,
          {Tiempo::desde_segundos(8.0f), Tiempo::desde_segundos(7.0f)}}
     );
@@ -55,6 +55,6 @@ TEST(EvaluarPreparacionTest, LimiteMaximoDePizzas) {
     EXPECT_EQ(contadores[TipoPizza::Margarita].preparadas, 1);
     EXPECT_EQ(contadores[TipoPizza::Pepperoni].preparadas, 1);
 
-    EXPECT_EQ(encargos.size(), 1);
-    EXPECT_EQ(encargos[0].tipo, TipoPizza::CuatroQuesos);
+    EXPECT_EQ(encargos.datos.size(), 1);
+    EXPECT_EQ(encargos.datos[0].tipo, TipoPizza::CuatroQuesos);
 }

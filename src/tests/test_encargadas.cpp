@@ -4,9 +4,9 @@
 #include <gtest/gtest.h>
 
 TEST(Juego, EncargadasDelTipoConVectorVacio) {
-    std::vector<EncargoACocina> encargadas;
-    assert(encargadas.size() == 0);
-    auto result = encargadas_del_tipo(encargadas, TipoPizza::Margarita);
+    Encargos encargos;
+    assert(encargos.datos.empty());
+    auto result = encargos.del_tipo(TipoPizza::Margarita);
     EXPECT_EQ(result, 0);
 }
 
@@ -14,17 +14,17 @@ TEST(Juego, EncargadasDelTipoConDosMargaritasYUnaPepperoni) {
     // El TiempoPreparacion deberia ser irrelevante aqui
     auto tp = TiempoPreparacion{Tiempo::CERO, Tiempo::CERO};
 
-    std::vector<EncargoACocina> encargadas;
-    encargadas.push_back(EncargoACocina{TipoPizza::Margarita, tp});
-    encargadas.push_back(EncargoACocina{TipoPizza::Margarita, tp});
-    encargadas.push_back(EncargoACocina{TipoPizza::Pepperoni, tp});
+    Encargos encargos;
+    encargos.datos.push_back(EncargoACocina{TipoPizza::Margarita, tp});
+    encargos.datos.push_back(EncargoACocina{TipoPizza::Margarita, tp});
+    encargos.datos.push_back(EncargoACocina{TipoPizza::Pepperoni, tp});
 
-    EXPECT_EQ(                                                 //
-        encargadas_del_tipo(encargadas, TipoPizza::Margarita), //
+    EXPECT_EQ(                                   //
+        encargos.del_tipo(TipoPizza::Margarita), //
         2
     );
-    EXPECT_EQ(                                                 //
-        encargadas_del_tipo(encargadas, TipoPizza::Pepperoni), //
+    EXPECT_EQ(                                   //
+        encargos.del_tipo(TipoPizza::Pepperoni), //
         1
     );
 }

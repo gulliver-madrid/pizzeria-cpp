@@ -31,7 +31,7 @@ enum class FaseNivel {
 struct Estado {
     FaseNivel fase_actual = FaseNivel::MostrandoInstrucciones;
     PizzasAContadores contadores;
-    std::vector<EncargoACocina> encargadas;
+    Encargos encargos;
 };
 
 // Datos para un nivel determinado de un tipo concreto de pizza

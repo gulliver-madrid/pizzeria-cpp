@@ -86,7 +86,7 @@ std::optional<FaseNivel> procesar_click_fase_activa(
     for (const auto &tp : tipos_de_pizza) {
         if (botones.encargar[tp].colisiona(mouse_pos, globales)) {
             EncargoACocina encargo = crear_encargo(tp, obtener_tiempo_actual());
-            estado.encargadas.push_back(encargo);
+            estado.encargos.datos.push_back(encargo);
             return std::nullopt;
         }
     }
@@ -185,7 +185,7 @@ AccionGeneral nivel(               //
             int maximo = MAXIMO_PIZZAS_PREPARADAS - total_preparadas;
             auto tiempo_actual = obtener_tiempo_actual();
             evaluar_preparacion(
-                estado.encargadas, estado.contadores, maximo, tiempo_actual
+                estado.encargos, estado.contadores, maximo, tiempo_actual
             );
         }
 
