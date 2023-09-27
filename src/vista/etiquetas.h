@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../modelo/modelo.h"
+#include "../general.h"
 #include <SFML/Graphics.hpp>
 
 struct EtiquetasContadores {
@@ -19,10 +19,8 @@ struct EtiquetasInfo {
 struct EtiquetasGenerales {
     EtiquetasContadores contadores;
     EtiquetasInfo info;
-};
 
-sf::Text generar_etiqueta_instrucciones(
-    const sf::Font &font, const std::string &plantilla_instrucciones,
-    int objetivo
-);
-sf::Text generar_etiqueta_resultado(const sf::Font &font);
+    void setup(
+        Globales &globales, const DatosNivel &datos_nivel, int total_objetivos
+    );
+};

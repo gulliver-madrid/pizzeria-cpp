@@ -108,3 +108,15 @@ sf::Text generar_etiqueta_resultado(const sf::Font &font) {
     etiqueta.setPosition(POSICION_INSTRUCCIONES_O_RESULTADO);
     return etiqueta;
 }
+
+void EtiquetasGenerales::setup(
+    Globales &globales, const DatosNivel &datos_nivel, int total_objetivos
+) {
+    auto instrucciones = generar_etiqueta_instrucciones(
+        globales.font, datos_nivel.instrucciones, total_objetivos
+    );
+    auto resultado = generar_etiqueta_resultado(globales.font);
+
+    info = {instrucciones, resultado};
+    contadores.setup(globales.font);
+}

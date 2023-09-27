@@ -133,18 +133,13 @@ AccionGeneral nivel(               //
         estado.contadores[tp].objetivo =
             datos_nivel.pedidos.pizzas.at(tp).objetivo_pizzas;
     }
-    int total = 0;
+    int total_objetivos = 0;
     for (auto tp : tipos_de_pizza) {
-        total += estado.contadores[tp].objetivo;
+        total_objetivos += estado.contadores[tp].objetivo;
     }
-    auto instrucciones = generar_etiqueta_instrucciones(
-        globales.font, datos_nivel.instrucciones, total
-    );
-    auto resultado = generar_etiqueta_resultado(globales.font);
 
     EtiquetasGenerales etiquetas;
-    etiquetas.info = {instrucciones, resultado};
-    etiquetas.contadores.setup(globales.font);
+    etiquetas.setup(globales, datos_nivel, total_objetivos);
 
     PanelesCompletos paneles_completos(globales.font);
 
