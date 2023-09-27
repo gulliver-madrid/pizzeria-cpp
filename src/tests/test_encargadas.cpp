@@ -5,7 +5,7 @@
 
 TEST(Juego, EncargadasDelTipoConVectorVacio) {
     Encargos encargos;
-    assert(encargos.datos.empty());
+    EXPECT_EQ(encargos.total(), 0);
     auto result = encargos.del_tipo(TipoPizza::Margarita);
     EXPECT_EQ(result, 0);
 }

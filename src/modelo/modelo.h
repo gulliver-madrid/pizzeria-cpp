@@ -11,9 +11,16 @@ struct EncargoACocina {
 };
 
 struct Encargos {
-    std::vector<EncargoACocina> datos;
+  private:
+    std::vector<EncargoACocina> _datos;
+
+  public:
     int del_tipo(TipoPizza) const;
     void anadir(const EncargoACocina);
+    std::vector<EncargoACocina>::const_iterator begin() const;
+    std::vector<EncargoACocina>::const_iterator end() const;
+    int total() const;
+    EncargoACocina at(int i) const;
 };
 
 struct Contadores {

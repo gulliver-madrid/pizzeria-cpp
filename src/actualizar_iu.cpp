@@ -58,7 +58,7 @@ void actualizar_estado_botones(Botones &botones, const Estado &estado) {
         }
     }
 
-    int total_en_preparacion = estado.encargos.datos.size();
+    int total_en_preparacion = estado.encargos.total();
     assert(total_en_preparacion <= MAXIMO_PIZZAS_EN_PREPARACION);
 
     for (auto &tp : tipos_de_pizza) {

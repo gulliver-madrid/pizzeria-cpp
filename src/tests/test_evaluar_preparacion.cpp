@@ -9,7 +9,7 @@ TEST(EvaluarPreparacionTest, NoHayPizzasEncargadas) {
 
     evaluar_preparacion(encargos, contadores, 3, tiempo_actual);
 
-    EXPECT_TRUE(encargos.datos.empty());
+    EXPECT_EQ(encargos.total(), 0);
     EXPECT_EQ(contadores[TipoPizza::Margarita].preparadas, 0);
 }
 
@@ -28,7 +28,7 @@ TEST(EvaluarPreparacionTest, VariasPizzasPreparadas) {
 
     EXPECT_EQ(contadores[TipoPizza::Margarita].preparadas, 1);
     EXPECT_EQ(contadores[TipoPizza::Pepperoni].preparadas, 1);
-    EXPECT_EQ(encargos.datos.size(), 1);
+    EXPECT_EQ(encargos.total(), 1);
 }
 
 TEST(EvaluarPreparacionTest, LimiteMaximoDePizzas) {
@@ -55,6 +55,6 @@ TEST(EvaluarPreparacionTest, LimiteMaximoDePizzas) {
     EXPECT_EQ(contadores[TipoPizza::Margarita].preparadas, 1);
     EXPECT_EQ(contadores[TipoPizza::Pepperoni].preparadas, 1);
 
-    EXPECT_EQ(encargos.datos.size(), 1);
-    EXPECT_EQ(encargos.datos[0].tipo, TipoPizza::CuatroQuesos);
+    EXPECT_EQ(encargos.total(), 1);
+    EXPECT_EQ(encargos.at(0).tipo, TipoPizza::CuatroQuesos);
 }
