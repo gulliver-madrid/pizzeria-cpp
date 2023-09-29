@@ -65,12 +65,12 @@ std::optional<FaseNivel> procesar_click_fase_activa(
 ) {
 
     if (!estado.control_pizzas.has_value() ||
-        estado.control_pizzas.value().tipo == TipoSistemaPedidos::Dinamico) {
+        estado.control_pizzas.value()->tipo == TipoSistemaPedidos::Dinamico) {
         // TODO: implementar
         return std::nullopt;
     }
     PizzasAContadores &contadores =
-        estado.control_pizzas.value().get_contadores();
+        estado.control_pizzas.value()->get_contadores();
 
     for (auto &par : botones.despachar) {
         auto &boton = par.second;
@@ -140,15 +140,13 @@ AccionGeneral nivel(               //
         // TODO: implementar
         return AccionGeneral::Salir;
     }
+    // Establezco los elementos en función del sistema estático
+    ControlPizzas control_pizzas = PizzasAContadores{};
+    Estado estado(FaseNivel::MostrandoInstrucciones, &control_pizzas);
 
-    // Iniciamos el estado
-    Estado estado;
-    estado.fase_actual = FaseNivel::MostrandoInstrucciones;
-    estado.control_pizzas.emplace(PizzasAContadores{});
-    auto &sistema_control = estado.control_pizzas.value();
-    assert(sistema_control.tipo == TipoSistemaPedidos::Estatico);
+    assert(estado.control_pizzas.value()->tipo == TipoSistemaPedidos::Estatico);
 
-    PizzasAContadores &contadores = sistema_control.get_contadores();
+    PizzasAContadores &contadores = control_pizzas.get_contadores();
 
     const PedidosEstaticos &pedidos_estaticos_definidos =
         datos_nivel.sistema_pedidos.get_pedidos_estaticos_const();
