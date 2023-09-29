@@ -7,15 +7,9 @@ extern std::map<TipoPizza, float> tiempos_preparacion;
 
 /* Almacena un encargo concreto */
 struct EncargoACocina {
-  private:
-    EncargoACocina(
-        const TipoPizza tipo, const TiempoPreparacion tiempo_preparacion
-    );
-
-  public:
     const TipoPizza tipo;
     const TiempoPreparacion tiempo_preparacion;
-    static EncargoACocina crear(const TipoPizza &tipo, Tiempo tiempo_actual);
+    EncargoACocina(const TipoPizza tipo, const Tiempo tiempo_actual);
 };
 
 /* Gestiona la lista de encargos realizados a cocina */

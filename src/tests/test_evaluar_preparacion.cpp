@@ -17,11 +17,11 @@ TEST(EvaluarPreparacionTest, VariasPizzasPreparadas) {
     // 2 de los 3 encargos estan listos
     PizzasAContadores contadores;
     Encargos encargos;
-    auto e = EncargoACocina::crear(TipoPizza::Margarita, Tiempo::CERO);
-    encargos.anadir(EncargoACocina::crear(TipoPizza::Margarita, Tiempo::CERO));
-    encargos.anadir(EncargoACocina::crear(TipoPizza::Pepperoni, Tiempo::CERO));
+    auto e = EncargoACocina(TipoPizza::Margarita, Tiempo::CERO);
+    encargos.anadir(EncargoACocina(TipoPizza::Margarita, Tiempo::CERO));
+    encargos.anadir(EncargoACocina(TipoPizza::Pepperoni, Tiempo::CERO));
     encargos.anadir(
-        EncargoACocina::crear(TipoPizza::Pepperoni, Tiempo::desde_segundos(2))
+        EncargoACocina(TipoPizza::Pepperoni, Tiempo::desde_segundos(2))
     );
     Tiempo tiempo_actual = Tiempo::desde_segundos(5);
 
@@ -36,13 +36,13 @@ TEST(EvaluarPreparacionTest, LimiteMaximoDePizzas) {
     // Se preparan 3 pizzas pero el maximo que pueden salir de cocina es 2
     PizzasAContadores contadores;
     Encargos encargos;
-    encargos.anadir(EncargoACocina::crear(
+    encargos.anadir(EncargoACocina(
         TipoPizza::Margarita, Tiempo::desde_segundos(2.5f)
     ));
-    encargos.anadir(EncargoACocina::crear(
+    encargos.anadir(EncargoACocina(
         TipoPizza::Pepperoni, Tiempo::desde_segundos(4.0f)
     ));
-    encargos.anadir(EncargoACocina::crear(
+    encargos.anadir(EncargoACocina(
         TipoPizza::CuatroQuesos, Tiempo::desde_segundos(7.0f)
     ));
 

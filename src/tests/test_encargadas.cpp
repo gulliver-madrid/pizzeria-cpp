@@ -13,9 +13,9 @@ TEST(Juego, EncargadasDelTipoConVectorVacio) {
 TEST(Juego, EncargadasDelTipoConDosMargaritasYUnaPepperoni) {
 
     Encargos encargos;
-    encargos.anadir(EncargoACocina::crear(TipoPizza::Margarita, Tiempo::CERO));
-    encargos.anadir(EncargoACocina::crear(TipoPizza::Margarita, Tiempo::CERO));
-    encargos.anadir(EncargoACocina::crear(TipoPizza::Pepperoni, Tiempo::CERO));
+    encargos.anadir(EncargoACocina(TipoPizza::Margarita, Tiempo::CERO));
+    encargos.anadir(EncargoACocina(TipoPizza::Margarita, Tiempo::CERO));
+    encargos.anadir(EncargoACocina(TipoPizza::Pepperoni, Tiempo::CERO));
 
     EXPECT_EQ(                                   //
         encargos.del_tipo(TipoPizza::Margarita), //
