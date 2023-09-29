@@ -27,6 +27,7 @@ add_executable(pizzeria
     src/debug.cpp
     src/juego.cpp
     src/modelo/dominio.cpp
+    src/modelo/encargos.cpp
     src/modelo/modelo.cpp
     src/nivel.cpp
     src/setup_juego.cpp
@@ -78,6 +79,7 @@ add_executable(
     src/cadenas.cpp
     src/debug.cpp
     src/modelo/dominio.cpp
+    src/modelo/encargos.cpp
     src/modelo/modelo.cpp
     src/textos.cpp
     src/tiempo.cpp

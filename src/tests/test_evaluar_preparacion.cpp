@@ -17,6 +17,7 @@ TEST(EvaluarPreparacionTest, VariasPizzasPreparadas) {
     // 2 de los 3 encargos estan listos
     PizzasAContadores contadores;
     Encargos encargos;
+    auto e = EncargoACocina::crear(TipoPizza::Margarita, Tiempo::CERO);
     encargos.anadir(EncargoACocina::crear(TipoPizza::Margarita, Tiempo::CERO));
     encargos.anadir(EncargoACocina::crear(TipoPizza::Pepperoni, Tiempo::CERO));
     encargos.anadir(
