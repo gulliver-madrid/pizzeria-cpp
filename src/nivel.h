@@ -8,7 +8,6 @@ enum class AccionGeneral { SiguienteNivel, Reiniciar, Salir };
 
 AccionGeneral nivel(               //
     Globales &globales,            //
-    Estado &estado,                //
     const DatosNivel &datos_nivel, //
     Grid &grid,                    //
     bool es_el_ultimo

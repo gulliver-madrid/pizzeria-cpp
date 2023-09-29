@@ -17,10 +17,8 @@ int demo_nivel(int indice_nivel) {
     }
 
     while (true) {
-        Estado estado;
-
         AccionGeneral res =
-            nivel(globales, estado, datos_niveles[indice_nivel], grid, true);
+            nivel(globales, datos_niveles[indice_nivel], grid, true);
         if (res == AccionGeneral::Reiniciar) {
             continue;
         } else {

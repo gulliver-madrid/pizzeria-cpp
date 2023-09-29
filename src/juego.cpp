@@ -18,10 +18,8 @@ int juego() {
     while (true) {
         bool reiniciar = false;
         for (int i = 0; i < NUM_DATOS_NIVELES; i++) {
-            Estado estado;
             bool es_el_ultimo = (i == NUM_DATOS_NIVELES - 1);
-            auto res =
-                nivel(globales, estado, datos_niveles[i], grid, es_el_ultimo);
+            auto res = nivel(globales, datos_niveles[i], grid, es_el_ultimo);
             if (res == AccionGeneral::Reiniciar) {
                 reiniciar = true;
                 break;

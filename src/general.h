@@ -3,6 +3,7 @@
 #include "modelo/modelo.h"
 #include <SFML/Audio.hpp>
 #include <cassert>
+#include <iostream>
 
 #define MAXIMO_PIZZAS_EN_PREPARACION 3
 #define MAXIMO_PIZZAS_PREPARADAS 4
@@ -47,6 +48,7 @@ struct ControlPizzas {
     ControlPizzas(PizzasAContadores contadores_) : contadores(contadores_) {
         tipo = TipoSistemaPedidos::Estatico;
     }
+
     ~ControlPizzas() {
         if (tipo == TipoSistemaPedidos::Estatico) {
             contadores.~PizzasAContadores(
@@ -105,6 +107,7 @@ struct SistemaPedidos {
             pedidos_dinamicos.~PedidosDinamicos();
         }
     }
+    TipoSistemaPedidos get_tipo() const { return tipo; }
 
     const PedidosEstaticos &get_pedidos_estaticos_const() const {
         assert(tipo == TipoSistemaPedidos::Estatico);

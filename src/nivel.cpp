@@ -130,23 +130,25 @@ void procesa_cambio_de_fase(
 
 AccionGeneral nivel(               //
     Globales &globales,            //
-    Estado &estado,                //
     const DatosNivel &datos_nivel, //
     Grid &grid,                    //
     bool es_el_ultimo
 ) {
-    // Iniciamos el estado
-    estado.fase_actual = FaseNivel::MostrandoInstrucciones;
-    estado.control_pizzas.emplace(PizzasAContadores{});
-
-    if (!estado.control_pizzas.has_value() ||
-        estado.control_pizzas.value().tipo == TipoSistemaPedidos::Dinamico) {
+    if (datos_nivel.sistema_pedidos.get_tipo() ==
+        TipoSistemaPedidos::Dinamico) {
         assert(false && "No implementado");
         // TODO: implementar
         return AccionGeneral::Salir;
     }
-    PizzasAContadores &contadores =
-        estado.control_pizzas.value().get_contadores();
+
+    // Iniciamos el estado
+    Estado estado;
+    estado.fase_actual = FaseNivel::MostrandoInstrucciones;
+    estado.control_pizzas.emplace(PizzasAContadores{});
+    auto &sistema_control = estado.control_pizzas.value();
+    assert(sistema_control.tipo == TipoSistemaPedidos::Estatico);
+
+    PizzasAContadores &contadores = sistema_control.get_contadores();
 
     const PedidosEstaticos &pedidos_estaticos_definidos =
         datos_nivel.sistema_pedidos.get_pedidos_estaticos_const();
