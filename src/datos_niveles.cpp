@@ -7,15 +7,15 @@ const DatosNivel datos_niveles[] = {
      construir_pedidos({
          {
 
-             DatosNivelTipoPizza{TipoPizza::Margarita, 2, 8},
+             DatosNivelTipoPizza{TipoPizza::Margarita, 2, 3},
          },
          {
 
-             DatosNivelTipoPizza{TipoPizza::Pepperoni, 0, 4},
+             DatosNivelTipoPizza{TipoPizza::Pepperoni, 0, 2},
          },
          {
 
-             DatosNivelTipoPizza{TipoPizza::CuatroQuesos, 0, 3},
+             DatosNivelTipoPizza{TipoPizza::CuatroQuesos, 0, 1},
          },
      })},
     {INSTRUCCIONES_NIVEL_2, //
