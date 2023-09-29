@@ -74,6 +74,7 @@ add_executable(
     src/tests/test_cadenas.cpp
     src/tests/test_encargadas.cpp
     src/tests/test_evaluar_preparacion.cpp
+    src/tests/test_tiempo.cpp
 
     # archivos del proyecto
     src/cadenas.cpp

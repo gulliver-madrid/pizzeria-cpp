@@ -1,4 +1,5 @@
 #include "tiempo.h"
+#include "juego_assert.h"
 #include <cassert>
 #include <chrono>
 
@@ -29,7 +30,7 @@ void Timer::start(Tiempo finalizacion) {
 }
 
 bool Timer::termino() {
-    assert(this->finalizacion.has_value());
+    juego_assert(this->finalizacion.has_value(), "Timer no inicializado");
     return obtener_tiempo_transcurrido() > finalizacion;
 }
 

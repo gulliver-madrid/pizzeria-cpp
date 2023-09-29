@@ -11,7 +11,7 @@
 
 #define APP 0
 
-int main(int argc, char *argv[]) { //
+int main(int argc, char *argv[]) { // fmt
     std::cout << std::endl;
     if (argc > 3) {
         std::cout
