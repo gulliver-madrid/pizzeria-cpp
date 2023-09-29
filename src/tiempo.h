@@ -6,24 +6,19 @@
 
 struct Tiempo : public Comparable<Tiempo> {
   private:
-    // Guarda el valor en milisegundos del objeto Tiempo. Este campo no debe
-    // modificarse
-    int _ms;
+    // Guarda el valor en milisegundos del objeto Tiempo
+    const int _ms;
     Tiempo(int ms);
 
   public:
     static const Tiempo CERO;
     static Tiempo desde_milisegundos(int valor);
-    static Tiempo desde_segundos(float valor);
+    static Tiempo desde_segundos(double valor);
 
-    int obtener_milisegundos() const { return _ms; }
-    const Tiempo operator+(const Tiempo &otro) const {
-        return Tiempo{this->_ms + otro._ms};
-    }
-    const Tiempo operator-(const Tiempo &otro) const {
-        return Tiempo{this->_ms - otro._ms};
-    }
-    bool operator==(const Tiempo &otro) const { return _ms == otro._ms; }
+    int obtener_milisegundos() const;
+    const Tiempo operator+(const Tiempo &otro) const;
+    const Tiempo operator-(const Tiempo &otro) const;
+    bool operator==(const Tiempo &otro) const;
     bool operator<(const Tiempo &otro) const;
     static int calcular_porcentaje(const Tiempo &parte, const Tiempo &total);
 };
@@ -31,7 +26,7 @@ struct Tiempo : public Comparable<Tiempo> {
 struct Timer {
   private:
     std::optional<sf::Clock> clock;
-    Tiempo finalizacion = Tiempo::CERO;
+    std::optional<Tiempo> finalizacion = std::nullopt;
     Tiempo obtener_tiempo_transcurrido();
 
   public:

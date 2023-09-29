@@ -2,22 +2,34 @@
 #include <cassert>
 #include <chrono>
 
+bool Tiempo::operator<(const Tiempo &otro) const { // fmt
+    return _ms < otro._ms;
+}
+
+int Tiempo::obtener_milisegundos() const { return _ms; }
+const Tiempo Tiempo::operator+(const Tiempo &otro) const {
+    return Tiempo{this->_ms + otro._ms};
+}
+const Tiempo Tiempo::operator-(const Tiempo &otro) const {
+    return Tiempo{this->_ms - otro._ms};
+}
+bool Tiempo::operator==(const Tiempo &otro) const { return _ms == otro._ms; }
+
 Tiempo Timer::obtener_tiempo_transcurrido() {
     assert(clock.has_value());
-    float segundos = clock.value().getElapsedTime().asSeconds();
+    auto segundos = clock.value().getElapsedTime().asSeconds();
     return Tiempo::desde_segundos(segundos);
 }
 
-bool Tiempo::operator<(const Tiempo &otro) const { return _ms < otro._ms; }
-
-void Timer::start(Tiempo finalizacion) { //
+void Timer::start(Tiempo finalizacion) {
     assert(finalizacion > Tiempo::CERO);
-    this->finalizacion = finalizacion;
+    assert(!this->finalizacion.has_value());
+    this->finalizacion.emplace(finalizacion);
     clock.emplace();
 }
 
 bool Timer::termino() {
-    assert(finalizacion != Tiempo::CERO);
+    assert(this->finalizacion.has_value());
     return obtener_tiempo_transcurrido() > finalizacion;
 }
 
@@ -47,7 +59,7 @@ Tiempo obtener_tiempo_actual() {
 
 Tiempo::Tiempo(int ms) : _ms(ms) {}
 Tiempo Tiempo::desde_milisegundos(int valor) { return Tiempo{valor}; }
-Tiempo Tiempo::desde_segundos(float valor) {
+Tiempo Tiempo::desde_segundos(double valor) {
     return Tiempo{static_cast<int>(valor * 1000)};
 }
 int Tiempo::calcular_porcentaje(const Tiempo &parte, const Tiempo &total) {

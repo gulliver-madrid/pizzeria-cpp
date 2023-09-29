@@ -3,7 +3,7 @@
 #include "../tiempo.h"
 #include "dominio.h"
 
-extern std::map<TipoPizza, float> tiempos_preparacion;
+extern const std::map<TipoPizza, Tiempo> tiempos_preparacion;
 
 /* Almacena un encargo concreto */
 struct EncargoACocina {

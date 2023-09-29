@@ -1,15 +1,15 @@
 #include "encargos.h"
 
 // En segundos
-std::map<TipoPizza, float> tiempos_preparacion = {
-    {TipoPizza::Margarita, 2.5f},
-    {TipoPizza::Pepperoni, 4.0f},
-    {TipoPizza::CuatroQuesos, 7.0f},
+const std::map<TipoPizza, Tiempo> tiempos_preparacion = {
+    {TipoPizza::Margarita, Tiempo::desde_segundos(2.5)},
+    {TipoPizza::Pepperoni, Tiempo::desde_segundos(4.0)},
+    {TipoPizza::CuatroQuesos, Tiempo::desde_segundos(7.0)},
 };
 
 TiempoPreparacion
 calcular_tiempo_preparacion(const TipoPizza tipo, const Tiempo tiempo_actual) {
-    auto total = Tiempo::desde_segundos(tiempos_preparacion[tipo]);
+    auto total = tiempos_preparacion.at(tipo);
     return TiempoPreparacion{
         tiempo_actual + total, total // fmt
     };
