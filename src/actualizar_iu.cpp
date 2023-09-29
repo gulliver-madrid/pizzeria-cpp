@@ -49,13 +49,12 @@ void actualizarIU(                       //
 }
 
 void actualizar_estado_botones(Botones &botones, const Estado &estado) {
-    if (!estado.control_pizzas.has_value() ||
-        estado.control_pizzas.value()->tipo == TipoSistemaPedidos::Dinamico) {
+    if (estado.control_pizzas->tipo == TipoSistemaPedidos::Dinamico) {
         // TODO: implementar
         return;
     }
     const PizzasAContadores &contadores =
-        estado.control_pizzas.value()->get_contadores_const();
+        estado.control_pizzas->get_contadores_const();
 
     for (auto tp : tipos_de_pizza) {
         auto &boton_despachar = botones.despachar[tp];
@@ -103,15 +102,13 @@ void actualizar_etiquetas(
         case FaseNivel::Activa:
         case FaseNivel::EsperaAntesDeResultado:
 
-            if (!estado.control_pizzas.has_value() ||
-                estado.control_pizzas.value()->tipo ==
-                    TipoSistemaPedidos::Dinamico) {
+            if (estado.control_pizzas->tipo == TipoSistemaPedidos::Dinamico) {
                 // TODO: implementar
                 return;
             }
             {
                 const PizzasAContadores &contadores =
-                    estado.control_pizzas.value()->get_contadores_const();
+                    estado.control_pizzas->get_contadores_const();
                 etiquetas.contadores.actualizar(contadores);
                 etiquetas.contadores.dibujar(ventana);
             }

@@ -69,11 +69,10 @@ struct ControlPizzas {
 
 struct Estado {
     FaseNivel fase_actual = FaseNivel::MostrandoInstrucciones;
-    std::optional<ControlPizzas *> control_pizzas;
+    ControlPizzas *control_pizzas;
     Encargos encargos;
-    Estado(FaseNivel fase, ControlPizzas *control) : fase_actual(fase) {
-        control_pizzas = control;
-    }
+    Estado(FaseNivel fase, ControlPizzas *control)
+        : fase_actual(fase), control_pizzas(control) {}
 };
 
 // Datos para un nivel determinado de un tipo concreto de pizza

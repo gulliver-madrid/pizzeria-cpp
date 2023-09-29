@@ -64,13 +64,11 @@ std::optional<FaseNivel> procesar_click_fase_activa(
     const sf::Vector2i mouse_pos
 ) {
 
-    if (!estado.control_pizzas.has_value() ||
-        estado.control_pizzas.value()->tipo == TipoSistemaPedidos::Dinamico) {
+    if (estado.control_pizzas->tipo == TipoSistemaPedidos::Dinamico) {
         // TODO: implementar
         return std::nullopt;
     }
-    PizzasAContadores &contadores =
-        estado.control_pizzas.value()->get_contadores();
+    PizzasAContadores &contadores = estado.control_pizzas->get_contadores();
 
     for (auto &par : botones.despachar) {
         auto &boton = par.second;
@@ -144,17 +142,16 @@ AccionGeneral nivel(               //
     ControlPizzas control_pizzas = PizzasAContadores{};
     Estado estado(FaseNivel::MostrandoInstrucciones, &control_pizzas);
 
-    assert(estado.control_pizzas.value()->tipo == TipoSistemaPedidos::Estatico);
+    assert(estado.control_pizzas->tipo == TipoSistemaPedidos::Estatico);
 
     PizzasAContadores &contadores = control_pizzas.get_contadores();
 
-    const PedidosEstaticos &pedidos_estaticos_definidos =
+    const PedidosEstaticos &pedidos =
         datos_nivel.sistema_pedidos.get_pedidos_estaticos_const();
     for (auto tp : tipos_de_pizza) {
-        contadores[tp].preparadas = pedidos_estaticos_definidos.pizzas.at(tp)
-                                        .pizzas_preparadas_iniciales;
-        contadores[tp].objetivo =
-            pedidos_estaticos_definidos.pizzas.at(tp).objetivo_pizzas;
+        contadores[tp].preparadas =
+            pedidos.pizzas.at(tp).pizzas_preparadas_iniciales;
+        contadores[tp].objetivo = pedidos.pizzas.at(tp).objetivo_pizzas;
     }
     int total_objetivos = 0;
     for (auto tp : tipos_de_pizza) {
