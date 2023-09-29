@@ -53,5 +53,5 @@ TEST(EvaluarPreparacionTest, LimiteMaximoDePizzas) {
     EXPECT_EQ(contadores[TipoPizza::Pepperoni].preparadas, 1);
 
     EXPECT_EQ(encargos.total(), 1);
-    EXPECT_EQ(encargos.at(0).tipo, TipoPizza::CuatroQuesos);
+    EXPECT_EQ(encargos.por_indice(0).tipo, TipoPizza::CuatroQuesos);
 }

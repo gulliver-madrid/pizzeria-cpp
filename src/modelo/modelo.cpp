@@ -9,11 +9,16 @@ std::map<TipoPizza, float> tiempos_preparacion = {
     {TipoPizza::CuatroQuesos, 7.0f},
 };
 
+EncargoACocina::EncargoACocina(
+    const TipoPizza tipo, const TiempoPreparacion tiempo_preparacion
+)
+    : tipo(tipo), tiempo_preparacion(tiempo_preparacion) {}
+
 EncargoACocina
 EncargoACocina::crear(const TipoPizza &tipo, Tiempo tiempo_actual) {
     auto total = Tiempo::desde_segundos(tiempos_preparacion[tipo]);
     auto tiempo_preparacion = TiempoPreparacion{
-        tiempo_actual + total, total //
+        tiempo_actual + total, total // fmt
     };
     return EncargoACocina{tipo, tiempo_preparacion};
 }
@@ -46,7 +51,7 @@ int Encargos::total() const { //
     return _datos.size();
 }
 
-EncargoACocina Encargos::at(int i) const { //
+EncargoACocina Encargos::por_indice(int i) const { //
     return _datos.at(i);
 }
 

@@ -5,12 +5,20 @@
 
 extern std::map<TipoPizza, float> tiempos_preparacion;
 
+/* Almacena un encargo concreto */
 struct EncargoACocina {
-    TipoPizza tipo;
-    TiempoPreparacion tiempo_preparacion;
+  private:
+    EncargoACocina(
+        const TipoPizza tipo, const TiempoPreparacion tiempo_preparacion
+    );
+
+  public:
+    const TipoPizza tipo;
+    const TiempoPreparacion tiempo_preparacion;
     static EncargoACocina crear(const TipoPizza &tipo, Tiempo tiempo_actual);
 };
 
+/* Gestiona la lista de encargos realizados a cocina */
 struct Encargos {
   private:
     std::vector<EncargoACocina> _datos;
@@ -21,7 +29,7 @@ struct Encargos {
     std::vector<EncargoACocina>::const_iterator begin() const;
     std::vector<EncargoACocina>::const_iterator end() const;
     int total() const;
-    EncargoACocina at(int i) const;
+    EncargoACocina por_indice(int i) const;
 };
 
 struct Contadores {
