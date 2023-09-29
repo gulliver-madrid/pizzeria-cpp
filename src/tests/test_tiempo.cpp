@@ -1,14 +1,15 @@
-
 #include "../juego_assert.h"
 #include "../tiempo.h"
 
 #include <gtest/gtest.h>
 
+#ifdef _DEBUG
+#define EXCEPCION JuegoException
+#else
+#define EXCEPCION std::bad_optional_access
+#endif
+
 TEST(Tiempo, TimerNoIniciadoGeneraExcepcionAlTerminarlo) { //
     Timer t;
-#ifdef _DEBUG
-    EXPECT_THROW(t.termino(), JuegoException);
-#else
-    EXPECT_THROW(t.termino(), std::bad_optional_access);
-#endif
+    EXPECT_THROW(t.termino(), EXCEPCION);
 }
