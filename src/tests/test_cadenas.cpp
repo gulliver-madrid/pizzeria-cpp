@@ -3,7 +3,7 @@
 #include <cassert>
 #include <gtest/gtest.h>
 
-TEST(Juego, Interpolar) { //
+TEST(Cadenas, Interpolar) { //
     EXPECT_EQ(interpolar_unicode("%a"), A_ACUTE);
     EXPECT_EQ(
         interpolar_unicode("%a%e%i%o%u"),

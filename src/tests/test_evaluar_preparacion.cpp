@@ -1,7 +1,7 @@
 #include "../modelo/modelo.h"
 #include <gtest/gtest.h>
 
-TEST(EvaluarPreparacionTest, NoHayPizzasEncargadas) {
+TEST(EvaluarPreparacion, NoHayPizzasEncargadas) {
     // No hay pizzas encargadas
     PizzasAContadores contadores;
     Encargos encargos;
@@ -13,7 +13,7 @@ TEST(EvaluarPreparacionTest, NoHayPizzasEncargadas) {
     EXPECT_EQ(contadores[TipoPizza::Margarita].preparadas, 0);
 }
 
-TEST(EvaluarPreparacionTest, VariasPizzasPreparadas) {
+TEST(EvaluarPreparacion, VariasPizzasPreparadas) {
     // 2 de los 3 encargos estan listos
     PizzasAContadores contadores;
     Encargos encargos;
@@ -32,19 +32,19 @@ TEST(EvaluarPreparacionTest, VariasPizzasPreparadas) {
     EXPECT_EQ(encargos.total(), 1);
 }
 
-TEST(EvaluarPreparacionTest, LimiteMaximoDePizzas) {
+TEST(EvaluarPreparacion, LimiteMaximoDePizzas) {
     // Se preparan 3 pizzas pero el maximo que pueden salir de cocina es 2
     PizzasAContadores contadores;
     Encargos encargos;
-    encargos.anadir(EncargoACocina(
-        TipoPizza::Margarita, Tiempo::desde_segundos(2.5f)
-    ));
-    encargos.anadir(EncargoACocina(
-        TipoPizza::Pepperoni, Tiempo::desde_segundos(4.0f)
-    ));
-    encargos.anadir(EncargoACocina(
-        TipoPizza::CuatroQuesos, Tiempo::desde_segundos(7.0f)
-    ));
+    encargos.anadir(
+        EncargoACocina(TipoPizza::Margarita, Tiempo::desde_segundos(2.5f))
+    );
+    encargos.anadir(
+        EncargoACocina(TipoPizza::Pepperoni, Tiempo::desde_segundos(4.0f))
+    );
+    encargos.anadir(
+        EncargoACocina(TipoPizza::CuatroQuesos, Tiempo::desde_segundos(7.0f))
+    );
 
     Tiempo tiempo_actual = Tiempo::desde_segundos(10);
 

@@ -3,15 +3,14 @@
 #include <cassert>
 #include <gtest/gtest.h>
 
-TEST(Juego, EncargadasDelTipoConVectorVacio) {
+TEST(Encargadas, EncargadasDelTipoConVectorVacio) {
     Encargos encargos;
     EXPECT_EQ(encargos.total(), 0);
     auto result = encargos.del_tipo(TipoPizza::Margarita);
     EXPECT_EQ(result, 0);
 }
 
-TEST(Juego, EncargadasDelTipoConDosMargaritasYUnaPepperoni) {
-
+TEST(Encargadas, EncargadasDelTipoConDosMargaritasYUnaPepperoni) {
     Encargos encargos;
     encargos.anadir(EncargoACocina(TipoPizza::Margarita, Tiempo::CERO));
     encargos.anadir(EncargoACocina(TipoPizza::Margarita, Tiempo::CERO));
