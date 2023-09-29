@@ -63,19 +63,29 @@ std::optional<FaseNivel> procesar_click_fase_activa(
     const Globales &globales, Botones &botones, Estado &estado,
     const sf::Vector2i mouse_pos
 ) {
+
+    if (!estado.control_pizzas.has_value() ||
+        estado.control_pizzas.value().tipo == TipoSistemaPedidos::Dinamico) {
+        // TODO: implementar
+        return std::nullopt;
+    }
+    PizzasAContadores &contadores =
+        estado.control_pizzas.value().get_contadores();
+
     for (auto &par : botones.despachar) {
         auto &boton = par.second;
-        auto &contador = estado.contadores[par.first];
+        auto &contador = contadores[par.first];
         if (boton.colisiona(mouse_pos, globales)) {
             assert(contador.preparadas > 0);
             contador.preparadas--;
             contador.servidas++;
-            return std::nullopt;
+            break;
         }
     }
+
     bool faltan = false;
     for (auto tp : tipos_de_pizza) {
-        if (estado.contadores[tp].servidas < estado.contadores[tp].objetivo) {
+        if (contadores[tp].servidas < contadores[tp].objetivo) {
             faltan = true;
             break;
         }
@@ -127,15 +137,28 @@ AccionGeneral nivel(               //
 ) {
     // Iniciamos el estado
     estado.fase_actual = FaseNivel::MostrandoInstrucciones;
+    estado.control_pizzas.emplace(PizzasAContadores{});
+
+    if (!estado.control_pizzas.has_value() ||
+        estado.control_pizzas.value().tipo == TipoSistemaPedidos::Dinamico) {
+        assert(false && "No implementado");
+        // TODO: implementar
+        return AccionGeneral::Salir;
+    }
+    PizzasAContadores &contadores =
+        estado.control_pizzas.value().get_contadores();
+
+    const PedidosEstaticos &pedidos_estaticos_definidos =
+        datos_nivel.sistema_pedidos.get_pedidos_estaticos_const();
     for (auto tp : tipos_de_pizza) {
-        estado.contadores[tp].preparadas =
-            datos_nivel.pedidos.pizzas.at(tp).pizzas_preparadas_iniciales;
-        estado.contadores[tp].objetivo =
-            datos_nivel.pedidos.pizzas.at(tp).objetivo_pizzas;
+        contadores[tp].preparadas = pedidos_estaticos_definidos.pizzas.at(tp)
+                                        .pizzas_preparadas_iniciales;
+        contadores[tp].objetivo =
+            pedidos_estaticos_definidos.pizzas.at(tp).objetivo_pizzas;
     }
     int total_objetivos = 0;
     for (auto tp : tipos_de_pizza) {
-        total_objetivos += estado.contadores[tp].objetivo;
+        total_objetivos += contadores[tp].objetivo;
     }
 
     EtiquetasGenerales etiquetas;
@@ -178,14 +201,14 @@ AccionGeneral nivel(               //
 
         int total_preparadas = 0;
         for (auto tp : tipos_de_pizza) {
-            total_preparadas += estado.contadores[tp].preparadas;
+            total_preparadas += contadores[tp].preparadas;
         }
 
         if (total_preparadas < MAXIMO_PIZZAS_PREPARADAS) {
             int maximo = MAXIMO_PIZZAS_PREPARADAS - total_preparadas;
             auto tiempo_actual = obtener_tiempo_actual();
             evaluar_preparacion(
-                estado.encargos, estado.contadores, maximo, tiempo_actual
+                estado.encargos, contadores, maximo, tiempo_actual
             );
         }
 

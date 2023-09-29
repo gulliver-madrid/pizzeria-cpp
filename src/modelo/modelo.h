@@ -3,6 +3,7 @@
 #include "../tiempo.h"
 #include "dominio.h"
 #include "encargos.h"
+#include <unordered_map>
 
 struct Contadores {
     int servidas = 0;
@@ -11,6 +12,7 @@ struct Contadores {
 };
 
 using PizzasAContadores = std::map<TipoPizza, Contadores>;
+using Pedido = std::unordered_map<TipoPizza, int>;
 
 void evaluar_preparacion(
     Encargos &encargos, PizzasAContadores &contadores, int maximo,

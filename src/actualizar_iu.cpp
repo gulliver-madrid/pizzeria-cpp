@@ -49,9 +49,17 @@ void actualizarIU(                       //
 }
 
 void actualizar_estado_botones(Botones &botones, const Estado &estado) {
+    if (!estado.control_pizzas.has_value() ||
+        estado.control_pizzas.value().tipo == TipoSistemaPedidos::Dinamico) {
+        // TODO: implementar
+        return;
+    }
+    const PizzasAContadores &contadores =
+        estado.control_pizzas.value().get_contadores_const();
+
     for (auto tp : tipos_de_pizza) {
         auto &boton_despachar = botones.despachar[tp];
-        if (estado.contadores.at(tp).preparadas == 0) {
+        if (contadores.at(tp).preparadas == 0) {
             boton_despachar.desactivar();
         } else {
             boton_despachar.activar();
@@ -71,10 +79,10 @@ void actualizar_estado_botones(Botones &botones, const Estado &estado) {
             boton_encargar.activar();
         }
         // Desactivar los botones que harían sobrepasar los objetivos
-        auto contadores = estado.contadores.at(tp);
-        int potenciales = contadores.preparadas + contadores.servidas +
+        auto contadores_tp = contadores.at(tp);
+        int potenciales = contadores_tp.preparadas + contadores_tp.servidas +
                           estado.encargos.del_tipo(tp);
-        if (potenciales < contadores.objetivo) {
+        if (potenciales < contadores_tp.objetivo) {
             boton_encargar.activar();
         } else {
             boton_encargar.desactivar();
@@ -87,14 +95,26 @@ void actualizar_etiquetas(
     EtiquetasGenerales &etiquetas, //
     const Estado &estado           //
 ) {
+
     switch (estado.fase_actual) {
         case FaseNivel::MostrandoInstrucciones:
             ventana.draw(etiquetas.info.instrucciones);
             break;
         case FaseNivel::Activa:
         case FaseNivel::EsperaAntesDeResultado:
-            etiquetas.contadores.actualizar(estado.contadores);
-            etiquetas.contadores.dibujar(ventana);
+
+            if (!estado.control_pizzas.has_value() ||
+                estado.control_pizzas.value().tipo ==
+                    TipoSistemaPedidos::Dinamico) {
+                // TODO: implementar
+                return;
+            }
+            {
+                const PizzasAContadores &contadores =
+                    estado.control_pizzas.value().get_contadores_const();
+                etiquetas.contadores.actualizar(contadores);
+                etiquetas.contadores.dibujar(ventana);
+            }
             break;
 
         default:
