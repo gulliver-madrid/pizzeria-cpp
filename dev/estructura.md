@@ -63,6 +63,9 @@
                                 - cadenas.h (def)
                         - actualizar_iu.cpp
                             - vista/vista_data.h (hoja)
+                            - estado_nivel.h
+                                - general.h (def)
+                    - estado_nivel.h (def)
                     - tiempo.h (def)
                     - vista/vista.h (def)
                     - vista/vista_data.h (hoja)

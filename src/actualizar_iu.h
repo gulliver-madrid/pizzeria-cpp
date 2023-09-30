@@ -2,6 +2,8 @@
 
 #include "vista/vista.h"
 
+struct Estado;
+
 void actualizarIU(                       //
     sf::RenderWindow &ventana,           //
     Botones &botones,                    //

@@ -1,5 +1,6 @@
 #include "nivel.h"
 #include "actualizar_iu.h"
+#include "estado_nivel.h"
 #include "tiempo.h"
 #include "vista/vista.h"
 #include "vista/vista_data.h"

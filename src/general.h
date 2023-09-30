@@ -29,15 +29,7 @@ enum class FaseNivel {
     Saliendo
 };
 
-struct Estado {
-    FaseNivel fase_actual = FaseNivel::MostrandoInstrucciones;
-    ControlPizzas *control_pizzas;
-    Encargos encargos;
-    Estado(FaseNivel fase, ControlPizzas *control)
-        : fase_actual(fase), control_pizzas(control) {}
-};
-
-// Datos para un nivel determinado de un tipo concreto de pizza
+/* Datos para un nivel determinado de un tipo concreto de pizza */
 struct DatosNivelTipoPizza {
     TipoPizza tipo;
     int pizzas_preparadas_iniciales = 0;
