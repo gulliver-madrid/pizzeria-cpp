@@ -1,5 +1,6 @@
 #include "vista.h"
 #include "../cadenas.h"
+#include "vista_basics.h"
 #include <SFML/Graphics.hpp>
 #include <cassert>
 #include <iostream>

@@ -3,6 +3,7 @@
 #include "vista/vista.h"
 
 struct Estado;
+struct Grid;
 
 void actualizarIU(                       //
     sf::RenderWindow &ventana,           //

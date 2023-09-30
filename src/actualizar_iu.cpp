@@ -1,5 +1,7 @@
 #include "actualizar_iu.h"
 #include "estado_nivel.h"
+#include "vista/grid.h"
+#include "vista/vista_basics.h"
 #include "vista/vista_data.h"
 #include <cassert>
 

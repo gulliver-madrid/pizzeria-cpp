@@ -40,8 +40,6 @@
                 - nivel.cpp
                     - actualizar_iu.h
                         - vista/vista.h
-                            - modelo/dominio.h (def)
-                            - tiempo.h (def)
                             - vista/botones.h
                                 - vista/componentes.h
                                     - vista/componentes.cpp (hoja)
@@ -61,15 +59,16 @@
                                             - cadenas.h (hoja)
                                     - vista/componentes.h (def)
                                     - vista/vista_basics.h (def)
-                            - vista/grid.h (def)
-                            - vista/vista_basics.h (def)
                             - vista/vista.cpp
                                 - cadenas.h (def)
+                                - vista/vista_basics.h (def)
                         - actualizar_iu.cpp
                             - vista/vista_data.h (hoja)
                             - estado_nivel.h
                                 - general.h (def)
                                 - modelo/encargos.h (def)
+                            - vista/grid.h (def)
+                            - vista/vista_basics.h (def)
                     - estado_nivel.h (def)
                     - tiempo.h (def)
                     - vista/vista.h (def)
