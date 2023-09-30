@@ -1,7 +1,6 @@
 #pragma once
 
 #include "general.h"
-#include "modelo/modelo.h"
 #include "vista/grid.h"
 
 enum class AccionGeneral { SiguienteNivel, Reiniciar, Salir };
