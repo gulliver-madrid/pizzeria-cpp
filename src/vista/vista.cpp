@@ -21,9 +21,8 @@ sf::RectangleShape crearPanelVertical(float x, float y) {
 }
 
 sf::RectangleShape crear_panel_estandar(IndicePanel indice) {
-    return crearPanelVertical(
-        obtener_posicion_x_panel(indice), medidas::MARGEN_TOP_PANELES
-    );
+    auto pos_panel = obtener_posicion_panel(indice);
+    return crearPanelVertical(pos_panel.x, pos_panel.y);
 }
 
 Paneles::Paneles() {
@@ -44,9 +43,9 @@ std::vector<BarraProgresoConNombre> crear_barras_progreso(
     const EstadoPreparacionPizzas &preparacion, sf::Font &font
 ) {
     std::vector<BarraProgresoConNombre> vect{};
-    int pos_x = obtener_posicion_x_panel(IndicePanel::PANEL_EN_PREPARACION) +
-                medidas::MARGEN_IZQ_ETIQUETAS;
-    int pos_y_inicial = medidas::FILA_CONTENIDO_PANEL;
+    auto pos_panel = obtener_posicion_panel(IndicePanel::PANEL_EN_PREPARACION);
+    int pos_x = pos_panel.x + medidas::MARGEN_IZQ_ETIQUETAS;
+    int pos_y_inicial = pos_panel.y + medidas::FILA_CONTENIDO_PANEL;
     int ancho = 300;
     int largo = 40;
     int i = 0;
@@ -82,14 +81,21 @@ void TitulosPaneles::dibujar(sf::RenderWindow &ventana) {
 
 PanelesCompletos::PanelesCompletos(sf::Font &font) {
     titulos_paneles = {
-        crearEtiquetaTituloPanel(font, IndicePanel::PANEL_ENCARGAR, "Encargar"),
         crearEtiquetaTituloPanel(
-            font, IndicePanel::PANEL_EN_PREPARACION, "En preparaci%on"
+            font, obtener_posicion_panel(IndicePanel::PANEL_ENCARGAR),
+            "Encargar"
         ),
         crearEtiquetaTituloPanel(
-            font, IndicePanel::PANEL_PREPARADAS, "Preparadas"
+            font, obtener_posicion_panel(IndicePanel::PANEL_EN_PREPARACION),
+            "En preparaci%on"
         ),
-        crearEtiquetaTituloPanel(font, IndicePanel::PANEL_PEDIDOS, "Pedidos")};
+        crearEtiquetaTituloPanel(
+            font, obtener_posicion_panel(IndicePanel::PANEL_PREPARADAS),
+            "Preparadas"
+        ),
+        crearEtiquetaTituloPanel(
+            font, obtener_posicion_panel(IndicePanel::PANEL_PEDIDOS), "Pedidos"
+        )};
 }
 
 void PanelesCompletos::dibujar(

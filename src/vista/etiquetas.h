@@ -26,3 +26,7 @@ struct EtiquetasGenerales {
         Globales &globales, const DatosNivel &datos_nivel, int total_objetivos
     );
 };
+
+sf::Text crearEtiquetaTituloPanel(
+    const sf::Font &font, sf::Vector2i posicion_panel, const std::string &texto
+);

@@ -44,12 +44,12 @@ Botones::Botones(sf::Font &font) {
     );
     int i = 0;
     for (auto tp : tipos_de_pizza) {
+        auto pos_panel = obtener_posicion_panel(IndicePanel::PANEL_ENCARGAR);
         encargar[tp] = crearBotonConTexto(
             tipo_pizza_to_string[tp], sf::Color::Green,
             sf::Vector2i(
-                obtener_posicion_x_panel(IndicePanel::PANEL_ENCARGAR) +
-                    medidas::MARGEN_IZQ_ETIQUETAS,
-                medidas::FILA_CONTENIDO_PANEL + 80 * i
+                pos_panel.x + medidas::MARGEN_IZQ_ETIQUETAS,
+                pos_panel.y + medidas::FILA_CONTENIDO_PANEL + 80 * i
             ),
             font, sf::Color::Black
         );
@@ -57,13 +57,13 @@ Botones::Botones(sf::Font &font) {
     }
     i = 0;
     for (auto tp : tipos_de_pizza) {
+        auto pos_panel = obtener_posicion_panel(IndicePanel::PANEL_PREPARADAS);
         despachar[tp] = crearBotonConTexto(
             "Despachar", sf::Color::Green,
             sf::Vector2i(
-                obtener_posicion_x_panel(IndicePanel::PANEL_PREPARADAS) +
-                    medidas::MARGEN_IZQ_ETIQUETAS +
+                pos_panel.x + medidas::MARGEN_IZQ_ETIQUETAS +
                     (medidas::ANCHO_PANEL * 0.55),
-                medidas::FILA_CONTENIDO_PANEL + 50 * i
+                pos_panel.y + medidas::FILA_CONTENIDO_PANEL + 50 * i
             ),
             font, sf::Color::Black, 0.7
         );

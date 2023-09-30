@@ -24,24 +24,15 @@ sf::Text crearEtiquetaTituloPanel(
     return etiqueta;
 }
 
-/* Usando indice_panel */
-sf::Text crearEtiquetaTituloPanel(
-    const sf::Font &font, IndicePanel indice_panel, const std::string &texto
-) {
-    int pos_x_panel = obtener_posicion_x_panel(indice_panel);
-    int pos_y_panel = medidas::MARGEN_TOP_PANELES;
-    return crearEtiquetaTituloPanel(font, {pos_x_panel, pos_y_panel}, texto);
-}
-
 sf::Text crearEtiquetaContadorPizzas(
     const sf::Font &font, int indice_etiqueta, IndicePanel indice_panel,
     int desplazamiento_vertical
 ) {
     sf::Text etiqueta =
         crearEtiqueta(medidas::TAMANO_FUENTE_ETIQUETAS, font, sf::Color::White);
-    auto pos_x =
-        obtener_posicion_x_panel(indice_panel) + medidas::MARGEN_IZQ_ETIQUETAS;
-    auto pos_y = medidas::FILA_CONTENIDO_PANEL +
+    auto pos_panel = obtener_posicion_panel(indice_panel);
+    auto pos_x = pos_panel.x + medidas::MARGEN_IZQ_ETIQUETAS;
+    auto pos_y = pos_panel.y + medidas::FILA_CONTENIDO_PANEL +
                  desplazamiento_vertical * indice_etiqueta;
     etiqueta.setPosition(pos_x, pos_y);
     return etiqueta;

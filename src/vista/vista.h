@@ -7,8 +7,6 @@
 
 enum class IndicePanel;
 
-sf::Text
-crearEtiquetaTituloPanel(const sf::Font &, IndicePanel, const std::string &);
 sf::Text crearEtiquetaPizzasServidas(const sf::Font &, int indice);
 sf::Text crearEtiquetaPizzasPreparadas(const sf::Font &, int indice);
 
