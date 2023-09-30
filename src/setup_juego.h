@@ -1,6 +1,6 @@
 #pragma once
 
-#include "nivel.h"
+#include "general.h"
 #include <vector>
 
 #define TITLE "Pizzer%ia"

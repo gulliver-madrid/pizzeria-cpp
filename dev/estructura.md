@@ -6,57 +6,21 @@
             - cadenas.h (hoja)
                 - cadenas.cpp (hoja)
             - datos_niveles.h
-                - nivel.h
-                    - general.h
-                        - modelo/modelo.h
-                            - tiempo.h
-                                - tiempo.cpp
-                                    - juego_assert.h (hoja)
-                                - templates.h (hoja)
-                            - modelo/dominio.h
-                                - modelo/dominio.cpp (hoja)
-                            - modelo/encargos.h
-                                - tiempo.h (def)
-                                - modelo/dominio.h (def)
-                                - modelo/encargos.cpp (hoja)
-                    - vista/grid.h
-                        - vista/grid.cpp (hoja)
-                    - nivel.cpp
-                        - actualizar_iu.h
-                            - vista/vista.h
-                                - modelo/dominio.h (def)
-                                - tiempo.h (def)
-                                - vista/botones.h
-                                    - modelo/dominio.h (def)
-                                    - vista/componentes.h
-                                        - vista/componentes.cpp (hoja)
-                                        - general.h (def)
-                                    - vista/botones.cpp
-                                        - vista_basics.h
-                                            - vista/vista_basics.cpp (hoja)
-                                - vista/componentes.h (def)
-                                - vista/etiquetas.h
-                                    - general.h (def)
-                                    - vista/etiquetas.cpp
-                                        - cadenas.h (def)
-                                        - templates.h (hoja)
-                                        - textos.h
-                                            - textos.cpp
-                                                - cadenas.h (hoja)
-                                        - vista/componentes.h (def)
-                                        - vista/vista_basics.h (def)
-                                - vista/grid.h (def)
-                                - vista/vista_basics.h (def)
-                                - vista/vista.cpp
-                                    - cadenas.h (def)
-                            - actualizar_iu.cpp
-                                - vista/vista_data.h (hoja)
-                        - tiempo.h (def)
-                        - vista/vista.h (def)
-                        - vista/vista_data.h (hoja)
+                - general.h
+                    - modelo/modelo.h
+                        - tiempo.h
+                            - tiempo.cpp
+                                - juego_assert.h (hoja)
+                            - templates.h (hoja)
+                        - modelo/dominio.h
+                            - modelo/dominio.cpp (hoja)
+                        - modelo/encargos.h
+                            - tiempo.h (def)
+                            - modelo/dominio.h (def)
+                            - modelo/encargos.cpp (hoja)
                 - datos_niveles.cpp
                     - setup_juego.h
-                        - nivel.h (def)
+                        - general.h (def)
                         - setup_juego.cpp
                             - cadenas.h (def)
                             - paths.h (hoja)
@@ -64,7 +28,43 @@
                     - textos.h
                         - textos.cpp
                             - cadenas.h (def)
-            - nivel.h (def)
+            - nivel.h
+                - general.h (def)
+                - vista/grid.h
+                    - vista/grid.cpp (hoja)
+                - nivel.cpp
+                    - actualizar_iu.h
+                        - vista/vista.h
+                            - modelo/dominio.h (def)
+                            - tiempo.h (def)
+                            - vista/botones.h
+                                - modelo/dominio.h (def)
+                                - vista/componentes.h
+                                    - vista/componentes.cpp (hoja)
+                                    - general.h (def)
+                                - vista/botones.cpp
+                                    - vista_basics.h
+                                        - vista/vista_basics.cpp (hoja)
+                            - vista/componentes.h (def)
+                            - vista/etiquetas.h
+                                - general.h (def)
+                                - vista/etiquetas.cpp
+                                    - cadenas.h (def)
+                                    - templates.h (hoja)
+                                    - textos.h
+                                        - textos.cpp
+                                            - cadenas.h (hoja)
+                                    - vista/componentes.h (def)
+                                    - vista/vista_basics.h (def)
+                            - vista/grid.h (def)
+                            - vista/vista_basics.h (def)
+                            - vista/vista.cpp
+                                - cadenas.h (def)
+                        - actualizar_iu.cpp
+                            - vista/vista_data.h (hoja)
+                    - tiempo.h (def)
+                    - vista/vista.h (def)
+                    - vista/vista_data.h (hoja)
             - setup_juego.h (def)
             - textos.h (def)
             - vista/grid.h (def)
