@@ -19,13 +19,14 @@ namespace medidas {
     constexpr int FILA_CONTENIDO_PANEL = 200;
     constexpr int MARGEN_TOP_PANELES = 50;
     constexpr int DIFERENCIA_VERTICAL_ENTRE_BARRAS_PROGRESO = 60;
-    constexpr int FILA_TITULOS_PANELES = 100;
-    constexpr int FILA_BOTONES_EJECUTIVOS = 600;
     constexpr int FILA_BOTONES_GENERALES = 800;
     constexpr int MARGEN_IZQ_PANELES = 50;
     constexpr int DESPLAZAMIENTO_LATERAL = ANCHO_PANEL + 42;
     constexpr int DESPLAZAMIENTO_VERTICAL_ETIQUETAS_PIZZAS_PREPARADAS = 50;
     constexpr int DESPLAZAMIENTO_VERTICAL_ETIQUETAS_PIZZAS_SERVIDAS = 50;
+
+    // Posiciones desde el inicio del panel respectivo
+    constexpr int FILA_TITULOS_PANELES = 50;
 } // namespace medidas
 
 namespace colores {

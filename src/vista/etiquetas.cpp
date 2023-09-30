@@ -9,19 +9,28 @@
 #define TAMANO_FUENTE_RESULTADO 48
 #define POSICION_INSTRUCCIONES_O_RESULTADO 200, 200
 
+/* Usando posicion_panel */
 sf::Text crearEtiquetaTituloPanel(
-    const sf::Font &font, IndicePanel indice_panel, const std::string &texto
+    const sf::Font &font, sf::Vector2i posicion_panel, const std::string &texto
 ) {
     sf::Text etiqueta = crearEtiqueta(
         medidas::TAMANO_FUENTE_TITULO_PANELES, font, sf::Color::White
     );
-    int pos_x =
-        obtener_posicion_x_panel(indice_panel) + medidas::MARGEN_IZQ_ETIQUETAS;
-    int pos_y = medidas::FILA_TITULOS_PANELES;
+    int pos_x = posicion_panel.x + medidas::MARGEN_IZQ_ETIQUETAS;
+    int pos_y = posicion_panel.y + medidas::FILA_TITULOS_PANELES;
     etiqueta.setPosition(pos_x, pos_y);
     etiqueta.setString(interpolar_unicode(texto));
     etiqueta.setFillColor(sf::Color::Green);
     return etiqueta;
+}
+
+/* Usando indice_panel */
+sf::Text crearEtiquetaTituloPanel(
+    const sf::Font &font, IndicePanel indice_panel, const std::string &texto
+) {
+    int pos_x_panel = obtener_posicion_x_panel(indice_panel);
+    int pos_y_panel = medidas::MARGEN_TOP_PANELES;
+    return crearEtiquetaTituloPanel(font, {pos_x_panel, pos_y_panel}, texto);
 }
 
 sf::Text crearEtiquetaContadorPizzas(
