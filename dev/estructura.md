@@ -15,10 +15,11 @@
                                 - templates.h (hoja)
                             - modelo/dominio.h
                                 - modelo/dominio.cpp (hoja)
-                            - modelo/encargos.h
-                                - tiempo.h (def)
-                                - modelo/dominio.h (def)
-                                - modelo/encargos.cpp (hoja)
+                            - modelo/modelo.cpp
+                                - modelo/encargos.h
+                                    - tiempo.h (def)
+                                    - modelo/dominio.h (def)
+                                    - modelo/encargos.cpp (hoja)
                 - datos_niveles.cpp
                     - setup_juego.h
                         - general.h (def)
@@ -65,6 +66,7 @@
                             - vista/vista_data.h (hoja)
                             - estado_nivel.h
                                 - general.h (def)
+                                - modelo/encargos.h (def)
                     - estado_nivel.h (def)
                     - tiempo.h (def)
                     - vista/vista.h (def)

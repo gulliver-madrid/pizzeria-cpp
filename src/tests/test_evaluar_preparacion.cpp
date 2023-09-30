@@ -1,3 +1,4 @@
+#include "../modelo/encargos.h"
 #include "../modelo/modelo.h"
 #include <gtest/gtest.h>
 
@@ -17,7 +18,6 @@ TEST(EvaluarPreparacion, VariasPizzasPreparadas) {
     // 2 de los 3 encargos estan listos
     PizzasAContadores contadores;
     Encargos encargos;
-    auto e = EncargoACocina(TipoPizza::Margarita, Tiempo::CERO);
     encargos.anadir(EncargoACocina(TipoPizza::Margarita, Tiempo::CERO));
     encargos.anadir(EncargoACocina(TipoPizza::Pepperoni, Tiempo::CERO));
     encargos.anadir(

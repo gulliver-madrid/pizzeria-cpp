@@ -2,8 +2,9 @@
 
 #include "../tiempo.h"
 #include "dominio.h"
-#include "encargos.h"
 #include <unordered_map>
+
+struct Encargos;
 
 struct Contadores {
     int servidas = 0;

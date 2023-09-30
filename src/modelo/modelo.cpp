@@ -1,4 +1,5 @@
 #include "modelo.h"
+#include "encargos.h"
 #include <cassert>
 #include <unordered_set>
 

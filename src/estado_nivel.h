@@ -1,6 +1,7 @@
 #pragma once
 
 #include "general.h"
+#include "modelo/encargos.h"
 
 /* Estado mutable de un nivel */
 struct Estado {
