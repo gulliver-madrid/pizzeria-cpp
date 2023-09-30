@@ -1,7 +1,8 @@
 #pragma once
 
 #include "../tiempo.h"
-#include "dominio.h"
+
+enum class TipoPizza;
 
 extern const std::map<TipoPizza, Tiempo> tiempos_preparacion;
 

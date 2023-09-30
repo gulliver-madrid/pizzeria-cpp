@@ -1,4 +1,5 @@
 #include "encargos.h"
+#include "dominio.h"
 
 // En segundos
 const std::map<TipoPizza, Tiempo> tiempos_preparacion = {

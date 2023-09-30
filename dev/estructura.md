@@ -18,8 +18,8 @@
                                     - templates.h (hoja)
                                 - modelo/encargos.h
                                     - tiempo.h (def)
-                                    - modelo/dominio.h (def)
                                     - modelo/encargos.cpp (hoja)
+                                        - modelo/dominio.h (def)
                     - tiempo.h (def)
                 - datos_niveles.cpp
                     - setup_juego.h
