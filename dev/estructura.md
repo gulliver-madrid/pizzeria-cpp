@@ -41,7 +41,6 @@
                             - modelo/dominio.h (def)
                             - tiempo.h (def)
                             - vista/botones.h
-                                - modelo/dominio.h (def)
                                 - vista/componentes.h
                                     - vista/componentes.cpp (hoja)
                                     - general.h (def)

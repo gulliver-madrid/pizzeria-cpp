@@ -94,3 +94,10 @@ void Botones::dibujar(sf::RenderWindow &ventana) const {
         boton_ptr->dibujar(ventana);
     }
 }
+
+void Botones::mostrar_botones_nivel(bool nuevo_valor) {
+    for (auto tp : tipos_de_pizza) {
+        despachar[tp].visible = nuevo_valor;
+        encargar[tp].visible = nuevo_valor;
+    }
+}
