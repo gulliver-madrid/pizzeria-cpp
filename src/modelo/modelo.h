@@ -1,10 +1,10 @@
 #pragma once
 
-#include "../tiempo.h"
 #include "dominio.h"
 #include <unordered_map>
 
 struct Encargos;
+struct Tiempo;
 
 struct Contadores {
     int servidas = 0;

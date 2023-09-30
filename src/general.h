@@ -1,7 +1,9 @@
 #pragma once
 
 #include "control_pizzas.h"
+#include "tiempo.h"
 #include <SFML/Audio.hpp>
+#include <SFML/Graphics.hpp>
 #include <cassert>
 
 #define MAXIMO_PIZZAS_EN_PREPARACION 3

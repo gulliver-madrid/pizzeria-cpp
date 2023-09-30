@@ -9,17 +9,18 @@
                 - general.h
                     - control_pizzas.h
                         - modelo/modelo.h
-                            - tiempo.h
-                                - tiempo.cpp
-                                    - juego_assert.h (hoja)
-                                - templates.h (hoja)
                             - modelo/dominio.h
                                 - modelo/dominio.cpp (hoja)
                             - modelo/modelo.cpp
+                                - tiempo.h
+                                    - tiempo.cpp
+                                        - juego_assert.h (hoja)
+                                    - templates.h (hoja)
                                 - modelo/encargos.h
                                     - tiempo.h (def)
                                     - modelo/dominio.h (def)
                                     - modelo/encargos.cpp (hoja)
+                    - tiempo.h (def)
                 - datos_niveles.cpp
                     - setup_juego.h
                         - general.h (def)
