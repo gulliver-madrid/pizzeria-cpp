@@ -9,6 +9,13 @@
 #define TAMANO_FUENTE_RESULTADO 48
 #define POSICION_INSTRUCCIONES_O_RESULTADO 200, 200
 
+namespace medidas {
+    constexpr int TAMANO_FUENTE_TITULO_PANELES = 36;
+    constexpr int TAMANO_FUENTE_ETIQUETAS = 24;
+    constexpr int DESPLAZAMIENTO_VERTICAL_ETIQUETAS_PIZZAS_PREPARADAS = 50;
+    constexpr int DESPLAZAMIENTO_VERTICAL_ETIQUETAS_PIZZAS_SERVIDAS = 50;
+} // namespace medidas
+
 /* Usando posicion_panel */
 sf::Text crearEtiquetaTituloPanel(
     const sf::Font &font, sf::Vector2i posicion_panel, const std::string &texto

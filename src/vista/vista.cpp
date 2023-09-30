@@ -9,6 +9,11 @@
 #define COLOR_BARRA_PROGRESO_RELLENO 255, 140, 0 // 30, 144, 255
 #define COLOR_BARRA_PROGRESO_TEXTO 0, 0, 0
 
+namespace medidas {
+    constexpr int GROSOR_BORDE_PANEL = 3;
+    constexpr int DIFERENCIA_VERTICAL_ENTRE_BARRAS_PROGRESO = 60;
+} // namespace medidas
+
 sf::RectangleShape crearPanelVertical(float x, float y) {
     auto rect = sf::RectangleShape(
         sf::Vector2f(medidas::ANCHO_PANEL, medidas::ALTO_PANEL)
