@@ -1,5 +1,6 @@
 #include "setup_juego.h"
 #include "cadenas.h"
+#include "globales.h"
 #include "manejo_rutas.h"
 #include "paths.h"
 #include "vista/vista_data.h"

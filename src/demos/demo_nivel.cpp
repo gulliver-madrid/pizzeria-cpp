@@ -1,5 +1,6 @@
 #include "demo_nivel.h"
 #include "../datos_niveles.h"
+#include "../globales.h"
 #include "../nivel.h"
 #include "../setup_juego.h"
 #include <cassert>

@@ -1,4 +1,5 @@
 #include "botones.h"
+#include "../modelo/dominio.h"
 #include "vista_basics.h"
 #include <cassert>
 

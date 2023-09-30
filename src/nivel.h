@@ -3,6 +3,8 @@
 #include "general.h"
 #include "vista/grid.h"
 
+struct Globales;
+
 enum class AccionGeneral { SiguienteNivel, Reiniciar, Salir };
 
 AccionGeneral nivel(               //

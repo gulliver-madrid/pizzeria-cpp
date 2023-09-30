@@ -5,6 +5,8 @@
 
 #define TITLE "Pizzer%ia"
 
+struct Globales;
+
 PedidosEstaticos
 construir_pedidos(const std::vector<DatosNivelTipoPizza> datos_niveles);
 

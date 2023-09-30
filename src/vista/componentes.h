@@ -1,7 +1,6 @@
 #pragma once
 
-#include "../general.h"
-#include <SFML/Graphics.hpp>
+#include "../globales.h"
 #include <SFML/Window.hpp>
 #include <optional>
 

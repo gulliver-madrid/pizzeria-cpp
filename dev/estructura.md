@@ -26,11 +26,13 @@
                         - general.h (def)
                         - setup_juego.cpp
                             - cadenas.h (def)
+                            - globales.h (hoja)
                             - paths.h (hoja)
                             - vista/vista_data.h (def)
                     - textos.h
                         - textos.cpp
                             - cadenas.h (def)
+            - globales.h (hoja)
             - nivel.h
                 - general.h (def)
                 - vista/grid.h
@@ -43,8 +45,9 @@
                             - vista/botones.h
                                 - vista/componentes.h
                                     - vista/componentes.cpp (hoja)
-                                    - general.h (def)
+                                    - globales.h (def)
                                 - vista/botones.cpp
+                                    - modelo/dominio.h
                                     - vista_basics.h
                                         - vista/vista_basics.cpp (hoja)
                             - vista/componentes.h (def)

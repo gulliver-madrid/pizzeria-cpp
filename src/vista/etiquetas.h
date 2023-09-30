@@ -3,6 +3,8 @@
 #include "../general.h"
 #include <SFML/Graphics.hpp>
 
+struct Globales;
+
 struct EtiquetasContadores {
     std::map<TipoPizza, sf::Text> texto_servidas;
     std::map<TipoPizza, sf::Text> texto_preparadas;
