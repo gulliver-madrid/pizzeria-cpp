@@ -8,11 +8,18 @@ namespace medidas {
     constexpr int TAMANO_TEXTO_BOTONES = 32;
 } // namespace medidas
 
+struct BotonData {
+    std::string texto;
+    sf::Color color_fondo;
+    sf::Color color_texto = sf::Color::White;
+};
+
 /* Crea un botón rectangular con texto */
 BotonConTexto crearBotonConTexto(
-    const std::string &texto, const sf::Color &color_fondo,
-    const sf::Vector2i &posicion, const sf::Font &font,
-    const sf::Color &color_texto, float escala
+    const BotonData &boton_data,  //
+    const sf::Vector2i &posicion, //
+    const sf::Font &font,         //
+    float escala
 ) {
     int x = posicion.x;
     int y = posicion.y;
@@ -20,9 +27,9 @@ BotonConTexto crearBotonConTexto(
     int margen = medidas::MARGEN_BOTON * (escala * escala);
     // Primero creamos la etiqueta para usar sus límites en el Rect
     sf::Text etiqueta = crearEtiqueta(
-        medidas::TAMANO_TEXTO_BOTONES * escala, font, color_texto
+        medidas::TAMANO_TEXTO_BOTONES * escala, font, boton_data.color_texto
     );
-    etiqueta.setString(texto);
+    etiqueta.setString(boton_data.texto);
     // Ajustamos para evitar un margen excesivo arriba y a la izquierda
     etiqueta.setPosition(x + margen * 0.7, y + margen * 0.7);
     sf::FloatRect textRect = etiqueta.getGlobalBounds();
@@ -31,51 +38,54 @@ BotonConTexto crearBotonConTexto(
     sf::RectangleShape rect(
         sf::Vector2f(textRect.width + margen * 2, textRect.height + margen * 2)
     );
-    rect.setFillColor(color_fondo);
+    rect.setFillColor(boton_data.color_fondo);
     rect.setPosition(x, y);
 
     return BotonConTexto(rect, etiqueta);
 };
 
+/* Crea todos los botones */
 Botones::Botones(sf::Font &font) {
-    empezar = crearBotonConTexto(
-        "Empezar", sf::Color::Green, sf::Vector2i(500, 450), font,
-        sf::Color::Black
-    );
+    auto empezar_data =
+        BotonData{std::string("Empezar"), sf::Color::Green, sf::Color::Black};
+    empezar = crearBotonConTexto(empezar_data, sf::Vector2i(500, 450), font);
     int i = 0;
     for (auto tp : tipos_de_pizza) {
         auto pos_panel = obtener_posicion_panel(IndicePanel::PANEL_ENCARGAR);
+        BotonData encargar_tp_data{
+            tipo_pizza_to_string[tp], sf::Color::Green, sf::Color::Black};
         encargar[tp] = crearBotonConTexto(
-            tipo_pizza_to_string[tp], sf::Color::Green,
+            encargar_tp_data,
             sf::Vector2i(
                 pos_panel.x + medidas::MARGEN_IZQ_ETIQUETAS,
                 pos_panel.y + medidas::FILA_CONTENIDO_PANEL + 80 * i
             ),
-            font, sf::Color::Black
+            font
         );
         i++;
     }
     i = 0;
     for (auto tp : tipos_de_pizza) {
         auto pos_panel = obtener_posicion_panel(IndicePanel::PANEL_PREPARADAS);
+        BotonData despachar_tp{"Despachar", sf::Color::Green, sf::Color::Black};
         despachar[tp] = crearBotonConTexto(
-            "Despachar", sf::Color::Green,
+            despachar_tp,
             sf::Vector2i(
                 pos_panel.x + medidas::MARGEN_IZQ_ETIQUETAS +
                     (medidas::ANCHO_PANEL * 0.55),
                 pos_panel.y + medidas::FILA_CONTENIDO_PANEL + 50 * i
             ),
-            font, sf::Color::Black, 0.7
+            font, 0.7
         );
         i++;
     }
 
     reiniciar = crearBotonConTexto(
-        "Reiniciar", sf::Color::Blue,
+        BotonData{"Reiniciar", sf::Color::Blue},
         sf::Vector2i(1440, medidas::FILA_BOTONES_GENERALES), font
     );
     salir = crearBotonConTexto(
-        "Salir", sf::Color::Red,
+        BotonData{"Salir", sf::Color::Red},
         sf::Vector2i(1640, medidas::FILA_BOTONES_GENERALES), font
     );
 

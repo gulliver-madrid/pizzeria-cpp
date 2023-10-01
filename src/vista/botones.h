@@ -3,10 +3,12 @@
 #include "componentes.h"
 
 enum class TipoPizza;
+struct BotonData;
 
 BotonConTexto crearBotonConTexto(
-    const std::string &, const sf::Color &color_fondo, const sf::Vector2i &,
-    const sf::Font &, const sf::Color &color_texto = sf::Color::White,
+    const BotonData &boton_data,  //
+    const sf::Vector2i &posicion, //
+    const sf::Font &font,         //
     float escala = 1
 );
 
