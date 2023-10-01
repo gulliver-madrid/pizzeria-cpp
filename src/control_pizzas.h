@@ -25,8 +25,7 @@ struct ControlPizzas {
 
     ~ControlPizzas() {
         if (tipo == TipoSistemaPedidos::Estatico) {
-            contadores.~PizzasAContadores(
-            ); // Llamar al destructor explícitamente
+            contadores.~PizzasAContadores();
         } else {
             control_dinamico.~ControlPizzasDinamico();
         }

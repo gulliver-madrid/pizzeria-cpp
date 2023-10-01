@@ -30,14 +30,17 @@ struct DatosNivelTipoPizza {
     int objetivo_pizzas = 0;
 };
 
+/* Una cantidad determinada de pizzas de cada tipo */
 struct PedidosEstaticos {
     std::map<TipoPizza, DatosNivelTipoPizza> pizzas;
 };
 
+/* Una lista de pedidos */
 struct PedidosDinamicos {
     std::vector<Pedido> listado;
 };
 
+/* Guarda la información relativa al nivel */
 struct SistemaPedidos {
   private:
     union {
@@ -52,7 +55,7 @@ struct SistemaPedidos {
     }
     ~SistemaPedidos() {
         if (tipo == TipoSistemaPedidos::Estatico) {
-            pedidos.~PedidosEstaticos(); // Llamar al destructor explícitamente
+            pedidos.~PedidosEstaticos();
         } else {
             pedidos_dinamicos.~PedidosDinamicos();
         }
@@ -68,6 +71,7 @@ struct SistemaPedidos {
 struct DatosNivel {
     std::string instrucciones;
     SistemaPedidos sistema_pedidos;
+    // TODO: implementar constructor para pedidos dinamicos tambien
     DatosNivel(std::string instr, PedidosEstaticos pizzas)
         : instrucciones(instr), sistema_pedidos(pizzas) {}
 };
