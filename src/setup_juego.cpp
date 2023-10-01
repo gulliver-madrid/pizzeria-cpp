@@ -10,11 +10,9 @@
 PedidosEstaticos construir_pedidos(const std::vector<DatosNivelTipoPizza> datos
 ) {
     std::map<TipoPizza, DatosNivelTipoPizza> pedidos;
-    std::unordered_set<TipoPizza> anadidos;
     for (auto dato : datos) {
-        assert(anadidos.find(dato.tipo) == anadidos.end());
+        assert(pedidos.find(dato.tipo) == pedidos.end());
         pedidos[dato.tipo] = dato;
-        anadidos.insert(dato.tipo);
     }
     return {pedidos};
 }
