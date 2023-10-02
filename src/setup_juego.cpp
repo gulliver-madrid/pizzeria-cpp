@@ -7,16 +7,6 @@
 #include <cassert>
 #include <unordered_set>
 
-PedidosEstaticos construir_pedidos(const std::vector<DatosNivelTipoPizza> datos
-) {
-    std::map<TipoPizza, DatosNivelTipoPizza> pedidos;
-    for (auto dato : datos) {
-        assert(pedidos.find(dato.tipo) == pedidos.end());
-        pedidos[dato.tipo] = dato;
-    }
-    return PedidosEstaticos{pedidos};
-}
-
 // Inicia los elementos del juego que permanecerán entre niveles
 // Inicializa las variables globales window, font y buffer
 // Devuelve un booleano indicando si se completo con exito

@@ -14,7 +14,7 @@ void actualizar_etiquetas(
 void actualizar_paneles(
     sf::RenderWindow &ventana,           //
     PanelesCompletos &paneles_completos, //
-    Estado &estado,                      //
+    const Estado &estado,                //
     sf::Font font                        //
 );
 
@@ -26,10 +26,12 @@ void actualizarIU(                       //
     Botones &botones,                    //
     PanelesCompletos &paneles_completos, //
     EtiquetasGenerales &etiquetas,       //
-    Estado &estado,                      //
+    const Estado &estado,                //
     Grid &grid,                          //
     sf::Font font                        //
 ) {
+    // std::cout << "\nActualizando IU" << std::endl;
+
     actualizar_estado_botones(botones, estado);
 
     // Limpia la ventana y empieza a pintar los componentes visuales
@@ -52,14 +54,14 @@ void actualizarIU(                       //
 }
 
 void actualizar_estado_botones(Botones &botones, const Estado &estado) {
-    if (estado.control_pizzas->tipo == TipoSistemaPedidos::Dinamico) {
+    if (!estado.control_pizzas.es_estatico) {
+        assert(false && "No implementado");
         // TODO: implementar
         return;
     }
-    const PizzasAContadores &contadores =
-        estado.control_pizzas->get_contadores_const();
-
-    for (auto tp : tipos_de_pizza) {
+    const PizzasAContadores &contadores = estado.control_pizzas.contadores;
+    for (auto &par : contadores) {
+        auto tp = par.first;
         auto &boton_despachar = botones.despachar[tp];
         if (contadores.at(tp).preparadas == 0) {
             boton_despachar.desactivar();
@@ -71,7 +73,8 @@ void actualizar_estado_botones(Botones &botones, const Estado &estado) {
     int total_en_preparacion = estado.encargos.total();
     assert(total_en_preparacion <= MAXIMO_PIZZAS_EN_PREPARACION);
 
-    for (auto &tp : tipos_de_pizza) {
+    for (auto &par : contadores) {
+        auto &tp = par.first;
         auto &boton_encargar = botones.encargar[tp];
         // Desactivar los botones si se alcanzó el máximo en preparación
         if (total_en_preparacion == MAXIMO_PIZZAS_EN_PREPARACION) {
@@ -84,10 +87,15 @@ void actualizar_estado_botones(Botones &botones, const Estado &estado) {
         auto contadores_tp = contadores.at(tp);
         int potenciales = contadores_tp.preparadas + contadores_tp.servidas +
                           estado.encargos.del_tipo(tp);
-        if (potenciales < contadores_tp.objetivo) {
-            boton_encargar.activar();
-        } else {
-            boton_encargar.desactivar();
+
+        if (estado.control_pizzas.es_estatico) {
+            auto &pedido = estado.control_pizzas.pedidos[0];
+            auto contador_estatico_tp = pedido.contenido.at(tp);
+            if (potenciales < contador_estatico_tp.objetivo) {
+                boton_encargar.activar();
+            } else {
+                boton_encargar.desactivar();
+            }
         }
     }
 }
@@ -105,14 +113,19 @@ void actualizar_etiquetas(
         case FaseNivel::Activa:
         case FaseNivel::EsperaAntesDeResultado:
 
-            if (estado.control_pizzas->tipo == TipoSistemaPedidos::Dinamico) {
+            if (!estado.control_pizzas.es_estatico) {
+                assert(false && "No implementado");
                 // TODO: implementar
                 return;
             }
             {
                 const PizzasAContadores &contadores =
-                    estado.control_pizzas->get_contadores_const();
-                etiquetas.contadores.actualizar(contadores);
+                    estado.control_pizzas.contadores;
+                // std::cout << "En actualizar iu" << std::endl;
+                // debug_contadores(contadores);
+                const auto &pedido = estado.control_pizzas.pedidos[0];
+                std::optional<Pedido> pedido_opt = pedido;
+                etiquetas.contadores.actualizar(contadores, pedido_opt);
                 etiquetas.contadores.dibujar(ventana);
             }
             break;
@@ -127,7 +140,7 @@ void actualizar_etiquetas(
 void actualizar_paneles(
     sf::RenderWindow &ventana,           //
     PanelesCompletos &paneles_completos, //
-    Estado &estado,                      //
+    const Estado &estado,                //
     sf::Font font                        //
 ) {
     EstadoPreparacionPizzas preparacion(estado.encargos);

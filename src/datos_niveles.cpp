@@ -3,44 +3,40 @@
 #include "textos.h"
 
 const auto dinamicos =
-    PedidosDinamicos{{// vector
-                      {{TipoPizza::Margarita, PedidoTipoPizza{3, 0}}},
-                      {{TipoPizza::Margarita, PedidoTipoPizza{3, 0}}}}};
+    Pedidos{ //
+            {//
+             Pedido(
+                 {{TipoPizza::Margarita, PedidoTipoPizza{2}},
+                  {TipoPizza::Pepperoni, PedidoTipoPizza{1}}}
+             ),
+             Pedido(
+                 {{TipoPizza::Margarita, PedidoTipoPizza{1}},
+                  {TipoPizza::CuatroQuesos, PedidoTipoPizza{1}}}
+             )}};
 
 const DatosNivel datos_niveles[] = {
     // TODO: adaptar texto instrucciones al nivel correspondiente
-    DatosNivel(
-        "NIVEL_1", //
-        construir_pedidos({
-            {
-
-                DatosNivelTipoPizza{TipoPizza::Margarita, 2, 3},
-            },
-            {
-
-                DatosNivelTipoPizza{TipoPizza::Pepperoni, 0, 2},
-            },
-            {
-
-                DatosNivelTipoPizza{TipoPizza::CuatroQuesos, 0, 1},
-            },
-        })
-    ),
     DatosNivel{
-        "NIVEL_2", //
-        PedidosNivel{dinamicos}},
-    {"NIVEL_3", //
-     construir_pedidos({
-         {
-             DatosNivelTipoPizza{TipoPizza::Margarita, 2, 6},
-         },
-         {
-             DatosNivelTipoPizza{TipoPizza::Pepperoni, 1, 3},
-         },
-         {
-             DatosNivelTipoPizza{TipoPizza::CuatroQuesos, 0, 6},
-         },
-     })}
+        INSTRUCCIONES_NIVEL_ESTATICO, //
+        Pedidos{{
+            Pedido(
+                {{TipoPizza::Margarita, PedidoTipoPizza{3}},
+                 {TipoPizza::CuatroQuesos, PedidoTipoPizza{2}}}
+            ),
+        }},
+        true},
+    DatosNivel{
+        INSTRUCCIONES_NIVEL_DINAMICO, //
+        dinamicos},
+    {INSTRUCCIONES_NIVEL_ESTATICO, //
+     Pedidos{{
+         Pedido({
+             {TipoPizza::Margarita, PedidoTipoPizza{6}},
+             {TipoPizza::Pepperoni, PedidoTipoPizza{4}},
+             {TipoPizza::CuatroQuesos, PedidoTipoPizza{3}},
+         }),
+     }},
+     true}
 
 };
 const int NUM_DATOS_NIVELES = sizeof(datos_niveles) / sizeof(datos_niveles[0]);

@@ -23,6 +23,7 @@ add_executable(pizzeria
     src/main.cpp
     src/actualizar_iu.cpp
     src/cadenas.cpp
+    src/control_pizzas.cpp
     src/datos_niveles.cpp
     src/debug.cpp
     src/juego.cpp

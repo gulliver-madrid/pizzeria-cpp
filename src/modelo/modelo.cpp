@@ -2,7 +2,17 @@
 #include "../tiempo.h"
 #include "encargos.h"
 #include <cassert>
+#include <iostream>
 #include <unordered_set>
+
+void debug_contadores(const PizzasAContadores &contadores) {
+    std::cout << "Debug contadores" << std::endl;
+    for (auto &par : contadores) {
+        std::cout << tipo_pizza_to_string[par.first] << " "
+                  << "preparadas: " << par.second.preparadas << std::endl;
+    }
+    std::cout << std::endl;
+}
 
 EstadoPreparacionPizzas::EstadoPreparacionPizzas(const Encargos &encargos) {
     assert(datos.empty());
@@ -28,6 +38,7 @@ void evaluar_preparacion(
     int maximo,                    //
     Tiempo tiempo_actual           //
 ) {
+    // std::cout << "Evaluando preparación" << std::endl;
     size_t i = 0;
     std::vector<std::pair<size_t, int>> pizzas_listas_con_tiempo;
     Encargos restantes;
@@ -44,6 +55,9 @@ void evaluar_preparacion(
         }
         i++;
     }
+
+    // std::cout << "Se detectaron " << pizzas_listas_con_tiempo.size()
+    //           << " pizzas listas" << std::endl;
 
     // Ordenar y limitar las pizzas que pueden salir
     if (pizzas_listas_con_tiempo.size() > maximo) {

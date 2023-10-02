@@ -23,7 +23,7 @@ struct Botones {
     BotonConTexto reiniciar;
     BotonConTexto salir;
 
-    Botones(sf::Font &);
+    Botones(const sf::Font &font, const std::vector<TipoPizza> &tp_disponibles);
     void dibujar(sf::RenderWindow &ventana) const;
     void mostrar_botones_nivel(bool nuevo_valor);
 };

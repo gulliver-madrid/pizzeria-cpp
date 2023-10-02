@@ -2,40 +2,20 @@
 
 #include "modelo/modelo.h"
 #include <cassert>
+#include <vector>
 
-struct ControlPizzasDinamico {
-    // TODO: implementar el control de pedidos cubiertos parcial o totalmente
-};
-
-enum class TipoSistemaPedidos { Ninguno, Estatico, Dinamico };
+/* Una lista de pedidos */
+using Pedidos = std::vector<Pedido>;
 
 /* Establece el sistema de control de la producción y distribución de pizzas */
 struct ControlPizzas {
   private:
-    union {
-        PizzasAContadores contadores;
-        ControlPizzasDinamico control_dinamico;
-    };
+    std::vector<TipoPizza> _tipos_disponibles;
 
   public:
-    TipoSistemaPedidos tipo;
-    ControlPizzas(PizzasAContadores contadores_) : contadores(contadores_) {
-        tipo = TipoSistemaPedidos::Estatico;
-    }
-
-    ~ControlPizzas() {
-        if (tipo == TipoSistemaPedidos::Estatico) {
-            contadores.~PizzasAContadores();
-        } else {
-            control_dinamico.~ControlPizzasDinamico();
-        }
-    }
-    const PizzasAContadores &get_contadores_const() const {
-        assert(tipo == TipoSistemaPedidos::Estatico);
-        return contadores;
-    }
-    PizzasAContadores &get_contadores() {
-        assert(tipo == TipoSistemaPedidos::Estatico);
-        return contadores;
-    }
+    PizzasAContadores contadores;
+    Pedidos pedidos;
+    bool es_estatico;
+    ControlPizzas(Pedidos pedidos_, bool es_estatico_ = true);
+    const std::vector<TipoPizza> get_tipos_disponibles() const;
 };

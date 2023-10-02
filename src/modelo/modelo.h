@@ -1,7 +1,8 @@
 #pragma once
 
 #include "dominio.h"
-#include <unordered_map>
+#include <map>
+#include <vector>
 
 struct Encargos;
 struct Tiempo;
@@ -9,20 +10,26 @@ struct Tiempo;
 struct Contadores {
     int servidas = 0;
     int preparadas = 0;
-    int objetivo = 0;
 };
 
 using PizzasAContadores = std::map<TipoPizza, Contadores>;
 
-/* Pedido relativo a un tipo de pizza */
+void debug_contadores(const PizzasAContadores &contadores);
+
+/* Parte de un pedido relativa a un tipo de pizza */
 struct PedidoTipoPizza {
-    // Cantidad demandada
-    int cantidad;
-    // Cantidad servida
-    int servido;
+    int objetivo = 0;
+    int servido = 0;
 };
 
-using Pedido = std::unordered_map<TipoPizza, PedidoTipoPizza>;
+/* Pedido completo, puede incluir varios tipos de pizza */
+struct Pedido {
+    std::map<TipoPizza, PedidoTipoPizza> contenido;
+    bool cubierto = false;
+    Pedido(std::map<TipoPizza, PedidoTipoPizza> contenido_) {
+        contenido = contenido_;
+    }
+};
 
 void evaluar_preparacion(
     Encargos &encargos, PizzasAContadores &contadores, int maximo,

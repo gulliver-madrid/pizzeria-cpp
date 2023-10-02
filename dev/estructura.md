@@ -20,6 +20,7 @@
                                     - tiempo.h (def)
                                     - modelo/encargos.cpp (hoja)
                                         - modelo/dominio.h (def)
+                        - control_pizzas.cpp (hoja)
                     - tiempo.h (def)
                 - datos_niveles.cpp
                     - setup_juego.h

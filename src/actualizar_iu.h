@@ -10,7 +10,7 @@ void actualizarIU(                       //
     Botones &botones,                    //
     PanelesCompletos &paneles_completos, //
     EtiquetasGenerales &etiquetas,       //
-    Estado &estado,                      //
+    const Estado &estado,                //
     Grid &grid,                          //
     sf::Font font                        //
 );

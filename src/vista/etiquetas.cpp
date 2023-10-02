@@ -60,48 +60,62 @@ crearEtiquetaPizzasServidas(const sf::Font &font, int indice_etiqueta) {
         medidas::DESPLAZAMIENTO_VERTICAL_ETIQUETAS_PIZZAS_SERVIDAS
     );
 }
-
-void EtiquetasContadores::setup(sf::Font &font) {
+void EtiquetasContadores::setup(
+    const sf::Font &font, const std::vector<TipoPizza> &tp_disponibles
+) {
     int i = 0;
-    for (auto tp : tipos_de_pizza) {
-        texto_servidas[tp] = crearEtiquetaPizzasServidas(font, i);
+    for (auto &tp : tp_disponibles) {
         texto_preparadas[tp] = crearEtiquetaPizzasPreparadas(font, i);
+        texto_servidas[tp] = crearEtiquetaPizzasServidas(font, i);
         i++;
     }
 };
 
 void EtiquetasContadores::actualizar(
-    const PizzasAContadores &pizzas_a_contadores
+    const PizzasAContadores &contadores,
+    std::optional<Pedido> &control_pizzas_estatico, bool es_estatico
 ) {
-    for (auto tp : tipos_de_pizza) {
-        const auto &contadores = pizzas_a_contadores.at(tp);
+    // std::cout << "\nEn EtiquetasContadores::actualizar() " << std::endl;
+    for (auto &par : contadores) {
+        const auto &tp = par.first;
+        const auto &contadores_tp = par.second;
         auto &nombre_pizza = tipo_pizza_to_string[tp];
         std::string preparadas =
-            nombre_pizza + ": " + std::to_string(contadores.preparadas);
-        std::string servidas = nombre_pizza + ": " +
-                               std::to_string(contadores.servidas) + "/" +
-                               std::to_string(contadores.objetivo);
+            nombre_pizza + ": " + std::to_string(contadores_tp.preparadas);
+        std::string servidas =
+            nombre_pizza + ": " + std::to_string(contadores_tp.servidas) + "/" +
+            (control_pizzas_estatico.has_value()
+                 ? std::to_string(
+                       control_pizzas_estatico.value().contenido.at(tp).objetivo
+                   )
+                 : "");
         texto_preparadas[tp].setString(preparadas);
         texto_servidas[tp].setString(servidas);
     }
 }
 
 void EtiquetasContadores::dibujar(sf::RenderWindow &ventana) const {
-    for (auto &tp : tipos_de_pizza) {
-        ventana.draw(texto_servidas.at(tp));
-        ventana.draw(texto_preparadas.at(tp));
+    for (auto &par : texto_preparadas) {
+        auto &etiqueta = par.second;
+        ventana.draw(etiqueta);
+    }
+    for (auto &par : texto_servidas) {
+        auto &etiqueta = par.second;
+        ventana.draw(etiqueta);
     }
 }
 
 sf::Text generar_etiqueta_instrucciones(
-    const sf::Font &font, const std::string &plantilla_instrucciones,
+    const sf::Font &font,                       //
+    const std::string &plantilla_instrucciones, //
+    int num_nivel,                              //
     int objetivo
 ) {
     auto etiqueta = crearEtiqueta(
         TAMANO_FUENTE_INFO, font, colores::COLOR_TEXTO_INSTRUCCIONES
     );
     etiqueta.setString(
-        construir_instrucciones(plantilla_instrucciones, objetivo)
+        construir_instrucciones(plantilla_instrucciones, num_nivel, objetivo)
     );
     etiqueta.setPosition(POSICION_INSTRUCCIONES_O_RESULTADO);
     return etiqueta;
@@ -117,13 +131,17 @@ sf::Text generar_etiqueta_resultado(const sf::Font &font) {
 }
 
 void EtiquetasGenerales::setup(
-    Globales &globales, const DatosNivel &datos_nivel, int total_objetivos
+    const Globales &globales,                    //
+    const std::string &instr,                    //
+    int num_nivel,                               //
+    const std::vector<TipoPizza> tp_disponibles, //
+    int total_objetivos
 ) {
     auto instrucciones = generar_etiqueta_instrucciones(
-        globales.font, datos_nivel.instrucciones, total_objetivos
+        globales.font, instr, num_nivel, total_objetivos
     );
     auto resultado = generar_etiqueta_resultado(globales.font);
 
     info = {instrucciones, resultado};
-    contadores.setup(globales.font);
+    contadores.setup(globales.font, tp_disponibles);
 }

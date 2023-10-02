@@ -6,7 +6,9 @@
 #include <cassert>
 #include <iostream>
 
-int demo_nivel(int indice_nivel) {
+int demo_nivel(int numero_nivel) {
+    std::cout << "DEMO NIVEL " << numero_nivel << std::endl;
+    int indice_nivel = numero_nivel - 1;
     Globales globales;
     Grid grid;
     bool resultado_setup = setup_juego(globales);
@@ -18,8 +20,9 @@ int demo_nivel(int indice_nivel) {
     }
 
     while (true) {
-        AccionGeneral res =
-            nivel(globales, datos_niveles[indice_nivel], grid, true);
+        AccionGeneral res = nivel(
+            globales, datos_niveles[indice_nivel], numero_nivel, grid, true
+        );
         if (res == AccionGeneral::Reiniciar) {
             continue;
         } else {

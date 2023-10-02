@@ -45,12 +45,14 @@ BotonConTexto crearBotonConTexto(
 };
 
 /* Crea todos los botones */
-Botones::Botones(sf::Font &font) {
+Botones::Botones(
+    const sf::Font &font, const std::vector<TipoPizza> &tp_disponibles
+) {
     auto empezar_data =
         BotonData{std::string("Empezar"), sf::Color::Green, sf::Color::Black};
     empezar = crearBotonConTexto(empezar_data, sf::Vector2i(500, 450), font);
     int i = 0;
-    for (auto tp : tipos_de_pizza) {
+    for (auto tp : tp_disponibles) {
         auto pos_panel = obtener_posicion_panel(IndicePanel::PANEL_ENCARGAR);
         BotonData encargar_tp_data{
             tipo_pizza_to_string[tp], sf::Color::Green, sf::Color::Black};
@@ -65,7 +67,7 @@ Botones::Botones(sf::Font &font) {
         i++;
     }
     i = 0;
-    for (auto tp : tipos_de_pizza) {
+    for (auto tp : tp_disponibles) {
         auto pos_panel = obtener_posicion_panel(IndicePanel::PANEL_PREPARADAS);
         BotonData despachar_tp{"Despachar", sf::Color::Green, sf::Color::Black};
         despachar[tp] = crearBotonConTexto(
@@ -96,7 +98,7 @@ Botones::Botones(sf::Font &font) {
     for (auto &par : encargar) {
         todos.push_back(&par.second);
     }
-    assert(todos.size() == 3 + NUMERO_DE_TIPOS_DE_PIZZA * 2);
+    assert(todos.size() == 3 + tp_disponibles.size() * 2);
 }
 
 void Botones::dibujar(sf::RenderWindow &ventana) const {
@@ -107,8 +109,12 @@ void Botones::dibujar(sf::RenderWindow &ventana) const {
 }
 
 void Botones::mostrar_botones_nivel(bool nuevo_valor) {
-    for (auto tp : tipos_de_pizza) {
-        despachar[tp].visible = nuevo_valor;
-        encargar[tp].visible = nuevo_valor;
+    for (auto &par : despachar) {
+        auto &boton = par.second;
+        boton.visible = nuevo_valor;
+    }
+    for (auto &par : encargar) {
+        auto &boton = par.second;
+        boton.visible = nuevo_valor;
     }
 }
