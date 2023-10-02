@@ -13,7 +13,16 @@ struct Contadores {
 };
 
 using PizzasAContadores = std::map<TipoPizza, Contadores>;
-using Pedido = std::unordered_map<TipoPizza, int>;
+
+/* Pedido relativo a un tipo de pizza */
+struct PedidoTipoPizza {
+    // Cantidad demandada
+    int cantidad;
+    // Cantidad servida
+    int servido;
+};
+
+using Pedido = std::unordered_map<TipoPizza, PedidoTipoPizza>;
 
 void evaluar_preparacion(
     Encargos &encargos, PizzasAContadores &contadores, int maximo,

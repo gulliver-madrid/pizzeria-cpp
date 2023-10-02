@@ -5,6 +5,7 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include <cassert>
+#include <iostream>
 
 #define MAXIMO_PIZZAS_EN_PREPARACION 3
 #define MAXIMO_PIZZAS_PREPARADAS 4
@@ -41,37 +42,69 @@ struct PedidosDinamicos {
 };
 
 /* Guarda la información relativa al nivel */
-struct SistemaPedidos {
+struct PedidosNivel {
   private:
     union {
-        PedidosEstaticos pedidos;
-        PedidosDinamicos pedidos_dinamicos;
+        PedidosEstaticos estaticos;
+        PedidosDinamicos dinamicos;
     };
     TipoSistemaPedidos tipo;
 
   public:
-    SistemaPedidos(PedidosEstaticos pedidos_) : pedidos(pedidos_) {
+    PedidosNivel(PedidosEstaticos pedidos_) : estaticos(pedidos_) {
+        std::cout << "en el constructor de PedidosNivel usando PedidosEstaticos"
+                  << std::endl;
         tipo = TipoSistemaPedidos::Estatico;
     }
-    ~SistemaPedidos() {
-        if (tipo == TipoSistemaPedidos::Estatico) {
-            pedidos.~PedidosEstaticos();
+    PedidosNivel(PedidosDinamicos pedidos_) : dinamicos(pedidos_) {
+        std::cout << "en el constructor de PedidosNivel usando PedidosDinamicos"
+                  << std::endl;
+        tipo = TipoSistemaPedidos::Dinamico;
+    }
+    PedidosNivel(PedidosNivel &pedidos_nivel) {
+        std::cout << "en el constructor de PedidosNivel" << std::endl;
+        if (pedidos_nivel.get_tipo() == TipoSistemaPedidos::Estatico) {
+            std::cout << "El tipo es estatico" << std::endl;
+            tipo = TipoSistemaPedidos::Estatico;
+            estaticos = pedidos_nivel.estaticos;
+        } else if (pedidos_nivel.get_tipo() == TipoSistemaPedidos::Dinamico) {
+            std::cout << "El tipo es dinámico" << std::endl;
+            tipo = TipoSistemaPedidos::Dinamico;
+            dinamicos = pedidos_nivel.dinamicos;
         } else {
-            pedidos_dinamicos.~PedidosDinamicos();
+            std::cout << "El tipo no es estático ni dinámico" << std::endl;
+            assert(false);
+        }
+    }
+    ~PedidosNivel() {
+        if (tipo == TipoSistemaPedidos::Estatico) {
+            estaticos.~PedidosEstaticos();
+        } else {
+            dinamicos.~PedidosDinamicos();
         }
     }
     TipoSistemaPedidos get_tipo() const { return tipo; }
 
     const PedidosEstaticos &get_pedidos_estaticos_const() const {
         assert(tipo == TipoSistemaPedidos::Estatico);
-        return pedidos;
+        return estaticos;
     }
 };
 
 struct DatosNivel {
     std::string instrucciones;
-    SistemaPedidos sistema_pedidos;
-    // TODO: implementar constructor para pedidos dinamicos tambien
-    DatosNivel(std::string instr, PedidosEstaticos pizzas)
-        : instrucciones(instr), sistema_pedidos(pizzas) {}
+    PedidosNivel sistema_pedidos;
+    DatosNivel(std::string instr, PedidosNivel pedidos)
+        : instrucciones(instr), sistema_pedidos(pedidos) {
+        std::cout << "En el constructor de DatosNivel que usa PedidosNivel - "
+                  << instr << std::endl
+                  << std::endl;
+    }
+    DatosNivel(std::string instr, PedidosEstaticos pedidos)
+        : instrucciones(instr), sistema_pedidos(pedidos) {
+        std::cout
+            << "En el constructor de DatosNivel que usa PedidosEstaticos - "
+            << instr << std::endl
+            << std::endl;
+    }
 };

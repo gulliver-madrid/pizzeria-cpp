@@ -14,7 +14,8 @@ PedidosEstaticos construir_pedidos(const std::vector<DatosNivelTipoPizza> datos
         assert(pedidos.find(dato.tipo) == pedidos.end());
         pedidos[dato.tipo] = dato;
     }
-    return {pedidos};
+    std::cout << "PedidosEstaticos construidos" << std::endl;
+    return PedidosEstaticos{pedidos};
 }
 
 // Inicia los elementos del juego que permanecerán entre niveles
