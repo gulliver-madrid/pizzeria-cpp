@@ -7,7 +7,7 @@ struct ControlPizzasDinamico {
     // TODO: implementar el control de pedidos cubiertos parcial o totalmente
 };
 
-enum class TipoSistemaPedidos { Estatico, Dinamico };
+enum class TipoSistemaPedidos { Ninguno, Estatico, Dinamico };
 
 /* Establece el sistema de control de la producción y distribución de pizzas */
 struct ControlPizzas {

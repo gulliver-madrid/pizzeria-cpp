@@ -6,27 +6,29 @@ const auto dinamicos =
     PedidosDinamicos{{// vector
                       {{TipoPizza::Margarita, PedidoTipoPizza{3, 0}}},
                       {{TipoPizza::Margarita, PedidoTipoPizza{3, 0}}}}};
-const auto estaticos = construir_pedidos({
-    {
-
-        DatosNivelTipoPizza{TipoPizza::Margarita, 2, 3},
-    },
-    {
-
-        DatosNivelTipoPizza{TipoPizza::Pepperoni, 0, 2},
-    },
-    {
-
-        DatosNivelTipoPizza{TipoPizza::CuatroQuesos, 0, 1},
-    },
-});
 
 const DatosNivel datos_niveles[] = {
     // TODO: adaptar texto instrucciones al nivel correspondiente
-    {"NIVEL_1", //
-     dinamicos},
-    {"NIVEL_2", //
-     estaticos},
+    DatosNivel(
+        "NIVEL_1", //
+        construir_pedidos({
+            {
+
+                DatosNivelTipoPizza{TipoPizza::Margarita, 2, 3},
+            },
+            {
+
+                DatosNivelTipoPizza{TipoPizza::Pepperoni, 0, 2},
+            },
+            {
+
+                DatosNivelTipoPizza{TipoPizza::CuatroQuesos, 0, 1},
+            },
+        })
+    ),
+    DatosNivel{
+        "NIVEL_2", //
+        PedidosNivel{dinamicos}},
     {"NIVEL_3", //
      construir_pedidos({
          {

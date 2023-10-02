@@ -133,8 +133,7 @@ AccionGeneral nivel(               //
     Grid &grid,                    //
     bool es_el_ultimo
 ) {
-    if (datos_nivel.sistema_pedidos.get_tipo() ==
-        TipoSistemaPedidos::Dinamico) {
+    if (datos_nivel.sistema_pedidos.tipo == TipoSistemaPedidos::Dinamico) {
         assert(false && "No implementado");
         // TODO: implementar
         return AccionGeneral::Salir;
@@ -147,8 +146,11 @@ AccionGeneral nivel(               //
 
     PizzasAContadores &contadores = control_pizzas.get_contadores();
 
+    assert(std::holds_alternative<PedidosEstaticos>(
+        datos_nivel.sistema_pedidos.pedidos
+    ));
     const PedidosEstaticos &pedidos =
-        datos_nivel.sistema_pedidos.get_pedidos_estaticos_const();
+        std::get<PedidosEstaticos>(datos_nivel.sistema_pedidos.pedidos);
     for (auto tp : tipos_de_pizza) {
         contadores[tp].preparadas =
             pedidos.pizzas.at(tp).pizzas_preparadas_iniciales;
