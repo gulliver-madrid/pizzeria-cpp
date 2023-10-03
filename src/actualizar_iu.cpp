@@ -125,7 +125,6 @@ void actualizar_etiquetas(
             break;
         case FaseNivel::Activa:
         case FaseNivel::EsperaAntesDeResultado:
-
             if (!estado.control_pizzas.es_estatico) {
                 assert(false && "No implementado");
                 // TODO: implementar
@@ -142,10 +141,10 @@ void actualizar_etiquetas(
                 etiquetas.contadores.dibujar(ventana);
             }
             break;
-
-        default:
-            assert(estado.fase_actual == FaseNivel::MostrandoResultado);
+        case FaseNivel::MostrandoResultado:
             ventana.draw(etiquetas.info.resultado);
+            break;
+        default:
             break;
     }
 }
