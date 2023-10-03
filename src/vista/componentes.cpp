@@ -66,3 +66,11 @@ void BotonConTexto::desactivar() {
     if (activo)
         activo = false;
 }
+
+void BotonConTexto::activar_cuando(bool condicion) {
+    if (condicion) {
+        activar();
+    } else {
+        desactivar();
+    }
+}

@@ -17,6 +17,7 @@ struct BotonConTexto {
     void dibujar(sf::RenderWindow &window);
     void activar();
     void desactivar();
+    void activar_cuando(bool condicion);
 
   private:
     std::optional<sf::Color> colorBotonActivo;

@@ -49,6 +49,42 @@ void Vista::actualizarIU(      //
     ventana.display();
 }
 
+/* Activa o desactiva cada botón despachar dependiendo de si hay pizzas
+ * preparadas de ese tipo */
+void activar_botones_despachar_si_hay_preparadas(
+    std::map<TipoPizza, BotonConTexto> &botones_despachar,
+    const PizzasAContadores &contadores
+) {
+    for (auto &par : contadores) {
+        auto &tp = par.first;
+        auto &contador = par.second;
+        auto &boton_despachar = botones_despachar[tp];
+        boton_despachar.activar_cuando(contador.preparadas > 0);
+    }
+}
+
+/* Solo se ejecutará en modo estático */
+void desactivar_botones_encargar_si_se_sobrepasan_objetivos(
+    std::map<TipoPizza, BotonConTexto> &botones_encargar,
+    const PizzasAContadores &contadores, const Encargos &encargos,
+    const Pedido &pedido
+) {
+    for (auto &par : contadores) {
+        auto &tp = par.first;
+        auto &boton_encargar = botones_encargar.at(tp);
+        if (!boton_encargar.activo) {
+            continue;
+        }
+        auto &contadores_tp = par.second;
+        int potenciales = contadores_tp.preparadas + contadores_tp.servidas +
+                          encargos.del_tipo(tp);
+        auto contador_estatico_tp = pedido.contenido.at(tp);
+        if (potenciales >= contador_estatico_tp.objetivo) {
+            boton_encargar.desactivar();
+        }
+    }
+}
+
 void actualizar_estado_botones(Botones &botones, const Estado &estado) {
     if (!estado.control_pizzas.es_estatico) {
         assert(false && "No implementado");
@@ -56,43 +92,24 @@ void actualizar_estado_botones(Botones &botones, const Estado &estado) {
         return;
     }
     const PizzasAContadores &contadores = estado.control_pizzas.contadores;
-    for (auto &par : contadores) {
-        auto tp = par.first;
-        auto &boton_despachar = botones.despachar[tp];
-        if (contadores.at(tp).preparadas == 0) {
-            boton_despachar.desactivar();
-        } else {
-            boton_despachar.activar();
-        }
-    }
+    activar_botones_despachar_si_hay_preparadas(botones.despachar, contadores);
 
     int total_en_preparacion = estado.encargos.total();
     assert(total_en_preparacion <= MAXIMO_PIZZAS_EN_PREPARACION);
+    const bool se_pueden_preparar_mas =
+        total_en_preparacion < MAXIMO_PIZZAS_EN_PREPARACION;
 
-    for (auto &par : contadores) {
-        auto &tp = par.first;
-        auto &boton_encargar = botones.encargar[tp];
-        // Desactivar los botones si se alcanzó el máximo en preparación
-        if (total_en_preparacion == MAXIMO_PIZZAS_EN_PREPARACION) {
-            boton_encargar.desactivar();
-            continue;
-        } else {
-            boton_encargar.activar();
-        }
+    for (auto &par : botones.encargar) {
+        auto &boton_encargar = par.second;
+        boton_encargar.activar_cuando(se_pueden_preparar_mas);
+    }
+    if (se_pueden_preparar_mas && estado.control_pizzas.es_estatico) {
+        assert(estado.control_pizzas.pedidos.size() == 1);
         // Desactivar los botones que harían sobrepasar los objetivos
-        auto contadores_tp = contadores.at(tp);
-        int potenciales = contadores_tp.preparadas + contadores_tp.servidas +
-                          estado.encargos.del_tipo(tp);
-
-        if (estado.control_pizzas.es_estatico) {
-            auto &pedido = estado.control_pizzas.pedidos[0];
-            auto contador_estatico_tp = pedido.contenido.at(tp);
-            if (potenciales < contador_estatico_tp.objetivo) {
-                boton_encargar.activar();
-            } else {
-                boton_encargar.desactivar();
-            }
-        }
+        auto &pedido = estado.control_pizzas.pedidos[0];
+        desactivar_botones_encargar_si_se_sobrepasan_objetivos(
+            botones.encargar, contadores, estado.encargos, pedido
+        );
     }
 }
 
