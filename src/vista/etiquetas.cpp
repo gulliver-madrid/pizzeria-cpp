@@ -83,10 +83,13 @@ void EtiquetasContadores::actualizar(
         std::string preparadas =
             nombre_pizza + ": " + std::to_string(contadores_tp.preparadas);
         std::string servidas =
-            nombre_pizza + ": " + std::to_string(contadores_tp.servidas) + "/" +
+            nombre_pizza + ": " + std::to_string(contadores_tp.servidas) +
             (control_pizzas_estatico.has_value()
-                 ? std::to_string(
-                       control_pizzas_estatico.value().contenido.at(tp).objetivo
+                 ? ( //
+                       std::string("/") +
+                       std::to_string(control_pizzas_estatico.value()
+                                          .contenido.at(tp)
+                                          .objetivo)
                    )
                  : "");
         texto_preparadas[tp].setString(preparadas);
