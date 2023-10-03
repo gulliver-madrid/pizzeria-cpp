@@ -156,7 +156,7 @@ AccionGeneral nivel(               //
     bool es_el_ultimo
 ) {
     int total_objetivos = -1; // En dinámicos no se usa
-    std::cout << "Número de nivel: " << num_nivel << std::endl;
+    // std::cout << "Número de nivel: " << num_nivel << std::endl;
     // std::cout << "Número de pedidos en este nivel: "
     //           << datos_nivel.pedidos.size() << std::endl;
 
@@ -206,7 +206,8 @@ AccionGeneral nivel(               //
     Timer timer_espera_antes_de_resultado;
     Timer timer_fin_nivel;
     sf::Sound sound;
-    int frame = 0;
+
+    Vista vista{botones, paneles_completos, etiquetas, grid};
 
     assert(!contadores.empty());
     // std::cout << "Empezando ciclo de juego en nivel()" << std::endl;
@@ -267,10 +268,7 @@ AccionGeneral nivel(               //
         }
         // debug_contadores(estado.control_pizzas.contadores);
 
-        actualizarIU(
-            globales.window, botones, paneles_completos, etiquetas, estado,
-            grid, globales.font
-        );
+        vista.actualizarIU(globales.window, estado, globales.font);
     }
     assert(false); // No deberiamos llegar aqui
     return AccionGeneral::Salir;

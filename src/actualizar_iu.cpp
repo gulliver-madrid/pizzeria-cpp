@@ -21,14 +21,10 @@ void actualizar_paneles(
 /*
  * Actualiza el interfaz gráfico
  */
-void actualizarIU(                       //
-    sf::RenderWindow &ventana,           //
-    Botones &botones,                    //
-    PanelesCompletos &paneles_completos, //
-    EtiquetasGenerales &etiquetas,       //
-    const Estado &estado,                //
-    Grid &grid,                          //
-    sf::Font font                        //
+void Vista::actualizarIU(      //
+    sf::RenderWindow &ventana, //
+    const Estado &estado,      //
+    sf::Font font              //
 ) {
     // std::cout << "\nActualizando IU" << std::endl;
 

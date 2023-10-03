@@ -5,12 +5,14 @@
 struct Estado;
 struct Grid;
 
-void actualizarIU(                       //
-    sf::RenderWindow &ventana,           //
-    Botones &botones,                    //
-    PanelesCompletos &paneles_completos, //
-    EtiquetasGenerales &etiquetas,       //
-    const Estado &estado,                //
-    Grid &grid,                          //
-    sf::Font font                        //
-);
+struct Vista {
+    Botones &botones;
+    PanelesCompletos &paneles_completos;
+    EtiquetasGenerales &etiquetas;
+    Grid &grid;
+    void actualizarIU(             //
+        sf::RenderWindow &ventana, //
+        const Estado &estado,      //
+        sf::Font font              //
+    );
+};
