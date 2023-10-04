@@ -1,8 +1,8 @@
-#include "actualizar_iu.h"
-#include "estado_nivel.h"
-#include "vista/grid.h"
-#include "vista/vista_basics.h"
-#include "vista/vista_data.h"
+#include "vista.h"
+#include "../estado_nivel.h"
+#include "grid.h"
+#include "vista_basics.h"
+#include "vista_data.h"
 #include <cassert>
 
 void actualizar_estado_botones(Botones &botones, const Estado &estado);

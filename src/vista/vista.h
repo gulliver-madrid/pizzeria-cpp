@@ -1,8 +1,8 @@
 #pragma once
 
-#include "vista/botones.h"
-#include "vista/etiquetas.h"
-#include "vista/paneles.h"
+#include "botones.h"
+#include "etiquetas.h"
+#include "paneles.h"
 
 struct Estado;
 struct Grid;

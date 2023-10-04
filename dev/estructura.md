@@ -39,7 +39,7 @@
                 - vista/grid.h
                     - vista/grid.cpp (hoja)
                 - nivel.cpp
-                    - actualizar_iu.h
+                    - vista/vista.h
                         - vista/botones.h
                             - vista/componentes.h
                                 - vista/componentes.cpp (hoja)
@@ -64,7 +64,7 @@
                                 - vista/etiquetas.h
                                     - general.h (def)
                                 - vista/vista_basics.h (def)
-                        - actualizar_iu.cpp
+                        - vista/vista.cpp
                             - vista/vista_data.h (hoja)
                             - estado_nivel.h
                                 - general.h (def)
