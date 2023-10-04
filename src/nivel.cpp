@@ -116,21 +116,17 @@ std::optional<FaseNivel> procesar_click_fase_activa(
 /* Procesa un cambio de fase reciente */
 void procesa_cambio_de_fase(
     FaseNivel nueva_fase,                   //
-    Botones &botones,                       //
-    PanelesCompletos &paneles_completos,    //
+    Vista &vista,                           //
     Timer &timer_espera_antes_de_resultado, //
     FaseNivel fase_previa                   //
 ) {
+    vista.procesa_cambio_de_fase(nueva_fase);
     switch (nueva_fase) {
         case FaseNivel::Activa:
             assert(fase_previa == FaseNivel::MostrandoInstrucciones);
-            botones.empezar.visible = false;
-            botones.mostrar_botones_nivel(true);
-            paneles_completos.visible = true;
             break;
         case FaseNivel::EsperaAntesDeResultado:
             assert(fase_previa == FaseNivel::Activa);
-            botones.mostrar_botones_nivel(false);
             timer_espera_antes_de_resultado.start(
                 tiempos::RETARDO_ANTES_DE_RESULTADO
             );
@@ -207,9 +203,8 @@ AccionGeneral nivel(               //
             if (nuevo_estado.has_value()) {
                 // std::cout << "Procesando cambio de fase" << std::endl;
                 procesa_cambio_de_fase(
-                    nuevo_estado.value(), vista.botones,
-                    vista.paneles_completos, timer_espera_antes_de_resultado,
-                    estado.fase_actual
+                    nuevo_estado.value(), vista,
+                    timer_espera_antes_de_resultado, estado.fase_actual
                 );
                 estado.fase_actual = nuevo_estado.value();
                 if (estado.fase_actual == FaseNivel::Reiniciando) {

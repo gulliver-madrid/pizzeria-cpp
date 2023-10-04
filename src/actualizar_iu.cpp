@@ -67,6 +67,19 @@ void Vista::actualizarIU(      //
     ventana.display();
 }
 
+void Vista::procesa_cambio_de_fase(FaseNivel nueva_fase) {
+    switch (nueva_fase) {
+        case FaseNivel::Activa:
+            botones.empezar.visible = false;
+            botones.mostrar_botones_nivel(true);
+            paneles_completos.visible = true;
+            break;
+        case FaseNivel::EsperaAntesDeResultado:
+            botones.mostrar_botones_nivel(false);
+            break;
+    }
+}
+
 /* Activa o desactiva cada botón despachar dependiendo de si hay pizzas
  * preparadas de ese tipo */
 void activar_botones_despachar_si_hay_preparadas(

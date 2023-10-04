@@ -31,4 +31,5 @@ struct Vista {
         const Estado &estado,      //
         sf::Font font              //
     );
+    void procesa_cambio_de_fase(FaseNivel nueva_fase);
 };
