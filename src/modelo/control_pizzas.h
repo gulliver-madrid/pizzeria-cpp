@@ -1,6 +1,6 @@
 #pragma once
 
-#include "modelo/modelo.h"
+#include "modelo.h"
 #include <cassert>
 #include <vector>
 

@@ -23,10 +23,10 @@ add_executable(pizzeria
     src/main.cpp
     src/vista/vista.cpp
     src/cadenas.cpp
-    src/control_pizzas.cpp
     src/datos_niveles.cpp
     src/debug.cpp
     src/juego.cpp
+    src/modelo/control_pizzas.cpp
     src/modelo/dominio.cpp
     src/modelo/encargos.cpp
     src/modelo/modelo.cpp

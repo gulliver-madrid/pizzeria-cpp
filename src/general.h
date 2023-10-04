@@ -1,6 +1,6 @@
 #pragma once
 
-#include "control_pizzas.h"
+#include "modelo/control_pizzas.h"
 #include "tiempo.h"
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>

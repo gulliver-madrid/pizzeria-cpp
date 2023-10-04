@@ -7,7 +7,7 @@
                 - cadenas.cpp (hoja)
             - datos_niveles.h
                 - general.h
-                    - control_pizzas.h
+                    - modelo/control_pizzas.h
                         - modelo/modelo.h
                             - modelo/dominio.h
                                 - modelo/dominio.cpp (hoja)
@@ -20,7 +20,7 @@
                                     - tiempo.h (def)
                                     - modelo/encargos.cpp (hoja)
                                         - modelo/dominio.h (def)
-                        - control_pizzas.cpp (hoja)
+                        - modelo/control_pizzas.cpp (hoja)
                     - tiempo.h (def)
                 - datos_niveles.cpp
                     - setup_juego.h
