@@ -47,6 +47,6 @@ struct PanelesCompletos {
     PanelesCompletos(const sf::Font &font);
     void dibujar(
         sf::RenderWindow &ventana, const EstadoPreparacionPizzas &preparacion,
-        sf::Font &font
+        const sf::Font &font
     );
 };

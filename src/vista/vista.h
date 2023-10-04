@@ -11,6 +11,11 @@ struct Vista {
   private:
     const sf::Font &font;
     const std::vector<TipoPizza> &tp_disponibles;
+    void actualizar_paneles(
+        sf::RenderWindow &ventana,           //
+        PanelesCompletos &paneles_completos, //
+        const Encargos &encargos             //
+    );
 
   public:
     Botones botones;
@@ -30,8 +35,7 @@ struct Vista {
     );
     void actualizarIU(             //
         sf::RenderWindow &ventana, //
-        const Estado &estado,      //
-        sf::Font font              //
+        const Estado &estado       //
     );
     void procesa_cambio_de_fase(FaseNivel nueva_fase);
 };

@@ -46,7 +46,7 @@ void Paneles::dibujar(sf::RenderWindow &window) {
 }
 
 std::vector<BarraProgresoConNombre> crear_barras_progreso(
-    const EstadoPreparacionPizzas &preparacion, sf::Font &font
+    const EstadoPreparacionPizzas &preparacion, const sf::Font &font
 ) {
     std::vector<BarraProgresoConNombre> vect{};
     auto pos_panel = obtener_posicion_panel(IndicePanel::PANEL_EN_PREPARACION);
@@ -106,7 +106,7 @@ PanelesCompletos::PanelesCompletos(const sf::Font &font) {
 
 void PanelesCompletos::dibujar(
     sf::RenderWindow &ventana, const EstadoPreparacionPizzas &preparacion,
-    sf::Font &font
+    const sf::Font &font
 ) {
     if (!visible)
         return;

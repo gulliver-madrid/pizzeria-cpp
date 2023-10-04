@@ -250,7 +250,7 @@ AccionGeneral nivel(               //
         }
         // debug_contadores(estado.control_pizzas.contadores);
 
-        vista.actualizarIU(globales.window, estado, globales.font);
+        vista.actualizarIU(globales.window, estado);
     }
     assert(false); // No deberiamos llegar aqui
     return AccionGeneral::Salir;

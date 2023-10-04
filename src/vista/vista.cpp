@@ -11,12 +11,6 @@ void actualizar_etiquetas(
     EtiquetasGenerales &etiquetas_generales, //
     const Estado &estado                     //
 );
-void actualizar_paneles(
-    sf::RenderWindow &ventana,           //
-    PanelesCompletos &paneles_completos, //
-    const Estado &estado,                //
-    sf::Font font                        //
-);
 
 void Vista::setup(
     const std::string &instrucciones, //
@@ -41,8 +35,7 @@ void Vista::setup(
  */
 void Vista::actualizarIU(      //
     sf::RenderWindow &ventana, //
-    const Estado &estado,      //
-    sf::Font font              //
+    const Estado &estado       //
 ) {
     // std::cout << "\nActualizando IU" << std::endl;
 
@@ -57,7 +50,7 @@ void Vista::actualizarIU(      //
         estado.fase_actual == FaseNivel::Activa ||
         estado.fase_actual == FaseNivel::EsperaAntesDeResultado
     ) {
-        actualizar_paneles(ventana, paneles_completos, estado, font);
+        actualizar_paneles(ventana, paneles_completos, estado.encargos);
     }
 
     actualizar_etiquetas(ventana, etiquetas, estado);
@@ -180,12 +173,12 @@ void actualizar_etiquetas(
     }
 }
 
-void actualizar_paneles(
+void Vista::actualizar_paneles(
     sf::RenderWindow &ventana,           //
     PanelesCompletos &paneles_completos, //
-    const Estado &estado,                //
-    sf::Font font                        //
+    const Encargos &encargos             //
+
 ) {
-    EstadoPreparacionPizzas preparacion(estado.encargos);
+    EstadoPreparacionPizzas preparacion(encargos);
     paneles_completos.dibujar(ventana, preparacion, font);
 }
