@@ -3,8 +3,6 @@
 - main.cpp
     - juego.h
         - juego.cpp
-            - cadenas.h (hoja)
-                - cadenas.cpp (hoja)
             - datos_niveles.h
                 - general.h
                     - modelo/control_pizzas.h
@@ -26,13 +24,14 @@
                     - setup_juego.h
                         - general.h (def)
                         - setup_juego.cpp
-                            - cadenas.h (def)
+                            - vista/cadenas.h
+                                - vista/cadenas.cpp (hoja)
                             - globales.h (hoja)
                             - paths.h (hoja)
                             - vista/vista_data.h (def)
                     - textos.h
                         - textos.cpp
-                            - cadenas.h (def)
+                            - vista/cadenas.h (def)
             - globales.h (hoja)
             - nivel.h
                 - general.h (def)
@@ -48,14 +47,14 @@
                                 - modelo/dominio.h
                                 - vista_basics.h
                                     - vista/vista_basics.cpp (hoja)
-                        - vista/etiquetas.cpp
-                            - cadenas.h (def)
-                            - templates.h (hoja)
-                            - textos.h
-                                - textos.cpp
-                                    - cadenas.h (hoja)
-                            - vista/componentes.h (def)
-                            - vista/vista_basics.h (def)
+                        - vista/etiquetas.h
+                            - general.h (def)
+                            - vista/etiquetas.cpp
+                                - templates.h (hoja)
+                                - textos.h (def)
+                                - vista/cadenas.h (def)
+                                - vista/componentes.h (def)
+                                - vista/vista_basics.h (def)
                         - vista/paneles.h
                             - modelo/modelo.h (def)
                             - vista/barras_progreso.h
@@ -64,9 +63,8 @@
                                     - vista/vista_basics.h (def)
                             - vista/componentes.h (def)
                             - vista/paneles.cpp
-                                - cadenas.h (def)
-                                - vista/etiquetas.h
-                                    - general.h (def)
+                                - vista/cadenas.h (def)
+                                - vista/etiquetas.h (def)
                                 - vista/vista_basics.h (def)
                         - vista/vista.cpp
                             - vista/vista_data.h (hoja)

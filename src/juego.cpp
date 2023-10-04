@@ -1,5 +1,4 @@
 #include "juego.h"
-#include "cadenas.h"
 #include "datos_niveles.h"
 #include "globales.h"
 #include "nivel.h"

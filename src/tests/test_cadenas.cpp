@@ -1,5 +1,5 @@
 
-#include "../cadenas.h"
+#include "../vista/cadenas.h"
 #include <cassert>
 #include <gtest/gtest.h>
 

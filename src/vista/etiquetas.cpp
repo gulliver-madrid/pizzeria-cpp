@@ -1,7 +1,7 @@
 #include "etiquetas.h"
-#include "../cadenas.h"
 #include "../templates.h"
 #include "../textos.h"
+#include "../vista/cadenas.h"
 #include "componentes.h"
 #include "vista_basics.h"
 

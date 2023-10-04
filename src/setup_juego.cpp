@@ -1,8 +1,8 @@
 #include "setup_juego.h"
-#include "cadenas.h"
 #include "globales.h"
 #include "manejo_rutas.h"
 #include "paths.h"
+#include "vista/cadenas.h"
 #include "vista/vista_data.h"
 #include <cassert>
 #include <unordered_set>

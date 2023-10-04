@@ -21,8 +21,6 @@ FetchContent_MakeAvailable(googletest)
 
 add_executable(pizzeria
     src/main.cpp
-    src/vista/vista.cpp
-    src/cadenas.cpp
     src/datos_niveles.cpp
     src/debug.cpp
     src/juego.cpp
@@ -36,10 +34,12 @@ add_executable(pizzeria
     src/tiempo.cpp
     src/vista/barras_progreso.cpp
     src/vista/botones.cpp
+    src/vista/cadenas.cpp
     src/vista/componentes.cpp
     src/vista/etiquetas.cpp
     src/vista/grid.cpp
     src/vista/paneles.cpp
+    src/vista/vista.cpp
     src/vista/vista_basics.cpp
     src/demos/demo_nivel.cpp
     src/demos/map.cpp
@@ -79,13 +79,13 @@ add_executable(
     src/tests/test_tiempo.cpp
 
     # archivos del proyecto
-    src/cadenas.cpp
     src/debug.cpp
     src/modelo/dominio.cpp
     src/modelo/encargos.cpp
     src/modelo/modelo.cpp
     src/textos.cpp
     src/tiempo.cpp
+    src/vista/cadenas.cpp
 )
 target_link_libraries(runUnitTests PRIVATE sfml-graphics sfml-audio )
 target_link_libraries(runUnitTests PUBLIC gtest gtest_main)

@@ -1,5 +1,4 @@
 #include "paneles.h"
-#include "../cadenas.h"
 #include "etiquetas.h"
 #include "vista_basics.h"
 #include <SFML/Graphics.hpp>
