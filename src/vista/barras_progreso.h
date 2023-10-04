@@ -31,7 +31,7 @@ struct BarraProgresoConNombre {
     void update(int porcentaje);
     void dibujar(sf::RenderWindow &ventana);
 };
-
 std::vector<BarraProgresoConNombre> crear_barras_progreso(
-    const EstadoPreparacionPizzas &preparacion, const sf::Font &font
+    const EstadoPreparacionPizzas &preparacion, sf::Vector2i &pos_panel,
+    const sf::Font &font
 );

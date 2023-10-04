@@ -52,11 +52,12 @@ void BarraProgresoConNombre::dibujar(sf::RenderWindow &ventana) { //
     ventana.draw(etiqueta);
 }
 
+/* Crea y actualiza las barras de progreso */
 std::vector<BarraProgresoConNombre> crear_barras_progreso(
-    const EstadoPreparacionPizzas &preparacion, const sf::Font &font
+    const EstadoPreparacionPizzas &preparacion, sf::Vector2i &pos_panel,
+    const sf::Font &font
 ) {
     std::vector<BarraProgresoConNombre> vect{};
-    auto pos_panel = obtener_posicion_panel(IndicePanel::PANEL_EN_PREPARACION);
     int pos_x = pos_panel.x + medidas::MARGEN_IZQ_ETIQUETAS;
     int pos_y_inicial = pos_panel.y + medidas::FILA_CONTENIDO_PANEL;
     int ancho = 300;

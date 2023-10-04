@@ -74,7 +74,9 @@ void PanelesCompletos::dibujar(
         return;
     paneles.dibujar(ventana);
     titulos_paneles.dibujar(ventana);
-    barras_progreso_con_nombres = crear_barras_progreso(preparacion, font);
+    auto pos_panel = obtener_posicion_panel(IndicePanel::PANEL_EN_PREPARACION);
+    barras_progreso_con_nombres =
+        crear_barras_progreso(preparacion, pos_panel, font);
     for (auto &bpn : barras_progreso_con_nombres) {
         bpn.dibujar(ventana);
     }
