@@ -56,10 +56,10 @@
                                     - cadenas.h (hoja)
                             - vista/componentes.h (def)
                             - vista/vista_basics.h (def)
-                        - vista/vista.h
+                        - vista/paneles.h
                             - modelo/modelo.h (def)
                             - vista/componentes.h (def)
-                            - vista/vista.cpp
+                            - vista/paneles.cpp
                                 - cadenas.h (def)
                                 - vista/etiquetas.h
                                     - general.h (def)
@@ -73,7 +73,7 @@
                             - vista/vista_basics.h (def)
                     - estado_nivel.h (def)
                     - tiempo.h (def)
-                    - vista/vista.h (def)
+                    - vista/paneles.h (def)
                     - vista/vista_data.h (hoja)
             - setup_juego.h (def)
             - textos.h (def)

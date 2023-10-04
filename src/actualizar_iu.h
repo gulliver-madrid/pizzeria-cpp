@@ -2,7 +2,7 @@
 
 #include "vista/botones.h"
 #include "vista/etiquetas.h"
-#include "vista/vista.h"
+#include "vista/paneles.h"
 
 struct Estado;
 struct Grid;

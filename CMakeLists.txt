@@ -38,7 +38,7 @@ add_executable(pizzeria
     src/vista/componentes.cpp
     src/vista/etiquetas.cpp
     src/vista/grid.cpp
-    src/vista/vista.cpp
+    src/vista/paneles.cpp
     src/vista/vista_basics.cpp
     src/demos/demo_nivel.cpp
     src/demos/map.cpp
