@@ -45,6 +45,20 @@ void Paneles::dibujar(sf::RenderWindow &window) {
     window.draw(pedidos);
 }
 
+void BarraProgreso::setup(
+    const sf::Vector2f &dimensiones, int porcentaje,
+    const sf::Vector2f &posicion
+) {
+    fondo = sf::RectangleShape(dimensiones);
+    relleno = sf::RectangleShape(
+        sf::Vector2f(dimensiones.x * porcentaje / 100, dimensiones.y)
+    );
+    fondo.setFillColor(sf::Color(COLOR_BARRA_PROGRESO_FONDO));
+    relleno.setFillColor(sf::Color(COLOR_BARRA_PROGRESO_RELLENO));
+    fondo.setPosition(posicion);
+    relleno.setPosition(posicion);
+}
+
 std::vector<BarraProgresoConNombre> crear_barras_progreso(
     const EstadoPreparacionPizzas &preparacion, const sf::Font &font
 ) {
@@ -54,20 +68,15 @@ std::vector<BarraProgresoConNombre> crear_barras_progreso(
     int pos_y_inicial = pos_panel.y + medidas::FILA_CONTENIDO_PANEL;
     int ancho = 300;
     int largo = 40;
+    auto dimensiones = sf::Vector2f(ancho, largo);
     int i = 0;
     for (auto &porcentaje : preparacion.datos) {
         BarraProgresoConNombre bpn;
         BarraProgreso &bp = bpn.bp;
-        bp.fondo = sf::RectangleShape(sf::Vector2f(ancho, largo));
-        bp.relleno = sf::RectangleShape(
-            sf::Vector2f(ancho * porcentaje.porcentaje / 100, largo)
-        );
-        bp.fondo.setFillColor(sf::Color(COLOR_BARRA_PROGRESO_FONDO));
-        bp.relleno.setFillColor(sf::Color(COLOR_BARRA_PROGRESO_RELLENO));
         int offset_y = i * medidas::DIFERENCIA_VERTICAL_ENTRE_BARRAS_PROGRESO;
         int pos_y = pos_y_inicial + offset_y;
-        bp.fondo.setPosition(pos_x, pos_y);
-        bp.relleno.setPosition(pos_x, pos_y);
+        auto posicion = sf::Vector2f(pos_x, pos_y);
+        bp.setup(dimensiones, porcentaje.porcentaje, posicion);
         bpn.etiqueta =
             sf::Text(tipo_pizza_to_string[porcentaje.tipo], font, 24);
         bpn.etiqueta.setFillColor(sf::Color(COLOR_BARRA_PROGRESO_TEXTO));

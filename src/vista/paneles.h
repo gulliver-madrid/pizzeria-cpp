@@ -9,6 +9,10 @@ enum class IndicePanel;
 struct BarraProgreso {
     sf::RectangleShape fondo;
     sf::RectangleShape relleno;
+    void setup(
+        const sf::Vector2f &dimensiones, int porcentaje,
+        const sf::Vector2f &posicion
+    );
 };
 struct BarraProgresoConNombre {
     sf::Text etiqueta;
