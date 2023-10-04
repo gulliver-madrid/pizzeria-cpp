@@ -183,31 +183,17 @@ AccionGeneral nivel(               //
             total_objetivos += pedido_tp.objetivo;
         }
     }
+    Vista vista(globales.font, grid, control_pizzas.get_tipos_disponibles());
 
-    EtiquetasGenerales etiquetas;
-    etiquetas.setup(
-        globales,                               //
-        datos_nivel.instrucciones,              //
-        num_nivel,                              //
-        control_pizzas.get_tipos_disponibles(), //
+    vista.setup(
+        datos_nivel.instrucciones, //
+        num_nivel,                 //
         total_objetivos
     );
-
-    PanelesCompletos paneles_completos(globales.font);
-
-    // Botones
-    Botones botones(globales.font, control_pizzas.get_tipos_disponibles());
-
-    // Mostrar botones iniciales
-    botones.reiniciar.visible = true;
-    botones.salir.visible = true;
-    botones.empezar.visible = true;
 
     Timer timer_espera_antes_de_resultado;
     Timer timer_fin_nivel;
     sf::Sound sound;
-
-    Vista vista{botones, paneles_completos, etiquetas, grid};
 
     assert(!contadores.empty());
     // std::cout << "Empezando ciclo de juego en nivel()" << std::endl;
@@ -215,14 +201,15 @@ AccionGeneral nivel(               //
         sf::Event event;
         while (globales.window.pollEvent(event)) {
             auto nuevo_estado =
-                procesarEvento(event, globales, botones, estado);
+                procesarEvento(event, globales, vista.botones, estado);
             // std::cout << "Evento completamente procesado" << std::endl;
             // Cambio de estado reciente
             if (nuevo_estado.has_value()) {
                 // std::cout << "Procesando cambio de fase" << std::endl;
                 procesa_cambio_de_fase(
-                    nuevo_estado.value(), botones, paneles_completos,
-                    timer_espera_antes_de_resultado, estado.fase_actual
+                    nuevo_estado.value(), vista.botones,
+                    vista.paneles_completos, timer_espera_antes_de_resultado,
+                    estado.fase_actual
                 );
                 estado.fase_actual = nuevo_estado.value();
                 if (estado.fase_actual == FaseNivel::Reiniciando) {
@@ -256,7 +243,7 @@ AccionGeneral nivel(               //
                         sound.play();
                     }
                     timer_fin_nivel.start(tiempos::ESPERA_ENTRE_NIVELES);
-                    paneles_completos.visible = false;
+                    vista.paneles_completos.visible = false;
                 }
                 break;
             case FaseNivel::MostrandoResultado: {

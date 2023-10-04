@@ -13,6 +13,6 @@ ControlPizzas::ControlPizzas(Pedidos pedidos_, bool es_estatico_)
     }
 }
 
-const std::vector<TipoPizza> ControlPizzas::get_tipos_disponibles() const {
+const std::vector<TipoPizza> &ControlPizzas::get_tipos_disponibles() const {
     return _tipos_disponibles;
 }

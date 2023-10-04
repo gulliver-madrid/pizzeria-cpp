@@ -27,10 +27,10 @@ struct EtiquetasGenerales {
     EtiquetasInfo info;
 
     void setup(
-        const Globales &globales,                    //
-        const std::string &instr,                    //
-        int num_nivel,                               //
-        const std::vector<TipoPizza> tp_disponibles, //
+        const sf::Font &font,                         //
+        const std::string &instr,                     //
+        int num_nivel,                                //
+        const std::vector<TipoPizza> &tp_disponibles, //
         int total_objetivos
     );
 };

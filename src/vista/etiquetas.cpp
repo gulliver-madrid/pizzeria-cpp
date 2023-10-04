@@ -134,17 +134,16 @@ sf::Text generar_etiqueta_resultado(const sf::Font &font) {
 }
 
 void EtiquetasGenerales::setup(
-    const Globales &globales,                    //
-    const std::string &instr,                    //
-    int num_nivel,                               //
-    const std::vector<TipoPizza> tp_disponibles, //
+    const sf::Font &font,                         //
+    const std::string &instr,                     //
+    int num_nivel,                                //
+    const std::vector<TipoPizza> &tp_disponibles, //
     int total_objetivos
 ) {
-    auto instrucciones = generar_etiqueta_instrucciones(
-        globales.font, instr, num_nivel, total_objetivos
-    );
-    auto resultado = generar_etiqueta_resultado(globales.font);
+    auto instrucciones =
+        generar_etiqueta_instrucciones(font, instr, num_nivel, total_objetivos);
+    auto resultado = generar_etiqueta_resultado(font);
 
     info = {instrucciones, resultado};
-    contadores.setup(globales.font, tp_disponibles);
+    contadores.setup(font, tp_disponibles);
 }

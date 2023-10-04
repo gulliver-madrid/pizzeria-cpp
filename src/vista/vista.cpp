@@ -84,7 +84,7 @@ void TitulosPaneles::dibujar(sf::RenderWindow &ventana) {
     ventana.draw(pedidos);
 }
 
-PanelesCompletos::PanelesCompletos(sf::Font &font) {
+PanelesCompletos::PanelesCompletos(const sf::Font &font) {
     titulos_paneles = {
         crearEtiquetaTituloPanel(
             font, obtener_posicion_panel(IndicePanel::PANEL_ENCARGAR),

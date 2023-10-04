@@ -18,6 +18,24 @@ void actualizar_paneles(
     sf::Font font                        //
 );
 
+void Vista::setup(
+    const std::string &instrucciones, //
+    int num_nivel,                    //
+    int total_objetivos
+) {
+    etiquetas.setup(
+        font,           //
+        instrucciones,  //
+        num_nivel,      //
+        tp_disponibles, //
+        total_objetivos
+    );
+    // Mostrar botones iniciales
+    botones.reiniciar.visible = true;
+    botones.salir.visible = true;
+    botones.empezar.visible = true;
+}
+
 /*
  * Actualiza el interfaz gráfico
  */

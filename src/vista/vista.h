@@ -48,7 +48,7 @@ struct PanelesCompletos {
     std::vector<BarraProgresoConNombre> barras_progreso_con_nombres;
     bool visible = false;
 
-    PanelesCompletos(sf::Font &font);
+    PanelesCompletos(const sf::Font &font);
     void dibujar(
         sf::RenderWindow &ventana, const EstadoPreparacionPizzas &preparacion,
         sf::Font &font

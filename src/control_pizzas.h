@@ -17,5 +17,5 @@ struct ControlPizzas {
     Pedidos pedidos;
     bool es_estatico;
     ControlPizzas(Pedidos pedidos_, bool es_estatico_ = true);
-    const std::vector<TipoPizza> get_tipos_disponibles() const;
+    const std::vector<TipoPizza> &get_tipos_disponibles() const;
 };
