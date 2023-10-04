@@ -1,23 +1,11 @@
 #pragma once
 
 #include "../modelo/modelo.h"
+#include "barras_progreso.h"
 #include "componentes.h"
 #include <vector>
 
 enum class IndicePanel;
-
-struct BarraProgreso {
-    sf::RectangleShape fondo;
-    sf::RectangleShape relleno;
-    void setup(
-        const sf::Vector2f &dimensiones, int porcentaje,
-        const sf::Vector2f &posicion
-    );
-};
-struct BarraProgresoConNombre {
-    sf::Text etiqueta;
-    BarraProgreso bp;
-};
 
 struct Paneles {
     sf::RectangleShape encargar;
@@ -28,10 +16,6 @@ struct Paneles {
     Paneles();
     void dibujar(sf::RenderWindow &window);
 };
-
-std::vector<BarraProgresoConNombre> crear_barras_progreso(
-    const EstadoPreparacionPizzas &preparacion, sf::Font &font
-);
 
 struct TitulosPaneles {
     sf::Text encargar;

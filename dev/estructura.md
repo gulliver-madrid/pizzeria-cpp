@@ -58,6 +58,10 @@
                             - vista/vista_basics.h (def)
                         - vista/paneles.h
                             - modelo/modelo.h (def)
+                            - vista/barras_progreso.h
+                                - vista/barras_progreso.cpp
+                                    - modelo/modelo.h (def)
+                                    - vista/vista_basics.h (def)
                             - vista/componentes.h (def)
                             - vista/paneles.cpp
                                 - cadenas.h (def)

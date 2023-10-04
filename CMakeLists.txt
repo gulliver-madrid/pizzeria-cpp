@@ -34,6 +34,7 @@ add_executable(pizzeria
     src/setup_juego.cpp
     src/textos.cpp
     src/tiempo.cpp
+    src/vista/barras_progreso.cpp
     src/vista/botones.cpp
     src/vista/componentes.cpp
     src/vista/etiquetas.cpp
