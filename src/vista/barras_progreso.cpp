@@ -31,6 +31,27 @@ void BarraProgreso::update(int porcentaje) {
     );
 }
 
+void BarraProgresoConNombre::setup(
+    sf::Vector2f &dimensiones,    //
+    const TipoPizza tp,           //
+    const sf::Vector2f &posicion, //
+    const sf::Font &font          //
+) {
+    bp.setup(dimensiones, posicion);
+    etiqueta = sf::Text(tipo_pizza_to_string[tp], font, 24);
+    etiqueta.setFillColor(sf::Color(COLOR_BARRA_PROGRESO_TEXTO));
+    etiqueta.setPosition(posicion.x + 20, posicion.y + 5);
+}
+
+void BarraProgresoConNombre::update(int porcentaje) { //
+    bp.update(porcentaje);
+}
+void BarraProgresoConNombre::dibujar(sf::RenderWindow &ventana) { //
+    ventana.draw(bp.fondo);
+    ventana.draw(bp.relleno);
+    ventana.draw(etiqueta);
+}
+
 std::vector<BarraProgresoConNombre> crear_barras_progreso(
     const EstadoPreparacionPizzas &preparacion, const sf::Font &font
 ) {
@@ -44,16 +65,11 @@ std::vector<BarraProgresoConNombre> crear_barras_progreso(
     int i = 0;
     for (auto &preparacion_pizza : preparacion.datos) {
         BarraProgresoConNombre bpn;
-        BarraProgreso &bp = bpn.bp;
         int offset_y = i * medidas::DIFERENCIA_VERTICAL_ENTRE_BARRAS_PROGRESO;
         int pos_y = pos_y_inicial + offset_y;
         auto posicion = sf::Vector2f(pos_x, pos_y);
-        bp.setup(dimensiones, posicion);
-        bp.update(preparacion_pizza.porcentaje);
-        bpn.etiqueta =
-            sf::Text(tipo_pizza_to_string[preparacion_pizza.tipo], font, 24);
-        bpn.etiqueta.setFillColor(sf::Color(COLOR_BARRA_PROGRESO_TEXTO));
-        bpn.etiqueta.setPosition(pos_x + 20, pos_y + 5);
+        bpn.setup(dimensiones, preparacion_pizza.tipo, posicion, font);
+        bpn.update(preparacion_pizza.porcentaje);
         vect.push_back(bpn);
         i++;
     }

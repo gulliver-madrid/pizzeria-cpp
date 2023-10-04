@@ -76,8 +76,6 @@ void PanelesCompletos::dibujar(
     titulos_paneles.dibujar(ventana);
     barras_progreso_con_nombres = crear_barras_progreso(preparacion, font);
     for (auto &bpn : barras_progreso_con_nombres) {
-        ventana.draw(bpn.bp.fondo);
-        ventana.draw(bpn.bp.relleno);
-        ventana.draw(bpn.etiqueta);
+        bpn.dibujar(ventana);
     }
 }
