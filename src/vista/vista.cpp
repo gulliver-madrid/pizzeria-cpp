@@ -123,12 +123,9 @@ void actualizar_estado_botones(Botones &botones, const Estado &estado) {
         auto &boton_encargar = par.second;
         boton_encargar.activar_cuando(se_pueden_preparar_mas);
     }
-    if (!estado.control_pizzas.es_estatico) {
-        // No hacer nada
-    }
+
     if (se_pueden_preparar_mas && estado.control_pizzas.es_estatico) {
         assert(estado.control_pizzas.pedidos.size() == 1);
-        // Desactivar los botones que harían sobrepasar los objetivos
         auto &pedido = estado.control_pizzas.pedidos[0];
         desactivar_botones_encargar_si_se_sobrepasan_objetivos(
             botones.encargar, contadores, estado.encargos, pedido
@@ -151,12 +148,10 @@ void actualizar_etiquetas(
             break;
         case FaseNivel::Activa:
         case FaseNivel::EsperaAntesDeResultado:
-
             etiquetas.contadores.actualizar(
                 contadores, pedidos, estado.control_pizzas.es_estatico
             );
             etiquetas.contadores.dibujar(ventana);
-
             break;
         case FaseNivel::MostrandoResultado:
             ventana.draw(etiquetas.info.resultado);

@@ -179,10 +179,8 @@ AccionGeneral nivel(               //
     PizzasAContadores &contadores = estado.control_pizzas.contadores;
     // std::cout << "Número de tipos de pizza disponibles: "
     //           << control_pizzas.get_tipos_disponibles().size() << std::endl;
-    if (!datos_nivel.es_estatico) {
-        // No hacer nada
-    } else {
-        // Calcular objetivos
+    if (datos_nivel.es_estatico) {
+        // Calcular total objetivos
         auto &pedidos = estado.control_pizzas.pedidos;
         assert(pedidos.size() == 1);
         auto &pedido = pedidos[0];
