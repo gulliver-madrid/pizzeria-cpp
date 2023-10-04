@@ -6,13 +6,18 @@
 struct Globales;
 
 struct EtiquetasContadores {
-    std::map<TipoPizza, sf::Text> texto_servidas;
+
+    const sf::Font &font;
+
     std::map<TipoPizza, sf::Text> texto_preparadas;
-    void
-    setup(const sf::Font &font, const std::vector<TipoPizza> &tp_disponibles);
+    std::map<TipoPizza, sf::Text> texto_servidas;
+    std::vector<sf::Text> texto_pedidos;
+    EtiquetasContadores(const sf::Font &font) : font(font) {}
+    void setup(const std::vector<TipoPizza> &tp_disponibles, bool es_estatico);
     void actualizar(
-        const PizzasAContadores &pizzas_a_contadores,
-        std::optional<Pedido> &control_pizzas_estatico, bool es_estatico = true
+        const PizzasAContadores &pizzas_a_contadores, //
+        const Pedidos &pedidos,                       //
+        bool es_estatico
     );
     void dibujar(sf::RenderWindow &ventana) const;
 };
@@ -23,14 +28,16 @@ struct EtiquetasInfo {
 };
 
 struct EtiquetasGenerales {
+    const sf::Font &font;
     EtiquetasContadores contadores;
     EtiquetasInfo info;
+    EtiquetasGenerales(const sf::Font &font) : font(font), contadores(font) {}
 
     void setup(
-        const sf::Font &font,                         //
         const std::string &instr,                     //
         int num_nivel,                                //
         const std::vector<TipoPizza> &tp_disponibles, //
+        bool es_estatico,                             //
         int total_objetivos
     );
 };

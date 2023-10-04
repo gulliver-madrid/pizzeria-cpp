@@ -26,11 +26,13 @@ struct Vista {
         const sf::Font &font, Grid &grid,
         const std::vector<TipoPizza> &tp_disponibles
     )
-        : botones(font, tp_disponibles), paneles_completos(font), grid(grid),
-          font(font), tp_disponibles(tp_disponibles) {}
+        : botones(font, tp_disponibles), paneles_completos(font),
+          etiquetas(font), grid(grid), font(font),
+          tp_disponibles(tp_disponibles) {}
     void setup(
         const std::string &instrucciones, //
         int num_nivel,                    //
+        bool es_estatico,                 //
         int total_objetivos
     );
     void actualizarIU(             //

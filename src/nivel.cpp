@@ -69,21 +69,45 @@ std::optional<FaseNivel> procesar_click_fase_activa(
     PizzasAContadores &contadores = estado.control_pizzas.contadores;
 
     for (auto &par : botones.despachar) {
+        auto &tp = par.first;
         auto &boton = par.second;
-        auto &contador = contadores[par.first];
+        auto &contador = contadores.at(tp);
         if (boton.colisiona(mouse_pos, globales)) {
             assert(contador.preparadas > 0);
             contador.preparadas--;
-            // TODO: si son dinamicas hay que anadir aqui al pedido
-            // correnpondiente
+            if (!estado.control_pizzas.es_estatico) {
+                for (auto &pedido : estado.control_pizzas.pedidos) {
+                    if (pedido.cubierto) {
+                        continue;
+                    }
+                    if (pedido.contenido.count(tp) == 0) {
+                        continue;
+                    }
+                    auto &pedido_tp = pedido.contenido.at(tp);
+                    if (pedido_tp.servido == pedido_tp.objetivo) {
+                        continue;
+                    }
+                    assert(pedido_tp.servido < pedido_tp.objetivo);
+                    pedido_tp.servido++;
+                    pedido.evaluar();
+                    break;
+                }
+            }
             contador.servidas++;
             break;
         }
     }
     if (!estado.control_pizzas.es_estatico) {
-        // TODO: controlar cumplimiento
-        assert(false && "No implementado");
-        return std::nullopt;
+        bool faltan = false;
+        for (auto &pedido : estado.control_pizzas.pedidos) {
+            if (!pedido.cubierto) {
+                faltan = true;
+                break;
+            }
+        }
+        if (!faltan) {
+            return FaseNivel::EsperaAntesDeResultado;
+        }
     } else {
         assert(estado.control_pizzas.pedidos.size() == 1);
         auto &pedido = estado.control_pizzas.pedidos[0];
@@ -152,6 +176,7 @@ AccionGeneral nivel(               //
     bool es_el_ultimo
 ) {
     int total_objetivos = -1; // En dinámicos no se usa
+    // std::cout << "es estatico? " << datos_nivel.es_estatico << std::endl;
     // std::cout << "Número de nivel: " << num_nivel << std::endl;
     // std::cout << "Número de pedidos en este nivel: "
     //           << datos_nivel.pedidos.size() << std::endl;
@@ -164,10 +189,9 @@ AccionGeneral nivel(               //
     // std::cout << "Número de tipos de pizza disponibles: "
     //           << control_pizzas.get_tipos_disponibles().size() << std::endl;
     if (!datos_nivel.es_estatico) {
-        assert(false && "No implementado");
-
+        // No hacer nada
     } else {
-        // Estaticos
+        // Calcular objetivos
         auto &pedidos = estado.control_pizzas.pedidos;
         assert(pedidos.size() == 1);
         auto &pedido = pedidos[0];
@@ -184,6 +208,7 @@ AccionGeneral nivel(               //
     vista.setup(
         datos_nivel.instrucciones, //
         num_nivel,                 //
+        datos_nivel.es_estatico,   //
         total_objetivos
     );
 

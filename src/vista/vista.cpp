@@ -15,13 +15,14 @@ void actualizar_etiquetas(
 void Vista::setup(
     const std::string &instrucciones, //
     int num_nivel,                    //
+    bool es_estatico,                 //
     int total_objetivos
 ) {
     etiquetas.setup(
-        font,           //
         instrucciones,  //
         num_nivel,      //
         tp_disponibles, //
+        es_estatico,    //
         total_objetivos
     );
     // Mostrar botones iniciales
@@ -110,11 +111,6 @@ void desactivar_botones_encargar_si_se_sobrepasan_objetivos(
 }
 
 void actualizar_estado_botones(Botones &botones, const Estado &estado) {
-    if (!estado.control_pizzas.es_estatico) {
-        assert(false && "No implementado");
-        // TODO: implementar
-        return;
-    }
     const PizzasAContadores &contadores = estado.control_pizzas.contadores;
     activar_botones_despachar_si_hay_preparadas(botones.despachar, contadores);
 
@@ -126,6 +122,9 @@ void actualizar_estado_botones(Botones &botones, const Estado &estado) {
     for (auto &par : botones.encargar) {
         auto &boton_encargar = par.second;
         boton_encargar.activar_cuando(se_pueden_preparar_mas);
+    }
+    if (!estado.control_pizzas.es_estatico) {
+        // No hacer nada
     }
     if (se_pueden_preparar_mas && estado.control_pizzas.es_estatico) {
         assert(estado.control_pizzas.pedidos.size() == 1);
@@ -143,27 +142,21 @@ void actualizar_etiquetas(
     const Estado &estado           //
 ) {
 
+    const PizzasAContadores &contadores = estado.control_pizzas.contadores;
+
+    auto pedidos = estado.control_pizzas.pedidos;
     switch (estado.fase_actual) {
         case FaseNivel::MostrandoInstrucciones:
             ventana.draw(etiquetas.info.instrucciones);
             break;
         case FaseNivel::Activa:
         case FaseNivel::EsperaAntesDeResultado:
-            if (!estado.control_pizzas.es_estatico) {
-                assert(false && "No implementado");
-                // TODO: implementar
-                return;
-            }
-            {
-                const PizzasAContadores &contadores =
-                    estado.control_pizzas.contadores;
-                // std::cout << "En actualizar iu" << std::endl;
-                // debug_contadores(contadores);
-                const auto &pedido = estado.control_pizzas.pedidos[0];
-                std::optional<Pedido> pedido_opt = pedido;
-                etiquetas.contadores.actualizar(contadores, pedido_opt);
-                etiquetas.contadores.dibujar(ventana);
-            }
+
+            etiquetas.contadores.actualizar(
+                contadores, pedidos, estado.control_pizzas.es_estatico
+            );
+            etiquetas.contadores.dibujar(ventana);
+
             break;
         case FaseNivel::MostrandoResultado:
             ventana.draw(etiquetas.info.resultado);

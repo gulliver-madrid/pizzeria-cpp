@@ -61,39 +61,67 @@ crearEtiquetaPizzasServidas(const sf::Font &font, int indice_etiqueta) {
     );
 }
 void EtiquetasContadores::setup(
-    const sf::Font &font, const std::vector<TipoPizza> &tp_disponibles
+    const std::vector<TipoPizza> &tp_disponibles, bool es_estatico
 ) {
     int i = 0;
     for (auto &tp : tp_disponibles) {
         texto_preparadas[tp] = crearEtiquetaPizzasPreparadas(font, i);
-        texto_servidas[tp] = crearEtiquetaPizzasServidas(font, i);
+        if (es_estatico) {
+            texto_servidas[tp] = crearEtiquetaPizzasServidas(font, i);
+        }
         i++;
     }
 };
 
+std::string pedido_to_string(const Pedido &pedido) {
+    std::string s;
+    for (auto &par : pedido.contenido) {
+        s += tipo_pizza_to_string.at(par.first);
+        s += ": ";
+        s += std::to_string(par.second.servido);
+        s += "/";
+        s += std::to_string(par.second.objetivo);
+        s += "\n";
+    }
+    return s;
+}
+
 void EtiquetasContadores::actualizar(
-    const PizzasAContadores &contadores,
-    std::optional<Pedido> &control_pizzas_estatico, bool es_estatico
+    const PizzasAContadores &pizzas_a_contadores, //
+    const Pedidos &pedidos,                       //
+    bool es_estatico
 ) {
     // std::cout << "\nEn EtiquetasContadores::actualizar() " << std::endl;
-    for (auto &par : contadores) {
+    for (auto &par : pizzas_a_contadores) {
         const auto &tp = par.first;
         const auto &contadores_tp = par.second;
         auto &nombre_pizza = tipo_pizza_to_string[tp];
         std::string preparadas =
             nombre_pizza + ": " + std::to_string(contadores_tp.preparadas);
-        std::string servidas =
-            nombre_pizza + ": " + std::to_string(contadores_tp.servidas) +
-            (control_pizzas_estatico.has_value()
-                 ? ( //
-                       std::string("/") +
-                       std::to_string(control_pizzas_estatico.value()
-                                          .contenido.at(tp)
-                                          .objetivo)
-                   )
-                 : "");
         texto_preparadas[tp].setString(preparadas);
-        texto_servidas[tp].setString(servidas);
+        if (es_estatico) {
+            auto &pedido_unico = pedidos.at(0);
+            std::string servidas = (                                   //
+                nombre_pizza + ": " +                                  //
+                std::to_string(contadores_tp.servidas) +               //
+                std::string("/") +                                     //
+                std::to_string(pedido_unico.contenido.at(tp).objetivo) //
+            );
+            texto_servidas[tp].setString(servidas);
+        } else {
+            texto_pedidos.clear();
+            int i = 0;
+            auto pos_panel = obtener_posicion_panel(IndicePanel::PANEL_PEDIDOS);
+            for (auto &pedido : pedidos) {
+                auto texto_pedido =
+                    sf::Text(pedido_to_string(pedido), font, 22);
+                texto_pedido.setPosition(
+                    sf::Vector2f(pos_panel.x + 30, i * 100 + pos_panel.y + 100)
+                );
+                texto_pedidos.push_back(texto_pedido);
+                i++;
+            }
+        }
     }
 }
 
@@ -104,6 +132,9 @@ void EtiquetasContadores::dibujar(sf::RenderWindow &ventana) const {
     }
     for (auto &par : texto_servidas) {
         auto &etiqueta = par.second;
+        ventana.draw(etiqueta);
+    }
+    for (auto &etiqueta : texto_pedidos) {
         ventana.draw(etiqueta);
     }
 }
@@ -134,10 +165,10 @@ sf::Text generar_etiqueta_resultado(const sf::Font &font) {
 }
 
 void EtiquetasGenerales::setup(
-    const sf::Font &font,                         //
     const std::string &instr,                     //
     int num_nivel,                                //
     const std::vector<TipoPizza> &tp_disponibles, //
+    bool es_estatico,                             //
     int total_objetivos
 ) {
     auto instrucciones =
@@ -145,5 +176,5 @@ void EtiquetasGenerales::setup(
     auto resultado = generar_etiqueta_resultado(font);
 
     info = {instrucciones, resultado};
-    contadores.setup(font, tp_disponibles);
+    contadores.setup(tp_disponibles, es_estatico);
 }

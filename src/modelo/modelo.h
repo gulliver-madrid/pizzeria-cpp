@@ -29,6 +29,19 @@ struct Pedido {
     Pedido(std::map<TipoPizza, PedidoTipoPizza> contenido_) {
         contenido = contenido_;
     }
+    void evaluar() {
+        bool faltan = false;
+        for (auto &par : contenido) {
+            auto &pedido_tp = par.second;
+            if (pedido_tp.servido < pedido_tp.objetivo) {
+                faltan = true;
+                break;
+            }
+        }
+        if (!faltan) {
+            cubierto = true;
+        }
+    }
 };
 
 void evaluar_preparacion(
