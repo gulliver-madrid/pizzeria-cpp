@@ -1,5 +1,7 @@
 #pragma once
 
+#include "vista/botones.h"
+#include "vista/etiquetas.h"
 #include "vista/vista.h"
 
 struct Estado;

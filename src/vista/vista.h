@@ -1,14 +1,10 @@
 #pragma once
 
-#include "botones.h"
+#include "../modelo/modelo.h"
 #include "componentes.h"
-#include "etiquetas.h"
 #include <vector>
 
 enum class IndicePanel;
-
-sf::Text crearEtiquetaPizzasServidas(const sf::Font &, int indice);
-sf::Text crearEtiquetaPizzasPreparadas(const sf::Font &, int indice);
 
 struct BarraProgreso {
     sf::RectangleShape fondo;

@@ -40,28 +40,29 @@
                     - vista/grid.cpp (hoja)
                 - nivel.cpp
                     - actualizar_iu.h
-                        - vista/vista.h
-                            - vista/botones.h
-                                - vista/componentes.h
-                                    - vista/componentes.cpp (hoja)
-                                    - globales.h (def)
-                                - vista/botones.cpp
-                                    - modelo/dominio.h
-                                    - vista_basics.h
-                                        - vista/vista_basics.cpp (hoja)
+                        - vista/botones.h
+                            - vista/componentes.h
+                                - vista/componentes.cpp (hoja)
+                                - globales.h (def)
+                            - vista/botones.cpp
+                                - modelo/dominio.h
+                                - vista_basics.h
+                                    - vista/vista_basics.cpp (hoja)
+                        - vista/etiquetas.cpp
+                            - cadenas.h (def)
+                            - templates.h (hoja)
+                            - textos.h
+                                - textos.cpp
+                                    - cadenas.h (hoja)
                             - vista/componentes.h (def)
-                            - vista/etiquetas.h
-                                - general.h (def)
-                                - vista/etiquetas.cpp
-                                    - cadenas.h (def)
-                                    - templates.h (hoja)
-                                    - textos.h
-                                        - textos.cpp
-                                            - cadenas.h (hoja)
-                                    - vista/componentes.h (def)
-                                    - vista/vista_basics.h (def)
+                            - vista/vista_basics.h (def)
+                        - vista/vista.h
+                            - modelo/modelo.h (def)
+                            - vista/componentes.h (def)
                             - vista/vista.cpp
                                 - cadenas.h (def)
+                                - vista/etiquetas.h
+                                    - general.h (def)
                                 - vista/vista_basics.h (def)
                         - actualizar_iu.cpp
                             - vista/vista_data.h (hoja)
