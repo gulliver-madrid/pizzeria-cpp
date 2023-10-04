@@ -5,12 +5,14 @@
 struct EstadoPreparacionPizzas;
 
 struct BarraProgreso {
+  private:
+    sf::Vector2f dimensiones = {0, 0};
+
+  public:
     sf::RectangleShape fondo;
     sf::RectangleShape relleno;
-    void setup(
-        const sf::Vector2f &dimensiones, int porcentaje,
-        const sf::Vector2f &posicion
-    );
+    void setup(const sf::Vector2f &dimensiones_, const sf::Vector2f &posicion);
+    void update(int porcentaje);
 };
 struct BarraProgresoConNombre {
     sf::Text etiqueta;
