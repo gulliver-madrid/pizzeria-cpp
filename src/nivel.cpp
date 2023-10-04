@@ -60,6 +60,30 @@ std::optional<FaseNivel> procesarEvento(
     }
     return std::nullopt;
 };
+/* Procesa el despacho de una pizza de tipo tp, incorporandola al primer pedido
+ * disponible y evaluando si ya esta completo.
+ * Devuelve un booleano indicando si se sirvió en un pedido (true) o se desechó
+ * (false)
+ * */
+bool procesar_despacho(const TipoPizza tp, Pedidos &pedidos) {
+    for (auto &pedido : pedidos) {
+        if (pedido.cubierto) {
+            continue;
+        }
+        if (pedido.contenido.count(tp) == 0) {
+            continue;
+        }
+        auto &pedido_tp = pedido.contenido.at(tp);
+        if (pedido_tp.servido == pedido_tp.objetivo) {
+            continue;
+        }
+        assert(pedido_tp.servido < pedido_tp.objetivo);
+        pedido_tp.servido++;
+        pedido.evaluar();
+        return true;
+    }
+    return false;
+}
 
 std::optional<FaseNivel> procesar_click_fase_activa(
     const Globales &globales, Botones &botones, Estado &estado,
@@ -75,55 +99,22 @@ std::optional<FaseNivel> procesar_click_fase_activa(
         if (boton.colisiona(mouse_pos, globales)) {
             assert(contador.preparadas > 0);
             contador.preparadas--;
-            if (!estado.control_pizzas.es_estatico) {
-                for (auto &pedido : estado.control_pizzas.pedidos) {
-                    if (pedido.cubierto) {
-                        continue;
-                    }
-                    if (pedido.contenido.count(tp) == 0) {
-                        continue;
-                    }
-                    auto &pedido_tp = pedido.contenido.at(tp);
-                    if (pedido_tp.servido == pedido_tp.objetivo) {
-                        continue;
-                    }
-                    assert(pedido_tp.servido < pedido_tp.objetivo);
-                    pedido_tp.servido++;
-                    pedido.evaluar();
-                    break;
-                }
+            bool result = procesar_despacho(tp, estado.control_pizzas.pedidos);
+            if (result) {
+                contador.servidas++;
             }
-            contador.servidas++;
             break;
         }
     }
-    if (!estado.control_pizzas.es_estatico) {
-        bool faltan = false;
-        for (auto &pedido : estado.control_pizzas.pedidos) {
-            if (!pedido.cubierto) {
-                faltan = true;
-                break;
-            }
+    bool faltan = false;
+    for (auto &pedido : estado.control_pizzas.pedidos) {
+        if (!pedido.cubierto) {
+            faltan = true;
+            break;
         }
-        if (!faltan) {
-            return FaseNivel::EsperaAntesDeResultado;
-        }
-    } else {
-        assert(estado.control_pizzas.pedidos.size() == 1);
-        auto &pedido = estado.control_pizzas.pedidos[0];
-
-        bool faltan = false;
-        for (auto &par : pedido.contenido) {
-            auto tp = par.first;
-            auto pedido_tp = par.second;
-            if (contadores[tp].servidas < pedido_tp.objetivo) {
-                faltan = true;
-                break;
-            }
-        }
-        if (!faltan) {
-            return FaseNivel::EsperaAntesDeResultado;
-        }
+    }
+    if (!faltan) {
+        return FaseNivel::EsperaAntesDeResultado;
     }
 
     for (const auto &par : contadores) {
