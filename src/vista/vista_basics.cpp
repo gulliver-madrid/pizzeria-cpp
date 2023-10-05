@@ -6,13 +6,13 @@ namespace medidas {
     constexpr int DESPLAZAMIENTO_LATERAL = ANCHO_PANEL + 42;
 } // namespace medidas
 
-int obtener_posicion_x_panel(IndicePanel indice_panel) {
+float obtener_posicion_x_panel(IndicePanel indice_panel) {
     return medidas::MARGEN_IZQ_PANELES +
-           (medidas::DESPLAZAMIENTO_LATERAL * static_cast<int>(indice_panel));
+           (medidas::DESPLAZAMIENTO_LATERAL * static_cast<float>(indice_panel));
 }
 
-sf::Vector2i obtener_posicion_panel(IndicePanel indice_panel) {
-    int pos_x_panel = obtener_posicion_x_panel(indice_panel);
-    int pos_y_panel = medidas::MARGEN_TOP_PANELES;
+sf::Vector2f obtener_posicion_panel(const IndicePanel &indice_panel) {
+    const auto pos_x_panel = obtener_posicion_x_panel(indice_panel);
+    const float pos_y_panel = medidas::MARGEN_TOP_PANELES;
     return {pos_x_panel, pos_y_panel};
 }

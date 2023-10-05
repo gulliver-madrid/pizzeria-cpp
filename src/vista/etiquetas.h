@@ -43,5 +43,6 @@ struct EtiquetasGenerales {
 };
 
 sf::Text crearEtiquetaTituloPanel(
-    const sf::Font &font, sf::Vector2i posicion_panel, const std::string &texto
+    const sf::Font &font, const sf::Vector2f &posicion_panel,
+    const std::string &texto
 );

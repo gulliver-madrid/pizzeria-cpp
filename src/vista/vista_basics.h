@@ -26,4 +26,4 @@ namespace colores {
     const auto COLOR_TEXTO_RESULTADO = sf::Color(255, 160, 0);
 } // namespace colores
 
-sf::Vector2i obtener_posicion_panel(IndicePanel indice_panel);
+sf::Vector2f obtener_posicion_panel(const IndicePanel &indice_panel);

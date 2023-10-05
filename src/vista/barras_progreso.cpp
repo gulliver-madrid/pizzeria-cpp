@@ -54,7 +54,7 @@ void BarraProgresoConNombre::dibujar(sf::RenderWindow &ventana) { //
 
 /* Crea y actualiza las barras de progreso */
 std::vector<BarraProgresoConNombre> crear_barras_progreso(
-    const EstadoPreparacionPizzas &preparacion, sf::Vector2i &pos_panel,
+    const EstadoPreparacionPizzas &preparacion, const sf::Vector2f &pos_panel,
     const sf::Font &font
 ) {
     std::vector<BarraProgresoConNombre> vect{};
