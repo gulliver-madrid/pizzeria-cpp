@@ -37,7 +37,8 @@ sf::Text crearEtiquetaTituloPanel(
 }
 
 sf::Vector2f obtener_posicion_etiqueta_contador_pizzas(
-    int indice_etiqueta, IndicePanel indice_panel, int desplazamiento_vertical
+    size_t indice_etiqueta, IndicePanel indice_panel,
+    int desplazamiento_vertical
 ) {
     const auto pos_panel = obtener_posicion_panel(indice_panel);
     const auto pos_x = pos_panel.x + medidas::MARGEN_IZQ_ETIQUETAS;
@@ -50,7 +51,7 @@ sf::Vector2f obtener_posicion_etiqueta_contador_pizzas(
  * significado)*/
 sf::Text crearEtiquetaContadorPizzas(
     IndicePanel indice_panel,    //
-    int indice_etiqueta,         //
+    size_t indice_etiqueta,      //
     int desplazamiento_vertical, //
     const sf::Font &font         //
 ) {
@@ -64,7 +65,7 @@ sf::Text crearEtiquetaContadorPizzas(
 }
 
 sf::Text
-crearEtiquetaPizzasPreparadas(const sf::Font &font, int indice_etiqueta) {
+crearEtiquetaPizzasPreparadas(const sf::Font &font, size_t indice_etiqueta) {
     return crearEtiquetaContadorPizzas(
         IndicePanel::PANEL_PREPARADAS,                                //
         indice_etiqueta,                                              //
@@ -74,7 +75,7 @@ crearEtiquetaPizzasPreparadas(const sf::Font &font, int indice_etiqueta) {
 }
 
 sf::Text
-crearEtiquetaPizzasServidas(const sf::Font &font, int indice_etiqueta) {
+crearEtiquetaPizzasServidas(const sf::Font &font, size_t indice_etiqueta) {
     return crearEtiquetaContadorPizzas(
         IndicePanel::PANEL_PEDIDOS,                                 //
         indice_etiqueta,                                            //
@@ -166,27 +167,30 @@ void EtiquetasContadores::_actualizar_pedido_estatico(
 void EtiquetasContadores::_actualizar_pedidos_dinamicos( //
     const Pedidos &pedidos
 ) {
-    float pos_x, pos_y;
-    const auto separacion_vertical = 0;
+    // Creamos las etiquetas con los textos
     const auto tamano_fuente = 22;
     texto_pedidos.clear();
-    {
-        // Establece la posicion del primer pedido
-        const auto pos_panel =
-            obtener_posicion_panel(IndicePanel::PANEL_PEDIDOS);
-        pos_x = pos_panel.x + medidas::MARGEN_IZQ_ETIQUETAS;
-        pos_y = pos_panel.y + medidas::FILA_CONTENIDO_PANEL;
-    }
     for (auto &pedido : pedidos) {
-        auto texto_pedido =
-            sf::Text(pedido_to_string(pedido), font, tamano_fuente);
+        const auto texto = pedido_to_string(pedido);
+        const auto etiqueta = sf::Text(texto, font, tamano_fuente);
+        texto_pedidos.push_back(etiqueta);
+    }
+    assert(texto_pedidos.size() == pedidos.size());
+
+    // Les asignamos su posicion correcta
+    float pos_x, pos_y;
+    const auto separacion_vertical = 0;
+
+    // Calcula la posicion del primer pedido
+    const auto pos_panel = obtener_posicion_panel(IndicePanel::PANEL_PEDIDOS);
+    pos_x = pos_panel.x + medidas::MARGEN_IZQ_ETIQUETAS;
+    pos_y = pos_panel.y + medidas::FILA_CONTENIDO_PANEL;
+
+    for (auto &texto_pedido : texto_pedidos) {
         texto_pedido.setPosition(pos_x, pos_y);
-        {
-            //  Establece la posicion del siguiente pedido
-            const auto g_bounds = texto_pedido.getGlobalBounds();
-            pos_y = get_bottom(g_bounds) + separacion_vertical;
-        }
-        texto_pedidos.push_back(texto_pedido);
+        //  Calcula la posicion del siguiente pedido
+        const auto g_bounds = texto_pedido.getGlobalBounds();
+        pos_y = get_bottom(g_bounds) + separacion_vertical;
     }
 }
 
