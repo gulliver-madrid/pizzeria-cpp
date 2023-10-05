@@ -6,9 +6,15 @@
 struct Globales;
 
 struct EtiquetasContadores {
-
+  private:
     const sf::Font &font;
+    void _actualizar_pedidos_dinamicos(const Pedidos &pedidos);
+    void _actualizar_pedido_estatico(
+        const PizzasAContadores &pizzas_a_contadores, //
+        const Pedidos &pedidos                        //
+    );
 
+  public:
     std::map<TipoPizza, sf::Text> texto_preparadas;
     std::map<TipoPizza, sf::Text> texto_servidas;
     std::vector<sf::Text> texto_pedidos;

@@ -128,38 +128,65 @@ void EtiquetasContadores::actualizar(
     const Pedidos &pedidos,                       //
     bool es_estatico
 ) {
-    // std::cout << "\nEn EtiquetasContadores::actualizar() " << std::endl;
     for (auto &par : pizzas_a_contadores) {
         const auto &tp = par.first;
         const auto &contadores_tp = par.second;
-        auto &nombre_pizza = tipo_pizza_to_string[tp];
+        auto &nombre_pizza = tipo_pizza_to_string.at(tp);
         std::string preparadas =
             nombre_pizza + ": " + std::to_string(contadores_tp.preparadas);
-        texto_preparadas[tp].setString(preparadas);
-        if (es_estatico) {
-            auto &pedido_unico = pedidos.at(0);
-            std::string servidas = (                                   //
-                nombre_pizza + ": " +                                  //
-                std::to_string(contadores_tp.servidas) +               //
-                std::string("/") +                                     //
-                std::to_string(pedido_unico.contenido.at(tp).objetivo) //
-            );
-            texto_servidas[tp].setString(servidas);
-        } else {
-            auto separacion_vertical = 0;
-            texto_pedidos.clear();
-            auto pos_panel = obtener_posicion_panel(IndicePanel::PANEL_PEDIDOS);
-            const auto pos_x = pos_panel.x + medidas::MARGEN_IZQ_ETIQUETAS;
-            auto pos_y = pos_panel.y + medidas::FILA_CONTENIDO_PANEL;
-            for (auto &pedido : pedidos) {
-                auto texto_pedido =
-                    sf::Text(pedido_to_string(pedido), font, 22);
-                texto_pedido.setPosition(sf::Vector2f(pos_x, pos_y));
-                auto g_bounds = texto_pedido.getGlobalBounds();
-                pos_y = g_bounds.top + g_bounds.height + separacion_vertical;
-                texto_pedidos.push_back(texto_pedido);
-            }
+        texto_preparadas.at(tp).setString(preparadas);
+    }
+    if (es_estatico) {
+        _actualizar_pedido_estatico(pizzas_a_contadores, pedidos);
+    } else {
+        _actualizar_pedidos_dinamicos(pedidos);
+    }
+}
+
+float get_bottom(const sf::FloatRect &rect) { //
+    return rect.top + rect.height;
+}
+
+void EtiquetasContadores::_actualizar_pedido_estatico(
+    const PizzasAContadores &pizzas_a_contadores, //
+    const Pedidos &pedidos                        //
+) {
+    assert(pedidos.size() == 1);
+    const auto &pedido_unico = pedidos.at(0);
+    for (auto &par : pizzas_a_contadores) {
+        const auto &tp = par.first;
+        const auto &contadores_tp = par.second;
+        std::string servidas = crea_linea_completitud_pizza(
+            tp, contadores_tp.servidas, pedido_unico.contenido.at(tp).objetivo
+        );
+        texto_servidas.at(tp).setString(servidas);
+    }
+}
+
+void EtiquetasContadores::_actualizar_pedidos_dinamicos( //
+    const Pedidos &pedidos
+) {
+    float pos_x, pos_y;
+    const auto separacion_vertical = 0;
+    const auto tamano_fuente = 22;
+    texto_pedidos.clear();
+    {
+        // Establece la posicion del primer pedido
+        const auto pos_panel =
+            obtener_posicion_panel(IndicePanel::PANEL_PEDIDOS);
+        pos_x = pos_panel.x + medidas::MARGEN_IZQ_ETIQUETAS;
+        pos_y = pos_panel.y + medidas::FILA_CONTENIDO_PANEL;
+    }
+    for (auto &pedido : pedidos) {
+        auto texto_pedido =
+            sf::Text(pedido_to_string(pedido), font, tamano_fuente);
+        texto_pedido.setPosition(pos_x, pos_y);
+        {
+            //  Establece la posicion del siguiente pedido
+            const auto g_bounds = texto_pedido.getGlobalBounds();
+            pos_y = get_bottom(g_bounds) + separacion_vertical;
         }
+        texto_pedidos.push_back(texto_pedido);
     }
 }
 
