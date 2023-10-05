@@ -109,17 +109,18 @@ void EtiquetasContadores::actualizar(
             );
             texto_servidas[tp].setString(servidas);
         } else {
+            auto separacion_vertical = 0;
             texto_pedidos.clear();
-            int i = 0;
             auto pos_panel = obtener_posicion_panel(IndicePanel::PANEL_PEDIDOS);
+            const auto pos_x = pos_panel.x + medidas::MARGEN_IZQ_ETIQUETAS;
+            auto pos_y = pos_panel.y + medidas::FILA_CONTENIDO_PANEL;
             for (auto &pedido : pedidos) {
                 auto texto_pedido =
                     sf::Text(pedido_to_string(pedido), font, 22);
-                texto_pedido.setPosition(
-                    sf::Vector2f(pos_panel.x + 30, i * 100 + pos_panel.y + 100)
-                );
+                texto_pedido.setPosition(sf::Vector2f(pos_x, pos_y));
+                auto g_bounds = texto_pedido.getGlobalBounds();
+                pos_y = g_bounds.top + g_bounds.height + separacion_vertical;
                 texto_pedidos.push_back(texto_pedido);
-                i++;
             }
         }
     }
