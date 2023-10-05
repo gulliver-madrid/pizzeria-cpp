@@ -28,6 +28,20 @@ const DatosNivel datos_niveles[] = {
     DatosNivel{
         INSTRUCCIONES_NIVEL_DINAMICO, //
         dinamicos},
+    DatosNivel{
+        INSTRUCCIONES_NIVEL_DINAMICO, //
+        Pedidos{                      //
+                {                     //
+                 Pedido({{TipoPizza::Margarita, PedidoTipoPizza{2}}}),
+                 Pedido(
+                     {{TipoPizza::Margarita, PedidoTipoPizza{2}},
+                      {TipoPizza::Pepperoni, PedidoTipoPizza{1}}}
+                 ),
+                 Pedido(
+                     {{TipoPizza::Margarita, PedidoTipoPizza{1}},
+                      {TipoPizza::CuatroQuesos, PedidoTipoPizza{1}},
+                      {TipoPizza::Pepperoni, PedidoTipoPizza{1}}}
+                 )}}},
     {INSTRUCCIONES_NIVEL_ESTATICO, //
      Pedidos{{
          Pedido({
