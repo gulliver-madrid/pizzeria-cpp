@@ -2,6 +2,8 @@
 
 #include <cassert>
 
+constexpr bool MODO_DESARROLLO = true;
+
 /* NewType para el número de nivel del juego */
 struct NumNivel {
     int valor;

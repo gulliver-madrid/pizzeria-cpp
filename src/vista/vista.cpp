@@ -24,6 +24,7 @@ void Vista::setup(
         total_objetivos //
     );
     // Mostrar botones iniciales
+    botones.alternar_grid.visible = MODO_DESARROLLO;
     botones.reiniciar.visible = true;
     botones.salir.visible = true;
     botones.empezar.visible = true;
@@ -42,7 +43,7 @@ void Vista::actualizarIU(      //
 
     // Limpia la ventana y empieza a pintar los componentes visuales
     ventana.clear(colores::COLOR_FONDO);
-    if (DRAW_GRID)
+    if (estado.mostrando_grid)
         draw_grid(ventana, grid, GRID_SIZE, GRID_TONE);
 
     if ( //

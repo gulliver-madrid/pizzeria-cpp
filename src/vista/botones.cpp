@@ -82,8 +82,13 @@ Botones::Botones(
         i++;
     }
 
+    alternar_grid = crearBotonConTexto(
+        // TODO: mejorar posicionamiento
+        BotonData{"Alternar Grid", sf::Color::Blue},
+        sf::Vector2i(1200, medidas::FILA_BOTONES_GENERALES), font
+    );
     reiniciar = crearBotonConTexto(
-        BotonData{"Reiniciar", sf::Color::Blue},
+        BotonData{"Reiniciar", sf::Color(255, 120, 0)},
         sf::Vector2i(1440, medidas::FILA_BOTONES_GENERALES), font
     );
     salir = crearBotonConTexto(
@@ -91,14 +96,15 @@ Botones::Botones(
         sf::Vector2i(1640, medidas::FILA_BOTONES_GENERALES), font
     );
 
-    todos = {&empezar, &reiniciar, &salir};
+    todos = {&empezar, &alternar_grid, &reiniciar, &salir};
+    const int num_fijos = 4;
     for (auto &par : despachar) {
         todos.push_back(&par.second);
     }
     for (auto &par : encargar) {
         todos.push_back(&par.second);
     }
-    assert(todos.size() == 3 + tp_disponibles.size() * 2);
+    assert(todos.size() == (num_fijos + tp_disponibles.size() * 2));
 }
 
 void Botones::dibujar(sf::RenderWindow &ventana) const {

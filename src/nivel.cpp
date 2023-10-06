@@ -43,6 +43,9 @@ std::optional<FaseNivel> procesarEvento(
             return FaseNivel::Saliendo;
         } else if (botones.reiniciar.colisiona(mousePos, globales)) {
             return FaseNivel::Reiniciando;
+        } else if (botones.alternar_grid.colisiona(mousePos, globales)) {
+            assert(MODO_DESARROLLO);
+            estado.mostrando_grid = !estado.mostrando_grid;
         }
         // Dependientes del estado
         if (estado.fase_actual == FaseNivel::MostrandoInstrucciones) {

@@ -20,6 +20,7 @@ struct Botones {
     BotonConTexto empezar;
     std::map<TipoPizza, BotonConTexto> encargar;
     std::map<TipoPizza, BotonConTexto> despachar;
+    BotonConTexto alternar_grid;
     BotonConTexto reiniciar;
     BotonConTexto salir;
 
