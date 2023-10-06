@@ -72,8 +72,10 @@ void Vista::procesa_cambio_de_fase(FaseNivel nueva_fase) {
     }
 }
 
-/* Activa o desactiva cada botón despachar dependiendo de si hay pizzas
- * preparadas de ese tipo */
+/*
+ * Activa o desactiva cada botón despachar dependiendo de si hay pizzas
+ * preparadas de ese tipo.
+ */
 void activar_botones_despachar_si_hay_preparadas(
     std::map<TipoPizza, BotonConTexto> &botones_despachar,
     const PizzasAContadores &contadores
@@ -82,15 +84,19 @@ void activar_botones_despachar_si_hay_preparadas(
         auto &tp = par.first;
         auto &contador = par.second;
         auto &boton_despachar = botones_despachar[tp];
-        boton_despachar.activar_cuando(contador.preparadas > 0);
+        boton_despachar.activacion_condicional(contador.preparadas > 0);
     }
 }
 
-/* Solo se ejecutará en modo estático */
+/* Desactiva los botones encargar de cada tipo de pizza que ya tenga suficientes
+ * unidades encargadas, preparadas y/o servidas.  Solo se ejecutará en modo
+ * estático.
+ */
 void desactivar_botones_encargar_si_se_sobrepasan_objetivos(
-    std::map<TipoPizza, BotonConTexto> &botones_encargar,
-    const PizzasAContadores &contadores, const Encargos &encargos,
-    const Pedido &pedido
+    std::map<TipoPizza, BotonConTexto> &botones_encargar, //
+    const PizzasAContadores &contadores,                  //
+    const Encargos &encargos,                             //
+    const Pedido &pedido                                  //
 ) {
     for (auto &par : contadores) {
         auto &tp = par.first;
@@ -108,23 +114,28 @@ void desactivar_botones_encargar_si_se_sobrepasan_objetivos(
     }
 }
 
+/* Actualiza el estado de los botones en funcion de varios factores */
 void actualizar_estado_botones(Botones &botones, const Estado &estado) {
-    const PizzasAContadores &contadores = estado.control_pizzas.contadores;
+    const auto &control_pizzas = estado.control_pizzas;
+    // Botones despachar
+    const PizzasAContadores &contadores = control_pizzas.contadores;
     activar_botones_despachar_si_hay_preparadas(botones.despachar, contadores);
 
-    int total_en_preparacion = estado.encargos.total();
-    assert(total_en_preparacion <= MAXIMO_PIZZAS_EN_PREPARACION);
-    const bool se_pueden_preparar_mas =
-        total_en_preparacion < MAXIMO_PIZZAS_EN_PREPARACION;
+    // Botones encargar
+    constexpr int maximo = MAXIMO_PIZZAS_EN_PREPARACION;
+    const int en_preparacion = estado.encargos.total();
+    assert(en_preparacion <= maximo);
+    const bool se_pueden_preparar_mas = en_preparacion < maximo;
 
     for (auto &par : botones.encargar) {
-        auto &boton_encargar = par.second;
-        boton_encargar.activar_cuando(se_pueden_preparar_mas);
+        auto &boton = par.second;
+        boton.activacion_condicional(se_pueden_preparar_mas);
     }
 
-    if (se_pueden_preparar_mas && estado.control_pizzas.es_estatico) {
-        assert(estado.control_pizzas.pedidos.size() == 1);
-        auto &pedido = estado.control_pizzas.pedidos[0];
+    if (se_pueden_preparar_mas && control_pizzas.es_estatico) {
+        const auto &pedidos = control_pizzas.pedidos;
+        assert(pedidos.size() == 1);
+        const auto &pedido = pedidos[0];
         desactivar_botones_encargar_si_se_sobrepasan_objetivos(
             botones.encargar, contadores, estado.encargos, pedido
         );

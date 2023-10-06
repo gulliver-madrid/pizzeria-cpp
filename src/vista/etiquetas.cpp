@@ -206,18 +206,17 @@ void EtiquetasContadores::dibujar(sf::RenderWindow &ventana) const {
 }
 
 sf::Text generar_etiqueta_instrucciones(
-    const sf::Font &font,                       //
-    const std::string &plantilla_instrucciones, //
-    int num_nivel,                              //
+    const sf::Font &font,         //
+    const std::string &plantilla, //
+    int num_nivel,                //
     int objetivo
 ) {
-    auto etiqueta = crearEtiqueta(
-        TAMANO_FUENTE_INFO, font, colores::COLOR_TEXTO_INSTRUCCIONES,
-        medidas::POSICION_INSTRUCCIONES_O_RESULTADO
-    );
-    etiqueta.setString(
-        construir_instrucciones(plantilla_instrucciones, num_nivel, objetivo)
-    );
+    const auto color = colores::COLOR_TEXTO_INSTRUCCIONES;
+    const auto posicion = medidas::POSICION_INSTRUCCIONES_O_RESULTADO;
+    FuenteTexto fuente_texto{TAMANO_FUENTE_INFO, color, font};
+    auto etiqueta = crearEtiqueta(fuente_texto, posicion);
+    const auto texto = construir_instrucciones(plantilla, num_nivel, objetivo);
+    etiqueta.setString(texto);
     return etiqueta;
 }
 

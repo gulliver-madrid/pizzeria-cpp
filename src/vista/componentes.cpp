@@ -53,6 +53,8 @@ sf::Text crearEtiqueta(
     etiqueta.setPosition(posicion);
     return etiqueta;
 }
+
+/* Sobrecarga para usar FuenteTexto */
 sf::Text
 crearEtiqueta(const FuenteTexto &fuente_texto, const sf::Vector2f &posicion) {
     return crearEtiqueta(
@@ -76,7 +78,7 @@ void BotonConTexto::desactivar() {
         activo = false;
 }
 
-void BotonConTexto::activar_cuando(bool condicion) {
+void BotonConTexto::activacion_condicional(bool condicion) {
     if (condicion) {
         activar();
     } else {
