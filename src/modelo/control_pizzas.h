@@ -7,6 +7,8 @@
 /* Una lista de pedidos */
 using Pedidos = std::vector<Pedido>;
 
+void debug_pedidos(const Pedidos &pedidos);
+
 /* Establece el sistema de control de la producción y distribución de pizzas */
 struct ControlPizzas {
   private:

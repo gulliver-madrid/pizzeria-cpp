@@ -149,15 +149,6 @@ void procesa_cambio_de_fase(
     }
 }
 
-void debug_pedidos(const DatosNivel &datos_nivel) {
-    for (auto &pedido : datos_nivel.pedidos) {
-        for (auto &par : pedido.contenido) {
-            std::cout << tipo_pizza_to_string[par.first] << ": "
-                      << par.second.objetivo << std::endl;
-        }
-    }
-}
-
 int obtener_total_preparadas(const PizzasAContadores &contadores) {
     int total_preparadas = 0;
     for (auto &par : contadores) {

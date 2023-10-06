@@ -22,7 +22,7 @@ FetchContent_MakeAvailable(googletest)
 add_executable(pizzeria
     src/main.cpp
     src/datos_niveles.cpp
-    src/debug.cpp
+    src/debug_sfml.cpp
     src/juego.cpp
     src/modelo/control_pizzas.cpp
     src/modelo/dominio.cpp
@@ -79,7 +79,7 @@ add_executable(
     src/tests/test_tiempo.cpp
 
     # archivos del proyecto
-    src/debug.cpp
+    src/debug_sfml.cpp
     src/modelo/dominio.cpp
     src/modelo/encargos.cpp
     src/modelo/modelo.cpp

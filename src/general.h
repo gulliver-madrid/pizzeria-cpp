@@ -4,8 +4,6 @@
 #include "tiempo.h"
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
-#include <cassert>
-#include <iostream>
 
 #define MAXIMO_PIZZAS_EN_PREPARACION 3
 #define MAXIMO_PIZZAS_PREPARADAS 4

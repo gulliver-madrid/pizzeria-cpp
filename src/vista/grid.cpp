@@ -11,7 +11,6 @@ void _draw_grid(
     );
 
     sf::Color color(tono_gris, tono_gris, tono_gris);
-    // std::cout << "Rendering grid" << std::endl;
 
     // Líneas horizontales
     for (int j = 0; j < tamano.y; j += distancia) {
