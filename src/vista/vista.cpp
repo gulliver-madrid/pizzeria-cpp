@@ -15,15 +15,13 @@ void actualizar_etiquetas(
 void Vista::setup(
     const std::string &instrucciones, //
     int num_nivel,                    //
-    bool es_estatico,                 //
-    int total_objetivos
+    int total_objetivos               //
 ) {
     etiquetas.setup(
         instrucciones,  //
         num_nivel,      //
         tp_disponibles, //
-        es_estatico,    //
-        total_objetivos
+        total_objetivos //
     );
     // Mostrar botones iniciales
     botones.reiniciar.visible = true;
@@ -148,9 +146,7 @@ void actualizar_etiquetas(
             break;
         case FaseNivel::Activa:
         case FaseNivel::EsperaAntesDeResultado:
-            etiquetas.contadores.actualizar(
-                contadores, pedidos, estado.control_pizzas.es_estatico
-            );
+            etiquetas.contadores.actualizar(contadores, pedidos);
             etiquetas.contadores.dibujar(ventana);
             break;
         case FaseNivel::MostrandoResultado:

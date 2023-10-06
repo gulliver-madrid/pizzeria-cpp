@@ -22,19 +22,26 @@ struct Vista {
     PanelesCompletos paneles_completos;
     EtiquetasGenerales etiquetas;
     Grid &grid;
+
     Vista(
-        const sf::Font &font, Grid &grid,
-        const std::vector<TipoPizza> &tp_disponibles
+        bool es_estatico,                            //
+        const sf::Font &font,                        //
+        Grid &grid,                                  //
+        const std::vector<TipoPizza> &tp_disponibles //
     )
-        : botones(font, tp_disponibles), paneles_completos(font),
-          etiquetas(font), grid(grid), font(font),
+        : botones(font, tp_disponibles), //
+          paneles_completos(font),       //
+          etiquetas(es_estatico, font),  //
+          grid(grid),                    //
+          font(font),                    //
           tp_disponibles(tp_disponibles) {}
+
     void setup(
         const std::string &instrucciones, //
         int num_nivel,                    //
-        bool es_estatico,                 //
-        int total_objetivos
+        int total_objetivos               //
     );
+
     void actualizarIU(             //
         sf::RenderWindow &ventana, //
         const Estado &estado       //

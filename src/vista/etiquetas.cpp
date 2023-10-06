@@ -83,9 +83,7 @@ crearEtiquetaPizzasServidas(const sf::Font &font, size_t indice_etiqueta) {
         font
     );
 }
-void EtiquetasContadores::setup(
-    const std::vector<TipoPizza> &tp_disponibles, bool es_estatico
-) {
+void EtiquetasContadores::setup(const std::vector<TipoPizza> &tp_disponibles) {
     int i = 0;
     for (auto &tp : tp_disponibles) {
         texto_preparadas[tp] = crearEtiquetaPizzasPreparadas(font, i);
@@ -126,8 +124,7 @@ std::string pedido_to_string(const Pedido &pedido) {
 
 void EtiquetasContadores::actualizar(
     const PizzasAContadores &pizzas_a_contadores, //
-    const Pedidos &pedidos,                       //
-    bool es_estatico
+    const Pedidos &pedidos                        //
 ) {
     for (auto &par : pizzas_a_contadores) {
         const auto &tp = par.first;
@@ -236,14 +233,12 @@ sf::Text generar_etiqueta_resultado(const sf::Font &font) {
 void EtiquetasGenerales::setup(
     const std::string &instr,                     //
     int num_nivel,                                //
-    const std::vector<TipoPizza> &tp_disponibles, //
-    bool es_estatico,                             //
+    const std::vector<TipoPizza> &tp_disponibles, //                          //
     int total_objetivos
 ) {
     const auto instrucciones =
         generar_etiqueta_instrucciones(font, instr, num_nivel, total_objetivos);
     const auto resultado = generar_etiqueta_resultado(font);
-
     info = {instrucciones, resultado};
-    contadores.setup(tp_disponibles, es_estatico);
+    contadores.setup(tp_disponibles);
 }

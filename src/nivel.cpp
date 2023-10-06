@@ -192,13 +192,17 @@ AccionGeneral nivel(               //
             total_objetivos += pedido_tp.objetivo;
         }
     }
-    Vista vista(globales.font, grid, control_pizzas.get_tipos_disponibles());
+    Vista vista(
+        datos_nivel.es_estatico,               //
+        globales.font,                         //
+        grid,                                  //
+        control_pizzas.get_tipos_disponibles() //
+    );
 
     vista.setup(
         datos_nivel.instrucciones, //
         num_nivel,                 //
-        datos_nivel.es_estatico,   //
-        total_objetivos
+        total_objetivos            //
     );
 
     Timer timer_espera_antes_de_resultado;
