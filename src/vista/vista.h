@@ -38,7 +38,7 @@ struct Vista {
 
     void setup(
         const std::string &instrucciones, //
-        int num_nivel,                    //
+        NumNivel num_nivel,               //
         int total_objetivos               //
     );
 

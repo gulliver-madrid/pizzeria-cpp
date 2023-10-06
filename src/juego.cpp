@@ -19,7 +19,7 @@ int juego() {
         bool reiniciar = false;
         for (int i = 0; i < NUM_DATOS_NIVELES; i++) {
             bool es_el_ultimo = (i == NUM_DATOS_NIVELES - 1);
-            auto num_nivel = i + 1;
+            auto num_nivel = NumNivel(i + 1);
             auto res = nivel(
                 globales, datos_niveles[i], num_nivel, grid, es_el_ultimo
             );

@@ -1,9 +1,10 @@
 #pragma once
 
+#include "shared.h"
 #include <string>
 
 std::string construir_instrucciones(
-    const std::string plantilla, int num_nivel, int objetivo
+    const std::string plantilla, NumNivel num_nivel, int objetivo
 );
 std::string construir_resultado();
 

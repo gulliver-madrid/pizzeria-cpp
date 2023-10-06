@@ -208,7 +208,7 @@ void EtiquetasContadores::dibujar(sf::RenderWindow &ventana) const {
 sf::Text generar_etiqueta_instrucciones(
     const sf::Font &font,         //
     const std::string &plantilla, //
-    int num_nivel,                //
+    NumNivel num_nivel,           //
     int objetivo
 ) {
     const auto color = colores::COLOR_TEXTO_INSTRUCCIONES;
@@ -231,7 +231,7 @@ sf::Text generar_etiqueta_resultado(const sf::Font &font) {
 
 void EtiquetasGenerales::setup(
     const std::string &instr,                     //
-    int num_nivel,                                //
+    NumNivel num_nivel,                           //
     const std::vector<TipoPizza> &tp_disponibles, //                          //
     int total_objetivos
 ) {

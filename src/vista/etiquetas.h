@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../general.h"
+#include "../shared.h"
 #include <SFML/Graphics.hpp>
 
 struct Globales;
@@ -49,7 +50,7 @@ struct EtiquetasGenerales {
 
     void setup(
         const std::string &instr,                     //
-        int num_nivel,                                //
+        NumNivel num_nivel,                           //
         const std::vector<TipoPizza> &tp_disponibles, //
         int total_objetivos
     );

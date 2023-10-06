@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) { // fmt
 
     switch (app) {
         case 1:
-            return demo_nivel(std::atoi(argv[2]));
+            return demo_nivel(NumNivel(std::atoi(argv[2])));
             break;
         case 2:
             return demo_visual();

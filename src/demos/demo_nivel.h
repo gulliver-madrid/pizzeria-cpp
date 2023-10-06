@@ -1,3 +1,5 @@
 #pragma once
 
-int demo_nivel(int indice_nivel);
+#include "../shared.h"
+
+int demo_nivel(NumNivel indice_nivel);
