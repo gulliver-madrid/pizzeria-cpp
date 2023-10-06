@@ -152,11 +152,20 @@ void procesa_cambio_de_fase(
 void debug_pedidos(const DatosNivel &datos_nivel) {
     for (auto &pedido : datos_nivel.pedidos) {
         for (auto &par : pedido.contenido) {
-
             std::cout << tipo_pizza_to_string[par.first] << ": "
                       << par.second.objetivo << std::endl;
         }
     }
+}
+
+int obtener_total_preparadas(const PizzasAContadores &contadores) {
+    int total_preparadas = 0;
+    for (auto &par : contadores) {
+        auto contador_tp = par.second;
+        total_preparadas += contador_tp.preparadas;
+    }
+    assert(total_preparadas >= 0);
+    return total_preparadas;
 }
 
 AccionGeneral nivel(               //
@@ -228,18 +237,13 @@ AccionGeneral nivel(               //
                 }
             }
         }
-        int total_preparadas = 0;
-        for (auto &par : contadores) {
-            auto contador_tp = par.second;
-            total_preparadas += contador_tp.preparadas;
-        }
+        int total_preparadas = obtener_total_preparadas(contadores);
         if (total_preparadas < MAXIMO_PIZZAS_PREPARADAS) {
             int maximo = MAXIMO_PIZZAS_PREPARADAS - total_preparadas;
             auto tiempo_actual = obtener_tiempo_actual();
             evaluar_preparacion(
                 estado.encargos, contadores, maximo, tiempo_actual
             );
-            // debug_contadores(contadores);
         }
 
         // En función de la fase actual (no necesariamente reciente)
@@ -262,7 +266,6 @@ AccionGeneral nivel(               //
                 break;
             }
         }
-        // debug_contadores(estado.control_pizzas.contadores);
 
         vista.actualizarIU(globales.window, estado);
     }
