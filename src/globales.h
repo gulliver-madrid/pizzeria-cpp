@@ -1,6 +1,6 @@
 #pragma once
 
-#include "vista/componentes.h"
+#include "vista/componentes/componentes.h"
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include <iostream>
