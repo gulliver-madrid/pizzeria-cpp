@@ -129,15 +129,15 @@ AccionGeneral Nivel::ejecutar() {
         datos_nivel.pedidos, datos_nivel.es_estatico};
     Estado estado(FaseNivel::MostrandoInstrucciones, control_pizzas);
     assert(estado.establecido);
-    PizzasAContadores &contadores = estado.control_pizzas.contadores;
+    PizzasAContadores &contadores = control_pizzas.contadores;
     // std::cout << "Número de tipos de pizza disponibles: "
     //           << control_pizzas.get_tipos_disponibles().size() << std::endl;
     if (datos_nivel.es_estatico) {
         // Calcular total objetivos
-        auto &pedidos = estado.control_pizzas.pedidos;
+        auto &pedidos = control_pizzas.pedidos;
         assert(pedidos.size() == 1);
         auto &pedido = pedidos[0];
-        total_objetivos = estado.control_pizzas.obtener_total_objetivos(pedido);
+        total_objetivos = control_pizzas.obtener_total_objetivos(pedido);
     }
     Vista vista(
         datos_nivel.es_estatico,               //
