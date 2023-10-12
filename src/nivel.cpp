@@ -8,8 +8,11 @@
 #include <cassert>
 
 Nivel::Nivel(
-    Globales &globales, const DatosNivel &datos_nivel, NumNivel num_nivel,
-    Grid &grid, bool es_el_ultimo
+    Globales &globales,            //
+    const DatosNivel &datos_nivel, //
+    NumNivel num_nivel,            //
+    Grid &grid,                    //
+    bool es_el_ultimo              //
 )
     : globales(globales), datos_nivel(datos_nivel), num_nivel(num_nivel),
       grid(grid), es_el_ultimo(es_el_ultimo) {}
@@ -23,8 +26,8 @@ std::optional<FaseNivel> procesar_click_fase_activa(
 );
 
 // Incluye toda la lógica para procesar un evento
-std::optional<FaseNivel> procesarEvento(
-    sf::Event evento, Globales &globales, const Botones &botones, Estado &estado
+std::optional<FaseNivel> Nivel::procesarEvento(
+    sf::Event evento, const Botones &botones, Estado &estado
 ) {
     // std::cout << "procesando evento" << std::endl;
     auto &ventana = globales.window;
@@ -220,8 +223,7 @@ AccionGeneral Nivel::ejecutar() {
     while (globales.window.isOpen()) {
         sf::Event event;
         while (globales.window.pollEvent(event)) {
-            auto nuevo_estado =
-                procesarEvento(event, globales, vista.botones, estado);
+            auto nuevo_estado = procesarEvento(event, vista.botones, estado);
             // std::cout << "Evento completamente procesado" << std::endl;
             // Cambio de estado reciente
             if (nuevo_estado.has_value()) {
