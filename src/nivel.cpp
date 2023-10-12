@@ -7,6 +7,13 @@
 #include <SFML/Window.hpp>
 #include <cassert>
 
+Nivel::Nivel(
+    Globales &globales, const DatosNivel &datos_nivel, NumNivel num_nivel,
+    Grid &grid, bool es_el_ultimo
+)
+    : globales(globales), datos_nivel(datos_nivel), num_nivel(num_nivel),
+      grid(grid), es_el_ultimo(es_el_ultimo) {}
+
 /* Procesa un click realizado durante la fase activa.
  * Devuelve la nueva fase, en caso de que debiera cambiar
  */
@@ -164,13 +171,7 @@ int obtener_total_preparadas(const PizzasAContadores &contadores) {
     return total_preparadas;
 }
 
-AccionGeneral nivel(               //
-    Globales &globales,            //
-    const DatosNivel &datos_nivel, //
-    NumNivel num_nivel,            //
-    Grid &grid,                    //
-    bool es_el_ultimo
-) {
+AccionGeneral Nivel::ejecutar() {
     int total_objetivos = -1; // En dinámicos no se usa
     // std::cout << "es estatico? " << datos_nivel.es_estatico << std::endl;
     // std::cout << "Número de nivel: " << num_nivel << std::endl;

@@ -20,9 +20,10 @@ int demo_nivel(NumNivel numero_nivel) {
     }
 
     while (true) {
-        AccionGeneral res = nivel(
+        Nivel nivel(
             globales, datos_niveles[indice_nivel], numero_nivel, grid, true
         );
+        AccionGeneral res = nivel.ejecutar();
         if (res == AccionGeneral::Reiniciar) {
             continue;
         } else {

@@ -9,10 +9,16 @@ struct Globales;
 
 enum class AccionGeneral { SiguienteNivel, Reiniciar, Salir };
 
-AccionGeneral nivel(               //
-    Globales &globales,            //
-    const DatosNivel &datos_nivel, //
-    NumNivel num_nivel,            //
-    Grid &grid,                    //
-    bool es_el_ultimo
-);
+struct Nivel {
+    Globales &globales;
+    const DatosNivel &datos_nivel;
+    NumNivel num_nivel;
+    Grid &grid;
+    bool es_el_ultimo;
+
+    Nivel(
+        Globales &globales, const DatosNivel &datos_nivel, NumNivel num_nivel,
+        Grid &grid, bool es_el_ultimo
+    );
+    AccionGeneral ejecutar();
+};
