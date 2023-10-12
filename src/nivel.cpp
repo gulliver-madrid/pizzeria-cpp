@@ -78,25 +78,21 @@ std::optional<FaseNivel> Nivel::procesar_click_fase_activa(
 
     auto tipos_pizza_disponibles =
         estado.control_pizzas.get_tipos_disponibles();
-
-    for (auto &par : botones.despachar) {
-        auto &tp = par.first;
-        auto &boton_despachar = par.second;
-        if (globales.detecta_colision(boton_despachar, mouse_pos)) {
-            estado.control_pizzas.procesar_despacho(tp);
-            break;
-        }
-    }
-    if (!estado.control_pizzas.faltan_pedidos_por_cubrir()) {
-        return FaseNivel::EsperaAntesDeResultado;
-    }
-
+    bool despacho = false;
     for (const auto &tp : tipos_pizza_disponibles) {
         if (globales.detecta_colision(botones.encargar.at(tp), mouse_pos)) {
             auto encargo = EncargoACocina(tp, obtener_tiempo_actual());
             estado.encargos.anadir(encargo);
             return std::nullopt;
         }
+        if (globales.detecta_colision(botones.despachar.at(tp), mouse_pos)) {
+            estado.control_pizzas.procesar_despacho(tp);
+            despacho = true;
+            break;
+        }
+    }
+    if (despacho && !estado.control_pizzas.faltan_pedidos_por_cubrir()) {
+        return FaseNivel::EsperaAntesDeResultado;
     }
     return std::nullopt;
 }
