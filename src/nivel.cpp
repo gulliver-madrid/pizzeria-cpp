@@ -17,7 +17,8 @@ Nivel::Nivel(
     : globales(globales), datos_nivel(datos_nivel), num_nivel(num_nivel),
       grid(grid), es_el_ultimo(es_el_ultimo) {}
 
-// Incluye toda la lógica para procesar un evento
+/* Incluye toda la lógica para procesar un evento. Devuelve la nueva fase si la
+ * hay.*/
 std::optional<FaseNivel> Nivel::procesarEvento(
     sf::Event evento, const Botones &botones, Estado &estado
 ) {
@@ -66,67 +67,31 @@ std::optional<FaseNivel> Nivel::procesarEvento(
     }
     return std::nullopt;
 };
-/* Procesa el despacho de una pizza de tipo tp, incorporandola al primer pedido
- * disponible y evaluando si ya esta completo.
- * Devuelve un booleano indicando si se sirvió en un pedido (true) o se desechó
- * (false)
- * */
-bool procesar_despacho(const TipoPizza tp, Pedidos &pedidos) {
-    for (auto &pedido : pedidos) {
-        if (pedido.cubierto) {
-            continue;
-        }
-        if (pedido.contenido.count(tp) == 0) {
-            continue;
-        }
-        auto &pedido_tp = pedido.contenido.at(tp);
-        if (pedido_tp.servido == pedido_tp.objetivo) {
-            continue;
-        }
-        assert(pedido_tp.servido < pedido_tp.objetivo);
-        pedido_tp.servido++;
-        pedido.evaluar();
-        return true;
-    }
-    return false;
-}
 
-/* Procesa un click realizado durante la fase activa.
+/*
+ *Procesa un click realizado durante la fase activa.
  * Devuelve la nueva fase, en caso de que debiera cambiar
  */
 std::optional<FaseNivel> Nivel::procesar_click_fase_activa(
     const Botones &botones, Estado &estado, const sf::Vector2i mouse_pos
 ) {
 
-    PizzasAContadores &contadores = estado.control_pizzas.contadores;
+    auto tipos_pizza_disponibles =
+        estado.control_pizzas.get_tipos_disponibles();
 
     for (auto &par : botones.despachar) {
         auto &tp = par.first;
-        auto &boton = par.second;
-        auto &contador = contadores.at(tp);
-        if (globales.detecta_colision(boton, mouse_pos)) {
-            assert(contador.preparadas > 0);
-            contador.preparadas--;
-            bool result = procesar_despacho(tp, estado.control_pizzas.pedidos);
-            if (result) {
-                contador.servidas++;
-            }
+        auto &boton_despachar = par.second;
+        if (globales.detecta_colision(boton_despachar, mouse_pos)) {
+            estado.control_pizzas.procesar_despacho(tp);
             break;
         }
     }
-    bool faltan = false;
-    for (auto &pedido : estado.control_pizzas.pedidos) {
-        if (!pedido.cubierto) {
-            faltan = true;
-            break;
-        }
-    }
-    if (!faltan) {
+    if (!estado.control_pizzas.faltan_pedidos_por_cubrir()) {
         return FaseNivel::EsperaAntesDeResultado;
     }
 
-    for (const auto &par : contadores) {
-        auto &tp = par.first;
+    for (const auto &tp : tipos_pizza_disponibles) {
         if (globales.detecta_colision(botones.encargar.at(tp), mouse_pos)) {
             auto encargo = EncargoACocina(tp, obtener_tiempo_actual());
             estado.encargos.anadir(encargo);
@@ -157,16 +122,6 @@ void Nivel::procesa_cambio_de_fase(
     }
 }
 
-int obtener_total_preparadas(const PizzasAContadores &contadores) {
-    int total_preparadas = 0;
-    for (auto &par : contadores) {
-        auto contador_tp = par.second;
-        total_preparadas += contador_tp.preparadas;
-    }
-    assert(total_preparadas >= 0);
-    return total_preparadas;
-}
-
 AccionGeneral Nivel::ejecutar() {
     int total_objetivos = -1; // En dinámicos no se usa
     // std::cout << "es estatico? " << datos_nivel.es_estatico << std::endl;
@@ -186,13 +141,7 @@ AccionGeneral Nivel::ejecutar() {
         auto &pedidos = estado.control_pizzas.pedidos;
         assert(pedidos.size() == 1);
         auto &pedido = pedidos[0];
-        total_objetivos = 0;
-        for (auto &par : pedido.contenido) {
-            auto tp = par.first;
-            auto pedido_tp = par.second;
-            assert(contadores[tp].preparadas == 0);
-            total_objetivos += pedido_tp.objetivo;
-        }
+        total_objetivos = estado.control_pizzas.obtener_total_objetivos(pedido);
     }
     Vista vista(
         datos_nivel.es_estatico,               //
@@ -233,7 +182,7 @@ AccionGeneral Nivel::ejecutar() {
                 }
             }
         }
-        int total_preparadas = obtener_total_preparadas(contadores);
+        int total_preparadas = estado.control_pizzas.obtener_total_preparadas();
         if (total_preparadas < MAXIMO_PIZZAS_PREPARADAS) {
             int maximo = MAXIMO_PIZZAS_PREPARADAS - total_preparadas;
             auto tiempo_actual = obtener_tiempo_actual();
