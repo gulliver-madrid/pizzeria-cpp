@@ -69,7 +69,7 @@ crea_linea_completitud_pizza(const TipoPizza &tp, int parte, int todo) {
 }
 
 /* Crea una string representando un pedido. Una línea por tipo de pizza, con el
- * formato TipoPizza: n/m
+ * formato TipoPizza: actual/objetivo
  */
 std::string pedido_to_string(const Pedido &pedido) {
     std::string s;
@@ -99,6 +99,24 @@ void EtiquetasContadores::setup(const std::vector<TipoPizza> &tp_disponibles) {
     }
 };
 
+/* Actualiza texto_servidas */
+void EtiquetasContadores::_actualizar_pedido_estatico(
+    const PizzasAContadores &pizzas_a_contadores, //
+    const Pedidos &pedidos                        //
+) {
+    assert(pedidos.size() == 1);
+    const auto &pedido_unico = pedidos.at(0);
+    for (auto &par : pizzas_a_contadores) {
+        const auto &tp = par.first;
+        const auto &contadores_tp = par.second;
+        std::string servidas = crea_linea_completitud_pizza(
+            tp, contadores_tp.servidas, pedido_unico.contenido.at(tp).objetivo
+        );
+        texto_servidas.at(tp).setString(servidas);
+    }
+}
+
+/* Actualiza texto_pedidos */
 void EtiquetasContadores::_actualizar_pedidos_dinamicos( //
     const Pedidos &pedidos
 ) {
@@ -159,21 +177,5 @@ void EtiquetasContadores::actualizar(
         _actualizar_pedido_estatico(pizzas_a_contadores, pedidos);
     } else {
         _actualizar_pedidos_dinamicos(pedidos);
-    }
-}
-
-void EtiquetasContadores::_actualizar_pedido_estatico(
-    const PizzasAContadores &pizzas_a_contadores, //
-    const Pedidos &pedidos                        //
-) {
-    assert(pedidos.size() == 1);
-    const auto &pedido_unico = pedidos.at(0);
-    for (auto &par : pizzas_a_contadores) {
-        const auto &tp = par.first;
-        const auto &contadores_tp = par.second;
-        std::string servidas = crea_linea_completitud_pizza(
-            tp, contadores_tp.servidas, pedido_unico.contenido.at(tp).objetivo
-        );
-        texto_servidas.at(tp).setString(servidas);
     }
 }
