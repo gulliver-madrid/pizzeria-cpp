@@ -3,34 +3,11 @@
 #include "../general.h"
 #include "../shared.h"
 #include <SFML/Graphics.hpp>
+#include <memory>
 
 struct Globales;
 
-struct EtiquetasContadores {
-  private:
-    const sf::Font &font;
-    // Indica si el sistema de pedidos es estatico
-    const bool es_estatico;
-
-    void _actualizar_pedidos_dinamicos(const Pedidos &pedidos);
-    void _actualizar_pedido_estatico(
-        const PizzasAContadores &pizzas_a_contadores, //
-        const Pedidos &pedidos                        //
-    );
-
-  public:
-    std::map<TipoPizza, sf::Text> texto_preparadas;
-    std::map<TipoPizza, sf::Text> texto_servidas;
-    std::vector<sf::Text> texto_pedidos;
-    EtiquetasContadores(bool es_estatico, const sf::Font &font)
-        : es_estatico(es_estatico), font(font) {}
-    void setup(const std::vector<TipoPizza> &tp_disponibles);
-    void actualizar(
-        const PizzasAContadores &pizzas_a_contadores, //
-        const Pedidos &pedidos                        //
-    );
-    void dibujar(sf::RenderWindow &ventana) const;
-};
+struct EtiquetasContadores;
 
 struct EtiquetasInfo {
     sf::Text instrucciones;
@@ -41,18 +18,24 @@ struct EtiquetasInfo {
 struct EtiquetasGenerales {
   private:
     const sf::Font &font;
+    std::unique_ptr<EtiquetasContadores> contadores;
 
   public:
-    EtiquetasContadores contadores;
     EtiquetasInfo info;
-    EtiquetasGenerales(bool es_estatico, const sf::Font &font)
-        : font(font), contadores(es_estatico, font) {}
+    EtiquetasGenerales(bool es_estatico, const sf::Font &font);
+    ~EtiquetasGenerales();
 
     void setup(
         const std::string &instr,                     //
         NumNivel num_nivel,                           //
         const std::vector<TipoPizza> &tp_disponibles, //
         int total_objetivos
+    );
+
+    void actualizar_y_dibujar_contadores(
+        const PizzasAContadores &pizzas_a_contadores, //
+        const Pedidos &pedidos,                       //
+        sf::RenderWindow &ventana                     //
     );
 };
 

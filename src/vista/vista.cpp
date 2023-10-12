@@ -158,8 +158,9 @@ void actualizar_etiquetas(
             break;
         case FaseNivel::Activa:
         case FaseNivel::EsperaAntesDeResultado:
-            etiquetas.contadores.actualizar(contadores, pedidos);
-            etiquetas.contadores.dibujar(ventana);
+            etiquetas.actualizar_y_dibujar_contadores(
+                contadores, pedidos, ventana
+            );
             break;
         case FaseNivel::MostrandoResultado:
             ventana.draw(etiquetas.info.resultado);
