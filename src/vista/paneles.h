@@ -2,7 +2,7 @@
 
 #include "../modelo/modelo.h"
 #include "barras_progreso.h"
-#include "componentes/componentes.h"
+#include "componentes/varios.h"
 #include <vector>
 
 enum class IndicePanel;

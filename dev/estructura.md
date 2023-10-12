@@ -40,8 +40,8 @@
                 - nivel.cpp
                     - vista/vista.h
                         - vista/botones.h
-                            - vista/componentes/componentes.h
-                                - vista/componentes/componentes.cpp (hoja)
+                            - vista/componentes/varios.h
+                                - vista/componentes/varios.cpp (hoja)
                                 - globales.h (def)
                             - vista/botones.cpp
                                 - modelo/dominio.h
@@ -53,7 +53,7 @@
                                 - templates.h (hoja)
                                 - textos.h (def)
                                 - vista/cadenas.h (def)
-                                - vista/componentes/componentes.h (def)
+                                - vista/componentes/varios.h (def)
                                 - vista/vista_basics.h (def)
                         - vista/paneles.h
                             - modelo/modelo.h (def)
@@ -61,7 +61,7 @@
                                 - vista/barras_progreso.cpp
                                     - modelo/modelo.h (def)
                                     - vista/vista_basics.h (def)
-                            - vista/componentes/componentes.h (def)
+                            - vista/componentes/varios.h (def)
                             - vista/paneles.cpp
                                 - vista/cadenas.h (def)
                                 - vista/etiquetas.h (def)

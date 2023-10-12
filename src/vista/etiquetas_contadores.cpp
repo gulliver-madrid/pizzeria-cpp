@@ -1,5 +1,5 @@
 #include "etiquetas_contadores.h"
-#include "componentes/componentes.h"
+#include "componentes/varios.h"
 #include "vista_basics.h"
 
 namespace medidas {

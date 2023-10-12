@@ -1,6 +1,6 @@
 #pragma once
 
-#include "vista/componentes/componentes.h"
+#include "vista/componentes/boton_con_texto.h"
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include <iostream>

@@ -2,7 +2,7 @@
 #include "../templates.h"
 #include "../textos.h"
 #include "../vista/cadenas.h"
-#include "componentes/componentes.h"
+#include "componentes/varios.h"
 #include "etiquetas_contadores.h"
 #include "vista_basics.h"
 

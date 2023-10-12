@@ -1,6 +1,6 @@
 #pragma once
 
-#include "componentes/componentes.h"
+#include "componentes/boton_con_texto.h"
 
 enum class TipoPizza;
 struct BotonData;

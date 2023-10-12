@@ -36,7 +36,8 @@ add_executable(pizzeria
     src/vista/barras_progreso.cpp
     src/vista/botones.cpp
     src/vista/cadenas.cpp
-    src/vista/componentes/componentes.cpp
+    src/vista/componentes/boton_con_texto.cpp
+    src/vista/componentes/varios.cpp
     src/vista/etiquetas.cpp
     src/vista/etiquetas_contadores.cpp
     src/vista/grid.cpp
