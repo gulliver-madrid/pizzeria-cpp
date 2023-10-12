@@ -17,14 +17,6 @@ Nivel::Nivel(
     : globales(globales), datos_nivel(datos_nivel), num_nivel(num_nivel),
       grid(grid), es_el_ultimo(es_el_ultimo) {}
 
-/* Procesa un click realizado durante la fase activa.
- * Devuelve la nueva fase, en caso de que debiera cambiar
- */
-std::optional<FaseNivel> procesar_click_fase_activa(
-    Globales &globales, const Botones &botones, Estado &estado,
-    const sf::Vector2i mouse_pos
-);
-
 // Incluye toda la lógica para procesar un evento
 std::optional<FaseNivel> Nivel::procesarEvento(
     sf::Event evento, const Botones &botones, Estado &estado
@@ -65,9 +57,8 @@ std::optional<FaseNivel> Nivel::procesarEvento(
                 return FaseNivel::Activa;
             }
         } else if (estado.fase_actual == FaseNivel::Activa) {
-            auto nueva_fase = procesar_click_fase_activa(
-                globales, botones, estado, mouse_pos
-            );
+            auto nueva_fase =
+                procesar_click_fase_activa(botones, estado, mouse_pos);
             if (nueva_fase.has_value()) {
                 return nueva_fase;
             }
@@ -100,9 +91,11 @@ bool procesar_despacho(const TipoPizza tp, Pedidos &pedidos) {
     return false;
 }
 
-std::optional<FaseNivel> procesar_click_fase_activa(
-    Globales &globales, const Botones &botones, Estado &estado,
-    const sf::Vector2i mouse_pos
+/* Procesa un click realizado durante la fase activa.
+ * Devuelve la nueva fase, en caso de que debiera cambiar
+ */
+std::optional<FaseNivel> Nivel::procesar_click_fase_activa(
+    const Botones &botones, Estado &estado, const sf::Vector2i mouse_pos
 ) {
 
     PizzasAContadores &contadores = estado.control_pizzas.contadores;
@@ -144,7 +137,7 @@ std::optional<FaseNivel> procesar_click_fase_activa(
 }
 
 /* Procesa un cambio de fase reciente */
-void procesa_cambio_de_fase(
+void Nivel::procesa_cambio_de_fase(
     FaseNivel nueva_fase,                   //
     Vista &vista,                           //
     Timer &timer_espera_antes_de_resultado, //
