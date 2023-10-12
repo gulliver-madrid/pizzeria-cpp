@@ -8,13 +8,12 @@ struct BotonConTexto {
   private:
     static size_t proximo_id;
     size_t id;
+    bool activo = true;
+    sf::RectangleShape forma;
+    sf::Text etiqueta;
 
   public:
-    sf::RectangleShape boton;
-    sf::Text texto;
-    bool activo = true;
     bool visible = false;
-
     BotonConTexto();
     BotonConTexto(sf::RectangleShape rectShape, sf::Text txt);
     bool colisiona(const sf::Vector2i &mousePos) const;
@@ -23,6 +22,7 @@ struct BotonConTexto {
     void desactivar();
     void activacion_condicional(bool condicion);
     size_t get_id() const;
+    bool esta_activo() const;
 
   private:
     std::optional<sf::Color> colorBotonActivo;

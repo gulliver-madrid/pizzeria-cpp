@@ -8,7 +8,7 @@ size_t BotonConTexto::proximo_id = 0;
 bool BotonConTexto::colisiona(const sf::Vector2i &mousePos) const {
     if (!visible || !activo)
         return false;
-    return boton.getGlobalBounds().contains(
+    return forma.getGlobalBounds().contains(
         static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)
     );
 }
@@ -17,21 +17,21 @@ void BotonConTexto::dibujar(sf::RenderWindow &window) {
     if (!visible)
         return;
     if (!colorBotonActivo.has_value())
-        colorBotonActivo = boton.getFillColor();
+        colorBotonActivo = forma.getFillColor();
     if (activo) {
-        boton.setFillColor(colorBotonActivo.value());
+        forma.setFillColor(colorBotonActivo.value());
     } else {
-        boton.setFillColor(sf::Color(100, 100, 100));
+        forma.setFillColor(sf::Color(100, 100, 100));
     }
-    window.draw(boton);
-    window.draw(texto);
+    window.draw(forma);
+    window.draw(etiqueta);
 }
 
 BotonConTexto::BotonConTexto(sf::RectangleShape rectShape, sf::Text txt)
-    : boton(rectShape), texto(txt) {
-    colorBotonActivo = boton.getFillColor();
-    boton.setOutlineColor(sf::Color::Black);
-    boton.setOutlineThickness(2);
+    : forma(rectShape), etiqueta(txt) {
+    colorBotonActivo = forma.getFillColor();
+    forma.setOutlineColor(sf::Color::Black);
+    forma.setOutlineThickness(2);
     id = proximo_id++;
 };
 
@@ -81,4 +81,8 @@ void BotonConTexto::activacion_condicional(bool condicion) {
 }
 size_t BotonConTexto::get_id() const { //
     return id;
+}
+
+bool BotonConTexto::esta_activo() const { //
+    return activo;
 }

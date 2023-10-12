@@ -102,7 +102,7 @@ void desactivar_botones_encargar_si_se_sobrepasan_objetivos(
     for (auto &par : contadores) {
         auto &tp = par.first;
         auto &boton_encargar = botones_encargar.at(tp);
-        if (!boton_encargar.activo) {
+        if (!boton_encargar.esta_activo()) {
             continue;
         }
         auto &contadores_tp = par.second;

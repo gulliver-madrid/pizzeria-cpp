@@ -51,7 +51,6 @@ std::optional<FaseNivel> procesarEvento(
         }
         // Dependientes del estado
         if (estado.fase_actual == FaseNivel::MostrandoInstrucciones) {
-            auto bounds = botones.empezar.boton.getGlobalBounds();
             if (globales.detecta_colision(botones.empezar, mouse_pos)) {
                 return FaseNivel::Activa;
             }
