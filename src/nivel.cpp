@@ -11,13 +11,13 @@
  * Devuelve la nueva fase, en caso de que debiera cambiar
  */
 std::optional<FaseNivel> procesar_click_fase_activa(
-    const Globales &globales, Botones &botones, Estado &estado,
+    Globales &globales, const Botones &botones, Estado &estado,
     const sf::Vector2i mouse_pos
 );
 
 // Incluye toda la lógica para procesar un evento
 std::optional<FaseNivel> procesarEvento(
-    sf::Event evento, Globales &globales, Botones &botones, Estado &estado
+    sf::Event evento, Globales &globales, const Botones &botones, Estado &estado
 ) {
     // std::cout << "procesando evento" << std::endl;
     auto &ventana = globales.window;
@@ -35,27 +35,30 @@ std::optional<FaseNivel> procesarEvento(
 
     // Pulsación botón
     else if (evento.type == sf::Event::MouseButtonPressed) {
-        sf::Vector2i mousePos = sf::Mouse::getPosition(ventana);
+        sf::Vector2i mouse_pos = sf::Mouse::getPosition(ventana);
 
         // Fijos
-        if (botones.salir.colisiona(mousePos, globales)) {
+        if (globales.detecta_colision(botones.salir, mouse_pos)) {
             ventana.close();
             return FaseNivel::Saliendo;
-        } else if (botones.reiniciar.colisiona(mousePos, globales)) {
+        } else if (globales.detecta_colision(botones.reiniciar, mouse_pos)) {
             return FaseNivel::Reiniciando;
-        } else if (botones.alternar_grid.colisiona(mousePos, globales)) {
+        } else if (globales.detecta_colision(
+                       botones.alternar_grid, mouse_pos
+                   )) {
             assert(MODO_DESARROLLO);
             estado.mostrando_grid = !estado.mostrando_grid;
         }
         // Dependientes del estado
         if (estado.fase_actual == FaseNivel::MostrandoInstrucciones) {
             auto bounds = botones.empezar.boton.getGlobalBounds();
-            if (botones.empezar.colisiona(mousePos, globales)) {
+            if (globales.detecta_colision(botones.empezar, mouse_pos)) {
                 return FaseNivel::Activa;
             }
         } else if (estado.fase_actual == FaseNivel::Activa) {
-            auto nueva_fase =
-                procesar_click_fase_activa(globales, botones, estado, mousePos);
+            auto nueva_fase = procesar_click_fase_activa(
+                globales, botones, estado, mouse_pos
+            );
             if (nueva_fase.has_value()) {
                 return nueva_fase;
             }
@@ -89,7 +92,7 @@ bool procesar_despacho(const TipoPizza tp, Pedidos &pedidos) {
 }
 
 std::optional<FaseNivel> procesar_click_fase_activa(
-    const Globales &globales, Botones &botones, Estado &estado,
+    Globales &globales, const Botones &botones, Estado &estado,
     const sf::Vector2i mouse_pos
 ) {
 
@@ -99,7 +102,7 @@ std::optional<FaseNivel> procesar_click_fase_activa(
         auto &tp = par.first;
         auto &boton = par.second;
         auto &contador = contadores.at(tp);
-        if (boton.colisiona(mouse_pos, globales)) {
+        if (globales.detecta_colision(boton, mouse_pos)) {
             assert(contador.preparadas > 0);
             contador.preparadas--;
             bool result = procesar_despacho(tp, estado.control_pizzas.pedidos);
@@ -122,7 +125,7 @@ std::optional<FaseNivel> procesar_click_fase_activa(
 
     for (const auto &par : contadores) {
         auto &tp = par.first;
-        if (botones.encargar[tp].colisiona(mouse_pos, globales)) {
+        if (globales.detecta_colision(botones.encargar.at(tp), mouse_pos)) {
             auto encargo = EncargoACocina(tp, obtener_tiempo_actual());
             estado.encargos.anadir(encargo);
             return std::nullopt;

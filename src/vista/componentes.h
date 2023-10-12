@@ -1,23 +1,28 @@
 #pragma once
 
-#include "../globales.h"
+#include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <optional>
 
 struct BotonConTexto {
+  private:
+    static size_t proximo_id;
+    size_t id;
+
+  public:
     sf::RectangleShape boton;
     sf::Text texto;
     bool activo = true;
     bool visible = false;
-    sf::Sound sound;
 
     BotonConTexto();
     BotonConTexto(sf::RectangleShape rectShape, sf::Text txt);
-    bool colisiona(const sf::Vector2i &mousePos, const Globales &globales);
+    bool colisiona(const sf::Vector2i &mousePos) const;
     void dibujar(sf::RenderWindow &window);
     void activar();
     void desactivar();
     void activacion_condicional(bool condicion);
+    size_t get_id() const;
 
   private:
     std::optional<sf::Color> colorBotonActivo;

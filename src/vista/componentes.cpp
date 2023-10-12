@@ -1,24 +1,16 @@
 #include "componentes.h"
 
+size_t BotonConTexto::proximo_id = 0;
+
 /*
  * Solo se detectará la colisión si el botón está visible y activo
  */
-bool BotonConTexto::colisiona(
-    const sf::Vector2i &mousePos, const Globales &globales
-) {
+bool BotonConTexto::colisiona(const sf::Vector2i &mousePos) const {
     if (!visible || !activo)
         return false;
-    bool colisiona = boton.getGlobalBounds().contains(
+    return boton.getGlobalBounds().contains(
         static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)
     );
-    if (!colisiona) {
-        return false;
-    }
-    if (globales.button_click_buffer) {
-        sound.setBuffer(globales.button_click_buffer.value());
-        sound.play();
-    }
-    return true;
 }
 
 void BotonConTexto::dibujar(sf::RenderWindow &window) {
@@ -40,7 +32,9 @@ BotonConTexto::BotonConTexto(sf::RectangleShape rectShape, sf::Text txt)
     colorBotonActivo = boton.getFillColor();
     boton.setOutlineColor(sf::Color::Black);
     boton.setOutlineThickness(2);
+    id = proximo_id++;
 };
+
 BotonConTexto::BotonConTexto(){};
 
 sf::Text crearEtiqueta(
@@ -84,4 +78,7 @@ void BotonConTexto::activacion_condicional(bool condicion) {
     } else {
         desactivar();
     }
+}
+size_t BotonConTexto::get_id() const { //
+    return id;
 }

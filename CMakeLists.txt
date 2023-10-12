@@ -23,6 +23,7 @@ add_executable(pizzeria
     src/main.cpp
     src/datos_niveles.cpp
     src/debug_sfml.cpp
+    src/globales.cpp
     src/juego.cpp
     src/modelo/control_pizzas.cpp
     src/modelo/dominio.cpp

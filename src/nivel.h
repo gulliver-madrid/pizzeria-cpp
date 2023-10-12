@@ -1,6 +1,7 @@
 #pragma once
 
 #include "general.h"
+#include "globales.h"
 #include "shared.h"
 #include "vista/grid.h"
 
