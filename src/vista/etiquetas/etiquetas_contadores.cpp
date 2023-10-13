@@ -1,8 +1,8 @@
 #include "etiquetas_contadores.h"
-#include "componentes/varios.h"
+#include "../componentes/varios.h"
+#include "../presentador.h"
+#include "../vista_basics.h"
 #include "fabrica_etiquetas_contadores.h"
-#include "presentador.h"
-#include "vista_basics.h"
 
 namespace medidas {
     constexpr int SEPARACION_VERTICAL_ENTRE_PEDIDOS = 20;

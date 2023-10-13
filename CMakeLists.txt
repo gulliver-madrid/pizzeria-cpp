@@ -38,10 +38,10 @@ add_executable(pizzeria
     src/vista/cadenas.cpp
     src/vista/componentes/boton_con_texto.cpp
     src/vista/componentes/varios.cpp
-    src/vista/etiquetas.cpp
-    src/vista/etiquetas_contadores.cpp
-    src/vista/fabrica_etiquetas.cpp
-    src/vista/fabrica_etiquetas_contadores.cpp
+    src/vista/etiquetas/etiquetas.cpp
+    src/vista/etiquetas/etiquetas_contadores.cpp
+    src/vista/etiquetas/fabrica_etiquetas.cpp
+    src/vista/etiquetas/fabrica_etiquetas_contadores.cpp
     src/vista/grid.cpp
     src/vista/paneles.cpp
     src/vista/presentador.cpp

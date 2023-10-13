@@ -1,7 +1,7 @@
 #include "fabrica_etiquetas.h"
-#include "../textos.h"
-#include "componentes/varios.h"
-#include "vista_basics.h"
+#include "../../textos.h"
+#include "../componentes/varios.h"
+#include "../vista_basics.h"
 
 namespace medidas {
     const sf::Vector2f POSICION_INSTRUCCIONES_O_RESULTADO = {200, 200};

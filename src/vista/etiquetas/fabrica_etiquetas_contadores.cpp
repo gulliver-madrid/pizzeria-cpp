@@ -1,6 +1,6 @@
 #include "fabrica_etiquetas_contadores.h"
-#include "componentes/varios.h"
-#include "vista_basics.h"
+#include "../componentes/varios.h"
+#include "../vista_basics.h"
 
 namespace medidas {
     constexpr int TAMANO_FUENTE_ETIQUETAS = 24;

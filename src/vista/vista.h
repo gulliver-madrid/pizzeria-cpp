@@ -1,7 +1,7 @@
 #pragma once
 
 #include "botones.h"
-#include "etiquetas.h"
+#include "etiquetas/etiquetas.h"
 #include "paneles.h"
 
 struct Estado;

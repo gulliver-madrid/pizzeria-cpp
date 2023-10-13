@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../general.h"
-#include "../shared.h"
+#include "../../general.h"
+#include "../../shared.h"
 #include <SFML/Graphics.hpp>
 #include <memory>
 
