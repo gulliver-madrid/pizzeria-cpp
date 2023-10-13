@@ -3,7 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <optional>
 
-struct FuenteTexto {
+struct EstiloTexto {
     const int tamano;
     const sf::Color &color;
     const sf::Font &font;
@@ -16,5 +16,5 @@ sf::Text crearEtiqueta(
     const sf::Vector2f &posicion = VECTOR_CERO
 );
 sf::Text crearEtiqueta(
-    const FuenteTexto &fuente_texto, const sf::Vector2f &posicion = VECTOR_CERO
+    const EstiloTexto &fuente_texto, const sf::Vector2f &posicion = VECTOR_CERO
 );

@@ -42,7 +42,7 @@ sf::Text generar_etiqueta_instrucciones(
 ) {
     const auto color = colores::COLOR_TEXTO_INSTRUCCIONES;
     const auto posicion = medidas::POSICION_INSTRUCCIONES_O_RESULTADO;
-    FuenteTexto fuente_texto{TAMANO_FUENTE_INFO, color, font};
+    EstiloTexto fuente_texto{TAMANO_FUENTE_INFO, color, font};
     auto etiqueta = crearEtiqueta(fuente_texto, posicion);
     const auto texto = construir_instrucciones(plantilla, num_nivel, objetivo);
     etiqueta.setString(texto);

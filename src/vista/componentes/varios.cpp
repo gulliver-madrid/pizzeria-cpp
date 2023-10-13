@@ -11,9 +11,9 @@ sf::Text crearEtiqueta(
     return etiqueta;
 }
 
-/* Sobrecarga para usar FuenteTexto */
+/* Sobrecarga para usar EstiloTexto */
 sf::Text
-crearEtiqueta(const FuenteTexto &fuente_texto, const sf::Vector2f &posicion) {
+crearEtiqueta(const EstiloTexto &fuente_texto, const sf::Vector2f &posicion) {
     return crearEtiqueta(
         fuente_texto.tamano, fuente_texto.font, fuente_texto.color, posicion
     );

@@ -1,62 +1,12 @@
 #include "etiquetas_contadores.h"
 #include "componentes/varios.h"
+#include "fabrica_etiquetas_contadores.h"
 #include "presentador.h"
 #include "vista_basics.h"
 
 namespace medidas {
-    constexpr int TAMANO_FUENTE_ETIQUETAS = 24;
-    constexpr int DESPLAZAMIENTO_VERTICAL_ETIQUETAS_PIZZAS_PREPARADAS = 50;
-    constexpr int DESPLAZAMIENTO_VERTICAL_ETIQUETAS_PIZZAS_SERVIDAS = 50;
     constexpr int SEPARACION_VERTICAL_ENTRE_PEDIDOS = 20;
-
 } // namespace medidas
-sf::Vector2f obtener_posicion_etiqueta_contador_pizzas(
-    size_t indice_etiqueta, IndicePanel indice_panel,
-    int desplazamiento_vertical
-) {
-    const auto pos_panel = obtener_posicion_panel(indice_panel);
-    const auto pos_x = pos_panel.x + medidas::MARGEN_IZQ_ETIQUETAS;
-    const auto pos_y = pos_panel.y + medidas::FILA_CONTENIDO_PANEL +
-                       desplazamiento_vertical * indice_etiqueta;
-    return sf::Vector2f(pos_x, pos_y);
-}
-
-/* Crea una etiqueta para un contador (dependiendo del panel tendrá uno u otro
- * significado)*/
-sf::Text crearEtiquetaContadorPizzas(
-    IndicePanel indice_panel,    //
-    size_t indice_etiqueta,      //
-    int desplazamiento_vertical, //
-    const sf::Font &font         //
-) {
-    const auto posicion = obtener_posicion_etiqueta_contador_pizzas(
-        indice_etiqueta, indice_panel, desplazamiento_vertical
-    );
-    const int tamano = medidas::TAMANO_FUENTE_ETIQUETAS;
-    const auto color = sf::Color::White;
-    const auto fuente = FuenteTexto{tamano, color, font};
-    return crearEtiqueta(fuente, posicion);
-}
-
-sf::Text
-crearEtiquetaPizzasPreparadas(const sf::Font &font, size_t indice_etiqueta) {
-    return crearEtiquetaContadorPizzas(
-        IndicePanel::PANEL_PREPARADAS,                                //
-        indice_etiqueta,                                              //
-        medidas::DESPLAZAMIENTO_VERTICAL_ETIQUETAS_PIZZAS_PREPARADAS, //
-        font                                                          //
-    );
-}
-
-sf::Text
-crearEtiquetaPizzasServidas(const sf::Font &font, size_t indice_etiqueta) {
-    return crearEtiquetaContadorPizzas(
-        IndicePanel::PANEL_PEDIDOS,                                 //
-        indice_etiqueta,                                            //
-        medidas::DESPLAZAMIENTO_VERTICAL_ETIQUETAS_PIZZAS_SERVIDAS, //
-        font
-    );
-}
 
 float get_bottom(const sf::FloatRect &rect) { //
     return rect.top + rect.height;
@@ -65,9 +15,13 @@ float get_bottom(const sf::FloatRect &rect) { //
 void EtiquetasContadores::setup(const std::vector<TipoPizza> &tp_disponibles) {
     int i = 0;
     for (auto &tp : tp_disponibles) {
-        texto_preparadas[tp] = crearEtiquetaPizzasPreparadas(font, i);
+        texto_preparadas[tp] =
+            FabricaEtiquetasContadores::crearEtiquetaPizzasPreparadas(font, i);
         if (es_estatico) {
-            texto_servidas[tp] = crearEtiquetaPizzasServidas(font, i);
+            texto_servidas[tp] =
+                FabricaEtiquetasContadores::crearEtiquetaPizzasServidas(
+                    font, i
+                );
         }
         i++;
     }
