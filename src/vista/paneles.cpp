@@ -1,5 +1,5 @@
 #include "paneles.h"
-#include "etiquetas.h"
+#include "etiquetas/etiquetas.h"
 #include "vista_basics.h"
 #include <SFML/Graphics.hpp>
 #include <cassert>
@@ -47,21 +47,23 @@ void TitulosPaneles::dibujar(sf::RenderWindow &ventana) {
 }
 
 PanelesCompletos::PanelesCompletos(const sf::Font &font) {
+    FabricaEtiquetasTituloPanel fabrica(font);
     titulos_paneles = {
-        crearEtiquetaTituloPanel(
-            font, obtener_posicion_panel(IndicePanel::PANEL_ENCARGAR),
+        fabrica.crearEtiquetaTituloPanel(
+            obtener_posicion_panel(IndicePanel::PANEL_ENCARGAR), //
             "Encargar"
         ),
-        crearEtiquetaTituloPanel(
-            font, obtener_posicion_panel(IndicePanel::PANEL_EN_PREPARACION),
+        fabrica.crearEtiquetaTituloPanel(
+            obtener_posicion_panel(IndicePanel::PANEL_EN_PREPARACION), //
             "En preparaci%on"
         ),
-        crearEtiquetaTituloPanel(
-            font, obtener_posicion_panel(IndicePanel::PANEL_PREPARADAS),
+        fabrica.crearEtiquetaTituloPanel(
+            obtener_posicion_panel(IndicePanel::PANEL_PREPARADAS), //
             "Preparadas"
         ),
-        crearEtiquetaTituloPanel(
-            font, obtener_posicion_panel(IndicePanel::PANEL_PEDIDOS), "Pedidos"
+        fabrica.crearEtiquetaTituloPanel(
+            obtener_posicion_panel(IndicePanel::PANEL_PEDIDOS), //
+            "Pedidos"
         )};
 }
 

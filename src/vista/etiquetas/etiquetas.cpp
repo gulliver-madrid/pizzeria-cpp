@@ -18,9 +18,8 @@ get_posicion_etiqueta_titulo_panel(const sf::Vector2f &posicion_panel) {
 }
 
 /* Usando posicion_panel */
-sf::Text crearEtiquetaTituloPanel(
-    const sf::Font &font, const sf::Vector2f &posicion_panel,
-    const std::string &texto
+sf::Text FabricaEtiquetasTituloPanel::crearEtiquetaTituloPanel(
+    const sf::Vector2f &posicion_panel, const std::string &texto
 ) {
     const auto tamano_fuente = medidas::TAMANO_FUENTE_TITULO_PANELES;
     auto posicion = get_posicion_etiqueta_titulo_panel(posicion_panel);

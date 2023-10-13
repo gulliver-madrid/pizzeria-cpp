@@ -39,7 +39,13 @@ struct EtiquetasGenerales {
     );
 };
 
-sf::Text crearEtiquetaTituloPanel(
-    const sf::Font &font, const sf::Vector2f &posicion_panel,
-    const std::string &texto
-);
+struct FabricaEtiquetasTituloPanel {
+  private:
+    const sf::Font &font;
+
+  public:
+    FabricaEtiquetasTituloPanel(const sf::Font &font) : font(font) {}
+    sf::Text crearEtiquetaTituloPanel(
+        const sf::Vector2f &posicion_panel, const std::string &texto
+    );
+};
