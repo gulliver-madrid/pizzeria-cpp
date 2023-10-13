@@ -1,6 +1,7 @@
 #pragma once
 
 #include "dominio.h"
+#include <cassert>
 #include <map>
 #include <vector>
 
@@ -18,8 +19,17 @@ void debug_contadores(const PizzasAContadores &contadores);
 
 /* Parte de un pedido relativa a un tipo de pizza */
 struct PedidoTipoPizza {
-    int objetivo = 0;
     int servido = 0;
+    int objetivo = 0;
+    PedidoTipoPizza(int objetivo) : objetivo(objetivo) {
+        assert(objetivo >= 0);
+    }
+    PedidoTipoPizza(int servido, int objetivo)
+        : servido(servido), objetivo(objetivo) {
+        assert(objetivo >= 0);
+        assert(servido >= 0);
+        assert(servido <= objetivo);
+    }
 };
 
 /* Pedido completo, puede incluir varios tipos de pizza */

@@ -1,13 +1,15 @@
 #include "etiquetas_contadores.h"
 #include "componentes/varios.h"
+#include "presentador.h"
 #include "vista_basics.h"
 
 namespace medidas {
     constexpr int TAMANO_FUENTE_ETIQUETAS = 24;
     constexpr int DESPLAZAMIENTO_VERTICAL_ETIQUETAS_PIZZAS_PREPARADAS = 50;
     constexpr int DESPLAZAMIENTO_VERTICAL_ETIQUETAS_PIZZAS_SERVIDAS = 50;
-} // namespace medidas
+    constexpr int SEPARACION_VERTICAL_ENTRE_PEDIDOS = 20;
 
+} // namespace medidas
 sf::Vector2f obtener_posicion_etiqueta_contador_pizzas(
     size_t indice_etiqueta, IndicePanel indice_panel,
     int desplazamiento_vertical
@@ -54,34 +56,6 @@ crearEtiquetaPizzasServidas(const sf::Font &font, size_t indice_etiqueta) {
         medidas::DESPLAZAMIENTO_VERTICAL_ETIQUETAS_PIZZAS_SERVIDAS, //
         font
     );
-}
-
-std::string
-crea_linea_completitud_pizza(const TipoPizza &tp, int parte, int todo) {
-    const auto nombre_pizza = tipo_pizza_to_string.at(tp);
-    std::string s = (           //
-        nombre_pizza + ": " +   //
-        std::to_string(parte) + //
-        std::string("/") +      //
-        std::to_string(todo)    //
-    );
-    return s;
-}
-
-/* Crea una string representando un pedido. Una línea por tipo de pizza, con el
- * formato TipoPizza: actual/objetivo
- */
-std::string pedido_to_string(const Pedido &pedido) {
-    std::string s;
-    for (auto &par : pedido.contenido) {
-        s.append(
-            crea_linea_completitud_pizza(
-                par.first, par.second.servido, par.second.objetivo
-            ) +
-            "\n"
-        );
-    }
-    return s;
 }
 
 float get_bottom(const sf::FloatRect &rect) { //
@@ -132,7 +106,7 @@ void EtiquetasContadores::_actualizar_pedidos_dinamicos( //
 
     // Les asignamos su posicion correcta
     float pos_x, pos_y;
-    const auto separacion_vertical = 0;
+    const auto separacion_vertical = medidas::SEPARACION_VERTICAL_ENTRE_PEDIDOS;
 
     // Calcula la posicion del primer pedido
     const auto pos_panel = obtener_posicion_panel(IndicePanel::PANEL_PEDIDOS);

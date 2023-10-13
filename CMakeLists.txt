@@ -42,6 +42,7 @@ add_executable(pizzeria
     src/vista/etiquetas_contadores.cpp
     src/vista/grid.cpp
     src/vista/paneles.cpp
+    src/vista/presentador.cpp
     src/vista/vista.cpp
     src/vista/vista_basics.cpp
     src/demos/demo_nivel.cpp
@@ -79,6 +80,7 @@ add_executable(
     src/tests/test_cadenas.cpp
     src/tests/test_encargadas.cpp
     src/tests/test_evaluar_preparacion.cpp
+    src/tests/test_presentador.cpp
     src/tests/test_tiempo.cpp
 
     # archivos del proyecto
@@ -89,6 +91,7 @@ add_executable(
     src/textos.cpp
     src/tiempo.cpp
     src/vista/cadenas.cpp
+    src/vista/presentador.cpp
 )
 target_link_libraries(runUnitTests PRIVATE sfml-graphics sfml-audio )
 target_link_libraries(runUnitTests PUBLIC gtest gtest_main)
