@@ -18,7 +18,7 @@ struct BotonData {
 /* Crea un botón rectangular con texto */
 BotonConTexto crearBotonConTexto(
     const BotonData &boton_data,  //
-    const sf::Vector2i &posicion, //
+    const sf::Vector2f &posicion, //
     const sf::Font &font,         //
     Align align,                  //
     double escala                 //
@@ -52,13 +52,32 @@ BotonConTexto crearBotonConTexto(
     return BotonConTexto(rect, etiqueta);
 };
 
+std::vector<BotonConTexto> crear_botones_alineados_derecha(
+    const sf::Vector2f &posicion_inicial,        //
+    const std::vector<BotonData> &datos_botones, //
+    const sf::Font &font                         //
+) {
+    auto separacion = medidas::SEPARACION_HORIZONTAL_ENTRE_BOTONES_GENERALES;
+    std::vector<BotonConTexto> botones;
+    int next_pos_x = posicion_inicial.x;
+    for (auto &dato : datos_botones) {
+        const auto posicion = sf::Vector2f(next_pos_x, posicion_inicial.y);
+        botones.push_back( //
+            crearBotonConTexto(dato, posicion, font, Align::Right)
+        );
+        const auto anterior_izquierda = botones.back().getGlobalBounds().left;
+        next_pos_x = anterior_izquierda - separacion;
+    }
+    return botones;
+}
+
 /* Crea todos los botones */
 Botones::Botones(
     const sf::Font &font, const std::vector<TipoPizza> &tp_disponibles
 ) {
     auto empezar_data =
         BotonData{std::string("Empezar"), sf::Color::Green, sf::Color::Black};
-    empezar = crearBotonConTexto(empezar_data, sf::Vector2i(500, 450), font);
+    empezar = crearBotonConTexto(empezar_data, sf::Vector2f(500, 450), font);
     int i = 0;
     for (auto tp : tp_disponibles) {
         auto pos_panel = obtener_posicion_panel(IndicePanel::PANEL_ENCARGAR);
@@ -66,7 +85,7 @@ Botones::Botones(
             tipo_pizza_to_string[tp], sf::Color::Green, sf::Color::Black};
         encargar[tp] = crearBotonConTexto(
             encargar_tp_data,
-            sf::Vector2i(
+            sf::Vector2f(
                 pos_panel.x + medidas::MARGEN_IZQ_ETIQUETAS,
                 pos_panel.y + medidas::FILA_CONTENIDO_PANEL + 80 * i
             ),
@@ -80,7 +99,7 @@ Botones::Botones(
         BotonData despachar_tp{"Despachar", sf::Color::Green, sf::Color::Black};
         despachar[tp] = crearBotonConTexto(
             despachar_tp,
-            sf::Vector2i(
+            sf::Vector2f(
                 pos_panel.x + medidas::MARGEN_IZQ_ETIQUETAS +
                     (medidas::ANCHO_PANEL * 0.55),
                 pos_panel.y + medidas::FILA_CONTENIDO_PANEL + 50 * i
@@ -94,25 +113,23 @@ Botones::Botones(
         obtener_posicion_panel(IndicePanel::PANEL_PEDIDOS);
     const auto pos_dcha_ultimo_boton =
         pos_ultimo_panel.x + medidas::ANCHO_PANEL;
-    salir = crearBotonConTexto(
-        BotonData{"Salir", sf::Color::Red},
-        sf::Vector2i(pos_dcha_ultimo_boton, medidas::FILA_BOTONES_GENERALES),
-        font, Align::Right
+
+    const std::vector<BotonData> datos_botones = {
+        {"Salir", sf::Color::Red},             //
+        {"Reiniciar", sf::Color(255, 120, 0)}, //
+        {"Alternar Grid", sf::Color::Blue}     //
+    };
+
+    auto botones_generales = crear_botones_alineados_derecha(
+        {pos_dcha_ultimo_boton, medidas::FILA_BOTONES_GENERALES}, //
+        datos_botones,                                            //
+        font                                                      //
     );
-    int next_pos = salir.getGlobalBounds().left -
-                   medidas::SEPARACION_ENTRE_BOTONES_GENERALES;
-    reiniciar = crearBotonConTexto(
-        BotonData{"Reiniciar", sf::Color(255, 120, 0)},
-        sf::Vector2i(next_pos, medidas::FILA_BOTONES_GENERALES), font,
-        Align::Right
-    );
-    next_pos = reiniciar.getGlobalBounds().left -
-               medidas::SEPARACION_ENTRE_BOTONES_GENERALES;
-    alternar_grid = crearBotonConTexto(
-        BotonData{"Alternar Grid", sf::Color::Blue},
-        sf::Vector2i(next_pos, medidas::FILA_BOTONES_GENERALES), font,
-        Align::Right
-    );
+
+    assert(botones_generales.size() == 3);
+    salir = botones_generales[0];
+    reiniciar = botones_generales[1];
+    alternar_grid = botones_generales[2];
 
     todos = {&empezar, &alternar_grid, &reiniciar, &salir};
     const int num_fijos = todos.size();

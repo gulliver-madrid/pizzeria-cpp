@@ -11,11 +11,11 @@ enum class Align { //
 };
 
 BotonConTexto crearBotonConTexto(
-    const BotonData &boton_data,    //
-    const sf::Vector2i &posicion,   //
-    const sf::Font &font,           //
-    Align align_left = Align::Left, //
-    double escala = 1               //
+    const BotonData &boton_data,  //
+    const sf::Vector2f &posicion, //
+    const sf::Font &font,         //
+    Align align = Align::Left,    //
+    double escala = 1             //
 );
 
 struct Botones {
