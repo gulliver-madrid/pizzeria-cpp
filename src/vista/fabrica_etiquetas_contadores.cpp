@@ -26,14 +26,9 @@ FabricaEtiquetasContadores::_obtener_posicion_etiqueta_contador_pizzas(
  * Crea una etiqueta para un contador (dependiendo del panel tendrá uno u
  * otro significado)
  */
-sf::Text FabricaEtiquetasContadores::_crearEtiquetaContadorPizzas(
-    sf::Vector2f posicion_panel, //
-    size_t indice_etiqueta,      //
-    int desplazamiento_vertical  //
+sf::Text FabricaEtiquetasContadores::_crearEtiquetaContadorPizzas( //
+    sf::Vector2f posicion
 ) {
-    const auto posicion = _obtener_posicion_etiqueta_contador_pizzas(
-        posicion_panel, indice_etiqueta, desplazamiento_vertical
-    );
     const int tamano = medidas::TAMANO_FUENTE_ETIQUETAS;
     const auto color = sf::Color::White;
     const auto estilo_texto = EstiloTexto{tamano, color, font};
@@ -46,11 +41,12 @@ sf::Text FabricaEtiquetasContadores::_crearEtiquetaContadorPizzas(
 sf::Text
 FabricaEtiquetasContadores::crearEtiquetaPizzasPreparadas(size_t indice_etiqueta
 ) {
-    return _crearEtiquetaContadorPizzas(
+    const auto posicion = _obtener_posicion_etiqueta_contador_pizzas(
         obtener_posicion_panel(IndicePanel::PANEL_PREPARADAS),       //
         indice_etiqueta,                                             //
         medidas::DESPLAZAMIENTO_VERTICAL_ETIQUETAS_PIZZAS_PREPARADAS //
     );
+    return _crearEtiquetaContadorPizzas(posicion);
 }
 
 /*
@@ -59,9 +55,10 @@ FabricaEtiquetasContadores::crearEtiquetaPizzasPreparadas(size_t indice_etiqueta
 sf::Text
 FabricaEtiquetasContadores::crearEtiquetaPizzasServidas(size_t indice_etiqueta
 ) {
-    return _crearEtiquetaContadorPizzas(
+    const auto posicion = _obtener_posicion_etiqueta_contador_pizzas(
         obtener_posicion_panel(IndicePanel::PANEL_PEDIDOS),        //
         indice_etiqueta,                                           //
         medidas::DESPLAZAMIENTO_VERTICAL_ETIQUETAS_PIZZAS_SERVIDAS //
     );
+    return _crearEtiquetaContadorPizzas(posicion);
 }
