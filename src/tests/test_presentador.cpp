@@ -4,7 +4,8 @@
 #include <gtest/gtest.h>
 
 TEST(Presentador, LineaCompletitudPizza) {
-    auto result = crea_linea_completitud_pizza(TipoPizza::Margarita, 2, 5);
+    auto result =
+        presentador::crea_linea_completitud_pizza(TipoPizza::Margarita, 2, 5);
     ASSERT_EQ(result, "Margarita: 2/5");
 }
 
@@ -14,6 +15,6 @@ TEST(Presentador, PedidoToString) {
     );
     Pedido pedido(contenido);
 
-    auto result = pedido_to_string(pedido);
+    auto result = presentador::pedido_to_string(pedido);
     ASSERT_EQ(result, "Margarita: 2/5\nPepperoni: 1/4");
 }

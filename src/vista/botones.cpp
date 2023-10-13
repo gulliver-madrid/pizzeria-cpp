@@ -98,7 +98,7 @@ Botones::Botones(
     );
 
     todos = {&empezar, &alternar_grid, &reiniciar, &salir};
-    const int num_fijos = 4;
+    const int num_fijos = todos.size();
     for (auto &par : despachar) {
         todos.push_back(&par.second);
     }

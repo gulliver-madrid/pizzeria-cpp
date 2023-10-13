@@ -9,21 +9,23 @@ namespace medidas {
     constexpr int GROSOR_BORDE_PANEL = 3;
 } // namespace medidas
 
-sf::RectangleShape crearPanelVertical(float x, float y) {
-    auto rect = sf::RectangleShape(
-        sf::Vector2f(medidas::ANCHO_PANEL, medidas::ALTO_PANEL)
-    );
-    rect.setPosition(sf::Vector2f(x, y));
-    rect.setFillColor(sf::Color(40, 40, 40, 200));
-    rect.setOutlineColor(sf::Color::Green);
-    rect.setOutlineThickness(medidas::GROSOR_BORDE_PANEL);
-    return rect;
-}
+namespace {
+    sf::RectangleShape _crearPanelVertical(float x, float y) {
+        auto rect = sf::RectangleShape(
+            sf::Vector2f(medidas::ANCHO_PANEL, medidas::ALTO_PANEL)
+        );
+        rect.setPosition(sf::Vector2f(x, y));
+        rect.setFillColor(sf::Color(40, 40, 40, 200));
+        rect.setOutlineColor(sf::Color::Green);
+        rect.setOutlineThickness(medidas::GROSOR_BORDE_PANEL);
+        return rect;
+    }
 
-sf::RectangleShape crear_panel_estandar(IndicePanel indice) {
-    auto pos_panel = obtener_posicion_panel(indice);
-    return crearPanelVertical(pos_panel.x, pos_panel.y);
-}
+    sf::RectangleShape crear_panel_estandar(IndicePanel indice) {
+        auto pos_panel = obtener_posicion_panel(indice);
+        return _crearPanelVertical(pos_panel.x, pos_panel.y);
+    }
+} // namespace
 
 Paneles::Paneles() {
     encargar = crear_panel_estandar(IndicePanel::PANEL_ENCARGAR);
@@ -68,8 +70,9 @@ PanelesCompletos::PanelesCompletos(const sf::Font &font) {
 }
 
 void PanelesCompletos::dibujar(
-    sf::RenderWindow &ventana, const EstadoPreparacionPizzas &preparacion,
-    const sf::Font &font
+    sf::RenderWindow &ventana,                  //
+    const EstadoPreparacionPizzas &preparacion, //
+    const sf::Font &font                        //
 ) {
     if (!visible)
         return;

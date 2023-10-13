@@ -3,9 +3,12 @@
 #include "vista_basics.h"
 #include <cassert>
 
-#define COLOR_BARRA_PROGRESO_FONDO 230, 230, 230
-#define COLOR_BARRA_PROGRESO_RELLENO 255, 140, 0 // 30, 144, 255
-#define COLOR_BARRA_PROGRESO_TEXTO 0, 0, 0
+namespace colores {
+    const sf::Color COLOR_BARRA_PROGRESO_FONDO = {230, 230, 230};
+    const sf::Color COLOR_BARRA_PROGRESO_RELLENO = {
+        255, 140, 0}; // 30, 144, 255
+    const sf::Color COLOR_BARRA_PROGRESO_TEXTO = {0, 0, 0};
+} // namespace colores
 
 namespace medidas {
     constexpr int DIFERENCIA_VERTICAL_ENTRE_BARRAS_PROGRESO = 60;
@@ -18,8 +21,8 @@ void BarraProgreso::setup(
     dimensiones = dimensiones_;
     fondo = sf::RectangleShape(dimensiones);
     relleno = sf::RectangleShape(sf::Vector2f(0, 0));
-    fondo.setFillColor(sf::Color(COLOR_BARRA_PROGRESO_FONDO));
-    relleno.setFillColor(sf::Color(COLOR_BARRA_PROGRESO_RELLENO));
+    fondo.setFillColor(sf::Color(colores::COLOR_BARRA_PROGRESO_FONDO));
+    relleno.setFillColor(sf::Color(colores::COLOR_BARRA_PROGRESO_RELLENO));
     fondo.setPosition(posicion);
     relleno.setPosition(posicion);
 }
@@ -39,7 +42,7 @@ void BarraProgresoConNombre::setup(
 ) {
     bp.setup(dimensiones, posicion);
     etiqueta = sf::Text(tipo_pizza_to_string[tp], font, 24);
-    etiqueta.setFillColor(sf::Color(COLOR_BARRA_PROGRESO_TEXTO));
+    etiqueta.setFillColor(sf::Color(colores::COLOR_BARRA_PROGRESO_TEXTO));
     etiqueta.setPosition(posicion.x + 20, posicion.y + 5);
 }
 

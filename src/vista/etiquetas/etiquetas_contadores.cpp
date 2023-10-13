@@ -34,7 +34,7 @@ void EtiquetasContadores::_actualizar_pedido_estatico(
     for (auto &par : pizzas_a_contadores) {
         const auto &tp = par.first;
         const auto &contadores_tp = par.second;
-        std::string servidas = crea_linea_completitud_pizza(
+        std::string servidas = presentador::crea_linea_completitud_pizza(
             tp, contadores_tp.servidas, pedido_unico.contenido.at(tp).objetivo
         );
         texto_servidas.at(tp).setString(servidas);
@@ -49,7 +49,7 @@ void EtiquetasContadores::_actualizar_pedidos_dinamicos( //
     const auto tamano_fuente = 22;
     texto_pedidos.clear();
     for (auto &pedido : pedidos) {
-        const auto texto = pedido_to_string(pedido);
+        const auto texto = presentador::pedido_to_string(pedido);
         const auto etiqueta = sf::Text(texto, font, tamano_fuente);
         texto_pedidos.push_back(etiqueta);
     }

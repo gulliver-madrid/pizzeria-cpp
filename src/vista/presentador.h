@@ -5,7 +5,9 @@
 enum class TipoPizza;
 struct Pedido;
 
-std::string
-crea_linea_completitud_pizza(const TipoPizza &tp, int parte, int todo);
+namespace presentador {
+    std::string
+    crea_linea_completitud_pizza(const TipoPizza &tp, int parte, int todo);
 
-std::string pedido_to_string(const Pedido &pedido);
+    std::string pedido_to_string(const Pedido &pedido);
+} // namespace presentador
