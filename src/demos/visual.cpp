@@ -15,7 +15,7 @@ int demo_visual() {
     sf::RectangleShape yellow_rect(sf::Vector2f(50, 50));
     yellow_rect.setFillColor(sf::Color::Yellow);
     yellow_rect.setPosition(100, 100);
-    debug_rect(yellow_rect, "yellow_rect");
+    debug::debug_rect(yellow_rect, "yellow_rect");
 
     sf::RectangleShape blue_rect(sf::Vector2f(300, 900));
     blue_rect.setFillColor(sf::Color::Blue);

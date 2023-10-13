@@ -4,8 +4,6 @@
 
 enum class TipoPizza;
 
-extern const std::map<TipoPizza, Tiempo> tiempos_preparacion;
-
 /* Almacena un encargo concreto */
 struct EncargoACocina {
     const TipoPizza tipo;

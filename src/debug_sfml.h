@@ -4,8 +4,10 @@
 #include <iostream>
 #include <string>
 
-void debug_rect(sf::RectangleShape &rect, std::string name);
-void debug_float_rect(sf::FloatRect rect);
+namespace debug {
+    void debug_rect(sf::RectangleShape &rect, std::string name);
+    void debug_float_rect(sf::FloatRect rect);
+} // namespace debug
 
 /* Crea una representacion de los pares de un contenedor iterable, suponiendo
  * que sus elementos puedan usarse con std::cout

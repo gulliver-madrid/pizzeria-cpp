@@ -5,14 +5,16 @@
 #include <iostream>
 #include <unordered_set>
 
-void debug_contadores(const PizzasAContadores &contadores) {
-    std::cout << "Debug contadores" << std::endl;
-    for (auto &par : contadores) {
-        std::cout << tipo_pizza_to_string[par.first] << " "
-                  << "preparadas: " << par.second.preparadas << std::endl;
+namespace debug {
+    void debug_contadores(const PizzasAContadores &contadores) {
+        std::cout << "Debug contadores" << std::endl;
+        for (auto &par : contadores) {
+            std::cout << tipo_pizza_to_string[par.first] << " "
+                      << "preparadas: " << par.second.preparadas << std::endl;
+        }
+        std::cout << std::endl;
     }
-    std::cout << std::endl;
-}
+} // namespace debug
 
 EstadoPreparacionPizzas::EstadoPreparacionPizzas(const Encargos &encargos) {
     assert(datos.empty());

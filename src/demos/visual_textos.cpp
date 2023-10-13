@@ -33,7 +33,7 @@ int demo_visual_textos() {
 
     bounds = etiqueta_dos_lineas.getGlobalBounds();
     assert(etiqueta_dos_lineas.getPosition() == sf::Vector2f(0, 0));
-    debug_float_rect(bounds);
+    debug::debug_float_rect(bounds);
 
     // Sin transformaciones, el tamano de los limites locales y
     // globales es el mismo

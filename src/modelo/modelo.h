@@ -15,7 +15,9 @@ struct Contadores {
 
 using PizzasAContadores = std::map<TipoPizza, Contadores>;
 
-void debug_contadores(const PizzasAContadores &contadores);
+namespace debug {
+    void debug_contadores(const PizzasAContadores &contadores);
+}
 
 /* Parte de un pedido relativa a un tipo de pizza */
 struct PedidoTipoPizza {
