@@ -23,6 +23,9 @@ struct BotonConTexto {
     void activacion_condicional(bool condicion);
     size_t get_id() const;
     bool esta_activo() const;
+    sf::FloatRect getGlobalBounds() const { //
+        return forma.getGlobalBounds();
+    }
 
   private:
     std::optional<sf::Color> colorBotonActivo;

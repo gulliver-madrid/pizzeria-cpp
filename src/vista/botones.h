@@ -5,11 +5,17 @@
 enum class TipoPizza;
 struct BotonData;
 
+enum class Align { //
+    Left,
+    Right
+};
+
 BotonConTexto crearBotonConTexto(
-    const BotonData &boton_data,  //
-    const sf::Vector2i &posicion, //
-    const sf::Font &font,         //
-    float escala = 1
+    const BotonData &boton_data,    //
+    const sf::Vector2i &posicion,   //
+    const sf::Font &font,           //
+    Align align_left = Align::Left, //
+    double escala = 1               //
 );
 
 struct Botones {

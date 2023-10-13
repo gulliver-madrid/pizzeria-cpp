@@ -20,10 +20,9 @@ BotonConTexto crearBotonConTexto(
     const BotonData &boton_data,  //
     const sf::Vector2i &posicion, //
     const sf::Font &font,         //
-    float escala
+    Align align,                  //
+    double escala                 //
 ) {
-    int x = posicion.x;
-    int y = posicion.y;
     // La escala del margen es proporcional al cuadrado de la escala del botón
     int margen = medidas::MARGEN_BOTON * (escala * escala);
     // Primero creamos la etiqueta para usar sus límites en el Rect
@@ -31,8 +30,6 @@ BotonConTexto crearBotonConTexto(
         medidas::TAMANO_TEXTO_BOTONES * escala, font, boton_data.color_texto
     );
     etiqueta.setString(boton_data.texto);
-    // Ajustamos para evitar un margen excesivo arriba y a la izquierda
-    etiqueta.setPosition(x + margen * 0.7, y + margen * 0.7);
     sf::FloatRect textRect = etiqueta.getGlobalBounds();
 
     // Rect
@@ -40,7 +37,17 @@ BotonConTexto crearBotonConTexto(
         sf::Vector2f(textRect.width + margen * 2, textRect.height + margen * 2)
     );
     rect.setFillColor(boton_data.color_fondo);
+    int x;
+    if (align == Align::Left) {
+        x = posicion.x;
+    } else {
+        assert(align == Align::Right);
+        x = posicion.x - rect.getGlobalBounds().width;
+    }
+    int y = posicion.y;
     rect.setPosition(x, y);
+    // Ajustamos para evitar un margen excesivo arriba y a la izquierda
+    etiqueta.setPosition(x + margen * 0.7, y + margen * 0.7);
 
     return BotonConTexto(rect, etiqueta);
 };
@@ -78,23 +85,33 @@ Botones::Botones(
                     (medidas::ANCHO_PANEL * 0.55),
                 pos_panel.y + medidas::FILA_CONTENIDO_PANEL + 50 * i
             ),
-            font, 0.7
+            font, Align::Left, 0.7
         );
         i++;
     }
-
-    alternar_grid = crearBotonConTexto(
-        // TODO: mejorar posicionamiento
-        BotonData{"Alternar Grid", sf::Color::Blue},
-        sf::Vector2i(1200, medidas::FILA_BOTONES_GENERALES), font
-    );
-    reiniciar = crearBotonConTexto(
-        BotonData{"Reiniciar", sf::Color(255, 120, 0)},
-        sf::Vector2i(1440, medidas::FILA_BOTONES_GENERALES), font
-    );
+    // Botones generales
+    const auto pos_ultimo_panel =
+        obtener_posicion_panel(IndicePanel::PANEL_PEDIDOS);
+    const auto pos_dcha_ultimo_boton =
+        pos_ultimo_panel.x + medidas::ANCHO_PANEL;
     salir = crearBotonConTexto(
         BotonData{"Salir", sf::Color::Red},
-        sf::Vector2i(1640, medidas::FILA_BOTONES_GENERALES), font
+        sf::Vector2i(pos_dcha_ultimo_boton, medidas::FILA_BOTONES_GENERALES),
+        font, Align::Right
+    );
+    int next_pos = salir.getGlobalBounds().left -
+                   medidas::SEPARACION_ENTRE_BOTONES_GENERALES;
+    reiniciar = crearBotonConTexto(
+        BotonData{"Reiniciar", sf::Color(255, 120, 0)},
+        sf::Vector2i(next_pos, medidas::FILA_BOTONES_GENERALES), font,
+        Align::Right
+    );
+    next_pos = reiniciar.getGlobalBounds().left -
+               medidas::SEPARACION_ENTRE_BOTONES_GENERALES;
+    alternar_grid = crearBotonConTexto(
+        BotonData{"Alternar Grid", sf::Color::Blue},
+        sf::Vector2i(next_pos, medidas::FILA_BOTONES_GENERALES), font,
+        Align::Right
     );
 
     todos = {&empezar, &alternar_grid, &reiniciar, &salir};
