@@ -13,15 +13,12 @@ float get_bottom(const sf::FloatRect &rect) { //
 }
 
 void EtiquetasContadores::setup(const std::vector<TipoPizza> &tp_disponibles) {
+    FabricaEtiquetasContadores fabrica(font);
     int i = 0;
     for (auto &tp : tp_disponibles) {
-        texto_preparadas[tp] =
-            FabricaEtiquetasContadores::crearEtiquetaPizzasPreparadas(font, i);
+        texto_preparadas[tp] = fabrica.crearEtiquetaPizzasPreparadas(i);
         if (es_estatico) {
-            texto_servidas[tp] =
-                FabricaEtiquetasContadores::crearEtiquetaPizzasServidas(
-                    font, i
-                );
+            texto_servidas[tp] = fabrica.crearEtiquetaPizzasServidas(i);
         }
         i++;
     }
