@@ -74,7 +74,7 @@ int demo_visual_textos() {
                 window.close();
         }
         window.clear();
-        draw_grid(window, grid);
+        grid.draw(window);
         window.draw(bg_rect);
         window.draw(bg_rect_2);
         window.draw(etiqueta_dos_lineas);

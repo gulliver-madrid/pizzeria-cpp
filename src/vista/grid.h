@@ -9,11 +9,8 @@
 struct Grid {
     sf::Sprite sprite;
     sf::Texture texture;
-    sf::RenderTexture renderTexture;
+    sf::RenderTexture render_texture;
     bool construido = false;
+    void
+    draw(sf::RenderWindow &ventana, int distancia = 50, int tono_gris = 60);
 };
-
-void draw_grid(
-    sf::RenderWindow &ventana, Grid &grid, int distancia = 50,
-    int tono_gris = 60
-);

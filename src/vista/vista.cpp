@@ -44,7 +44,7 @@ void Vista::actualizarIU(      //
     // Limpia la ventana y empieza a pintar los componentes visuales
     ventana.clear(colores::COLOR_FONDO);
     if (estado.mostrando_grid)
-        draw_grid(ventana, grid, GRID_SIZE, GRID_TONE);
+        grid.draw(ventana, GRID_SIZE, GRID_TONE);
 
     if ( //
         estado.fase_actual == FaseNivel::Activa ||

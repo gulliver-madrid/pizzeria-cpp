@@ -31,20 +31,18 @@ void _draw_grid(
     render_texture.display();
 }
 
-void draw_grid(
-    sf::RenderWindow &ventana, Grid &grid, int distancia, int tono_gris
-) {
+void Grid::draw(sf::RenderWindow &ventana, int distancia, int tono_gris) {
     // Verificamos si ya se ha creado la textura
     bool diff_tamano =
-        (grid.texture.getSize().x != ventana.getSize().x ||
-         grid.texture.getSize().y != ventana.getSize().y);
-    if (diff_tamano && !grid.construido) {
-        grid.renderTexture.create(ventana.getSize().x, ventana.getSize().y);
+        (texture.getSize().x != ventana.getSize().x ||
+         texture.getSize().y != ventana.getSize().y);
+    if (diff_tamano && !construido) {
+        render_texture.create(ventana.getSize().x, ventana.getSize().y);
         // Si no, la creamos con el tamaño de la ventana
-        _draw_grid(grid.renderTexture, ventana.getSize(), distancia, tono_gris);
-        grid.texture = grid.renderTexture.getTexture();
-        grid.sprite.setTexture(grid.texture);
-        grid.construido = true;
+        _draw_grid(render_texture, ventana.getSize(), distancia, tono_gris);
+        texture = render_texture.getTexture();
+        sprite.setTexture(texture);
+        construido = true;
     }
-    ventana.draw(grid.sprite);
+    ventana.draw(sprite);
 }
