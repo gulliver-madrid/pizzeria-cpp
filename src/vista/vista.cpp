@@ -24,9 +24,9 @@ void Vista::setup(
         total_objetivos //
     );
     // Mostrar botones iniciales
-    botones.alternar_grid.visible = MODO_DESARROLLO;
-    botones.reiniciar.visible = true;
-    botones.salir.visible = true;
+    botones.generales.alternar_grid.visible = MODO_DESARROLLO;
+    botones.generales.reiniciar.visible = true;
+    botones.generales.salir.visible = true;
     botones.empezar.visible = true;
 }
 

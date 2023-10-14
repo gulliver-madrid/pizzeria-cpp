@@ -4,6 +4,13 @@
 
 enum class TipoPizza;
 
+struct BotonesGenerales {
+    BotonConTexto alternar_grid;
+    BotonConTexto reiniciar;
+    BotonConTexto salir;
+    const std::vector<BotonConTexto *> obtener_todos();
+};
+
 struct Botones {
   private:
     std::vector<BotonConTexto *> todos;
@@ -12,9 +19,7 @@ struct Botones {
     BotonConTexto empezar;
     std::map<TipoPizza, BotonConTexto> encargar;
     std::map<TipoPizza, BotonConTexto> despachar;
-    BotonConTexto alternar_grid;
-    BotonConTexto reiniciar;
-    BotonConTexto salir;
+    BotonesGenerales generales;
 
     Botones(const sf::Font &font, const std::vector<TipoPizza> &tp_disponibles);
     void dibujar(sf::RenderWindow &ventana) const;

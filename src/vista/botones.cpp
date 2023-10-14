@@ -5,6 +5,10 @@
 #include "vista_basics.h"
 #include <cassert>
 
+const std::vector<BotonConTexto *> BotonesGenerales::obtener_todos() {
+    return {&alternar_grid, &reiniciar, &salir};
+}
+
 /* Crea todos los botones */
 Botones::Botones(
     const sf::Font &font, const std::vector<TipoPizza> &tp_disponibles
@@ -62,19 +66,21 @@ Botones::Botones(
     );
 
     assert(botones_generales.size() == 3);
-    salir = botones_generales[0];
-    reiniciar = botones_generales[1];
-    alternar_grid = botones_generales[2];
+    generales.salir = botones_generales[0];
+    generales.reiniciar = botones_generales[1];
+    generales.alternar_grid = botones_generales[2];
 
-    todos = {&empezar, &alternar_grid, &reiniciar, &salir};
+    todos = {&empezar};
     const int num_fijos = todos.size();
+    for (auto &boton : generales.obtener_todos()) {
+        todos.push_back(boton);
+    }
     for (auto &par : despachar) {
         todos.push_back(&par.second);
     }
     for (auto &par : encargar) {
         todos.push_back(&par.second);
     }
-    assert(todos.size() == (num_fijos + tp_disponibles.size() * 2));
 }
 
 void Botones::dibujar(sf::RenderWindow &ventana) const {

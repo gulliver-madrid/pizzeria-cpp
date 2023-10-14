@@ -41,13 +41,15 @@ std::optional<FaseNivel> Nivel::procesarEvento(
         sf::Vector2i mouse_pos = sf::Mouse::getPosition(ventana);
 
         // Fijos
-        if (globales.detecta_colision(botones.salir, mouse_pos)) {
+        if (globales.detecta_colision(botones.generales.salir, mouse_pos)) {
             ventana.close();
             return FaseNivel::Saliendo;
-        } else if (globales.detecta_colision(botones.reiniciar, mouse_pos)) {
+        } else if (globales.detecta_colision(
+                       botones.generales.reiniciar, mouse_pos
+                   )) {
             return FaseNivel::Reiniciando;
         } else if (globales.detecta_colision(
-                       botones.alternar_grid, mouse_pos
+                       botones.generales.alternar_grid, mouse_pos
                    )) {
             assert(MODO_DESARROLLO);
             estado.mostrando_grid = !estado.mostrando_grid;
