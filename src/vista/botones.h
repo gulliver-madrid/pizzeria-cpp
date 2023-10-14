@@ -3,20 +3,6 @@
 #include "componentes/boton_con_texto.h"
 
 enum class TipoPizza;
-struct BotonData;
-
-enum class Align { //
-    Left,
-    Right
-};
-
-BotonConTexto crearBotonConTexto(
-    const BotonData &boton_data,  //
-    const sf::Vector2f &posicion, //
-    const sf::Font &font,         //
-    Align align = Align::Left,    //
-    double escala = 1             //
-);
 
 struct Botones {
   private:

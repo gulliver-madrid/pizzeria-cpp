@@ -40,21 +40,37 @@
                 - nivel.cpp
                     - vista/vista.h
                         - vista/botones.h
-                            - vista/componentes/varios.h
-                                - vista/componentes/varios.cpp (hoja)
-                                - globales.h (def)
+                            - vista/componentes/boton_con_texto.h
+                                - vista/componentes/boton_con_texto.cpp (hoja)
                             - vista/botones.cpp
                                 - modelo/dominio.h
+                                - vista/componentes/fabrica_botones.h
+                                    - vista/componentes/boton_con_texto.h (def)
+                                    - vista/componentes/fabrica_botones.cpp
+                                        - vista/componentes/varios.h (hoja)
+                                - vista/componentes/varios.h (def)
                                 - vista_basics.h
                                     - vista/vista_basics.cpp (hoja)
                         - vista/etiquetas.h
                             - general.h (def)
-                            - vista/etiquetas.cpp
+                            - shared.h
+                            - vista/etiquetas/etiquetas.cpp
                                 - templates.h (hoja)
                                 - textos.h (def)
                                 - vista/cadenas.h (def)
                                 - vista/componentes/varios.h (def)
                                 - vista/vista_basics.h (def)
+                                - vista/etiquetas/etiquetas_contadores.h
+                                    - general.h (def)
+                                    - vista/etiquetas/etiquetas_contadores.cpp
+                                        - vista/componentes/varios.h (def)
+                                        - vista/presentador.h
+                                            - vista/presentador.cpp
+                                                - modelo/dominio.h
+                                                - modelo/modelo.h
+                                        - vista/vista_basics.h
+                                        - vista/etiquetas/fabrica_etiquetas_contadores.h
+                                - vista/etiquetas/fabrica_etiquetas.h
                         - vista/paneles.h
                             - modelo/modelo.h (def)
                             - vista/barras_progreso.h
@@ -64,7 +80,7 @@
                             - vista/componentes/varios.h (def)
                             - vista/paneles.cpp
                                 - vista/cadenas.h (def)
-                                - vista/etiquetas.h (def)
+                                - vista/etiquetas/etiquetas.h (def)
                                 - vista/vista_basics.h (def)
                         - vista/vista.cpp
                             - vista/vista_data.h (hoja)
