@@ -56,30 +56,38 @@ std::optional<FaseNivel> Nivel::procesarEvento(
             estado.mostrando_grid = !estado.mostrando_grid;
         }
         // Dependientes del estado
-        if (estado.fase_actual == FaseNivel::MostrandoInstrucciones) {
-            if (pulsado(botones.empezar)) {
-                return FaseNivel::Activa;
-            }
-        } else if (estado.fase_actual == FaseNivel::Activa) {
-            const auto tipos_pizza_disponibles =
-                estado.control_pizzas.get_tipos_disponibles();
-            bool despacho = false;
-            for (const auto &tp : tipos_pizza_disponibles) {
-                if (pulsado(botones.encargar.at(tp))) {
-                    auto encargo = EncargoACocina(tp, obtener_tiempo_actual());
-                    estado.encargos.anadir(encargo);
-                    return std::nullopt;
+        switch (estado.fase_actual) {
+            case FaseNivel::MostrandoInstrucciones:
+                if (pulsado(botones.empezar)) {
+                    return FaseNivel::Activa;
                 }
-                if (pulsado(botones.despachar.at(tp))) {
-                    estado.control_pizzas.procesar_despacho(tp);
-                    despacho = true;
-                    break;
+                break;
+            case FaseNivel::Activa:
+                {
+                    const auto tipos_pizza_disponibles =
+                        estado.control_pizzas.get_tipos_disponibles();
+                    bool despacho = false;
+                    for (const auto &tp : tipos_pizza_disponibles) {
+                        if (pulsado(botones.encargar.at(tp))) {
+                            auto encargo =
+                                EncargoACocina(tp, obtener_tiempo_actual());
+                            estado.encargos.anadir(encargo);
+                            return std::nullopt;
+                        }
+                        if (pulsado(botones.despachar.at(tp))) {
+                            estado.control_pizzas.procesar_despacho(tp);
+                            despacho = true;
+                            break;
+                        }
+                    }
+                    if (despacho &&
+                        !estado.control_pizzas.faltan_pedidos_por_cubrir()) {
+                        return FaseNivel::EsperaAntesDeResultado;
+                    }
                 }
-            }
-            if (despacho &&
-                !estado.control_pizzas.faltan_pedidos_por_cubrir()) {
-                return FaseNivel::EsperaAntesDeResultado;
-            }
+                break;
+            default:
+                break;
         }
     }
     return std::nullopt;
@@ -188,12 +196,13 @@ AccionGeneral Nivel::ejecutar() {
                     vista.paneles_completos.visible = false;
                 }
                 break;
-            case FaseNivel::MostrandoResultado: {
-                if (!es_el_ultimo && timer_fin_nivel.termino()) {
-                    return AccionGeneral::SiguienteNivel;
-                };
-                break;
-            }
+            case FaseNivel::MostrandoResultado:
+                {
+                    if (!es_el_ultimo && timer_fin_nivel.termino()) {
+                        return AccionGeneral::SiguienteNivel;
+                    };
+                    break;
+                }
         }
 
         vista.actualizarIU(globales.window, estado);
