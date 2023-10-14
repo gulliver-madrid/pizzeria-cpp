@@ -38,25 +38,24 @@ std::optional<FaseNivel> Nivel::procesarEvento(
 
     // Pulsación botón
     else if (evento.type == sf::Event::MouseButtonPressed) {
-        sf::Vector2i mouse_pos = sf::Mouse::getPosition(ventana);
+        const sf::Vector2i mouse_pos = sf::Mouse::getPosition(ventana);
+        const auto pulsado = [this, &mouse_pos](const BotonConTexto &boton) {
+            return this->globales.detecta_colision(boton, mouse_pos);
+        };
 
         // Fijos
-        if (globales.detecta_colision(botones.generales.salir, mouse_pos)) {
+        if (pulsado(botones.generales.salir)) {
             ventana.close();
             return FaseNivel::Saliendo;
-        } else if (globales.detecta_colision(
-                       botones.generales.reiniciar, mouse_pos
-                   )) {
+        } else if (pulsado(botones.generales.reiniciar)) {
             return FaseNivel::Reiniciando;
-        } else if (globales.detecta_colision(
-                       botones.generales.alternar_grid, mouse_pos
-                   )) {
+        } else if (pulsado(botones.generales.alternar_grid)) {
             assert(MODO_DESARROLLO);
             estado.mostrando_grid = !estado.mostrando_grid;
         }
         // Dependientes del estado
         if (estado.fase_actual == FaseNivel::MostrandoInstrucciones) {
-            if (globales.detecta_colision(botones.empezar, mouse_pos)) {
+            if (pulsado(botones.empezar)) {
                 return FaseNivel::Activa;
             }
         } else if (estado.fase_actual == FaseNivel::Activa) {
@@ -77,17 +76,20 @@ std::optional<FaseNivel> Nivel::procesarEvento(
 std::optional<FaseNivel> Nivel::procesar_click_fase_activa(
     const Botones &botones, Estado &estado, const sf::Vector2i mouse_pos
 ) {
+    const auto pulsado = [this, &mouse_pos](const BotonConTexto &boton) {
+        return this->globales.detecta_colision(boton, mouse_pos);
+    };
 
-    auto tipos_pizza_disponibles =
+    const auto tipos_pizza_disponibles =
         estado.control_pizzas.get_tipos_disponibles();
     bool despacho = false;
     for (const auto &tp : tipos_pizza_disponibles) {
-        if (globales.detecta_colision(botones.encargar.at(tp), mouse_pos)) {
+        if (pulsado(botones.encargar.at(tp))) {
             auto encargo = EncargoACocina(tp, obtener_tiempo_actual());
             estado.encargos.anadir(encargo);
             return std::nullopt;
         }
-        if (globales.detecta_colision(botones.despachar.at(tp), mouse_pos)) {
+        if (pulsado(botones.despachar.at(tp))) {
             estado.control_pizzas.procesar_despacho(tp);
             despacho = true;
             break;
