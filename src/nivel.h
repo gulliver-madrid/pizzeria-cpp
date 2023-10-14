@@ -25,9 +25,6 @@ struct Nivel {
         Timer &timer_espera_antes_de_resultado, //
         FaseNivel fase_previa                   //
     );
-    std::optional<FaseNivel> procesar_click_fase_activa(
-        const Botones &botones, Estado &estado, const sf::Vector2i mouse_pos
-    );
 
   public:
     Globales &globales;

@@ -17,8 +17,10 @@ Nivel::Nivel(
     : globales(globales), datos_nivel(datos_nivel), num_nivel(num_nivel),
       grid(grid), es_el_ultimo(es_el_ultimo) {}
 
-/* Incluye toda la lógica para procesar un evento. Devuelve la nueva fase si la
- * hay.*/
+/*
+ * Incluye toda la lógica para procesar un evento. Devuelve la nueva fase, en
+ * caso de que debiera cambiar.
+ */
 std::optional<FaseNivel> Nivel::procesarEvento(
     sf::Event evento, const Botones &botones, Estado &estado
 ) {
@@ -59,47 +61,29 @@ std::optional<FaseNivel> Nivel::procesarEvento(
                 return FaseNivel::Activa;
             }
         } else if (estado.fase_actual == FaseNivel::Activa) {
-            auto nueva_fase =
-                procesar_click_fase_activa(botones, estado, mouse_pos);
-            if (nueva_fase.has_value()) {
-                return nueva_fase;
+            const auto tipos_pizza_disponibles =
+                estado.control_pizzas.get_tipos_disponibles();
+            bool despacho = false;
+            for (const auto &tp : tipos_pizza_disponibles) {
+                if (pulsado(botones.encargar.at(tp))) {
+                    auto encargo = EncargoACocina(tp, obtener_tiempo_actual());
+                    estado.encargos.anadir(encargo);
+                    return std::nullopt;
+                }
+                if (pulsado(botones.despachar.at(tp))) {
+                    estado.control_pizzas.procesar_despacho(tp);
+                    despacho = true;
+                    break;
+                }
+            }
+            if (despacho &&
+                !estado.control_pizzas.faltan_pedidos_por_cubrir()) {
+                return FaseNivel::EsperaAntesDeResultado;
             }
         }
     }
     return std::nullopt;
 };
-
-/*
- *Procesa un click realizado durante la fase activa.
- * Devuelve la nueva fase, en caso de que debiera cambiar
- */
-std::optional<FaseNivel> Nivel::procesar_click_fase_activa(
-    const Botones &botones, Estado &estado, const sf::Vector2i mouse_pos
-) {
-    const auto pulsado = [this, &mouse_pos](const BotonConTexto &boton) {
-        return this->globales.detecta_colision(boton, mouse_pos);
-    };
-
-    const auto tipos_pizza_disponibles =
-        estado.control_pizzas.get_tipos_disponibles();
-    bool despacho = false;
-    for (const auto &tp : tipos_pizza_disponibles) {
-        if (pulsado(botones.encargar.at(tp))) {
-            auto encargo = EncargoACocina(tp, obtener_tiempo_actual());
-            estado.encargos.anadir(encargo);
-            return std::nullopt;
-        }
-        if (pulsado(botones.despachar.at(tp))) {
-            estado.control_pizzas.procesar_despacho(tp);
-            despacho = true;
-            break;
-        }
-    }
-    if (despacho && !estado.control_pizzas.faltan_pedidos_por_cubrir()) {
-        return FaseNivel::EsperaAntesDeResultado;
-    }
-    return std::nullopt;
-}
 
 /* Procesa un cambio de fase reciente */
 void Nivel::procesa_cambio_de_fase(
