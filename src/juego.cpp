@@ -28,9 +28,10 @@ int juego() {
             if (res == AccionGeneral::Reiniciar) {
                 reiniciar = true;
                 break;
-            } else if (res == AccionGeneral::Salir)
+            } else if (res == AccionGeneral::Salir) {
+                globales.window.close();
                 break;
-            else {
+            } else {
                 assert(res == AccionGeneral::SiguienteNivel);
             }
         }

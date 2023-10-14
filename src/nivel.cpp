@@ -24,9 +24,7 @@ Nivel::Nivel(
 std::optional<FaseNivel> Nivel::procesarEvento(
     sf::Event evento, const Botones &botones, Estado &estado
 ) {
-    // std::cout << "procesando evento" << std::endl;
     auto &ventana = globales.window;
-    // Cierre de ventana
     if (evento.type == sf::Event::Closed) {
         ventana.close();
         return FaseNivel::Saliendo;
@@ -38,60 +36,65 @@ std::optional<FaseNivel> Nivel::procesarEvento(
         ventana.setView(sf::View(visibleArea));
     }
 
-    // Pulsación botón
     else if (evento.type == sf::Event::MouseButtonPressed) {
         const sf::Vector2i mouse_pos = sf::Mouse::getPosition(ventana);
-        const auto pulsado = [this, &mouse_pos](const BotonConTexto &boton) {
-            return this->globales.detecta_colision(boton, mouse_pos);
-        };
-
-        // Fijos
-        if (pulsado(botones.generales.salir)) {
-            ventana.close();
-            return FaseNivel::Saliendo;
-        } else if (pulsado(botones.generales.reiniciar)) {
-            return FaseNivel::Reiniciando;
-        } else if (pulsado(botones.generales.alternar_grid)) {
-            assert(MODO_DESARROLLO);
-            estado.mostrando_grid = !estado.mostrando_grid;
-        }
-        // Dependientes del estado
-        switch (estado.fase_actual) {
-            case FaseNivel::MostrandoInstrucciones:
-                if (pulsado(botones.empezar)) {
-                    return FaseNivel::Activa;
-                }
-                break;
-            case FaseNivel::Activa:
-                {
-                    const auto tipos_pizza_disponibles =
-                        estado.control_pizzas.get_tipos_disponibles();
-                    bool despacho = false;
-                    for (const auto &tp : tipos_pizza_disponibles) {
-                        if (pulsado(botones.encargar.at(tp))) {
-                            auto encargo =
-                                EncargoACocina(tp, obtener_tiempo_actual());
-                            estado.encargos.anadir(encargo);
-                            return std::nullopt;
-                        }
-                        if (pulsado(botones.despachar.at(tp))) {
-                            estado.control_pizzas.procesar_despacho(tp);
-                            despacho = true;
-                            break;
-                        }
-                    }
-                    if (despacho &&
-                        !estado.control_pizzas.faltan_pedidos_por_cubrir()) {
-                        return FaseNivel::EsperaAntesDeResultado;
-                    }
-                }
-                break;
-            default:
-                break;
-        }
+        return procesa_click(botones, estado, mouse_pos);
     }
     return std::nullopt;
 };
+
+std::optional<FaseNivel> Nivel::procesa_click(
+    const Botones &botones, Estado &estado, const sf::Vector2i &mouse_pos
+) {
+    const auto pulsado = [this, &mouse_pos](const BotonConTexto &boton) {
+        return this->globales.detecta_colision(boton, mouse_pos);
+    };
+
+    // Fijos
+    if (pulsado(botones.generales.salir)) {
+        return FaseNivel::Saliendo;
+    } else if (pulsado(botones.generales.reiniciar)) {
+        return FaseNivel::Reiniciando;
+    } else if (pulsado(botones.generales.alternar_grid)) {
+        assert(MODO_DESARROLLO);
+        estado.mostrando_grid = !estado.mostrando_grid;
+    }
+    // Dependientes del estado
+    switch (estado.fase_actual) {
+        case FaseNivel::MostrandoInstrucciones:
+            if (pulsado(botones.empezar)) {
+                return FaseNivel::Activa;
+            }
+            break;
+        case FaseNivel::Activa:
+            {
+                const auto tipos_pizza_disponibles =
+                    estado.control_pizzas.get_tipos_disponibles();
+                bool despacho = false;
+                for (const auto &tp : tipos_pizza_disponibles) {
+                    if (pulsado(botones.encargar.at(tp))) {
+                        auto encargo =
+                            EncargoACocina(tp, obtener_tiempo_actual());
+                        estado.encargos.anadir(encargo);
+                        return std::nullopt;
+                    }
+                    if (pulsado(botones.despachar.at(tp))) {
+                        estado.control_pizzas.procesar_despacho(tp);
+                        despacho = true;
+                        break;
+                    }
+                }
+                if (despacho &&
+                    !estado.control_pizzas.faltan_pedidos_por_cubrir()) {
+                    return FaseNivel::EsperaAntesDeResultado;
+                }
+            }
+            break;
+        default:
+            break;
+    }
+    return std::nullopt;
+}
 
 /* Procesa un cambio de fase reciente */
 void Nivel::procesa_cambio_de_fase(
