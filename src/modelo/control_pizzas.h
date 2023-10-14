@@ -22,6 +22,6 @@ struct ControlPizzas {
     const std::vector<TipoPizza> &get_tipos_disponibles() const;
     void procesar_despacho(const TipoPizza tp);
     int obtener_total_preparadas() const;
-    int obtener_total_objetivos(Pedido &pedido) const;
+    int obtener_total_objetivos() const;
     bool faltan_pedidos_por_cubrir() const;
 };

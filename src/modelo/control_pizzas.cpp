@@ -23,6 +23,9 @@ ControlPizzas::ControlPizzas(Pedidos pedidos_, bool es_estatico_)
             }
         }
     }
+    if (es_estatico) {
+        assert(pedidos.size() == 1);
+    }
 }
 
 const std::vector<TipoPizza> & //
@@ -72,7 +75,11 @@ int ControlPizzas::obtener_total_preparadas() const {
     return total_preparadas;
 }
 
-int ControlPizzas::obtener_total_objetivos(Pedido &pedido) const {
+/* Calcular total objetivos. Solo tiene sentido con pedidos estaticos. */
+int ControlPizzas::obtener_total_objetivos() const {
+    assert(es_estatico);
+    assert(pedidos.size() == 1);
+    auto &pedido = pedidos[0];
     int total_objetivos = 0;
     for (auto &par : pedido.contenido) {
         auto tp = par.first;

@@ -129,11 +129,7 @@ AccionGeneral Nivel::ejecutar() {
     // std::cout << "Número de tipos de pizza disponibles: "
     //           << control_pizzas.get_tipos_disponibles().size() << std::endl;
     if (datos_nivel.es_estatico) {
-        // Calcular total objetivos
-        auto &pedidos = control_pizzas.pedidos;
-        assert(pedidos.size() == 1);
-        auto &pedido = pedidos[0];
-        total_objetivos = control_pizzas.obtener_total_objetivos(pedido);
+        total_objetivos = control_pizzas.obtener_total_objetivos();
     }
     Vista vista(
         datos_nivel.es_estatico,               //
