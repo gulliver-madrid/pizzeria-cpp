@@ -2,24 +2,25 @@
 
 namespace debug {
     void debug_rect(sf::RectangleShape &rect, std::string name) {
-        std::cout << name << ".getPosition(): " << rect.getPosition().x << ", "
-                  << rect.getPosition().y << std::endl;
-        std::cout << name << ".getLocalBounds(): " << rect.getLocalBounds().left
-                  << ", " << rect.getLocalBounds().top << std::endl;
-        std::cout << name
-                  << ".getGlobalBounds(): " << rect.getGlobalBounds().left
-                  << ", " << rect.getGlobalBounds().top << ", "
-                  << rect.getGlobalBounds().width << ", "
-                  << rect.getGlobalBounds().height << std::endl;
+        using namespace std;
+        cout << name << ".getPosition(): " << rect.getPosition().x << ", "
+             << rect.getPosition().y << endl;
+        cout << name << ".getLocalBounds(): " << rect.getLocalBounds().left
+             << ", " << rect.getLocalBounds().top << endl;
+        cout << name << ".getGlobalBounds(): " << rect.getGlobalBounds().left
+             << ", " << rect.getGlobalBounds().top << ", "
+             << rect.getGlobalBounds().width << ", "
+             << rect.getGlobalBounds().height << endl;
     }
 
     void debug_float_rect(sf::FloatRect rect) {
-        std::cout << "getPosition(): " << rect.getPosition().x << ", "
-                  << rect.getPosition().y << std::endl;
-        std::cout << "left: " << rect.left << std::endl;
-        std::cout << "top: " << rect.top << std::endl;
-        std::cout << "width: " << rect.width << std::endl;
-        std::cout << "height: " << rect.height << std::endl;
-        std::cout << std::endl;
+        using namespace std;
+        cout << "getPosition(): " << rect.getPosition().x << ", "
+             << rect.getPosition().y << endl;
+        cout << "left: " << rect.left << endl;
+        cout << "top: " << rect.top << endl;
+        cout << "width: " << rect.width << endl;
+        cout << "height: " << rect.height << endl;
+        cout << endl;
     }
 } // namespace debug

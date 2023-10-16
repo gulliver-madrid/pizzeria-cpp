@@ -7,12 +7,13 @@
 
 namespace debug {
     void debug_contadores(const modelo::PizzasAContadores &contadores) {
-        std::cout << "Debug contadores" << std::endl;
+        using namespace std;
+        cout << "Debug contadores" << endl;
         for (auto &par : contadores) {
-            std::cout << tipo_pizza_to_string[par.first] << " "
-                      << "preparadas: " << par.second.preparadas << std::endl;
+            cout << tipo_pizza_to_string[par.first] << " "
+                 << "preparadas: " << par.second.preparadas << endl;
         }
-        std::cout << std::endl;
+        cout << endl;
     }
 } // namespace debug
 
