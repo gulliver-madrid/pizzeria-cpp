@@ -23,6 +23,8 @@ struct EtiquetasGenerales {
   public:
     EtiquetasInfo info;
     EtiquetasGenerales(bool es_estatico, const sf::Font &font);
+    EtiquetasGenerales(const EtiquetasGenerales &) = delete;
+    EtiquetasGenerales &operator=(const EtiquetasGenerales &) = delete;
     ~EtiquetasGenerales();
 
     void setup(
