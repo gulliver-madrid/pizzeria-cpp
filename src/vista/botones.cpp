@@ -76,11 +76,11 @@ Botones::Botones(
     for (auto &boton : generales.obtener_todos()) {
         todos.push_back(boton);
     }
-    for (auto &par : despachar) {
-        todos.push_back(&par.second);
+    for (auto &[_, boton] : despachar) {
+        todos.push_back(&boton);
     }
-    for (auto &par : encargar) {
-        todos.push_back(&par.second);
+    for (auto &[_, boton] : encargar) {
+        todos.push_back(&boton);
     }
 }
 
@@ -92,12 +92,10 @@ void Botones::dibujar(sf::RenderWindow &ventana) const {
 }
 
 void Botones::mostrar_botones_nivel(bool nuevo_valor) {
-    for (auto &par : despachar) {
-        auto &boton = par.second;
+    for (auto &[_, boton] : despachar) {
         boton.visible = nuevo_valor;
     }
-    for (auto &par : encargar) {
-        auto &boton = par.second;
+    for (auto &[_, boton] : encargar) {
         boton.visible = nuevo_valor;
     }
 }

@@ -9,9 +9,9 @@ namespace debug {
     void debug_contadores(const modelo::PizzasAContadores &contadores) {
         using namespace std;
         cout << "Debug contadores" << endl;
-        for (auto &par : contadores) {
-            cout << tipo_pizza_to_string[par.first] << " "
-                 << "preparadas: " << par.second.preparadas << endl;
+        for (auto &[tp, contadores_tp] : contadores) {
+            cout << tipo_pizza_to_string[tp] << " "
+                 << "preparadas: " << contadores_tp.preparadas << endl;
         }
         cout << endl;
     }
@@ -41,8 +41,7 @@ Pedido::Pedido(std::map<modelo::TipoPizza, PedidoTipoPizza> contenido)
 
 void Pedido::evaluar() {
     bool faltan = false;
-    for (auto &par : contenido) {
-        auto &pedido_tp = par.second;
+    for (auto &[_, pedido_tp] : contenido) {
         if (pedido_tp.servido < pedido_tp.objetivo) {
             faltan = true;
             break;
@@ -102,8 +101,8 @@ void evaluar_preparacion(
     }
 
     std::unordered_set<size_t> indices_para_pasar;
-    for (const auto &par : pizzas_listas_con_tiempo) {
-        indices_para_pasar.insert(par.first);
+    for (const auto &[indice, _] : pizzas_listas_con_tiempo) {
+        indices_para_pasar.insert(indice);
     }
 
     // Segunda ronda para actualizar contadores y lista de encargos

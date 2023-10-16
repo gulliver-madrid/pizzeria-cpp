@@ -18,9 +18,8 @@ int demo_map() { //
               << "La edad de Alice es " << edad["Alice"] << std::endl;
 
     // Itera a través del map
-    for (auto &par : edad) {
-        std::cout << par.first << " tiene " << par.second << " años."
-                  << std::endl;
+    for (auto &[nombre, edad] : edad) {
+        std::cout << nombre << " tiene " << edad << " años." << std::endl;
     }
 
     return 0;

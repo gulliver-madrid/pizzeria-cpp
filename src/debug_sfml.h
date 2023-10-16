@@ -9,13 +9,15 @@ namespace debug {
     void debug_float_rect(sf::FloatRect rect);
 } // namespace debug
 
-/* Crea una representacion de los pares de un contenedor iterable, suponiendo
+/*
+ * Crea una representacion de los pares de un contenedor iterable, suponiendo
  * que sus elementos puedan usarse con std::cout
  */
 template <typename Iterable> void debug_pares(const Iterable &contenedor) {
-    std::cout << "[";
-    for (const auto &par : contenedor) {
-        std::cout << "(" << par.first << ", " << par.second << "), ";
+    using namespace std;
+    cout << "[";
+    for (const auto &[primero, segundo] : contenedor) {
+        cout << "(" << primero << ", " << segundo << "), ";
     }
-    std::cout << "]" << std::endl;
+    cout << "]" << endl;
 }

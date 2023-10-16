@@ -24,10 +24,10 @@ namespace presentador {
         std::string s;
         size_t ultimo = pedido.contenido.size() - 1;
         size_t i = 0;
-        for (auto &par : pedido.contenido) {
+        for (auto &[tp, pedido_tp] : pedido.contenido) {
             s.append(
                 crea_linea_completitud_pizza(
-                    par.first, par.second.servido, par.second.objetivo
+                    tp, pedido_tp.servido, pedido_tp.objetivo
                 ) +
                 ((i < ultimo) ? "\n" : "")
             );

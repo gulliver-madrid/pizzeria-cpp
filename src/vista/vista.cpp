@@ -81,11 +81,9 @@ void activar_botones_despachar_si_hay_preparadas(
     TipoPizzaToBoton &botones_despachar,
     const modelo::PizzasAContadores &contadores
 ) {
-    for (auto &par : contadores) {
-        auto &tp = par.first;
-        auto &contador = par.second;
+    for (auto &[tp, contadores_tp] : contadores) {
         auto &boton_despachar = botones_despachar[tp];
-        boton_despachar.activacion_condicional(contador.preparadas > 0);
+        boton_despachar.activacion_condicional(contadores_tp.preparadas > 0);
     }
 }
 
@@ -99,13 +97,11 @@ void desactivar_botones_encargar_si_se_sobrepasan_objetivos(
     const Encargos &encargos,                    //
     const Pedido &pedido                         //
 ) {
-    for (auto &par : contadores) {
-        auto &tp = par.first;
+    for (auto &[tp, contadores_tp] : contadores) {
         auto &boton_encargar = botones_encargar.at(tp);
         if (!boton_encargar.esta_activo()) {
             continue;
         }
-        auto &contadores_tp = par.second;
         int potenciales = contadores_tp.preparadas + contadores_tp.servidas +
                           encargos.del_tipo(tp);
         auto contador_estatico_tp = pedido.contenido.at(tp);
@@ -128,8 +124,7 @@ void actualizar_estado_botones(Botones &botones, const Estado &estado) {
     assert(en_preparacion <= maximo);
     const bool se_pueden_preparar_mas = en_preparacion < maximo;
 
-    for (auto &par : botones.encargar) {
-        auto &boton = par.second;
+    for (auto &[_, boton] : botones.encargar) {
         boton.activacion_condicional(se_pueden_preparar_mas);
     }
 

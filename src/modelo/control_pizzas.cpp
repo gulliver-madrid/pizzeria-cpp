@@ -8,8 +8,7 @@ ControlPizzas::ControlPizzas(
 )
     : pedidos(pedidos_), es_estatico(es_estatico) {
     for (auto &pedido : pedidos) {
-        for (auto &par : pedido.contenido) {
-            auto &tp = par.first;
+        for (auto &[tp, _] : pedido.contenido) {
             if (contadores.find(tp) == contadores.end()) {
                 contadores[tp] = Contadores{};
                 _tipos_disponibles.push_back(tp);
@@ -60,8 +59,7 @@ void ControlPizzas::procesar_despacho(const TipoPizza tp) {
 
 int ControlPizzas::obtener_total_preparadas() const {
     int total_preparadas = 0;
-    for (auto &par : contadores) {
-        auto contador_tp = par.second;
+    for (auto &[_, contador_tp] : contadores) {
         total_preparadas += contador_tp.preparadas;
     }
     assert(total_preparadas >= 0);
@@ -74,9 +72,7 @@ int ControlPizzas::obtener_total_objetivos() const {
     assert(pedidos.size() == 1);
     auto &pedido = pedidos[0];
     int total_objetivos = 0;
-    for (auto &par : pedido.contenido) {
-        auto tp = par.first;
-        auto pedido_tp = par.second;
+    for (auto &[tp, pedido_tp] : pedido.contenido) {
         assert(contadores.at(tp).preparadas == 0);
         total_objetivos += pedido_tp.objetivo;
     }
@@ -95,9 +91,9 @@ bool ControlPizzas::faltan_pedidos_por_cubrir() const {
 
 void debug::debug_pedidos(const Pedidos &pedidos) {
     for (auto &pedido : pedidos) {
-        for (auto &par : pedido.contenido) {
-            std::cout << tipo_pizza_to_string[par.first] << ": "
-                      << par.second.objetivo << std::endl;
+        for (auto &[tp, pedido_tp] : pedido.contenido) {
+            std::cout << tipo_pizza_to_string[tp] << ": " << pedido_tp.objetivo
+                      << std::endl;
         }
     }
 }
