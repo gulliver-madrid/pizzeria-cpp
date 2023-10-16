@@ -31,8 +31,8 @@ sf::Text FabricaEtiquetasContadores::_crearEtiquetaContadorPizzas( //
 ) {
     const int tamano = medidas::TAMANO_FUENTE_ETIQUETAS;
     const auto color = sf::Color::White;
-    const auto estilo_texto = EstiloTexto{tamano, color, font};
-    return crearEtiqueta(estilo_texto, posicion);
+    const auto estilo = EstiloTexto{tamano, color, font};
+    return crearEtiqueta(estilo, posicion);
 }
 
 /*

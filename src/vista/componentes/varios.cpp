@@ -13,8 +13,8 @@ sf::Text crearEtiqueta(
 
 /* Sobrecarga para usar EstiloTexto */
 sf::Text
-crearEtiqueta(const EstiloTexto &fuente_texto, const sf::Vector2f &posicion) {
+crearEtiqueta(const EstiloTexto &estilo_texto, const sf::Vector2f &posicion) {
     return crearEtiqueta(
-        fuente_texto.tamano, fuente_texto.font, fuente_texto.color, posicion
+        estilo_texto.tamano, estilo_texto.font, estilo_texto.color, posicion
     );
 }
