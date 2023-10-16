@@ -132,7 +132,7 @@ AccionGeneral Nivel::ejecutar() {
     modelo::PizzasAContadores &contadores = control_pizzas.contadores;
     // std::cout << "Número de tipos de pizza disponibles: "
     //           << control_pizzas.get_tipos_disponibles().size() << std::endl;
-    if (datos_nivel.es_estatico) {
+    if (datos_nivel.es_estatico.valor) {
         total_objetivos = control_pizzas.obtener_total_objetivos();
     }
     Vista vista(

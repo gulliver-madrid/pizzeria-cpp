@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../shared.h"
 #include "modelo.h"
 #include <cassert>
 #include <vector>
@@ -17,8 +18,8 @@ namespace modelo {
       public:
         PizzasAContadores contadores;
         Pedidos pedidos;
-        bool es_estatico;
-        ControlPizzas(Pedidos pedidos_, bool es_estatico_ = true);
+        const EsSistemaEstatico &es_estatico;
+        ControlPizzas(Pedidos pedidos_, const EsSistemaEstatico &es_estatico);
         const std::vector<TipoPizza> &get_tipos_disponibles() const;
         void procesar_despacho(const TipoPizza tp);
         int obtener_total_preparadas() const;

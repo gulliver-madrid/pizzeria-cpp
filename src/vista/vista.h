@@ -24,7 +24,7 @@ struct Vista {
     Grid &grid;
 
     Vista(
-        bool es_estatico,                                    //
+        const EsSistemaEstatico &es_estatico,                //
         const sf::Font &font,                                //
         Grid &grid,                                          //
         const std::vector<modelo::TipoPizza> &tp_disponibles //

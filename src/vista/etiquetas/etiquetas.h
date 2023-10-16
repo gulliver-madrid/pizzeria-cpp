@@ -22,7 +22,9 @@ struct EtiquetasGenerales {
     std::unique_ptr<EtiquetasInfo> info;
 
   public:
-    EtiquetasGenerales(bool es_estatico, const sf::Font &font);
+    EtiquetasGenerales(
+        const EsSistemaEstatico &es_estatico, const sf::Font &font
+    );
     EtiquetasGenerales(const EtiquetasGenerales &) = delete;
     EtiquetasGenerales &operator=(const EtiquetasGenerales &) = delete;
     ~EtiquetasGenerales();

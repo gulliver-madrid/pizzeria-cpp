@@ -9,7 +9,7 @@ struct EtiquetasContadores {
   private:
     const sf::Font &font;
     // Indica si el sistema de pedidos es estatico
-    const bool es_estatico;
+    const EsSistemaEstatico &es_estatico;
 
     void _actualizar_pedidos_dinamicos(const modelo::Pedidos &pedidos);
     void _actualizar_pedido_estatico(
@@ -21,7 +21,9 @@ struct EtiquetasContadores {
     std::map<TipoPizza, sf::Text> texto_preparadas;
     std::map<TipoPizza, sf::Text> texto_servidas;
     std::vector<sf::Text> texto_pedidos;
-    EtiquetasContadores(bool es_estatico, const sf::Font &font)
+    EtiquetasContadores(
+        const EsSistemaEstatico &es_estatico, const sf::Font &font
+    )
         : es_estatico(es_estatico), font(font) {}
     void setup(const std::vector<TipoPizza> &tp_disponibles);
     void actualizar(

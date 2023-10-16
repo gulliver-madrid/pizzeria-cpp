@@ -133,7 +133,7 @@ void actualizar_estado_botones(Botones &botones, const Estado &estado) {
         boton.activacion_condicional(se_pueden_preparar_mas);
     }
 
-    if (se_pueden_preparar_mas && control_pizzas.es_estatico) {
+    if (se_pueden_preparar_mas && control_pizzas.es_estatico.valor) {
         const auto &pedidos = control_pizzas.pedidos;
         assert(pedidos.size() == 1);
         const auto &pedido = pedidos[0];

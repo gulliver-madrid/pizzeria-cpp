@@ -3,8 +3,10 @@
 
 using namespace modelo;
 
-ControlPizzas::ControlPizzas(Pedidos pedidos_, bool es_estatico_)
-    : pedidos(pedidos_), es_estatico(es_estatico_) {
+ControlPizzas::ControlPizzas(
+    Pedidos pedidos_, const EsSistemaEstatico &es_estatico
+)
+    : pedidos(pedidos_), es_estatico(es_estatico) {
     for (auto &pedido : pedidos) {
         for (auto &par : pedido.contenido) {
             auto &tp = par.first;
@@ -14,7 +16,7 @@ ControlPizzas::ControlPizzas(Pedidos pedidos_, bool es_estatico_)
             }
         }
     }
-    if (es_estatico) {
+    if (es_estatico.valor) {
         assert(pedidos.size() == 1);
     }
 }
@@ -68,7 +70,7 @@ int ControlPizzas::obtener_total_preparadas() const {
 
 /* Calcular total objetivos. Solo tiene sentido con pedidos estaticos. */
 int ControlPizzas::obtener_total_objetivos() const {
-    assert(es_estatico);
+    assert(es_estatico.valor);
     assert(pedidos.size() == 1);
     auto &pedido = pedidos[0];
     int total_objetivos = 0;

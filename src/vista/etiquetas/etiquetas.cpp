@@ -19,7 +19,9 @@ namespace estilos {
 // EtiquetasGenerales
 //////////////////////////////////////////
 
-EtiquetasGenerales::EtiquetasGenerales(bool es_estatico, const sf::Font &font)
+EtiquetasGenerales::EtiquetasGenerales(
+    const EsSistemaEstatico &es_estatico, const sf::Font &font
+)
     : font(font) {
     contadores = std::make_unique<EtiquetasContadores>(es_estatico, font);
     info = std::make_unique<EtiquetasInfo>(font);

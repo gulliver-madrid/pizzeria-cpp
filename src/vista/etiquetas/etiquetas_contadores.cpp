@@ -17,7 +17,7 @@ void EtiquetasContadores::setup(const std::vector<TipoPizza> &tp_disponibles) {
     int i = 0;
     for (auto &tp : tp_disponibles) {
         texto_preparadas[tp] = fabrica.crearEtiquetaPizzasPreparadas(i);
-        if (es_estatico) {
+        if (es_estatico.valor) {
             texto_servidas[tp] = fabrica.crearEtiquetaPizzasServidas(i);
         }
         i++;
@@ -98,7 +98,7 @@ void EtiquetasContadores::actualizar(
             nombre_pizza + ": " + std::to_string(contadores_tp.preparadas);
         texto_preparadas.at(tp).setString(preparadas);
     }
-    if (es_estatico) {
+    if (es_estatico.valor) {
         _actualizar_pedido_estatico(pizzas_a_contadores, pedidos);
     } else {
         _actualizar_pedidos_dinamicos(pedidos);
