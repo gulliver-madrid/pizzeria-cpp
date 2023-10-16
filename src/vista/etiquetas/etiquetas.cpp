@@ -27,8 +27,7 @@ sf::Text FabricaEtiquetasTituloPanel::crearEtiquetaTituloPanel(
     const sf::Vector2f &posicion_panel, const std::string &texto
 ) {
     const auto posicion = get_posicion_etiqueta_titulo_panel(posicion_panel);
-    const EstiloTextoConFuente estilo = {estilos::TITULO_PANEL, font};
-    auto etiqueta = crearEtiqueta(estilo, posicion);
+    auto etiqueta = crearEtiqueta(estilos::TITULO_PANEL, font, posicion);
     etiqueta.setString(interpolar_unicode(texto));
     return etiqueta;
 }

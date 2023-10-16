@@ -18,10 +18,11 @@ namespace estilos {
     };
 } // namespace estilos
 
-sf::Text
-_crear_etiqueta_instrucciones_o_resultado(const EstiloTextoConFuente &estilo) {
+sf::Text _crear_etiqueta_instrucciones_o_resultado(
+    const EstiloTexto &estilo, const sf::Font &font
+) {
     const auto posicion = medidas::POSICION_INSTRUCCIONES_O_RESULTADO;
-    return crearEtiqueta(estilo, posicion);
+    return crearEtiqueta(estilo, font, posicion);
 }
 
 sf::Text FabricaEtiquetasInfo::generar_etiqueta_instrucciones(
@@ -31,7 +32,7 @@ sf::Text FabricaEtiquetasInfo::generar_etiqueta_instrucciones(
     int objetivo
 ) {
     const auto estilo = estilos::INSTRUCCIONES;
-    auto etiqueta = _crear_etiqueta_instrucciones_o_resultado({estilo, font});
+    auto etiqueta = _crear_etiqueta_instrucciones_o_resultado(estilo, font);
     const auto texto = construir_instrucciones(plantilla, num_nivel, objetivo);
     etiqueta.setString(texto);
     return etiqueta;
@@ -40,7 +41,7 @@ sf::Text FabricaEtiquetasInfo::generar_etiqueta_instrucciones(
 sf::Text FabricaEtiquetasInfo::generar_etiqueta_resultado(const sf::Font &font
 ) {
     const auto estilo = estilos::RESULTADO;
-    auto etiqueta = _crear_etiqueta_instrucciones_o_resultado({estilo, font});
+    auto etiqueta = _crear_etiqueta_instrucciones_o_resultado(estilo, font);
     etiqueta.setString(construir_resultado());
     return etiqueta;
 }

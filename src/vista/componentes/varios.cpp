@@ -1,7 +1,7 @@
 #include "varios.h"
 
 sf::Text crearEtiqueta(
-    int tamano, const sf::Font &font, const sf::Color &color,
+    int tamano, const sf::Color &color, const sf::Font &font,
     const sf::Vector2f &posicion
 ) {
     // Usamos un placeholder para poder obtener la altura
@@ -11,12 +11,10 @@ sf::Text crearEtiqueta(
     return etiqueta;
 }
 
-/* Sobrecarga para usar EstiloTextoConFuente */
+/* Sobrecarga para usar EstiloTexto */
 sf::Text crearEtiqueta(
-    const EstiloTextoConFuente &estilo_con_fuente, const sf::Vector2f &posicion
+    const EstiloTexto &estilo, const sf::Font &font,
+    const sf::Vector2f &posicion
 ) {
-    return crearEtiqueta(
-        estilo_con_fuente.estilo.tamano, estilo_con_fuente.font,
-        estilo_con_fuente.estilo.color, posicion
-    );
+    return crearEtiqueta(estilo.tamano, estilo.color, font, posicion);
 }

@@ -35,8 +35,7 @@ FabricaEtiquetasContadores::_obtener_posicion_etiqueta_contador_pizzas(
 sf::Text FabricaEtiquetasContadores::_crearEtiquetaContadorPizzas( //
     sf::Vector2f posicion
 ) {
-    const EstiloTextoConFuente estilo = {estilos::CONTADORES, font};
-    return crearEtiqueta(estilo, posicion);
+    return crearEtiqueta(estilos::CONTADORES, font, posicion);
 }
 
 /*
