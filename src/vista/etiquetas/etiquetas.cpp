@@ -39,7 +39,7 @@ void EtiquetasGenerales::setup(
 
 void EtiquetasGenerales::actualizar_y_dibujar_contadores(
     const PizzasAContadores &pizzas_a_contadores, //
-    const Pedidos &pedidos,                       //
+    const modelo::Pedidos &pedidos,               //
     sf::RenderWindow &ventana                     //
 ) {
     contadores->actualizar(pizzas_a_contadores, pedidos);

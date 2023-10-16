@@ -36,7 +36,7 @@ struct EtiquetasGenerales {
 
     void actualizar_y_dibujar_contadores(
         const PizzasAContadores &pizzas_a_contadores, //
-        const Pedidos &pedidos,                       //
+        const modelo::Pedidos &pedidos,               //
         sf::RenderWindow &ventana                     //
     );
 

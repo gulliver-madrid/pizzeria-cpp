@@ -9,10 +9,10 @@ struct EtiquetasContadores {
     // Indica si el sistema de pedidos es estatico
     const bool es_estatico;
 
-    void _actualizar_pedidos_dinamicos(const Pedidos &pedidos);
+    void _actualizar_pedidos_dinamicos(const modelo::Pedidos &pedidos);
     void _actualizar_pedido_estatico(
         const PizzasAContadores &pizzas_a_contadores, //
-        const Pedidos &pedidos                        //
+        const modelo::Pedidos &pedidos                //
     );
 
   public:
@@ -24,7 +24,7 @@ struct EtiquetasContadores {
     void setup(const std::vector<TipoPizza> &tp_disponibles);
     void actualizar(
         const PizzasAContadores &pizzas_a_contadores, //
-        const Pedidos &pedidos                        //
+        const modelo::Pedidos &pedidos                //
     );
     void dibujar(sf::RenderWindow &ventana) const;
 };

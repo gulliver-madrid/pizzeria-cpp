@@ -2,6 +2,8 @@
 #include "setup_juego.h"
 #include "textos.h"
 
+using namespace modelo;
+
 const auto dinamicos =
     Pedidos{ //
             {//
@@ -12,7 +14,9 @@ const auto dinamicos =
              Pedido(
                  {{TipoPizza::Margarita, PedidoTipoPizza{1}},
                   {TipoPizza::CuatroQuesos, PedidoTipoPizza{1}}}
-             )}};
+             )
+            }
+    };
 
 const DatosNivel datos_niveles[] = {
     // TODO: adaptar texto instrucciones al nivel correspondiente
@@ -24,10 +28,12 @@ const DatosNivel datos_niveles[] = {
                  {TipoPizza::CuatroQuesos, PedidoTipoPizza{2}}}
             ),
         }},
-        true},
+        true
+    },
     DatosNivel{
         INSTRUCCIONES_NIVEL_DINAMICO, //
-        dinamicos},
+        dinamicos
+    },
     DatosNivel{
         INSTRUCCIONES_NIVEL_DINAMICO, //
         Pedidos{                      //
@@ -41,7 +47,10 @@ const DatosNivel datos_niveles[] = {
                      {{TipoPizza::Margarita, PedidoTipoPizza{1}},
                       {TipoPizza::CuatroQuesos, PedidoTipoPizza{1}},
                       {TipoPizza::Pepperoni, PedidoTipoPizza{1}}}
-                 )}}},
+                 )
+                }
+        }
+    },
     {INSTRUCCIONES_NIVEL_ESTATICO, //
      Pedidos{{
          Pedido({

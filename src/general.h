@@ -27,6 +27,6 @@ enum class FaseNivel {
 /* Guarda la información relativa al nivel */
 struct DatosNivel {
     std::string instrucciones;
-    Pedidos pedidos;
+    modelo::Pedidos pedidos;
     bool es_estatico = false;
 };

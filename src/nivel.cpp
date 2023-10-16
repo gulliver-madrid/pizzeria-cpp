@@ -124,7 +124,7 @@ AccionGeneral Nivel::ejecutar() {
     // std::cout << "Número de pedidos en este nivel: "
     //           << datos_nivel.pedidos.size() << std::endl;
 
-    ControlPizzas control_pizzas = {
+    modelo::ControlPizzas control_pizzas = {
         datos_nivel.pedidos, datos_nivel.es_estatico
     };
     Estado estado(FaseNivel::MostrandoInstrucciones, control_pizzas);

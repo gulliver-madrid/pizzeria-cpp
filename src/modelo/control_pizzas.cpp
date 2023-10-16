@@ -1,16 +1,7 @@
 #include "control_pizzas.h"
 #include <iostream>
 
-namespace debug {
-    void debug_pedidos(const Pedidos &pedidos) {
-        for (auto &pedido : pedidos) {
-            for (auto &par : pedido.contenido) {
-                std::cout << tipo_pizza_to_string[par.first] << ": "
-                          << par.second.objetivo << std::endl;
-            }
-        }
-    }
-} // namespace debug
+using namespace modelo;
 
 ControlPizzas::ControlPizzas(Pedidos pedidos_, bool es_estatico_)
     : pedidos(pedidos_), es_estatico(es_estatico_) {
@@ -98,4 +89,13 @@ bool ControlPizzas::faltan_pedidos_por_cubrir() const {
         }
     }
     return faltan;
+}
+
+void debug::debug_pedidos(const Pedidos &pedidos) {
+    for (auto &pedido : pedidos) {
+        for (auto &par : pedido.contenido) {
+            std::cout << tipo_pizza_to_string[par.first] << ": "
+                      << par.second.objetivo << std::endl;
+        }
+    }
 }
