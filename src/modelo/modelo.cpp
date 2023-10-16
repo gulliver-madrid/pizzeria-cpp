@@ -26,6 +26,33 @@ EstadoPreparacionPizzas::EstadoPreparacionPizzas(const Encargos &encargos) {
     }
 }
 
+PedidoTipoPizza::PedidoTipoPizza(int objetivo) : objetivo(objetivo) {
+    assert(objetivo >= 0);
+}
+PedidoTipoPizza::PedidoTipoPizza(int servido, int objetivo)
+    : servido(servido), objetivo(objetivo) {
+    assert(objetivo >= 0);
+    assert(servido >= 0);
+    assert(servido <= objetivo);
+}
+
+Pedido::Pedido(std::map<modelo::TipoPizza, PedidoTipoPizza> contenido)
+    : contenido(contenido) {}
+
+void Pedido::evaluar() {
+    bool faltan = false;
+    for (auto &par : contenido) {
+        auto &pedido_tp = par.second;
+        if (pedido_tp.servido < pedido_tp.objetivo) {
+            faltan = true;
+            break;
+        }
+    }
+    if (!faltan) {
+        cubierto = true;
+    }
+}
+
 /*
  * Evalua si hay pizzas ya preparadas y actualiza encargos y contadores en
  * consecuencia. Las pizzas que lleven más tiempo preparadas pasan antes.
