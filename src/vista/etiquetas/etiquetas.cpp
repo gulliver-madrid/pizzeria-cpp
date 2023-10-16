@@ -9,6 +9,11 @@
 namespace medidas {
     constexpr int TAMANO_FUENTE_TITULO_PANELES = 36;
 } // namespace medidas
+namespace estilos {
+    const EstiloTexto TITULO_PANEL = {
+        medidas::TAMANO_FUENTE_TITULO_PANELES, sf::Color::Green
+    };
+}
 
 sf::Vector2f
 get_posicion_etiqueta_titulo_panel(const sf::Vector2f &posicion_panel) {
@@ -21,9 +26,8 @@ get_posicion_etiqueta_titulo_panel(const sf::Vector2f &posicion_panel) {
 sf::Text FabricaEtiquetasTituloPanel::crearEtiquetaTituloPanel(
     const sf::Vector2f &posicion_panel, const std::string &texto
 ) {
-    const auto tamano_fuente = medidas::TAMANO_FUENTE_TITULO_PANELES;
     const auto posicion = get_posicion_etiqueta_titulo_panel(posicion_panel);
-    const EstiloTexto estilo = {tamano_fuente, sf::Color::Green, font};
+    const EstiloTextoConFuente estilo = {estilos::TITULO_PANEL, font};
     auto etiqueta = crearEtiqueta(estilo, posicion);
     etiqueta.setString(interpolar_unicode(texto));
     return etiqueta;

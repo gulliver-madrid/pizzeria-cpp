@@ -9,7 +9,17 @@ namespace medidas {
     constexpr int TAMANO_FUENTE_RESULTADO = 48;
 } // namespace medidas
 
-sf::Text _crear_etiqueta_instrucciones_o_resultado(const EstiloTexto &estilo) {
+namespace estilos {
+    const EstiloTexto RESULTADO = {
+        medidas::TAMANO_FUENTE_RESULTADO, colores::TEXTO_RESULTADO
+    };
+    const EstiloTexto INSTRUCCIONES = {
+        medidas::TAMANO_FUENTE_INFO, colores::TEXTO_INSTRUCCIONES
+    };
+} // namespace estilos
+
+sf::Text
+_crear_etiqueta_instrucciones_o_resultado(const EstiloTextoConFuente &estilo) {
     const auto posicion = medidas::POSICION_INSTRUCCIONES_O_RESULTADO;
     return crearEtiqueta(estilo, posicion);
 }
@@ -20,10 +30,8 @@ sf::Text FabricaEtiquetasInfo::generar_etiqueta_instrucciones(
     NumNivel num_nivel,           //
     int objetivo
 ) {
-    const auto tamano_fuente = medidas::TAMANO_FUENTE_INFO;
-    const auto color = colores::COLOR_TEXTO_INSTRUCCIONES;
-    const auto estilo = EstiloTexto{tamano_fuente, color, font};
-    auto etiqueta = _crear_etiqueta_instrucciones_o_resultado(estilo);
+    const auto estilo = estilos::INSTRUCCIONES;
+    auto etiqueta = _crear_etiqueta_instrucciones_o_resultado({estilo, font});
     const auto texto = construir_instrucciones(plantilla, num_nivel, objetivo);
     etiqueta.setString(texto);
     return etiqueta;
@@ -31,10 +39,8 @@ sf::Text FabricaEtiquetasInfo::generar_etiqueta_instrucciones(
 
 sf::Text FabricaEtiquetasInfo::generar_etiqueta_resultado(const sf::Font &font
 ) {
-    const auto tamano_fuente = medidas::TAMANO_FUENTE_RESULTADO;
-    const auto color = colores::COLOR_TEXTO_RESULTADO;
-    const auto estilo = EstiloTexto{tamano_fuente, color, font};
-    auto etiqueta = _crear_etiqueta_instrucciones_o_resultado(estilo);
+    const auto estilo = estilos::RESULTADO;
+    auto etiqueta = _crear_etiqueta_instrucciones_o_resultado({estilo, font});
     etiqueta.setString(construir_resultado());
     return etiqueta;
 }

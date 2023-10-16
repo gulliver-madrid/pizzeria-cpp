@@ -23,8 +23,8 @@ namespace medidas {
 
 namespace colores {
     const auto COLOR_FONDO = sf::Color(60, 0, 150);
-    const auto COLOR_TEXTO_INSTRUCCIONES = sf::Color::Yellow;
-    const auto COLOR_TEXTO_RESULTADO = sf::Color(255, 160, 0);
+    const auto TEXTO_INSTRUCCIONES = sf::Color::Yellow;
+    const auto TEXTO_RESULTADO = sf::Color(255, 160, 0);
 } // namespace colores
 
 sf::Vector2f obtener_posicion_panel(const IndicePanel &indice_panel);

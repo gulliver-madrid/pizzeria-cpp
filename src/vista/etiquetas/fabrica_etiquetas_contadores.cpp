@@ -8,6 +8,12 @@ namespace medidas {
     constexpr int DESPLAZAMIENTO_VERTICAL_ETIQUETAS_PIZZAS_SERVIDAS = 50;
 } // namespace medidas
 
+namespace estilos {
+    const EstiloTexto CONTADORES = {
+        medidas::TAMANO_FUENTE_ETIQUETAS, sf::Color::White
+    };
+}
+
 /*
  * Obtiene la posicion de una etiqueta para un contador
  */
@@ -29,9 +35,7 @@ FabricaEtiquetasContadores::_obtener_posicion_etiqueta_contador_pizzas(
 sf::Text FabricaEtiquetasContadores::_crearEtiquetaContadorPizzas( //
     sf::Vector2f posicion
 ) {
-    const int tamano = medidas::TAMANO_FUENTE_ETIQUETAS;
-    const auto color = sf::Color::White;
-    const auto estilo = EstiloTexto{tamano, color, font};
+    const EstiloTextoConFuente estilo = {estilos::CONTADORES, font};
     return crearEtiqueta(estilo, posicion);
 }
 

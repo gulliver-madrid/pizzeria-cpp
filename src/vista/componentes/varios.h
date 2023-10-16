@@ -6,6 +6,10 @@
 struct EstiloTexto {
     const int tamano;
     const sf::Color &color;
+};
+
+struct EstiloTextoConFuente {
+    const EstiloTexto &estilo;
     const sf::Font &font;
 };
 
@@ -16,5 +20,6 @@ sf::Text crearEtiqueta(
     const sf::Vector2f &posicion = VECTOR_CERO
 );
 sf::Text crearEtiqueta(
-    const EstiloTexto &fuente_texto, const sf::Vector2f &posicion = VECTOR_CERO
+    const EstiloTextoConFuente &fuente_texto,
+    const sf::Vector2f &posicion = VECTOR_CERO
 );

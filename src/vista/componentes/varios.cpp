@@ -11,10 +11,12 @@ sf::Text crearEtiqueta(
     return etiqueta;
 }
 
-/* Sobrecarga para usar EstiloTexto */
-sf::Text
-crearEtiqueta(const EstiloTexto &estilo_texto, const sf::Vector2f &posicion) {
+/* Sobrecarga para usar EstiloTextoConFuente */
+sf::Text crearEtiqueta(
+    const EstiloTextoConFuente &estilo_con_fuente, const sf::Vector2f &posicion
+) {
     return crearEtiqueta(
-        estilo_texto.tamano, estilo_texto.font, estilo_texto.color, posicion
+        estilo_con_fuente.estilo.tamano, estilo_con_fuente.font,
+        estilo_con_fuente.estilo.color, posicion
     );
 }
