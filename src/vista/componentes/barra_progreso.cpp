@@ -2,25 +2,23 @@
 #include <cassert>
 
 namespace colores {
-    const sf::Color COLOR_BARRA_PROGRESO_FONDO = {230, 230, 230};
-    const sf::Color COLOR_BARRA_PROGRESO_RELLENO = {
-        255, 140, 0
-    }; // 30, 144, 255
-    const sf::Color COLOR_BARRA_PROGRESO_TEXTO = {0, 0, 0};
+    namespace barra_progreso {
+        using sf::Color;
+        const Color FONDO = {230, 230, 230};
+        const Color RELLENO = {255, 140, 0}; // 30, 144, 255
+        const Color TEXTO = {0, 0, 0};
+    } // namespace barra_progreso
 } // namespace colores
 
 BarraProgreso::BarraProgreso(
-    const sf::Vector2f &dimensiones_, const sf::Vector2f &posicion
-) {
-    assert(dimensiones == sf::Vector2f(0, 0));
-    assert(fondo.getSize() == sf::Vector2f(0, 0));
-    assert(relleno.getSize() == sf::Vector2f(0, 0));
-    dimensiones = dimensiones_;
-
-    fondo = sf::RectangleShape(dimensiones);
-    relleno = sf::RectangleShape(sf::Vector2f(0, 0));
-    fondo.setFillColor(sf::Color(colores::COLOR_BARRA_PROGRESO_FONDO));
-    relleno.setFillColor(sf::Color(colores::COLOR_BARRA_PROGRESO_RELLENO));
+    const sf::Vector2f &dimensiones, const sf::Vector2f &posicion
+)
+    : dimensiones(dimensiones) {
+    assert(fondo.getSize() == Vector2f_CERO);
+    assert(relleno.getSize() == Vector2f_CERO);
+    fondo.setSize(dimensiones);
+    fondo.setFillColor(colores::barra_progreso::FONDO);
+    relleno.setFillColor(colores::barra_progreso::RELLENO);
     fondo.setPosition(posicion);
     relleno.setPosition(posicion);
 }
@@ -44,7 +42,7 @@ BarraProgresoConNombre::BarraProgresoConNombre(
 )
     : bp(dimensiones, posicion) {
     etiqueta = sf::Text(texto, font, 24);
-    etiqueta.setFillColor(sf::Color(colores::COLOR_BARRA_PROGRESO_TEXTO));
+    etiqueta.setFillColor(colores::barra_progreso::TEXTO);
     etiqueta.setPosition(posicion.x + 20, posicion.y + 5);
 }
 

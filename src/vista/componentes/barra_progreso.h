@@ -1,16 +1,17 @@
 #pragma once
 
+#include "varios.h"
 #include <SFML/Graphics.hpp>
 
 struct BarraProgreso {
   private:
-    sf::Vector2f dimensiones = {0, 0};
+    sf::Vector2f dimensiones;
     sf::RectangleShape fondo;
     sf::RectangleShape relleno;
 
   public:
     BarraProgreso(
-        const sf::Vector2f &dimensiones_, const sf::Vector2f &posicion
+        const sf::Vector2f &dimensiones, const sf::Vector2f &posicion
     );
     void update(int porcentaje);
     void dibujar(sf::RenderWindow &ventana) const;
