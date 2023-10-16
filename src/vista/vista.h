@@ -10,7 +10,7 @@ struct Grid;
 struct Vista {
   private:
     const sf::Font &font;
-    const std::vector<TipoPizza> &tp_disponibles;
+    const std::vector<modelo::TipoPizza> &tp_disponibles;
     void actualizar_paneles(
         sf::RenderWindow &ventana,           //
         PanelesCompletos &paneles_completos, //
@@ -24,10 +24,10 @@ struct Vista {
     Grid &grid;
 
     Vista(
-        bool es_estatico,                            //
-        const sf::Font &font,                        //
-        Grid &grid,                                  //
-        const std::vector<TipoPizza> &tp_disponibles //
+        bool es_estatico,                                    //
+        const sf::Font &font,                                //
+        Grid &grid,                                          //
+        const std::vector<modelo::TipoPizza> &tp_disponibles //
     )
         : botones(font, tp_disponibles), //
           paneles_completos(font),       //

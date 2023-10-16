@@ -2,7 +2,11 @@
 
 #include "componentes/boton_con_texto.h"
 
-enum class TipoPizza;
+namespace modelo {
+    enum class TipoPizza;
+}
+
+using TipoPizzaToBoton = std::map<modelo::TipoPizza, BotonConTexto>;
 
 struct BotonesGenerales {
     BotonConTexto alternar_grid;
@@ -17,11 +21,14 @@ struct Botones {
 
   public:
     BotonConTexto empezar;
-    std::map<TipoPizza, BotonConTexto> encargar;
-    std::map<TipoPizza, BotonConTexto> despachar;
+    TipoPizzaToBoton encargar;
+    TipoPizzaToBoton despachar;
     BotonesGenerales generales;
 
-    Botones(const sf::Font &font, const std::vector<TipoPizza> &tp_disponibles);
+    Botones(
+        const sf::Font &font,
+        const std::vector<modelo::TipoPizza> &tp_disponibles
+    );
     void dibujar(sf::RenderWindow &ventana) const;
     void mostrar_botones_nivel(bool nuevo_valor);
 };

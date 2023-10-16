@@ -2,13 +2,15 @@
 
 #include "../tiempo.h"
 
-enum class TipoPizza;
+namespace modelo {
+    enum class TipoPizza;
+}
 
 /* Almacena un encargo concreto */
 struct EncargoACocina {
-    const TipoPizza tipo;
+    const modelo::TipoPizza tipo;
     const TiempoPreparacion tiempo_preparacion;
-    EncargoACocina(const TipoPizza tipo, const Tiempo tiempo_actual);
+    EncargoACocina(const modelo::TipoPizza tipo, const Tiempo tiempo_actual);
 };
 
 /* Gestiona la lista de encargos realizados a cocina */
@@ -17,7 +19,7 @@ struct Encargos {
     std::vector<EncargoACocina> _datos;
 
   public:
-    int del_tipo(TipoPizza) const;
+    int del_tipo(modelo::TipoPizza) const;
     void anadir(const EncargoACocina);
     std::vector<EncargoACocina>::const_iterator begin() const;
     std::vector<EncargoACocina>::const_iterator end() const;

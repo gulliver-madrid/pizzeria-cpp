@@ -78,8 +78,8 @@ void Vista::procesa_cambio_de_fase(FaseNivel nueva_fase) {
  * preparadas de ese tipo.
  */
 void activar_botones_despachar_si_hay_preparadas(
-    std::map<TipoPizza, BotonConTexto> &botones_despachar,
-    const PizzasAContadores &contadores
+    TipoPizzaToBoton &botones_despachar,
+    const modelo::PizzasAContadores &contadores
 ) {
     for (auto &par : contadores) {
         auto &tp = par.first;
@@ -94,10 +94,10 @@ void activar_botones_despachar_si_hay_preparadas(
  * estático.
  */
 void desactivar_botones_encargar_si_se_sobrepasan_objetivos(
-    std::map<TipoPizza, BotonConTexto> &botones_encargar, //
-    const PizzasAContadores &contadores,                  //
-    const Encargos &encargos,                             //
-    const Pedido &pedido                                  //
+    TipoPizzaToBoton &botones_encargar,          //
+    const modelo::PizzasAContadores &contadores, //
+    const Encargos &encargos,                    //
+    const Pedido &pedido                         //
 ) {
     for (auto &par : contadores) {
         auto &tp = par.first;
@@ -119,7 +119,7 @@ void desactivar_botones_encargar_si_se_sobrepasan_objetivos(
 void actualizar_estado_botones(Botones &botones, const Estado &estado) {
     const auto &control_pizzas = estado.control_pizzas;
     // Botones despachar
-    const PizzasAContadores &contadores = control_pizzas.contadores;
+    const modelo::PizzasAContadores &contadores = control_pizzas.contadores;
     activar_botones_despachar_si_hay_preparadas(botones.despachar, contadores);
 
     // Botones encargar
@@ -149,7 +149,8 @@ void actualizar_etiquetas(
     const Estado &estado           //
 ) {
 
-    const PizzasAContadores &contadores = estado.control_pizzas.contadores;
+    const modelo::PizzasAContadores &contadores =
+        estado.control_pizzas.contadores;
 
     auto pedidos = estado.control_pizzas.pedidos;
     switch (estado.fase_actual) {

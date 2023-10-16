@@ -3,6 +3,8 @@
 #include "../vista/presentador.h"
 #include <gtest/gtest.h>
 
+using modelo::TipoPizza;
+
 TEST(Presentador, LineaCompletitudPizza) {
     auto result =
         presentador::crea_linea_completitud_pizza(TipoPizza::Margarita, 2, 5);

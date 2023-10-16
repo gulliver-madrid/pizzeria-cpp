@@ -2,6 +2,9 @@
 #include "../modelo/modelo.h"
 #include <gtest/gtest.h>
 
+using modelo::PizzasAContadores;
+using modelo::TipoPizza;
+
 TEST(EvaluarPreparacion, NoHayPizzasEncargadas) {
     // No hay pizzas encargadas
     PizzasAContadores contadores;

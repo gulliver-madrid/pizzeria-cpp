@@ -26,8 +26,8 @@ void EtiquetasContadores::setup(const std::vector<TipoPizza> &tp_disponibles) {
 
 /* Actualiza texto_servidas */
 void EtiquetasContadores::_actualizar_pedido_estatico(
-    const PizzasAContadores &pizzas_a_contadores, //
-    const modelo::Pedidos &pedidos                //
+    const modelo::PizzasAContadores &pizzas_a_contadores, //
+    const modelo::Pedidos &pedidos                        //
 ) {
     assert(pedidos.size() == 1);
     const auto &pedido_unico = pedidos.at(0);
@@ -87,8 +87,8 @@ void EtiquetasContadores::dibujar(sf::RenderWindow &ventana) const {
 }
 
 void EtiquetasContadores::actualizar(
-    const PizzasAContadores &pizzas_a_contadores, //
-    const modelo::Pedidos &pedidos                //
+    const modelo::PizzasAContadores &pizzas_a_contadores, //
+    const modelo::Pedidos &pedidos                        //
 ) {
     for (auto &par : pizzas_a_contadores) {
         const auto &tp = par.first;

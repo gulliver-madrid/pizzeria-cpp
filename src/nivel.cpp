@@ -129,7 +129,7 @@ AccionGeneral Nivel::ejecutar() {
     };
     Estado estado(FaseNivel::MostrandoInstrucciones, control_pizzas);
     assert(estado.establecido);
-    PizzasAContadores &contadores = control_pizzas.contadores;
+    modelo::PizzasAContadores &contadores = control_pizzas.contadores;
     // std::cout << "Número de tipos de pizza disponibles: "
     //           << control_pizzas.get_tipos_disponibles().size() << std::endl;
     if (datos_nivel.es_estatico) {

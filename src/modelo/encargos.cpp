@@ -1,6 +1,8 @@
 #include "encargos.h"
 #include "dominio.h"
 
+using namespace modelo;
+
 // En segundos
 const std::map<TipoPizza, Tiempo> tiempos_preparacion = {
     {TipoPizza::Margarita, Tiempo::desde_segundos(2.5)},

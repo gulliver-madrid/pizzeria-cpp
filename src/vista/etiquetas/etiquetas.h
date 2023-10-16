@@ -28,16 +28,16 @@ struct EtiquetasGenerales {
     ~EtiquetasGenerales();
 
     void setup(
-        const std::string &instr,                     //
-        NumNivel num_nivel,                           //
-        const std::vector<TipoPizza> &tp_disponibles, //
+        const std::string &instr,                             //
+        NumNivel num_nivel,                                   //
+        const std::vector<modelo::TipoPizza> &tp_disponibles, //
         int total_objetivos
     );
 
     void actualizar_y_dibujar_contadores(
-        const PizzasAContadores &pizzas_a_contadores, //
-        const modelo::Pedidos &pedidos,               //
-        sf::RenderWindow &ventana                     //
+        const modelo::PizzasAContadores &pizzas_a_contadores, //
+        const modelo::Pedidos &pedidos,                       //
+        sf::RenderWindow &ventana                             //
     );
 
     void dibujar_instrucciones(sf::RenderWindow &ventana);

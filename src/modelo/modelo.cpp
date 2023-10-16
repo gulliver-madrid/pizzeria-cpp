@@ -6,7 +6,7 @@
 #include <unordered_set>
 
 namespace debug {
-    void debug_contadores(const PizzasAContadores &contadores) {
+    void debug_contadores(const modelo::PizzasAContadores &contadores) {
         std::cout << "Debug contadores" << std::endl;
         for (auto &par : contadores) {
             std::cout << tipo_pizza_to_string[par.first] << " "
@@ -20,7 +20,8 @@ EstadoPreparacionPizzas::EstadoPreparacionPizzas(const Encargos &encargos) {
     assert(datos.empty());
     for (auto &encargo : encargos) {
         datos.push_back(EstadoPreparacionPizzaIndividual{
-            encargo.tiempo_preparacion.obtener_porcentaje(), encargo.tipo});
+            encargo.tiempo_preparacion.obtener_porcentaje(), encargo.tipo
+        });
     }
 }
 
@@ -35,10 +36,10 @@ EstadoPreparacionPizzas::EstadoPreparacionPizzas(const Encargos &encargos) {
  * de la preparación
  */
 void evaluar_preparacion(
-    Encargos &encargos,            //
-    PizzasAContadores &contadores, //
-    int maximo,                    //
-    Tiempo tiempo_actual           //
+    Encargos &encargos,                    //
+    modelo::PizzasAContadores &contadores, //
+    int maximo,                            //
+    Tiempo tiempo_actual                   //
 ) {
     // std::cout << "Evaluando preparación" << std::endl;
     size_t i = 0;

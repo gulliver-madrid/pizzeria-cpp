@@ -4,8 +4,9 @@
 #include "../modelo/modelo.h"
 
 namespace presentador {
-    std::string
-    crea_linea_completitud_pizza(const TipoPizza &tp, int parte, int todo) {
+    std::string crea_linea_completitud_pizza(
+        const modelo::TipoPizza &tp, int parte, int todo
+    ) {
         const auto nombre_pizza = tipo_pizza_to_string.at(tp);
         std::string s = (           //
             nombre_pizza + ": " +   //

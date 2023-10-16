@@ -11,7 +11,7 @@ const std::vector<BotonConTexto *> BotonesGenerales::obtener_todos() {
 
 /* Crea todos los botones */
 Botones::Botones(
-    const sf::Font &font, const std::vector<TipoPizza> &tp_disponibles
+    const sf::Font &font, const std::vector<modelo::TipoPizza> &tp_disponibles
 ) {
     auto empezar_data =
         BotonData{std::string("Empezar"), sf::Color::Green, sf::Color::Black};
@@ -20,7 +20,8 @@ Botones::Botones(
     for (auto tp : tp_disponibles) {
         auto pos_panel = obtener_posicion_panel(IndicePanel::PANEL_ENCARGAR);
         BotonData encargar_tp_data{
-            tipo_pizza_to_string[tp], sf::Color::Green, sf::Color::Black};
+            tipo_pizza_to_string[tp], sf::Color::Green, sf::Color::Black
+        };
         encargar[tp] = crearBotonConTexto(
             encargar_tp_data,
             sf::Vector2f(

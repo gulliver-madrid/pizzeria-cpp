@@ -6,12 +6,14 @@
 #define TIPOS_DE_PIZZA Margarita, Pepperoni, CuatroQuesos
 #define NUMERO_DE_TIPOS_DE_PIZZA 3
 
-enum class TipoPizza { TIPOS_DE_PIZZA };
-extern TipoPizza tipos_de_pizza[NUMERO_DE_TIPOS_DE_PIZZA];
+namespace modelo {
+    enum class TipoPizza { TIPOS_DE_PIZZA };
+    extern TipoPizza tipos_de_pizza[NUMERO_DE_TIPOS_DE_PIZZA];
+} // namespace modelo
 
-extern std::map<TipoPizza, std::string> tipo_pizza_to_string;
+extern std::map<modelo::TipoPizza, std::string> tipo_pizza_to_string;
 
 struct EstadoPreparacionPizzaIndividual {
     int porcentaje;
-    TipoPizza tipo;
+    modelo::TipoPizza tipo;
 };

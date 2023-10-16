@@ -12,11 +12,12 @@ struct Contadores {
     int servidas = 0;
     int preparadas = 0;
 };
-
-using PizzasAContadores = std::map<TipoPizza, Contadores>;
+namespace modelo {
+    using PizzasAContadores = std::map<TipoPizza, Contadores>;
+}
 
 namespace debug {
-    void debug_contadores(const PizzasAContadores &contadores);
+    void debug_contadores(const modelo::PizzasAContadores &contadores);
 }
 
 /* Parte de un pedido relativa a un tipo de pizza */
@@ -36,9 +37,9 @@ struct PedidoTipoPizza {
 
 /* Pedido completo, puede incluir varios tipos de pizza */
 struct Pedido {
-    std::map<TipoPizza, PedidoTipoPizza> contenido;
+    std::map<modelo::TipoPizza, PedidoTipoPizza> contenido;
     bool cubierto = false;
-    Pedido(std::map<TipoPizza, PedidoTipoPizza> contenido_) {
+    Pedido(std::map<modelo::TipoPizza, PedidoTipoPizza> contenido_) {
         contenido = contenido_;
     }
     void evaluar() {
@@ -57,7 +58,7 @@ struct Pedido {
 };
 
 void evaluar_preparacion(
-    Encargos &encargos, PizzasAContadores &contadores, int maximo,
+    Encargos &encargos, modelo::PizzasAContadores &contadores, int maximo,
     Tiempo tiempo_actual
 );
 

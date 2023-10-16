@@ -4,6 +4,8 @@
 #include <cassert>
 #include <gtest/gtest.h>
 
+using modelo::TipoPizza;
+
 TEST(Encargadas, EncargadasDelTipoConVectorVacio) {
     Encargos encargos;
     EXPECT_EQ(encargos.total(), 0);

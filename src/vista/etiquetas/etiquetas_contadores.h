@@ -3,6 +3,8 @@
 #include "../../general.h"
 #include <SFML/Graphics.hpp>
 
+using modelo::TipoPizza;
+
 struct EtiquetasContadores {
   private:
     const sf::Font &font;
@@ -11,8 +13,8 @@ struct EtiquetasContadores {
 
     void _actualizar_pedidos_dinamicos(const modelo::Pedidos &pedidos);
     void _actualizar_pedido_estatico(
-        const PizzasAContadores &pizzas_a_contadores, //
-        const modelo::Pedidos &pedidos                //
+        const modelo::PizzasAContadores &pizzas_a_contadores, //
+        const modelo::Pedidos &pedidos                        //
     );
 
   public:
@@ -23,8 +25,8 @@ struct EtiquetasContadores {
         : es_estatico(es_estatico), font(font) {}
     void setup(const std::vector<TipoPizza> &tp_disponibles);
     void actualizar(
-        const PizzasAContadores &pizzas_a_contadores, //
-        const modelo::Pedidos &pedidos                //
+        const modelo::PizzasAContadores &pizzas_a_contadores, //
+        const modelo::Pedidos &pedidos                        //
     );
     void dibujar(sf::RenderWindow &ventana) const;
 };
