@@ -18,30 +18,54 @@ namespace estilos {
     };
 } // namespace estilos
 
-sf::Text _crear_etiqueta_instrucciones_o_resultado(
-    const EstiloTexto &estilo, const sf::Font &font
-) {
-    const auto posicion = medidas::POSICION_INSTRUCCIONES_O_RESULTADO;
-    return crearEtiqueta(estilo, font, posicion);
-}
+///////////////////////////////////////////
+// FabricaEtiquetasInfo
+//////////////////////////////////////////
 
-sf::Text FabricaEtiquetasInfo::generar_etiqueta_instrucciones(
-    const sf::Font &font,         //
-    const std::string &plantilla, //
-    NumNivel num_nivel,           //
-    int objetivo
-) {
-    const auto estilo = estilos::INSTRUCCIONES;
-    auto etiqueta = _crear_etiqueta_instrucciones_o_resultado(estilo, font);
-    const auto texto = construir_instrucciones(plantilla, num_nivel, objetivo);
-    etiqueta.setString(texto);
-    return etiqueta;
-}
+struct FabricaEtiquetasInfo {
+  private:
+    const sf::Font &font;
+    sf::Text crear_etiqueta_instrucciones_o_resultado(const EstiloTexto &estilo
+    ) const {
+        const auto posicion = medidas::POSICION_INSTRUCCIONES_O_RESULTADO;
+        return crearEtiqueta(estilo, font, posicion);
+    }
 
-sf::Text FabricaEtiquetasInfo::generar_etiqueta_resultado(const sf::Font &font
+  public:
+    FabricaEtiquetasInfo(const sf::Font &font) : font(font) {}
+    sf::Text generar_etiqueta_instrucciones(
+        const std::string &plantilla, //
+        const NumNivel &num_nivel,    //
+        int objetivo                  //
+    ) const {
+        const auto estilo = estilos::INSTRUCCIONES;
+        auto etiqueta = crear_etiqueta_instrucciones_o_resultado(estilo);
+        const auto texto =
+            construir_instrucciones(plantilla, num_nivel, objetivo);
+        etiqueta.setString(texto);
+        return etiqueta;
+    }
+
+    sf::Text generar_etiqueta_resultado() const {
+        const auto estilo = estilos::RESULTADO;
+        auto etiqueta = crear_etiqueta_instrucciones_o_resultado(estilo);
+        etiqueta.setString(construir_resultado());
+        return etiqueta;
+    }
+};
+
+///////////////////////////////////////////
+// EtiquetasInfo
+//////////////////////////////////////////
+
+void EtiquetasInfo::setup(
+    const std::string &instr,  //
+    const NumNivel &num_nivel, //
+    int total_objetivos        //
 ) {
-    const auto estilo = estilos::RESULTADO;
-    auto etiqueta = _crear_etiqueta_instrucciones_o_resultado(estilo, font);
-    etiqueta.setString(construir_resultado());
-    return etiqueta;
+    const auto fabrica = FabricaEtiquetasInfo(font);
+    instrucciones = fabrica.generar_etiqueta_instrucciones(
+        instr, num_nivel, total_objetivos
+    );
+    resultado = fabrica.generar_etiqueta_resultado();
 }

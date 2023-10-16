@@ -4,17 +4,16 @@
 #include <SFML/Graphics.hpp>
 
 struct EtiquetasInfo {
+  private:
+    const sf::Font &font;
+
+  public:
     sf::Text instrucciones;
     sf::Text resultado;
-};
-
-struct FabricaEtiquetasInfo {
-    static sf::Text generar_etiqueta_instrucciones(
-        const sf::Font &font,         //
-        const std::string &plantilla, //
-        NumNivel num_nivel,           //
-        int objetivo
+    EtiquetasInfo(const sf::Font &font) : font(font) {}
+    void setup(
+        const std::string &instr,  //
+        const NumNivel &num_nivel, //
+        int total_objetivos        //
     );
-
-    static sf::Text generar_etiqueta_resultado(const sf::Font &font);
 };

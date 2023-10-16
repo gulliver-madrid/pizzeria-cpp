@@ -154,7 +154,7 @@ void actualizar_etiquetas(
     auto pedidos = estado.control_pizzas.pedidos;
     switch (estado.fase_actual) {
         case FaseNivel::MostrandoInstrucciones:
-            ventana.draw(etiquetas.info.instrucciones);
+            etiquetas.dibujar_instrucciones(ventana);
             break;
         case FaseNivel::Activa:
         case FaseNivel::EsperaAntesDeResultado:
@@ -163,7 +163,7 @@ void actualizar_etiquetas(
             );
             break;
         case FaseNivel::MostrandoResultado:
-            ventana.draw(etiquetas.info.resultado);
+            etiquetas.dibujar_resultado(ventana);
             break;
         default:
             break;

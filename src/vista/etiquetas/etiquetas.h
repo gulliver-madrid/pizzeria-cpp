@@ -2,22 +2,26 @@
 
 #include "../../general.h"
 #include "../../shared.h"
-#include "etiquetas_info.h"
 #include <SFML/Graphics.hpp>
 #include <memory>
 
 struct Globales;
 
 struct EtiquetasContadores;
+struct EtiquetasInfo;
+
+///////////////////////////////////////////
+// EtiquetasGenerales
+//////////////////////////////////////////
 
 /* Agrupa las etiquetas principales para un nivel determinado */
 struct EtiquetasGenerales {
   private:
     const sf::Font &font;
     std::unique_ptr<EtiquetasContadores> contadores;
+    std::unique_ptr<EtiquetasInfo> info;
 
   public:
-    EtiquetasInfo info;
     EtiquetasGenerales(bool es_estatico, const sf::Font &font);
     EtiquetasGenerales(const EtiquetasGenerales &) = delete;
     EtiquetasGenerales &operator=(const EtiquetasGenerales &) = delete;
@@ -35,11 +39,21 @@ struct EtiquetasGenerales {
         const Pedidos &pedidos,                       //
         sf::RenderWindow &ventana                     //
     );
+
+    void dibujar_instrucciones(sf::RenderWindow &ventana);
+    void dibujar_resultado(sf::RenderWindow &ventana);
 };
+
+///////////////////////////////////////////
+// FabricaEtiquetasTituloPanel
+//////////////////////////////////////////
 
 struct FabricaEtiquetasTituloPanel {
   private:
     const sf::Font &font;
+    static sf::Vector2f get_posicion_etiqueta_titulo_panel( //
+        const sf::Vector2f &posicion_panel
+    );
 
   public:
     FabricaEtiquetasTituloPanel(const sf::Font &font) : font(font) {}
