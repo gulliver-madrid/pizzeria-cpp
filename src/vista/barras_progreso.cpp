@@ -25,7 +25,7 @@ std::vector<BarraProgresoConNombre> crear_barras_progreso(
         const auto posicion = sf::Vector2f(pos_x, pos_y);
         const auto str = tipo_pizza_to_string[preparacion_pizza.tipo];
         BarraProgresoConNombre bpn(dimensiones, str, posicion, font);
-        bpn.update(preparacion_pizza.porcentaje);
+        bpn.actualizar_porcentaje(preparacion_pizza.porcentaje);
         vect.push_back(bpn);
         i++;
     }
