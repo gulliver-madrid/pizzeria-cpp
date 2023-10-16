@@ -29,7 +29,7 @@ EtiquetasGenerales::~EtiquetasGenerales() = default;
 
 void EtiquetasGenerales::setup(
     const std::string &instr,                     //
-    NumNivel num_nivel,                           //
+    const NumNivel &num_nivel,                    //
     const std::vector<TipoPizza> &tp_disponibles, //
     int total_objetivos                           //
 ) {

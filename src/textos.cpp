@@ -5,7 +5,7 @@
     "%!Enhorabuena! Todos los clientes est%an satisfechos."
 
 std::string construir_instrucciones(
-    const std::string plantilla, NumNivel num_nivel, int objetivo
+    const std::string plantilla, const NumNivel &num_nivel, int objetivo
 ) {
     CadenaJuego mi_string = interpolar_unicode(plantilla);
     return mi_string.interpolar_por_clave("objetivo", std::to_string(objetivo))

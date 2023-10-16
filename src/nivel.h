@@ -32,13 +32,13 @@ struct Nivel {
   public:
     Globales &globales;
     const DatosNivel &datos_nivel;
-    const NumNivel num_nivel;
+    const NumNivel &num_nivel;
     Grid &grid;
     const bool es_el_ultimo;
 
     Nivel(
-        Globales &globales, const DatosNivel &datos_nivel, NumNivel num_nivel,
-        Grid &grid, bool es_el_ultimo
+        Globales &globales, const DatosNivel &datos_nivel,
+        const NumNivel &num_nivel, Grid &grid, bool es_el_ultimo
     );
     AccionGeneral ejecutar();
 };
