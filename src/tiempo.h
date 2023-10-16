@@ -4,7 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <optional>
 
-struct Tiempo : public Comparable<Tiempo> {
+struct Tiempo : public templates::Comparable<Tiempo> {
   private:
     // Guarda el valor en milisegundos del objeto Tiempo
     const int _ms;

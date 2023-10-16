@@ -123,7 +123,7 @@ void actualizar_estado_botones(Botones &botones, const Estado &estado) {
     activar_botones_despachar_si_hay_preparadas(botones.despachar, contadores);
 
     // Botones encargar
-    constexpr int maximo = MAXIMO_PIZZAS_EN_PREPARACION;
+    constexpr int maximo = modelo_info::MAXIMO_PIZZAS_EN_PREPARACION;
     const int en_preparacion = estado.encargos.total();
     assert(en_preparacion <= maximo);
     const bool se_pueden_preparar_mas = en_preparacion < maximo;

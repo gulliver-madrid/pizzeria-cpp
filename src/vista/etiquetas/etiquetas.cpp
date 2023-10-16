@@ -1,5 +1,4 @@
 #include "etiquetas.h"
-#include "../../templates.h"
 #include "../cadenas.h"
 #include "../componentes/varios.h"
 #include "../vista_basics.h"

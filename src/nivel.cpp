@@ -125,7 +125,8 @@ AccionGeneral Nivel::ejecutar() {
     //           << datos_nivel.pedidos.size() << std::endl;
 
     ControlPizzas control_pizzas = {
-        datos_nivel.pedidos, datos_nivel.es_estatico};
+        datos_nivel.pedidos, datos_nivel.es_estatico
+    };
     Estado estado(FaseNivel::MostrandoInstrucciones, control_pizzas);
     assert(estado.establecido);
     PizzasAContadores &contadores = control_pizzas.contadores;
@@ -174,8 +175,9 @@ AccionGeneral Nivel::ejecutar() {
             }
         }
         int total_preparadas = estado.control_pizzas.obtener_total_preparadas();
-        if (total_preparadas < MAXIMO_PIZZAS_PREPARADAS) {
-            int maximo = MAXIMO_PIZZAS_PREPARADAS - total_preparadas;
+        if (total_preparadas < modelo_info::MAXIMO_PIZZAS_PREPARADAS) {
+            int maximo =
+                modelo_info::MAXIMO_PIZZAS_PREPARADAS - total_preparadas;
             auto tiempo_actual = obtener_tiempo_actual();
             evaluar_preparacion(
                 estado.encargos, contadores, maximo, tiempo_actual
