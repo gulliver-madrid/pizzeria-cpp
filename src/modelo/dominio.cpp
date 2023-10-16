@@ -1,6 +1,6 @@
 #include "dominio.h"
 
-using namespace modelo;
+using modelo::TipoPizza;
 
 TipoPizza tipos_de_pizza[] = {
     TipoPizza::Margarita,

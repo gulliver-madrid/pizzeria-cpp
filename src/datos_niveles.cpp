@@ -2,7 +2,8 @@
 #include "setup_juego.h"
 #include "textos.h"
 
-using namespace modelo;
+using modelo::Pedidos;
+using modelo::TipoPizza;
 
 const auto dinamicos =
     Pedidos{ //

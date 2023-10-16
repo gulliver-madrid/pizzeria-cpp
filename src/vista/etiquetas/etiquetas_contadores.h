@@ -3,9 +3,9 @@
 #include "../../general.h"
 #include <SFML/Graphics.hpp>
 
-using modelo::TipoPizza;
-
 struct EtiquetasContadores {
+    using TipoPizza = modelo::TipoPizza;
+
   private:
     const sf::Font &font;
     // Indica si el sistema de pedidos es estatico

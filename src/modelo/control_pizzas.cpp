@@ -1,7 +1,7 @@
 #include "control_pizzas.h"
 #include <iostream>
 
-using namespace modelo;
+using modelo::ControlPizzas;
 
 ControlPizzas::ControlPizzas(
     Pedidos pedidos_, const EsSistemaEstatico &es_estatico
@@ -20,7 +20,7 @@ ControlPizzas::ControlPizzas(
     }
 }
 
-const std::vector<TipoPizza> & //
+const std::vector<modelo::TipoPizza> & //
 ControlPizzas::get_tipos_disponibles() const {
     return _tipos_disponibles;
 }
@@ -89,7 +89,7 @@ bool ControlPizzas::faltan_pedidos_por_cubrir() const {
     return faltan;
 }
 
-void debug::debug_pedidos(const Pedidos &pedidos) {
+void debug::debug_pedidos(const modelo::Pedidos &pedidos) {
     for (auto &pedido : pedidos) {
         for (auto &[tp, pedido_tp] : pedido.contenido) {
             std::cout << tipo_pizza_to_string[tp] << ": " << pedido_tp.objetivo
