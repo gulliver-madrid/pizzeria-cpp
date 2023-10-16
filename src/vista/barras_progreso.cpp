@@ -19,13 +19,12 @@ std::vector<BarraProgresoConNombre> crear_barras_progreso(
     auto dimensiones = sf::Vector2f(ancho, largo);
     int i = 0;
     for (auto &preparacion_pizza : preparacion.datos) {
-        BarraProgresoConNombre bpn;
         const int offset_y =
             i * medidas::DIFERENCIA_VERTICAL_ENTRE_BARRAS_PROGRESO;
         int pos_y = pos_y_inicial + offset_y;
         const auto posicion = sf::Vector2f(pos_x, pos_y);
         auto str = tipo_pizza_to_string[preparacion_pizza.tipo];
-        bpn.setup(dimensiones, str, posicion, font);
+        BarraProgresoConNombre bpn(dimensiones, str, posicion, font);
         bpn.update(preparacion_pizza.porcentaje);
         vect.push_back(bpn);
         i++;

@@ -4,15 +4,19 @@
 namespace colores {
     const sf::Color COLOR_BARRA_PROGRESO_FONDO = {230, 230, 230};
     const sf::Color COLOR_BARRA_PROGRESO_RELLENO = {
-        255, 140, 0}; // 30, 144, 255
+        255, 140, 0
+    }; // 30, 144, 255
     const sf::Color COLOR_BARRA_PROGRESO_TEXTO = {0, 0, 0};
 } // namespace colores
 
-void BarraProgreso::setup(
+BarraProgreso::BarraProgreso(
     const sf::Vector2f &dimensiones_, const sf::Vector2f &posicion
 ) {
     assert(dimensiones == sf::Vector2f(0, 0));
+    assert(fondo.getSize() == sf::Vector2f(0, 0));
+    assert(relleno.getSize() == sf::Vector2f(0, 0));
     dimensiones = dimensiones_;
+
     fondo = sf::RectangleShape(dimensiones);
     relleno = sf::RectangleShape(sf::Vector2f(0, 0));
     fondo.setFillColor(sf::Color(colores::COLOR_BARRA_PROGRESO_FONDO));
@@ -27,14 +31,18 @@ void BarraProgreso::update(int porcentaje) {
         sf::Vector2f(dimensiones.x * porcentaje / 100, dimensiones.y)
     );
 }
+void BarraProgreso::dibujar(sf::RenderWindow &ventana) const {
+    ventana.draw(fondo);
+    ventana.draw(relleno);
+}
 
-void BarraProgresoConNombre::setup(
+BarraProgresoConNombre::BarraProgresoConNombre(
     const sf::Vector2f &dimensiones, //
     const std::string &texto,        //
     const sf::Vector2f &posicion,    //
     const sf::Font &font             //
-) {
-    bp.setup(dimensiones, posicion);
+)
+    : bp(dimensiones, posicion) {
     etiqueta = sf::Text(texto, font, 24);
     etiqueta.setFillColor(sf::Color(colores::COLOR_BARRA_PROGRESO_TEXTO));
     etiqueta.setPosition(posicion.x + 20, posicion.y + 5);
@@ -44,7 +52,6 @@ void BarraProgresoConNombre::update(int porcentaje) { //
     bp.update(porcentaje);
 }
 void BarraProgresoConNombre::dibujar(sf::RenderWindow &ventana) const { //
-    ventana.draw(bp.fondo);
-    ventana.draw(bp.relleno);
+    bp.dibujar(ventana);
     ventana.draw(etiqueta);
 }
