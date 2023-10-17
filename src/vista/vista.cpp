@@ -1,7 +1,7 @@
 #include "vista.h"
 #include "../estado_nivel.h"
+#include "basicos_vista.h"
 #include "grid.h"
-#include "vista_basics.h"
 #include "vista_data.h"
 #include <cassert>
 

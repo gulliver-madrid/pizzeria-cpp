@@ -1,7 +1,7 @@
 #include "etiquetas.h"
+#include "../basicos_vista.h"
 #include "../cadenas.h"
 #include "../componentes/varios.h"
-#include "../vista_basics.h"
 #include "etiquetas_contadores.h"
 #include "etiquetas_info.h"
 

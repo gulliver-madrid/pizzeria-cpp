@@ -1,6 +1,6 @@
 #include "barras_progreso.h"
 #include "../modelo/modelo.h"
-#include "vista_basics.h"
+#include "basicos_vista.h"
 
 namespace medidas {
     constexpr int DIFERENCIA_VERTICAL_ENTRE_BARRAS_PROGRESO = 60;

@@ -1,8 +1,8 @@
 #include "botones.h"
 #include "../modelo/dominio.h"
+#include "basicos_vista.h"
 #include "componentes/fabrica_botones.h"
 #include "componentes/varios.h"
-#include "vista_basics.h"
 #include <cassert>
 
 const std::vector<BotonConTexto *> BotonesGenerales::obtener_todos() {
@@ -18,7 +18,8 @@ Botones::Botones(
     empezar = crearBotonConTexto(empezar_data, sf::Vector2f(500, 450), font);
     int i = 0;
     for (auto tp : tp_disponibles) {
-        auto pos_panel = obtener_posicion_panel(IndicePanel::PANEL_ENCARGAR);
+        auto pos_panel =
+            basicos_vista::obtener_posicion_panel(IndicePanel::PANEL_ENCARGAR);
         BotonData encargar_tp_data{
             tipo_pizza_to_string[tp], sf::Color::Green, sf::Color::Black
         };
@@ -34,7 +35,9 @@ Botones::Botones(
     }
     i = 0;
     for (auto tp : tp_disponibles) {
-        auto pos_panel = obtener_posicion_panel(IndicePanel::PANEL_PREPARADAS);
+        auto pos_panel =
+            basicos_vista::obtener_posicion_panel(IndicePanel::PANEL_PREPARADAS
+            );
         BotonData despachar_tp{"Despachar", sf::Color::Green, sf::Color::Black};
         despachar[tp] = crearBotonConTexto(
             despachar_tp,
@@ -48,8 +51,9 @@ Botones::Botones(
         i++;
     }
     // Botones generales
-    const auto pos_ultimo_panel =
-        obtener_posicion_panel(IndicePanel::PANEL_PEDIDOS);
+    const auto pos_ultimo_panel = basicos_vista::obtener_posicion_panel( //
+        IndicePanel::PANEL_PEDIDOS
+    );
     const auto pos_dcha_ultimo_boton =
         pos_ultimo_panel.x + medidas::ANCHO_PANEL;
 

@@ -1,6 +1,6 @@
 #include "paneles.h"
+#include "basicos_vista.h"
 #include "etiquetas/etiquetas.h"
-#include "vista_basics.h"
 #include <SFML/Graphics.hpp>
 #include <cassert>
 #include <iostream>
@@ -22,7 +22,7 @@ namespace {
     }
 
     sf::RectangleShape crear_panel_estandar(IndicePanel indice) {
-        auto pos_panel = obtener_posicion_panel(indice);
+        auto pos_panel = basicos_vista::obtener_posicion_panel(indice);
         return _crearPanelVertical(pos_panel.x, pos_panel.y);
     }
 } // namespace
@@ -53,7 +53,7 @@ PanelesCompletos::PanelesCompletos(const sf::Font &font) {
     const auto crear_etiqueta =
         [&fabrica](const IndicePanel indice_panel, const std::string texto) {
             return fabrica.crearEtiquetaTituloPanel(
-                obtener_posicion_panel(indice_panel), //
+                basicos_vista::obtener_posicion_panel(indice_panel), //
                 texto
             );
         };
@@ -61,7 +61,8 @@ PanelesCompletos::PanelesCompletos(const sf::Font &font) {
         crear_etiqueta(IndicePanel::PANEL_ENCARGAR, "Encargar"),
         crear_etiqueta(IndicePanel::PANEL_EN_PREPARACION, "En preparaci%on"),
         crear_etiqueta(IndicePanel::PANEL_PREPARADAS, "Preparadas"),
-        crear_etiqueta(IndicePanel::PANEL_PEDIDOS, "Pedidos")};
+        crear_etiqueta(IndicePanel::PANEL_PEDIDOS, "Pedidos")
+    };
 }
 
 void PanelesCompletos::dibujar(
@@ -73,7 +74,9 @@ void PanelesCompletos::dibujar(
         return;
     paneles.dibujar(ventana);
     titulos_paneles.dibujar(ventana);
-    auto pos_panel = obtener_posicion_panel(IndicePanel::PANEL_EN_PREPARACION);
+    auto pos_panel = basicos_vista::obtener_posicion_panel( //
+        IndicePanel::PANEL_EN_PREPARACION
+    );
     barras_progreso_con_nombres =
         crear_barras_progreso(preparacion, pos_panel, font);
     for (auto &bpn : barras_progreso_con_nombres) {

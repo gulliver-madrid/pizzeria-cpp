@@ -1,7 +1,7 @@
 #include "etiquetas_contadores.h"
+#include "../basicos_vista.h"
 #include "../componentes/varios.h"
 #include "../presentador.h"
-#include "../vista_basics.h"
 #include "fabrica_etiquetas_contadores.h"
 
 namespace medidas {
@@ -58,7 +58,9 @@ void EtiquetasContadores::_actualizar_pedidos_dinamicos( //
     const auto separacion_vertical = medidas::SEPARACION_VERTICAL_ENTRE_PEDIDOS;
 
     // Calcula la posicion del primer pedido
-    const auto pos_panel = obtener_posicion_panel(IndicePanel::PANEL_PEDIDOS);
+    const auto pos_panel = basicos_vista::obtener_posicion_panel( //
+        IndicePanel::PANEL_PEDIDOS
+    );
     pos_x = pos_panel.x + medidas::MARGEN_IZQ_ETIQUETAS;
     pos_y = pos_panel.y + medidas::FILA_CONTENIDO_PANEL;
 

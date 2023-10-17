@@ -1,6 +1,6 @@
 #include "fabrica_etiquetas_contadores.h"
+#include "../basicos_vista.h"
 #include "../componentes/varios.h"
-#include "../vista_basics.h"
 
 namespace medidas {
     constexpr int TAMANO_FUENTE_ETIQUETAS = 24;
@@ -45,9 +45,9 @@ sf::Text
 FabricaEtiquetasContadores::crearEtiquetaPizzasPreparadas(size_t indice_etiqueta
 ) {
     const auto posicion = _obtener_posicion_etiqueta_contador_pizzas(
-        obtener_posicion_panel(IndicePanel::PANEL_PREPARADAS),       //
-        indice_etiqueta,                                             //
-        medidas::DESPLAZAMIENTO_VERTICAL_ETIQUETAS_PIZZAS_PREPARADAS //
+        basicos_vista::obtener_posicion_panel(IndicePanel::PANEL_PREPARADAS), //
+        indice_etiqueta,                                                      //
+        medidas::DESPLAZAMIENTO_VERTICAL_ETIQUETAS_PIZZAS_PREPARADAS          //
     );
     return _crearEtiquetaContadorPizzas(posicion);
 }
@@ -59,9 +59,9 @@ sf::Text
 FabricaEtiquetasContadores::crearEtiquetaPizzasServidas(size_t indice_etiqueta
 ) {
     const auto posicion = _obtener_posicion_etiqueta_contador_pizzas(
-        obtener_posicion_panel(IndicePanel::PANEL_PEDIDOS),        //
-        indice_etiqueta,                                           //
-        medidas::DESPLAZAMIENTO_VERTICAL_ETIQUETAS_PIZZAS_SERVIDAS //
+        basicos_vista::obtener_posicion_panel(IndicePanel::PANEL_PEDIDOS), //
+        indice_etiqueta,                                                   //
+        medidas::DESPLAZAMIENTO_VERTICAL_ETIQUETAS_PIZZAS_SERVIDAS         //
     );
     return _crearEtiquetaContadorPizzas(posicion);
 }
