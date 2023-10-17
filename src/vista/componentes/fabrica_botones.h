@@ -1,17 +1,7 @@
 #pragma once
 
 #include "boton_con_texto.h"
-
-enum class Align { //
-    Left,
-    Right
-};
-
-struct BotonData {
-    std::string texto;
-    sf::Color color_fondo;
-    sf::Color color_texto = sf::Color::White;
-};
+#include "boton_data.h"
 
 BotonConTexto crearBotonConTexto(
     const BotonData &boton_data,  //
