@@ -15,7 +15,7 @@ float get_bottom(const sf::FloatRect &rect) { //
 void EtiquetasContadores::setup(const modelo::TiposDePizza &tp_disponibles) {
     FabricaEtiquetasContadores fabrica(font);
     int i = 0;
-    for (auto &tp : tp_disponibles) {
+    for (auto tp : tp_disponibles) {
         texto_preparadas[tp] = fabrica.crearEtiquetaPizzasPreparadas(i);
         if (es_estatico.valor) {
             texto_servidas[tp] = fabrica.crearEtiquetaPizzasServidas(i);

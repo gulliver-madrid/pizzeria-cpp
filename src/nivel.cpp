@@ -71,7 +71,7 @@ std::optional<FaseNivel> Nivel::procesa_click(
                 const auto tipos_pizza_disponibles =
                     estado.control_pizzas.get_tipos_disponibles();
                 bool despacho = false;
-                for (const auto &tp : tipos_pizza_disponibles) {
+                for (const auto tp : tipos_pizza_disponibles) {
                     if (pulsado(botones.encargar.at(tp))) {
                         auto encargo =
                             EncargoACocina(tp, obtener_tiempo_actual());

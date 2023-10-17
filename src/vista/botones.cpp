@@ -102,7 +102,7 @@ namespace {
         };
         // Crea los botones
         std::vector<BotonConTexto *> ordenados;
-        for (auto &tp : tp_disponibles) {
+        for (auto tp : tp_disponibles) {
             const BotonData boton_data = crear_boton_data(tp);
             encargar[tp] = BotonConTexto(boton_data, font);
             ordenados.push_back(&encargar.at(tp));
