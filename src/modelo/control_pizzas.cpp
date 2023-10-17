@@ -20,7 +20,7 @@ ControlPizzas::ControlPizzas(
     }
 }
 
-const std::vector<modelo::TipoPizza> & //
+const modelo::TiposDePizza & //
 ControlPizzas::get_tipos_disponibles() const {
     return _tipos_disponibles;
 }

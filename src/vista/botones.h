@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../modelo/dominio.h"
 #include "componentes/boton_con_texto.h"
 
 namespace modelo {
@@ -25,10 +26,7 @@ struct Botones {
     TipoPizzaToBoton despachar;
     BotonesGenerales generales;
 
-    Botones(
-        const sf::Font &font,
-        const std::vector<modelo::TipoPizza> &tp_disponibles
-    );
+    Botones(const sf::Font &font, const modelo::TiposDePizza &tp_disponibles);
     void dibujar(sf::RenderWindow &ventana) const;
     void mostrar_botones_nivel(bool nuevo_valor);
 };

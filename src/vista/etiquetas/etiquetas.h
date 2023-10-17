@@ -30,9 +30,9 @@ struct EtiquetasGenerales {
     ~EtiquetasGenerales();
 
     void setup(
-        const std::string &instr,                             //
-        const NumNivel &num_nivel,                            //
-        const std::vector<modelo::TipoPizza> &tp_disponibles, //
+        const std::string &instr,                   //
+        const NumNivel &num_nivel,                  //
+        const modelo::TiposDePizza &tp_disponibles, //
         int total_objetivos
     );
 

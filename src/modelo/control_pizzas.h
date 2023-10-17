@@ -13,14 +13,14 @@ namespace modelo {
      */
     struct ControlPizzas {
       private:
-        std::vector<TipoPizza> _tipos_disponibles;
+        TiposDePizza _tipos_disponibles;
 
       public:
         PizzasAContadores contadores;
         Pedidos pedidos;
         const EsSistemaEstatico &es_estatico;
         ControlPizzas(Pedidos pedidos_, const EsSistemaEstatico &es_estatico);
-        const std::vector<TipoPizza> &get_tipos_disponibles() const;
+        const TiposDePizza &get_tipos_disponibles() const;
         void procesar_despacho(const TipoPizza tp);
         int obtener_total_preparadas() const;
         int obtener_total_objetivos() const;

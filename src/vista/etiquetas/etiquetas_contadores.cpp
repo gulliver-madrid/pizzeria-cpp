@@ -12,7 +12,7 @@ float get_bottom(const sf::FloatRect &rect) { //
     return rect.top + rect.height;
 }
 
-void EtiquetasContadores::setup(const std::vector<TipoPizza> &tp_disponibles) {
+void EtiquetasContadores::setup(const modelo::TiposDePizza &tp_disponibles) {
     FabricaEtiquetasContadores fabrica(font);
     int i = 0;
     for (auto &tp : tp_disponibles) {

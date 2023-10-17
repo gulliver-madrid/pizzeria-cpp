@@ -11,7 +11,7 @@ const std::vector<BotonConTexto *> BotonesGenerales::obtener_todos() {
 
 /* Crea todos los botones */
 Botones::Botones(
-    const sf::Font &font, const std::vector<modelo::TipoPizza> &tp_disponibles
+    const sf::Font &font, const modelo::TiposDePizza &tp_disponibles
 ) {
     auto empezar_data =
         BotonData{std::string("Empezar"), sf::Color::Green, sf::Color::Black};
