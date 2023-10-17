@@ -9,14 +9,31 @@ namespace medidas {
 
 size_t BotonConTexto::proximo_id = 0;
 
-/* Crea un boton rectangular con texto */
-BotonConTexto::BotonConTexto(
-    const BotonData &boton_data,  //
+void BotonConTexto::establecerPosicion(
     const sf::Vector2f &posicion, //
-    const sf::Font &font,         //
-    Align align,                  //
-    double escala                 //
+    Align align
 ) {
+    int margen = medidas::MARGEN_BOTON * (escala * escala);
+    int x;
+    if (align == Align::Left) {
+        x = posicion.x;
+    } else {
+        assert(align == Align::Right);
+        x = posicion.x - forma.getGlobalBounds().width;
+    }
+    int y = posicion.y;
+    forma.setPosition(x, y);
+    // Ajustamos para evitar un margen excesivo arriba y a la izquierda
+    etiqueta.setPosition(x + margen * 0.7, y + margen * 0.7);
+}
+
+/* Crea un boton rectangular con texto sin determinar la posicion */
+BotonConTexto::BotonConTexto(
+    const BotonData &boton_data, //
+    const sf::Font &font,        //
+    double escala                //
+)
+    : escala(escala) {
     // La escala del margen es proporcional al cuadrado de la escala del botón
     int margen = medidas::MARGEN_BOTON * (escala * escala);
     // Primero creamos la etiqueta para usar sus límites en el Rect
@@ -30,17 +47,17 @@ BotonConTexto::BotonConTexto(
         sf::Vector2f(textRect.width + margen * 2, textRect.height + margen * 2)
     );
     forma.setFillColor(boton_data.color_fondo);
-    int x;
-    if (align == Align::Left) {
-        x = posicion.x;
-    } else {
-        assert(align == Align::Right);
-        x = posicion.x - forma.getGlobalBounds().width;
-    }
-    int y = posicion.y;
-    forma.setPosition(x, y);
-    // Ajustamos para evitar un margen excesivo arriba y a la izquierda
-    etiqueta.setPosition(x + margen * 0.7, y + margen * 0.7);
+};
+/* Crea un boton rectangular con texto */
+BotonConTexto::BotonConTexto(
+    const BotonData &boton_data,  //
+    const sf::Vector2f &posicion, //
+    const sf::Font &font,         //
+    Align align,                  //
+    double escala                 //
+)
+    : BotonConTexto(boton_data, font, escala) {
+    establecerPosicion(posicion, align);
 };
 
 /*

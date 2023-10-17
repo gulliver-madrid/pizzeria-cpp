@@ -12,17 +12,28 @@ struct BotonConTexto {
     bool activo = true;
     sf::RectangleShape forma;
     sf::Text etiqueta;
+    double escala = 1;
 
   public:
     bool visible = false;
     BotonConTexto();
     BotonConTexto(sf::RectangleShape rectShape, sf::Text txt);
     BotonConTexto(
+        const BotonData &boton_data, //
+        const sf::Font &font,        //
+        double escala = 1            //
+    );
+    BotonConTexto(
         const BotonData &boton_data,  //
         const sf::Vector2f &posicion, //
         const sf::Font &font,         //
         Align align = Align::Left,    //
         double escala = 1             //
+    );
+    void establecerPosicion(
+        const sf::Vector2f &posicion, //
+        Align align = Align::Left
+
     );
     bool colisiona(const sf::Vector2i &mousePos) const;
     void dibujar(sf::RenderWindow &window);

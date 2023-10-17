@@ -48,6 +48,10 @@ namespace {
         colores::botones_despachar::TEXTO
     };
 
+    const BotonData boton_data_empezar{
+        "Empezar", sf::Color::Green, sf::Color::Black
+    };
+
     /**
      * Crea y posiciona los botones asociados con la acción "encargar".
      *
@@ -82,12 +86,17 @@ namespace {
         };
 
         // Crea los botones
-        int i = 0;
-        for (auto tp : tp_disponibles) {
+        for (auto &tp : tp_disponibles) {
             const BotonData boton_data = crear_boton_data(tp);
+            encargar[tp] = BotonConTexto(boton_data, font);
+        }
+
+        // Posiciona los botones
+        int i = 0;
+        for (auto &[_, boton] : encargar) {
             const auto posicion =
                 mover_vertical(pos_inicial, (dif_vertical * i++));
-            encargar[tp] = BotonConTexto(boton_data, posicion, font);
+            boton.establecerPosicion(posicion);
         }
     }
 
@@ -96,8 +105,8 @@ namespace {
         const sf::Font &font,                      //
         const modelo::TiposDePizza &tp_disponibles //
     ) {
-        const int dif_vertical = 50;
         const double escala_botones = 0.7;
+        const int dif_vertical = 50;
 
         // Determinacion posicion inicial
         const auto pos_panel = basicos_vista::obtener_posicion_panel( //
@@ -109,30 +118,40 @@ namespace {
         );
         const auto pos_inicial = pos_panel + pos_inicial_relativa_al_panel;
 
-        size_t i = 0;
+        // Crea los botones
         for (auto tp : tp_disponibles) {
+            despachar[tp] = BotonConTexto(
+                boton_data_botones_despachar, font, escala_botones
+            );
+        }
+
+        // Posiciona los botones
+        size_t i = 0;
+        for (auto &[_, boton] : despachar) {
             const auto posicion =
                 mover_vertical(pos_inicial, (dif_vertical * i++));
-            despachar[tp] = BotonConTexto(
-                boton_data_botones_despachar, posicion, font, Align::Left,
-                escala_botones
-            );
+            boton.establecerPosicion(posicion);
         }
     }
 
-    BotonesGenerales _crear_botones_generales(const sf::Font &font //
-    ) {
+    sf::Vector2f _obtener_pos_dcha_botones_generales() {
         const sf::Vector2f pos_ultimo_panel =
             basicos_vista::obtener_posicion_panel( //
                 IndicePanel::PANEL_PEDIDOS
             );
-        const auto pos_dcha_ultimo_boton = sf::Vector2f(
+        return sf::Vector2f(
             pos_ultimo_panel.x + medidas::ANCHO_PANEL,
             medidas::FILA_BOTONES_GENERALES
         );
+    }
+
+    BotonesGenerales _crear_botones_generales( //
+        const sf::Font &font
+    ) {
+        const sf::Vector2f pos_derecha = _obtener_pos_dcha_botones_generales();
 
         const auto vect_botones = crear_botones_alineados_derecha(
-            pos_dcha_ultimo_boton,                                 //
+            pos_derecha,                                           //
             datos_botones_generales,                               //
             font,                                                  //
             medidas::SEPARACION_HORIZONTAL_ENTRE_BOTONES_GENERALES //
@@ -145,19 +164,17 @@ namespace {
         generales.alternar_grid = vect_botones[2];
         return generales;
     }
-} // namespace
 
-BotonConTexto crear_boton_empezar(const sf::Font &font) {
-    const auto empezar_data =
-        BotonData{std::string("Empezar"), sf::Color::Green, sf::Color::Black};
-    return BotonConTexto(empezar_data, sf::Vector2f(500, 450), font);
-}
+    BotonConTexto _crear_boton_empezar(const sf::Font &font) {
+        return BotonConTexto(boton_data_empezar, sf::Vector2f(500, 450), font);
+    }
+} // namespace
 
 /* Crea todos los botones */
 Botones::Botones(
     const sf::Font &font, const modelo::TiposDePizza &tp_disponibles
 )
-    : empezar(crear_boton_empezar(font)),
+    : empezar(_crear_boton_empezar(font)),
       generales(_crear_botones_generales(font)) {
 
     _crear_botones_encargar(encargar, font, tp_disponibles);
