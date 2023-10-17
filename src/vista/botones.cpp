@@ -87,7 +87,7 @@ namespace {
             const BotonData boton_data = crear_boton_data(tp);
             const auto posicion =
                 mover_vertical(pos_inicial, (dif_vertical * i++));
-            encargar[tp] = crearBotonConTexto(boton_data, posicion, font);
+            encargar[tp] = BotonConTexto(boton_data, posicion, font);
         }
     }
 
@@ -113,7 +113,7 @@ namespace {
         for (auto tp : tp_disponibles) {
             const auto posicion =
                 mover_vertical(pos_inicial, (dif_vertical * i++));
-            despachar[tp] = crearBotonConTexto(
+            despachar[tp] = BotonConTexto(
                 boton_data_botones_despachar, posicion, font, Align::Left,
                 escala_botones
             );
@@ -153,7 +153,7 @@ Botones::Botones(
 ) {
     auto empezar_data =
         BotonData{std::string("Empezar"), sf::Color::Green, sf::Color::Black};
-    empezar = crearBotonConTexto(empezar_data, sf::Vector2f(500, 450), font);
+    empezar = BotonConTexto(empezar_data, sf::Vector2f(500, 450), font);
 
     _crear_botones_encargar(encargar, font, tp_disponibles);
     _crear_botones_despachar(despachar, font, tp_disponibles);

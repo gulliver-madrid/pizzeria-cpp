@@ -1,5 +1,6 @@
 #pragma once
 
+#include "boton_data.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <optional>
@@ -16,6 +17,13 @@ struct BotonConTexto {
     bool visible = false;
     BotonConTexto();
     BotonConTexto(sf::RectangleShape rectShape, sf::Text txt);
+    BotonConTexto(
+        const BotonData &boton_data,  //
+        const sf::Vector2f &posicion, //
+        const sf::Font &font,         //
+        Align align = Align::Left,    //
+        double escala = 1             //
+    );
     bool colisiona(const sf::Vector2i &mousePos) const;
     void dibujar(sf::RenderWindow &window);
     void activar();
