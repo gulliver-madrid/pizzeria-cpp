@@ -30,7 +30,7 @@ const std::vector<BotonConTexto *> BotonesGenerales::obtener_todos() {
 
 namespace {
     /* Devuelve un nuevo vector como consecuencia de desplazar uno dado
-     * verticalmento */
+     * verticalmente */
     sf::Vector2f mover_vertical( //
         const sf::Vector2f &inicial, float desplazamiento
     ) {
