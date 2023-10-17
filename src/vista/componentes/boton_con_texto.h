@@ -8,11 +8,12 @@
 struct BotonConTexto {
   private:
     static size_t proximo_id;
-    size_t id;
+    size_t _id = 0;
     bool activo = true;
     sf::RectangleShape forma;
     sf::Text etiqueta;
     double escala = 1;
+    void asignar_id();
 
   public:
     bool visible = false;

@@ -16,9 +16,7 @@ std::vector<BotonConTexto> crear_botones_alineados_derecha(
     int next_pos_x = posicion_inicial.x;
     for (auto &dato : datos_botones) {
         const auto posicion = sf::Vector2f(next_pos_x, posicion_inicial.y);
-        botones.push_back( //
-            BotonConTexto(dato, posicion, font, Align::Right)
-        );
+        botones.emplace_back(dato, posicion, font, Align::Right);
         const auto anterior_izquierda = botones.back().getGlobalBounds().left;
         next_pos_x = anterior_izquierda - separacion;
     }

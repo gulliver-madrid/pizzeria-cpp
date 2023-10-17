@@ -7,7 +7,17 @@ namespace medidas {
     constexpr int TAMANO_TEXTO_BOTONES = 32;
 } // namespace medidas
 
-size_t BotonConTexto::proximo_id = 0;
+size_t BotonConTexto::proximo_id = 1;
+
+/*
+ * Debe ser llamado en todos los constructores para garantizar que ningun boton
+ * se queda sin su _id.
+ */
+void BotonConTexto::asignar_id() {
+    if (_id == 0) {
+        _id = proximo_id++;
+    }
+}
 
 void BotonConTexto::establecerPosicion(
     const sf::Vector2f &posicion, //
@@ -26,6 +36,18 @@ void BotonConTexto::establecerPosicion(
     // Ajustamos para evitar un margen excesivo arriba y a la izquierda
     etiqueta.setPosition(x + margen * 0.7, y + margen * 0.7);
 }
+
+BotonConTexto::BotonConTexto() { //
+    asignar_id();
+};
+
+BotonConTexto::BotonConTexto(sf::RectangleShape rectShape, sf::Text txt)
+    : forma(rectShape), etiqueta(txt) {
+    colorBotonActivo = forma.getFillColor();
+    forma.setOutlineColor(sf::Color::Black);
+    forma.setOutlineThickness(2);
+    asignar_id();
+};
 
 /* Crea un boton rectangular con texto sin determinar la posicion */
 BotonConTexto::BotonConTexto(
@@ -47,6 +69,7 @@ BotonConTexto::BotonConTexto(
         sf::Vector2f(textRect.width + margen * 2, textRect.height + margen * 2)
     );
     forma.setFillColor(boton_data.color_fondo);
+    asignar_id();
 };
 /* Crea un boton rectangular con texto */
 BotonConTexto::BotonConTexto(
@@ -58,6 +81,7 @@ BotonConTexto::BotonConTexto(
 )
     : BotonConTexto(boton_data, font, escala) {
     establecerPosicion(posicion, align);
+    asignar_id();
 };
 
 /*
@@ -85,16 +109,6 @@ void BotonConTexto::dibujar(sf::RenderWindow &window) {
     window.draw(etiqueta);
 }
 
-BotonConTexto::BotonConTexto(sf::RectangleShape rectShape, sf::Text txt)
-    : forma(rectShape), etiqueta(txt) {
-    colorBotonActivo = forma.getFillColor();
-    forma.setOutlineColor(sf::Color::Black);
-    forma.setOutlineThickness(2);
-    id = proximo_id++;
-};
-
-BotonConTexto::BotonConTexto(){};
-
 /**
  * Activa el botón solo si está actualmente inactivo.
  */
@@ -119,7 +133,7 @@ void BotonConTexto::activacion_condicional(bool condicion) {
     }
 }
 size_t BotonConTexto::get_id() const { //
-    return id;
+    return _id;
 }
 
 bool BotonConTexto::esta_activo() const { //
