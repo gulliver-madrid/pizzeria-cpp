@@ -41,10 +41,14 @@ AppNombrada convertir_a_app_nombrada(const char *const nombre_app) {
     return app_nombrada;
 }
 
+void write_line(const std::string &s = "") { //
+    std::cout << s << std::endl;
+}
+
 int main(int argc, char *argv[]) {
-    std::cout << std::endl;
+    write_line();
     if (argc > 3) {
-        std::cout << "Demasiados argumentos" << std::endl;
+        write_line("Demasiados argumentos");
         return USER_ERROR;
     }
 
@@ -60,14 +64,12 @@ int main(int argc, char *argv[]) {
                 try {
                     num_nivel_introducido = std::stoi(argc > 2 ? argv[2] : "");
                 } catch (std::invalid_argument) {
-                    std::cout << "Debe introducirse un número de nivel (un "
-                                 "entero positivo)"
-                              << std::endl;
+                    write_line("Debe introducirse un número de nivel (un "
+                               "entero positivo)");
                     return USER_ERROR;
                 }
                 if (num_nivel_introducido <= 0) {
-                    std::cout << "El número de nivel debe ser mayor que 0"
-                              << std::endl;
+                    write_line("El número de nivel debe ser mayor que 0");
                     return USER_ERROR;
                 }
                 NumNivel num_nivel(num_nivel_introducido);
@@ -90,7 +92,7 @@ int main(int argc, char *argv[]) {
             return demo_map();
             break;
         default:
-            std::cout << "Argumentos desconocidos" << std::endl;
+            write_line("Argumentos desconocidos");
             break;
     }
 }
