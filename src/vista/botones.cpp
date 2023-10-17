@@ -52,6 +52,18 @@ namespace {
         "Empezar", sf::Color::Green, sf::Color::Black
     };
 
+    void _colocar_botones_en_vertical(
+        std::vector<BotonConTexto *> botones, const sf::Vector2f &pos_inicial,
+        float diferencia
+    ) {
+        size_t i = 0;
+        for (auto &boton : botones) {
+            const auto posicion =
+                mover_vertical(pos_inicial, (diferencia * i++));
+            boton->establecerPosicion(posicion);
+        }
+    }
+
     /**
      * Crea y posiciona los botones asociados con la acción "encargar".
      *
@@ -84,20 +96,16 @@ namespace {
                 colores::botones_encargar::TEXTO  //
             };
         };
-
         // Crea los botones
+        std::vector<BotonConTexto *> ordenados;
         for (auto &tp : tp_disponibles) {
             const BotonData boton_data = crear_boton_data(tp);
             encargar[tp] = BotonConTexto(boton_data, font);
+            ordenados.push_back(&encargar.at(tp));
         }
 
         // Posiciona los botones
-        int i = 0;
-        for (auto &[_, boton] : encargar) {
-            const auto posicion =
-                mover_vertical(pos_inicial, (dif_vertical * i++));
-            boton.establecerPosicion(posicion);
-        }
+        _colocar_botones_en_vertical(ordenados, pos_inicial, dif_vertical);
     }
 
     void _crear_botones_despachar(
@@ -119,19 +127,16 @@ namespace {
         const auto pos_inicial = pos_panel + pos_inicial_relativa_al_panel;
 
         // Crea los botones
+        std::vector<BotonConTexto *> ordenados;
         for (auto tp : tp_disponibles) {
             despachar[tp] = BotonConTexto(
                 boton_data_botones_despachar, font, escala_botones
             );
+            ordenados.push_back(&despachar.at(tp));
         }
 
         // Posiciona los botones
-        size_t i = 0;
-        for (auto &[_, boton] : despachar) {
-            const auto posicion =
-                mover_vertical(pos_inicial, (dif_vertical * i++));
-            boton.establecerPosicion(posicion);
-        }
+        _colocar_botones_en_vertical(ordenados, pos_inicial, dif_vertical);
     }
 
     sf::Vector2f _obtener_pos_dcha_botones_generales() {
