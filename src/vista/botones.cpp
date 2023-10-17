@@ -29,6 +29,13 @@ const std::vector<BotonConTexto *> BotonesGenerales::obtener_todos() {
 //////////////////////////////////////////
 
 namespace {
+    /* Devuelve un nuevo vector como consecuencia de desplazar uno dado
+     * verticalmento */
+    sf::Vector2f mover_vertical( //
+        const sf::Vector2f &inicial, float desplazamiento
+    ) {
+        return inicial + sf::Vector2f(0, desplazamiento);
+    }
 
     const std::vector<BotonData> datos_botones_generales = {
         {"Salir", sf::Color::Red},             //
@@ -57,17 +64,18 @@ namespace {
         const sf::Vector2f pos_panel = basicos_vista::obtener_posicion_panel( //
             IndicePanel::PANEL_ENCARGAR
         );
-        const float pos_x = pos_panel.x + medidas::MARGEN_IZQ_ETIQUETAS;
-        const float pos_y_inicial = pos_panel.y + medidas::FILA_CONTENIDO_PANEL;
-        const int diferencia_vertical = 80;
+        const auto pos_inicial_relativa_al_panel = sf::Vector2f(
+            medidas::MARGEN_IZQ_ETIQUETAS, medidas::FILA_CONTENIDO_PANEL
+        );
+        const sf::Vector2f pos_inicial =
+            pos_panel + pos_inicial_relativa_al_panel;
+        const int dif_vertical = 80;
 
         // Lambda para obtener la posicion de cada boton
-        const auto obtener_posicion = [&pos_x, &pos_y_inicial,
-                                       &diferencia_vertical //
-        ](int indice_boton) {
-            const float pos_y =
-                pos_y_inicial + (diferencia_vertical * indice_boton);
-            return sf::Vector2f(pos_x, pos_y);
+        const auto obtener_posicion = [&pos_inicial, &dif_vertical]( //
+                                          int indice_boton
+                                      ) {
+            return mover_vertical(pos_inicial, dif_vertical * indice_boton);
         };
 
         // Lambda para crear boton data
@@ -94,25 +102,24 @@ namespace {
         const sf::Font &font,                      //
         const modelo::TiposDePizza &tp_disponibles //
     ) {
-        const int separacion_vertical_botones = 50;
+        const int dif_vertical = 50;
         const double escala_botones = 0.7;
 
         // Determinacion posicion inicial
         const auto pos_panel = basicos_vista::obtener_posicion_panel( //
             IndicePanel::PANEL_PREPARADAS
         );
-        const auto pos_x_relativa_panel =
-            medidas::MARGEN_IZQ_ETIQUETAS + (medidas::ANCHO_PANEL * 0.55);
-        const float pos_x = pos_panel.x + pos_x_relativa_panel;
-        const float pos_y_inicial = pos_panel.y + medidas::FILA_CONTENIDO_PANEL;
+        const auto pos_inicial_relativa_al_panel = sf::Vector2f(
+            medidas::MARGEN_IZQ_ETIQUETAS + (medidas::ANCHO_PANEL * 0.55),
+            medidas::FILA_CONTENIDO_PANEL
+        );
+        const auto pos_inicial = pos_panel + pos_inicial_relativa_al_panel;
 
         // Lambda para obtener la posicion de cada boton
-        const auto obtener_posicion = [&pos_x, &pos_y_inicial,
-                                       &separacion_vertical_botones //
-        ](size_t indice_boton) {
-            const float pos_y =
-                pos_y_inicial + (separacion_vertical_botones * indice_boton);
-            return sf::Vector2f(pos_x, pos_y);
+        const auto obtener_posicion = [&pos_inicial, &dif_vertical]( //
+                                          size_t indice_boton
+                                      ) {
+            return mover_vertical(pos_inicial, dif_vertical * indice_boton);
         };
 
         size_t i = 0;
@@ -133,14 +140,16 @@ namespace {
             basicos_vista::obtener_posicion_panel( //
                 IndicePanel::PANEL_PEDIDOS
             );
-        const float pos_dcha_ultimo_boton =
-            pos_ultimo_panel.x + medidas::ANCHO_PANEL;
+        const auto pos_dcha_ultimo_boton = sf::Vector2f(
+            pos_ultimo_panel.x + medidas::ANCHO_PANEL,
+            medidas::FILA_BOTONES_GENERALES
+        );
 
         auto botones_generales = crear_botones_alineados_derecha(
-            {pos_dcha_ultimo_boton, medidas::FILA_BOTONES_GENERALES}, //
-            datos_botones_generales,                                  //
-            font,                                                     //
-            medidas::SEPARACION_HORIZONTAL_ENTRE_BOTONES_GENERALES    //
+            pos_dcha_ultimo_boton,                                 //
+            datos_botones_generales,                               //
+            font,                                                  //
+            medidas::SEPARACION_HORIZONTAL_ENTRE_BOTONES_GENERALES //
         );
 
         assert(botones_generales.size() == 3);
