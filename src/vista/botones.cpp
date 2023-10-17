@@ -5,6 +5,17 @@
 #include "componentes/varios.h"
 #include <cassert>
 
+namespace colores {
+    namespace botones_encargar {
+        const auto FONDO = sf::Color::Green;
+        const auto TEXTO = sf::Color::Black;
+    } // namespace botones_encargar
+    namespace botones_despachar {
+        const auto FONDO = sf::Color::Green;
+        const auto TEXTO = sf::Color::Black;
+    } // namespace botones_despachar
+} // namespace colores
+
 ///////////////////////////////////////////
 // BotonesGenerales
 //////////////////////////////////////////
@@ -25,56 +36,92 @@ namespace {
         {"Alternar Grid", sf::Color::Blue}     //
     };
 
+    const BotonData boton_data_botones_despachar{
+        "Despachar", colores::botones_despachar::FONDO,
+        colores::botones_despachar::TEXTO
+    };
+
+    /**
+     * Crea y posiciona los botones asociados con la acción "encargar".
+     *
+     * @param encargar: Mapa donde almacenar los botones creados.
+     * @param font: Fuente a utilizar para el texto del botón.
+     * @param tp_disponibles: Tipos de pizza disponibles para encargar.
+     */
     void _crear_botones_encargar(
         TipoPizzaToBoton &encargar,                //
         const sf::Font &font,                      //
         const modelo::TiposDePizza &tp_disponibles //
     ) {
+        // Constantes para definir la posicion de cada boton
+        const sf::Vector2f pos_panel = basicos_vista::obtener_posicion_panel( //
+            IndicePanel::PANEL_ENCARGAR
+        );
+        const float pos_x = pos_panel.x + medidas::MARGEN_IZQ_ETIQUETAS;
+        const float pos_y_inicial = pos_panel.y + medidas::FILA_CONTENIDO_PANEL;
+        const int diferencia_vertical = 80;
+
+        // Lambda para obtener la posicion de cada boton
+        const auto obtener_posicion = [&pos_x, &pos_y_inicial,
+                                       &diferencia_vertical //
+        ](int indice_boton) {
+            const float pos_y =
+                pos_y_inicial + (diferencia_vertical * indice_boton);
+            return sf::Vector2f(pos_x, pos_y);
+        };
+
+        // Lambda para crear boton data
+        const auto crear_boton_data = [](modelo::TipoPizza tp) {
+            const std::string pizza_str = tipo_pizza_to_string.at(tp);
+            return BotonData{
+                pizza_str,                        //
+                colores::botones_encargar::FONDO, //
+                colores::botones_encargar::TEXTO  //
+            };
+        };
+
+        // Crea los botones
         int i = 0;
         for (auto tp : tp_disponibles) {
-            auto pos_panel = basicos_vista::obtener_posicion_panel(
-                IndicePanel::PANEL_ENCARGAR
-            );
-            BotonData encargar_tp_data{
-                tipo_pizza_to_string[tp], sf::Color::Green, sf::Color::Black
-            };
-            encargar[tp] = crearBotonConTexto(
-                encargar_tp_data,
-                sf::Vector2f(
-                    pos_panel.x + medidas::MARGEN_IZQ_ETIQUETAS,
-                    pos_panel.y + medidas::FILA_CONTENIDO_PANEL + 80 * i
-                ),
-                font
-            );
-            i++;
+            const BotonData boton_data = crear_boton_data(tp);
+            const auto posicion = obtener_posicion(i);
+            encargar[tp] = crearBotonConTexto(boton_data, posicion, font);
         }
     }
+
     void _crear_botones_despachar(
         TipoPizzaToBoton &despachar,               //
         const sf::Font &font,                      //
         const modelo::TiposDePizza &tp_disponibles //
     ) {
-        const auto pos_x_boton_despachar_rel_panel =
+        const int separacion_vertical_botones = 50;
+        const double escala_botones = 0.7;
+
+        // Determinacion posicion inicial
+        const auto pos_panel = basicos_vista::obtener_posicion_panel( //
+            IndicePanel::PANEL_PREPARADAS
+        );
+        const auto pos_x_relativa_panel =
             medidas::MARGEN_IZQ_ETIQUETAS + (medidas::ANCHO_PANEL * 0.55);
-        const BotonData despachar_tp{
-            "Despachar", sf::Color::Green, sf::Color::Black
+        const float pos_x = pos_panel.x + pos_x_relativa_panel;
+        const float pos_y_inicial = pos_panel.y + medidas::FILA_CONTENIDO_PANEL;
+
+        // Lambda para obtener la posicion de cada boton
+        const auto obtener_posicion = [&pos_x, &pos_y_inicial,
+                                       &separacion_vertical_botones //
+        ](size_t indice_boton) {
+            const float pos_y =
+                pos_y_inicial + (separacion_vertical_botones * indice_boton);
+            return sf::Vector2f(pos_x, pos_y);
         };
-        const int separacion_vertical_botones_despachar = 50;
-        const double escala_botones_despachar = 0.7;
 
         size_t i = 0;
         for (auto tp : tp_disponibles) {
-            auto pos_panel = basicos_vista::obtener_posicion_panel( //
-                IndicePanel::PANEL_PREPARADAS
-            );
-            const auto pos_x = pos_panel.x + pos_x_boton_despachar_rel_panel;
-            const auto pos_y = pos_panel.y + medidas::FILA_CONTENIDO_PANEL +
-                               (separacion_vertical_botones_despachar * i);
+            const auto posicion = obtener_posicion(i++);
             despachar[tp] = crearBotonConTexto(
-                despachar_tp, sf::Vector2f(pos_x, pos_y), font, Align::Left,
-                escala_botones_despachar
+                boton_data_botones_despachar, posicion, font, Align::Left,
+                escala_botones
             );
-            i++;
         }
     }
 
@@ -82,10 +129,11 @@ namespace {
         BotonesGenerales &generales, //
         const sf::Font &font         //
     ) {
-        const auto pos_ultimo_panel = basicos_vista::obtener_posicion_panel( //
-            IndicePanel::PANEL_PEDIDOS
-        );
-        const auto pos_dcha_ultimo_boton =
+        const sf::Vector2f pos_ultimo_panel =
+            basicos_vista::obtener_posicion_panel( //
+                IndicePanel::PANEL_PEDIDOS
+            );
+        const float pos_dcha_ultimo_boton =
             pos_ultimo_panel.x + medidas::ANCHO_PANEL;
 
         auto botones_generales = crear_botones_alineados_derecha(
