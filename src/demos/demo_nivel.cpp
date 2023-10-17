@@ -6,7 +6,7 @@
 #include <cassert>
 #include <iostream>
 
-int demo_nivel(NumNivel &numero_nivel) {
+int demo_nivel(const NumNivel &numero_nivel) {
     std::cout << "DEMO NIVEL " << numero_nivel.valor << std::endl;
     int indice_nivel = numero_nivel.valor - 1;
     Globales globales;

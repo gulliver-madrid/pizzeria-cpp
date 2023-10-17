@@ -2,4 +2,4 @@
 
 #include "../shared.h"
 
-int demo_nivel(NumNivel &indice_nivel);
+int demo_nivel(const NumNivel &indice_nivel);
