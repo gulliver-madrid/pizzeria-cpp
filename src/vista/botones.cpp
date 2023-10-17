@@ -147,13 +147,17 @@ namespace {
     }
 } // namespace
 
+BotonConTexto crear_boton_empezar(const sf::Font &font) {
+    const auto empezar_data =
+        BotonData{std::string("Empezar"), sf::Color::Green, sf::Color::Black};
+    return BotonConTexto(empezar_data, sf::Vector2f(500, 450), font);
+}
+
 /* Crea todos los botones */
 Botones::Botones(
     const sf::Font &font, const modelo::TiposDePizza &tp_disponibles
-) {
-    auto empezar_data =
-        BotonData{std::string("Empezar"), sf::Color::Green, sf::Color::Black};
-    empezar = BotonConTexto(empezar_data, sf::Vector2f(500, 450), font);
+)
+    : empezar(crear_boton_empezar(font)) {
 
     _crear_botones_encargar(encargar, font, tp_disponibles);
     _crear_botones_despachar(despachar, font, tp_disponibles);
