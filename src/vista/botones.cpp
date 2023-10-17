@@ -71,13 +71,6 @@ namespace {
             pos_panel + pos_inicial_relativa_al_panel;
         const int dif_vertical = 80;
 
-        // Lambda para obtener la posicion de cada boton
-        const auto obtener_posicion = [&pos_inicial, &dif_vertical]( //
-                                          int indice_boton
-                                      ) {
-            return mover_vertical(pos_inicial, dif_vertical * indice_boton);
-        };
-
         // Lambda para crear boton data
         const auto crear_boton_data = [](modelo::TipoPizza tp) {
             const std::string pizza_str = tipo_pizza_to_string.at(tp);
@@ -92,7 +85,8 @@ namespace {
         int i = 0;
         for (auto tp : tp_disponibles) {
             const BotonData boton_data = crear_boton_data(tp);
-            const auto posicion = obtener_posicion(i);
+            const auto posicion =
+                mover_vertical(pos_inicial, (dif_vertical * i++));
             encargar[tp] = crearBotonConTexto(boton_data, posicion, font);
         }
     }
@@ -115,16 +109,10 @@ namespace {
         );
         const auto pos_inicial = pos_panel + pos_inicial_relativa_al_panel;
 
-        // Lambda para obtener la posicion de cada boton
-        const auto obtener_posicion = [&pos_inicial, &dif_vertical]( //
-                                          size_t indice_boton
-                                      ) {
-            return mover_vertical(pos_inicial, dif_vertical * indice_boton);
-        };
-
         size_t i = 0;
         for (auto tp : tp_disponibles) {
-            const auto posicion = obtener_posicion(i++);
+            const auto posicion =
+                mover_vertical(pos_inicial, (dif_vertical * i++));
             despachar[tp] = crearBotonConTexto(
                 boton_data_botones_despachar, posicion, font, Align::Left,
                 escala_botones
