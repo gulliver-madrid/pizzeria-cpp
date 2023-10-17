@@ -120,9 +120,7 @@ namespace {
         }
     }
 
-    void _crear_botones_generales(
-        BotonesGenerales &generales, //
-        const sf::Font &font         //
+    BotonesGenerales _crear_botones_generales(const sf::Font &font //
     ) {
         const sf::Vector2f pos_ultimo_panel =
             basicos_vista::obtener_posicion_panel( //
@@ -133,17 +131,19 @@ namespace {
             medidas::FILA_BOTONES_GENERALES
         );
 
-        auto botones_generales = crear_botones_alineados_derecha(
+        const auto vect_botones = crear_botones_alineados_derecha(
             pos_dcha_ultimo_boton,                                 //
             datos_botones_generales,                               //
             font,                                                  //
             medidas::SEPARACION_HORIZONTAL_ENTRE_BOTONES_GENERALES //
         );
 
-        assert(botones_generales.size() == 3);
-        generales.salir = botones_generales[0];
-        generales.reiniciar = botones_generales[1];
-        generales.alternar_grid = botones_generales[2];
+        assert(vect_botones.size() == 3);
+        BotonesGenerales generales;
+        generales.salir = vect_botones[0];
+        generales.reiniciar = vect_botones[1];
+        generales.alternar_grid = vect_botones[2];
+        return generales;
     }
 } // namespace
 
@@ -157,11 +157,12 @@ BotonConTexto crear_boton_empezar(const sf::Font &font) {
 Botones::Botones(
     const sf::Font &font, const modelo::TiposDePizza &tp_disponibles
 )
-    : empezar(crear_boton_empezar(font)) {
+    : empezar(crear_boton_empezar(font)),
+      generales(_crear_botones_generales(font)) {
 
     _crear_botones_encargar(encargar, font, tp_disponibles);
     _crear_botones_despachar(despachar, font, tp_disponibles);
-    _crear_botones_generales(generales, font);
+    ;
 
     todos = {&empezar};
     const int num_fijos = todos.size();
