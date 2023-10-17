@@ -2,17 +2,13 @@
 
 #include "../../general.h"
 #include "../../shared.h"
+#include "etiquetas_info.h"
 #include <SFML/Graphics.hpp>
 #include <memory>
 
 struct Globales;
 
 struct EtiquetasContadores;
-
-struct EtiquetasInfo {
-    sf::Text instrucciones;
-    sf::Text resultado;
-};
 
 /* Agrupa las etiquetas principales para un nivel determinado */
 struct EtiquetasGenerales {

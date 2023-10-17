@@ -4,7 +4,6 @@
 #include "../componentes/varios.h"
 #include "../vista_basics.h"
 #include "etiquetas_contadores.h"
-#include "fabrica_etiquetas.h"
 
 namespace medidas {
     constexpr int TAMANO_FUENTE_TITULO_PANELES = 36;

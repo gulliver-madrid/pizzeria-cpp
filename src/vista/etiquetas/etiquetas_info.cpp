@@ -1,4 +1,4 @@
-#include "fabrica_etiquetas.h"
+#include "etiquetas_info.h"
 #include "../../textos.h"
 #include "../componentes/varios.h"
 #include "../vista_basics.h"

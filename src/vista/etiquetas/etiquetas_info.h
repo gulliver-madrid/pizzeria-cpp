@@ -3,6 +3,11 @@
 #include "../../shared.h"
 #include <SFML/Graphics.hpp>
 
+struct EtiquetasInfo {
+    sf::Text instrucciones;
+    sf::Text resultado;
+};
+
 struct FabricaEtiquetasInfo {
     static sf::Text generar_etiqueta_instrucciones(
         const sf::Font &font,         //
