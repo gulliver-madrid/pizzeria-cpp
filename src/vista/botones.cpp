@@ -16,6 +16,10 @@ namespace colores {
     } // namespace botones_despachar
 } // namespace colores
 
+namespace medidas {
+    const auto POSICION_BOTON_EMPEZAR = sf::Vector2f(500, 450);
+}
+
 ///////////////////////////////////////////
 // BotonesGenerales
 //////////////////////////////////////////
@@ -171,7 +175,9 @@ namespace {
     }
 
     BotonConTexto _crear_boton_empezar(const sf::Font &font) {
-        return BotonConTexto(boton_data_empezar, sf::Vector2f(500, 450), font);
+        return BotonConTexto(
+            boton_data_empezar, medidas::POSICION_BOTON_EMPEZAR, font
+        );
     }
 } // namespace
 
