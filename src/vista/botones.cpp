@@ -157,7 +157,7 @@ namespace {
     BotonesGenerales _crear_botones_generales( //
         const sf::Font &font
     ) {
-        const sf::Vector2f pos_derecha = _obtener_pos_dcha_botones_generales();
+        const auto pos_derecha = _obtener_pos_dcha_botones_generales();
 
         auto vect_botones = crear_botones_alineados_derecha(
             pos_derecha,                                           //
@@ -167,14 +167,11 @@ namespace {
         );
 
         assert(vect_botones.size() == 3);
-        BotonesGenerales generales{
+        return {
             std::move(vect_botones.at(2)),
             std::move(vect_botones.at(1)),
             std::move(vect_botones.at(0)),
         };
-        vect_botones.clear();
-        assert(vect_botones.size() == 0);
-        return generales;
     }
 
     BotonConTexto _crear_boton_empezar(const sf::Font &font) {
