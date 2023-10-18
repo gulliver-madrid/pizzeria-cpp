@@ -19,6 +19,7 @@ struct BotonesGenerales {
 struct Botones {
   private:
     std::vector<BotonConTexto *> todos;
+    void _establecer_todos();
 
   public:
     BotonConTexto empezar;

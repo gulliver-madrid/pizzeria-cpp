@@ -95,11 +95,11 @@ namespace {
         return botones;
     }
 
-    void _crear_botones_despachar(
-        TipoPizzaToBoton &despachar,               //
+    TipoPizzaToBoton _crear_botones_despachar(
         const sf::Font &font,                      //
         const modelo::TiposDePizza &tp_disponibles //
     ) {
+        TipoPizzaToBoton botones;
         const double escala_botones = 0.7;
         const int dif_vertical = 50;
 
@@ -116,17 +116,18 @@ namespace {
         // Crea los botones
         std::vector<BotonConTexto *> ordenados;
         for (auto tp : tp_disponibles) {
-            despachar.emplace(
+            botones.emplace(
                 tp, //
                 BotonConTexto(
                     boton_data_botones_despachar, font, escala_botones
                 )
             );
-            ordenados.push_back(&despachar.at(tp));
+            ordenados.push_back(&botones.at(tp));
         }
 
         // Posiciona los botones
         colocar_botones_en_vertical(ordenados, pos_inicial, dif_vertical);
+        return botones;
     }
 
     sf::Vector2f _obtener_pos_dcha_botones_generales() {
@@ -165,18 +166,11 @@ namespace {
             boton_data_empezar, medidas::POSICION_BOTON_EMPEZAR, font
         );
     }
+
 } // namespace
 
-/* Crea todos los botones */
-Botones::Botones(
-    const sf::Font &font, const modelo::TiposDePizza &tp_disponibles
-)
-    : empezar(_crear_boton_empezar(font)),
-      generales(_crear_botones_generales(font)),
-      encargar(_crear_botones_encargar(font, tp_disponibles)) {
-    _crear_botones_despachar(despachar, font, tp_disponibles);
-    ;
-
+/* Establece la variable miembro 'todos', que agrupa todos los botones */
+void Botones::_establecer_todos() {
     todos = {&empezar};
     const int num_fijos = todos.size();
     for (auto &boton : generales.obtener_todos()) {
@@ -188,6 +182,17 @@ Botones::Botones(
     for (auto &[_, boton] : encargar) {
         todos.push_back(&boton);
     }
+}
+
+/* Crea todos los botones */
+Botones::Botones(
+    const sf::Font &font, const modelo::TiposDePizza &tp_disponibles
+)
+    : empezar(_crear_boton_empezar(font)),
+      generales(_crear_botones_generales(font)),
+      encargar(_crear_botones_encargar(font, tp_disponibles)),
+      despachar(_crear_botones_despachar(font, tp_disponibles)) {
+    _establecer_todos();
 }
 
 void Botones::dibujar(sf::RenderWindow &ventana) const {
