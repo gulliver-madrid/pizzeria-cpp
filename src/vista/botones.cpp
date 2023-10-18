@@ -34,13 +34,6 @@ const std::vector<BotonConTexto *> BotonesGenerales::obtener_todos() {
 //////////////////////////////////////////
 
 namespace {
-    /* Devuelve un nuevo vector como consecuencia de desplazar uno dado
-     * verticalmente */
-    sf::Vector2f mover_vertical( //
-        const sf::Vector2f &inicial, float desplazamiento
-    ) {
-        return inicial + sf::Vector2f(0, desplazamiento);
-    }
 
     const std::vector<BotonData> datos_botones_generales = {
         {"Salir", sf::Color::Red},             //
@@ -57,19 +50,6 @@ namespace {
         "Empezar", sf::Color::Green, sf::Color::Black
     };
 
-    void _colocar_botones_en_vertical(
-        const std::vector<BotonConTexto *> &botones, //
-        const sf::Vector2f &pos_inicial,             //
-        float diferencia                             //
-    ) {
-        size_t i = 0;
-        for (auto &boton : botones) {
-            const auto posicion =
-                mover_vertical(pos_inicial, (diferencia * i++));
-            boton->establecerPosicion(posicion);
-        }
-    }
-
     /**
      * Crea y posiciona los botones asociados con la acción "encargar".
      * @param font: Fuente a utilizar para el texto del botón.
@@ -81,7 +61,6 @@ namespace {
         const sf::Font &font,                      //
         const modelo::TiposDePizza &tp_disponibles //
     ) {
-        TipoPizzaToBoton botones;
         // Constantes para definir la posicion de cada boton
         const sf::Vector2f pos_panel = basicos_vista::obtener_posicion_panel( //
             IndicePanel::PANEL_ENCARGAR
@@ -102,6 +81,7 @@ namespace {
             };
         };
         // Crea los botones
+        TipoPizzaToBoton botones;
         std::vector<BotonConTexto *> ordenados;
         for (auto tp : tp_disponibles) {
             const BotonData boton_data = crear_boton_data(tp);
@@ -111,7 +91,7 @@ namespace {
 
         // Posiciona los botones
         const int dif_vertical = medidas::DIF_VERTICAL_BOTONES_ENCARGAR;
-        _colocar_botones_en_vertical(ordenados, pos_inicial, dif_vertical);
+        colocar_botones_en_vertical(ordenados, pos_inicial, dif_vertical);
         return botones;
     }
 
@@ -146,7 +126,7 @@ namespace {
         }
 
         // Posiciona los botones
-        _colocar_botones_en_vertical(ordenados, pos_inicial, dif_vertical);
+        colocar_botones_en_vertical(ordenados, pos_inicial, dif_vertical);
     }
 
     sf::Vector2f _obtener_pos_dcha_botones_generales() {

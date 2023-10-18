@@ -5,7 +5,7 @@
 /*
  * Crea una hilera de botones.
  */
-std::vector<BotonConTexto> crear_botones(
+std::vector<BotonConTexto> _crear_botones(
     const std::vector<BotonData> &datos_botones, //
     const sf::Font &font                         //
 ) {
@@ -21,7 +21,7 @@ std::vector<BotonConTexto> crear_botones(
  * Alinea una hilera de botones a la derecha. El orden en el que se
  * reciben los datos y se anaden al vector de botones es de derecha a izquierda.
  */
-void alinear_botones_derecha(
+void _alinear_botones_derecha(
     const std::vector<BotonConTexto *> &botones, //
     const sf::Vector2f &posicion_inicial,        //
     int separacion                               //
@@ -46,11 +46,33 @@ std::vector<BotonConTexto> crear_botones_alineados_derecha(
     const sf::Font &font,                        //
     int separacion                               //
 ) {
-    auto botones = crear_botones(datos_botones, font);
+    auto botones = _crear_botones(datos_botones, font);
     std::vector<BotonConTexto *> vect_ptr;
     for (auto &boton : botones) {
         vect_ptr.push_back(&boton);
     }
-    alinear_botones_derecha(vect_ptr, posicion_inicial, separacion);
+    _alinear_botones_derecha(vect_ptr, posicion_inicial, separacion);
     return botones;
+}
+
+/*
+ * Devuelve un nuevo Vector2f como consecuencia de
+ * desplazar verticalmente el proporcionado
+ */
+sf::Vector2f _mover_vertical( //
+    const sf::Vector2f &inicial, float desplazamiento
+) {
+    return inicial + sf::Vector2f(0, desplazamiento);
+}
+
+void colocar_botones_en_vertical(
+    const std::vector<BotonConTexto *> &botones, //
+    const sf::Vector2f &pos_inicial,             //
+    float diferencia                             //
+) {
+    size_t i = 0;
+    for (auto &boton : botones) {
+        const auto posicion = _mover_vertical(pos_inicial, (diferencia * i++));
+        boton->establecerPosicion(posicion);
+    }
 }
