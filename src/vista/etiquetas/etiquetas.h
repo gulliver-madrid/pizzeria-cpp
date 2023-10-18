@@ -61,5 +61,5 @@ struct FabricaEtiquetasTituloPanel {
     FabricaEtiquetasTituloPanel(const sf::Font &font) : font(font) {}
     sf::Text crearEtiquetaTituloPanel(
         const sf::Vector2f &posicion_panel, const std::string &texto_crudo
-    );
+    ) const;
 };

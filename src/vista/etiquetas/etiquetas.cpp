@@ -70,7 +70,7 @@ sf::Vector2f FabricaEtiquetasTituloPanel::get_posicion_etiqueta_titulo_panel(
 /* Usando posicion_panel */
 sf::Text FabricaEtiquetasTituloPanel::crearEtiquetaTituloPanel(
     const sf::Vector2f &posicion_panel, const std::string &texto_crudo
-) {
+) const {
     const auto posicion = get_posicion_etiqueta_titulo_panel(posicion_panel);
     const auto texto = interpolar_unicode(texto_crudo);
     return crearEtiqueta(texto, estilos::TITULO_PANEL, font, posicion);

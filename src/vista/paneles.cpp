@@ -49,21 +49,21 @@ void TitulosPaneles::dibujar(sf::RenderWindow &ventana) {
 }
 
 PanelesCompletos::PanelesCompletos(const sf::Font &font) {
-    FabricaEtiquetasTituloPanel fabrica(font);
-    const auto crear_etiqueta = [&fabrica](
-                                    const IndicePanel indice_panel,
-                                    const std::string texto_crudo
-                                ) {
+    const FabricaEtiquetasTituloPanel fabrica(font);
+    const auto crea_titulo = [&fabrica](
+                                 const IndicePanel indice_panel,
+                                 const std::string texto_crudo
+                             ) {
         return fabrica.crearEtiquetaTituloPanel(
             basicos_vista::obtener_posicion_panel(indice_panel), //
             texto_crudo
         );
     };
     titulos_paneles = {
-        crear_etiqueta(IndicePanel::PANEL_ENCARGAR, "Encargar"),
-        crear_etiqueta(IndicePanel::PANEL_EN_PREPARACION, "En preparaci%on"),
-        crear_etiqueta(IndicePanel::PANEL_PREPARADAS, "Preparadas"),
-        crear_etiqueta(IndicePanel::PANEL_PEDIDOS, "Pedidos")
+        crea_titulo(IndicePanel::PANEL_ENCARGAR, "Encargar"),
+        crea_titulo(IndicePanel::PANEL_EN_PREPARACION, "En preparaci%on"),
+        crea_titulo(IndicePanel::PANEL_PREPARADAS, "Preparadas"),
+        crea_titulo(IndicePanel::PANEL_PEDIDOS, "Pedidos")
     };
 }
 
