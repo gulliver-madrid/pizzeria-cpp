@@ -14,7 +14,7 @@ size_t BotonConTexto::proximo_id = 1;
  * se queda sin su _id.
  */
 void BotonConTexto::asignar_id() {
-    if (_id == 0) {
+    if (!_id.has_value()) {
         _id = proximo_id++;
     }
 }
@@ -133,7 +133,8 @@ void BotonConTexto::activacion_condicional(bool condicion) {
     }
 }
 size_t BotonConTexto::get_id() const { //
-    return _id;
+    assert(_id.has_value());
+    return _id.value();
 }
 
 bool BotonConTexto::esta_activo() const { //
