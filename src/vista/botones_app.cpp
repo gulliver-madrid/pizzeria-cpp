@@ -1,7 +1,7 @@
-#include "botones.h"
+#include "botones_app.h"
 #include "../modelo/dominio.h"
 #include "basicos_vista.h"
-#include "componentes/fabrica_botones.h"
+#include "componentes/botones.h"
 #include "componentes/varios.h"
 #include <cassert>
 

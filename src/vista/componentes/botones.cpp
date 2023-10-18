@@ -1,4 +1,4 @@
-#include "fabrica_botones.h"
+#include "botones.h"
 #include "varios.h"
 #include <cassert>
 

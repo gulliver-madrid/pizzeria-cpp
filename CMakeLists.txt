@@ -34,11 +34,11 @@ add_executable(pizzeria
     src/textos.cpp
     src/tiempo.cpp
     src/vista/barras_progreso.cpp
-    src/vista/botones.cpp
+    src/vista/botones_app.cpp
     src/vista/cadenas.cpp
     src/vista/componentes/barra_progreso.cpp
     src/vista/componentes/boton_con_texto.cpp
-    src/vista/componentes/fabrica_botones.cpp
+    src/vista/componentes/botones.cpp
     src/vista/componentes/varios.cpp
     src/vista/etiquetas/etiquetas.cpp
     src/vista/etiquetas/etiquetas_contadores.cpp

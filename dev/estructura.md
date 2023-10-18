@@ -39,14 +39,14 @@
                     - vista/grid.cpp (hoja)
                 - nivel.cpp
                     - vista/vista.h
-                        - vista/botones.h
+                        - vista/botones_app.h
                             - vista/componentes/boton_con_texto.h
                                 - vista/componentes/boton_con_texto.cpp (hoja)
-                            - vista/botones.cpp
+                            - vista/botones_app.cpp
                                 - modelo/dominio.h
-                                - vista/componentes/fabrica_botones.h
+                                - vista/componentes/botones.h
                                     - vista/componentes/boton_con_texto.h (def)
-                                    - vista/componentes/fabrica_botones.cpp
+                                    - vista/componentes/botones.cpp
                                         - vista/componentes/varios.h (hoja)
                                 - vista/componentes/varios.h (def)
                                 - basicos_vista.h
