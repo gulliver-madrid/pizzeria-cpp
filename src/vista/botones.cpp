@@ -18,7 +18,8 @@ namespace colores {
 
 namespace medidas {
     const auto POSICION_BOTON_EMPEZAR = sf::Vector2f(500, 450);
-}
+    const auto DIF_VERTICAL_BOTONES_ENCARGAR = 80;
+} // namespace medidas
 
 ///////////////////////////////////////////
 // BotonesGenerales
@@ -70,16 +71,16 @@ namespace {
 
     /**
      * Crea y posiciona los botones asociados con la acción "encargar".
-     *
-     * @param encargar: Mapa donde almacenar los botones creados.
      * @param font: Fuente a utilizar para el texto del botón.
      * @param tp_disponibles: Tipos de pizza disponibles para encargar.
+     * @return TipoPizzaToBoton: Un mapa que asocia cada TipoPizza con un
+     * BotonConTexto.
      */
-    void _crear_botones_encargar(
-        TipoPizzaToBoton &encargar,                //
+    TipoPizzaToBoton _crear_botones_encargar(
         const sf::Font &font,                      //
         const modelo::TiposDePizza &tp_disponibles //
     ) {
+        TipoPizzaToBoton botones;
         // Constantes para definir la posicion de cada boton
         const sf::Vector2f pos_panel = basicos_vista::obtener_posicion_panel( //
             IndicePanel::PANEL_ENCARGAR
@@ -89,7 +90,6 @@ namespace {
         );
         const sf::Vector2f pos_inicial =
             pos_panel + pos_inicial_relativa_al_panel;
-        const int dif_vertical = 80;
 
         // Lambda para crear boton data
         const auto crear_boton_data = [](modelo::TipoPizza tp) {
@@ -104,12 +104,14 @@ namespace {
         std::vector<BotonConTexto *> ordenados;
         for (auto tp : tp_disponibles) {
             const BotonData boton_data = crear_boton_data(tp);
-            encargar[tp] = BotonConTexto(boton_data, font);
-            ordenados.push_back(&encargar.at(tp));
+            botones[tp] = BotonConTexto(boton_data, font);
+            ordenados.push_back(&botones.at(tp));
         }
 
         // Posiciona los botones
+        const int dif_vertical = medidas::DIF_VERTICAL_BOTONES_ENCARGAR;
         _colocar_botones_en_vertical(ordenados, pos_inicial, dif_vertical);
+        return botones;
     }
 
     void _crear_botones_despachar(
@@ -186,9 +188,8 @@ Botones::Botones(
     const sf::Font &font, const modelo::TiposDePizza &tp_disponibles
 )
     : empezar(_crear_boton_empezar(font)),
-      generales(_crear_botones_generales(font)) {
-
-    _crear_botones_encargar(encargar, font, tp_disponibles);
+      generales(_crear_botones_generales(font)),
+      encargar(_crear_botones_encargar(font, tp_disponibles)) {
     _crear_botones_despachar(despachar, font, tp_disponibles);
     ;
 
