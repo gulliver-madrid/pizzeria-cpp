@@ -66,17 +66,17 @@ int ControlPizzas::obtener_total_preparadas() const {
     return total_preparadas;
 }
 
-/* Calcular total objetivos. Solo tiene sentido con pedidos estaticos. */
-int ControlPizzas::obtener_total_objetivos() const {
+/* Calcular objetivo total. Solo tiene sentido con pedidos estaticos. */
+int ControlPizzas::obtener_objetivo_total_estatico() const {
     assert(es_estatico.valor);
     assert(pedidos.size() == 1);
     auto &pedido = pedidos[0];
-    int total_objetivos = 0;
+    int objetivo = 0;
     for (auto &[tp, pedido_tp] : pedido.contenido) {
         assert(contadores.at(tp).preparadas == 0);
-        total_objetivos += pedido_tp.objetivo;
+        objetivo += pedido_tp.objetivo;
     }
-    return total_objetivos;
+    return objetivo;
 }
 bool ControlPizzas::faltan_pedidos_por_cubrir() const {
     bool faltan = false;

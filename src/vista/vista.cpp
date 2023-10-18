@@ -15,13 +15,13 @@ void actualizar_etiquetas(
 void Vista::setup(
     const std::string &instrucciones, //
     const NumNivel &num_nivel,        //
-    int total_objetivos               //
+    std::optional<int> objetivo       //
 ) {
     etiquetas.setup(
         instrucciones,  //
         num_nivel,      //
         tp_disponibles, //
-        total_objetivos //
+        objetivo        //
     );
     // Mostrar botones iniciales
     botones.generales.alternar_grid.visible = MODO_DESARROLLO;

@@ -23,7 +23,7 @@ namespace modelo {
         const TiposDePizza &get_tipos_disponibles() const;
         void procesar_despacho(const TipoPizza tp);
         int obtener_total_preparadas() const;
-        int obtener_total_objetivos() const;
+        int obtener_objetivo_total_estatico() const;
         bool faltan_pedidos_por_cubrir() const;
     };
 } // namespace modelo

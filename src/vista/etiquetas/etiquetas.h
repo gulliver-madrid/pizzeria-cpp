@@ -31,9 +31,9 @@ struct EtiquetasGenerales {
 
     void setup(
         const std::string &instr,                   //
-        const NumNivel &num_nivel,                  //
+        const NumNivel &,                           //
         const modelo::TiposDePizza &tp_disponibles, //
-        int total_objetivos
+        std::optional<int> objetivo                 //
     );
 
     void actualizar_y_dibujar_contadores(

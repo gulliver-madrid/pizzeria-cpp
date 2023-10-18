@@ -2,6 +2,7 @@
 
 #include "../../shared.h"
 #include <SFML/Graphics.hpp>
+#include <optional>
 
 struct EtiquetasInfo {
   private:
@@ -12,8 +13,8 @@ struct EtiquetasInfo {
     sf::Text resultado;
     EtiquetasInfo(const sf::Font &);
     void setup(
-        const std::string &instr, //
-        const NumNivel &,         //
-        int total_objetivos       //
+        const std::string &instr,   //
+        const NumNivel &,           //
+        std::optional<int> objetivo //
     );
 };

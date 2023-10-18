@@ -33,6 +33,10 @@ std::string interpolar_unicode(const std::string plantilla) {
     return oss.str();
 }
 
+/* Considerar es un booleano que indica si debe realizarse la interpolacion. De
+ * esa manera el codigo llamante puede encadenar llamadas a interpolar y
+ * deshabilitar aquellas que no correspondan.
+ */
 CadenaJuego &CadenaJuego::interpolar_por_clave(
     const std::string &key, const std::string &value, bool considerar
 ) {

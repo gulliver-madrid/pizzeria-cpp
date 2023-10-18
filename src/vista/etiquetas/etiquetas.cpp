@@ -33,9 +33,9 @@ void EtiquetasGenerales::setup(
     const std::string &instr,                   //
     const NumNivel &num_nivel,                  //
     const modelo::TiposDePizza &tp_disponibles, //
-    int total_objetivos                         //
+    std::optional<int> objetivo                 //
 ) {
-    info->setup(instr, num_nivel, total_objetivos);
+    info->setup(instr, num_nivel, objetivo);
     contadores->setup(tp_disponibles);
 }
 

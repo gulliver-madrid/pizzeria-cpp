@@ -38,11 +38,11 @@ struct Vista {
 
     void setup(
         const std::string &instrucciones, //
-        const NumNivel &num_nivel,        //
-        int total_objetivos               //
+        const NumNivel &,                 //
+        std::optional<int> objetivo       //
     );
 
-    void actualizarIU(             //
+    void actualizarIU(
         sf::RenderWindow &ventana, //
         const Estado &estado       //
     );
