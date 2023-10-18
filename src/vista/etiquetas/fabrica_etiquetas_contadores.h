@@ -9,12 +9,12 @@ class FabricaEtiquetasContadores {
         const sf::Vector2f pos_panel, //
         size_t indice_etiqueta,       //
         int desplazamiento_vertical   //
-    );
+    ) const;
 
-    sf::Text _crearEtiquetaContadorPizzas(sf::Vector2f posicion);
+    sf::Text _crearEtiquetaContadorPizzas(sf::Vector2f posicion) const;
 
   public:
     FabricaEtiquetasContadores(const sf::Font &font) : font(font){};
-    sf::Text crearEtiquetaPizzasPreparadas(size_t indice_etiqueta);
-    sf::Text crearEtiquetaPizzasServidas(size_t indice_etiqueta);
+    sf::Text crearEtiquetaPizzasPreparadas(size_t indice_etiqueta) const;
+    sf::Text crearEtiquetaPizzasServidas(size_t indice_etiqueta) const;
 };
