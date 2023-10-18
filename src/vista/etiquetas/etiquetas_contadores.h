@@ -11,24 +11,21 @@ struct EtiquetasContadores {
     // Indica si el sistema de pedidos es estatico
     const EsSistemaEstatico &es_estatico;
 
-    void _actualizar_pedidos_dinamicos(const modelo::Pedidos &pedidos);
+    void _actualizar_pedidos_dinamicos(const modelo::Pedidos &);
     void _actualizar_pedido_estatico(
-        const modelo::PizzasAContadores &pizzas_a_contadores, //
-        const modelo::Pedidos &pedidos                        //
+        const modelo::PizzasAContadores &, //
+        const modelo::Pedidos &            //
     );
 
   public:
-    std::map<TipoPizza, sf::Text> texto_preparadas;
-    std::map<TipoPizza, sf::Text> texto_servidas;
-    std::vector<sf::Text> texto_pedidos;
-    EtiquetasContadores(
-        const EsSistemaEstatico &es_estatico, const sf::Font &font
-    )
-        : es_estatico(es_estatico), font(font) {}
+    std::map<TipoPizza, sf::Text> etiquetas_preparadas;
+    std::map<TipoPizza, sf::Text> etiquetas_servidas;
+    std::vector<sf::Text> etiquetas_pedidos;
+    EtiquetasContadores(const EsSistemaEstatico &, const sf::Font &);
     void setup(const modelo::TiposDePizza &tp_disponibles);
     void actualizar(
-        const modelo::PizzasAContadores &pizzas_a_contadores, //
-        const modelo::Pedidos &pedidos                        //
+        const modelo::PizzasAContadores &, //
+        const modelo::Pedidos &            //
     );
     void dibujar(sf::RenderWindow &ventana) const;
 };

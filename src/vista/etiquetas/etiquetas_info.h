@@ -10,10 +10,10 @@ struct EtiquetasInfo {
   public:
     sf::Text instrucciones;
     sf::Text resultado;
-    EtiquetasInfo(const sf::Font &font) : font(font) {}
+    EtiquetasInfo(const sf::Font &);
     void setup(
-        const std::string &instr,  //
-        const NumNivel &num_nivel, //
-        int total_objetivos        //
+        const std::string &instr, //
+        const NumNivel &,         //
+        int total_objetivos       //
     );
 };

@@ -60,6 +60,8 @@ struct FabricaEtiquetasInfo {
 // EtiquetasInfo
 //////////////////////////////////////////
 
+EtiquetasInfo::EtiquetasInfo(const sf::Font &font) : font(font) {}
+
 void EtiquetasInfo::setup(
     const std::string &instr,  //
     const NumNivel &num_nivel, //
