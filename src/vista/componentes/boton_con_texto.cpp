@@ -60,9 +60,9 @@ BotonConTexto::BotonConTexto(
     int margen = medidas::MARGEN_BOTON * (escala * escala);
     // Primero creamos la etiqueta para usar sus límites en el Rect
     etiqueta = crearEtiqueta(
-        medidas::TAMANO_TEXTO_BOTONES * escala, boton_data.color_texto, font
+        boton_data.texto, medidas::TAMANO_TEXTO_BOTONES * escala,
+        boton_data.color_texto, font
     );
-    etiqueta.setString(boton_data.texto);
     sf::FloatRect textRect = etiqueta.getGlobalBounds();
 
     forma.setSize(

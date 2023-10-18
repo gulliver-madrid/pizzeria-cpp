@@ -25,10 +25,11 @@ namespace estilos {
 struct FabricaEtiquetasInfo {
   private:
     const sf::Font &font;
-    sf::Text crear_etiqueta_instrucciones_o_resultado(const EstiloTexto &estilo
+    sf::Text crear_etiqueta_instrucciones_o_resultado(
+        const std::string &texto, const EstiloTexto &estilo
     ) const {
         const auto posicion = medidas::POSICION_INSTRUCCIONES_O_RESULTADO;
-        return crearEtiqueta(estilo, font, posicion);
+        return crearEtiqueta(texto, estilo, font, posicion);
     }
 
   public:
@@ -39,17 +40,18 @@ struct FabricaEtiquetasInfo {
         int objetivo                  //
     ) const {
         const auto estilo = estilos::INSTRUCCIONES;
-        auto etiqueta = crear_etiqueta_instrucciones_o_resultado(estilo);
         const auto texto =
             construir_instrucciones(plantilla, num_nivel, objetivo);
-        etiqueta.setString(texto);
+        const auto etiqueta =
+            crear_etiqueta_instrucciones_o_resultado(texto, estilo);
         return etiqueta;
     }
 
     sf::Text generar_etiqueta_resultado() const {
         const auto estilo = estilos::RESULTADO;
-        auto etiqueta = crear_etiqueta_instrucciones_o_resultado(estilo);
-        etiqueta.setString(construir_resultado());
+        const auto texto = construir_resultado();
+        const auto etiqueta =
+            crear_etiqueta_instrucciones_o_resultado(texto, estilo);
         return etiqueta;
     }
 };
