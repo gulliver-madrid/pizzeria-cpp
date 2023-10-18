@@ -15,9 +15,9 @@ enum class AccionGeneral { SiguienteNivel, Reiniciar, Salir };
 struct Nivel {
   private:
     std::optional<FaseNivel> procesarEvento(
-        sf::Event evento,   //
+        sf::Event,          //
         const BotonesApp &, //
-        Estado &estado      //
+        Estado &            //
     );
     void procesa_cambio_de_fase(
         FaseNivel nueva_fase,                   //
@@ -26,7 +26,9 @@ struct Nivel {
         FaseNivel fase_previa                   //
     );
     std::optional<FaseNivel> procesa_click(
-        const BotonesApp &, Estado &estado, const sf::Vector2i &mouse_pos
+        const BotonesApp &,           //
+        Estado &,                     //
+        const sf::Vector2i &mouse_pos //
     );
 
   public:
@@ -37,8 +39,11 @@ struct Nivel {
     const bool es_el_ultimo;
 
     Nivel(
-        Globales &globales, const DatosNivel &datos_nivel,
-        const NumNivel &num_nivel, Grid &grid, bool es_el_ultimo
+        Globales &,         //
+        const DatosNivel &, //
+        const NumNivel &,   //
+        Grid &,             //
+        bool es_el_ultimo   //
     );
     AccionGeneral ejecutar();
 };
