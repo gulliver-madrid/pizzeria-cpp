@@ -20,7 +20,7 @@ Nivel::Nivel(
  * caso de que debiera cambiar.
  */
 std::optional<FaseNivel> Nivel::procesarEvento(
-    sf::Event evento, const Botones &botones, Estado &estado
+    sf::Event evento, const BotonesApp &botones, Estado &estado
 ) {
     auto &ventana = globales.window;
     if (evento.type == sf::Event::Closed) {
@@ -42,7 +42,7 @@ std::optional<FaseNivel> Nivel::procesarEvento(
 };
 
 std::optional<FaseNivel> Nivel::procesa_click(
-    const Botones &botones, Estado &estado, const sf::Vector2i &mouse_pos
+    const BotonesApp &botones, Estado &estado, const sf::Vector2i &mouse_pos
 ) {
     const auto pulsado = [this, &mouse_pos](const BotonConTexto &boton) {
         return this->globales.detecta_colision(boton, mouse_pos);

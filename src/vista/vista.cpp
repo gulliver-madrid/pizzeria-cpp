@@ -5,7 +5,7 @@
 #include "vista_data.h"
 #include <cassert>
 
-void actualizar_estado_botones(Botones &botones, const Estado &estado);
+void actualizar_estado_botones(BotonesApp &botones, const Estado &estado);
 void actualizar_etiquetas(
     sf::RenderWindow &ventana,               //
     EtiquetasGenerales &etiquetas_generales, //
@@ -112,7 +112,7 @@ void desactivar_botones_encargar_si_se_sobrepasan_objetivos(
 }
 
 /* Actualiza el estado de los botones en funcion de varios factores */
-void actualizar_estado_botones(Botones &botones, const Estado &estado) {
+void actualizar_estado_botones(BotonesApp &botones, const Estado &estado) {
     const auto &control_pizzas = estado.control_pizzas;
     // Botones despachar
     const modelo::PizzasAContadores &contadores = control_pizzas.contadores;

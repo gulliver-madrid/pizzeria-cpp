@@ -16,7 +16,7 @@ struct BotonesGenerales {
     const std::vector<BotonConTexto *> obtener_todos();
 };
 
-struct Botones {
+struct BotonesApp {
   private:
     std::vector<BotonConTexto *> todos;
     void _establecer_todos();
@@ -27,7 +27,9 @@ struct Botones {
     TipoPizzaToBoton despachar;
     BotonesGenerales generales;
 
-    Botones(const sf::Font &font, const modelo::TiposDePizza &tp_disponibles);
+    BotonesApp(
+        const sf::Font &font, const modelo::TiposDePizza &tp_disponibles
+    );
     void dibujar(sf::RenderWindow &ventana) const;
     void mostrar_botones_nivel(bool nuevo_valor);
 };

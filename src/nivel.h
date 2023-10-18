@@ -6,7 +6,7 @@
 #include "vista/grid.h"
 
 struct Globales;
-struct Botones;
+struct BotonesApp;
 struct Estado;
 struct Vista;
 
@@ -15,9 +15,9 @@ enum class AccionGeneral { SiguienteNivel, Reiniciar, Salir };
 struct Nivel {
   private:
     std::optional<FaseNivel> procesarEvento(
-        sf::Event evento,       //
-        const Botones &botones, //
-        Estado &estado          //
+        sf::Event evento,   //
+        const BotonesApp &, //
+        Estado &estado      //
     );
     void procesa_cambio_de_fase(
         FaseNivel nueva_fase,                   //
@@ -26,7 +26,7 @@ struct Nivel {
         FaseNivel fase_previa                   //
     );
     std::optional<FaseNivel> procesa_click(
-        const Botones &botones, Estado &estado, const sf::Vector2i &mouse_pos
+        const BotonesApp &, Estado &estado, const sf::Vector2i &mouse_pos
     );
 
   public:

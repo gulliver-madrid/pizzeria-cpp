@@ -18,7 +18,7 @@ struct Vista {
     );
 
   public:
-    Botones botones;
+    BotonesApp botones;
     PanelesCompletos paneles_completos;
     EtiquetasGenerales etiquetas;
     Grid &grid;

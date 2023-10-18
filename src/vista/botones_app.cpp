@@ -29,10 +29,6 @@ const std::vector<BotonConTexto *> BotonesGenerales::obtener_todos() {
     return {&alternar_grid, &reiniciar, &salir};
 }
 
-///////////////////////////////////////////
-// Botones
-//////////////////////////////////////////
-
 namespace {
 
     const std::vector<BotonData> datos_botones_generales = {
@@ -169,8 +165,12 @@ namespace {
 
 } // namespace
 
+///////////////////////////////////////////
+// BotonesApp
+//////////////////////////////////////////
+
 /* Establece la variable miembro 'todos', que agrupa todos los botones */
-void Botones::_establecer_todos() {
+void BotonesApp::_establecer_todos() {
     todos = {&empezar};
     const int num_fijos = todos.size();
     for (auto &boton : generales.obtener_todos()) {
@@ -185,7 +185,7 @@ void Botones::_establecer_todos() {
 }
 
 /* Crea todos los botones */
-Botones::Botones(
+BotonesApp::BotonesApp(
     const sf::Font &font, const modelo::TiposDePizza &tp_disponibles
 )
     : empezar(_crear_boton_empezar(font)),
@@ -195,14 +195,14 @@ Botones::Botones(
     _establecer_todos();
 }
 
-void Botones::dibujar(sf::RenderWindow &ventana) const {
+void BotonesApp::dibujar(sf::RenderWindow &ventana) const {
     for (auto boton_ptr : todos) {
         assert(boton_ptr != nullptr);
         boton_ptr->dibujar(ventana);
     }
 }
 
-void Botones::mostrar_botones_nivel(bool nuevo_valor) {
+void BotonesApp::mostrar_botones_nivel(bool nuevo_valor) {
     for (auto &[_, boton] : despachar) {
         boton.visible = nuevo_valor;
     }
