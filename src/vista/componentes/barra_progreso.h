@@ -34,10 +34,10 @@ struct BarraProgresoConNombre {
   private:
     sf::Text etiqueta;
     BarraProgreso bp;
-    static sf::Text crear_etiqueta(
-        const std::string &texto,     //
-        const sf::Vector2f &posicion, //
-        const sf::Font &font          //
+    static sf::Text _crear_etiqueta(
+        const std::string &texto,           //
+        const sf::Vector2f &posicion_barra, //
+        const sf::Font &                    //
     );
 
   public:
@@ -45,7 +45,7 @@ struct BarraProgresoConNombre {
         const sf::Vector2f &dimensiones, //
         const std::string &texto,        //
         const sf::Vector2f &posicion,    //
-        const sf::Font &font             //
+        const sf::Font &                 //
     );
     void actualizar_porcentaje(int porcentaje);
     void dibujar(sf::RenderWindow &ventana) const;

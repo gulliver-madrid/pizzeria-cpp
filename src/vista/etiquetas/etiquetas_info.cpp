@@ -25,7 +25,7 @@ namespace estilos {
 struct FabricaEtiquetasInfo {
   private:
     const sf::Font &font;
-    sf::Text crear_etiqueta_instrucciones_o_resultado(
+    sf::Text crear_etiqueta_info(
         const std::string &texto, const EstiloTexto &estilo
     ) const {
         const auto posicion = medidas::POSICION_INSTRUCCIONES_O_RESULTADO;
@@ -34,7 +34,7 @@ struct FabricaEtiquetasInfo {
 
   public:
     FabricaEtiquetasInfo(const sf::Font &font) : font(font) {}
-    sf::Text generar_etiqueta_instrucciones(
+    sf::Text crear_etiqueta_instrucciones(
         const std::string &plantilla, //
         const NumNivel &num_nivel,    //
         int objetivo                  //
@@ -42,16 +42,14 @@ struct FabricaEtiquetasInfo {
         const auto estilo = estilos::INSTRUCCIONES;
         const auto texto =
             construir_instrucciones(plantilla, num_nivel, objetivo);
-        const auto etiqueta =
-            crear_etiqueta_instrucciones_o_resultado(texto, estilo);
+        const auto etiqueta = crear_etiqueta_info(texto, estilo);
         return etiqueta;
     }
 
-    sf::Text generar_etiqueta_resultado() const {
+    sf::Text crear_etiqueta_resultado() const {
         const auto estilo = estilos::RESULTADO;
         const auto texto = construir_resultado();
-        const auto etiqueta =
-            crear_etiqueta_instrucciones_o_resultado(texto, estilo);
+        const auto etiqueta = crear_etiqueta_info(texto, estilo);
         return etiqueta;
     }
 };
@@ -68,8 +66,7 @@ void EtiquetasInfo::setup(
     int total_objetivos        //
 ) {
     const auto fabrica = FabricaEtiquetasInfo(font);
-    instrucciones = fabrica.generar_etiqueta_instrucciones(
-        instr, num_nivel, total_objetivos
-    );
-    resultado = fabrica.generar_etiqueta_resultado();
+    instrucciones =
+        fabrica.crear_etiqueta_instrucciones(instr, num_nivel, total_objetivos);
+    resultado = fabrica.crear_etiqueta_resultado();
 }

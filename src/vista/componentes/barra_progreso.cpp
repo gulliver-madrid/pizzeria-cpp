@@ -1,4 +1,5 @@
 #include "barra_progreso.h"
+#include "varios.h"
 #include <cassert>
 
 namespace colores {
@@ -56,15 +57,19 @@ void BarraProgreso::dibujar(sf::RenderWindow &ventana) const {
 // BarraProgresoConNombre
 ///////////////////////////////////////////
 
-sf::Text BarraProgresoConNombre::crear_etiqueta(
-    const std::string &texto,     //
-    const sf::Vector2f &posicion, //
-    const sf::Font &font          //
+sf::Text BarraProgresoConNombre::_crear_etiqueta(
+    const std::string &texto,           //
+    const sf::Vector2f &posicion_barra, //
+    const sf::Font &font                //
 ) {
-    auto etiqueta = sf::Text(texto, font, 24);
-    etiqueta.setFillColor(colores::barra_progreso::TEXTO);
-    etiqueta.setPosition(posicion.x + 20, posicion.y + 5);
-    return etiqueta;
+    return crearEtiqueta(
+        texto,                                        //
+        24,                                           //
+        colores::barra_progreso::TEXTO,               //
+        font,                                         //
+        {posicion_barra.x + 20, posicion_barra.y + 5} //
+
+    );
 }
 
 BarraProgresoConNombre::BarraProgresoConNombre(
@@ -74,7 +79,7 @@ BarraProgresoConNombre::BarraProgresoConNombre(
     const sf::Font &font             //
 )
     : bp(dimensiones, posicion),
-      etiqueta(crear_etiqueta(texto, posicion, font)) {}
+      etiqueta(_crear_etiqueta(texto, posicion, font)) {}
 
 void BarraProgresoConNombre::actualizar_porcentaje(int porcentaje) { //
     bp.actualizar_porcentaje(porcentaje);
