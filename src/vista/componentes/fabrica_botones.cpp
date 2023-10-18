@@ -7,7 +7,7 @@
  */
 std::vector<BotonConTexto> crear_botones(
     const std::vector<BotonData> &datos_botones, //
-    const sf::Font &font
+    const sf::Font &font                         //
 ) {
     // Crea los botones
     std::vector<BotonConTexto> botones;
@@ -22,9 +22,9 @@ std::vector<BotonConTexto> crear_botones(
  * reciben los datos y se anaden al vector de botones es de derecha a izquierda.
  */
 void alinear_botones_derecha(
-    std::vector<BotonConTexto *> botones,
-    const sf::Vector2f &posicion_inicial, //
-    int separacion
+    const std::vector<BotonConTexto *> &botones, //
+    const sf::Vector2f &posicion_inicial,        //
+    int separacion                               //
 ) {
     // Posiciona los botones
     int next_pos_x = posicion_inicial.x;
@@ -44,7 +44,7 @@ std::vector<BotonConTexto> crear_botones_alineados_derecha(
     const sf::Vector2f &posicion_inicial,        //
     const std::vector<BotonData> &datos_botones, //
     const sf::Font &font,                        //
-    int separacion
+    int separacion                               //
 ) {
     auto botones = crear_botones(datos_botones, font);
     std::vector<BotonConTexto *> vect_ptr;

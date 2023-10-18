@@ -58,8 +58,9 @@ namespace {
     };
 
     void _colocar_botones_en_vertical(
-        std::vector<BotonConTexto *> botones, const sf::Vector2f &pos_inicial,
-        float diferencia
+        const std::vector<BotonConTexto *> &botones, //
+        const sf::Vector2f &pos_inicial,             //
+        float diferencia                             //
     ) {
         size_t i = 0;
         for (auto &boton : botones) {
