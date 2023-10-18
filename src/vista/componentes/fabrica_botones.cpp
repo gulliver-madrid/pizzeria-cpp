@@ -12,12 +12,17 @@ std::vector<BotonConTexto> crear_botones_alineados_derecha(
     const sf::Font &font,                        //
     int separacion
 ) {
+    // Crea los botones
     std::vector<BotonConTexto> botones;
-    int next_pos_x = posicion_inicial.x;
     for (auto &dato : datos_botones) {
+        botones.emplace_back(dato, font);
+    }
+    // Posiciona los botones
+    int next_pos_x = posicion_inicial.x;
+    for (auto &boton : botones) {
         const auto posicion = sf::Vector2f(next_pos_x, posicion_inicial.y);
-        botones.emplace_back(dato, posicion, font, Align::Right);
-        const auto anterior_izquierda = botones.back().getGlobalBounds().left;
+        boton.establecerPosicion(posicion, Align::Right);
+        const auto anterior_izquierda = boton.getGlobalBounds().left;
         next_pos_x = anterior_izquierda - separacion;
     }
     return botones;
