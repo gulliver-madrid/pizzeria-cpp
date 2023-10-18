@@ -35,13 +35,13 @@ struct FabricaEtiquetasInfo {
   public:
     FabricaEtiquetasInfo(const sf::Font &font) : font(font) {}
     sf::Text crear_etiqueta_instrucciones(
-        const std::string &plantilla, //
-        const NumNivel &num_nivel,    //
-        std::optional<int> objetivo   //
+        const std::string &plantilla,              //
+        const NumNivel &num_nivel,                 //
+        const std::optional<int> objetivo_estatico //
     ) const {
         const auto estilo = estilos::INSTRUCCIONES;
         const auto texto =
-            construir_instrucciones(plantilla, num_nivel, objetivo);
+            construir_instrucciones(plantilla, num_nivel, objetivo_estatico);
         const auto etiqueta = crear_etiqueta_info(texto, estilo);
         return etiqueta;
     }
@@ -61,12 +61,13 @@ struct FabricaEtiquetasInfo {
 EtiquetasInfo::EtiquetasInfo(const sf::Font &font) : font(font) {}
 
 void EtiquetasInfo::setup(
-    const std::string &instr,   //
-    const NumNivel &num_nivel,  //
-    std::optional<int> objetivo //
+    const std::string &instr,                  //
+    const NumNivel &num_nivel,                 //
+    const std::optional<int> objetivo_estatico //
 ) {
     const auto fabrica = FabricaEtiquetasInfo(font);
-    instrucciones =
-        fabrica.crear_etiqueta_instrucciones(instr, num_nivel, objetivo);
+    instrucciones = fabrica.crear_etiqueta_instrucciones(
+        instr, num_nivel, objetivo_estatico
+    );
     resultado = fabrica.crear_etiqueta_resultado();
 }

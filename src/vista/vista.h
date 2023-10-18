@@ -37,9 +37,9 @@ struct Vista {
           tp_disponibles(tp_disponibles) {}
 
     void setup(
-        const std::string &instrucciones, //
-        const NumNivel &,                 //
-        std::optional<int> objetivo       //
+        const std::string &instrucciones,          //
+        const NumNivel &,                          //
+        const std::optional<int> objetivo_estatico //
     );
 
     void actualizarIU(

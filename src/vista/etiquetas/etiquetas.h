@@ -33,7 +33,7 @@ struct EtiquetasGenerales {
         const std::string &instr,                   //
         const NumNivel &,                           //
         const modelo::TiposDePizza &tp_disponibles, //
-        std::optional<int> objetivo                 //
+        const std::optional<int> objetivo_estatico  //
     );
 
     void actualizar_y_dibujar_contadores(

@@ -5,9 +5,9 @@
 #include <string>
 
 std::string construir_instrucciones(
-    const std::string plantilla, //
-    const NumNivel &,            //
-    std::optional<int> objetivo  //
+    const std::string plantilla,               //
+    const NumNivel &,                          //
+    const std::optional<int> objetivo_estatico //
 );
 std::string construir_resultado();
 

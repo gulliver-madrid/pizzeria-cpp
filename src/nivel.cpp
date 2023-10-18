@@ -116,7 +116,7 @@ void Nivel::procesa_cambio_de_fase(
 }
 
 AccionGeneral Nivel::ejecutar() {
-    std::optional<int> objetivo; // Solo se define en estaticos
+    std::optional<int> objetivo_estatico; // Solo se define en estaticos
     modelo::ControlPizzas control_pizzas = {
         datos_nivel.pedidos, datos_nivel.es_estatico
     };
@@ -124,7 +124,7 @@ AccionGeneral Nivel::ejecutar() {
     assert(estado.establecido);
     modelo::PizzasAContadores &contadores = control_pizzas.contadores;
     if (datos_nivel.es_estatico.valor) {
-        objetivo = control_pizzas.obtener_objetivo_total_estatico();
+        objetivo_estatico = control_pizzas.obtener_objetivo_total_estatico();
     }
     Vista vista(
         datos_nivel.es_estatico,               //
@@ -136,7 +136,7 @@ AccionGeneral Nivel::ejecutar() {
     vista.setup(
         datos_nivel.instrucciones, //
         num_nivel,                 //
-        objetivo                   //
+        objetivo_estatico          //
     );
 
     Timer timer_espera_antes_de_resultado;
