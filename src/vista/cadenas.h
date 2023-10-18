@@ -18,8 +18,11 @@ struct CadenaJuego {
 
     CadenaJuego(const std::string &init_value = "") : value(init_value) {}
 
-    CadenaJuego &
-    interpolar_por_clave(const std::string &key, const std::string &value);
+    CadenaJuego &interpolar_por_clave(
+        const std::string &key,   //
+        const std::string &value, //
+        bool considerar = true    //
+    );
 
     // Operador para convertir implícitamente a std::string
     operator std::string() const { return value; }
