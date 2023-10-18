@@ -12,10 +12,17 @@ struct EstiloTexto {
 const auto Vector2f_CERO = sf::Vector2f(0, 0);
 
 sf::Text crearEtiqueta(
-    const std::string &texto, int tamano_fuente, const sf::Color &,
-    const sf::Font &, const sf::Vector2f &posicion = Vector2f_CERO
+    const std::string &texto,                    //
+    int tamano_fuente,                           //
+    const sf::Color &,                           //
+    const sf::Font &,                            //
+    const sf::Vector2f &posicion = Vector2f_CERO //
+
 );
 sf::Text crearEtiqueta(
-    const std::string &texto, const EstiloTexto &, const sf::Font &,
-    const sf::Vector2f &posicion = Vector2f_CERO
+    const std::string &texto,                    //
+    const EstiloTexto &,                         //
+    const sf::Font &,                            //
+    const sf::Vector2f &posicion = Vector2f_CERO //
+
 );
