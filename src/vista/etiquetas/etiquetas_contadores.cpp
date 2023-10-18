@@ -21,9 +21,13 @@ void EtiquetasContadores::setup(const modelo::TiposDePizza &tp_disponibles) {
     FabricaEtiquetasContadores fabrica(font);
     int i = 0;
     for (auto tp : tp_disponibles) {
-        etiquetas_preparadas[tp] = fabrica.crearEtiquetaPizzasPreparadas(i);
+        etiquetas_preparadas.emplace(
+            tp, fabrica.crearEtiquetaPizzasPreparadas(i)
+        );
         if (es_estatico.valor) {
-            etiquetas_servidas[tp] = fabrica.crearEtiquetaPizzasServidas(i);
+            etiquetas_servidas.emplace(
+                tp, fabrica.crearEtiquetaPizzasServidas(i)
+            );
         }
         i++;
     }

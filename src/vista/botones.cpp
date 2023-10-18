@@ -104,7 +104,7 @@ namespace {
         std::vector<BotonConTexto *> ordenados;
         for (auto tp : tp_disponibles) {
             const BotonData boton_data = crear_boton_data(tp);
-            botones[tp] = BotonConTexto(boton_data, font);
+            botones.emplace(tp, BotonConTexto(boton_data, font));
             ordenados.push_back(&botones.at(tp));
         }
 
@@ -135,8 +135,11 @@ namespace {
         // Crea los botones
         std::vector<BotonConTexto *> ordenados;
         for (auto tp : tp_disponibles) {
-            despachar[tp] = BotonConTexto(
-                boton_data_botones_despachar, font, escala_botones
+            despachar.emplace(
+                tp, //
+                BotonConTexto(
+                    boton_data_botones_despachar, font, escala_botones
+                )
             );
             ordenados.push_back(&despachar.at(tp));
         }

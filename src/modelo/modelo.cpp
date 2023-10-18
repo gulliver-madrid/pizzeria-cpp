@@ -10,7 +10,7 @@ namespace debug {
         using namespace std;
         cout << "Debug contadores" << endl;
         for (auto &[tp, contadores_tp] : contadores) {
-            cout << tipo_pizza_to_string[tp] << " "
+            cout << tipo_pizza_to_string.at(tp) << " "
                  << "preparadas: " << contadores_tp.preparadas << endl;
         }
         cout << endl;

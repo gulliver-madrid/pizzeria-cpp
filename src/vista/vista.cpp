@@ -82,7 +82,7 @@ void activar_botones_despachar_si_hay_preparadas(
     const modelo::PizzasAContadores &contadores
 ) {
     for (auto &[tp, contadores_tp] : contadores) {
-        auto &boton_despachar = botones_despachar[tp];
+        auto &boton_despachar = botones_despachar.at(tp);
         boton_despachar.activacion_condicional(contadores_tp.preparadas > 0);
     }
 }

@@ -10,7 +10,7 @@ ControlPizzas::ControlPizzas(
     for (auto &pedido : pedidos) {
         for (auto &[tp, _] : pedido.contenido) {
             if (contadores.find(tp) == contadores.end()) {
-                contadores[tp] = Contadores{};
+                contadores.emplace(tp, Contadores{});
                 _tipos_disponibles.push_back(tp);
             }
         }
@@ -92,8 +92,8 @@ bool ControlPizzas::faltan_pedidos_por_cubrir() const {
 void debug::debug_pedidos(const modelo::Pedidos &pedidos) {
     for (auto &pedido : pedidos) {
         for (auto &[tp, pedido_tp] : pedido.contenido) {
-            std::cout << tipo_pizza_to_string[tp] << ": " << pedido_tp.objetivo
-                      << std::endl;
+            std::cout << tipo_pizza_to_string.at(tp) << ": "
+                      << pedido_tp.objetivo << std::endl;
         }
     }
 }
