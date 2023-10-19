@@ -87,6 +87,7 @@ add_executable(
     src/tests/test_evaluar_preparacion.cpp
     src/tests/test_presentador.cpp
     src/tests/test_tiempo.cpp
+    src/tests/test_timer.cpp
 
     # archivos del proyecto
     src/debug_sfml.cpp

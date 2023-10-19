@@ -1,15 +1,10 @@
-#include "../juego_assert.h"
-#include "../tiempo.h"
 
+#include "../tiempo.h"
+#include <cassert>
 #include <gtest/gtest.h>
 
-#ifdef _DEBUG
-#define EXCEPCION JuegoException
-#else
-#define EXCEPCION std::bad_optional_access
-#endif
-
-TEST(Tiempo, TimerNoIniciadoGeneraExcepcionAlTerminarlo) { //
-    Timer t;
-    EXPECT_THROW(t.termino(), EXCEPCION);
+TEST(Tiempo, RestarTiempo) { //
+    const Tiempo t1 = Tiempo::desde_milisegundos(1);
+    const Tiempo t2 = Tiempo::desde_milisegundos(3);
+    EXPECT_EQ(t2 - t1, Tiempo::desde_milisegundos(2));
 }
