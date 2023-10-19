@@ -51,6 +51,7 @@ add_executable(pizzeria
     src/vista/basicos_vista.cpp
     src/demos/demo_nivel.cpp
     src/demos/map.cpp
+    src/demos/prueba.cpp
     src/demos/unicode.cpp
     src/demos/visual.cpp
     src/demos/visual_textos.cpp

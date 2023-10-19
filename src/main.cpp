@@ -1,6 +1,7 @@
 #include "demos/demo_nivel.h"
 #include "demos/map.h"
 #include "demos/min_ex.h"
+#include "demos/prueba.h"
 #include "demos/unicode.h"
 #include "demos/visual.h"
 #include "demos/visual_textos.h"
@@ -18,6 +19,7 @@ enum class AppNombrada {
     Unicode,
     MinEx,
     Map,
+    Prueba,
     Default
 };
 
@@ -29,6 +31,7 @@ const std::map<std::string, AppNombrada> cadena_to_app_nombrada = {
     {"unicode", AppNombrada::Unicode}, //
     {"minex", AppNombrada::MinEx},     //
     {"map", AppNombrada::Map},         //
+    {"prueba", AppNombrada::Prueba},   //
 };
 
 AppNombrada convertir_a_app_nombrada(const char *const nombre_app) {
@@ -90,6 +93,9 @@ int main(int argc, char *argv[]) {
             break;
         case AppNombrada::Map:
             return demo_map();
+            break;
+        case AppNombrada::Prueba:
+            return demo_prueba();
             break;
         default:
             write_line("Argumentos desconocidos");
