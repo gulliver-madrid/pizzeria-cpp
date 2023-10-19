@@ -21,7 +21,10 @@ EstadoPreparacionPizzas::EstadoPreparacionPizzas(const Encargos &encargos) {
     assert(datos.empty());
     for (auto &encargo : encargos) {
         datos.push_back(EstadoPreparacionPizzaIndividual{
-            encargo.tiempo_preparacion.obtener_porcentaje(), encargo.tipo
+            encargo.tiempo_preparacion.obtener_porcentaje(
+                GestorTiempoJuego::obtener_tiempo_juego()
+            ),
+            encargo.tipo
         });
     }
 }
@@ -58,14 +61,14 @@ void Pedido::evaluar() {
  * [in, out] encargos: Lista de encargos en la cocina
  * [out] contadores: Mapa de contadores para cada tipo de pizza
  * [in] maximo: Número máximo de pizzas que pueden salir de la cocina
- * [in] tiempo_actual: Tiempo actual para comparar con el tiempo de finalización
- * de la preparación
+ * [in] tiempo_actual: TiempoJuego actual para comparar con el tiempo de
+ * finalización de la preparación
  */
 void evaluar_preparacion(
     Encargos &encargos,                    //
     modelo::PizzasAContadores &contadores, //
     int maximo,                            //
-    Tiempo tiempo_actual                   //
+    const TiempoJuego &tiempo_actual       //
 ) {
     // std::cout << "Evaluando preparación" << std::endl;
     size_t i = 0;
@@ -75,9 +78,9 @@ void evaluar_preparacion(
     // Primera ronda para identificar pizzas listas
     i = 0;
     for (auto &encargo : encargos) {
-        Tiempo exceso_tiempo =
+        TiempoJuego exceso_tiempo =
             (tiempo_actual - encargo.tiempo_preparacion.finalizacion);
-        if (exceso_tiempo >= Tiempo::CERO) {
+        if (exceso_tiempo >= TiempoJuego_CERO) {
             pizzas_listas_con_tiempo.push_back(
                 {i, exceso_tiempo.obtener_milisegundos()}
             );

@@ -9,7 +9,7 @@ TEST(EvaluarPreparacion, NoHayPizzasEncargadas) {
     // No hay pizzas encargadas
     PizzasAContadores contadores;
     Encargos encargos;
-    Tiempo tiempo_actual = Tiempo::desde_segundos(5);
+    const auto tiempo_actual = TiempoJuego::desde_segundos(5);
 
     evaluar_preparacion(encargos, contadores, 3, tiempo_actual);
 
@@ -21,12 +21,12 @@ TEST(EvaluarPreparacion, VariasPizzasPreparadas) {
     // 2 de los 3 encargos estan listos
     PizzasAContadores contadores;
     Encargos encargos;
-    encargos.anadir(EncargoACocina(TipoPizza::Margarita, Tiempo::CERO));
-    encargos.anadir(EncargoACocina(TipoPizza::Pepperoni, Tiempo::CERO));
+    encargos.anadir(EncargoACocina(TipoPizza::Margarita, TiempoJuego_CERO));
+    encargos.anadir(EncargoACocina(TipoPizza::Pepperoni, TiempoJuego_CERO));
     encargos.anadir(
-        EncargoACocina(TipoPizza::Pepperoni, Tiempo::desde_segundos(2))
+        EncargoACocina(TipoPizza::Pepperoni, TiempoJuego::desde_segundos(2))
     );
-    Tiempo tiempo_actual = Tiempo::desde_segundos(5);
+    const auto tiempo_actual = TiempoJuego::desde_segundos(5);
 
     evaluar_preparacion(encargos, contadores, 3, tiempo_actual);
 
@@ -40,16 +40,16 @@ TEST(EvaluarPreparacion, LimiteMaximoDePizzas) {
     PizzasAContadores contadores;
     Encargos encargos;
     encargos.anadir(
-        EncargoACocina(TipoPizza::Margarita, Tiempo::desde_segundos(2.5f))
+        EncargoACocina(TipoPizza::Margarita, TiempoJuego::desde_segundos(2.5f))
     );
     encargos.anadir(
-        EncargoACocina(TipoPizza::Pepperoni, Tiempo::desde_segundos(4.0f))
+        EncargoACocina(TipoPizza::Pepperoni, TiempoJuego::desde_segundos(4.0f))
     );
-    encargos.anadir(
-        EncargoACocina(TipoPizza::CuatroQuesos, Tiempo::desde_segundos(7.0f))
-    );
+    encargos.anadir(EncargoACocina(
+        TipoPizza::CuatroQuesos, TiempoJuego::desde_segundos(7.0f)
+    ));
 
-    Tiempo tiempo_actual = Tiempo::desde_segundos(10);
+    const auto tiempo_actual = TiempoJuego::desde_segundos(10);
 
     evaluar_preparacion(encargos, contadores, 2, tiempo_actual);
 

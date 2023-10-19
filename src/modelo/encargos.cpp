@@ -4,21 +4,26 @@
 using modelo::TipoPizza;
 
 // En segundos
-const std::map<TipoPizza, Tiempo> tiempos_preparacion = {
-    {TipoPizza::Margarita, Tiempo::desde_segundos(2.5)},
-    {TipoPizza::Pepperoni, Tiempo::desde_segundos(4.0)},
-    {TipoPizza::CuatroQuesos, Tiempo::desde_segundos(7.0)},
+const std::map<TipoPizza, TiempoJuego> tiempos_preparacion = {
+    {TipoPizza::Margarita, TiempoJuego::desde_segundos(2.5)},
+    {TipoPizza::Pepperoni, TiempoJuego::desde_segundos(4.0)},
+    {TipoPizza::CuatroQuesos, TiempoJuego::desde_segundos(7.0)},
 };
 
-TiempoPreparacion
-calcular_tiempo_preparacion(const TipoPizza tipo, const Tiempo tiempo_actual) {
+/*
+ * Calcula el tiempo de preparacion para una pizza partiendo de su tipo y del
+ * tiempo actual.
+ */
+TiempoPreparacion calcular_tiempo_preparacion( //
+    const TipoPizza tipo, const TiempoJuego &tiempo_actual
+) {
     auto total = tiempos_preparacion.at(tipo);
-    return TiempoPreparacion{
-        tiempo_actual + total, total // fmt
-    };
+    return TiempoPreparacion{tiempo_actual + total, total};
 }
 
-EncargoACocina::EncargoACocina(const TipoPizza tipo, const Tiempo tiempo_actual)
+EncargoACocina::EncargoACocina(
+    const TipoPizza tipo, const TiempoJuego &tiempo_actual
+)
     : tipo(tipo),
       tiempo_preparacion(calcular_tiempo_preparacion(tipo, tiempo_actual)) {}
 

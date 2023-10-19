@@ -71,8 +71,9 @@ std::optional<FaseNivel> Nivel::procesa_click(
                 bool despacho = false;
                 for (const auto tp : tipos_pizza_disponibles) {
                     if (pulsado(botones.encargar.at(tp))) {
-                        auto encargo =
-                            EncargoACocina(tp, obtener_tiempo_actual());
+                        auto encargo = EncargoACocina(
+                            tp, GestorTiempoJuego::obtener_tiempo_juego()
+                        );
                         estado.encargos.anadir(encargo);
                         return std::nullopt;
                     }
@@ -169,7 +170,8 @@ AccionGeneral Nivel::ejecutar() {
         if (total_preparadas < modelo_info::MAXIMO_PIZZAS_PREPARADAS) {
             int maximo =
                 modelo_info::MAXIMO_PIZZAS_PREPARADAS - total_preparadas;
-            auto tiempo_actual = obtener_tiempo_actual();
+            const TiempoJuego tiempo_actual =
+                GestorTiempoJuego::obtener_tiempo_juego();
             evaluar_preparacion(
                 estado.encargos, contadores, maximo, tiempo_actual
             );

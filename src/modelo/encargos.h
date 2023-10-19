@@ -10,7 +10,9 @@ namespace modelo {
 struct EncargoACocina {
     const modelo::TipoPizza tipo;
     const TiempoPreparacion tiempo_preparacion;
-    EncargoACocina(const modelo::TipoPizza tipo, const Tiempo tiempo_actual);
+    EncargoACocina(
+        const modelo::TipoPizza tipo, const TiempoJuego &tiempo_actual
+    );
 };
 
 /* Gestiona la lista de encargos realizados a cocina */

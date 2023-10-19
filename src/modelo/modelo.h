@@ -6,7 +6,7 @@
 #include <vector>
 
 struct Encargos;
-struct Tiempo;
+struct TiempoJuego;
 
 /*
  * Contabiliza el numero de pizzas servidas y preparadas de un determinado tipo
@@ -44,7 +44,7 @@ struct Pedido {
 
 void evaluar_preparacion(
     Encargos &encargos, modelo::PizzasAContadores &contadores, int maximo,
-    Tiempo tiempo_actual
+    const TiempoJuego &tiempo_actual
 );
 
 struct EstadoPreparacionPizzas {

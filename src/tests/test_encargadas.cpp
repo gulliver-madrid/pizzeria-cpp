@@ -15,16 +15,16 @@ TEST(Encargadas, EncargadasDelTipoConVectorVacio) {
 
 TEST(Encargadas, EncargadasDelTipoConDosMargaritasYUnaPepperoni) {
     Encargos encargos;
-    encargos.anadir(EncargoACocina(TipoPizza::Margarita, Tiempo::CERO));
-    encargos.anadir(EncargoACocina(TipoPizza::Margarita, Tiempo::CERO));
-    encargos.anadir(EncargoACocina(TipoPizza::Pepperoni, Tiempo::CERO));
+    encargos.anadir(EncargoACocina(TipoPizza::Margarita, TiempoJuego_CERO));
+    encargos.anadir(EncargoACocina(TipoPizza::Margarita, TiempoJuego_CERO));
+    encargos.anadir(EncargoACocina(TipoPizza::Pepperoni, TiempoJuego_CERO));
 
-    EXPECT_EQ(                                   //
+    EXPECT_EQ(
         encargos.del_tipo(TipoPizza::Margarita), //
-        2
+        2                                        //
     );
-    EXPECT_EQ(                                   //
+    EXPECT_EQ(
         encargos.del_tipo(TipoPizza::Pepperoni), //
-        1
+        1                                        //
     );
 }
