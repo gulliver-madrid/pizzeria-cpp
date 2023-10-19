@@ -36,8 +36,7 @@ PedidoTipoPizza::PedidoTipoPizza(int servido, int objetivo)
     assert(servido <= objetivo);
 }
 
-Pedido::Pedido(std::map<modelo::TipoPizza, PedidoTipoPizza> contenido)
-    : contenido(contenido) {}
+Pedido::Pedido(ContenidoPedido &&contenido) : contenido(std::move(contenido)) {}
 
 void Pedido::evaluar() {
     bool faltan = false;

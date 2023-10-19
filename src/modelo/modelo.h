@@ -8,6 +8,9 @@
 struct Encargos;
 struct Tiempo;
 
+/*
+ * Contabiliza el numero de pizzas servidas y preparadas de un determinado tipo
+ */
 struct Contadores {
     int servidas = 0;
     int preparadas = 0;
@@ -29,11 +32,13 @@ struct PedidoTipoPizza {
     PedidoTipoPizza(int servido, int objetivo);
 };
 
+using ContenidoPedido = std::map<modelo::TipoPizza, PedidoTipoPizza>;
+
 /* Pedido completo, puede incluir varios tipos de pizza */
 struct Pedido {
-    std::map<modelo::TipoPizza, PedidoTipoPizza> contenido;
+    ContenidoPedido contenido;
     bool cubierto = false;
-    Pedido(std::map<modelo::TipoPizza, PedidoTipoPizza> contenido);
+    Pedido(ContenidoPedido &&contenido);
     void evaluar();
 };
 
