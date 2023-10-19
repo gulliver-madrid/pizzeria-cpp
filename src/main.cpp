@@ -48,7 +48,7 @@ void write_line(const std::string &s = "") { //
     std::cout << s << std::endl;
 }
 
-int main(int argc, char *argv[]) {
+int _main(int argc, char *argv[]) {
     write_line();
     if (argc > 3) {
         write_line("Demasiados argumentos");
@@ -99,6 +99,25 @@ int main(int argc, char *argv[]) {
             break;
         default:
             write_line("Argumentos desconocidos");
+            return USER_ERROR;
             break;
+    }
+    return 0;
+}
+
+int main(int argc, char *argv[]) {
+    if (MODO_DESARROLLO) {
+
+        int result;
+        try {
+            result = _main(argc, argv);
+        } catch (const std::exception &e) {
+            std::cout << "Capturada una excepción en el programa principal: "
+                      << e.what() << std::endl;
+            throw;
+        }
+        return result;
+    } else {
+        return _main(argc, argv);
     }
 }
