@@ -164,6 +164,7 @@ void actualizar_etiquetas(
         default:
             break;
     }
+    etiquetas.dibujar_barra_estado(ventana);
 }
 
 void Vista::actualizar_paneles(

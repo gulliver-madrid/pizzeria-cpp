@@ -7,6 +7,7 @@
 
 struct Globales;
 
+struct EtiquetasBarraEstado;
 struct EtiquetasContadores;
 struct EtiquetasInfo;
 
@@ -20,6 +21,7 @@ struct EtiquetasGenerales {
     const sf::Font &font;
     std::unique_ptr<EtiquetasContadores> contadores;
     std::unique_ptr<EtiquetasInfo> info;
+    std::unique_ptr<EtiquetasBarraEstado> barra_estado;
 
   public:
     EtiquetasGenerales(
@@ -44,6 +46,7 @@ struct EtiquetasGenerales {
 
     void dibujar_instrucciones(sf::RenderWindow &ventana);
     void dibujar_resultado(sf::RenderWindow &ventana);
+    void dibujar_barra_estado(sf::RenderWindow &ventana);
 };
 
 ///////////////////////////////////////////

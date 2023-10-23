@@ -66,7 +66,7 @@
 
 - setup_juego.cpp
     - setup_juego.h (def)
-    - vista/cadenas.h
+    - vista/cadenas.h (hoja)
     - globales.h (hoja)
     - paths.h (hoja)
     - vista/vista_data.h (def)
@@ -104,15 +104,21 @@
     - vista/componentes/varios.h (hoja)
 
 - vista/etiquetas/etiquetas.cpp
-    - vista/etiquetas/etiquetas.h
+    - vista/etiquetas/etiquetas.h (def)
     - vista/basicos_vista.h (hoja)
     - vista/cadenas.h (hoja)
     - vista/componentes/varios.h (hoja)
+    - vista/etiquetas/etiquetas_barra_estado.h (hoja)
     - vista/etiquetas/etiquetas_contadores.h
         - general.h (def)
     - vista/etiquetas/etiquetas_info.h
         - shared.h (hoja)
     - vista/etiquetas/fabrica_etiquetas.h
+
+- vista/etiquetas/etiquetas_barra_estado.cpp
+    - vista/etiquetas/etiquetas_barra_estado.h (hoja)
+    - vista/basicos_vista.h (def)
+    - vista/componentes/varios.h (hoja)
 
 - vista/etiquetas/etiquetas_contadores.cpp
     - vista/componentes/varios.h (hoja)

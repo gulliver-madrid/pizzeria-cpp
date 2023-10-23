@@ -2,6 +2,7 @@
 #include "../basicos_vista.h"
 #include "../cadenas.h"
 #include "../componentes/varios.h"
+#include "etiquetas_barra_estado.h"
 #include "etiquetas_contadores.h"
 #include "etiquetas_info.h"
 
@@ -25,6 +26,7 @@ EtiquetasGenerales::EtiquetasGenerales(
     : font(font) {
     contadores = std::make_unique<EtiquetasContadores>(es_estatico, font);
     info = std::make_unique<EtiquetasInfo>(font);
+    barra_estado = std::make_unique<EtiquetasBarraEstado>(font);
 }
 
 EtiquetasGenerales::~EtiquetasGenerales() = default;
@@ -53,6 +55,10 @@ void EtiquetasGenerales::dibujar_instrucciones(sf::RenderWindow &ventana) {
 }
 void EtiquetasGenerales::dibujar_resultado(sf::RenderWindow &ventana) {
     ventana.draw(info->resultado);
+}
+
+void EtiquetasGenerales::dibujar_barra_estado(sf::RenderWindow &ventana) {
+    barra_estado->dibujar(ventana);
 }
 
 ///////////////////////////////////////////

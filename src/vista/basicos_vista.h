@@ -14,6 +14,7 @@ namespace medidas {
     constexpr int ALTO_PANEL = 700;
     constexpr int MARGEN_IZQ_ETIQUETAS = 30;
     constexpr int FILA_BOTONES_GENERALES = 800;
+    constexpr int FILA_BARRA_ESTADO = FILA_BOTONES_GENERALES;
     constexpr int SEPARACION_HORIZONTAL_ENTRE_BOTONES_GENERALES = 25;
 
     // Posiciones desde el inicio del panel respectivo
