@@ -26,6 +26,12 @@ Tiempo Tiempo::desde_segundos(double valor) {
     return Tiempo{static_cast<int>(valor * 1000)};
 }
 
+std::string Tiempo::to_string() const {
+    const auto minutos = _ms / 60'000;
+    const auto segundos = _ms / 1000 % 60;
+    return std::to_string(minutos) + ":" + std::to_string(segundos);
+}
+
 ///////////////////////////////////////////
 // Timer
 //////////////////////////////////////////

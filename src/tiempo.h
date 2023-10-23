@@ -24,6 +24,7 @@ struct Tiempo : public templates::Comparable<Tiempo> {
     const Tiempo operator-(const Tiempo &otro) const;
     bool operator==(const Tiempo &otro) const;
     bool operator<(const Tiempo &otro) const;
+    virtual std::string to_string() const;
 };
 
 Tiempo obtener_tiempo_actual();

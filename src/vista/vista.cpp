@@ -138,6 +138,7 @@ void actualizar_estado_botones(BotonesApp &botones, const Estado &estado) {
     }
 }
 
+/* Actualiza y dibuja las etiquetas */
 void actualizar_etiquetas(
     sf::RenderWindow &ventana,     //
     EtiquetasGenerales &etiquetas, //
@@ -164,6 +165,9 @@ void actualizar_etiquetas(
         default:
             break;
     }
+    const auto tiempo_real_actual = obtener_tiempo_actual();
+    const auto tiempo_juego_actual = GestorTiempoJuego::obtener_tiempo_juego();
+    etiquetas.actualizar_barra_estado(tiempo_real_actual, tiempo_juego_actual);
     etiquetas.dibujar_barra_estado(ventana);
 }
 

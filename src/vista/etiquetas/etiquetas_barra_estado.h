@@ -2,6 +2,9 @@
 
 #include <SFML/Graphics.hpp>
 
+struct Tiempo;
+struct TiempoJuego;
+
 struct EtiquetasBarraEstado {
 
   private:
@@ -10,6 +13,6 @@ struct EtiquetasBarraEstado {
 
   public:
     EtiquetasBarraEstado(const sf::Font &);
-    void actualizar();
+    void actualizar(const Tiempo &, const TiempoJuego &);
     void dibujar(sf::RenderWindow &ventana) const;
 };

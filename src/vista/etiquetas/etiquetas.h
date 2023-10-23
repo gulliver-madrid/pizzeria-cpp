@@ -44,6 +44,10 @@ struct EtiquetasGenerales {
         sf::RenderWindow &ventana                             //
     );
 
+    void actualizar_barra_estado(
+        const Tiempo &tiempo_real_actual, const TiempoJuego &tiempo_juego_actual
+    );
+
     void dibujar_instrucciones(sf::RenderWindow &ventana);
     void dibujar_resultado(sf::RenderWindow &ventana);
     void dibujar_barra_estado(sf::RenderWindow &ventana);
