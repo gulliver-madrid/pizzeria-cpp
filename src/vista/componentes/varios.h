@@ -4,6 +4,10 @@
 #include <SFML/Graphics.hpp>
 #include <optional>
 
+namespace medidas {
+    constexpr int TAMANO_TEXTO_GRANDE = 32;
+} // namespace medidas
+
 struct EstiloTexto {
     const int tamano;
     const sf::Color &color;

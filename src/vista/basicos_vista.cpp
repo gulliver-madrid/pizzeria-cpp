@@ -1,8 +1,6 @@
 #include "basicos_vista.h"
 
 namespace medidas {
-    constexpr int MARGEN_IZQ_PANELES = 50;
-    constexpr int MARGEN_TOP_PANELES = 50;
     constexpr int DESPLAZAMIENTO_LATERAL = ANCHO_PANEL + 42;
 } // namespace medidas
 

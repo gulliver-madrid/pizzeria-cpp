@@ -12,6 +12,11 @@ enum class IndicePanel {
 namespace medidas {
     constexpr int ANCHO_PANEL = 390;
     constexpr int ALTO_PANEL = 700;
+
+    // Margenes externos de los paneles
+    constexpr int MARGEN_IZQ_PANELES = 50;
+    constexpr int MARGEN_TOP_PANELES = 50;
+
     constexpr int MARGEN_IZQ_ETIQUETAS = 30;
     constexpr int FILA_BOTONES_GENERALES = 800;
     constexpr int FILA_BARRA_ESTADO = FILA_BOTONES_GENERALES;

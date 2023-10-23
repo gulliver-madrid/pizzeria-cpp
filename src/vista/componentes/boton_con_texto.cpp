@@ -4,7 +4,7 @@
 
 namespace medidas {
     constexpr int MARGEN_BOTON = 20;
-    constexpr int TAMANO_TEXTO_BOTONES = 32;
+    constexpr int TAMANO_TEXTO_BOTONES = TAMANO_TEXTO_GRANDE;
 } // namespace medidas
 
 size_t BotonConTexto::proximo_id = 1;

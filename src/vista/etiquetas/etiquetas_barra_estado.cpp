@@ -5,9 +5,12 @@
 #include "../componentes/varios.h"
 
 EtiquetasBarraEstado::EtiquetasBarraEstado(const sf::Font &font) : font(font) {
-    const EstiloTexto estilo = {24, sf::Color::Green};
+    const EstiloTexto estilo = {
+        medidas::TAMANO_TEXTO_GRANDE, sf::Color::Yellow
+    };
     etiqueta = crearEtiqueta(
-        "EtiquetasBarraEstado", estilo, font, {0, medidas::FILA_BARRA_ESTADO}
+        "Tiempo Juego: 00:00       Tiempo Real: 00:00", estilo, font,
+        {medidas::MARGEN_IZQ_PANELES, medidas::FILA_BARRA_ESTADO}
     );
 }
 void EtiquetasBarraEstado::actualizar() {
