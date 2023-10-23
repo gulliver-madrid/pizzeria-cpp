@@ -3,6 +3,11 @@
 #include <cassert>
 #include <chrono>
 
+// Asignacion miembros estaticos
+TiempoJuego GestorTiempoJuego::previo = TiempoJuego_CERO;
+Tiempo GestorTiempoJuego::ultima_activacion = Tiempo::CERO;
+bool GestorTiempoJuego::en_pausa = true;
+
 std::string pad_with_zeroes(int n) {
     assert(n >= 0);
     if (n > 59) {
@@ -19,7 +24,7 @@ std::string pad_with_zeroes(int n) {
 // Tiempo
 //////////////////////////////////////////
 
-bool Tiempo::operator<(const Tiempo &otro) const { // fmt
+bool Tiempo::operator<(const Tiempo &otro) const { //
     return _ms < otro._ms;
 }
 
@@ -125,30 +130,29 @@ const TiempoJuego TiempoJuego::operator-(const TiempoJuego &otro) const {
 // GestorTiempoJuego
 //////////////////////////////////////////
 
-void GestorTiempoJuego::contabilizar() {
-    const auto actual = obtener_tiempo_actual();
-    const auto transcurrido = actual - ultima_contabilizacion;
-    contabilizado = TiempoJuego::desde_milisegundos(
-        contabilizado.obtener_milisegundos() +
-        transcurrido.obtener_milisegundos()
-    );
-}
-
 TiempoJuego GestorTiempoJuego::obtener_tiempo_juego() {
-    // TODO: implementar con pausas
-    return TiempoJuego::desde_milisegundos(
-        obtener_tiempo_actual().obtener_milisegundos()
-    );
+    if (en_pausa) {
+        return previo;
+    }
+    const auto transcurrido = obtener_tiempo_actual() - ultima_activacion;
+    return previo +
+           TiempoJuego::desde_milisegundos(transcurrido.obtener_milisegundos());
 }
 
 void GestorTiempoJuego::activar() {
     assert(en_pausa);
+    ultima_activacion = obtener_tiempo_actual();
     en_pausa = false;
 }
 void GestorTiempoJuego::pausar() {
     assert(!en_pausa);
+    previo = obtener_tiempo_juego();
     en_pausa = true;
 }
-TiempoJuego GestorTiempoJuego::obtener_transcurrido() { return contabilizado; }
+void GestorTiempoJuego::reiniciar() {
+    en_pausa = true;
+    previo = TiempoJuego_CERO;
+    ultima_activacion = Tiempo::CERO;
+}
 
 const Tiempo Tiempo::CERO = Tiempo::desde_milisegundos(0);

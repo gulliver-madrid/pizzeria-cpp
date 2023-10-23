@@ -106,9 +106,11 @@ void Nivel::procesa_cambio_de_fase(
     switch (nueva_fase) {
         case FaseNivel::Activa:
             assert(fase_previa == FaseNivel::MostrandoInstrucciones);
+            GestorTiempoJuego::activar();
             break;
         case FaseNivel::EsperaAntesDeResultado:
             assert(fase_previa == FaseNivel::Activa);
+            GestorTiempoJuego::pausar();
             timer_espera_antes_de_resultado.start(
                 tiempos::RETARDO_ANTES_DE_RESULTADO
             );
@@ -143,6 +145,8 @@ AccionGeneral Nivel::ejecutar() {
     Timer timer_espera_antes_de_resultado;
     Timer timer_fin_nivel;
     sf::Sound sound;
+
+    GestorTiempoJuego::reiniciar();
 
     assert(!contadores.empty());
     // std::cout << "Empezando ciclo de juego en nivel()" << std::endl;

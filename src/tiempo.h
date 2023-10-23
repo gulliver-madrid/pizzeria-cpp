@@ -82,19 +82,18 @@ struct TiempoPreparacion {
 // GestorTiempoJuego
 //////////////////////////////////////////
 
-/* Provisional. Debe poder activarse y pausarse */
 struct GestorTiempoJuego {
 
   private:
-    TiempoJuego contabilizado = TiempoJuego_CERO;
-    Tiempo ultima_contabilizacion = Tiempo::CERO;
-    bool en_pausa = true;
-    void contabilizar();
+    // Tiempo de juego contabilizado previamente
+    static TiempoJuego previo;
+    static Tiempo ultima_activacion;
+    static bool en_pausa;
 
   public:
-    GestorTiempoJuego() {}
+    GestorTiempoJuego() = delete;
     static TiempoJuego obtener_tiempo_juego();
-    void activar();
-    void pausar();
-    TiempoJuego obtener_transcurrido();
+    static void activar();
+    static void pausar();
+    static void reiniciar();
 };
