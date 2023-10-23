@@ -3,6 +3,18 @@
 #include <cassert>
 #include <chrono>
 
+std::string pad_with_zeroes(int n) {
+    assert(n >= 0);
+    if (n > 59) {
+        n = n % 60;
+    }
+    auto cadena = std::to_string(n);
+    if (cadena.length() == 1) {
+        cadena.insert(0, "0");
+    }
+    return cadena;
+}
+
 ///////////////////////////////////////////
 // Tiempo
 //////////////////////////////////////////
@@ -27,9 +39,11 @@ Tiempo Tiempo::desde_segundos(double valor) {
 }
 
 std::string Tiempo::to_string() const {
-    const auto minutos = _ms / 60'000;
-    const auto segundos = _ms / 1000 % 60;
-    return std::to_string(minutos) + ":" + std::to_string(segundos);
+    const int segundos_brutos = _ms / 1000;
+    const auto minutos = segundos_brutos / 60;
+    const auto segundos = segundos_brutos % 60;
+    assert(segundos < 60);
+    return pad_with_zeroes(minutos) + ":" + pad_with_zeroes(segundos);
 }
 
 ///////////////////////////////////////////
@@ -80,7 +94,8 @@ Tiempo obtener_tiempo_actual() {
         std::chrono::duration_cast<std::chrono::milliseconds>(duracion).count(
         ) %
         10'000'000;
-    return Tiempo::desde_milisegundos(milisegundos);
+    const static auto inicial = Tiempo::desde_milisegundos(milisegundos);
+    return Tiempo::desde_milisegundos(milisegundos) - inicial;
 };
 
 ///////////////////////////////////////////
