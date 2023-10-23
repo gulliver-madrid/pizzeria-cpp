@@ -2,8 +2,11 @@
 
 #include "templates.h"
 #include <SFML/Graphics.hpp>
-#include <cassert>
 #include <optional>
+
+///////////////////////////////////////////
+// Tiempo
+//////////////////////////////////////////
 
 struct Tiempo : public templates::Comparable<Tiempo> {
   protected:
@@ -23,6 +26,12 @@ struct Tiempo : public templates::Comparable<Tiempo> {
     bool operator<(const Tiempo &otro) const;
 };
 
+Tiempo obtener_tiempo_actual();
+
+///////////////////////////////////////////
+// TiempoJuego
+//////////////////////////////////////////
+
 struct TiempoJuego : public Tiempo {
   private:
     TiempoJuego(int ms) : Tiempo(ms) {}
@@ -41,6 +50,10 @@ struct TiempoJuego : public Tiempo {
 
 const auto TiempoJuego_CERO = TiempoJuego::desde_milisegundos(0);
 
+///////////////////////////////////////////
+// Timer
+//////////////////////////////////////////
+
 struct Timer {
   private:
     std::optional<sf::Clock> clock;
@@ -52,6 +65,10 @@ struct Timer {
     bool termino();
 };
 
+///////////////////////////////////////////
+// TiempoPreparacion
+//////////////////////////////////////////
+
 struct TiempoPreparacion {
     // Tiempo en el que la pizza estará lista
     TiempoJuego finalizacion;
@@ -60,7 +77,9 @@ struct TiempoPreparacion {
     int obtener_porcentaje(const TiempoJuego &tiempo_actual) const;
 };
 
-Tiempo obtener_tiempo_actual();
+///////////////////////////////////////////
+// GestorTiempoJuego
+//////////////////////////////////////////
 
 /* Provisional. Debe poder activarse y pausarse */
 struct GestorTiempoJuego {
@@ -69,25 +88,12 @@ struct GestorTiempoJuego {
     TiempoJuego contabilizado = TiempoJuego_CERO;
     Tiempo ultima_contabilizacion = Tiempo::CERO;
     bool en_pausa = true;
-    void contabilizar() {
-        const auto actual = obtener_tiempo_actual();
-        const auto transcurrido = actual - ultima_contabilizacion;
-        contabilizado = TiempoJuego::desde_milisegundos(
-            contabilizado.obtener_milisegundos() +
-            transcurrido.obtener_milisegundos()
-        );
-    }
+    void contabilizar();
 
   public:
     GestorTiempoJuego() {}
     static TiempoJuego obtener_tiempo_juego();
-    void activar() {
-        assert(en_pausa);
-        en_pausa = false;
-    }
-    void pausar() {
-        assert(!en_pausa);
-        en_pausa = true;
-    }
-    TiempoJuego obtener_transcurrido() { return contabilizado; }
+    void activar();
+    void pausar();
+    TiempoJuego obtener_transcurrido();
 };

@@ -3,6 +3,10 @@
 #include <cassert>
 #include <chrono>
 
+///////////////////////////////////////////
+// Tiempo
+//////////////////////////////////////////
+
 bool Tiempo::operator<(const Tiempo &otro) const { // fmt
     return _ms < otro._ms;
 }
@@ -15,6 +19,16 @@ const Tiempo Tiempo::operator-(const Tiempo &otro) const {
     return Tiempo{this->_ms - otro._ms};
 }
 bool Tiempo::operator==(const Tiempo &otro) const { return _ms == otro._ms; }
+
+Tiempo::Tiempo(int ms) : _ms(ms) {}
+Tiempo Tiempo::desde_milisegundos(int valor) { return Tiempo{valor}; }
+Tiempo Tiempo::desde_segundos(double valor) {
+    return Tiempo{static_cast<int>(valor * 1000)};
+}
+
+///////////////////////////////////////////
+// Timer
+//////////////////////////////////////////
 
 Tiempo Timer::obtener_tiempo_transcurrido() {
     assert(clock.has_value());
@@ -33,6 +47,10 @@ bool Timer::termino() {
     juego_assert(this->finalizacion.has_value(), "Timer no inicializado");
     return obtener_tiempo_transcurrido() > finalizacion;
 }
+
+///////////////////////////////////////////
+// TiempoPreparacion
+//////////////////////////////////////////
 
 int TiempoPreparacion::obtener_porcentaje(const TiempoJuego &tiempo_actual
 ) const {
@@ -59,11 +77,10 @@ Tiempo obtener_tiempo_actual() {
     return Tiempo::desde_milisegundos(milisegundos);
 };
 
-Tiempo::Tiempo(int ms) : _ms(ms) {}
-Tiempo Tiempo::desde_milisegundos(int valor) { return Tiempo{valor}; }
-Tiempo Tiempo::desde_segundos(double valor) {
-    return Tiempo{static_cast<int>(valor * 1000)};
-}
+///////////////////////////////////////////
+// TiempoJuego
+//////////////////////////////////////////
+
 TiempoJuego TiempoJuego::desde_milisegundos(int valor) {
     return TiempoJuego{valor};
 }
@@ -83,11 +100,34 @@ const TiempoJuego TiempoJuego::operator-(const TiempoJuego &otro) const {
     return TiempoJuego{this->_ms - otro._ms};
 }
 
+///////////////////////////////////////////
+// GestorTiempoJuego
+//////////////////////////////////////////
+
+void GestorTiempoJuego::contabilizar() {
+    const auto actual = obtener_tiempo_actual();
+    const auto transcurrido = actual - ultima_contabilizacion;
+    contabilizado = TiempoJuego::desde_milisegundos(
+        contabilizado.obtener_milisegundos() +
+        transcurrido.obtener_milisegundos()
+    );
+}
+
 TiempoJuego GestorTiempoJuego::obtener_tiempo_juego() {
     // TODO: implementar con pausas
     return TiempoJuego::desde_milisegundos(
         obtener_tiempo_actual().obtener_milisegundos()
     );
 }
+
+void GestorTiempoJuego::activar() {
+    assert(en_pausa);
+    en_pausa = false;
+}
+void GestorTiempoJuego::pausar() {
+    assert(!en_pausa);
+    en_pausa = true;
+}
+TiempoJuego GestorTiempoJuego::obtener_transcurrido() { return contabilizado; }
 
 const Tiempo Tiempo::CERO = Tiempo::desde_milisegundos(0);
