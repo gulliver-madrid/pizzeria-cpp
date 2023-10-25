@@ -139,6 +139,23 @@ std::optional<AccionGeneral> Nivel::procesa_cambio_de_fase(
     return posible_accion;
 }
 
+void mostrar_resultado(
+    const Globales &globales, //
+    Estado &estado,           //
+    Vista &vista,             //
+    Timer &timer_fin_nivel,   //
+    sf::Sound &sound          //
+) {
+    // Pasa a fase MostrandoResultado
+    estado.fase_actual = FaseNivel::MostrandoResultado;
+    if (globales.success_buffer) {
+        sound.setBuffer(globales.success_buffer.value());
+        sound.play();
+    }
+    timer_fin_nivel.start(tiempos::ESPERA_ENTRE_NIVELES);
+    vista.paneles_completos.visible = false;
+}
+
 AccionGeneral Nivel::ejecutar() {
     std::optional<int> objetivo_estatico; // Solo se define en estaticos
     modelo::ControlPizzas control_pizzas = {
@@ -204,22 +221,16 @@ AccionGeneral Nivel::ejecutar() {
         switch (estado.fase_actual) {
             case FaseNivel::EsperaAntesDeResultado:
                 if (timer_espera_antes_de_resultado.termino()) {
-                    estado.fase_actual = FaseNivel::MostrandoResultado;
-                    if (globales.success_buffer) {
-                        sound.setBuffer(globales.success_buffer.value());
-                        sound.play();
-                    }
-                    timer_fin_nivel.start(tiempos::ESPERA_ENTRE_NIVELES);
-                    vista.paneles_completos.visible = false;
+                    mostrar_resultado(
+                        globales, estado, vista, timer_fin_nivel, sound
+                    );
                 }
                 break;
             case FaseNivel::MostrandoResultado:
-                {
-                    if (!es_el_ultimo && timer_fin_nivel.termino()) {
-                        return AccionGeneral::SiguienteNivel;
-                    };
-                    break;
-                }
+                if (!es_el_ultimo && timer_fin_nivel.termino()) {
+                    return AccionGeneral::SiguienteNivel;
+                };
+                break;
         }
 
         vista.actualizarIU(globales.window, estado);
