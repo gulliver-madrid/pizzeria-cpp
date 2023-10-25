@@ -1,4 +1,5 @@
 #include "cadenas.h"
+#include "componentes.h"
 #include "manejo_rutas.h"
 #include "paths.h"
 #include <SFML/Audio.hpp>
@@ -13,22 +14,6 @@
 #define TITLE "Pizzer%ia"
 #define FPS 12
 #define RETARDO_ANTES_DE_RESULTADO 0.6
-
-struct BotonConTexto {
-    sf::RectangleShape boton;
-    sf::Text texto;
-
-    bool colisiona(sf::Vector2i &mousePos) {
-        return boton.getGlobalBounds().contains(
-            static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)
-        );
-    }
-
-    void dibujar(sf::RenderWindow &window) {
-        window.draw(boton);
-        window.draw(texto);
-    }
-};
 
 struct Botones {
     BotonConTexto empezar;
