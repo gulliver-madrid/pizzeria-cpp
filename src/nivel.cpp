@@ -23,10 +23,11 @@ std::optional<FaseNivel> Nivel::procesarEvento(
     sf::Event evento, const BotonesApp &botones, Estado &estado
 ) {
     auto &ventana = globales.window;
+    std::optional<FaseNivel> siguiente_fase;
     switch (evento.type) {
         case sf::Event::Closed:
             ventana.close();
-            return FaseNivel::Saliendo;
+            siguiente_fase = FaseNivel::Saliendo;
             break;
         case sf::Event::Resized:
             {
@@ -40,12 +41,13 @@ std::optional<FaseNivel> Nivel::procesarEvento(
         case sf::Event::MouseButtonPressed:
             {
                 const sf::Vector2i mouse_pos = sf::Mouse::getPosition(ventana);
-                return procesa_click(botones, estado, mouse_pos);
+                siguiente_fase = procesa_click(botones, estado, mouse_pos);
             }
             break;
         default:
-            return std::nullopt;
+            /* Eventos ignorados */
     }
+    return siguiente_fase;
 };
 
 std::optional<FaseNivel> Nivel::procesa_click(
