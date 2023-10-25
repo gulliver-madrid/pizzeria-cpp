@@ -166,25 +166,27 @@ AccionGeneral Nivel::ejecutar() {
     Timer timer_espera_antes_de_resultado;
     Timer timer_fin_nivel;
     sf::Sound sound;
-
     GestorTiempoJuego::reiniciar();
-
     assert(!contadores.empty());
-    // std::cout << "Empezando ciclo de juego en nivel()" << std::endl;
+
     while (globales.window.isOpen()) {
         sf::Event event;
         while (globales.window.pollEvent(event)) {
-            auto nuevo_estado = procesarEvento(event, vista.botones, estado);
-            // Cambio de estado reciente
-            if (nuevo_estado.has_value()) {
-                const auto accion = procesa_cambio_de_fase(
-                    nuevo_estado.value(), vista,
-                    timer_espera_antes_de_resultado, estado.fase_actual
-                );
-                estado.fase_actual = nuevo_estado.value();
-                if (accion.has_value()) {
-                    return accion.value();
-                }
+            auto siguiente_fase = procesarEvento(event, vista.botones, estado);
+            // Cambio de fase reciente
+            if (!siguiente_fase.has_value()) {
+                continue;
+            }
+            const auto fase_previa = estado.fase_actual;
+            estado.fase_actual = siguiente_fase.value();
+            const auto accion = procesa_cambio_de_fase(
+                estado.fase_actual,              //
+                vista,                           //
+                timer_espera_antes_de_resultado, //
+                fase_previa                      //
+            );
+            if (accion.has_value()) {
+                return accion.value();
             }
         }
         int total_preparadas = estado.control_pizzas.obtener_total_preparadas();
