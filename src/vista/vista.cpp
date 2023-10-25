@@ -60,17 +60,14 @@ void Vista::actualizarIU(      //
     ventana.display();
 }
 
-void Vista::procesa_cambio_de_fase(FaseNivel nueva_fase) {
-    switch (nueva_fase) {
-        case FaseNivel::Activa:
-            botones.empezar.visible = false;
-            botones.mostrar_botones_nivel(true);
-            paneles_completos.visible = true;
-            break;
-        case FaseNivel::EsperaAntesDeResultado:
-            botones.mostrar_botones_nivel(false);
-            break;
-    }
+void Vista::on_cambio_a_fase_activa() {
+    botones.empezar.visible = false;
+    botones.mostrar_botones_nivel(true);
+    paneles_completos.visible = true;
+}
+
+void Vista::on_cambio_a_fase_espera_antes_de_resultado() {
+    botones.mostrar_botones_nivel(false);
 }
 
 /*

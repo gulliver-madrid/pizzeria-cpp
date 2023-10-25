@@ -46,5 +46,6 @@ struct Vista {
         sf::RenderWindow &ventana, //
         const Estado &estado       //
     );
-    void procesa_cambio_de_fase(FaseNivel nueva_fase);
+    void on_cambio_a_fase_activa();
+    void on_cambio_a_fase_espera_antes_de_resultado();
 };
