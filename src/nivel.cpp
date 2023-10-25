@@ -46,6 +46,7 @@ std::optional<FaseNivel> Nivel::procesarEvento(
             break;
         default:
             /* Eventos ignorados */
+            break;
     }
     return siguiente_fase;
 };
@@ -105,13 +106,14 @@ std::optional<FaseNivel> Nivel::procesa_click(
 }
 
 /* Procesa un cambio de fase reciente */
-void Nivel::procesa_cambio_de_fase(
+std::optional<AccionGeneral> Nivel::procesa_cambio_de_fase(
     FaseNivel nueva_fase,                   //
     Vista &vista,                           //
     Timer &timer_espera_antes_de_resultado, //
     FaseNivel fase_previa                   //
 ) {
     vista.procesa_cambio_de_fase(nueva_fase);
+    std::optional<AccionGeneral> posible_accion;
     switch (nueva_fase) {
         case FaseNivel::Activa:
             assert(fase_previa == FaseNivel::MostrandoInstrucciones);
@@ -124,7 +126,17 @@ void Nivel::procesa_cambio_de_fase(
                 tiempos::RETARDO_ANTES_DE_RESULTADO
             );
             break;
+        case FaseNivel::Reiniciando:
+            posible_accion = AccionGeneral::Reiniciar;
+            break;
+        case FaseNivel::Saliendo:
+            posible_accion = AccionGeneral::Salir;
+            break;
+        default:
+            assert(false);
+            break;
     }
+    return posible_accion;
 }
 
 AccionGeneral Nivel::ejecutar() {
@@ -163,19 +175,15 @@ AccionGeneral Nivel::ejecutar() {
         sf::Event event;
         while (globales.window.pollEvent(event)) {
             auto nuevo_estado = procesarEvento(event, vista.botones, estado);
-            // std::cout << "Evento completamente procesado" << std::endl;
             // Cambio de estado reciente
             if (nuevo_estado.has_value()) {
-                // std::cout << "Procesando cambio de fase" << std::endl;
-                procesa_cambio_de_fase(
+                const auto accion = procesa_cambio_de_fase(
                     nuevo_estado.value(), vista,
                     timer_espera_antes_de_resultado, estado.fase_actual
                 );
                 estado.fase_actual = nuevo_estado.value();
-                if (estado.fase_actual == FaseNivel::Reiniciando) {
-                    return AccionGeneral::Reiniciar;
-                } else if (estado.fase_actual == FaseNivel::Saliendo) {
-                    return AccionGeneral::Salir;
+                if (accion.has_value()) {
+                    return accion.value();
                 }
             }
         }

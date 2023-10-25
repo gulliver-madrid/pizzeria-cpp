@@ -19,7 +19,7 @@ struct Nivel {
         const BotonesApp &, //
         Estado &            //
     );
-    void procesa_cambio_de_fase(
+    std::optional<AccionGeneral> procesa_cambio_de_fase(
         FaseNivel nueva_fase,                   //
         Vista &vista,                           //
         Timer &timer_espera_antes_de_resultado, //
