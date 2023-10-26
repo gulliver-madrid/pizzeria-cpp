@@ -97,6 +97,7 @@ std::optional<Comando> genera_comando(
     return std::nullopt;
 }
 
+#define CASE(type) constexpr(std::is_same_v<T, type>)
 std::optional<FaseNivel> Nivel::procesa_click(
     const BotonesApp &botones, Estado &estado, const sf::Vector2i &mouse_pos
 ) {
@@ -109,25 +110,25 @@ std::optional<FaseNivel> Nivel::procesa_click(
     return std::visit(
         [&estado](auto &&variante) -> std::optional<FaseNivel> {
             using T = std::decay_t<decltype(variante)>;
-            if constexpr (std::is_same_v<T, Comando::Empezar>) {
+            if CASE (Comando::Empezar) {
                 assert(estado.fase_actual == FaseNivel::MostrandoInstrucciones);
                 return FaseNivel::Activa;
-            } else if constexpr (std::is_same_v<T, Comando::Salir>) {
+            } else if CASE (Comando::Salir) {
                 return FaseNivel::Saliendo;
-            } else if constexpr (std::is_same_v<T, Comando::Reiniciar>) {
+            } else if CASE (Comando::Reiniciar) {
                 return FaseNivel::Reiniciando;
-            } else if constexpr (std::is_same_v<T, Comando::AlternarGrid>) {
+            } else if CASE (Comando::AlternarGrid) {
                 assert(MODO_DESARROLLO);
                 estado.mostrando_grid = !estado.mostrando_grid;
                 return std::nullopt;
-            } else if constexpr (std::is_same_v<T, Comando::Encargar>) {
+            } else if CASE (Comando::Encargar) {
                 assert(estado.fase_actual == FaseNivel::Activa);
                 auto encargo = EncargoACocina(
                     variante.tp, GestorTiempoJuego::obtener_tiempo_juego()
                 );
                 estado.encargos.anadir(encargo);
                 return std::nullopt;
-            } else if constexpr (std::is_same_v<T, Comando::Despachar>) {
+            } else if CASE (Comando::Despachar) {
                 assert(estado.fase_actual == FaseNivel::Activa);
                 estado.control_pizzas.procesar_despacho(variante.tp);
                 if (!estado.control_pizzas.faltan_pedidos_por_cubrir()) {
@@ -139,6 +140,7 @@ std::optional<FaseNivel> Nivel::procesa_click(
         com.value().comando
     );
 }
+#undef CASE
 
 /* Procesa un cambio de fase reciente */
 std::optional<AccionGeneral> Nivel::procesa_cambio_de_fase(
