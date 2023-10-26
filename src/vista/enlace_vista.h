@@ -2,7 +2,11 @@
 
 #include <memory>
 
+struct Estado;
 struct Vista;
+namespace sf {
+    class RenderWindow;
+}
 
 /* Debe ser un intermediario entre el modelo y la vista */
 struct EnlaceVista {
@@ -15,4 +19,8 @@ struct EnlaceVista {
     void on_cambio_a_fase_activa() const;
     void on_cambio_a_fase_espera_antes_de_resultado() const;
     void esconder_paneles() const;
+    void actualizarIU(
+        sf::RenderWindow &ventana, //
+        const Estado &estado       //
+    ) const;
 };

@@ -11,3 +11,9 @@ void EnlaceVista::on_cambio_a_fase_espera_antes_de_resultado() const {
 void EnlaceVista::esconder_paneles() const {
     vista->paneles_completos.visible = false;
 }
+void EnlaceVista::actualizarIU(
+    sf::RenderWindow &ventana, //
+    const Estado &estado       //
+) const {
+    vista->actualizarIU(ventana, estado);
+}
