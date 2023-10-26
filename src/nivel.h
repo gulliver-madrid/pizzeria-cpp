@@ -9,6 +9,7 @@ struct BotonesApp;
 struct EnlaceVista;
 struct Estado;
 struct Globales;
+struct ControladorClicks;
 
 enum class AccionGeneral { SiguienteNivel, Reiniciar, Salir };
 
@@ -25,11 +26,6 @@ struct Nivel {
         Timer &timer_espera_antes_de_resultado, //
         FaseNivel fase_previa                   //
     );
-    std::optional<FaseNivel> procesa_click(
-        const BotonesApp &,           //
-        Estado &,                     //
-        const sf::Vector2i &mouse_pos //
-    );
     EnlaceVista crear_enlace_vista(
         const modelo::ControlPizzas &control_pizzas, //
         std::optional<int> objetivo_estatico         //
@@ -41,6 +37,7 @@ struct Nivel {
     const NumNivel &num_nivel;
     Grid &grid;
     const bool es_el_ultimo;
+    std::shared_ptr<ControladorClicks> controlador_clicks;
 
     Nivel(
         Globales &,         //

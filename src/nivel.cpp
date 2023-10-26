@@ -49,6 +49,27 @@ struct Realizador {
     }
 };
 
+struct ControladorClicks {
+  private:
+    std::optional<Comando> ControladorClicks::genera_comando(
+        const std::function<bool(const BotonConTexto &boton)> &pulsado, //
+        const BotonesApp &,                                             //
+        const FaseNivel fase_actual                                     //
+    );
+    std::optional<FaseNivel> aplica_comando( //
+        Estado &estado,                      //
+        const Comando &comando
+    );
+
+  public:
+    std::optional<FaseNivel> procesa_click(
+        Globales &,                   //
+        const BotonesApp &,           //
+        Estado &,                     //
+        const sf::Vector2i &mouse_pos //
+    );
+};
+
 Nivel::Nivel(
     Globales &globales,            //
     const DatosNivel &datos_nivel, //
@@ -57,11 +78,13 @@ Nivel::Nivel(
     bool es_el_ultimo              //
 )
     : globales(globales), datos_nivel(datos_nivel), num_nivel(num_nivel),
-      grid(grid), es_el_ultimo(es_el_ultimo) {}
+      grid(grid), es_el_ultimo(es_el_ultimo) {
+    controlador_clicks = std::shared_ptr<ControladorClicks>();
+}
 
 /*
- * Incluye toda la lógica para procesar un evento. Devuelve la nueva fase, en
- * caso de que debiera cambiar.
+ * Incluye toda la lógica para procesar un evento. Devuelve la nueva fase,
+ * en caso de que debiera cambiar.
  */
 std::optional<FaseNivel> Nivel::procesarEvento(
     sf::Event evento, const BotonesApp &botones, Estado &estado
@@ -85,7 +108,9 @@ std::optional<FaseNivel> Nivel::procesarEvento(
         case sf::Event::MouseButtonPressed:
             {
                 const sf::Vector2i mouse_pos = sf::Mouse::getPosition(ventana);
-                siguiente_fase = procesa_click(botones, estado, mouse_pos);
+                siguiente_fase = controlador_clicks->procesa_click(
+                    globales, botones, estado, mouse_pos
+                );
             }
             break;
         default:
@@ -95,7 +120,7 @@ std::optional<FaseNivel> Nivel::procesarEvento(
     return siguiente_fase;
 };
 
-std::optional<Comando> genera_comando(
+std::optional<Comando> ControladorClicks::genera_comando(
     const std::function<bool(const BotonConTexto &boton)> &pulsado, //
     const BotonesApp &botones,                                      //
     const FaseNivel fase_actual                                     //
@@ -142,7 +167,11 @@ std::optional<Comando> genera_comando(
         return accion;                                                         \
     }
 /* Aplica un comando y devuelve la nueva fase, si correspondiera cambiar */
-std::optional<FaseNivel> aplica_comando(Estado &estado, Comando comando) {
+std::optional<FaseNivel> ControladorClicks::aplica_comando( //
+    Estado &estado,                                         //
+    const Comando &comando                                  //
+
+) {
     return std::visit(
         [&estado](auto &&variante) -> std::optional<FaseNivel> {
             Realizador realizador{estado};
@@ -161,11 +190,15 @@ std::optional<FaseNivel> aplica_comando(Estado &estado, Comando comando) {
 #undef SWITCH
 #undef CASE
 
-std::optional<FaseNivel> Nivel::procesa_click(
-    const BotonesApp &botones, Estado &estado, const sf::Vector2i &mouse_pos
+std::optional<FaseNivel> ControladorClicks::procesa_click(
+    Globales &globales,           //
+    const BotonesApp &botones,    //
+    Estado &estado,               //
+    const sf::Vector2i &mouse_pos //
+
 ) {
-    const auto pulsado = [this, &mouse_pos](const BotonConTexto &boton) {
-        return this->globales.detecta_colision(boton, mouse_pos);
+    const auto pulsado = [&globales, &mouse_pos](const BotonConTexto &boton) {
+        return globales.detecta_colision(boton, mouse_pos);
     };
     std::optional<Comando> comando = genera_comando( //
         pulsado, botones, estado.fase_actual
@@ -289,6 +322,7 @@ AccionGeneral Nivel::ejecutar() {
                 return accion.value();
             }
         }
+        // Evalua la preparacion de las pizzas
         int total_preparadas = estado.control_pizzas.obtener_total_preparadas();
         if (total_preparadas < modelo_info::MAXIMO_PIZZAS_PREPARADAS) {
             int maximo =
@@ -300,7 +334,7 @@ AccionGeneral Nivel::ejecutar() {
             );
         }
 
-        // En función de la fase actual (no necesariamente reciente)
+        // En funcion de la fase actual (no necesariamente recien iniciada)
         switch (estado.fase_actual) {
             case FaseNivel::EsperaAntesDeResultado:
                 if (timer_espera_antes_de_resultado.termino()) {
