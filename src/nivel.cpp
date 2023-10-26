@@ -133,9 +133,11 @@ std::optional<Comando> genera_comando(
     return std::nullopt;
 }
 
-#define CASE(type) constexpr(std::is_same_v<T, type>)
-#define HANDLE(comando, accion)                                                \
-    else if CASE (Comando::comando) {                                          \
+#define SWITCH()                                                               \
+    if (false) {                                                               \
+    }
+#define CASE(comando, accion)                                                  \
+    else if constexpr (std::is_same_v<T, Comando::comando>) {                  \
         return accion;                                                         \
     }
 std::optional<FaseNivel> aplica_comando(Estado &estado, Comando com) {
@@ -143,19 +145,19 @@ std::optional<FaseNivel> aplica_comando(Estado &estado, Comando com) {
         [&estado](auto &&variante) -> std::optional<FaseNivel> {
             using T = std::decay_t<decltype(variante)>;
             Realizador realizador{estado};
-            if (false) {
-            }
-            HANDLE(Empezar, realizador.empezar())
-            HANDLE(Salir, FaseNivel::Saliendo)
-            HANDLE(Reiniciar, FaseNivel::Reiniciando)
-            HANDLE(AlternarGrid, realizador.alternar_grid())
-            HANDLE(Encargar, realizador.encargar_pizza(variante.tp))
-            HANDLE(Despachar, realizador.despachar_pizza(variante.tp))
+            SWITCH()
+            CASE(Empezar, realizador.empezar())
+            CASE(Salir, FaseNivel::Saliendo)
+            CASE(Reiniciar, FaseNivel::Reiniciando)
+            CASE(AlternarGrid, realizador.alternar_grid())
+            CASE(Encargar, realizador.encargar_pizza(variante.tp))
+            CASE(Despachar, realizador.despachar_pizza(variante.tp))
             return std::nullopt;
         },
         com.comando
     );
 }
+#undef SWITCH
 #undef CASE
 
 std::optional<FaseNivel> Nivel::procesa_click(
