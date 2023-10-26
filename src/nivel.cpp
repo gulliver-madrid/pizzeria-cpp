@@ -1,9 +1,11 @@
 #include "nivel.h"
 #include "estado_nivel.h"
 #include "tiempo.h"
+#include "vista/enlace_vista.h"
 #include "vista/vista.h"
 #include <SFML/Window.hpp>
 #include <cassert>
+#include <memory>
 
 Nivel::Nivel(
     Globales &globales,            //
@@ -168,18 +170,26 @@ AccionGeneral Nivel::ejecutar() {
     if (datos_nivel.es_estatico.valor) {
         objetivo_estatico = control_pizzas.obtener_objetivo_total_estatico();
     }
-    Vista vista(
-        datos_nivel.es_estatico,               //
-        globales.font,                         //
-        grid,                                  //
-        control_pizzas.get_tipos_disponibles() //
-    );
 
-    vista.setup(
-        datos_nivel.instrucciones, //
-        num_nivel,                 //
-        objetivo_estatico          //
-    );
+    std::shared_ptr<Vista> vista_ptr_temp;
+    {
+        Vista *vista = new Vista(
+            datos_nivel.es_estatico,               //
+            globales.font,                         //
+            grid,                                  //
+            control_pizzas.get_tipos_disponibles() //
+        );
+
+        vista->setup(
+            datos_nivel.instrucciones, //
+            num_nivel,                 //
+            objetivo_estatico          //
+        );
+        vista_ptr_temp = std::shared_ptr<Vista>(vista);
+    }
+
+    EnlaceVista enlace_vista(vista_ptr_temp);
+    vista_ptr_temp = nullptr;
 
     Timer timer_espera_antes_de_resultado;
     Timer timer_fin_nivel;
@@ -190,7 +200,8 @@ AccionGeneral Nivel::ejecutar() {
     while (globales.window.isOpen()) {
         sf::Event event;
         while (globales.window.pollEvent(event)) {
-            auto siguiente_fase = procesarEvento(event, vista.botones, estado);
+            auto siguiente_fase =
+                procesarEvento(event, enlace_vista.vista->botones, estado);
             // Cambio de fase reciente
             if (!siguiente_fase.has_value()) {
                 continue;
@@ -199,7 +210,7 @@ AccionGeneral Nivel::ejecutar() {
             estado.fase_actual = siguiente_fase.value();
             const auto accion = procesa_cambio_de_fase(
                 estado.fase_actual,              //
-                vista,                           //
+                *(enlace_vista.vista),           //
                 timer_espera_antes_de_resultado, //
                 fase_previa                      //
             );
@@ -223,7 +234,8 @@ AccionGeneral Nivel::ejecutar() {
             case FaseNivel::EsperaAntesDeResultado:
                 if (timer_espera_antes_de_resultado.termino()) {
                     mostrar_resultado(
-                        globales, estado, vista, timer_fin_nivel, sound
+                        globales, estado, *(enlace_vista.vista),
+                        timer_fin_nivel, sound
                     );
                 }
                 break;
@@ -234,7 +246,7 @@ AccionGeneral Nivel::ejecutar() {
                 break;
         }
 
-        vista.actualizarIU(globales.window, estado);
+        enlace_vista.vista->actualizarIU(globales.window, estado);
     }
     assert(false); // No deberiamos llegar aqui
     return AccionGeneral::Salir;

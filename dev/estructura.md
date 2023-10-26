@@ -50,6 +50,7 @@
     - nivel.h (def)
     - estado_nivel.h (def)
     - tiempo.h (def)
+    - vista/enlace_vista.h (hoja)
     - vista/vista.h
         - vista/botones_app.h
             - vista/componentes/boton_con_texto.h
