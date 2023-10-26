@@ -55,7 +55,7 @@ std::optional<FaseNivel> Nivel::procesarEvento(
 };
 
 std::optional<Comando> genera_comando(
-    Nivel &nivel, const BotonesApp &botones, Estado &estado,
+    Nivel &nivel, const BotonesApp &botones, const Estado &estado,
     const sf::Vector2i &mouse_pos
 ) {
     const auto pulsado = [&nivel, &mouse_pos](const BotonConTexto &boton) {
@@ -98,15 +98,7 @@ std::optional<Comando> genera_comando(
 }
 
 #define CASE(type) constexpr(std::is_same_v<T, type>)
-std::optional<FaseNivel> Nivel::procesa_click(
-    const BotonesApp &botones, Estado &estado, const sf::Vector2i &mouse_pos
-) {
-    std::optional<Comando> com =
-        genera_comando(*this, botones, estado, mouse_pos);
-    // Manejamos el comando
-    if (!com) {
-        return std::nullopt;
-    }
+std::optional<FaseNivel> aplica_comando(Estado &estado, Comando com) {
     return std::visit(
         [&estado](auto &&variante) -> std::optional<FaseNivel> {
             using T = std::decay_t<decltype(variante)>;
@@ -137,10 +129,22 @@ std::optional<FaseNivel> Nivel::procesa_click(
                 return std::nullopt;
             }
         },
-        com.value().comando
+        com.comando
     );
 }
 #undef CASE
+
+std::optional<FaseNivel> Nivel::procesa_click(
+    const BotonesApp &botones, Estado &estado, const sf::Vector2i &mouse_pos
+) {
+    std::optional<Comando> com = genera_comando( //
+        *this, botones, estado, mouse_pos
+    );
+    if (!com) {
+        return std::nullopt;
+    }
+    return aplica_comando(estado, com.value());
+}
 
 /* Procesa un cambio de fase reciente */
 std::optional<AccionGeneral> Nivel::procesa_cambio_de_fase(
