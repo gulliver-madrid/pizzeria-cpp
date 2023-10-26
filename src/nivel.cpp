@@ -68,6 +68,7 @@ std::optional<FaseNivel> Nivel::procesa_click(
     } else if (pulsado(botones.generales.alternar_grid)) {
         assert(MODO_DESARROLLO);
         estado.mostrando_grid = !estado.mostrando_grid;
+        return std::nullopt;
     }
     // Dependientes del estado
     switch (estado.fase_actual) {
@@ -78,9 +79,9 @@ std::optional<FaseNivel> Nivel::procesa_click(
             break;
         case FaseNivel::Activa:
             {
+                auto &control_pizzas = estado.control_pizzas;
                 const auto tipos_pizza_disponibles =
-                    estado.control_pizzas.get_tipos_disponibles();
-                bool despacho = false;
+                    control_pizzas.get_tipos_disponibles();
                 for (const auto tp : tipos_pizza_disponibles) {
                     if (pulsado(botones.encargar.at(tp))) {
                         auto encargo = EncargoACocina(
@@ -90,14 +91,12 @@ std::optional<FaseNivel> Nivel::procesa_click(
                         return std::nullopt;
                     }
                     if (pulsado(botones.despachar.at(tp))) {
-                        estado.control_pizzas.procesar_despacho(tp);
-                        despacho = true;
+                        control_pizzas.procesar_despacho(tp);
+                        if (!control_pizzas.faltan_pedidos_por_cubrir()) {
+                            return FaseNivel::EsperaAntesDeResultado;
+                        }
                         break;
                     }
-                }
-                if (despacho &&
-                    !estado.control_pizzas.faltan_pedidos_por_cubrir()) {
-                    return FaseNivel::EsperaAntesDeResultado;
                 }
             }
             break;
