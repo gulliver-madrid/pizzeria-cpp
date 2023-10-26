@@ -12,6 +12,19 @@ void actualizar_etiquetas(
     const Estado &estado                     //
 );
 
+Vista::Vista(
+    const EsSistemaEstatico &es_estatico,      //
+    const sf::Font &font,                      //
+    Grid &grid,                                //
+    const modelo::TiposDePizza &tp_disponibles //
+)
+    : botones(font, tp_disponibles), //
+      paneles_completos(font),       //
+      etiquetas(es_estatico, font),  //
+      grid(grid),                    //
+      font(font),                    //
+      tp_disponibles(tp_disponibles) {}
+
 void Vista::setup(
     const std::string &instrucciones,          //
     const NumNivel &num_nivel,                 //

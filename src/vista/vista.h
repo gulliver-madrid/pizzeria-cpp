@@ -7,8 +7,8 @@
 struct Estado;
 struct Grid;
 
-struct Vista {
-  private:
+class Vista {
+
     const sf::Font &font;
     const modelo::TiposDePizza &tp_disponibles;
     void actualizar_paneles(
@@ -28,13 +28,7 @@ struct Vista {
         const sf::Font &font,                      //
         Grid &grid,                                //
         const modelo::TiposDePizza &tp_disponibles //
-    )
-        : botones(font, tp_disponibles), //
-          paneles_completos(font),       //
-          etiquetas(es_estatico, font),  //
-          grid(grid),                    //
-          font(font),                    //
-          tp_disponibles(tp_disponibles) {}
+    );
 
     void setup(
         const std::string &instrucciones,          //
