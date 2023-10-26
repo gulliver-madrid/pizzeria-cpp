@@ -43,6 +43,10 @@ struct Realizador {
         estado.mostrando_grid = !estado.mostrando_grid;
         return std::nullopt;
     }
+    NuevaFase empezar() {
+        assert(estado.fase_actual == FaseNivel::MostrandoInstrucciones);
+        return FaseNivel::Activa;
+    }
 };
 
 Nivel::Nivel(
@@ -130,25 +134,23 @@ std::optional<Comando> genera_comando(
 }
 
 #define CASE(type) constexpr(std::is_same_v<T, type>)
+#define HANDLE(comando, accion)                                                \
+    else if CASE (Comando::comando) {                                          \
+        return accion;                                                         \
+    }
 std::optional<FaseNivel> aplica_comando(Estado &estado, Comando com) {
     return std::visit(
         [&estado](auto &&variante) -> std::optional<FaseNivel> {
             using T = std::decay_t<decltype(variante)>;
             Realizador realizador{estado};
-            if CASE (Comando::Empezar) {
-                assert(estado.fase_actual == FaseNivel::MostrandoInstrucciones);
-                return FaseNivel::Activa;
-            } else if CASE (Comando::Salir) {
-                return FaseNivel::Saliendo;
-            } else if CASE (Comando::Reiniciar) {
-                return FaseNivel::Reiniciando;
-            } else if CASE (Comando::AlternarGrid) {
-                return realizador.alternar_grid();
-            } else if CASE (Comando::Encargar) {
-                return realizador.encargar_pizza(variante.tp);
-            } else if CASE (Comando::Despachar) {
-                return realizador.despachar_pizza(variante.tp);
+            if (false) {
             }
+            HANDLE(Empezar, realizador.empezar())
+            HANDLE(Salir, FaseNivel::Saliendo)
+            HANDLE(Reiniciar, FaseNivel::Reiniciando)
+            HANDLE(AlternarGrid, realizador.alternar_grid())
+            HANDLE(Encargar, realizador.encargar_pizza(variante.tp))
+            HANDLE(Despachar, realizador.despachar_pizza(variante.tp))
             return std::nullopt;
         },
         com.comando
