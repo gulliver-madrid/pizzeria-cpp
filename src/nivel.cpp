@@ -9,6 +9,42 @@
 #include <functional>
 #include <memory>
 
+struct Realizador {
+    using NuevaFase = std::optional<FaseNivel>;
+    Estado &estado;
+    /* Encarga una pizza a la cocina del tipo indicado */
+    NuevaFase encargar_pizza( //
+        const modelo::TipoPizza tp
+    ) {
+        assert(estado.fase_actual == FaseNivel::Activa);
+        auto encargo = EncargoACocina( //
+            tp, GestorTiempoJuego::obtener_tiempo_juego()
+        );
+        estado.encargos.anadir(encargo);
+        return std::nullopt;
+    }
+
+    /*
+     * Despacha una pizza a losclientes del tipo indicado. Devuelve la nueva
+     * fase si corresponde.
+     */
+    NuevaFase despachar_pizza( //
+        const modelo::TipoPizza tp
+    ) {
+        assert(estado.fase_actual == FaseNivel::Activa);
+        estado.control_pizzas.procesar_despacho(tp);
+        if (!estado.control_pizzas.faltan_pedidos_por_cubrir()) {
+            return FaseNivel::EsperaAntesDeResultado;
+        }
+        return std::nullopt;
+    }
+    NuevaFase alternar_grid() {
+        assert(MODO_DESARROLLO);
+        estado.mostrando_grid = !estado.mostrando_grid;
+        return std::nullopt;
+    }
+};
+
 Nivel::Nivel(
     Globales &globales,            //
     const DatosNivel &datos_nivel, //
@@ -98,6 +134,7 @@ std::optional<FaseNivel> aplica_comando(Estado &estado, Comando com) {
     return std::visit(
         [&estado](auto &&variante) -> std::optional<FaseNivel> {
             using T = std::decay_t<decltype(variante)>;
+            Realizador realizador{estado};
             if CASE (Comando::Empezar) {
                 assert(estado.fase_actual == FaseNivel::MostrandoInstrucciones);
                 return FaseNivel::Activa;
@@ -106,24 +143,13 @@ std::optional<FaseNivel> aplica_comando(Estado &estado, Comando com) {
             } else if CASE (Comando::Reiniciar) {
                 return FaseNivel::Reiniciando;
             } else if CASE (Comando::AlternarGrid) {
-                assert(MODO_DESARROLLO);
-                estado.mostrando_grid = !estado.mostrando_grid;
-                return std::nullopt;
+                return realizador.alternar_grid();
             } else if CASE (Comando::Encargar) {
-                assert(estado.fase_actual == FaseNivel::Activa);
-                auto encargo = EncargoACocina(
-                    variante.tp, GestorTiempoJuego::obtener_tiempo_juego()
-                );
-                estado.encargos.anadir(encargo);
-                return std::nullopt;
+                return realizador.encargar_pizza(variante.tp);
             } else if CASE (Comando::Despachar) {
-                assert(estado.fase_actual == FaseNivel::Activa);
-                estado.control_pizzas.procesar_despacho(variante.tp);
-                if (!estado.control_pizzas.faltan_pedidos_por_cubrir()) {
-                    return FaseNivel::EsperaAntesDeResultado;
-                }
-                return std::nullopt;
+                return realizador.despachar_pizza(variante.tp);
             }
+            return std::nullopt;
         },
         com.comando
     );
