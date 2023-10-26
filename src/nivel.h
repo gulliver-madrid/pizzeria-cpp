@@ -5,10 +5,10 @@
 #include "shared.h"
 #include "vista/grid.h"
 
-struct Globales;
 struct BotonesApp;
+struct EnlaceVista;
 struct Estado;
-struct Vista;
+struct Globales;
 
 enum class AccionGeneral { SiguienteNivel, Reiniciar, Salir };
 
@@ -21,7 +21,7 @@ struct Nivel {
     );
     std::optional<AccionGeneral> procesa_cambio_de_fase(
         FaseNivel nueva_fase,                   //
-        Vista &vista,                           //
+        const EnlaceVista &enlace_vista,        //
         Timer &timer_espera_antes_de_resultado, //
         FaseNivel fase_previa                   //
     );

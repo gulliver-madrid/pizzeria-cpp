@@ -46,6 +46,6 @@ struct Vista {
         sf::RenderWindow &ventana, //
         const Estado &estado       //
     );
-    void on_cambio_a_fase_activa();
-    void on_cambio_a_fase_espera_antes_de_resultado();
+    void mostrar_elementos_fase_activa();
+    void esconder_botones_gestion_pizzeria();
 };

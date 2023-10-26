@@ -60,13 +60,13 @@ void Vista::actualizarIU(      //
     ventana.display();
 }
 
-void Vista::on_cambio_a_fase_activa() {
+void Vista::mostrar_elementos_fase_activa() {
     botones.empezar.visible = false;
     botones.mostrar_botones_nivel(true);
     paneles_completos.visible = true;
 }
 
-void Vista::on_cambio_a_fase_espera_antes_de_resultado() {
+void Vista::esconder_botones_gestion_pizzeria() { //
     botones.mostrar_botones_nivel(false);
 }
 

@@ -40,6 +40,7 @@ add_executable(pizzeria
     src/vista/componentes/boton_con_texto.cpp
     src/vista/componentes/botones.cpp
     src/vista/componentes/varios.cpp
+    src/vista/enlace_vista.cpp
     src/vista/etiquetas/etiquetas.cpp
     src/vista/etiquetas/etiquetas_barra_estado.cpp
     src/vista/etiquetas/etiquetas_contadores.cpp

@@ -110,7 +110,7 @@ std::optional<FaseNivel> Nivel::procesa_click(
 /* Procesa un cambio de fase reciente */
 std::optional<AccionGeneral> Nivel::procesa_cambio_de_fase(
     FaseNivel nueva_fase,                   //
-    Vista &vista,                           //
+    const EnlaceVista &enlace_vista,        //
     Timer &timer_espera_antes_de_resultado, //
     FaseNivel fase_previa                   //
 ) {
@@ -119,7 +119,7 @@ std::optional<AccionGeneral> Nivel::procesa_cambio_de_fase(
         case FaseNivel::Activa:
             assert(fase_previa == FaseNivel::MostrandoInstrucciones);
             GestorTiempoJuego::activar();
-            vista.on_cambio_a_fase_activa();
+            enlace_vista.on_cambio_a_fase_activa();
             break;
         case FaseNivel::EsperaAntesDeResultado:
             assert(fase_previa == FaseNivel::Activa);
@@ -127,7 +127,7 @@ std::optional<AccionGeneral> Nivel::procesa_cambio_de_fase(
             timer_espera_antes_de_resultado.start(
                 tiempos::RETARDO_ANTES_DE_RESULTADO
             );
-            vista.on_cambio_a_fase_espera_antes_de_resultado();
+            enlace_vista.on_cambio_a_fase_espera_antes_de_resultado();
             break;
         case FaseNivel::Reiniciando:
             posible_accion = AccionGeneral::Reiniciar;
@@ -210,7 +210,7 @@ AccionGeneral Nivel::ejecutar() {
             estado.fase_actual = siguiente_fase.value();
             const auto accion = procesa_cambio_de_fase(
                 estado.fase_actual,              //
-                *(enlace_vista.vista),           //
+                enlace_vista,                    //
                 timer_espera_antes_de_resultado, //
                 fase_previa                      //
             );

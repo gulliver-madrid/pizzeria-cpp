@@ -104,6 +104,10 @@
     - vista/componentes/botones.h (def)
     - vista/componentes/varios.h (hoja)
 
+- vista/enlace_vista.cpp
+    - vista/enlace_vista.h (hoja)
+    - vista/vista.h (def)
+
 - vista/etiquetas/etiquetas.cpp
     - vista/etiquetas/etiquetas.h (def)
     - vista/basicos_vista.h (hoja)
