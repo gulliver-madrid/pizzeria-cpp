@@ -159,6 +159,27 @@ void mostrar_resultado(
     enlace_vista.esconder_paneles();
 }
 
+EnlaceVista Nivel::crear_enlace_vista(
+    const modelo::ControlPizzas &control_pizzas, //
+    std::optional<int> objetivo_estatico         //
+) {
+
+    Vista *vista = new Vista(
+        datos_nivel.es_estatico,               //
+        globales.font,                         //
+        grid,                                  //
+        control_pizzas.get_tipos_disponibles() //
+    );
+
+    vista->setup(
+        datos_nivel.instrucciones, //
+        num_nivel,                 //
+        objetivo_estatico          //
+    );
+
+    return EnlaceVista(std::shared_ptr<Vista>(vista));
+}
+
 AccionGeneral Nivel::ejecutar() {
     std::optional<int> objetivo_estatico; // Solo se define en estaticos
     modelo::ControlPizzas control_pizzas = {
@@ -171,25 +192,9 @@ AccionGeneral Nivel::ejecutar() {
         objetivo_estatico = control_pizzas.obtener_objetivo_total_estatico();
     }
 
-    std::shared_ptr<Vista> vista_ptr_temp;
-    {
-        Vista *vista = new Vista(
-            datos_nivel.es_estatico,               //
-            globales.font,                         //
-            grid,                                  //
-            control_pizzas.get_tipos_disponibles() //
-        );
-
-        vista->setup(
-            datos_nivel.instrucciones, //
-            num_nivel,                 //
-            objetivo_estatico          //
-        );
-        vista_ptr_temp = std::shared_ptr<Vista>(vista);
-    }
-
-    EnlaceVista enlace_vista(vista_ptr_temp);
-    vista_ptr_temp = nullptr;
+    const auto enlace_vista = crear_enlace_vista( //
+        control_pizzas, objetivo_estatico
+    );
 
     Timer timer_espera_antes_de_resultado;
     Timer timer_fin_nivel;

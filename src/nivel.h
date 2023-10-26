@@ -30,6 +30,10 @@ struct Nivel {
         Estado &,                     //
         const sf::Vector2i &mouse_pos //
     );
+    EnlaceVista crear_enlace_vista(
+        const modelo::ControlPizzas &control_pizzas, //
+        std::optional<int> objetivo_estatico         //
+    );
 
   public:
     Globales &globales;
