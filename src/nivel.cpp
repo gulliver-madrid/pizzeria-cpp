@@ -317,6 +317,7 @@ AccionGeneral Nivel::ejecutar() {
         }
 
         enlace_vista.actualizarIU(globales.window, estado);
+        globales.window.display();
     }
     assert(false); // No deberiamos llegar aqui
     return AccionGeneral::Salir;

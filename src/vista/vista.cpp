@@ -69,8 +69,6 @@ void Vista::actualizarIU(      //
     actualizar_etiquetas(ventana, etiquetas, estado);
 
     botones.dibujar(ventana);
-
-    ventana.display();
 }
 
 void Vista::mostrar_elementos_fase_activa() {
