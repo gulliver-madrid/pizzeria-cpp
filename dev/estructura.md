@@ -123,7 +123,7 @@
 - vista/etiquetas/etiquetas_barra_estado.cpp
     - vista/etiquetas/etiquetas_barra_estado.h (hoja)
     - tiempo.h (def)
-    - vista/basicos_vista.h (def)
+    - vista/basicos_vista.h (hoja)
     - vista/cadenas.h (def)
     - vista/componentes/varios.h (hoja)
 
