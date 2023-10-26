@@ -163,21 +163,18 @@ EnlaceVista Nivel::crear_enlace_vista(
     const modelo::ControlPizzas &control_pizzas, //
     std::optional<int> objetivo_estatico         //
 ) {
-
-    Vista *vista = new Vista(
+    const auto vista_ptr = std::make_shared<Vista>(
         datos_nivel.es_estatico,               //
         globales.font,                         //
         grid,                                  //
         control_pizzas.get_tipos_disponibles() //
     );
-
-    vista->setup(
+    vista_ptr->setup(
         datos_nivel.instrucciones, //
         num_nivel,                 //
         objetivo_estatico          //
     );
-
-    return EnlaceVista(std::shared_ptr<Vista>(vista));
+    return EnlaceVista(vista_ptr);
 }
 
 AccionGeneral Nivel::ejecutar() {
