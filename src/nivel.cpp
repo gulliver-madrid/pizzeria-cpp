@@ -6,6 +6,7 @@
 #include "vista/vista.h"
 #include <SFML/Window.hpp>
 #include <cassert>
+#include <functional>
 #include <memory>
 
 Nivel::Nivel(
@@ -55,13 +56,10 @@ std::optional<FaseNivel> Nivel::procesarEvento(
 };
 
 std::optional<Comando> genera_comando(
-    Nivel &nivel, const BotonesApp &botones, const Estado &estado,
-    const sf::Vector2i &mouse_pos
+    const std::function<bool(const BotonConTexto &boton)> &pulsado, //
+    const BotonesApp &botones,                                      //
+    const FaseNivel fase_actual                                     //
 ) {
-    const auto pulsado = [&nivel, &mouse_pos](const BotonConTexto &boton) {
-        return nivel.globales.detecta_colision(boton, mouse_pos);
-    };
-
     // Fijos
     if (pulsado(botones.generales.salir)) {
         return Comando::Salir{};
@@ -70,24 +68,22 @@ std::optional<Comando> genera_comando(
     } else if (pulsado(botones.generales.alternar_grid)) {
         return Comando::AlternarGrid{};
     }
-    // Dependientes del estado
-    switch (estado.fase_actual) {
+    // Dependientes de la fase
+    switch (fase_actual) {
         case FaseNivel::MostrandoInstrucciones:
             if (pulsado(botones.empezar)) {
                 return Comando::Empezar{};
             }
             break;
         case FaseNivel::Activa:
-            {
-                const auto tipos_pizza_disponibles =
-                    estado.control_pizzas.get_tipos_disponibles();
-                for (const auto tp : tipos_pizza_disponibles) {
-                    if (pulsado(botones.encargar.at(tp))) {
-                        return Comando::Encargar{tp};
-                    }
-                    if (pulsado(botones.despachar.at(tp))) {
-                        return Comando::Despachar{tp};
-                    }
+            for (const auto &[tp, boton] : botones.encargar) {
+                if (pulsado(boton)) {
+                    return Comando::Encargar{tp};
+                }
+            }
+            for (const auto &[tp, boton] : botones.despachar) {
+                if (pulsado(boton)) {
+                    return Comando::Despachar{tp};
                 }
             }
             break;
@@ -137,8 +133,11 @@ std::optional<FaseNivel> aplica_comando(Estado &estado, Comando com) {
 std::optional<FaseNivel> Nivel::procesa_click(
     const BotonesApp &botones, Estado &estado, const sf::Vector2i &mouse_pos
 ) {
+    const auto pulsado = [this, &mouse_pos](const BotonConTexto &boton) {
+        return this->globales.detecta_colision(boton, mouse_pos);
+    };
     std::optional<Comando> com = genera_comando( //
-        *this, botones, estado, mouse_pos
+        pulsado, botones, estado.fase_actual
     );
     if (!com) {
         return std::nullopt;
