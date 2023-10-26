@@ -44,10 +44,12 @@
     - modelo/encargos.h
         - tiempo.h (def)
         - modelo/encargos.cpp (hoja)
-            - modelo/dominio.h (def)
+            - modelo/dominio.h (hoja)
 
 - nivel.cpp
     - nivel.h (def)
+    - comandos.h
+        - modelo/dominio.h (hoja)
     - estado_nivel.h (def)
     - tiempo.h (def)
     - vista/enlace_vista.h (hoja)
@@ -85,7 +87,7 @@
     - vista/basicos_vista.h (hoja)
 
 - vista/botones_app.cpp
-    - modelo/dominio.h
+    - modelo/dominio.h (hoja)
     - vista/componentes/botones.h
         - vista/componentes/boton_con_texto.h (def)
     - vista/componentes/varios.h (hoja)
@@ -152,7 +154,7 @@
 
 - vista/presentador.cpp
     - vista/presentador.h (hoja)
-    - modelo/dominio.h (def)
+    - modelo/dominio.h (hoja)
     - modelo/modelo.h (def)
 
 - vista/vista.cpp

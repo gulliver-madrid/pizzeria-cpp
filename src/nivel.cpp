@@ -1,4 +1,5 @@
 #include "nivel.h"
+#include "comandos.h"
 #include "estado_nivel.h"
 #include "tiempo.h"
 #include "vista/enlace_vista.h"
@@ -53,49 +54,39 @@ std::optional<FaseNivel> Nivel::procesarEvento(
     return siguiente_fase;
 };
 
-std::optional<FaseNivel> Nivel::procesa_click(
-    const BotonesApp &botones, Estado &estado, const sf::Vector2i &mouse_pos
+std::optional<Comando> genera_comando(
+    Nivel &nivel, const BotonesApp &botones, Estado &estado,
+    const sf::Vector2i &mouse_pos
 ) {
-    const auto pulsado = [this, &mouse_pos](const BotonConTexto &boton) {
-        return this->globales.detecta_colision(boton, mouse_pos);
+    const auto pulsado = [&nivel, &mouse_pos](const BotonConTexto &boton) {
+        return nivel.globales.detecta_colision(boton, mouse_pos);
     };
 
     // Fijos
     if (pulsado(botones.generales.salir)) {
-        return FaseNivel::Saliendo;
+        return Comando::Salir{};
     } else if (pulsado(botones.generales.reiniciar)) {
-        return FaseNivel::Reiniciando;
+        return Comando::Reiniciar{};
     } else if (pulsado(botones.generales.alternar_grid)) {
-        assert(MODO_DESARROLLO);
-        estado.mostrando_grid = !estado.mostrando_grid;
-        return std::nullopt;
+        return Comando::AlternarGrid{};
     }
     // Dependientes del estado
     switch (estado.fase_actual) {
         case FaseNivel::MostrandoInstrucciones:
             if (pulsado(botones.empezar)) {
-                return FaseNivel::Activa;
+                return Comando::Empezar{};
             }
             break;
         case FaseNivel::Activa:
             {
-                auto &control_pizzas = estado.control_pizzas;
                 const auto tipos_pizza_disponibles =
-                    control_pizzas.get_tipos_disponibles();
+                    estado.control_pizzas.get_tipos_disponibles();
                 for (const auto tp : tipos_pizza_disponibles) {
                     if (pulsado(botones.encargar.at(tp))) {
-                        auto encargo = EncargoACocina(
-                            tp, GestorTiempoJuego::obtener_tiempo_juego()
-                        );
-                        estado.encargos.anadir(encargo);
-                        return std::nullopt;
+                        return Comando::Encargar{tp};
                     }
                     if (pulsado(botones.despachar.at(tp))) {
-                        control_pizzas.procesar_despacho(tp);
-                        if (!control_pizzas.faltan_pedidos_por_cubrir()) {
-                            return FaseNivel::EsperaAntesDeResultado;
-                        }
-                        break;
+                        return Comando::Despachar{tp};
                     }
                 }
             }
@@ -104,6 +95,49 @@ std::optional<FaseNivel> Nivel::procesa_click(
             break;
     }
     return std::nullopt;
+}
+
+std::optional<FaseNivel> Nivel::procesa_click(
+    const BotonesApp &botones, Estado &estado, const sf::Vector2i &mouse_pos
+) {
+    std::optional<Comando> com =
+        genera_comando(*this, botones, estado, mouse_pos);
+    // Manejamos el comando
+    if (!com) {
+        return std::nullopt;
+    }
+    return std::visit(
+        [&estado](auto &&variante) -> std::optional<FaseNivel> {
+            using T = std::decay_t<decltype(variante)>;
+            if constexpr (std::is_same_v<T, Comando::Empezar>) {
+                assert(estado.fase_actual == FaseNivel::MostrandoInstrucciones);
+                return FaseNivel::Activa;
+            } else if constexpr (std::is_same_v<T, Comando::Salir>) {
+                return FaseNivel::Saliendo;
+            } else if constexpr (std::is_same_v<T, Comando::Reiniciar>) {
+                return FaseNivel::Reiniciando;
+            } else if constexpr (std::is_same_v<T, Comando::AlternarGrid>) {
+                assert(MODO_DESARROLLO);
+                estado.mostrando_grid = !estado.mostrando_grid;
+                return std::nullopt;
+            } else if constexpr (std::is_same_v<T, Comando::Encargar>) {
+                assert(estado.fase_actual == FaseNivel::Activa);
+                auto encargo = EncargoACocina(
+                    variante.tp, GestorTiempoJuego::obtener_tiempo_juego()
+                );
+                estado.encargos.anadir(encargo);
+                return std::nullopt;
+            } else if constexpr (std::is_same_v<T, Comando::Despachar>) {
+                assert(estado.fase_actual == FaseNivel::Activa);
+                estado.control_pizzas.procesar_despacho(variante.tp);
+                if (!estado.control_pizzas.faltan_pedidos_por_cubrir()) {
+                    return FaseNivel::EsperaAntesDeResultado;
+                }
+                return std::nullopt;
+            }
+        },
+        com.value().comando
+    );
 }
 
 /* Procesa un cambio de fase reciente */
