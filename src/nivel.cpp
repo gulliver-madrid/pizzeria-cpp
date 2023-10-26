@@ -143,11 +143,11 @@ std::optional<AccionGeneral> Nivel::procesa_cambio_de_fase(
 }
 
 void mostrar_resultado(
-    const Globales &globales, //
-    Estado &estado,           //
-    Vista &vista,             //
-    Timer &timer_fin_nivel,   //
-    sf::Sound &sound          //
+    const Globales &globales,        //
+    Estado &estado,                  //
+    const EnlaceVista &enlace_vista, //
+    Timer &timer_fin_nivel,          //
+    sf::Sound &sound                 //
 ) {
     // Pasa a fase MostrandoResultado
     estado.fase_actual = FaseNivel::MostrandoResultado;
@@ -156,7 +156,7 @@ void mostrar_resultado(
         sound.play();
     }
     timer_fin_nivel.start(tiempos::ESPERA_ENTRE_NIVELES);
-    vista.paneles_completos.visible = false;
+    enlace_vista.esconder_paneles();
 }
 
 AccionGeneral Nivel::ejecutar() {
@@ -234,8 +234,7 @@ AccionGeneral Nivel::ejecutar() {
             case FaseNivel::EsperaAntesDeResultado:
                 if (timer_espera_antes_de_resultado.termino()) {
                     mostrar_resultado(
-                        globales, estado, *(enlace_vista.vista),
-                        timer_fin_nivel, sound
+                        globales, estado, enlace_vista, timer_fin_nivel, sound
                     );
                 }
                 break;
