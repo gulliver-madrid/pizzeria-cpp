@@ -8,14 +8,32 @@
 #include <cassert>
 #include <functional>
 #include <memory>
+#include <optional>
 
-struct Realizador {
+class RealizadorBase {
+  public:
     using NuevaFase = std::optional<FaseNivel>;
+
+    virtual ~RealizadorBase() = default; // Destructor virtual
+
+    // Métodos virtuales puros
+    virtual NuevaFase encargar_pizza(const modelo::TipoPizza tp) = 0;
+    virtual NuevaFase despachar_pizza(const modelo::TipoPizza tp) = 0;
+    virtual NuevaFase alternar_grid() = 0;
+    virtual NuevaFase empezar() = 0;
+};
+
+class Realizador : public RealizadorBase {
+  private:
     Estado &estado;
+
+  public:
+    Realizador(Estado &estado) : estado(estado) {}
     /* Encarga una pizza a la cocina del tipo indicado */
     NuevaFase encargar_pizza( //
         const modelo::TipoPizza tp
     ) {
+        std::cout << "Llamando a encargar" << std::endl;
         assert(estado.fase_actual == FaseNivel::Activa);
         auto encargo = EncargoACocina( //
             tp, GestorTiempoJuego::obtener_tiempo_juego()
@@ -25,7 +43,7 @@ struct Realizador {
     }
 
     /*
-     * Despacha una pizza a losclientes del tipo indicado. Devuelve la nueva
+     * Despacha una pizza a los clientes del tipo indicado. Devuelve la nueva
      * fase si corresponde.
      */
     NuevaFase despachar_pizza( //
@@ -56,16 +74,17 @@ struct ControladorClicks {
         const BotonesApp &,                                             //
         const FaseNivel fase_actual                                     //
     );
-    std::optional<FaseNivel> aplica_comando( //
-        Estado &estado,                      //
-        const Comando &comando
+    std::optional<FaseNivel> aplica_comando(
+        RealizadorBase &realizador, //
+        const Comando &comando      //
     );
 
   public:
     std::optional<FaseNivel> procesa_click(
         Globales &,                   //
         const BotonesApp &,           //
-        Estado &,                     //
+        const Estado &,               //
+        RealizadorBase &,             //
         const sf::Vector2i &mouse_pos //
     );
 };
@@ -107,9 +126,10 @@ std::optional<FaseNivel> Nivel::procesarEvento(
             break;
         case sf::Event::MouseButtonPressed:
             {
+                Realizador realizador{estado};
                 const sf::Vector2i mouse_pos = sf::Mouse::getPosition(ventana);
                 siguiente_fase = controlador_clicks->procesa_click(
-                    globales, botones, estado, mouse_pos
+                    globales, botones, estado, realizador, mouse_pos
                 );
             }
             break;
@@ -168,13 +188,12 @@ std::optional<Comando> ControladorClicks::genera_comando(
     }
 /* Aplica un comando y devuelve la nueva fase, si correspondiera cambiar */
 std::optional<FaseNivel> ControladorClicks::aplica_comando( //
-    Estado &estado,                                         //
+    RealizadorBase &realizador,                             //
     const Comando &comando                                  //
 
 ) {
     return std::visit(
-        [&estado](auto &&variante) -> std::optional<FaseNivel> {
-            Realizador realizador{estado};
+        [&realizador](auto &&variante) -> std::optional<FaseNivel> {
             SWITCH(variante)
             CASE(Empezar, realizador.empezar())
             CASE(Salir, FaseNivel::Saliendo)
@@ -193,7 +212,8 @@ std::optional<FaseNivel> ControladorClicks::aplica_comando( //
 std::optional<FaseNivel> ControladorClicks::procesa_click(
     Globales &globales,           //
     const BotonesApp &botones,    //
-    Estado &estado,               //
+    const Estado &estado,         //
+    RealizadorBase &realizador,   //
     const sf::Vector2i &mouse_pos //
 
 ) {
@@ -206,7 +226,7 @@ std::optional<FaseNivel> ControladorClicks::procesa_click(
     if (!comando) {
         return std::nullopt;
     }
-    return aplica_comando(estado, comando.value());
+    return aplica_comando(realizador, comando.value());
 }
 
 /* Procesa un cambio de fase reciente */
