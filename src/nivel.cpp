@@ -133,19 +133,20 @@ std::optional<Comando> genera_comando(
     return std::nullopt;
 }
 
-#define SWITCH()                                                               \
-    if (false) {                                                               \
+#define SWITCH(variante)                                                       \
+    using T = std::decay_t<decltype(variante)>;                                \
+    if (false) { /* Para inicializar los bloques if else */                    \
     }
 #define CASE(comando, accion)                                                  \
     else if constexpr (std::is_same_v<T, Comando::comando>) {                  \
         return accion;                                                         \
     }
-std::optional<FaseNivel> aplica_comando(Estado &estado, Comando com) {
+/* Aplica un comando y devuelve la nueva fase, si correspondiera cambiar */
+std::optional<FaseNivel> aplica_comando(Estado &estado, Comando comando) {
     return std::visit(
         [&estado](auto &&variante) -> std::optional<FaseNivel> {
-            using T = std::decay_t<decltype(variante)>;
             Realizador realizador{estado};
-            SWITCH()
+            SWITCH(variante)
             CASE(Empezar, realizador.empezar())
             CASE(Salir, FaseNivel::Saliendo)
             CASE(Reiniciar, FaseNivel::Reiniciando)
@@ -154,7 +155,7 @@ std::optional<FaseNivel> aplica_comando(Estado &estado, Comando com) {
             CASE(Despachar, realizador.despachar_pizza(variante.tp))
             return std::nullopt;
         },
-        com.comando
+        comando.variante
     );
 }
 #undef SWITCH
@@ -166,13 +167,13 @@ std::optional<FaseNivel> Nivel::procesa_click(
     const auto pulsado = [this, &mouse_pos](const BotonConTexto &boton) {
         return this->globales.detecta_colision(boton, mouse_pos);
     };
-    std::optional<Comando> com = genera_comando( //
+    std::optional<Comando> comando = genera_comando( //
         pulsado, botones, estado.fase_actual
     );
-    if (!com) {
+    if (!comando) {
         return std::nullopt;
     }
-    return aplica_comando(estado, com.value());
+    return aplica_comando(estado, comando.value());
 }
 
 /* Procesa un cambio de fase reciente */

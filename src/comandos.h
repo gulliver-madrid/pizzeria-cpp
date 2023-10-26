@@ -18,12 +18,12 @@ class Comando {
 
     using ComandoVar = std::variant<
         Empezar, Salir, AlternarGrid, Reiniciar, Encargar, Despachar>;
-    ComandoVar comando;
+    ComandoVar variante;
 
-    Comando(Empezar cmd) : comando(cmd) {}
-    Comando(Salir cmd) : comando(cmd) {}
-    Comando(AlternarGrid cmd) : comando(cmd) {}
-    Comando(Reiniciar cmd) : comando(cmd) {}
-    Comando(Encargar cmd) : comando(cmd) {}
-    Comando(Despachar cmd) : comando(cmd) {}
+    Comando(Empezar cmd) : variante(cmd) {}
+    Comando(Salir cmd) : variante(cmd) {}
+    Comando(AlternarGrid cmd) : variante(cmd) {}
+    Comando(Reiniciar cmd) : variante(cmd) {}
+    Comando(Encargar cmd) : variante(cmd) {}
+    Comando(Despachar cmd) : variante(cmd) {}
 };
