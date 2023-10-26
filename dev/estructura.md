@@ -63,8 +63,6 @@
             - vista/barras_progreso.h
                 - vista/componentes/barra_progreso.h (hoja)
             - vista/componentes/varios.h (hoja)
-    - vista/paneles.h (def)
-    - vista/vista_data.h (hoja)
 
 - setup_juego.cpp
     - setup_juego.h (def)

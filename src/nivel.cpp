@@ -1,9 +1,7 @@
 #include "nivel.h"
 #include "estado_nivel.h"
 #include "tiempo.h"
-#include "vista/paneles.h"
 #include "vista/vista.h"
-#include "vista/vista_data.h"
 #include <SFML/Window.hpp>
 #include <cassert>
 
