@@ -1,7 +1,15 @@
 # Estructura del proyecto (nuevo sistema)
 
 - main.cpp
-    - juego.h
+    - juego.h (hoja)
+
+- controlador_clicks.cpp
+    - controlador_clicks.h (hoja)
+    - comandos.h (def)
+    - estado_nivel.h (def)
+    - globales.h (def)
+    - realizador_base.h (def)
+    - vista/botones_app.h (def)
 
 - datos_niveles.cpp
     - datos_niveles.h (def)
