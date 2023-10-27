@@ -55,7 +55,7 @@ namespace {
      */
     TipoPizzaToBoton _crear_botones_encargar(
         const sf::Font &font,                      //
-        const modelo::TiposDePizza &tp_disponibles //
+        const dominio::TiposDePizza &tp_disponibles //
     ) {
         // Constantes para definir la posicion de cada boton
         const sf::Vector2f pos_panel = basicos_vista::obtener_posicion_panel( //
@@ -68,7 +68,7 @@ namespace {
             pos_panel + pos_inicial_relativa_al_panel;
 
         // Lambda para crear boton data
-        const auto crear_boton_data = [](modelo::TipoPizza tp) {
+        const auto crear_boton_data = [](dominio::TipoPizza tp) {
             const std::string pizza_str = tipo_pizza_to_string.at(tp);
             return BotonData{
                 pizza_str,                        //
@@ -93,7 +93,7 @@ namespace {
 
     TipoPizzaToBoton _crear_botones_despachar(
         const sf::Font &font,                      //
-        const modelo::TiposDePizza &tp_disponibles //
+        const dominio::TiposDePizza &tp_disponibles //
     ) {
         TipoPizzaToBoton botones;
         const double escala_botones = 0.7;
@@ -186,7 +186,7 @@ void BotonesApp::_establecer_todos() {
 
 /* Crea todos los botones */
 BotonesApp::BotonesApp(
-    const sf::Font &font, const modelo::TiposDePizza &tp_disponibles
+    const sf::Font &font, const dominio::TiposDePizza &tp_disponibles
 )
     : empezar(_crear_boton_empezar(font)),
       generales(_crear_botones_generales(font)),

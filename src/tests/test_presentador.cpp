@@ -3,7 +3,7 @@
 #include "../vista/presentador.h"
 #include <gtest/gtest.h>
 
-using modelo::TipoPizza;
+using dominio::TipoPizza;
 
 TEST(Presentador, LineaCompletitudPizza) {
     auto result =

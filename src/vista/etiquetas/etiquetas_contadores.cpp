@@ -19,7 +19,7 @@ EtiquetasContadores::EtiquetasContadores(
 )
     : es_estatico(es_estatico), font(font) {}
 
-void EtiquetasContadores::setup(const modelo::TiposDePizza &tp_disponibles) {
+void EtiquetasContadores::setup(const dominio::TiposDePizza &tp_disponibles) {
     FabricaEtiquetasContadores fabrica(font);
     int i = 0;
     for (auto tp : tp_disponibles) {

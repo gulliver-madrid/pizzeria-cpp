@@ -5,6 +5,7 @@
 
 int demo_prueba() {
     using namespace modelo;
+    using namespace dominio;
     try {
         std::map<TipoPizza, PedidoTipoPizza> contenido(
             {{TipoPizza::Margarita, {2, 5}}, {TipoPizza::Pepperoni, {1, 4}}}

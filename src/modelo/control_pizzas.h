@@ -13,15 +13,15 @@ namespace modelo {
      */
     struct ControlPizzas {
       private:
-        TiposDePizza _tipos_disponibles;
+        dominio::TiposDePizza _tipos_disponibles;
 
       public:
         PizzasAContadores contadores;
         Pedidos pedidos;
         const EsSistemaEstatico &es_estatico;
         ControlPizzas(Pedidos pedidos_, const EsSistemaEstatico &es_estatico);
-        const TiposDePizza &get_tipos_disponibles() const;
-        void procesar_despacho(const TipoPizza tp);
+        const dominio::TiposDePizza &get_tipos_disponibles() const;
+        void procesar_despacho(const dominio::TipoPizza tp);
         int obtener_total_preparadas() const;
         int obtener_objetivo_total_estatico() const;
         bool faltan_pedidos_por_cubrir() const;

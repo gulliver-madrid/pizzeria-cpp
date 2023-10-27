@@ -7,7 +7,7 @@ namespace modelo {
     enum class TipoPizza;
 }
 
-using TipoPizzaToBoton = std::map<modelo::TipoPizza, BotonConTexto>;
+using TipoPizzaToBoton = std::map<dominio::TipoPizza, BotonConTexto>;
 
 struct BotonesGenerales {
     BotonConTexto alternar_grid;
@@ -28,7 +28,7 @@ struct BotonesApp {
     BotonesGenerales generales;
 
     BotonesApp(
-        const sf::Font &font, const modelo::TiposDePizza &tp_disponibles
+        const sf::Font &font, const dominio::TiposDePizza &tp_disponibles
     );
     void dibujar(sf::RenderWindow &ventana) const;
     void mostrar_botones_nivel(bool nuevo_valor);

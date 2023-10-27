@@ -35,10 +35,10 @@ struct EtiquetasGenerales {
     ~EtiquetasGenerales();
 
     void setup(
-        const std::string &instr,                   //
-        const NumNivel &,                           //
-        const modelo::TiposDePizza &tp_disponibles, //
-        const std::optional<int> objetivo_estatico  //
+        const std::string &instr,                    //
+        const NumNivel &,                            //
+        const dominio::TiposDePizza &tp_disponibles, //
+        const std::optional<int> objetivo_estatico   //
     );
 
     void actualizar_y_dibujar_contadores(

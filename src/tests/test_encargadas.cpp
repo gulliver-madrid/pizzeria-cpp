@@ -4,7 +4,7 @@
 #include <cassert>
 #include <gtest/gtest.h>
 
-using modelo::TipoPizza;
+using dominio::TipoPizza;
 
 TEST(Encargadas, EncargadasDelTipoConVectorVacio) {
     Encargos encargos;

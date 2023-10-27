@@ -1,7 +1,7 @@
 #include "encargos.h"
 #include "dominio.h"
 
-using modelo::TipoPizza;
+using dominio::TipoPizza;
 
 // En segundos
 const std::map<TipoPizza, TiempoJuego> tiempos_preparacion = {

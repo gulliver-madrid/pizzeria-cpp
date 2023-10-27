@@ -32,10 +32,10 @@ EtiquetasGenerales::EtiquetasGenerales(
 EtiquetasGenerales::~EtiquetasGenerales() = default;
 
 void EtiquetasGenerales::setup(
-    const std::string &instr,                   //
-    const NumNivel &num_nivel,                  //
-    const modelo::TiposDePizza &tp_disponibles, //
-    const std::optional<int> objetivo_estatico  //
+    const std::string &instr,                    //
+    const NumNivel &num_nivel,                   //
+    const dominio::TiposDePizza &tp_disponibles, //
+    const std::optional<int> objetivo_estatico   //
 ) {
     info->setup(instr, num_nivel, objetivo_estatico);
     contadores->setup(tp_disponibles);

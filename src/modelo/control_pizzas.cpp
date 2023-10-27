@@ -20,7 +20,7 @@ ControlPizzas::ControlPizzas(
     }
 }
 
-const modelo::TiposDePizza & //
+const dominio::TiposDePizza & //
 ControlPizzas::get_tipos_disponibles() const {
     return _tipos_disponibles;
 }
@@ -29,7 +29,7 @@ ControlPizzas::get_tipos_disponibles() const {
  * Procesa el despacho de una pizza de tipo tp, incorporandola al primer
  * pedido disponible y evaluando si ya esta completo.
  */
-void ControlPizzas::procesar_despacho(const TipoPizza tp) {
+void ControlPizzas::procesar_despacho(const dominio::TipoPizza tp) {
     auto &contador = contadores.at(tp);
     assert(contador.preparadas > 0);
     contador.preparadas--;

@@ -24,7 +24,7 @@ class Realizador : public RealizadorBase {
     Realizador(Estado &estado) : estado(estado) {}
     /* Encarga una pizza a la cocina del tipo indicado */
     NuevaFase encargar_pizza( //
-        const modelo::TipoPizza tp
+        const dominio::TipoPizza tp
     ) {
         std::cout << "Llamando a encargar" << std::endl;
         assert(estado.fase_actual == FaseNivel::Activa);
@@ -40,7 +40,7 @@ class Realizador : public RealizadorBase {
      * fase si corresponde.
      */
     NuevaFase despachar_pizza( //
-        const modelo::TipoPizza tp
+        const dominio::TipoPizza tp
     ) {
         assert(estado.fase_actual == FaseNivel::Activa);
         estado.control_pizzas.procesar_despacho(tp);

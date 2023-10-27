@@ -3,7 +3,7 @@
 #include <gtest/gtest.h>
 
 using modelo::PizzasAContadores;
-using modelo::TipoPizza;
+using dominio::TipoPizza;
 
 TEST(EvaluarPreparacion, NoHayPizzasEncargadas) {
     // No hay pizzas encargadas

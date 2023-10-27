@@ -5,7 +5,7 @@
 
 namespace presentador {
     std::string crea_linea_completitud_pizza(
-        const modelo::TipoPizza tp, int parte, int todo
+        const dominio::TipoPizza tp, int parte, int todo
     ) {
         const auto nombre_pizza = tipo_pizza_to_string.at(tp);
         std::string s = (           //
@@ -17,7 +17,7 @@ namespace presentador {
         return s;
     }
 
-    /* Crea una string representando un pedido. Una línea por tipo de pizza, con
+    /* Crea una string representando un pedido. Una linea por tipo de pizza, con
      * el formato TipoPizza: actual/objetivo
      */
     std::string pedido_to_string(const Pedido &pedido) {

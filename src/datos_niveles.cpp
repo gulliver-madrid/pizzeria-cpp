@@ -3,7 +3,7 @@
 #include "textos.h"
 
 using modelo::Pedidos;
-using modelo::TipoPizza;
+using dominio::TipoPizza;
 
 const auto dinamicos =
     Pedidos{ //

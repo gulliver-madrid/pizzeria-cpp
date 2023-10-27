@@ -10,10 +10,10 @@ class Comando {
     struct AlternarGrid {};
     struct Reiniciar {};
     struct Encargar {
-        modelo::TipoPizza tp;
+        dominio::TipoPizza tp;
     };
     struct Despachar {
-        modelo::TipoPizza tp;
+        dominio::TipoPizza tp;
     };
 
     using ComandoVar = std::variant<

@@ -10,7 +10,7 @@ struct Grid;
 class Vista {
 
     const sf::Font &font;
-    const modelo::TiposDePizza &tp_disponibles;
+    const dominio::TiposDePizza &tp_disponibles;
     void actualizar_paneles(
         sf::RenderWindow &ventana,           //
         PanelesCompletos &paneles_completos, //
@@ -24,10 +24,10 @@ class Vista {
     Grid &grid;
 
     Vista(
-        const EsSistemaEstatico &es_estatico,      //
-        const sf::Font &font,                      //
-        Grid &grid,                                //
-        const modelo::TiposDePizza &tp_disponibles //
+        const EsSistemaEstatico &es_estatico,       //
+        const sf::Font &font,                       //
+        Grid &grid,                                 //
+        const dominio::TiposDePizza &tp_disponibles //
     );
 
     void setup(

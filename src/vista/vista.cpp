@@ -14,10 +14,10 @@ void actualizar_etiquetas(
 );
 
 Vista::Vista(
-    const EsSistemaEstatico &es_estatico,      //
-    const sf::Font &font,                      //
-    Grid &grid,                                //
-    const modelo::TiposDePizza &tp_disponibles //
+    const EsSistemaEstatico &es_estatico,       //
+    const sf::Font &font,                       //
+    Grid &grid,                                 //
+    const dominio::TiposDePizza &tp_disponibles //
 )
     : botones(font, tp_disponibles), //
       paneles_completos(font),       //

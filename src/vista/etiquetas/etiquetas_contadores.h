@@ -5,7 +5,7 @@
 #include <SFML/Graphics.hpp>
 
 struct EtiquetasContadores {
-    using TipoPizza = modelo::TipoPizza;
+    using TipoPizza = dominio::TipoPizza;
 
   private:
     const sf::Font &font;
@@ -23,7 +23,7 @@ struct EtiquetasContadores {
     std::map<TipoPizza, sf::Text> etiquetas_servidas;
     std::vector<sf::Text> etiquetas_pedidos;
     EtiquetasContadores(const EsSistemaEstatico &, const sf::Font &);
-    void setup(const modelo::TiposDePizza &tp_disponibles);
+    void setup(const dominio::TiposDePizza &tp_disponibles);
     void actualizar(
         const modelo::PizzasAContadores &, //
         const modelo::Pedidos &            //

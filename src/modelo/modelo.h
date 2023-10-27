@@ -17,7 +17,7 @@ struct Contadores {
 };
 
 namespace modelo {
-    using PizzasAContadores = std::map<TipoPizza, Contadores>;
+    using PizzasAContadores = std::map<dominio::TipoPizza, Contadores>;
 }
 
 namespace debug {
@@ -32,7 +32,7 @@ struct PedidoTipoPizza {
     PedidoTipoPizza(int servido, int objetivo);
 };
 
-using ContenidoPedido = std::map<modelo::TipoPizza, PedidoTipoPizza>;
+using ContenidoPedido = std::map<dominio::TipoPizza, PedidoTipoPizza>;
 
 /* Pedido completo, puede incluir varios tipos de pizza */
 struct Pedido {
