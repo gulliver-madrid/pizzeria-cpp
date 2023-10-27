@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../../general.h"
+#include "../../modelo/control_pizzas.h"
 #include <SFML/Graphics.hpp>
 
 struct EtiquetasContadores {

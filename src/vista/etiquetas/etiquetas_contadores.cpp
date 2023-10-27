@@ -1,4 +1,6 @@
 #include "etiquetas_contadores.h"
+#include "../../modelo/modelo.h"
+#include "../../shared.h"
 #include "../basicos_vista.h"
 #include "../componentes/varios.h"
 #include "../presentador.h"

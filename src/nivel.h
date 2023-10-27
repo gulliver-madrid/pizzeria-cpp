@@ -1,15 +1,18 @@
 #pragma once
 
-#include "general.h"
+#include "datos_nivel.h"
 #include "globales.h"
 #include "shared.h"
+#include "tiempo.h"
 #include "vista/grid.h"
+#include <memory>
 
 struct BotonesApp;
 struct EnlaceVista;
 struct Estado;
 struct Globales;
 struct ControladorClicks;
+enum class FaseNivel;
 
 enum class AccionGeneral { SiguienteNivel, Reiniciar, Salir };
 

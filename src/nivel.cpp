@@ -1,6 +1,7 @@
 #include "nivel.h"
 #include "controlador_clicks.h"
 #include "estado_nivel.h"
+#include "general.h"
 #include "realizador_base.h"
 #include "tiempo.h"
 #include "vista/enlace_vista.h"
@@ -9,6 +10,11 @@
 #include <functional>
 #include <memory>
 #include <optional>
+
+namespace tiempos {
+    const auto RETARDO_ANTES_DE_RESULTADO = Tiempo::desde_segundos(2.5);
+    const auto ESPERA_ENTRE_NIVELES = Tiempo::desde_segundos(2);
+} // namespace tiempos
 
 class Realizador : public RealizadorBase {
   private:

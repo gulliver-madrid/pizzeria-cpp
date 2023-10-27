@@ -1,7 +1,5 @@
 #pragma once
 
-#include "modelo/control_pizzas.h"
-#include "tiempo.h"
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 
@@ -10,11 +8,6 @@ namespace modelo_info {
     const auto MAXIMO_PIZZAS_PREPARADAS = 4;
 } // namespace modelo_info
 
-namespace tiempos {
-    const auto RETARDO_ANTES_DE_RESULTADO = Tiempo::desde_segundos(2.5);
-    const auto ESPERA_ENTRE_NIVELES = Tiempo::desde_segundos(2);
-} // namespace tiempos
-
 enum class FaseNivel {
     MostrandoInstrucciones,
     Activa,
@@ -22,17 +15,4 @@ enum class FaseNivel {
     MostrandoResultado,
     Reiniciando,
     Saliendo
-};
-
-/* Guarda la información relativa al nivel */
-struct DatosNivel {
-    std::string instrucciones;
-    modelo::Pedidos pedidos;
-    const EsSistemaEstatico es_estatico;
-    DatosNivel(
-        std::string instrucciones, modelo::Pedidos pedidos,
-        bool es_estatico = false
-    )
-        : instrucciones(instrucciones), pedidos(pedidos),
-          es_estatico(EsSistemaEstatico(es_estatico)) {}
 };

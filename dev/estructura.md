@@ -5,21 +5,18 @@
 
 - controlador_clicks.cpp
     - controlador_clicks.h (hoja)
-    - comandos.h (def)
+    - comandos.h
+        - modelo/dominio.h (hoja)
     - estado_nivel.h (def)
     - general.h (hoja)
     - globales.h (hoja)
-    - realizador_base.h (def)
+    - realizador_base.h (hoja)
     - vista/botones_app.h (def)
 
 - datos_niveles.cpp
     - datos_niveles.h (def)
-        - general.h
-            - modelo/control_pizzas.h
-                - shared.h (hoja)
-                - modelo/modelo.h
-                    - modelo/dominio.h (hoja)
-            - tiempo.h (def)
+        - datos_nivel.h
+            - modelo/control_pizzas.h (def)
     - setup_juego.h (hoja)
     - textos.h
         - textos.cpp
@@ -28,7 +25,7 @@
 - estado_nivel.cpp
     - estado_nivel.h
         - modelo/encargos.h (def)
-    - general.h (def)
+    - general.h (hoja)
 
 - globales.cpp
     - globales.h (hoja)
@@ -39,14 +36,20 @@
     - datos_niveles.h (def)
     - globales.h (hoja)
     - nivel.h
-        - general.h (def)
-        - vista/grid.h
+        - datos_nivel.h (def)
+        - globales.h (hoja)
+        - shared.h (hoja)
+        - tiempo.h (def)
+        - vista/grid.h (hoja)
     - setup_juego.h (hoja)
     - textos.h (def)
-    - vista/grid.h (def)
+    - vista/grid.h (hoja)
 
 - modelo/control_pizzas.cpp
-    - modelo/control_pizzas.h (hoja)
+    - modelo/control_pizzas.h
+          - shared.h (hoja)
+          - modelo/modelo.h
+              - modelo/dominio.h (hoja)
 
 - modelo/dominio.cpp
     - modelo/dominio.h (hoja)
@@ -63,9 +66,10 @@
 
 - nivel.cpp
     - nivel.h (def)
-    - comandos.h
-        - modelo/dominio.h (hoja)
+    - controlador_clicks.h (hoja)
     - estado_nivel.h (def)
+    - general.h (hoja)
+    - realizador_base.h (hoja)
     - tiempo.h (def)
     - vista/enlace_vista.h (hoja)
     - vista/vista.h
@@ -74,7 +78,8 @@
                 - vista/componentes/boton_data.h (hoja)
             - modelo/dominio.h (hoja)
         - vista/etiquetas.h
-            - general.h (def)
+            - modelo/control_pizzas.h (def)
+            - modelo/modelo.h (def)
             - shared.h (hoja)
         - vista/paneles.h
             - modelo/modelo.h (def)
@@ -131,8 +136,7 @@
     - vista/cadenas.h (hoja)
     - vista/componentes/varios.h (hoja)
     - vista/etiquetas/etiquetas_barra_estado.h (hoja)
-    - vista/etiquetas/etiquetas_contadores.h
-        - general.h (def)
+    - vista/etiquetas/etiquetas_contadores.h (def)
     - vista/etiquetas/etiquetas_info.h
         - shared.h (hoja)
     - vista/etiquetas/fabrica_etiquetas.h
@@ -145,9 +149,14 @@
     - vista/componentes/varios.h (hoja)
 
 - vista/etiquetas/etiquetas_contadores.cpp
+    - vista/etiquetas/etiquetas_contadores.h
+        - general.h (hoja)
+        - modelo/control_pizzas.h (def)
+    - modelo/modelo.h (def)
+    - shared.h (hoja)
+    - vista/basicos_vista.h (hoja)
     - vista/componentes/varios.h (hoja)
     - vista/presentador.h (hoja)
-    - vista/basicos_vista.h (hoja)
     - vista/etiquetas/fabrica_etiquetas_contadores.h (hoja)
 
 - vista/etiquetas/etiquetas_info.cpp
@@ -175,8 +184,9 @@
 - vista/vista.cpp
     - vista/vista.h (def)
     - estado_nivel.h (def)
+    - general.h (hoja)
     - vista/basicos_vista.h (hoja)
-    - vista/grid.h (def)
+    - vista/grid.h (hoja)
     - vista/vista_data.h (hoja)
 
 

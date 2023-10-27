@@ -1,15 +1,18 @@
 #pragma once
 
-#include "../../general.h"
+#include "../../modelo/control_pizzas.h"
+#include "../../modelo/modelo.h"
 #include "../../shared.h"
 #include <SFML/Graphics.hpp>
 #include <memory>
-
-struct Globales;
+#include <optional>
 
 struct EtiquetasBarraEstado;
 struct EtiquetasContadores;
 struct EtiquetasInfo;
+struct Globales;
+struct Tiempo;
+struct TiempoJuego;
 
 ///////////////////////////////////////////
 // EtiquetasGenerales
