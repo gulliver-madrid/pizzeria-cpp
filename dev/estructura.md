@@ -1,4 +1,4 @@
-# Estructura del proyecto (nuevo sistema)
+# Estructura del proyecto
 
 - main.cpp
     - juego.h (hoja)
@@ -7,7 +7,8 @@
     - controlador_clicks.h (hoja)
     - comandos.h (def)
     - estado_nivel.h (def)
-    - globales.h (def)
+    - general.h (hoja)
+    - globales.h (hoja)
     - realizador_base.h (def)
     - vista/botones_app.h (def)
 
@@ -19,24 +20,28 @@
                 - modelo/modelo.h
                     - modelo/dominio.h (hoja)
             - tiempo.h (def)
-    - setup_juego.h
-        - general.h (def)
+    - setup_juego.h (hoja)
     - textos.h
         - textos.cpp
             - vista/cadenas.h (hoja)
 
+- estado_nivel.cpp
+    - estado_nivel.h
+        - modelo/encargos.h (def)
+    - general.h (def)
+
 - globales.cpp
-    - globales.h
-        - vista/componentes/boton_con_texto.h (def)
+    - globales.h (hoja)
+    - vista/componentes/boton_con_texto.h (def)
 
 - juego.cpp
     - juego.h
     - datos_niveles.h (def)
-    - globales.h (def)
+    - globales.h (hoja)
     - nivel.h
         - general.h (def)
         - vista/grid.h
-    - setup_juego.h (def)
+    - setup_juego.h (hoja)
     - textos.h (def)
     - vista/grid.h (def)
 
@@ -46,13 +51,15 @@
 - modelo/dominio.cpp
     - modelo/dominio.h (hoja)
 
-- modelo/modelo.cpp
-    - tiempo.h
-        - templates.h (hoja)
+- modelo/encargos.cpp (hoja)
     - modelo/encargos.h
-        - tiempo.h (def)
-        - modelo/encargos.cpp (hoja)
-            - modelo/dominio.h (hoja)
+        - tiempo.h
+            - templates.h (hoja)
+    - modelo/dominio.h (hoja)
+
+- modelo/modelo.cpp
+    - modelo/modelo.h (def)
+    - modelo/encargos.h (def)
 
 - nivel.cpp
     - nivel.h (def)
@@ -76,7 +83,7 @@
             - vista/componentes/varios.h (hoja)
 
 - setup_juego.cpp
-    - setup_juego.h (def)
+    - setup_juego.h (hoja)
     - vista/cadenas.h (hoja)
     - globales.h (hoja)
     - paths.h (hoja)
@@ -167,9 +174,7 @@
 
 - vista/vista.cpp
     - vista/vista.h (def)
-    - estado_nivel.h
-        - general.h (def)
-        - modelo/encargos.h (def)
+    - estado_nivel.h (def)
     - vista/basicos_vista.h (hoja)
     - vista/grid.h (def)
     - vista/vista_data.h (hoja)
@@ -177,7 +182,7 @@
 
 ## Leyenda
 (def) Dependencias definidas en otro lugar
-(hoja) Nodo hoja (sin dependencias internas)
+(hoja) Nodo hoja (sin dependencias dentro del proyecto)
 
 ## Criterios
 - Se mantiene el orden de los includes en el código fuente.

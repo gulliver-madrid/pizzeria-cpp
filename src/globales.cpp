@@ -1,4 +1,5 @@
 #include "globales.h"
+#include "vista/componentes/boton_con_texto.h"
 
 bool Globales::detecta_colision(
     const BotonConTexto &boton, const sf::Vector2i &mouse_pos

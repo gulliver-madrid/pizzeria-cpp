@@ -1,10 +1,11 @@
 #pragma once
 
-#include "vista/componentes/boton_con_texto.h"
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <optional>
+
+struct BotonConTexto;
 
 struct Globales {
   private:

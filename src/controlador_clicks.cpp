@@ -1,6 +1,7 @@
 #include "controlador_clicks.h"
 #include "comandos.h"
 #include "estado_nivel.h"
+#include "general.h"
 #include "globales.h"
 #include "realizador_base.h"
 #include "vista/botones_app.h"

@@ -1,5 +1,4 @@
 #include "modelo.h"
-#include "../tiempo.h"
 #include "encargos.h"
 #include <cassert>
 #include <iostream>
