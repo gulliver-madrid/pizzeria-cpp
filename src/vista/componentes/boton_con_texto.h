@@ -8,16 +8,23 @@
 
 class BotonConTexto : public Componente {
   private:
+    struct Posicionamiento {
+        sf::FloatRect rect_padre;
+        sf::Vector2f posicion_relativa;
+        Align alineamiento = Align::Left;
+
+        std::pair<sf::Vector2f, sf::Vector2f> calcular_posicion_absoluta(
+            const double escala, const float forma_width
+        );
+    };
+
     static size_t proximo_id;
     std::optional<size_t> _id;
     bool activo = true;
     sf::RectangleShape forma;
     sf::Text etiqueta;
+    Posicionamiento posicionamiento;
     double escala = 1;
-    sf::FloatRect _rect_padre;
-    sf::Vector2f _posicion_relativa;
-    Align _alineamiento = Align::Left;
-
     void asignar_id();
     void _calcular_posicion_absoluta();
 
@@ -43,7 +50,7 @@ class BotonConTexto : public Componente {
     /* Establece la posicion relativa */
     void establecerPosicion(
         const sf::Vector2f &posicion, //
-        const Align align = Align::Left
+        Align align = Align::Left
     );
     bool colisiona(const sf::Vector2i &mousePos) const;
     void dibujar(sf::RenderWindow &window);

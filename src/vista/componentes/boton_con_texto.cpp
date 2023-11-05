@@ -18,30 +18,43 @@ void BotonConTexto::asignar_id() {
         _id = proximo_id++;
     }
 }
+std::pair<sf::Vector2f, sf::Vector2f>
+BotonConTexto::Posicionamiento::calcular_posicion_absoluta(
+    const double escala, const float forma_width
+) {
+    const sf::Vector2f posicion = posicion_relativa;
+    const Align align = alineamiento;
+    const int margen = medidas::MARGEN_BOTON * (escala * escala);
+    int x;
+    if (align == Align::Left) {
+        x = rect_padre.left + posicion.x;
+    } else {
+        assert(align == Align::Right);
+        // Aqui la posicion relativa se refiere desde el lado derecho del padre
+        x = rect_padre.left + rect_padre.width + posicion.x - forma_width;
+    }
+    const int y = rect_padre.getPosition().y + posicion.y;
+    return {
+        sf::Vector2f(x, y),
+        // Ajustamos para evitar un margen excesivo arriba y a la izquierda
+        sf::Vector2f(x + margen * 0.7, y + margen * 0.7)
+    };
+}
 
 void BotonConTexto::_calcular_posicion_absoluta() {
     // esta posicion estara a la derecha o a la izquierda de acuerdo con el
     // alineamiento
-    const sf::Vector2f posicion = _posicion_relativa;
-    const Align align = _alineamiento;
-    int margen = medidas::MARGEN_BOTON * (escala * escala);
-    int x;
-    if (align == Align::Left) {
-        x = _rect_padre.left + posicion.x;
-    } else {
-        assert(align == Align::Right);
-        // Aqui la posicion relativa se refiere desde el lado derecho del padre
-        x = _rect_padre.left + _rect_padre.width + posicion.x -
-            forma.getGlobalBounds().width;
-    }
-    int y = _rect_padre.getPosition().y + posicion.y;
-    forma.setPosition(x, y);
-    // Ajustamos para evitar un margen excesivo arriba y a la izquierda
-    etiqueta.setPosition(x + margen * 0.7, y + margen * 0.7);
+    const auto [pos_forma, pos_etiqueta] =
+        posicionamiento.calcular_posicion_absoluta(
+            escala, forma.getGlobalBounds().width
+        );
+
+    forma.setPosition(pos_forma);
+    etiqueta.setPosition(pos_etiqueta);
 }
 
 void BotonConTexto::establecer_rect_padre(const sf::FloatRect &rect) {
-    _rect_padre = rect;
+    posicionamiento.rect_padre = rect;
     _calcular_posicion_absoluta();
 }
 
@@ -49,8 +62,8 @@ void BotonConTexto::establecerPosicion(
     const sf::Vector2f &posicion, //
     const Align align
 ) {
-    _alineamiento = align;
-    _posicion_relativa = posicion;
+    posicionamiento.alineamiento = align;
+    posicionamiento.posicion_relativa = posicion;
     _calcular_posicion_absoluta();
 }
 
