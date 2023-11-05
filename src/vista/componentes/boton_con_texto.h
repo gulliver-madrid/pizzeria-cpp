@@ -4,26 +4,19 @@
 #include "componente.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
+#include <memory>
 #include <optional>
+
+struct Posicionamiento;
 
 class BotonConTexto : public Componente {
   private:
-    struct Posicionamiento {
-        sf::FloatRect rect_padre;
-        sf::Vector2f posicion_relativa;
-        Align alineamiento = Align::Left;
-
-        std::pair<sf::Vector2f, sf::Vector2f> calcular_posicion_absoluta(
-            const double escala, const float forma_width
-        );
-    };
-
     static size_t proximo_id;
     std::optional<size_t> _id;
     bool activo = true;
     sf::RectangleShape forma;
     sf::Text etiqueta;
-    Posicionamiento posicionamiento;
+    std::unique_ptr<Posicionamiento> posicionamiento;
     double escala = 1;
     void asignar_id();
     void _calcular_posicion_absoluta();
@@ -44,6 +37,12 @@ class BotonConTexto : public Componente {
         Align align = Align::Left,    //
         double escala = 1             //
     );
+    BotonConTexto(const BotonConTexto &) = delete;
+    BotonConTexto &operator=(const BotonConTexto &) = delete;
+    BotonConTexto(BotonConTexto &&otro) noexcept;
+    BotonConTexto &operator=(BotonConTexto &&) noexcept;
+
+    ~BotonConTexto();
 
     void establecer_rect_padre(const sf::FloatRect &);
 
