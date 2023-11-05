@@ -1,7 +1,6 @@
 #include "boton_con_texto.h"
 #include "varios.h"
 #include <cassert>
-#include <iostream>
 
 namespace medidas {
     constexpr int MARGEN_BOTON = 20;
@@ -83,7 +82,6 @@ void BotonConTexto::establecerPosicion(
 }
 
 BotonConTexto::BotonConTexto() { //
-    std::cout << "En constructor sencillo" << std::endl;
     posicionamiento = std::make_unique<Posicionamiento>();
     asignar_id();
 };
@@ -95,7 +93,6 @@ BotonConTexto::BotonConTexto(
     double escala                //
 )
     : BotonConTexto() {
-    std::cout << "En constructor de 3" << std::endl;
     this->escala = escala;
     // La escala del margen es proporcional al cuadrado de la escala del botón
     int margen = medidas::MARGEN_BOTON * (escala * escala);
@@ -121,7 +118,6 @@ BotonConTexto::BotonConTexto(
     double escala                 //
 )
     : BotonConTexto(boton_data, font, escala) {
-    std::cout << "En constructor de 5" << std::endl;
     establecerPosicion(posicion, align);
 };
 
