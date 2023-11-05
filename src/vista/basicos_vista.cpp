@@ -18,3 +18,10 @@ sf::Vector2f basicos_vista::obtener_posicion_panel( //
     const float pos_y_panel = medidas::MARGEN_TOP_PANELES;
     return {pos_x_panel, pos_y_panel};
 }
+
+sf::FloatRect basicos_vista::obtener_rect_panel( //
+    const IndicePanel &indice_panel
+) {
+    const auto posicion = obtener_posicion_panel(indice_panel);
+    return sf::FloatRect(posicion, {medidas::ANCHO_PANEL, medidas::ALTO_PANEL});
+}

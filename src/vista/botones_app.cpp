@@ -54,18 +54,17 @@ namespace {
      * BotonConTexto.
      */
     TipoPizzaToBoton _crear_botones_encargar(
-        const sf::Font &font,                      //
+        const sf::Font &font,                       //
         const dominio::TiposDePizza &tp_disponibles //
     ) {
         // Constantes para definir la posicion de cada boton
-        const sf::Vector2f pos_panel = basicos_vista::obtener_posicion_panel( //
+        const auto rect_panel = basicos_vista::obtener_rect_panel( //
             IndicePanel::PANEL_ENCARGAR
         );
+        const sf::Vector2f pos_panel = rect_panel.getPosition();
         const auto pos_inicial_relativa_al_panel = sf::Vector2f(
             medidas::MARGEN_IZQ_ETIQUETAS, medidas::FILA_CONTENIDO_PANEL
         );
-        const sf::Vector2f pos_inicial =
-            pos_panel + pos_inicial_relativa_al_panel;
 
         // Lambda para crear boton data
         const auto crear_boton_data = [](dominio::TipoPizza tp) {
@@ -82,32 +81,35 @@ namespace {
         for (auto tp : tp_disponibles) {
             const BotonData boton_data = crear_boton_data(tp);
             botones.emplace(tp, BotonConTexto(boton_data, font));
+            botones.at(tp).establecer_rect_padre(rect_panel);
             ordenados.push_back(&botones.at(tp));
         }
 
         // Posiciona los botones
         const int dif_vertical = medidas::DIF_VERTICAL_BOTONES_ENCARGAR;
-        colocar_botones_en_vertical(ordenados, pos_inicial, dif_vertical);
+        colocar_botones_en_vertical(
+            ordenados, pos_inicial_relativa_al_panel, dif_vertical
+        );
         return botones;
     }
 
     TipoPizzaToBoton _crear_botones_despachar(
-        const sf::Font &font,                      //
+        const sf::Font &font,                       //
         const dominio::TiposDePizza &tp_disponibles //
     ) {
         TipoPizzaToBoton botones;
         const double escala_botones = 0.7;
         const int dif_vertical = 50;
+        const int pequeno_ajuste = (-5);
 
-        // Determinacion posicion inicial
-        const auto pos_panel = basicos_vista::obtener_posicion_panel( //
+        const auto rect_panel = basicos_vista::obtener_rect_panel( //
             IndicePanel::PANEL_PREPARADAS
         );
+
         const auto pos_inicial_relativa_al_panel = sf::Vector2f(
             medidas::MARGEN_IZQ_ETIQUETAS + (medidas::ANCHO_PANEL * 0.55),
-            medidas::FILA_CONTENIDO_PANEL
+            medidas::FILA_CONTENIDO_PANEL +pequeno_ajuste
         );
-        const auto pos_inicial = pos_panel + pos_inicial_relativa_al_panel;
 
         // Crea los botones
         std::vector<BotonConTexto *> ordenados;
@@ -118,11 +120,14 @@ namespace {
                     boton_data_botones_despachar, font, escala_botones
                 )
             );
+            botones.at(tp).establecer_rect_padre(rect_panel);
             ordenados.push_back(&botones.at(tp));
         }
 
         // Posiciona los botones
-        colocar_botones_en_vertical(ordenados, pos_inicial, dif_vertical);
+        colocar_botones_en_vertical(
+            ordenados, pos_inicial_relativa_al_panel, dif_vertical
+        );
         return botones;
     }
 
@@ -146,6 +151,7 @@ namespace {
             pos_derecha,                                           //
             datos_botones_generales,                               //
             font,                                                  //
+            sf::FloatRect(),                                       //
             medidas::SEPARACION_HORIZONTAL_ENTRE_BOTONES_GENERALES //
         );
 

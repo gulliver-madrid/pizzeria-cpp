@@ -34,5 +34,6 @@ namespace colores {
 } // namespace colores
 
 namespace basicos_vista {
-    sf::Vector2f obtener_posicion_panel(const IndicePanel &indice_panel);
-}
+    sf::Vector2f obtener_posicion_panel(const IndicePanel &);
+    sf::FloatRect obtener_rect_panel(const IndicePanel &);
+} // namespace basicos_vista
