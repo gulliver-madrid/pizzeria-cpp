@@ -19,22 +19,39 @@ void BotonConTexto::asignar_id() {
     }
 }
 
-void BotonConTexto::establecerPosicion(
-    const sf::Vector2f &posicion, //
-    Align align
-) {
+void BotonConTexto::_calcular_posicion_absoluta() {
+    // esta posicion estara a la derecha o a la izquierda de acuerdo con el
+    // alineamiento
+    const sf::Vector2f posicion = _posicion_relativa;
+    const Align align = _alineamiento;
     int margen = medidas::MARGEN_BOTON * (escala * escala);
     int x;
     if (align == Align::Left) {
-        x = posicion.x;
+        x = _rect_padre.left + posicion.x;
     } else {
         assert(align == Align::Right);
-        x = posicion.x - forma.getGlobalBounds().width;
+        // Aqui la posicion relativa se refiere desde el lado derecho del padre
+        x = _rect_padre.left + _rect_padre.width + posicion.x -
+            forma.getGlobalBounds().width;
     }
-    int y = posicion.y;
+    int y = _rect_padre.getPosition().y + posicion.y;
     forma.setPosition(x, y);
     // Ajustamos para evitar un margen excesivo arriba y a la izquierda
     etiqueta.setPosition(x + margen * 0.7, y + margen * 0.7);
+}
+
+void BotonConTexto::establecer_rect_padre(const sf::FloatRect &rect) {
+    _rect_padre = rect;
+    _calcular_posicion_absoluta();
+}
+
+void BotonConTexto::establecerPosicion(
+    const sf::Vector2f &posicion, //
+    const Align align
+) {
+    _alineamiento = align;
+    _posicion_relativa = posicion;
+    _calcular_posicion_absoluta();
 }
 
 BotonConTexto::BotonConTexto() { //

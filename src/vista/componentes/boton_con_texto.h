@@ -1,11 +1,12 @@
 #pragma once
 
 #include "boton_data.h"
+#include "componente.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <optional>
 
-struct BotonConTexto {
+class BotonConTexto : public Componente {
   private:
     static size_t proximo_id;
     std::optional<size_t> _id;
@@ -13,7 +14,12 @@ struct BotonConTexto {
     sf::RectangleShape forma;
     sf::Text etiqueta;
     double escala = 1;
+    sf::FloatRect _rect_padre;
+    sf::Vector2f _posicion_relativa;
+    Align _alineamiento = Align::Left;
+
     void asignar_id();
+    void _calcular_posicion_absoluta();
 
   public:
     bool visible = false;
@@ -31,10 +37,13 @@ struct BotonConTexto {
         Align align = Align::Left,    //
         double escala = 1             //
     );
+
+    void establecer_rect_padre(const sf::FloatRect &);
+
+    /* Establece la posicion relativa */
     void establecerPosicion(
         const sf::Vector2f &posicion, //
-        Align align = Align::Left
-
+        const Align align = Align::Left
     );
     bool colisiona(const sf::Vector2i &mousePos) const;
     void dibujar(sf::RenderWindow &window);
