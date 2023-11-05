@@ -88,15 +88,6 @@ BotonConTexto::BotonConTexto() { //
     asignar_id();
 };
 
-BotonConTexto::BotonConTexto(sf::RectangleShape rectShape, sf::Text txt)
-    : forma(rectShape), etiqueta(txt) {
-    std::cout << "En constructor de 2" << std::endl;
-    colorBotonActivo = forma.getFillColor();
-    forma.setOutlineColor(sf::Color::Black);
-    forma.setOutlineThickness(2);
-    asignar_id();
-};
-
 /* Crea un boton rectangular con texto sin determinar la posicion */
 BotonConTexto::BotonConTexto(
     const BotonData &boton_data, //

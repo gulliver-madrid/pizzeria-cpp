@@ -24,7 +24,6 @@ class BotonConTexto : public Componente {
   public:
     bool visible = false;
     BotonConTexto();
-    BotonConTexto(sf::RectangleShape rectShape, sf::Text txt);
     BotonConTexto(
         const BotonData &boton_data, //
         const sf::Font &font,        //
