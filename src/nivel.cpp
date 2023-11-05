@@ -26,7 +26,6 @@ class Realizador : public RealizadorBase {
     NuevaFase encargar_pizza( //
         const dominio::TipoPizza tp
     ) {
-        std::cout << "Llamando a encargar" << std::endl;
         assert(estado.fase_actual == FaseNivel::Activa);
         auto encargo = EncargoACocina( //
             tp, GestorTiempoJuego::obtener_tiempo_juego()
