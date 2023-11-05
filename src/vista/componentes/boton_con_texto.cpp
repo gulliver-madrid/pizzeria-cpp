@@ -94,9 +94,9 @@ BotonConTexto::BotonConTexto(
 )
     : BotonConTexto() {
     this->escala = escala;
-    // La escala del margen es proporcional al cuadrado de la escala del botón
+    // La escala del margen es proporcional al cuadrado de la escala del boton
     int margen = medidas::MARGEN_BOTON * (escala * escala);
-    // Primero creamos la etiqueta para usar sus límites en el Rect
+    // Primero creamos la etiqueta para usar sus limites en el Rect
     etiqueta = crearEtiqueta(
         boton_data.texto, medidas::TAMANO_TEXTO_BOTONES * escala,
         boton_data.color_texto, font
@@ -147,7 +147,7 @@ void BotonConTexto::dibujar(sf::RenderWindow &window) {
 }
 
 /**
- * Activa el botón solo si está actualmente inactivo.
+ * Activa el boton solo si esta actualmente inactivo.
  */
 void BotonConTexto::activar() {
     if (!activo)
@@ -155,7 +155,7 @@ void BotonConTexto::activar() {
 }
 
 /**
- * Desactiva el botón solo si está actualmente activo.
+ * Desactiva el boton solo si esta actualmente activo.
  */
 void BotonConTexto::desactivar() {
     if (activo)
