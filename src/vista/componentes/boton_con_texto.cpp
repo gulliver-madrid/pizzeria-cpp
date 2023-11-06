@@ -18,7 +18,7 @@ namespace medidas {
  *
  * Esta estructura contiene informacion sobre como un elemento UI debe ser
  * posicionado en la ventana. Esto incluye el rectangulo dentro del cual el
- * elemento debe ser colocado (rect_padre), la posicion relativa dentro de este
+ * elemento debe ser colocado (contenedor), la posicion relativa dentro de este
  * rectangulo y el alineamiento (izquierda o derecha).
  */
 struct Posicionamiento {
@@ -26,7 +26,7 @@ struct Posicionamiento {
     int _obtener_pos_abs_x(float ancho_forma) const;
 
   public:
-    sf::FloatRect rect_padre;
+    sf::FloatRect contenedor;
     sf::Vector2f posicion_relativa;
     Align alineamiento = Align::Left;
 
@@ -42,14 +42,15 @@ struct Posicionamiento {
 int Posicionamiento::_obtener_pos_abs_x(const float ancho_forma) const {
     switch (alineamiento) {
         case Align::Left:
-            return rect_padre.left + posicion_relativa.x;
+            return contenedor.left + posicion_relativa.x;
         case Align::Right:
             {
-                // Aqui la posicion relativa es
-                // desde el lado derecho del padre
-                const auto padre_right = rect_padre.left + rect_padre.width;
-                const auto pos_abs_derecha = padre_right + posicion_relativa.x;
+                // clang-format off
+                // Aqui la posicion relativa es desde el lado derecho del padre
+                const auto contenedor_derecha = contenedor.left + contenedor.width;
+                const auto pos_abs_derecha = contenedor_derecha + posicion_relativa.x;
                 return pos_abs_derecha - ancho_forma;
+                // clang-format on
             }
         default:
             throw std::out_of_range("Valor no manejado");
@@ -75,7 +76,7 @@ Posicionamiento::calcular_posicion_absoluta(
     const int margen = medidas::MARGEN_BOTON * (escala * escala);
     const auto margen_corregido = margen * 0.7;
     const int x = _obtener_pos_abs_x(ancho_forma);
-    const int y = rect_padre.getPosition().y + posicion_relativa.y;
+    const int y = contenedor.getPosition().y + posicion_relativa.y;
     // Ajustamos para evitar un margen excesivo arriba y a la izquierda
     return {
         sf::Vector2f(x, y),
@@ -133,7 +134,7 @@ void BotonConTexto::_actualizar_posicion_absoluta() {
  * @param rect El rectangulo que representa el espacio disponible para el boton.
  */
 void BotonConTexto::establecer_rect_padre(const sf::FloatRect &rect) {
-    posicionamiento->rect_padre = rect;
+    posicionamiento->contenedor = rect;
     _actualizar_posicion_absoluta();
 }
 
