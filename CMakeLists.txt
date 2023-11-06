@@ -41,6 +41,12 @@ add_executable(pizzeria
 target_link_libraries(pizzeria PRIVATE sfml-graphics sfml-audio)
 target_compile_features(pizzeria PRIVATE cxx_std_17)
 
+# Tratar los warnings como errores en modo Debug.
+if(MSVC)
+    target_compile_options(pizzeria PRIVATE "$<$<CONFIG:Debug>:/WX>")
+endif()
+
+
 if(WIN32)
     add_custom_command(
         TARGET pizzeria
