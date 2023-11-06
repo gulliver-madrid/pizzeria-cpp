@@ -19,9 +19,8 @@ struct TiempoJuego;
 //////////////////////////////////////////
 
 /* Agrupa las etiquetas principales para un nivel determinado */
-struct EtiquetasGenerales {
+struct EtiquetasGenerales : public ObjetoConFont {
   private:
-    const sf::Font &font;
     std::unique_ptr<EtiquetasContadores> contadores;
     std::unique_ptr<EtiquetasInfo> info;
     std::unique_ptr<EtiquetasBarraEstado> barra_estado;
@@ -60,15 +59,14 @@ struct EtiquetasGenerales {
 // FabricaEtiquetasTituloPanel
 //////////////////////////////////////////
 
-struct FabricaEtiquetasTituloPanel {
+struct FabricaEtiquetasTituloPanel : public ObjetoConFont {
   private:
-    const sf::Font &font;
     static sf::Vector2f get_posicion_etiqueta_titulo_panel( //
         const sf::Vector2f &posicion_panel
     );
 
   public:
-    FabricaEtiquetasTituloPanel(const sf::Font &font) : font(font) {}
+    FabricaEtiquetasTituloPanel(const sf::Font &font) : ObjetoConFont(font) {}
     sf::Text crearEtiquetaTituloPanel(
         const sf::Vector2f &posicion_panel, const std::string &texto_crudo
     ) const;

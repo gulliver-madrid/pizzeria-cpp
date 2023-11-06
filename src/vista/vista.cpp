@@ -19,11 +19,11 @@ Vista::Vista(
     Grid &grid,                                 //
     const dominio::TiposDePizza &tp_disponibles //
 )
-    : botones(font, tp_disponibles), //
+    : ObjetoConFont(font),           //
+      botones(font, tp_disponibles), //
       paneles_completos(font),       //
       etiquetas(es_estatico, font),  //
       grid(grid),                    //
-      font(font),                    //
       tp_disponibles(tp_disponibles) {}
 
 void Vista::setup(

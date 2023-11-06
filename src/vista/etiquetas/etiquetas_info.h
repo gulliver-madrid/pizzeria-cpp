@@ -4,10 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <optional>
 
-struct EtiquetasInfo {
-  private:
-    const sf::Font &font;
-
+struct EtiquetasInfo : public ObjetoConFont {
   public:
     sf::Text instrucciones;
     sf::Text resultado;

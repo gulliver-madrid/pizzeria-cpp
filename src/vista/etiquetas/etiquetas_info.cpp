@@ -22,9 +22,8 @@ namespace estilos {
 // FabricaEtiquetasInfo
 //////////////////////////////////////////
 
-struct FabricaEtiquetasInfo {
+struct FabricaEtiquetasInfo : public ObjetoConFont {
   private:
-    const sf::Font &font;
     sf::Text crear_etiqueta_info(
         const std::string &texto, const EstiloTexto &estilo
     ) const {
@@ -33,7 +32,7 @@ struct FabricaEtiquetasInfo {
     }
 
   public:
-    FabricaEtiquetasInfo(const sf::Font &font) : font(font) {}
+    FabricaEtiquetasInfo(const sf::Font &font) : ObjetoConFont(font) {}
     sf::Text crear_etiqueta_instrucciones(
         const std::string &plantilla,              //
         const NumNivel &num_nivel,                 //
@@ -58,7 +57,7 @@ struct FabricaEtiquetasInfo {
 // EtiquetasInfo
 //////////////////////////////////////////
 
-EtiquetasInfo::EtiquetasInfo(const sf::Font &font) : font(font) {}
+EtiquetasInfo::EtiquetasInfo(const sf::Font &font) : ObjetoConFont(font) {}
 
 void EtiquetasInfo::setup(
     const std::string &instr,                  //

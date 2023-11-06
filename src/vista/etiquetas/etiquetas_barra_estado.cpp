@@ -6,7 +6,8 @@
 #include "../cadenas.h"
 #include "../componentes/varios.h"
 
-EtiquetasBarraEstado::EtiquetasBarraEstado(const sf::Font &font) : font(font) {
+EtiquetasBarraEstado::EtiquetasBarraEstado(const sf::Font &font)
+    : ObjetoConFont(font) {
     const EstiloTexto estilo = {
         medidas::TAMANO_TEXTO_GRANDE, sf::Color::Yellow
     };

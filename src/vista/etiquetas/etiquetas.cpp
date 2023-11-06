@@ -23,7 +23,7 @@ namespace estilos {
 EtiquetasGenerales::EtiquetasGenerales(
     const EsSistemaEstatico &es_estatico, const sf::Font &font
 )
-    : font(font) {
+    : ObjetoConFont(font) {
     contadores = std::make_unique<EtiquetasContadores>(es_estatico, font);
     info = std::make_unique<EtiquetasInfo>(font);
     barra_estado = std::make_unique<EtiquetasBarraEstado>(font);

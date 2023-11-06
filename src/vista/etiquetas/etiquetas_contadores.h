@@ -4,11 +4,10 @@
 #include "../../modelo/control_pizzas.h"
 #include <SFML/Graphics.hpp>
 
-struct EtiquetasContadores {
+struct EtiquetasContadores : public ObjetoConFont {
     using TipoPizza = dominio::TipoPizza;
 
   private:
-    const sf::Font &font;
     // Indica si el sistema de pedidos es estatico
     const EsSistemaEstatico &es_estatico;
 

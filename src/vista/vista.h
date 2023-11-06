@@ -7,9 +7,7 @@
 struct Estado;
 struct Grid;
 
-class Vista {
-
-    const sf::Font &font;
+class Vista : public ObjetoConFont {
     const dominio::TiposDePizza &tp_disponibles;
     void actualizar_paneles(
         sf::RenderWindow &ventana,                 //

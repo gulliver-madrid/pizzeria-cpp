@@ -48,7 +48,7 @@ void TitulosPaneles::dibujar(sf::RenderWindow &ventana) {
     ventana.draw(pedidos);
 }
 
-PanelesCompletos::PanelesCompletos(const sf::Font &font) : font(font) {
+PanelesCompletos::PanelesCompletos(const sf::Font &font) : ObjetoConFont(font) {
     const FabricaEtiquetasTituloPanel fabrica(font);
     const auto crea_titulo = [&fabrica](
                                  const IndicePanel indice_panel,

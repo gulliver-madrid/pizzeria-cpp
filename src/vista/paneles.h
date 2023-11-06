@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../modelo/modelo.h"
+#include "../shared.h"
 #include "barras_progreso.h"
 #include "componentes/varios.h"
 #include <vector>
@@ -26,8 +27,7 @@ struct TitulosPaneles {
     void dibujar(sf::RenderWindow &window);
 };
 
-struct PanelesCompletos {
-    const sf::Font &font;
+struct PanelesCompletos : public ObjetoConFont {
     Paneles paneles;
     TitulosPaneles titulos_paneles;
     std::vector<BarraProgresoConNombre> barras_progreso_con_nombres;

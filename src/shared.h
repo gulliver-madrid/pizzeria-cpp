@@ -2,6 +2,10 @@
 
 #include <cassert>
 
+namespace sf {
+    class Font;
+}
+
 constexpr bool MODO_DESARROLLO = true;
 
 /* NewType para el número de nivel del juego */
@@ -20,4 +24,12 @@ struct EsSistemaEstatico {
     explicit EsSistemaEstatico(bool v) : valor(v) {}
     EsSistemaEstatico(const EsSistemaEstatico &) = delete;
     EsSistemaEstatico &operator=(const EsSistemaEstatico &) = delete;
+};
+
+class ObjetoConFont {
+  protected:
+    const sf::Font &font;
+
+  public:
+    ObjetoConFont(const sf::Font &font) : font(font) {}
 };

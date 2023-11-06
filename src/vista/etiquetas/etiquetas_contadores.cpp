@@ -17,7 +17,7 @@ float get_bottom(const sf::FloatRect &rect) { //
 EtiquetasContadores::EtiquetasContadores(
     const EsSistemaEstatico &es_estatico, const sf::Font &font
 )
-    : es_estatico(es_estatico), font(font) {}
+    : ObjetoConFont(font), es_estatico(es_estatico) {}
 
 void EtiquetasContadores::setup(const dominio::TiposDePizza &tp_disponibles) {
     FabricaEtiquetasContadores fabrica(font);

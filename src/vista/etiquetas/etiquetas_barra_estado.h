@@ -1,14 +1,14 @@
 #pragma once
 
+#include "../../shared.h"
 #include <SFML/Graphics.hpp>
 
 struct Tiempo;
 struct TiempoJuego;
 
-struct EtiquetasBarraEstado {
+struct EtiquetasBarraEstado : public ObjetoConFont {
 
   private:
-    const sf::Font &font;
     sf::Text etiqueta;
 
   public:
