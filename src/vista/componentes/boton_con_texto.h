@@ -11,19 +11,22 @@ struct Posicionamiento;
 
 class BotonConTexto : public Componente {
   private:
-    static size_t proximo_id;
+    static size_t _proximo_id;
     std::optional<size_t> _id;
-    bool activo = true;
-    sf::RectangleShape forma;
-    sf::Text etiqueta;
+
+    sf::RectangleShape _forma;
+    sf::Text _etiqueta;
+
     std::unique_ptr<Posicionamiento> posicionamiento;
-    double escala = 1;
-    void asignar_id();
+    double _escala = 1;
+    bool _activo = true;
+
+    void _asignar_id();
     void _calcular_posicion_absoluta();
+    BotonConTexto();
 
   public:
     bool visible = false;
-    BotonConTexto();
     BotonConTexto(
         const BotonData &boton_data, //
         const sf::Font &font,        //
@@ -36,8 +39,13 @@ class BotonConTexto : public Componente {
         Align align = Align::Left,    //
         double escala = 1             //
     );
+
+    // Eliminamos operadores de copia y asignacion
     BotonConTexto(const BotonConTexto &) = delete;
     BotonConTexto &operator=(const BotonConTexto &) = delete;
+
+    // Creamos los operadores de movimiento y asignacion de movimiento
+    // por defecto
     BotonConTexto(BotonConTexto &&otro) noexcept;
     BotonConTexto &operator=(BotonConTexto &&) noexcept;
 
@@ -46,7 +54,7 @@ class BotonConTexto : public Componente {
     void establecer_rect_padre(const sf::FloatRect &);
 
     /* Establece la posicion relativa */
-    void establecerPosicion(
+    void establecer_posicion(
         const sf::Vector2f &posicion, //
         Align align = Align::Left
     );
@@ -57,8 +65,8 @@ class BotonConTexto : public Componente {
     void activacion_condicional(bool condicion);
     size_t get_id() const;
     bool esta_activo() const;
-    sf::FloatRect getGlobalBounds() const { //
-        return forma.getGlobalBounds();
+    sf::FloatRect get_rect() const { //
+        return _forma.getGlobalBounds();
     }
 
   private:

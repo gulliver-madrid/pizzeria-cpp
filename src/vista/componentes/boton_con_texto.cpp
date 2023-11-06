@@ -7,6 +7,10 @@ namespace medidas {
     constexpr int TAMANO_TEXTO_BOTONES = TAMANO_TEXTO_GRANDE;
 } // namespace medidas
 
+///////////////////////////////////////////
+// Posicionamiento
+//////////////////////////////////////////
+
 struct Posicionamiento {
     sf::FloatRect rect_padre;
     sf::Vector2f posicion_relativa;
@@ -39,15 +43,19 @@ Posicionamiento::calcular_posicion_absoluta(
     };
 }
 
-size_t BotonConTexto::proximo_id = 1;
+///////////////////////////////////////////
+// BotonConTexto
+//////////////////////////////////////////
+
+size_t BotonConTexto::_proximo_id = 1;
 
 /*
  * Debe ser llamado en todos los constructores para garantizar que ningun boton
  * se queda sin su _id.
  */
-void BotonConTexto::asignar_id() {
+void BotonConTexto::_asignar_id() {
     if (!_id.has_value()) {
-        _id = proximo_id++;
+        _id = _proximo_id++;
     }
 }
 
@@ -60,11 +68,11 @@ void BotonConTexto::_calcular_posicion_absoluta() {
     // alineamiento
     const auto [pos_forma, pos_etiqueta] =
         posicionamiento->calcular_posicion_absoluta(
-            escala, forma.getGlobalBounds().width
+            _escala, _forma.getGlobalBounds().width
         );
 
-    forma.setPosition(pos_forma);
-    etiqueta.setPosition(pos_etiqueta);
+    _forma.setPosition(pos_forma);
+    _etiqueta.setPosition(pos_etiqueta);
 }
 
 void BotonConTexto::establecer_rect_padre(const sf::FloatRect &rect) {
@@ -72,7 +80,7 @@ void BotonConTexto::establecer_rect_padre(const sf::FloatRect &rect) {
     _calcular_posicion_absoluta();
 }
 
-void BotonConTexto::establecerPosicion(
+void BotonConTexto::establecer_posicion(
     const sf::Vector2f &posicion, //
     const Align align
 ) {
@@ -83,33 +91,56 @@ void BotonConTexto::establecerPosicion(
 
 BotonConTexto::BotonConTexto() { //
     posicionamiento = std::make_unique<Posicionamiento>();
-    asignar_id();
+    _asignar_id();
 };
 
-/* Crea un boton rectangular con texto sin determinar la posicion */
+/**
+ * @brief Constructor por defecto que inicializa un boton con texto.
+ *
+ * Este constructor crea un boton con texto sin definir su posicion en la
+ * pantalla. La apariencia del boton se escala segun el parametro proporcionado.
+ *
+ * @param boton_data Estructura que contiene los datos del boton como el texto,
+ *                   color del texto, y color de fondo.
+ * @param font Fuente utilizada para el texto del boton.
+ * @param escala Factor de escala para el tamano del boton y del texto.
+ */
 BotonConTexto::BotonConTexto(
     const BotonData &boton_data, //
     const sf::Font &font,        //
     double escala                //
 )
     : BotonConTexto() {
-    this->escala = escala;
+    this->_escala = escala;
     // La escala del margen es proporcional al cuadrado de la escala del boton
     int margen = medidas::MARGEN_BOTON * (escala * escala);
     // Primero creamos la etiqueta para usar sus limites en el Rect
-    etiqueta = crearEtiqueta(
+    _etiqueta = crearEtiqueta(
         boton_data.texto, medidas::TAMANO_TEXTO_BOTONES * escala,
         boton_data.color_texto, font
     );
-    sf::FloatRect textRect = etiqueta.getGlobalBounds();
+    sf::FloatRect textRect = _etiqueta.getGlobalBounds();
 
-    forma.setSize(
+    _forma.setSize(
         sf::Vector2f(textRect.width + margen * 2, textRect.height + margen * 2)
     );
-    forma.setFillColor(boton_data.color_fondo);
+    _forma.setFillColor(boton_data.color_fondo);
 };
 
-/* Crea un boton rectangular con texto */
+/**
+ * @brief Constructor sobrecargado que inicializa un boton con texto y posicion.
+ *
+ * Este constructor crea un boton con texto y permite definir su posicion en la
+ * pantalla. La apariencia del boton se escala segun el parametro proporcionado
+ * y se posiciona de acuerdo a un alineamiento especificado.
+ *
+ * @param boton_data Estructura que contiene los datos del boton como el texto,
+ *                   color del texto, y color de fondo.
+ * @param posicion Posicion inicial del boton en la pantalla.
+ * @param font Fuente utilizada para el texto del boton.
+ * @param align Alineamiento del boton con respecto a su posicion.
+ * @param escala Factor de escala para el tamano del boton y del texto.
+ */
 BotonConTexto::BotonConTexto(
     const BotonData &boton_data,  //
     const sf::Vector2f &posicion, //
@@ -118,17 +149,24 @@ BotonConTexto::BotonConTexto(
     double escala                 //
 )
     : BotonConTexto(boton_data, font, escala) {
-    establecerPosicion(posicion, align);
+    establecer_posicion(posicion, align);
 };
 
-/*
- * Solo se detectara la colision si el boton esta visible y activo
+/**
+ * @brief Comprueba si la posicion del mouse colisiona con el boton.
+ *
+ * Evalua si la posicion actual del cursor del mouse se encuentra dentro de los
+ * limites del boton. La deteccion de colision solo ocurre si el boton esta
+ * visible y activo.
+ *
+ * @param pos_raton Posicion actual del cursor del mouse.
+ * @return true si hay colision, false en caso contrario.
  */
-bool BotonConTexto::colisiona(const sf::Vector2i &mousePos) const {
-    if (!visible || !activo)
+bool BotonConTexto::colisiona(const sf::Vector2i &pos_raton) const {
+    if (!visible || !_activo)
         return false;
-    return forma.getGlobalBounds().contains(
-        static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)
+    return _forma.getGlobalBounds().contains(
+        static_cast<float>(pos_raton.x), static_cast<float>(pos_raton.y)
     );
 }
 
@@ -136,30 +174,30 @@ void BotonConTexto::dibujar(sf::RenderWindow &window) {
     if (!visible)
         return;
     if (!colorBotonActivo.has_value())
-        colorBotonActivo = forma.getFillColor();
-    if (activo) {
-        forma.setFillColor(colorBotonActivo.value());
+        colorBotonActivo = _forma.getFillColor();
+    if (_activo) {
+        _forma.setFillColor(colorBotonActivo.value());
     } else {
-        forma.setFillColor(sf::Color(100, 100, 100));
+        _forma.setFillColor(sf::Color(100, 100, 100));
     }
-    window.draw(forma);
-    window.draw(etiqueta);
+    window.draw(_forma);
+    window.draw(_etiqueta);
 }
 
 /**
  * Activa el boton solo si esta actualmente inactivo.
  */
 void BotonConTexto::activar() {
-    if (!activo)
-        activo = true;
+    if (!_activo)
+        _activo = true;
 }
 
 /**
  * Desactiva el boton solo si esta actualmente activo.
  */
 void BotonConTexto::desactivar() {
-    if (activo)
-        activo = false;
+    if (_activo)
+        _activo = false;
 }
 
 void BotonConTexto::activacion_condicional(bool condicion) {
@@ -175,5 +213,5 @@ size_t BotonConTexto::get_id() const { //
 }
 
 bool BotonConTexto::esta_activo() const { //
-    return activo;
+    return _activo;
 }
