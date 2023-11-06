@@ -46,22 +46,23 @@ std::pair<sf::Vector2f, sf::Vector2f>
 Posicionamiento::calcular_posicion_absoluta(
     const double escala, const float forma_width
 ) {
-    const sf::Vector2f posicion = posicion_relativa;
+    const sf::Vector2f pos_relativa = posicion_relativa;
     const Align align = alineamiento;
     const int margen = medidas::MARGEN_BOTON * (escala * escala);
     int x;
     if (align == Align::Left) {
-        x = rect_padre.left + posicion.x;
+        x = rect_padre.left + pos_relativa.x;
     } else {
         assert(align == Align::Right);
         // Aqui la posicion relativa se refiere desde el lado derecho del padre
-        x = rect_padre.left + rect_padre.width + posicion.x - forma_width;
+        x = rect_padre.left + rect_padre.width + pos_relativa.x - forma_width;
     }
-    const int y = rect_padre.getPosition().y + posicion.y;
+    const int y = rect_padre.getPosition().y + pos_relativa.y;
+    // Ajustamos para evitar un margen excesivo arriba y a la izquierda
+    const auto margen_corregido = margen * 0.7;
     return {
         sf::Vector2f(x, y),
-        // Ajustamos para evitar un margen excesivo arriba y a la izquierda
-        sf::Vector2f(x + margen * 0.7, y + margen * 0.7)
+        sf::Vector2f(x + margen_corregido, y + margen_corregido)
     };
 }
 
@@ -165,18 +166,20 @@ BotonConTexto::BotonConTexto(
     : BotonConTexto() {
     this->_escala = escala;
     // La escala del margen es proporcional al cuadrado de la escala del boton
-    int margen = medidas::MARGEN_BOTON * (escala * escala);
+    const int margen = medidas::MARGEN_BOTON * (escala * escala);
+    const auto margen_ambos_lados = margen * 2;
 
     // Primero creamos la etiqueta para usar sus limites en el Rect
     _etiqueta = crearEtiqueta(
         boton_data.texto, medidas::TAMANO_TEXTO_BOTONES * escala,
         boton_data.color_texto, font
     );
-    sf::FloatRect textRect = _etiqueta.getGlobalBounds();
+    const sf::FloatRect rect_etiqueta = _etiqueta.getGlobalBounds();
 
-    _forma.setSize(
-        sf::Vector2f(textRect.width + margen * 2, textRect.height + margen * 2)
-    );
+    _forma.setSize(sf::Vector2f(
+        rect_etiqueta.width + margen_ambos_lados,
+        rect_etiqueta.height + margen_ambos_lados
+    ));
     _forma.setFillColor(boton_data.color_fondo);
 };
 

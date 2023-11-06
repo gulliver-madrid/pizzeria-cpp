@@ -18,6 +18,7 @@ class BotonConTexto : public Componente {
     sf::Text _etiqueta;
 
     std::unique_ptr<Posicionamiento> posicionamiento;
+    // Solo puede modificarse la escala en la construccion
     double _escala = 1;
     bool _activo = true;
 
