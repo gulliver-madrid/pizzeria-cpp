@@ -8,7 +8,7 @@ namespace medidas {
 } // namespace medidas
 
 ///////////////////////////////////////////
-// Posicionamiento
+// Posicionamiento: declaracion
 //////////////////////////////////////////
 
 /**
@@ -23,7 +23,7 @@ namespace medidas {
  */
 struct Posicionamiento {
   private:
-    int _obtener_pos_abs_x(const float ancho_forma);
+    int _obtener_pos_abs_x(float ancho_forma) const;
 
   public:
     sf::FloatRect rect_padre;
@@ -31,20 +31,25 @@ struct Posicionamiento {
     Align alineamiento = Align::Left;
 
     std::pair<sf::Vector2f, sf::Vector2f>
-    calcular_posicion_absoluta(const double escala, const float ancho_forma);
+    calcular_posicion_absoluta(double escala, float ancho_forma) const;
 };
 
-int Posicionamiento::_obtener_pos_abs_x(const float ancho_forma) {
-    int x;
-    if (alineamiento == Align::Left) {
-        x = rect_padre.left + posicion_relativa.x;
-    } else {
-        assert(alineamiento == Align::Right);
-        // Aqui la posicion relativa se refiere desde el lado derecho del padre
-        x = rect_padre.left + rect_padre.width + posicion_relativa.x -
-            ancho_forma;
+///////////////////////////////////////////
+// Posicionamiento: implementacion
+//////////////////////////////////////////
+
+int Posicionamiento::_obtener_pos_abs_x(const float ancho_forma) const {
+    switch (alineamiento) {
+        case Align::Left:
+            return rect_padre.left + posicion_relativa.x;
+        case Align::Right:
+            // Aqui la posicion relativa se refiere desde el lado derecho del
+            // padre
+            return rect_padre.left + rect_padre.width + posicion_relativa.x -
+                   ancho_forma;
+        default:
+            throw std::out_of_range("Valor no manejado");
     }
-    return x;
 }
 
 /**
@@ -62,7 +67,7 @@ int Posicionamiento::_obtener_pos_abs_x(const float ancho_forma) {
 std::pair<sf::Vector2f, sf::Vector2f>
 Posicionamiento::calcular_posicion_absoluta(
     const double escala, const float ancho_forma
-) {
+) const {
     const int margen = medidas::MARGEN_BOTON * (escala * escala);
     const auto margen_corregido = margen * 0.7;
     const int x = _obtener_pos_abs_x(ancho_forma);
