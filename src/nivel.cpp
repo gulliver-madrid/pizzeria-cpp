@@ -27,8 +27,9 @@ class Realizador : public RealizadorBase {
         const dominio::TipoPizza tp
     ) {
         assert(estado.fase_actual == FaseNivel::Activa);
+        // TODO: pasar a EstadoModelo esta logica
         auto encargo = EncargoACocina( //
-            tp, GestorTiempoJuego::obtener_tiempo_juego()
+            tp, estado.estado_modelo.gestor_tiempo.obtener_tiempo_juego()
         );
         estado.estado_modelo.encargos.anadir(encargo);
         return std::nullopt;
@@ -119,18 +120,19 @@ std::optional<AccionGeneral> Nivel::procesa_cambio_de_fase(
     FaseNivel nueva_fase,                   //
     const EnlaceVista &enlace_vista,        //
     Timer &timer_espera_antes_de_resultado, //
-    FaseNivel fase_previa                   //
+    FaseNivel fase_previa,                  //
+    GestorTiempoJuego &gestor_tiempo        //
 ) {
     std::optional<AccionGeneral> posible_accion;
     switch (nueva_fase) {
         case FaseNivel::Activa:
             assert(fase_previa == FaseNivel::MostrandoInstrucciones);
-            GestorTiempoJuego::activar();
+            gestor_tiempo.activar();
             enlace_vista.on_cambio_a_fase_activa();
             break;
         case FaseNivel::EsperaAntesDeResultado:
             assert(fase_previa == FaseNivel::Activa);
-            GestorTiempoJuego::pausar();
+            gestor_tiempo.pausar();
             timer_espera_antes_de_resultado.start(
                 tiempos::RETARDO_ANTES_DE_RESULTADO
             );
@@ -203,9 +205,10 @@ AccionGeneral Nivel::ejecutar() {
     Timer timer_espera_antes_de_resultado;
     Timer timer_fin_nivel;
     sf::Sound sound;
-    GestorTiempoJuego::reiniciar();
+    estado.estado_modelo.gestor_tiempo.reiniciar();
     assert(!contadores.empty());
 
+    auto &gestor_tiempo = estado.estado_modelo.gestor_tiempo;
     while (globales.window.isOpen()) {
         sf::Event event;
         while (globales.window.pollEvent(event)) {
@@ -221,7 +224,8 @@ AccionGeneral Nivel::ejecutar() {
                 estado.fase_actual,              //
                 enlace_vista,                    //
                 timer_espera_antes_de_resultado, //
-                fase_previa                      //
+                fase_previa,                     //
+                gestor_tiempo                    //
             );
             if (accion.has_value()) {
                 return accion.value();
@@ -234,7 +238,7 @@ AccionGeneral Nivel::ejecutar() {
             int maximo =
                 modelo_info::MAXIMO_PIZZAS_PREPARADAS - total_preparadas;
             const TiempoJuego tiempo_actual =
-                GestorTiempoJuego::obtener_tiempo_juego();
+                gestor_tiempo.obtener_tiempo_juego();
             evaluar_preparacion(
                 estado.estado_modelo.encargos, contadores, maximo, tiempo_actual
             );

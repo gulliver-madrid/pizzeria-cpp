@@ -27,7 +27,8 @@ struct Nivel {
         FaseNivel nueva_fase,                   //
         const EnlaceVista &enlace_vista,        //
         Timer &timer_espera_antes_de_resultado, //
-        FaseNivel fase_previa                   //
+        FaseNivel fase_previa,                  //
+        GestorTiempoJuego &gestor_tiempo        //
     );
     EnlaceVista crear_enlace_vista(
         const modelo::ControlPizzas &control_pizzas, //

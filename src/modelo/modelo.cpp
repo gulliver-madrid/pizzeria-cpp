@@ -16,13 +16,14 @@ namespace debug {
     }
 } // namespace debug
 
-EstadoPreparacionPizzas::EstadoPreparacionPizzas(const Encargos &encargos) {
+EstadoPreparacionPizzas::EstadoPreparacionPizzas(
+    const Encargos &encargos,        //
+    const TiempoJuego &tiempo_actual //
+) {
     assert(datos.empty());
     for (auto &encargo : encargos) {
         datos.push_back(EstadoPreparacionPizzaIndividual{
-            encargo.tiempo_preparacion.obtener_porcentaje(
-                GestorTiempoJuego::obtener_tiempo_juego()
-            ),
+            encargo.tiempo_preparacion.obtener_porcentaje(tiempo_actual),
             encargo.tipo
         });
     }

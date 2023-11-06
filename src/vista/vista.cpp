@@ -64,13 +64,15 @@ void Vista::actualizarIU(      //
         estado.fase_actual == FaseNivel::Activa ||
         estado.fase_actual == FaseNivel::EsperaAntesDeResultado
     ) {
-        actualizar_paneles(
-            ventana, paneles_completos, estado.estado_modelo.encargos
+        const auto tiempo_actual =
+            estado.estado_modelo.gestor_tiempo.obtener_tiempo_juego();
+        EstadoPreparacionPizzas preparacion(
+            estado.estado_modelo.encargos, tiempo_actual
         );
+        actualizar_paneles(ventana, paneles_completos, preparacion);
     }
 
     actualizar_etiquetas(ventana, etiquetas, estado);
-
     botones.dibujar(ventana);
 }
 
@@ -177,17 +179,17 @@ void actualizar_etiquetas(
             break;
     }
     const auto tiempo_real_actual = obtener_tiempo_actual();
-    const auto tiempo_juego_actual = GestorTiempoJuego::obtener_tiempo_juego();
+    const auto tiempo_juego_actual =
+        estado.estado_modelo.gestor_tiempo.obtener_tiempo_juego();
     etiquetas.actualizar_barra_estado(tiempo_real_actual, tiempo_juego_actual);
     etiquetas.dibujar_barra_estado(ventana);
 }
 
 void Vista::actualizar_paneles(
-    sf::RenderWindow &ventana,           //
-    PanelesCompletos &paneles_completos, //
-    const Encargos &encargos             //
-
+    sf::RenderWindow &ventana,                 //
+    PanelesCompletos &paneles_completos,       //
+    const EstadoPreparacionPizzas &preparacion //
 ) {
-    EstadoPreparacionPizzas preparacion(encargos);
+
     paneles_completos.dibujar(ventana, preparacion, font);
 }

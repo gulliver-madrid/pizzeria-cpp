@@ -11,6 +11,7 @@ namespace modelo {
 struct EstadoModelo {
     modelo::ControlPizzas &control_pizzas;
     Encargos encargos;
+    GestorTiempoJuego gestor_tiempo;
 
     EstadoModelo(modelo::ControlPizzas &control);
 };

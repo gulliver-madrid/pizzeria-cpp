@@ -47,7 +47,11 @@ void evaluar_preparacion(
     const TiempoJuego &tiempo_actual
 );
 
+/** Representa el estado de preparacion de las pizzas en un momento concreto */
 struct EstadoPreparacionPizzas {
     std::vector<EstadoPreparacionPizzaIndividual> datos;
-    EstadoPreparacionPizzas(const Encargos &encargos);
+    EstadoPreparacionPizzas(
+        const Encargos &encargos,        //
+        const TiempoJuego &tiempo_actual //
+    );
 };

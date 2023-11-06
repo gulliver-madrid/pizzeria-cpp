@@ -86,14 +86,13 @@ struct GestorTiempoJuego {
 
   private:
     // Tiempo de juego contabilizado previamente
-    static TiempoJuego previo;
-    static Tiempo ultima_activacion;
-    static bool en_pausa;
+    TiempoJuego previo = TiempoJuego_CERO;
+    Tiempo ultima_activacion = Tiempo::CERO;
+    bool en_pausa = true;
 
   public:
-    GestorTiempoJuego() = delete;
-    static TiempoJuego obtener_tiempo_juego();
-    static void activar();
-    static void pausar();
-    static void reiniciar();
+    TiempoJuego obtener_tiempo_juego() const;
+    void activar();
+    void pausar();
+    void reiniciar();
 };

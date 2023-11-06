@@ -3,11 +3,6 @@
 #include <cassert>
 #include <chrono>
 
-// Asignacion miembros estaticos
-TiempoJuego GestorTiempoJuego::previo = TiempoJuego_CERO;
-Tiempo GestorTiempoJuego::ultima_activacion = Tiempo::CERO;
-bool GestorTiempoJuego::en_pausa = true;
-
 std::string pad_with_zeroes(int n) {
     assert(n >= 0);
     if (n > 59) {
@@ -130,13 +125,14 @@ const TiempoJuego TiempoJuego::operator-(const TiempoJuego &otro) const {
 // GestorTiempoJuego
 //////////////////////////////////////////
 
-TiempoJuego GestorTiempoJuego::obtener_tiempo_juego() {
+TiempoJuego GestorTiempoJuego::obtener_tiempo_juego() const {
     if (en_pausa) {
         return previo;
     }
     const auto transcurrido = obtener_tiempo_actual() - ultima_activacion;
-    return previo +
-           TiempoJuego::desde_milisegundos(transcurrido.obtener_milisegundos());
+    return previo + TiempoJuego::desde_milisegundos( //
+                        transcurrido.obtener_milisegundos()
+                    );
 }
 
 void GestorTiempoJuego::activar() {
