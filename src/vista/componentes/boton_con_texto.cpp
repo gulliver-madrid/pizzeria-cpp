@@ -90,6 +90,16 @@ Posicionamiento::calcular_posicion_absoluta(
 
 size_t BotonConTexto::_proximo_id = 1;
 
+//////// Metodos privados
+
+/**
+ * @brief Constructor por defecto privado.
+ */
+BotonConTexto::BotonConTexto() { //
+    posicionamiento = std::make_unique<Posicionamiento>();
+    _asignar_id();
+};
+
 /*
  * Debe ser llamado en todos los constructores para garantizar que ningun boton
  * se queda sin su _id.
@@ -99,10 +109,6 @@ void BotonConTexto::_asignar_id() {
         _id = _proximo_id++;
     }
 }
-
-BotonConTexto &BotonConTexto::operator=(BotonConTexto &&) noexcept = default;
-BotonConTexto::BotonConTexto(BotonConTexto &&otro) noexcept = default;
-BotonConTexto::~BotonConTexto() = default;
 
 /**
  * @brief Calcula y establece la posicion absoluta del boton.
@@ -123,47 +129,7 @@ void BotonConTexto::_actualizar_posicion_absoluta() {
     _etiqueta.setPosition(pos_etiqueta);
 }
 
-/**
- * @brief Establece el rectangulo padre y recalcula la posicion absoluta del
- * boton.
- *
- * Esta funcion define el rectangulo padre que se utiliza para calcular la
- * posicion absoluta del boton. Despues de establecer el rectangulo padre,
- * actualiza la posicion del boton.
- *
- * @param rect El rectangulo que representa el espacio disponible para el boton.
- */
-void BotonConTexto::establecer_rect_padre(const sf::FloatRect &rect) {
-    posicionamiento->contenedor = rect;
-    _actualizar_posicion_absoluta();
-}
-
-/**
- * @brief Establece la posicion relativa del boton y actualiza su posicion
- * absoluta.
- *
- * Define la posicion relativa del boton y su alineamiento. Con estos nuevos
- * valores, actualiza la posicion del boton.
- *
- * @param posicion Nueva posicion relativa del boton.
- * @param align Alineamiento del boton con respecto a su posicion relativa.
- */
-void BotonConTexto::establecer_posicion(
-    const sf::Vector2f &posicion, //
-    const Align align             //
-) {
-    posicionamiento->alineamiento = align;
-    posicionamiento->posicion_relativa = posicion;
-    _actualizar_posicion_absoluta();
-}
-
-/**
- * @brief Constructor por defecto privado.
- */
-BotonConTexto::BotonConTexto() { //
-    posicionamiento = std::make_unique<Posicionamiento>();
-    _asignar_id();
-};
+//////// Metodos publicos
 
 /**
  * @brief Constructor que inicializa un boton con texto pero sin posicion
@@ -225,6 +191,44 @@ BotonConTexto::BotonConTexto(
     : BotonConTexto(boton_data, font, escala) {
     establecer_posicion(posicion, align);
 };
+
+BotonConTexto &BotonConTexto::operator=(BotonConTexto &&) noexcept = default;
+BotonConTexto::BotonConTexto(BotonConTexto &&otro) noexcept = default;
+BotonConTexto::~BotonConTexto() = default;
+
+/**
+ * @brief Establece el rectangulo padre y recalcula la posicion absoluta del
+ * boton.
+ *
+ * Esta funcion define el rectangulo padre que se utiliza para calcular la
+ * posicion absoluta del boton. Despues de establecer el rectangulo padre,
+ * actualiza la posicion del boton.
+ *
+ * @param rect El rectangulo que representa el espacio disponible para el boton.
+ */
+void BotonConTexto::establecer_rect_padre(const sf::FloatRect &rect) {
+    posicionamiento->contenedor = rect;
+    _actualizar_posicion_absoluta();
+}
+
+/**
+ * @brief Establece la posicion relativa del boton y actualiza su posicion
+ * absoluta.
+ *
+ * Define la posicion relativa del boton y su alineamiento. Con estos nuevos
+ * valores, actualiza la posicion del boton.
+ *
+ * @param posicion Nueva posicion relativa del boton.
+ * @param align Alineamiento del boton con respecto a su posicion relativa.
+ */
+void BotonConTexto::establecer_posicion(
+    const sf::Vector2f &posicion, //
+    const Align align             //
+) {
+    posicionamiento->alineamiento = align;
+    posicionamiento->posicion_relativa = posicion;
+    _actualizar_posicion_absoluta();
+}
 
 /**
  * @brief Comprueba si la posicion del mouse colisiona con el boton.

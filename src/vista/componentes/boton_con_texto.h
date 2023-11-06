@@ -22,21 +22,21 @@ class BotonConTexto : public Componente {
     double _escala = 1;
     bool _activo = true;
 
+    BotonConTexto();
     void _asignar_id();
     void _actualizar_posicion_absoluta();
-    BotonConTexto();
 
   public:
     bool visible = false;
     BotonConTexto(
         const BotonData &boton_data, //
-        const sf::Font &font,        //
+        const sf::Font &,            //
         double escala = 1            //
     );
     BotonConTexto(
         const BotonData &boton_data,  //
         const sf::Vector2f &posicion, //
-        const sf::Font &font,         //
+        const sf::Font &,             //
         Align align = Align::Left,    //
         double escala = 1             //
     );
@@ -45,11 +45,10 @@ class BotonConTexto : public Componente {
     BotonConTexto(const BotonConTexto &) = delete;
     BotonConTexto &operator=(const BotonConTexto &) = delete;
 
-    // Creamos los operadores de movimiento y asignacion de movimiento
-    // por defecto
+    // Creamos los operadores de movimiento, asignacion de movimiento y
+    // destructor por defecto
     BotonConTexto(BotonConTexto &&otro) noexcept;
     BotonConTexto &operator=(BotonConTexto &&) noexcept;
-
     ~BotonConTexto();
 
     void establecer_rect_padre(const sf::FloatRect &);
@@ -57,7 +56,7 @@ class BotonConTexto : public Componente {
     /* Establece la posicion relativa */
     void establecer_posicion(
         const sf::Vector2f &posicion, //
-        Align align = Align::Left
+        Align align = Align::Left     //
     );
     bool colisiona(const sf::Vector2i &mousePos) const;
     void dibujar(sf::RenderWindow &window);
