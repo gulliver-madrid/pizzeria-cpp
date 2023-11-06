@@ -161,22 +161,22 @@ namespace {
         const sf::Font &font
     ) {
         const auto pos_derecha = _obtener_pos_dcha_botones_generales();
-        const auto boton_data_vec = anadir_fuente( //
+        const auto datos_botones = anadir_fuente( //
             datos_botones_generales, font
         );
 
-        auto vect_botones = crear_botones_alineados_derecha(
+        auto botones = crear_botones_alineados_derecha(
             pos_derecha,                                           //
-            boton_data_vec,                                        //
+            datos_botones,                                         //
             sf::FloatRect(),                                       //
             medidas::SEPARACION_HORIZONTAL_ENTRE_BOTONES_GENERALES //
         );
 
-        assert(vect_botones.size() == 3);
+        assert(botones.size() == 3);
         return {
-            std::move(vect_botones.at(2)),
-            std::move(vect_botones.at(1)),
-            std::move(vect_botones.at(0)),
+            std::move(botones.at(2)),
+            std::move(botones.at(1)),
+            std::move(botones.at(0)),
         };
     }
 
