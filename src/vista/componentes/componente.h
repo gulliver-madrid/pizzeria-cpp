@@ -9,5 +9,5 @@ enum class Align { //
 
 class Componente {
   public:
-    void virtual establecer_rect_padre(const sf::FloatRect &) = 0;
+    void virtual establecer_contenedor(const sf::FloatRect &) = 0;
 };

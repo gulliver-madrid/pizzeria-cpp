@@ -5,7 +5,7 @@
 std::vector<BotonConTexto> crear_botones_alineados_derecha(
     const sf::Vector2f &posicion_inicial,               //
     const std::vector<BotonDataConFont> &datos_botones, //
-    const sf::FloatRect &rect_padre = sf::FloatRect(),  //
+    const sf::FloatRect &contenedor = sf::FloatRect(),  //
     int separacion = 0                                  //
 );
 

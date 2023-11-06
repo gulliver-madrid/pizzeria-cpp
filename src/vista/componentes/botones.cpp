@@ -3,15 +3,17 @@
 #include <cassert>
 
 /*
- * Crea una hilera de botones.
+ * Crea un grupo de botones en un contenedor.
  */
 std::vector<BotonConTexto> _crear_botones( //
-    const std::vector<BotonDataConFont> &datos_botones
+    const std::vector<BotonDataConFont> &datos_botones,
+    const sf::FloatRect &contenedor
 ) {
     // Crea los botones
     std::vector<BotonConTexto> botones;
     for (auto &dato : datos_botones) {
         botones.emplace_back(dato);
+        botones.back().establecer_contenedor(contenedor);
     }
     return botones;
 }
@@ -51,16 +53,15 @@ void _alinear_botones_derecha(
 std::vector<BotonConTexto> crear_botones_alineados_derecha(
     const sf::Vector2f &posicion_inicial,               //
     const std::vector<BotonDataConFont> &datos_botones, //
-    const sf::FloatRect &rect_padre,                    //
+    const sf::FloatRect &contenedor,                    //
     int separacion                                      //
 ) {
-    auto botones = _crear_botones(datos_botones);
-    std::vector<BotonConTexto *> vect_ptr;
+    auto botones = _crear_botones(datos_botones, contenedor);
+    std::vector<BotonConTexto *> botones_ptr;
     for (auto &boton : botones) {
-        boton.establecer_rect_padre(rect_padre);
-        vect_ptr.push_back(&boton);
+        botones_ptr.push_back(&boton);
     }
-    _alinear_botones_derecha(vect_ptr, posicion_inicial, separacion);
+    _alinear_botones_derecha(botones_ptr, posicion_inicial, separacion);
     return botones;
 }
 

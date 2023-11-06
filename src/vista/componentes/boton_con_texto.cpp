@@ -206,7 +206,7 @@ BotonConTexto::~BotonConTexto() = default;
  *
  * @param rect El rectangulo que representa el espacio disponible para el boton.
  */
-void BotonConTexto::establecer_rect_padre(const sf::FloatRect &rect) {
+void BotonConTexto::establecer_contenedor(const sf::FloatRect &rect) {
     posicionamiento->contenedor = rect;
     _actualizar_posicion_absoluta();
 }

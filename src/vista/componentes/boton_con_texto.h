@@ -49,7 +49,7 @@ class BotonConTexto : public Componente {
     BotonConTexto &operator=(BotonConTexto &&) noexcept;
     ~BotonConTexto();
 
-    void establecer_rect_padre(const sf::FloatRect &);
+    void establecer_contenedor(const sf::FloatRect &);
 
     /* Establece la posicion relativa */
     void establecer_posicion(

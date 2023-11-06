@@ -92,13 +92,14 @@ namespace {
                 colores::botones_encargar::TEXTO  //
             };
         };
+
         // Crea los botones
         TipoPizzaToBoton botones;
         vector<BotonConTexto *> ordenados;
         for (auto tp : tp_disponibles) {
             const BotonData boton_data = crear_boton_data(tp);
             botones.emplace(tp, BotonConTexto({boton_data, font}));
-            botones.at(tp).establecer_rect_padre(rect_panel);
+            botones.at(tp).establecer_contenedor(rect_panel);
             ordenados.push_back(&botones.at(tp));
         }
 
@@ -138,7 +139,7 @@ namespace {
                     escala                                //
                 )
             );
-            botones.at(tp).establecer_rect_padre(rect_panel);
+            botones.at(tp).establecer_contenedor(rect_panel);
             ordenados.push_back(&botones.at(tp));
         }
 
