@@ -6,6 +6,9 @@
 #include <algorithm>
 #include <cassert>
 
+using std::move;
+using std::vector;
+
 namespace colores {
     namespace botones_encargar {
         const auto FONDO = sf::Color::Green;
@@ -26,13 +29,13 @@ namespace medidas {
 // BotonesGenerales
 //////////////////////////////////////////
 
-const std::vector<BotonConTexto *> BotonesGenerales::obtener_todos() {
+const vector<BotonConTexto *> BotonesGenerales::obtener_todos() {
     return {&alternar_grid, &reiniciar, &salir};
 }
 
 namespace {
 
-    const std::vector<BotonData> datos_botones_generales = {
+    const vector<BotonData> datos_botones_generales = {
         {"Salir", sf::Color::Red},             //
         {"Reiniciar", sf::Color(255, 120, 0)}, //
         {"Alternar Grid", sf::Color::Blue}     //
@@ -47,10 +50,10 @@ namespace {
         "Empezar", sf::Color::Green, sf::Color::Black
     };
 
-    std::vector<BotonDataConFont> anadir_fuente( //
-        const std::vector<BotonData> &datos, const sf::Font &font
+    vector<BotonDataConFont> anadir_fuente( //
+        const vector<BotonData> &datos, const sf::Font &font
     ) {
-        std::vector<BotonDataConFont> result;
+        vector<BotonDataConFont> result;
         transform(
             datos.begin(), datos.end(), std::back_inserter(result),
             [&font](BotonData data) -> BotonDataConFont { //
@@ -91,7 +94,7 @@ namespace {
         };
         // Crea los botones
         TipoPizzaToBoton botones;
-        std::vector<BotonConTexto *> ordenados;
+        vector<BotonConTexto *> ordenados;
         for (auto tp : tp_disponibles) {
             const BotonData boton_data = crear_boton_data(tp);
             botones.emplace(tp, BotonConTexto({boton_data, font}));
@@ -112,7 +115,7 @@ namespace {
         const dominio::TiposDePizza &tp_disponibles //
     ) {
         TipoPizzaToBoton botones;
-        const double escala_botones = 0.7;
+        const double escala = 0.7;
         const int dif_vertical = 50;
         const int pequeno_ajuste = (-5);
 
@@ -126,13 +129,13 @@ namespace {
         );
 
         // Crea los botones
-        std::vector<BotonConTexto *> ordenados;
+        vector<BotonConTexto *> ordenados;
         for (auto tp : tp_disponibles) {
             botones.emplace(
                 tp, //
                 BotonConTexto(
                     {boton_data_botones_despachar, font}, //
-                    escala_botones                        //
+                    escala                                //
                 )
             );
             botones.at(tp).establecer_rect_padre(rect_panel);
@@ -174,9 +177,9 @@ namespace {
 
         assert(botones.size() == 3);
         return {
-            std::move(botones.at(2)),
-            std::move(botones.at(1)),
-            std::move(botones.at(0)),
+            move(botones.at(2)),
+            move(botones.at(1)),
+            move(botones.at(0)),
         };
     }
 
