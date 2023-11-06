@@ -3,6 +3,7 @@
 #include "basicos_vista.h"
 #include "componentes/botones.h"
 #include "componentes/varios.h"
+#include <algorithm>
 #include <cassert>
 
 namespace colores {
@@ -46,6 +47,19 @@ namespace {
         "Empezar", sf::Color::Green, sf::Color::Black
     };
 
+    std::vector<BotonDataConFont> anadir_fuente( //
+        const std::vector<BotonData> &datos, const sf::Font &font
+    ) {
+        std::vector<BotonDataConFont> result;
+        transform(
+            datos.begin(), datos.end(), std::back_inserter(result),
+            [&font](BotonData data) -> BotonDataConFont { //
+                return {data, font};
+            }
+        );
+        return result;
+    }
+
     /**
      * Crea y posiciona los botones asociados con la acción "encargar".
      * @param font: Fuente a utilizar para el texto del botón.
@@ -80,7 +94,7 @@ namespace {
         std::vector<BotonConTexto *> ordenados;
         for (auto tp : tp_disponibles) {
             const BotonData boton_data = crear_boton_data(tp);
-            botones.emplace(tp, BotonConTexto(boton_data, font));
+            botones.emplace(tp, BotonConTexto({boton_data, font}));
             botones.at(tp).establecer_rect_padre(rect_panel);
             ordenados.push_back(&botones.at(tp));
         }
@@ -117,7 +131,8 @@ namespace {
             botones.emplace(
                 tp, //
                 BotonConTexto(
-                    boton_data_botones_despachar, font, escala_botones
+                    {boton_data_botones_despachar, font}, //
+                    escala_botones                        //
                 )
             );
             botones.at(tp).establecer_rect_padre(rect_panel);
@@ -146,11 +161,13 @@ namespace {
         const sf::Font &font
     ) {
         const auto pos_derecha = _obtener_pos_dcha_botones_generales();
+        const auto boton_data_vec = anadir_fuente( //
+            datos_botones_generales, font
+        );
 
         auto vect_botones = crear_botones_alineados_derecha(
             pos_derecha,                                           //
-            datos_botones_generales,                               //
-            font,                                                  //
+            boton_data_vec,                                        //
             sf::FloatRect(),                                       //
             medidas::SEPARACION_HORIZONTAL_ENTRE_BOTONES_GENERALES //
         );
@@ -165,7 +182,8 @@ namespace {
 
     BotonConTexto _crear_boton_empezar(const sf::Font &font) {
         return BotonConTexto(
-            boton_data_empezar, medidas::POSICION_BOTON_EMPEZAR, font
+            {boton_data_empezar, font},     //
+            medidas::POSICION_BOTON_EMPEZAR //
         );
     }
 

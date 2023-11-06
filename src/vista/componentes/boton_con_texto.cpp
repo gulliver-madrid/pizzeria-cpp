@@ -143,9 +143,8 @@ void BotonConTexto::_actualizar_posicion_absoluta() {
  * @param escala Factor de escala para el tamano del boton y del texto.
  */
 BotonConTexto::BotonConTexto(
-    const BotonData &boton_data, //
-    const sf::Font &font,        //
-    double escala                //
+    const BotonDataConFont &boton_data, //
+    double escala                       //
 )
     : BotonConTexto() {
     this->_escala = escala;
@@ -155,8 +154,10 @@ BotonConTexto::BotonConTexto(
 
     // Primero creamos la etiqueta para usar sus limites en el Rect
     _etiqueta = crearEtiqueta(
-        boton_data.texto, medidas::TAMANO_TEXTO_BOTONES * escala,
-        boton_data.color_texto, font
+        boton_data.data.texto,                  //
+        medidas::TAMANO_TEXTO_BOTONES * escala, //
+        boton_data.data.color_texto,            //
+        boton_data.font                         //
     );
     const sf::FloatRect rect_etiqueta = _etiqueta.getGlobalBounds();
 
@@ -164,7 +165,7 @@ BotonConTexto::BotonConTexto(
         rect_etiqueta.width + margen_ambos_lados,
         rect_etiqueta.height + margen_ambos_lados
     ));
-    _forma.setFillColor(boton_data.color_fondo);
+    _forma.setFillColor(boton_data.data.color_fondo);
 };
 
 /**
@@ -182,13 +183,12 @@ BotonConTexto::BotonConTexto(
  * @param escala Factor de escala para el tamano del boton y del texto.
  */
 BotonConTexto::BotonConTexto(
-    const BotonData &boton_data,  //
-    const sf::Vector2f &posicion, //
-    const sf::Font &font,         //
-    Align align,                  //
-    double escala                 //
+    const BotonDataConFont &boton_data, //
+    const sf::Vector2f &posicion,       //
+    Align align,                        //
+    double escala                       //
 )
-    : BotonConTexto(boton_data, font, escala) {
+    : BotonConTexto(boton_data, escala) {
     establecer_posicion(posicion, align);
 };
 

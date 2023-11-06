@@ -3,11 +3,10 @@
 #include "boton_con_texto.h"
 
 std::vector<BotonConTexto> crear_botones_alineados_derecha(
-    const sf::Vector2f &posicion_inicial,              //
-    const std::vector<BotonData> &datos_botones,       //
-    const sf::Font &,                                  //
-    const sf::FloatRect &rect_padre = sf::FloatRect(), //
-    int separacion = 0                                 //
+    const sf::Vector2f &posicion_inicial,               //
+    const std::vector<BotonDataConFont> &datos_botones, //
+    const sf::FloatRect &rect_padre = sf::FloatRect(),  //
+    int separacion = 0                                  //
 );
 
 void colocar_botones_en_vertical(

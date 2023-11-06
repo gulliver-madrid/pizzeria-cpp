@@ -7,3 +7,8 @@ struct BotonData {
     sf::Color color_fondo;
     sf::Color color_texto = sf::Color::White;
 };
+
+struct BotonDataConFont {
+    BotonData data;
+    const sf::Font &font;
+};

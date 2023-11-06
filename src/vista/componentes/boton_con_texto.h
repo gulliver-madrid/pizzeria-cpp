@@ -29,16 +29,14 @@ class BotonConTexto : public Componente {
   public:
     bool visible = false;
     BotonConTexto(
-        const BotonData &boton_data, //
-        const sf::Font &,            //
-        double escala = 1            //
+        const BotonDataConFont &boton_data, //
+        double escala = 1                   //
     );
     BotonConTexto(
-        const BotonData &boton_data,  //
-        const sf::Vector2f &posicion, //
-        const sf::Font &,             //
-        Align align = Align::Left,    //
-        double escala = 1             //
+        const BotonDataConFont &boton_data, //
+        const sf::Vector2f &posicion,       //
+        Align align = Align::Left,          //
+        double escala = 1                   //
     );
 
     // Eliminamos operadores de copia y asignacion
