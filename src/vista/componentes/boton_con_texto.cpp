@@ -22,13 +22,30 @@ namespace medidas {
  * rectangulo y el alineamiento (izquierda o derecha).
  */
 struct Posicionamiento {
+  private:
+    int _obtener_pos_abs_x(const float ancho_forma);
+
+  public:
     sf::FloatRect rect_padre;
     sf::Vector2f posicion_relativa;
     Align alineamiento = Align::Left;
 
     std::pair<sf::Vector2f, sf::Vector2f>
-    calcular_posicion_absoluta(const double escala, const float forma_width);
+    calcular_posicion_absoluta(const double escala, const float ancho_forma);
 };
+
+int Posicionamiento::_obtener_pos_abs_x(const float ancho_forma) {
+    int x;
+    if (alineamiento == Align::Left) {
+        x = rect_padre.left + posicion_relativa.x;
+    } else {
+        assert(alineamiento == Align::Right);
+        // Aqui la posicion relativa se refiere desde el lado derecho del padre
+        x = rect_padre.left + rect_padre.width + posicion_relativa.x -
+            ancho_forma;
+    }
+    return x;
+}
 
 /**
  * @brief Calcula la posicion absoluta del elemento UI en la ventana.
@@ -38,28 +55,19 @@ struct Posicionamiento {
  * el alineamiento especificado.
  *
  * @param escala Factor de escala que se aplica al tamano del elemento UI.
- * @param forma_width Ancho actual del elemento UI.
+ * @param ancho_forma Ancho actual del elemento UI.
  * @return Un par de sf::Vector2f que representan la nueva posicion del elemento
  * y su etiqueta ajustada, respectivamente.
  */
 std::pair<sf::Vector2f, sf::Vector2f>
 Posicionamiento::calcular_posicion_absoluta(
-    const double escala, const float forma_width
+    const double escala, const float ancho_forma
 ) {
-    const sf::Vector2f pos_relativa = posicion_relativa;
-    const Align align = alineamiento;
     const int margen = medidas::MARGEN_BOTON * (escala * escala);
-    int x;
-    if (align == Align::Left) {
-        x = rect_padre.left + pos_relativa.x;
-    } else {
-        assert(align == Align::Right);
-        // Aqui la posicion relativa se refiere desde el lado derecho del padre
-        x = rect_padre.left + rect_padre.width + pos_relativa.x - forma_width;
-    }
-    const int y = rect_padre.getPosition().y + pos_relativa.y;
-    // Ajustamos para evitar un margen excesivo arriba y a la izquierda
     const auto margen_corregido = margen * 0.7;
+    const int x = _obtener_pos_abs_x(ancho_forma);
+    const int y = rect_padre.getPosition().y + posicion_relativa.y;
+    // Ajustamos para evitar un margen excesivo arriba y a la izquierda
     return {
         sf::Vector2f(x, y),
         sf::Vector2f(x + margen_corregido, y + margen_corregido)
