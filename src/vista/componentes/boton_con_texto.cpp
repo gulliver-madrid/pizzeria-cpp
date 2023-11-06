@@ -38,15 +38,19 @@ struct Posicionamiento {
 // Posicionamiento: implementacion
 //////////////////////////////////////////
 
+/** Devuelve la posicion absoluta del lado izquierdo del elemento UI */
 int Posicionamiento::_obtener_pos_abs_x(const float ancho_forma) const {
     switch (alineamiento) {
         case Align::Left:
             return rect_padre.left + posicion_relativa.x;
         case Align::Right:
-            // Aqui la posicion relativa se refiere desde el lado derecho del
-            // padre
-            return rect_padre.left + rect_padre.width + posicion_relativa.x -
-                   ancho_forma;
+            {
+                // Aqui la posicion relativa es
+                // desde el lado derecho del padre
+                const auto padre_right = rect_padre.left + rect_padre.width;
+                const auto pos_abs_derecha = padre_right + posicion_relativa.x;
+                return pos_abs_derecha - ancho_forma;
+            }
         default:
             throw std::out_of_range("Valor no manejado");
     }
