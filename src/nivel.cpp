@@ -30,7 +30,7 @@ class Realizador : public RealizadorBase {
         auto encargo = EncargoACocina( //
             tp, GestorTiempoJuego::obtener_tiempo_juego()
         );
-        estado.encargos.anadir(encargo);
+        estado.estado_modelo.encargos.anadir(encargo);
         return std::nullopt;
     }
 
@@ -42,8 +42,8 @@ class Realizador : public RealizadorBase {
         const dominio::TipoPizza tp
     ) {
         assert(estado.fase_actual == FaseNivel::Activa);
-        estado.control_pizzas.procesar_despacho(tp);
-        if (!estado.control_pizzas.faltan_pedidos_por_cubrir()) {
+        estado.estado_modelo.control_pizzas.procesar_despacho(tp);
+        if (!estado.estado_modelo.control_pizzas.faltan_pedidos_por_cubrir()) {
             return FaseNivel::EsperaAntesDeResultado;
         }
         return std::nullopt;
@@ -228,14 +228,15 @@ AccionGeneral Nivel::ejecutar() {
             }
         }
         // Evalua la preparacion de las pizzas
-        int total_preparadas = estado.control_pizzas.obtener_total_preparadas();
+        int total_preparadas =
+            estado.estado_modelo.control_pizzas.obtener_total_preparadas();
         if (total_preparadas < modelo_info::MAXIMO_PIZZAS_PREPARADAS) {
             int maximo =
                 modelo_info::MAXIMO_PIZZAS_PREPARADAS - total_preparadas;
             const TiempoJuego tiempo_actual =
                 GestorTiempoJuego::obtener_tiempo_juego();
             evaluar_preparacion(
-                estado.encargos, contadores, maximo, tiempo_actual
+                estado.estado_modelo.encargos, contadores, maximo, tiempo_actual
             );
         }
 

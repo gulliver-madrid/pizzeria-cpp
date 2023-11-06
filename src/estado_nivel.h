@@ -8,11 +8,18 @@ namespace modelo {
     struct ControlPizzas;
 }
 
+struct EstadoModelo {
+    modelo::ControlPizzas &control_pizzas;
+    Encargos encargos;
+
+    EstadoModelo(modelo::ControlPizzas &control);
+};
+
 /* Estado mutable de un nivel */
 struct Estado {
     FaseNivel fase_actual;
-    modelo::ControlPizzas &control_pizzas;
-    Encargos encargos;
+    EstadoModelo estado_modelo;
+
     bool establecido = false;
     bool mostrando_grid = false;
 

@@ -64,7 +64,9 @@ void Vista::actualizarIU(      //
         estado.fase_actual == FaseNivel::Activa ||
         estado.fase_actual == FaseNivel::EsperaAntesDeResultado
     ) {
-        actualizar_paneles(ventana, paneles_completos, estado.encargos);
+        actualizar_paneles(
+            ventana, paneles_completos, estado.estado_modelo.encargos
+        );
     }
 
     actualizar_etiquetas(ventana, etiquetas, estado);
@@ -122,14 +124,14 @@ void desactivar_botones_encargar_si_se_sobrepasan_objetivos(
 
 /* Actualiza el estado de los botones en funcion de varios factores */
 void actualizar_estado_botones(BotonesApp &botones, const Estado &estado) {
-    const auto &control_pizzas = estado.control_pizzas;
+    const auto &control_pizzas = estado.estado_modelo.control_pizzas;
     // Botones despachar
     const modelo::PizzasAContadores &contadores = control_pizzas.contadores;
     activar_botones_despachar_si_hay_preparadas(botones.despachar, contadores);
 
     // Botones encargar
     constexpr int maximo = modelo_info::MAXIMO_PIZZAS_EN_PREPARACION;
-    const int en_preparacion = estado.encargos.total();
+    const int en_preparacion = estado.estado_modelo.encargos.total();
     assert(en_preparacion <= maximo);
     const bool se_pueden_preparar_mas = en_preparacion < maximo;
 
@@ -142,7 +144,7 @@ void actualizar_estado_botones(BotonesApp &botones, const Estado &estado) {
         assert(pedidos.size() == 1);
         const auto &pedido = pedidos[0];
         desactivar_botones_encargar_si_se_sobrepasan_objetivos(
-            botones.encargar, contadores, estado.encargos, pedido
+            botones.encargar, contadores, estado.estado_modelo.encargos, pedido
         );
     }
 }
@@ -155,9 +157,9 @@ void actualizar_etiquetas(
 ) {
 
     const modelo::PizzasAContadores &contadores =
-        estado.control_pizzas.contadores;
+        estado.estado_modelo.control_pizzas.contadores;
 
-    auto pedidos = estado.control_pizzas.pedidos;
+    auto pedidos = estado.estado_modelo.control_pizzas.pedidos;
     switch (estado.fase_actual) {
         case FaseNivel::MostrandoInstrucciones:
             etiquetas.dibujar_instrucciones(ventana);
