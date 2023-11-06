@@ -1,5 +1,4 @@
 #include "controlador_clicks.h"
-#include "comandos.h"
 #include "estado_nivel.h"
 #include "general.h"
 #include "globales.h"
@@ -44,6 +43,22 @@ std::optional<Comando> ControladorClicks::genera_comando(
     return std::nullopt;
 }
 
+std::optional<Comando> ControladorClicks::procesa_click(
+    Globales &globales,           //
+    const BotonesApp &botones,    //
+    const Estado &estado,         //
+    const sf::Vector2i &mouse_pos //
+
+) {
+    const auto pulsado = [&globales, &mouse_pos](const BotonConTexto &boton) {
+        return globales.detecta_colision(boton, mouse_pos);
+    };
+    std::optional<Comando> comando = genera_comando( //
+        pulsado, botones, estado.fase_actual
+    );
+    return comando;
+}
+
 #define SWITCH(variante)                                                       \
     using T = std::decay_t<decltype(variante)>;                                \
     if (false) { /* Para inicializar los bloques if else */                    \
@@ -53,9 +68,9 @@ std::optional<Comando> ControladorClicks::genera_comando(
         return accion;                                                         \
     }
 /* Aplica un comando y devuelve la nueva fase, si correspondiera cambiar */
-std::optional<FaseNivel> ControladorClicks::aplica_comando( //
-    RealizadorBase &realizador,                             //
-    const Comando &comando                                  //
+std::optional<FaseNivel> aplica_comando( //
+    RealizadorBase &realizador,          //
+    const Comando &comando               //
 
 ) {
     return std::visit(
@@ -74,23 +89,3 @@ std::optional<FaseNivel> ControladorClicks::aplica_comando( //
 }
 #undef SWITCH
 #undef CASE
-
-std::optional<FaseNivel> ControladorClicks::procesa_click(
-    Globales &globales,           //
-    const BotonesApp &botones,    //
-    const Estado &estado,         //
-    RealizadorBase &realizador,   //
-    const sf::Vector2i &mouse_pos //
-
-) {
-    const auto pulsado = [&globales, &mouse_pos](const BotonConTexto &boton) {
-        return globales.detecta_colision(boton, mouse_pos);
-    };
-    std::optional<Comando> comando = genera_comando( //
-        pulsado, botones, estado.fase_actual
-    );
-    if (!comando) {
-        return std::nullopt;
-    }
-    return aplica_comando(realizador, comando.value());
-}

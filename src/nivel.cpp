@@ -87,7 +87,7 @@ std::optional<FaseNivel> Nivel::procesarEvento(
             break;
         case sf::Event::Resized:
             {
-                // Actualiza la View al nuevo tamaño de la ventana
+                // Actualiza la View al nuevo tamano de la ventana
                 sf::FloatRect visibleArea(
                     0, 0, evento.size.width, evento.size.height
                 );
@@ -98,9 +98,13 @@ std::optional<FaseNivel> Nivel::procesarEvento(
             {
                 Realizador realizador{estado};
                 const sf::Vector2i mouse_pos = sf::Mouse::getPosition(ventana);
-                siguiente_fase = controlador_clicks->procesa_click(
-                    globales, botones, estado, realizador, mouse_pos
+                const auto comando = controlador_clicks->procesa_click(
+                    globales, botones, estado, mouse_pos
                 );
+                if (!comando) {
+                    return std::nullopt;
+                }
+                return aplica_comando(realizador, comando.value());
             }
             break;
         default:
