@@ -11,6 +11,16 @@ namespace medidas {
 // Posicionamiento
 //////////////////////////////////////////
 
+/**
+ * @struct Posicionamiento
+ *
+ * @brief Gestiona la posician de un elemento UI respecto a un rectangulo padre.
+ *
+ * Esta estructura contiene informacion sobre como un elemento UI debe ser
+ * posicionado en la ventana. Esto incluye el rectangulo dentro del cual el
+ * elemento debe ser colocado (rect_padre), la posicion relativa dentro de este
+ * rectangulo y el alineamiento (izquierda o derecha).
+ */
 struct Posicionamiento {
     sf::FloatRect rect_padre;
     sf::Vector2f posicion_relativa;
@@ -20,6 +30,18 @@ struct Posicionamiento {
     calcular_posicion_absoluta(const double escala, const float forma_width);
 };
 
+/**
+ * @brief Calcula la posicion absoluta del elemento UI en la ventana.
+ *
+ * Toma en cuenta el factor de escala y el ancho del elemento para determinar
+ * su nueva posicion absoluta en la ventana. Esta posicion se ajusta segun
+ * el alineamiento especificado.
+ *
+ * @param escala Factor de escala que se aplica al tamano del elemento UI.
+ * @param forma_width Ancho actual del elemento UI.
+ * @return Un par de sf::Vector2f que representan la nueva posicion del elemento
+ * y su etiqueta ajustada, respectivamente.
+ */
 std::pair<sf::Vector2f, sf::Vector2f>
 Posicionamiento::calcular_posicion_absoluta(
     const double escala, const float forma_width
@@ -63,9 +85,16 @@ BotonConTexto &BotonConTexto::operator=(BotonConTexto &&) noexcept = default;
 BotonConTexto::BotonConTexto(BotonConTexto &&otro) noexcept = default;
 BotonConTexto::~BotonConTexto() = default;
 
-void BotonConTexto::_calcular_posicion_absoluta() {
-    // esta posicion estara a la derecha o a la izquierda de acuerdo con el
-    // alineamiento
+/**
+ * @brief Calcula y establece la posicion absoluta del boton.
+ *
+ * Esta funcion actualiza la posicion absoluta del boton en la
+ * ventana, tomando en cuenta el alineamiento actual y el factor de escala del
+ * boton. La posicion absoluta se calcula a partir de la posicion relativa y las
+ * dimensiones del rectangulo padre. Esta posicion estara a la derecha o a la
+ * izquierda del boton de acuerdo con el alineamiento.
+ */
+void BotonConTexto::_actualizar_posicion_absoluta() {
     const auto [pos_forma, pos_etiqueta] =
         posicionamiento->calcular_posicion_absoluta(
             _escala, _forma.getGlobalBounds().width
@@ -75,30 +104,53 @@ void BotonConTexto::_calcular_posicion_absoluta() {
     _etiqueta.setPosition(pos_etiqueta);
 }
 
+/**
+ * @brief Establece el rectangulo padre y recalcula la posicion absoluta del
+ * boton.
+ *
+ * Esta funcion define el rectangulo padre que se utiliza para calcular la
+ * posicion absoluta del boton. Despues de establecer el rectangulo padre,
+ * actualiza la posicion del boton.
+ *
+ * @param rect El rectangulo que representa el espacio disponible para el boton.
+ */
 void BotonConTexto::establecer_rect_padre(const sf::FloatRect &rect) {
     posicionamiento->rect_padre = rect;
-    _calcular_posicion_absoluta();
+    _actualizar_posicion_absoluta();
 }
 
+/**
+ * @brief Establece la posicion relativa del boton y actualiza su posicion
+ * absoluta.
+ *
+ * Define la posicion relativa del boton y su alineamiento. Con estos nuevos
+ * valores, actualiza la posicion del boton.
+ *
+ * @param posicion Nueva posicion relativa del boton.
+ * @param align Alineamiento del boton con respecto a su posicion relativa.
+ */
 void BotonConTexto::establecer_posicion(
     const sf::Vector2f &posicion, //
-    const Align align
+    const Align align             //
 ) {
     posicionamiento->alineamiento = align;
     posicionamiento->posicion_relativa = posicion;
-    _calcular_posicion_absoluta();
+    _actualizar_posicion_absoluta();
 }
 
+/**
+ * @brief Constructor por defecto privado.
+ */
 BotonConTexto::BotonConTexto() { //
     posicionamiento = std::make_unique<Posicionamiento>();
     _asignar_id();
 };
 
 /**
- * @brief Constructor por defecto que inicializa un boton con texto.
+ * @brief Constructor que inicializa un boton con texto pero sin posicion
+ * definida.
  *
- * Este constructor crea un boton con texto sin definir su posicion en la
- * pantalla. La apariencia del boton se escala segun el parametro proporcionado.
+ * La apariencia del boton se escala segun el parametro proporcionado
  *
  * @param boton_data Estructura que contiene los datos del boton como el texto,
  *                   color del texto, y color de fondo.
@@ -114,6 +166,7 @@ BotonConTexto::BotonConTexto(
     this->_escala = escala;
     // La escala del margen es proporcional al cuadrado de la escala del boton
     int margen = medidas::MARGEN_BOTON * (escala * escala);
+
     // Primero creamos la etiqueta para usar sus limites en el Rect
     _etiqueta = crearEtiqueta(
         boton_data.texto, medidas::TAMANO_TEXTO_BOTONES * escala,
@@ -169,7 +222,18 @@ bool BotonConTexto::colisiona(const sf::Vector2i &pos_raton) const {
         static_cast<float>(pos_raton.x), static_cast<float>(pos_raton.y)
     );
 }
-
+/**
+ * @brief Dibuja el boton en la ventana proporcionada.
+ *
+ * Esta funcion es responsable de renderizar el boton en la ventana de la
+ * aplicacion. Verifica si el boton esta marcado como visible antes de proceder.
+ * Si el boton esta activo, se muestra con su color activo; de lo contrario, se
+ * muestra con un color gris por defecto. La etiqueta del boton se dibuja sobre
+ * el boton.
+ *
+ * @param window Referencia a la ventana de renderizado donde se dibujara el
+ * boton.
+ */
 void BotonConTexto::dibujar(sf::RenderWindow &window) {
     if (!visible)
         return;
@@ -200,6 +264,9 @@ void BotonConTexto::desactivar() {
         _activo = false;
 }
 
+/**
+ * Activo o desactiva el boton en funcion de si se cumple la condicion.
+ */
 void BotonConTexto::activacion_condicional(bool condicion) {
     if (condicion) {
         activar();
@@ -207,11 +274,23 @@ void BotonConTexto::activacion_condicional(bool condicion) {
         desactivar();
     }
 }
+
+/**
+ * Devuelve el id del boton
+ */
 size_t BotonConTexto::get_id() const { //
     assert(_id.has_value());
     return _id.value();
 }
 
+/**
+ * @brief Verifica si el boton esta actualmente activo.
+ *
+ * Retorna el estado actual del boton, indicando si este esta activo y puede
+ * interactuar con el usuario o no.
+ *
+ * @return true si el boton esta activo, false en caso contrario.
+ */
 bool BotonConTexto::esta_activo() const { //
     return _activo;
 }

@@ -22,7 +22,7 @@ class BotonConTexto : public Componente {
     bool _activo = true;
 
     void _asignar_id();
-    void _calcular_posicion_absoluta();
+    void _actualizar_posicion_absoluta();
     BotonConTexto();
 
   public:
