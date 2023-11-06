@@ -27,6 +27,7 @@ struct TitulosPaneles {
 };
 
 struct PanelesCompletos {
+    const sf::Font &font;
     Paneles paneles;
     TitulosPaneles titulos_paneles;
     std::vector<BarraProgresoConNombre> barras_progreso_con_nombres;
@@ -34,7 +35,7 @@ struct PanelesCompletos {
 
     PanelesCompletos(const sf::Font &font);
     void dibujar(
-        sf::RenderWindow &ventana, const EstadoPreparacionPizzas &preparacion,
-        const sf::Font &font
+        sf::RenderWindow &ventana,                 //
+        const EstadoPreparacionPizzas &preparacion //
     );
 };

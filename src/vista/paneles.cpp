@@ -48,7 +48,7 @@ void TitulosPaneles::dibujar(sf::RenderWindow &ventana) {
     ventana.draw(pedidos);
 }
 
-PanelesCompletos::PanelesCompletos(const sf::Font &font) {
+PanelesCompletos::PanelesCompletos(const sf::Font &font) : font(font) {
     const FabricaEtiquetasTituloPanel fabrica(font);
     const auto crea_titulo = [&fabrica](
                                  const IndicePanel indice_panel,
@@ -68,9 +68,9 @@ PanelesCompletos::PanelesCompletos(const sf::Font &font) {
 }
 
 void PanelesCompletos::dibujar(
-    sf::RenderWindow &ventana,                  //
-    const EstadoPreparacionPizzas &preparacion, //
-    const sf::Font &font                        //
+    sf::RenderWindow &ventana,                 //
+    const EstadoPreparacionPizzas &preparacion //
+
 ) {
     if (!visible)
         return;

@@ -190,6 +190,5 @@ void Vista::actualizar_paneles(
     PanelesCompletos &paneles_completos,       //
     const EstadoPreparacionPizzas &preparacion //
 ) {
-
-    paneles_completos.dibujar(ventana, preparacion, font);
+    paneles_completos.dibujar(ventana, preparacion);
 }
