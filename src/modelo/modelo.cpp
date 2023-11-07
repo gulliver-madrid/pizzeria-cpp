@@ -54,6 +54,10 @@ void Pedido::evaluar() {
     }
 }
 
+bool Pedido::incluye(dominio::TipoPizza tp) { //
+    return contenido.count(tp) > 0;
+}
+
 /*
  * Evalua si hay pizzas ya preparadas y actualiza encargos y contadores en
  * consecuencia. Las pizzas que lleven más tiempo preparadas pasan antes.

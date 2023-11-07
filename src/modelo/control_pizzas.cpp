@@ -38,7 +38,7 @@ void ControlPizzas::procesar_despacho(const dominio::TipoPizza tp) {
         if (pedido.cubierto) {
             continue;
         }
-        if (pedido.contenido.count(tp) == 0) {
+        if (!pedido.incluye(tp)) {
             continue;
         }
         auto &pedido_tp = pedido.contenido.at(tp);

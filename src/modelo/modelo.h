@@ -38,8 +38,9 @@ using ContenidoPedido = std::map<dominio::TipoPizza, PedidoTipoPizza>;
 struct Pedido {
     ContenidoPedido contenido;
     bool cubierto = false;
-    Pedido(ContenidoPedido &&contenido);
+    Pedido(ContenidoPedido &&);
     void evaluar();
+    bool incluye(dominio::TipoPizza);
 };
 
 void evaluar_preparacion(
