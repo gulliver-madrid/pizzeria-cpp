@@ -1,4 +1,5 @@
 #include "paneles.h"
+#include "../shared.h"
 #include "basicos_vista.h"
 #include "etiquetas/etiquetas.h"
 #include <SFML/Graphics.hpp>
