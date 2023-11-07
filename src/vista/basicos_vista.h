@@ -9,6 +9,9 @@ enum class IndicePanel {
     PANEL_PEDIDOS,
 };
 
+constexpr int NUMERO_DE_TIPOS_DE_PANEL = 4;
+extern IndicePanel paneles_posibles[NUMERO_DE_TIPOS_DE_PANEL];
+
 namespace medidas {
     constexpr int ANCHO_PANEL = 390;
     constexpr int ALTO_PANEL = 700;

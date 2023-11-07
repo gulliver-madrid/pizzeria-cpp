@@ -9,22 +9,16 @@
 enum class IndicePanel;
 
 struct Paneles {
-    sf::RectangleShape encargar;
-    sf::RectangleShape en_preparacion;
-    sf::RectangleShape preparadas;
-    sf::RectangleShape pedidos;
+    std::map<IndicePanel, sf::RectangleShape> contenido;
 
     Paneles();
-    void dibujar(sf::RenderWindow &window);
+    void dibujar(sf::RenderWindow &);
 };
 
-struct TitulosPaneles {
-    sf::Text encargar;
-    sf::Text en_preparacion;
-    sf::Text preparadas;
-    sf::Text pedidos;
-
-    void dibujar(sf::RenderWindow &window);
+struct TitulosPaneles : public ObjetoConFont {
+    std::map<IndicePanel, sf::Text> contenido;
+    TitulosPaneles(const sf::Font &);
+    void dibujar(sf::RenderWindow &);
 };
 
 struct PanelesCompletos : public ObjetoConFont {
@@ -33,9 +27,9 @@ struct PanelesCompletos : public ObjetoConFont {
     std::vector<BarraProgresoConNombre> barras_progreso_con_nombres;
     bool visible = false;
 
-    PanelesCompletos(const sf::Font &font);
+    PanelesCompletos(const sf::Font &);
     void dibujar(
-        sf::RenderWindow &ventana,                 //
-        const EstadoPreparacionPizzas &preparacion //
+        sf::RenderWindow &,             //
+        const EstadoPreparacionPizzas & //
     );
 };

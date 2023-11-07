@@ -4,6 +4,13 @@ namespace medidas {
     constexpr int DESPLAZAMIENTO_LATERAL = ANCHO_PANEL + 42;
 } // namespace medidas
 
+IndicePanel paneles_posibles[] = {
+    IndicePanel::PANEL_ENCARGAR,       //
+    IndicePanel::PANEL_EN_PREPARACION, //
+    IndicePanel::PANEL_PREPARADAS,     //
+    IndicePanel::PANEL_PEDIDOS,        //
+};
+
 namespace {
     float _obtener_posicion_x_panel(IndicePanel indice_panel) {
         return medidas::MARGEN_IZQ_PANELES + (medidas::DESPLAZAMIENTO_LATERAL *

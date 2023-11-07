@@ -1,10 +1,12 @@
 #pragma once
 
 #include <cassert>
+#include <map>
 
 namespace sf {
     class Font;
-}
+    class RenderWindow;
+} // namespace sf
 
 constexpr bool MODO_DESARROLLO = true;
 
@@ -33,3 +35,13 @@ class ObjetoConFont {
   public:
     ObjetoConFont(const sf::Font &font) : font(font) {}
 };
+
+template <typename Key, typename Drawable>
+void dibujar_elementos(
+    sf::RenderWindow &ventana,               //
+    const std::map<Key, Drawable> &elementos //
+) {
+    for (const auto &[_, drawable] : elementos) {
+        ventana.draw(drawable);
+    }
+}

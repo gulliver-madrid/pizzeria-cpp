@@ -9,6 +9,13 @@ namespace medidas {
     constexpr int GROSOR_BORDE_PANEL = 3;
 } // namespace medidas
 
+const std::map<IndicePanel, std::string> titulos_paneles = {
+    {IndicePanel::PANEL_ENCARGAR, "Encargar"},
+    {IndicePanel::PANEL_EN_PREPARACION, "En preparaci%on"},
+    {IndicePanel::PANEL_PREPARADAS, "Preparadas"},
+    {IndicePanel::PANEL_PEDIDOS, "Pedidos"}
+};
+
 namespace {
     sf::RectangleShape _crearPanelVertical(float x, float y) {
         auto rect = sf::RectangleShape(
@@ -28,44 +35,37 @@ namespace {
 } // namespace
 
 Paneles::Paneles() {
-    encargar = crear_panel_estandar(IndicePanel::PANEL_ENCARGAR);
-    en_preparacion = crear_panel_estandar(IndicePanel::PANEL_EN_PREPARACION);
-    preparadas = crear_panel_estandar(IndicePanel::PANEL_PREPARADAS);
-    pedidos = crear_panel_estandar(IndicePanel::PANEL_PEDIDOS);
+    for (auto indice : paneles_posibles) {
+        contenido.emplace(indice, crear_panel_estandar(indice));
+    }
 }
 
-void Paneles::dibujar(sf::RenderWindow &window) {
-    window.draw(encargar);
-    window.draw(en_preparacion);
-    window.draw(preparadas);
-    window.draw(pedidos);
+void Paneles::dibujar(sf::RenderWindow &ventana) {
+    dibujar_elementos(ventana, contenido);
 }
 
-void TitulosPaneles::dibujar(sf::RenderWindow &ventana) {
-    ventana.draw(encargar);
-    ventana.draw(en_preparacion);
-    ventana.draw(preparadas);
-    ventana.draw(pedidos);
-}
-
-PanelesCompletos::PanelesCompletos(const sf::Font &font) : ObjetoConFont(font) {
+TitulosPaneles::TitulosPaneles(const sf::Font &font) : ObjetoConFont(font) {
     const FabricaEtiquetasTituloPanel fabrica(font);
     const auto crea_titulo = [&fabrica](
-                                 const IndicePanel indice_panel,
-                                 const std::string texto_crudo
+                                 const IndicePanel indice,      //
+                                 const std::string &texto_crudo //
                              ) {
         return fabrica.crearEtiquetaTituloPanel(
-            basicos_vista::obtener_posicion_panel(indice_panel), //
+            basicos_vista::obtener_posicion_panel(indice), //
             texto_crudo
         );
     };
-    titulos_paneles = {
-        crea_titulo(IndicePanel::PANEL_ENCARGAR, "Encargar"),
-        crea_titulo(IndicePanel::PANEL_EN_PREPARACION, "En preparaci%on"),
-        crea_titulo(IndicePanel::PANEL_PREPARADAS, "Preparadas"),
-        crea_titulo(IndicePanel::PANEL_PEDIDOS, "Pedidos")
-    };
+    for (auto &[indice, texto_crudo] : titulos_paneles) {
+        contenido.emplace(indice, crea_titulo(indice, texto_crudo));
+    }
 }
+
+void TitulosPaneles::dibujar(sf::RenderWindow &ventana) {
+    dibujar_elementos(ventana, contenido);
+}
+
+PanelesCompletos::PanelesCompletos(const sf::Font &font)
+    : ObjetoConFont(font), titulos_paneles(font) {}
 
 void PanelesCompletos::dibujar(
     sf::RenderWindow &ventana,                 //
@@ -79,8 +79,9 @@ void PanelesCompletos::dibujar(
     auto pos_panel = basicos_vista::obtener_posicion_panel( //
         IndicePanel::PANEL_EN_PREPARACION
     );
-    barras_progreso_con_nombres =
-        crear_barras_progreso(preparacion, pos_panel, font);
+    barras_progreso_con_nombres = crear_barras_progreso( //
+        preparacion, pos_panel, font
+    );
     for (auto &bpn : barras_progreso_con_nombres) {
         bpn.dibujar(ventana);
     }
