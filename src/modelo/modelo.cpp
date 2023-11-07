@@ -29,6 +29,8 @@ EstadoPreparacionPizzas::EstadoPreparacionPizzas(
     }
 }
 
+//////// PedidoTipoPizza
+
 PedidoTipoPizza::PedidoTipoPizza(int objetivo) : objetivo(objetivo) {
     assert(objetivo >= 0);
 }
@@ -39,12 +41,20 @@ PedidoTipoPizza::PedidoTipoPizza(int servido, int objetivo)
     assert(servido <= objetivo);
 }
 
+bool PedidoTipoPizza::cubierto() const {
+    assert(servido <= objetivo);
+    return servido == objetivo;
+}
+
+//////// Pedido
+
 Pedido::Pedido(ContenidoPedido &&contenido) : contenido(std::move(contenido)) {}
 
+/* Evalua si el pedido esta cubierto */
 void Pedido::evaluar() {
     bool faltan = false;
     for (auto &[_, pedido_tp] : contenido) {
-        if (pedido_tp.servido < pedido_tp.objetivo) {
+        if (!pedido_tp.cubierto()) {
             faltan = true;
             break;
         }
@@ -55,7 +65,24 @@ void Pedido::evaluar() {
 }
 
 bool Pedido::incluye(dominio::TipoPizza tp) { //
+                                              // TODO: add const
     return contenido.count(tp) > 0;
+}
+
+bool Pedido::intentar_servir(const dominio::TipoPizza tp) {
+    if (cubierto) {
+        return false;
+    }
+    if (!incluye(tp)) {
+        return false;
+    }
+    auto &pedido_tp = contenido.at(tp);
+    if (pedido_tp.cubierto()) {
+        return false;
+    }
+    pedido_tp.servido++;
+    evaluar();
+    return true;
 }
 
 /*

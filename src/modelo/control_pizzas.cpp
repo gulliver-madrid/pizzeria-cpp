@@ -35,23 +35,11 @@ void ControlPizzas::procesar_despacho(const dominio::TipoPizza tp) {
     contador.preparadas--;
     bool servida = false;
     for (auto &pedido : pedidos) {
-        if (pedido.cubierto) {
-            continue;
+        servida = pedido.intentar_servir(tp);
+        if (servida) {
+            break;
         }
-        if (!pedido.incluye(tp)) {
-            continue;
-        }
-        auto &pedido_tp = pedido.contenido.at(tp);
-        if (pedido_tp.servido == pedido_tp.objetivo) {
-            continue;
-        }
-        assert(pedido_tp.servido < pedido_tp.objetivo);
-        pedido_tp.servido++;
-        pedido.evaluar();
-        servida = true;
-        break;
     }
-
     if (servida) {
         contador.servidas++;
     }

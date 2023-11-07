@@ -30,6 +30,7 @@ struct PedidoTipoPizza {
     int objetivo = 0;
     PedidoTipoPizza(int objetivo);
     PedidoTipoPizza(int servido, int objetivo);
+    bool cubierto() const;
 };
 
 using ContenidoPedido = std::map<dominio::TipoPizza, PedidoTipoPizza>;
@@ -41,6 +42,8 @@ struct Pedido {
     Pedido(ContenidoPedido &&);
     void evaluar();
     bool incluye(dominio::TipoPizza);
+    /* Devuelve true si acepta el servicio */
+    bool intentar_servir(dominio::TipoPizza);
 };
 
 void evaluar_preparacion(
