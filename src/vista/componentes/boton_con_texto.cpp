@@ -1,4 +1,5 @@
 #include "boton_con_texto.h"
+#include "../../shared.h"
 #include "varios.h"
 #include <cassert>
 
@@ -269,8 +270,7 @@ void BotonConTexto::dibujar(sf::RenderWindow &window) {
     } else {
         _forma.setFillColor(sf::Color(100, 100, 100));
     }
-    window.draw(_forma);
-    window.draw(_etiqueta);
+    dibujar_elementos(window, std::make_tuple(_forma, _etiqueta));
 }
 
 /**

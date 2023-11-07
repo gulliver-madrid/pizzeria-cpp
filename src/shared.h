@@ -2,6 +2,8 @@
 
 #include <cassert>
 #include <map>
+#include <tuple>
+#include <vector>
 
 namespace sf {
     class Font;
@@ -41,7 +43,28 @@ void dibujar_elementos(
     sf::RenderWindow &ventana,               //
     const std::map<Key, Drawable> &elementos //
 ) {
-    for (const auto &[_, drawable] : elementos) {
-        ventana.draw(drawable);
+    for (const auto &[_, elemento] : elementos) {
+        ventana.draw(elemento);
     }
+}
+
+template <typename Drawable>
+void dibujar_elementos(
+    sf::RenderWindow &ventana, const std::vector<Drawable> &elementos
+) {
+    for (const auto &elemento : elementos) {
+        ventana.draw(elemento);
+    }
+}
+
+template <typename... Drawables>
+void dibujar_elementos(
+    sf::RenderWindow &ventana, const std::tuple<Drawables...> &drawables
+) {
+    std::apply(
+        [&ventana](const auto &...drawable) { //
+            (ventana.draw(drawable), ...);
+        },
+        drawables
+    );
 }

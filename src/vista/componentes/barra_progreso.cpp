@@ -1,4 +1,5 @@
 #include "barra_progreso.h"
+#include "../../shared.h"
 #include "varios.h"
 #include <cassert>
 
@@ -49,8 +50,7 @@ void BarraProgreso::actualizar_porcentaje(int porcentaje) {
     );
 }
 void BarraProgreso::dibujar(sf::RenderWindow &ventana) const {
-    ventana.draw(fondo);
-    ventana.draw(relleno);
+    dibujar_elementos(ventana, std::make_tuple(fondo, relleno));
 }
 
 ///////////////////////////////////////////

@@ -86,9 +86,7 @@ void EtiquetasContadores::_actualizar_pedidos_dinamicos( //
 void EtiquetasContadores::dibujar(sf::RenderWindow &ventana) const {
     dibujar_elementos(ventana, etiquetas_preparadas);
     dibujar_elementos(ventana, etiquetas_servidas);
-    for (auto &etiqueta : etiquetas_pedidos) {
-        ventana.draw(etiqueta);
-    }
+    dibujar_elementos(ventana, etiquetas_pedidos);
 }
 
 void EtiquetasContadores::actualizar(
