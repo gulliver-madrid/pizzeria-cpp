@@ -22,16 +22,13 @@ class Realizador : public RealizadorBase {
 
   public:
     Realizador(Estado &estado) : estado(estado) {}
+
     /* Encarga una pizza a la cocina del tipo indicado */
     NuevaFase encargar_pizza( //
         const dominio::TipoPizza tp
     ) {
         assert(estado.fase_actual == FaseNivel::Activa);
-        // TODO: pasar a EstadoModelo esta logica
-        auto encargo = EncargoACocina( //
-            tp, estado.estado_modelo.gestor_tiempo.obtener_tiempo_juego()
-        );
-        estado.estado_modelo.encargos.anadir(encargo);
+        estado.estado_modelo.anadir_encargo(tp);
         return std::nullopt;
     }
 

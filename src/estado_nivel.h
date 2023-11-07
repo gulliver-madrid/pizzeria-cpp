@@ -14,6 +14,7 @@ struct EstadoModelo {
     GestorTiempoJuego gestor_tiempo;
 
     EstadoModelo(modelo::ControlPizzas &control);
+    void anadir_encargo(dominio::TipoPizza tp);
 };
 
 /* Estado mutable de un nivel */
