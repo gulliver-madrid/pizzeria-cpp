@@ -40,8 +40,8 @@ class Realizador : public RealizadorBase {
         const dominio::TipoPizza tp
     ) {
         assert(estado.fase_actual == FaseNivel::Activa);
-        estado.estado_modelo.control_pizzas.procesar_despacho(tp);
-        if (!estado.estado_modelo.control_pizzas.faltan_pedidos_por_cubrir()) {
+        const auto pedidos_cubiertos = estado.estado_modelo.despachar_pizza(tp);
+        if (pedidos_cubiertos) {
             return FaseNivel::EsperaAntesDeResultado;
         }
         return std::nullopt;

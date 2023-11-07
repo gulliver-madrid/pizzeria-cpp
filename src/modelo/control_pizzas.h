@@ -21,7 +21,7 @@ namespace modelo {
         const EsSistemaEstatico &es_estatico;
         ControlPizzas(Pedidos pedidos_, const EsSistemaEstatico &es_estatico);
         const dominio::TiposDePizza &get_tipos_disponibles() const;
-        void procesar_despacho(const dominio::TipoPizza tp);
+        void procesar_despacho(dominio::TipoPizza tp);
         int obtener_total_preparadas() const;
         int obtener_objetivo_total_estatico() const;
         bool faltan_pedidos_por_cubrir() const;

@@ -1,5 +1,6 @@
 #include "estado_nivel.h"
 #include "general.h"
+#include "modelo/control_pizzas.h"
 
 //////// EstadoModelo
 
@@ -14,6 +15,17 @@ void EstadoModelo::anadir_encargo(dominio::TipoPizza tp) {
         tp, gestor_tiempo.obtener_tiempo_juego()
     );
     encargos.anadir(encargo);
+}
+
+/*
+ * Despacha una pizza a los clientes del tipo indicado. Devuelve true si ya
+ * se han cubierto todos los pedidos, y false en caso contrario.
+ */
+bool EstadoModelo::despachar_pizza( //
+    const dominio::TipoPizza tp
+) {
+    control_pizzas.procesar_despacho(tp);
+    return (!control_pizzas.faltan_pedidos_por_cubrir());
 }
 
 //////// Estado
