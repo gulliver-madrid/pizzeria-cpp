@@ -64,9 +64,12 @@ void Pedido::evaluar() {
     }
 }
 
-bool Pedido::incluye(dominio::TipoPizza tp) { //
-                                              // TODO: add const
+bool Pedido::incluye(dominio::TipoPizza tp) const { //
     return contenido.count(tp) > 0;
+}
+
+bool Pedido::esta_cubierto() const { //
+    return cubierto;
 }
 
 bool Pedido::intentar_servir(const dominio::TipoPizza tp) {

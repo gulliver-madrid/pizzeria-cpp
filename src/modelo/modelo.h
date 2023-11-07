@@ -36,13 +36,16 @@ struct PedidoTipoPizza {
 using ContenidoPedido = std::map<dominio::TipoPizza, PedidoTipoPizza>;
 
 /* Pedido completo, puede incluir varios tipos de pizza */
-struct Pedido {
-    ContenidoPedido contenido;
+class Pedido {
     bool cubierto = false;
+
+  public:
+    ContenidoPedido contenido;
     Pedido(ContenidoPedido &&);
     void evaluar();
-    bool incluye(dominio::TipoPizza);
+    bool incluye(dominio::TipoPizza) const;
     /* Devuelve true si acepta el servicio */
+    bool esta_cubierto() const;
     bool intentar_servir(dominio::TipoPizza);
 };
 

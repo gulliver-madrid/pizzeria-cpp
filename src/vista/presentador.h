@@ -5,7 +5,7 @@
 namespace dominio {
     enum class TipoPizza;
 }
-struct Pedido;
+class Pedido;
 
 namespace presentador {
     std::string crea_linea_completitud_pizza(

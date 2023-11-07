@@ -69,7 +69,7 @@ int ControlPizzas::obtener_objetivo_total_estatico() const {
 bool ControlPizzas::faltan_pedidos_por_cubrir() const {
     bool faltan = false;
     for (auto &pedido : pedidos) {
-        if (!pedido.cubierto) {
+        if (!pedido.esta_cubierto()) {
             faltan = true;
             break;
         }
