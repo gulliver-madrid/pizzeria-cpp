@@ -34,6 +34,20 @@ EstadoModelo::obtener_estado_preparacion_pizzas() const {
     const auto tiempo_actual = gestor_tiempo.obtener_tiempo_juego();
     return {encargos, tiempo_actual};
 }
+TiempoJuego EstadoModelo::obtener_tiempo_juego() const {
+    return gestor_tiempo.obtener_tiempo_juego();
+}
+
+void EstadoModelo::evaluar_preparacion_pizzas() {
+    int total_preparadas = control_pizzas.obtener_total_preparadas();
+    int preparables = modelo_info::MAXIMO_PIZZAS_PREPARADAS - total_preparadas;
+    if (preparables > 0) {
+        const auto tiempo_actual = gestor_tiempo.obtener_tiempo_juego();
+        evaluar_preparacion(
+            encargos, control_pizzas.contadores, preparables, tiempo_actual
+        );
+    }
+}
 
 //////// Estado
 

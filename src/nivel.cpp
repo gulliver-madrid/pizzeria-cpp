@@ -227,18 +227,7 @@ AccionGeneral Nivel::ejecutar() {
                 return accion.value();
             }
         }
-        // Evalua la preparacion de las pizzas
-        int total_preparadas =
-            estado.estado_modelo.control_pizzas.obtener_total_preparadas();
-        if (total_preparadas < modelo_info::MAXIMO_PIZZAS_PREPARADAS) {
-            int maximo =
-                modelo_info::MAXIMO_PIZZAS_PREPARADAS - total_preparadas;
-            const TiempoJuego tiempo_actual =
-                gestor_tiempo.obtener_tiempo_juego();
-            evaluar_preparacion(
-                estado.estado_modelo.encargos, contadores, maximo, tiempo_actual
-            );
-        }
+        estado.estado_modelo.evaluar_preparacion_pizzas();
 
         // En funcion de la fase actual (no necesariamente recien iniciada)
         switch (estado.fase_actual) {

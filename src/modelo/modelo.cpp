@@ -90,21 +90,20 @@ bool Pedido::intentar_servir(const dominio::TipoPizza tp) {
 
 /*
  * Evalua si hay pizzas ya preparadas y actualiza encargos y contadores en
- * consecuencia. Las pizzas que lleven más tiempo preparadas pasan antes.
+ * consecuencia. Las pizzas que lleven mas tiempo preparadas pasan antes.
  *
  * [in, out] encargos: Lista de encargos en la cocina
  * [out] contadores: Mapa de contadores para cada tipo de pizza
- * [in] maximo: Número máximo de pizzas que pueden salir de la cocina
+ * [in] preparables: Numero maximo de pizzas que pueden salir de la cocina
  * [in] tiempo_actual: TiempoJuego actual para comparar con el tiempo de
- * finalización de la preparación
+ * finalizacion de la preparacion
  */
 void evaluar_preparacion(
     Encargos &encargos,                    //
     modelo::PizzasAContadores &contadores, //
-    int maximo,                            //
+    int preparables,                       //
     const TiempoJuego &tiempo_actual       //
 ) {
-    // std::cout << "Evaluando preparación" << std::endl;
     size_t i = 0;
     std::vector<std::pair<size_t, int>> pizzas_listas_con_tiempo;
     Encargos restantes;
@@ -122,18 +121,15 @@ void evaluar_preparacion(
         i++;
     }
 
-    // std::cout << "Se detectaron " << pizzas_listas_con_tiempo.size()
-    //           << " pizzas listas" << std::endl;
-
     // Ordenar y limitar las pizzas que pueden salir
-    if (pizzas_listas_con_tiempo.size() > maximo) {
+    if (pizzas_listas_con_tiempo.size() > preparables) {
         // Ordenamos la lista de manera descendente para que
-        // las que llevan más tiempo preparadas salgan antes
+        // las que llevan mas tiempo preparadas salgan antes
         std::sort(
             pizzas_listas_con_tiempo.begin(), pizzas_listas_con_tiempo.end(),
             [](const auto &a, const auto &b) { return a.second > b.second; }
         );
-        pizzas_listas_con_tiempo.resize(maximo);
+        pizzas_listas_con_tiempo.resize(preparables);
     }
 
     std::unordered_set<size_t> indices_para_pasar;

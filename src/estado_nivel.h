@@ -19,9 +19,8 @@ struct EstadoModelo {
         const dominio::TipoPizza tp
     );
     EstadoPreparacionPizzas obtener_estado_preparacion_pizzas() const;
-    TiempoJuego obtener_tiempo_juego() const {
-        return gestor_tiempo.obtener_tiempo_juego();
-    }
+    TiempoJuego obtener_tiempo_juego() const;
+    void evaluar_preparacion_pizzas();
 };
 
 /* Estado mutable de un nivel */
