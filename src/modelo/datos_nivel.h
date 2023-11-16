@@ -1,6 +1,6 @@
 #pragma once
 
-#include "modelo/control_pizzas.h"
+#include "control_pizzas.h"
 #include <string>
 
 /* Guarda la información relativa al nivel */

@@ -1,11 +1,12 @@
 #include "estado_nivel.h"
 #include "general.h"
-#include "modelo/control_pizzas.h"
+#include "modelo/datos_nivel.h"
+#include <cassert>
 
 //////// EstadoModelo
 
-EstadoModelo::EstadoModelo(modelo::ControlPizzas &control)
-    : control_pizzas(control) {
+EstadoModelo::EstadoModelo(const DatosNivel &datos_nivel)
+    : control_pizzas(datos_nivel.pedidos, datos_nivel.es_estatico) {
     assert(encargos.total() == 0);
 }
 
@@ -30,8 +31,7 @@ bool EstadoModelo::despachar_pizza( //
 
 //////// Estado
 
-Estado::Estado(FaseNivel fase, modelo::ControlPizzas &control)
-    : fase_actual(fase), estado_modelo(control) {
-    fase_actual = FaseNivel::MostrandoInstrucciones;
+Estado::Estado(FaseNivel fase, const DatosNivel &datos_nivel)
+    : fase_actual(fase), estado_modelo(datos_nivel) {
     establecido = true;
 }

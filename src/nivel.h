@@ -1,6 +1,5 @@
 #pragma once
 
-#include "datos_nivel.h"
 #include "globales.h"
 #include "shared.h"
 #include "tiempo.h"
@@ -12,6 +11,10 @@ struct EnlaceVista;
 struct Estado;
 struct Globales;
 struct ControladorClicks;
+struct DatosNivel;
+namespace modelo {
+    struct ControlPizzas;
+}
 enum class FaseNivel;
 
 enum class AccionGeneral { SiguienteNivel, Reiniciar, Salir };

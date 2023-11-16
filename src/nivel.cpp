@@ -2,6 +2,7 @@
 #include "controlador_clicks.h"
 #include "estado_nivel.h"
 #include "general.h"
+#include "modelo/datos_nivel.h"
 #include "realizador_base.h"
 #include "tiempo.h"
 #include "vista/enlace_vista.h"
@@ -185,11 +186,10 @@ EnlaceVista Nivel::crear_enlace_vista(
 
 AccionGeneral Nivel::ejecutar() {
     std::optional<int> objetivo_estatico; // Solo se define en estaticos
-    modelo::ControlPizzas control_pizzas = {
-        datos_nivel.pedidos, datos_nivel.es_estatico
-    };
-    Estado estado(FaseNivel::MostrandoInstrucciones, control_pizzas);
+
+    Estado estado(FaseNivel::MostrandoInstrucciones, datos_nivel);
     assert(estado.establecido);
+    modelo::ControlPizzas &control_pizzas = estado.estado_modelo.control_pizzas;
     modelo::PizzasAContadores &contadores = control_pizzas.contadores;
     if (datos_nivel.es_estatico.valor) {
         objetivo_estatico = control_pizzas.obtener_objetivo_total_estatico();

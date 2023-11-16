@@ -15,7 +15,7 @@
 
 - datos_niveles.cpp
     - datos_niveles.h (def)
-        - datos_nivel.h
+        - modelo/datos_nivel.h
             - modelo/control_pizzas.h (def)
     - setup_juego.h (hoja)
     - textos.h
@@ -24,8 +24,10 @@
 
 - estado_nivel.cpp
     - estado_nivel.h
+        - modelo/control_pizzas.h (def)
         - modelo/encargos.h (def)
     - general.h (hoja)
+    - modelo/datos_nivel.h (hoja)
 
 - globales.cpp
     - globales.h (hoja)
@@ -36,7 +38,6 @@
     - datos_niveles.h (def)
     - globales.h (hoja)
     - nivel.h
-        - datos_nivel.h (def)
         - globales.h (hoja)
         - shared.h (hoja)
         - tiempo.h (def)
@@ -69,6 +70,7 @@
     - controlador_clicks.h (hoja)
     - estado_nivel.h (def)
     - general.h (hoja)
+    - modelo/datos_nivel.h (hoja)
     - realizador_base.h (hoja)
     - tiempo.h (def)
     - vista/enlace_vista.h (hoja)

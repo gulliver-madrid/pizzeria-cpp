@@ -1,19 +1,17 @@
 #pragma once
 
+#include "modelo/control_pizzas.h"
 #include "modelo/encargos.h"
-#include <cassert>
 
 enum class FaseNivel;
-namespace modelo {
-    struct ControlPizzas;
-}
+struct DatosNivel;
 
 struct EstadoModelo {
-    modelo::ControlPizzas &control_pizzas;
+    modelo::ControlPizzas control_pizzas;
     Encargos encargos;
     GestorTiempoJuego gestor_tiempo;
 
-    EstadoModelo(modelo::ControlPizzas &control);
+    EstadoModelo(const DatosNivel &datos_nivel);
     /* Encarga una pizza de tipo tp */
     void anadir_encargo(dominio::TipoPizza tp);
     /* Despacha una pizza del tipo indicado. */
@@ -30,5 +28,5 @@ struct Estado {
     bool establecido = false;
     bool mostrando_grid = false;
 
-    Estado(FaseNivel fase, modelo::ControlPizzas &control);
+    Estado(FaseNivel fase, const DatosNivel &);
 };
