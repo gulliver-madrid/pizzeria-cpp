@@ -8,6 +8,7 @@
 EstadoModelo::EstadoModelo(const DatosNivel &datos_nivel)
     : control_pizzas(datos_nivel.pedidos, datos_nivel.es_estatico) {
     assert(encargos.total() == 0);
+    gestor_tiempo.reiniciar();
 }
 
 /* Encarga una pizza de tipo tp */

@@ -202,7 +202,6 @@ AccionGeneral Nivel::ejecutar() {
     Timer timer_espera_antes_de_resultado;
     Timer timer_fin_nivel;
     sf::Sound sound;
-    estado.estado_modelo.gestor_tiempo.reiniciar();
     assert(!contadores.empty());
 
     auto &gestor_tiempo = estado.estado_modelo.gestor_tiempo;
