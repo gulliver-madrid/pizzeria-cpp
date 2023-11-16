@@ -64,11 +64,8 @@ void Vista::actualizarIU(      //
         estado.fase_actual == FaseNivel::Activa ||
         estado.fase_actual == FaseNivel::EsperaAntesDeResultado
     ) {
-        const auto tiempo_actual =
-            estado.estado_modelo.gestor_tiempo.obtener_tiempo_juego();
-        EstadoPreparacionPizzas preparacion(
-            estado.estado_modelo.encargos, tiempo_actual
-        );
+        const auto preparacion =
+            estado.estado_modelo.obtener_estado_preparacion_pizzas();
         actualizar_paneles(ventana, paneles_completos, preparacion);
     }
 
@@ -180,7 +177,7 @@ void actualizar_etiquetas(
     }
     const auto tiempo_real_actual = obtener_tiempo_actual();
     const auto tiempo_juego_actual =
-        estado.estado_modelo.gestor_tiempo.obtener_tiempo_juego();
+        estado.estado_modelo.obtener_tiempo_juego();
     etiquetas.actualizar_barra_estado(tiempo_real_actual, tiempo_juego_actual);
     etiquetas.dibujar_barra_estado(ventana);
 }

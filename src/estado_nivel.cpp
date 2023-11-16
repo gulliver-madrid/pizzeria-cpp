@@ -29,6 +29,11 @@ bool EstadoModelo::despachar_pizza( //
     control_pizzas.procesar_despacho(tp);
     return (!control_pizzas.faltan_pedidos_por_cubrir());
 }
+EstadoPreparacionPizzas
+EstadoModelo::obtener_estado_preparacion_pizzas() const {
+    const auto tiempo_actual = gestor_tiempo.obtener_tiempo_juego();
+    return {encargos, tiempo_actual};
+}
 
 //////// Estado
 

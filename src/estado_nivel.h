@@ -7,9 +7,9 @@ enum class FaseNivel;
 struct DatosNivel;
 
 struct EstadoModelo {
+    GestorTiempoJuego gestor_tiempo;
     modelo::ControlPizzas control_pizzas;
     Encargos encargos;
-    GestorTiempoJuego gestor_tiempo;
 
     EstadoModelo(const DatosNivel &datos_nivel);
     /* Encarga una pizza de tipo tp */
@@ -18,6 +18,10 @@ struct EstadoModelo {
     bool despachar_pizza( //
         const dominio::TipoPizza tp
     );
+    EstadoPreparacionPizzas obtener_estado_preparacion_pizzas() const;
+    TiempoJuego obtener_tiempo_juego() const {
+        return gestor_tiempo.obtener_tiempo_juego();
+    }
 };
 
 /* Estado mutable de un nivel */
