@@ -1,209 +1,290 @@
-# Estructura del proyecto
-
-- main.cpp
-    - juego.h (hoja)
-
-- controlador_clicks.cpp
-    - controlador_clicks.h (hoja)
-    - comandos.h
-        - modelo/dominio.h (hoja)
-    - estado_nivel.h (def)
-    - general.h (hoja)
-    - globales.h (hoja)
-    - realizador_base.h (hoja)
-    - vista/botones_app.h (def)
-
-- datos_niveles.cpp
-    - datos_niveles.h
-        - datos_nivel.h (def)
-    - setup_juego.h (hoja)
-    - textos.h
-        - textos.cpp
-            - vista/cadenas.h (hoja)
-
-- estado_nivel.cpp
-    - estado_nivel.h
-        - modelo/estado_modelo.h (def)
-    - datos_nivel.h
-        - modelo/datos_nivel_para_modelo.h
-            - modelo/control_pizzas.h (def)
-            - modelo/encargos.h (def)
-    - general.h (hoja)
-
-- globales.cpp
-    - globales.h (hoja)
-    - vista/componentes/boton_con_texto.h (def)
-
-- juego.cpp
+- main.cpp:
     - juego.h
-    - datos_niveles.h (def)
-    - globales.h (hoja)
-    - nivel.h
-        - globales.h (hoja)
-        - shared.h (hoja)
-        - tiempo.h (def)
-        - vista/grid.h (hoja)
-    - setup_juego.h (hoja)
-    - textos.h (def)
-    - vista/grid.h (hoja)
 
-- modelo/control_pizzas.cpp
-    - modelo/control_pizzas.h
-          - shared.h (hoja)
-          - modelo/modelo.h
-              - modelo/dominio.h (hoja)
+- comandos.h:
+    - modelo/dominio.h
 
-- modelo/dominio.cpp
-    - modelo/dominio.h (hoja)
+- controlador_clicks.cpp:
+    - controlador_clicks.h
+    - estado_nivel.h
+    - general.h
+    - globales.h
+    - realizador_base.h
+    - vista/botones_app.h
 
-- modelo/encargos.cpp
-    - modelo/encargos.h
-        - tiempo.h
-            - templates.h (hoja)
-    - modelo/dominio.h (hoja)
+- controlador_clicks.h:
+    - comandos.h
 
-- modelo/estado_modelo.cpp
+- datos_nivel.h:
+    - modelo/datos_nivel_para_modelo.h
+
+- datos_niveles.cpp:
+    - datos_niveles.h
+    - setup_juego.h
+    - textos.h
+
+- datos_niveles.h:
+    - datos_nivel.h
+
+- debug_sfml.cpp:
+    - debug_sfml.h
+
+- estado_nivel.cpp:
+    - estado_nivel.h
+    - datos_nivel.h
+    - general.h
+
+- estado_nivel.h:
     - modelo/estado_modelo.h
-        - modelo/control_pizzas.h
-        - modelo/encargos.h
 
-- modelo/modelo.cpp
-    - modelo/modelo.h (def)
-    - modelo/encargos.h (def)
+- globales.cpp:
+    - globales.h
+    - vista/componentes/boton_con_texto.h
 
-- nivel.cpp
-    - nivel.h (def)
-    - controlador_clicks.h (hoja)
-    - datos_nivel.h (def)
-    - estado_nivel.h (def)
-    - general.h (hoja)
-    - realizador_base.h (hoja)
-    - tiempo.h (def)
-    - vista/enlace_vista.h (hoja)
+- juego.cpp:
+    - juego.h
+    - datos_niveles.h
+    - globales.h
+    - nivel.h
+    - setup_juego.h
+    - textos.h
+    - vista/grid.h
+
+- modelo/control_pizzas.cpp:
+    - modelo/control_pizzas.h
+
+- modelo/control_pizzas.h:
+    - modelo/modelo.h
+    - shared.h
+
+- modelo/datos_nivel_para_modelo.h:
+    - modelo/control_pizzas.h
+    - modelo/encargos.h
+
+- modelo/dominio.cpp:
+    - modelo/dominio.h
+
+- modelo/encargos.cpp:
+    - modelo/encargos.h
+    - modelo/dominio.h
+
+- modelo/encargos.h:
+    - tiempo.h
+
+- modelo/estado_modelo.cpp:
+    - modelo/estado_modelo.h
+    - modelo/datos_nivel_para_modelo.h
+
+- modelo/estado_modelo.h:
+    - modelo/control_pizzas.h
+    - modelo/encargos.h
+
+- modelo/modelo.cpp:
+    - modelo/modelo.h
+    - modelo/encargos.h
+
+- modelo/modelo.h:
+    - modelo/dominio.h
+
+- nivel.cpp:
+    - nivel.h
+    - controlador_clicks.h
+    - datos_nivel.h
+    - estado_nivel.h
+    - general.h
+    - realizador_base.h
+    - tiempo.h
+    - vista/enlace_vista.h
     - vista/vista.h
-        - vista/botones_app.h
-            - vista/componentes/boton_con_texto.h
-                - vista/componentes/boton_data.h (hoja)
-            - modelo/dominio.h (hoja)
-        - vista/etiquetas.h
-            - modelo/control_pizzas.h (def)
-            - modelo/modelo.h (def)
-            - shared.h (hoja)
-        - vista/paneles.h
-            - modelo/modelo.h (def)
-            - vista/barras_progreso.h
-                - vista/componentes/barra_progreso.h (hoja)
-            - vista/componentes/varios.h (hoja)
 
-- setup_juego.cpp
-    - setup_juego.h (hoja)
-    - vista/cadenas.h (hoja)
-    - globales.h (hoja)
-    - paths.h (hoja)
-    - vista/vista_data.h (def)
+- nivel.h:
+    - globales.h
+    - shared.h
+    - tiempo.h
+    - vista/grid.h
 
-- tiempo.cpp
-    - tiempo.h (def)
-    - juego_assert.h (hoja)
+- setup_juego.cpp:
+    - setup_juego.h
+    - globales.h
+    - manejo_rutas.h
+    - paths.h
+    - vista/cadenas.h
+    - vista/vista_data.h
 
-- vista/barras_progreso.cpp
-    - vista/barras_progreso.h (def)
-    - modelo/modelo.h (def)
-    - vista/basicos_vista.h (hoja)
+- tests/test_cadenas.cpp:
+    - vista/cadenas.h
 
-- vista/basicos_vista.cpp (hoja)
-    - vista/basicos_vista.h (hoja)
+- tests/test_encargadas.cpp:
+    - modelo/encargos.h
+    - modelo/modelo.h
 
-- vista/botones_app.cpp
-    - modelo/dominio.h (hoja)
+- tests/test_evaluar_preparacion.cpp:
+    - modelo/encargos.h
+    - modelo/modelo.h
+
+- tests/test_presentador.cpp:
+    - modelo/dominio.h
+    - modelo/modelo.h
+    - vista/presentador.h
+
+- tests/test_tiempo.cpp:
+    - tiempo.h
+
+- tests/test_timer.cpp:
+    - juego_assert.h
+    - tiempo.h
+
+- textos.cpp:
+    - textos.h
+    - vista/cadenas.h
+
+- textos.h:
+    - shared.h
+
+- tiempo.cpp:
+    - tiempo.h
+    - juego_assert.h
+
+- tiempo.h:
+    - templates.h
+
+- vista/barras_progreso.cpp:
+    - vista/barras_progreso.h
+    - modelo/modelo.h
+    - vista/basicos_vista.h
+
+- vista/barras_progreso.h:
+    - vista/componentes/barra_progreso.h
+
+- vista/basicos_vista.cpp:
+    - vista/basicos_vista.h
+
+- vista/botones_app.cpp:
+    - vista/botones_app.h
+    - modelo/dominio.h
+    - vista/basicos_vista.h
     - vista/componentes/botones.h
-        - vista/componentes/boton_con_texto.h (def)
-    - vista/componentes/varios.h (hoja)
-    - vista/basicos_vista.h (hoja)
+    - vista/componentes/varios.h
 
-- vista/cadenas.cpp
-    - vista/cadenas.h (hoja)
+- vista/botones_app.h:
+    - modelo/dominio.h
+    - vista/componentes/boton_con_texto.h
 
-- vista/componentes/barra_progreso.cpp
-    - vista/componentes/barra_progreso.h (hoja)
+- vista/cadenas.cpp:
+    - vista/cadenas.h
 
-- vista/componentes/boton_con_texto.cpp
-    - vista/componentes/boton_con_texto.h (def)
+- vista/componentes/barra_progreso.cpp:
+    - vista/componentes/barra_progreso.h
+    - shared.h
+    - vista/componentes/varios.h
 
-- vista/componentes/botones.cpp
-    - vista/componentes/botones.h (def)
-    - vista/componentes/varios.h (hoja)
+- vista/componentes/boton_con_texto.cpp:
+    - vista/componentes/boton_con_texto.h
+    - shared.h
+    - vista/componentes/varios.h
 
-- vista/enlace_vista.cpp
-    - vista/enlace_vista.h (hoja)
-    - vista/vista.h (def)
+- vista/componentes/boton_con_texto.h:
+    - vista/componentes/boton_data.h
+    - vista/componentes/componente.h
 
-- vista/etiquetas/etiquetas.cpp
-    - vista/etiquetas/etiquetas.h (def)
-    - vista/basicos_vista.h (hoja)
-    - vista/cadenas.h (hoja)
-    - vista/componentes/varios.h (hoja)
-    - vista/etiquetas/etiquetas_barra_estado.h (hoja)
-    - vista/etiquetas/etiquetas_contadores.h (def)
-    - vista/etiquetas/etiquetas_info.h
-        - shared.h (hoja)
-    - vista/etiquetas/fabrica_etiquetas.h
+- vista/componentes/botones.cpp:
+    - vista/componentes/botones.h
+    - vista/componentes/varios.h
 
-- vista/etiquetas/etiquetas_barra_estado.cpp
-    - vista/etiquetas/etiquetas_barra_estado.h (hoja)
-    - tiempo.h (def)
-    - vista/basicos_vista.h (hoja)
-    - vista/cadenas.h (def)
-    - vista/componentes/varios.h (hoja)
+- vista/componentes/botones.h:
+    - vista/componentes/boton_con_texto.h
 
-- vista/etiquetas/etiquetas_contadores.cpp
+- vista/componentes/varios.cpp:
+    - vista/componentes/varios.h
+
+- vista/enlace_vista.cpp:
+    - vista/enlace_vista.h
+    - vista/vista.h
+
+- vista/etiquetas/etiquetas.cpp:
+    - vista/etiquetas/etiquetas.h
+    - vista/basicos_vista.h
+    - vista/cadenas.h
+    - vista/componentes/varios.h
+    - vista/etiquetas/etiquetas_barra_estado.h
     - vista/etiquetas/etiquetas_contadores.h
-        - general.h (hoja)
-        - modelo/control_pizzas.h (def)
-    - modelo/modelo.h (def)
-    - shared.h (hoja)
-    - vista/basicos_vista.h (hoja)
-    - vista/componentes/varios.h (hoja)
-    - vista/presentador.h (hoja)
-    - vista/etiquetas/fabrica_etiquetas_contadores.h (hoja)
+    - vista/etiquetas/etiquetas_info.h
 
-- vista/etiquetas/etiquetas_info.cpp
-    - vista/etiquetas/etiquetas_info.h (def)
+- vista/etiquetas/etiquetas.h:
+    - modelo/control_pizzas.h
+    - modelo/modelo.h
+    - shared.h
 
-- vista/etiquetas/fabrica_etiquetas_contadores.cpp
-    - vista/etiquetas/fabrica_etiquetas_contadores.h (hoja)
-    - vista/basicos_vista.h (hoja)
-    - vista/componentes/varios.h (hoja)
+- vista/etiquetas/etiquetas_barra_estado.cpp:
+    - vista/etiquetas/etiquetas_barra_estado.h
+    - tiempo.h
+    - vista/basicos_vista.h
+    - vista/cadenas.h
+    - vista/componentes/varios.h
 
-- vista/grid.cpp
-    - vista/grid.h (hoja)
+- vista/etiquetas/etiquetas_barra_estado.h:
+    - shared.h
 
-- vista/paneles.cpp
-    - vista/paneles.h (def)
-    - vista/cadenas.h (hoja)
-    - vista/etiquetas/etiquetas.h (def)
-    - vista/basicos_vista.h (hoja)
+- vista/etiquetas/etiquetas_contadores.cpp:
+    - vista/etiquetas/etiquetas_contadores.h
+    - modelo/modelo.h
+    - shared.h
+    - vista/basicos_vista.h
+    - vista/componentes/varios.h
+    - vista/etiquetas/fabrica_etiquetas_contadores.h
+    - vista/presentador.h
 
-- vista/presentador.cpp
-    - vista/presentador.h (hoja)
-    - modelo/dominio.h (hoja)
-    - modelo/modelo.h (def)
+- vista/etiquetas/etiquetas_contadores.h:
+    - general.h
+    - modelo/control_pizzas.h
 
-- vista/vista.cpp
-    - vista/vista.h (def)
-    - estado_nivel.h (def)
-    - general.h (hoja)
-    - vista/basicos_vista.h (hoja)
-    - vista/grid.h (hoja)
-    - vista/vista_data.h (hoja)
+- vista/etiquetas/etiquetas_info.cpp:
+    - vista/etiquetas/etiquetas_info.h
+    - textos.h
+    - vista/basicos_vista.h
+    - vista/componentes/varios.h
 
+- vista/etiquetas/etiquetas_info.h:
+    - shared.h
 
-## Leyenda
-(def) Dependencias definidas en otro lugar
-(hoja) Nodo hoja (sin dependencias dentro del proyecto)
+- vista/etiquetas/fabrica_etiquetas_contadores.cpp:
+    - vista/etiquetas/fabrica_etiquetas_contadores.h
+    - vista/basicos_vista.h
+    - vista/componentes/varios.h
 
-## Criterios
-- Se mantiene el orden de los includes en el código fuente.
-- Los .cpp se consideran dependencias de los .h.
-- Los .cpp se muestran en último lugar en la lista de dependencias.
-- Se definen las dependencias solo de la primera aparición de un archivo.
+- vista/etiquetas/fabrica_etiquetas_contadores.h:
+    - shared.h
+
+- vista/grid.cpp:
+    - vista/grid.h
+
+- vista/paneles.cpp:
+    - vista/paneles.h
+    - shared.h
+    - vista/basicos_vista.h
+    - vista/etiquetas/etiquetas.h
+
+- vista/paneles.h:
+    - modelo/modelo.h
+    - shared.h
+    - vista/barras_progreso.h
+    - vista/componentes/varios.h
+
+- vista/presentador.cpp:
+    - vista/presentador.h
+    - modelo/dominio.h
+    - modelo/modelo.h
+
+- vista/vista.cpp:
+    - vista/vista.h
+    - estado_nivel.h
+    - general.h
+    - vista/basicos_vista.h
+    - vista/grid.h
+    - vista/vista_data.h
+
+- vista/vista.h:
+    - vista/botones_app.h
+    - vista/etiquetas/etiquetas.h
+    - vista/paneles.h
+
