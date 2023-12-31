@@ -14,9 +14,8 @@
     - vista/botones_app.h (def)
 
 - datos_niveles.cpp
-    - datos_niveles.h (def)
-        - modelo/datos_nivel.h
-            - modelo/control_pizzas.h (def)
+    - datos_niveles.h
+        - datos_nivel.h (def)
     - setup_juego.h (hoja)
     - textos.h
         - textos.cpp
@@ -24,10 +23,12 @@
 
 - estado_nivel.cpp
     - estado_nivel.h
-        - modelo/control_pizzas.h (def)
-        - modelo/encargos.h (def)
+        - modelo/estado_modelo.h (def)
+    - datos_nivel.h
+        - modelo/datos_nivel_para_modelo.h
+            - modelo/control_pizzas.h (def)
+            - modelo/encargos.h (def)
     - general.h (hoja)
-    - modelo/datos_nivel.h (hoja)
 
 - globales.cpp
     - globales.h (hoja)
@@ -55,11 +56,16 @@
 - modelo/dominio.cpp
     - modelo/dominio.h (hoja)
 
-- modelo/encargos.cpp (hoja)
+- modelo/encargos.cpp
     - modelo/encargos.h
         - tiempo.h
             - templates.h (hoja)
     - modelo/dominio.h (hoja)
+
+- modelo/estado_modelo.cpp
+    - modelo/estado_modelo.h
+        - modelo/control_pizzas.h
+        - modelo/encargos.h
 
 - modelo/modelo.cpp
     - modelo/modelo.h (def)
@@ -68,9 +74,9 @@
 - nivel.cpp
     - nivel.h (def)
     - controlador_clicks.h (hoja)
+    - datos_nivel.h (def)
     - estado_nivel.h (def)
     - general.h (hoja)
-    - modelo/datos_nivel.h (hoja)
     - realizador_base.h (hoja)
     - tiempo.h (def)
     - vista/enlace_vista.h (hoja)

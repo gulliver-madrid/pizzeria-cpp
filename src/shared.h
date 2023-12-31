@@ -26,7 +26,6 @@ struct NumNivel {
 struct EsSistemaEstatico {
     const bool valor;
     explicit EsSistemaEstatico(bool v) : valor(v) {}
-    EsSistemaEstatico(const EsSistemaEstatico &) = delete;
     EsSistemaEstatico &operator=(const EsSistemaEstatico &) = delete;
 };
 

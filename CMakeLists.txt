@@ -30,6 +30,7 @@ add_executable(pizzeria
     src/modelo/control_pizzas.cpp
     src/modelo/dominio.cpp
     src/modelo/encargos.cpp
+    src/modelo/estado_modelo.cpp
     src/modelo/modelo.cpp
     src/nivel.cpp
     src/setup_juego.cpp

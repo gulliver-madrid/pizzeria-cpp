@@ -1,8 +1,8 @@
 #include "nivel.h"
 #include "controlador_clicks.h"
+#include "datos_nivel.h"
 #include "estado_nivel.h"
 #include "general.h"
-#include "modelo/datos_nivel.h"
 #include "realizador_base.h"
 #include "tiempo.h"
 #include "vista/enlace_vista.h"
@@ -171,10 +171,10 @@ EnlaceVista Nivel::crear_enlace_vista(
     std::optional<int> objetivo_estatico         //
 ) {
     const auto vista_ptr = std::make_shared<Vista>(
-        datos_nivel.es_estatico,               //
-        globales.font,                         //
-        grid,                                  //
-        control_pizzas.get_tipos_disponibles() //
+        datos_nivel.datos_nivel_para_modelo.es_estatico, //
+        globales.font,                                   //
+        grid,                                            //
+        control_pizzas.get_tipos_disponibles()           //
     );
     vista_ptr->setup(
         datos_nivel.instrucciones, //
@@ -191,7 +191,7 @@ AccionGeneral Nivel::ejecutar() {
     assert(estado.establecido);
     modelo::ControlPizzas &control_pizzas = estado.estado_modelo.control_pizzas;
     modelo::PizzasAContadores &contadores = control_pizzas.contadores;
-    if (datos_nivel.es_estatico.valor) {
+    if (datos_nivel.es_estatico().valor) {
         objetivo_estatico = control_pizzas.obtener_objetivo_total_estatico();
     }
 
