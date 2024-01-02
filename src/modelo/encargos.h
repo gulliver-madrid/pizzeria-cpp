@@ -11,7 +11,8 @@ struct EncargoACocina {
     const dominio::TipoPizza tipo;
     const TiempoPreparacion tiempo_preparacion;
     EncargoACocina(
-        const dominio::TipoPizza tipo, const TiempoJuego &tiempo_actual
+        const dominio::TipoPizza tipo,
+        const TiempoJuego &tiempo_actual = TiempoJuego_CERO
     );
 };
 

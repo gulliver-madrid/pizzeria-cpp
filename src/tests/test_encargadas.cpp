@@ -6,6 +6,8 @@
 
 using dominio::TipoPizza;
 
+// Tests de la struct Encargos
+
 TEST(Encargadas, EncargadasDelTipoConVectorVacio) {
     Encargos encargos;
     EXPECT_EQ(encargos.total(), 0);
@@ -15,10 +17,14 @@ TEST(Encargadas, EncargadasDelTipoConVectorVacio) {
 
 TEST(Encargadas, EncargadasDelTipoConDosMargaritasYUnaPepperoni) {
     Encargos encargos;
-    encargos.anadir(EncargoACocina(TipoPizza::Margarita, TiempoJuego_CERO));
-    encargos.anadir(EncargoACocina(TipoPizza::Margarita, TiempoJuego_CERO));
-    encargos.anadir(EncargoACocina(TipoPizza::Pepperoni, TiempoJuego_CERO));
-
+    EncargoACocina data[] = {
+        {TipoPizza::Margarita},
+        {TipoPizza::Margarita},
+        {TipoPizza::Pepperoni},
+    };
+    for (const auto &encargo : data) {
+        encargos.anadir(encargo);
+    }
     EXPECT_EQ(
         encargos.del_tipo(TipoPizza::Margarita), //
         2                                        //
