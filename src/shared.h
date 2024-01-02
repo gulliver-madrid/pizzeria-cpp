@@ -1,5 +1,6 @@
 #pragma once
 
+#include <SFML/Graphics.hpp>
 #include <cassert>
 #include <map>
 #include <tuple>
@@ -7,7 +8,6 @@
 
 namespace sf {
     class Font;
-    class RenderWindow;
 } // namespace sf
 
 constexpr bool MODO_DESARROLLO = true;

@@ -1,6 +1,5 @@
 #include "modelo.h"
 #include "encargos.h"
-#include <cassert>
 #include <iostream>
 #include <unordered_set>
 

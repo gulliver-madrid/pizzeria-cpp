@@ -33,6 +33,7 @@ add_executable(pizzeria
     src/modelo/encargos.cpp
     src/modelo/estado_modelo.cpp
     src/modelo/modelo.cpp
+    src/modelo_amplio.cpp
     src/nivel.cpp
     src/realizador.cpp
     src/setup_juego.cpp
@@ -98,13 +99,16 @@ add_executable(
     src/tests/test_timer.cpp
 
     # archivos del proyecto
+    src/aplicador.cpp
     src/debug_sfml.cpp
     src/estado_nivel.cpp
+    src/modelo_amplio.cpp
     src/modelo/control_pizzas.cpp
     src/modelo/dominio.cpp
     src/modelo/encargos.cpp
     src/modelo/estado_modelo.cpp
     src/modelo/modelo.cpp
+    src/realizador.cpp
     src/textos.cpp
     src/tiempo.cpp
     src/vista/cadenas.cpp

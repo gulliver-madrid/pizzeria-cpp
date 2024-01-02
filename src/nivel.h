@@ -1,6 +1,7 @@
 #pragma once
 
 #include "globales.h"
+#include "modelo_amplio.h"
 #include "shared.h"
 #include "tiempo.h"
 #include "vista/grid.h"
@@ -20,6 +21,7 @@ enum class AccionGeneral { SiguienteNivel, Reiniciar, Salir };
 
 struct Nivel {
   private:
+    std::optional<ModeloAmplio> modelo_amplio;
     std::optional<FaseNivel> procesarEvento(
         sf::Event,          //
         const BotonesApp &, //

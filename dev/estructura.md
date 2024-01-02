@@ -94,9 +94,15 @@
 - modelo/modelo.h:
     - modelo/dominio.h
 
-- modelo_amplio.h:
-    - estado_nivel.h
+- modelo_amplio.cpp:
+    - modelo_amplio.h
+    - comandos.h
     - general.h
+    - realizador.h
+
+- modelo_amplio.h:
+    - aplicador.h
+    - estado_nivel.h
 
 - nivel.cpp:
     - nivel.h
@@ -105,13 +111,12 @@
     - datos_nivel.h
     - estado_nivel.h
     - general.h
-    - modelo_amplio.h
-    - realizador.h
     - vista/enlace_vista.h
     - vista/vista.h
 
 - nivel.h:
     - globales.h
+    - modelo_amplio.h
     - shared.h
     - tiempo.h
     - vista/grid.h
@@ -146,6 +151,7 @@
 - tests/modelo/test_modelo_amplio.cpp:
     - comandos.h
     - datos_nivel.h
+    - general.h
     - modelo_amplio.h
 
 - tests/test_cadenas.cpp:

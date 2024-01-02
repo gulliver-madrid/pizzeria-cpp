@@ -4,8 +4,6 @@
 #include "datos_nivel.h"
 #include "estado_nivel.h"
 #include "general.h"
-#include "modelo_amplio.h"
-#include "realizador.h"
 #include "vista/enlace_vista.h"
 #include "vista/vista.h"
 #include <cassert>
@@ -54,7 +52,7 @@ std::optional<FaseNivel> Nivel::procesarEvento(
             break;
         case sf::Event::MouseButtonPressed:
             {
-                Realizador realizador{estado};
+
                 const sf::Vector2i mouse_pos = sf::Mouse::getPosition(ventana);
                 const auto comando = controlador_clicks->procesa_click(
                     globales, botones, estado, mouse_pos
@@ -62,7 +60,8 @@ std::optional<FaseNivel> Nivel::procesarEvento(
                 if (!comando) {
                     return std::nullopt;
                 }
-                return aplicador::aplicar_comando(realizador, comando.value());
+                assert(modelo_amplio.has_value());
+                return modelo_amplio.value().aplica_comando(comando.value());
             }
             break;
         default:
@@ -145,8 +144,9 @@ EnlaceVista Nivel::crear_enlace_vista(
 
 AccionGeneral Nivel::ejecutar() {
     std::optional<int> objetivo_estatico; // Solo se define en estaticos
-    ModeloAmplio modelo_amplio(datos_nivel);
-    auto &estado = modelo_amplio.estado;
+    modelo_amplio.emplace(ModeloAmplio{datos_nivel});
+    assert(modelo_amplio.has_value());
+    auto &estado = modelo_amplio.value().estado;
     assert(estado.establecido);
     modelo::ControlPizzas &control_pizzas = estado.estado_modelo.control_pizzas;
     modelo::PizzasAContadores &contadores = control_pizzas.contadores;
