@@ -1,6 +1,6 @@
 
-#include "../modelo/encargos.h"
-#include "../modelo/modelo.h"
+#include "../../modelo/encargos.h"
+#include "../../modelo/modelo.h"
 #include <cassert>
 #include <gtest/gtest.h>
 

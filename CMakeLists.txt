@@ -87,9 +87,9 @@ add_executable(
 
     # tests
     src/tests/test_main.cpp
+    src/tests/modelo/test_encargadas.cpp
+    src/tests/modelo/test_evaluar_preparacion.cpp
     src/tests/test_cadenas.cpp
-    src/tests/test_encargadas.cpp
-    src/tests/test_evaluar_preparacion.cpp
     src/tests/test_presentador.cpp
     src/tests/test_tiempo.cpp
     src/tests/test_timer.cpp
