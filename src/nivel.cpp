@@ -3,6 +3,7 @@
 #include "datos_nivel.h"
 #include "estado_nivel.h"
 #include "general.h"
+#include "modelo_amplio.h"
 #include "realizador_base.h"
 #include "tiempo.h"
 #include "vista/enlace_vista.h"
@@ -186,8 +187,8 @@ EnlaceVista Nivel::crear_enlace_vista(
 
 AccionGeneral Nivel::ejecutar() {
     std::optional<int> objetivo_estatico; // Solo se define en estaticos
-
-    Estado estado(FaseNivel::MostrandoInstrucciones, datos_nivel);
+    ModeloAmplio modelo_amplio(datos_nivel);
+    auto &estado = modelo_amplio.estado;
     assert(estado.establecido);
     modelo::ControlPizzas &control_pizzas = estado.estado_modelo.control_pizzas;
     modelo::PizzasAContadores &contadores = control_pizzas.contadores;

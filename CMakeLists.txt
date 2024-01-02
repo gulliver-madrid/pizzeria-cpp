@@ -89,6 +89,7 @@ add_executable(
     src/tests/test_main.cpp
     src/tests/modelo/test_encargadas.cpp
     src/tests/modelo/test_evaluar_preparacion.cpp
+    src/tests/modelo/test_modelo_amplio.cpp
     src/tests/test_cadenas.cpp
     src/tests/test_presentador.cpp
     src/tests/test_tiempo.cpp
@@ -96,8 +97,11 @@ add_executable(
 
     # archivos del proyecto
     src/debug_sfml.cpp
+    src/estado_nivel.cpp
+    src/modelo/control_pizzas.cpp
     src/modelo/dominio.cpp
     src/modelo/encargos.cpp
+    src/modelo/estado_modelo.cpp
     src/modelo/modelo.cpp
     src/textos.cpp
     src/tiempo.cpp

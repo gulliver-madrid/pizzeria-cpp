@@ -8,7 +8,7 @@ struct DatosNivel {
     std::string instrucciones;
     DatosNivelParaModelo datos_nivel_para_modelo;
     DatosNivel(
-        std::string instrucciones, modelo::Pedidos pedidos,
+        std::string instrucciones = "", modelo::Pedidos pedidos = {},
         bool es_estatico = false
     )
         : instrucciones(instrucciones),

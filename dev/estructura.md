@@ -86,12 +86,17 @@
 - modelo/modelo.h:
     - modelo/dominio.h
 
+- modelo_amplio.h:
+    - estado_nivel.h
+    - general.h
+
 - nivel.cpp:
     - nivel.h
     - controlador_clicks.h
     - datos_nivel.h
     - estado_nivel.h
     - general.h
+    - modelo_amplio.h
     - realizador_base.h
     - tiempo.h
     - vista/enlace_vista.h
@@ -111,16 +116,20 @@
     - vista/cadenas.h
     - vista/vista_data.h
 
+- tests/modelo/test_encargadas.cpp:
+    - modelo/encargos.h
+    - modelo/modelo.h
+
+- tests/modelo/test_evaluar_preparacion.cpp:
+    - modelo/encargos.h
+    - modelo/modelo.h
+
+- tests/modelo/test_modelo_amplio.cpp:
+    - datos_nivel.h
+    - modelo_amplio.h
+
 - tests/test_cadenas.cpp:
     - vista/cadenas.h
-
-- tests/test_encargadas.cpp:
-    - modelo/encargos.h
-    - modelo/modelo.h
-
-- tests/test_evaluar_preparacion.cpp:
-    - modelo/encargos.h
-    - modelo/modelo.h
 
 - tests/test_presentador.cpp:
     - modelo/dominio.h
@@ -152,6 +161,7 @@
     - vista/barras_progreso.h
     - modelo/modelo.h
     - vista/basicos_vista.h
+    - vista/vista_data.h
 
 - vista/barras_progreso.h:
     - vista/componentes/barra_progreso.h
