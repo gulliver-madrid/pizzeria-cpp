@@ -60,7 +60,7 @@ std::optional<Comando> ControladorClicks::procesa_click(
 }
 
 #define SWITCH(variante)                                                       \
-    using T = std::decay_t<decltype(variante)>;                                \
+    using T = std::decay_t<decltype(comando_data)>;                            \
     if (false) { /* Para inicializar los bloques if else */                    \
     }
 #define CASE(comando, accion)                                                  \
@@ -74,17 +74,17 @@ std::optional<FaseNivel> aplica_comando( //
 
 ) {
     return std::visit(
-        [&realizador](auto &&variante) -> std::optional<FaseNivel> {
-            SWITCH(variante)
+        [&realizador](auto &&comando_data) -> std::optional<FaseNivel> {
+            SWITCH(comando_data)
             CASE(Empezar, realizador.empezar())
             CASE(Salir, FaseNivel::Saliendo)
             CASE(Reiniciar, FaseNivel::Reiniciando)
             CASE(AlternarGrid, realizador.alternar_grid())
-            CASE(Encargar, realizador.encargar_pizza(variante.tp))
-            CASE(Despachar, realizador.despachar_pizza(variante.tp))
+            CASE(Encargar, realizador.encargar_pizza(comando_data.tp))
+            CASE(Despachar, realizador.despachar_pizza(comando_data.tp))
             return std::nullopt;
         },
-        comando.variante
+        comando.comando_data
     );
 }
 #undef SWITCH

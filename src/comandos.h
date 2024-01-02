@@ -16,14 +16,14 @@ class Comando {
         dominio::TipoPizza tp;
     };
 
-    using ComandoVar = std::variant<
+    using ComandoData = std::variant<
         Empezar, Salir, AlternarGrid, Reiniciar, Encargar, Despachar>;
-    ComandoVar variante;
+    ComandoData comando_data;
 
-    Comando(Empezar cmd) : variante(cmd) {}
-    Comando(Salir cmd) : variante(cmd) {}
-    Comando(AlternarGrid cmd) : variante(cmd) {}
-    Comando(Reiniciar cmd) : variante(cmd) {}
-    Comando(Encargar cmd) : variante(cmd) {}
-    Comando(Despachar cmd) : variante(cmd) {}
+    Comando(Empezar cmd) : comando_data(cmd) {}
+    Comando(Salir cmd) : comando_data(cmd) {}
+    Comando(AlternarGrid cmd) : comando_data(cmd) {}
+    Comando(Reiniciar cmd) : comando_data(cmd) {}
+    Comando(Encargar cmd) : comando_data(cmd) {}
+    Comando(Despachar cmd) : comando_data(cmd) {}
 };
