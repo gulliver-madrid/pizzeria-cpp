@@ -7,7 +7,7 @@
 #include <cassert>
 #include <unordered_set>
 
-// Inicia los elementos del juego que permanecerán entre niveles
+// Inicia los elementos del juego que permaneceran entre niveles
 // Inicializa las variables globales window, font y buffer
 // Devuelve un booleano indicando si se completo con exito
 bool setup_juego(Globales &globales) {

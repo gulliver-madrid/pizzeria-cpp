@@ -15,7 +15,7 @@ int demo_unicode() {
     sf::Text text;
     text.setFont(font);
     text.setFillColor(sf::Color::White);
-    text.setString(L"Algunos carácteres: ¡ñáéíóú");
+    text.setString(L"Algunos caracteres: ¡ñáéíóú");
     text.setCharacterSize(24);
 
     while (window.isOpen()) {

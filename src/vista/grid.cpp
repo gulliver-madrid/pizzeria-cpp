@@ -12,7 +12,7 @@ void _draw_grid(
 
     sf::Color color(tono_gris, tono_gris, tono_gris);
 
-    // Líneas horizontales
+    // Lineas horizontales
     for (int j = 0; j < tamano.y; j += distancia) {
         sf::RectangleShape rect(sf::Vector2f(tamano.x, 1));
         rect.setFillColor(color);
@@ -20,7 +20,7 @@ void _draw_grid(
         render_texture.draw(rect);
     }
 
-    // Líneas verticales
+    // Lineas verticales
     for (int i = 0; i < tamano.x; i += distancia) {
         sf::RectangleShape rect(sf::Vector2f(1, tamano.y));
         rect.setFillColor(color);

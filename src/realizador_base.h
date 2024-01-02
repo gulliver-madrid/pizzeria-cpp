@@ -10,7 +10,7 @@ class RealizadorBase {
 
     virtual ~RealizadorBase() = default; // Destructor virtual
 
-    // Métodos virtuales puros
+    // Metodos virtuales puros
     virtual NuevaFase encargar_pizza(const dominio::TipoPizza tp) = 0;
     virtual NuevaFase despachar_pizza(const dominio::TipoPizza tp) = 0;
     virtual NuevaFase alternar_grid() = 0;

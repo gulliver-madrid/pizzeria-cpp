@@ -9,7 +9,7 @@ inline void juego_assert(bool condicion, const std::string &mensaje = "") {
 #ifdef _DEBUG
     if (!condicion) {
         throw JuegoException(
-            mensaje.empty() ? std::string("Aserción no verificada") : mensaje
+            mensaje.empty() ? std::string("Asercion no verificada") : mensaje
         );
     }
 #endif

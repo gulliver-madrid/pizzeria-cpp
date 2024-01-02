@@ -2,7 +2,7 @@
 
 namespace templates {
     /* Permite que las clases derivadas obtengan todos los operadores de
-     * comparación implementando únicamente < y ==
+     * comparacion implementando unicamente < y ==
      */
     template <typename Derived> class Comparable {
       public:

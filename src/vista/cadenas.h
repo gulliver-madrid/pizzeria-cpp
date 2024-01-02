@@ -24,6 +24,6 @@ struct CadenaJuego {
         bool considerar = true    //
     );
 
-    // Operador para convertir implícitamente a std::string
+    // Operador para convertir implicitamente a std::string
     operator std::string() const { return value; }
 };

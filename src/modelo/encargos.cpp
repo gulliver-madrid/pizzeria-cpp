@@ -27,7 +27,7 @@ EncargoACocina::EncargoACocina(
     : tipo(tipo),
       tiempo_preparacion(calcular_tiempo_preparacion(tipo, tiempo_actual)) {}
 
-// Definición métodos Encargos
+// Definicion metodos Encargos
 
 int Encargos::del_tipo(TipoPizza tipo) const {
     int contador = 0;
@@ -59,4 +59,4 @@ EncargoACocina Encargos::por_indice(int i) const { // fmt
     return _datos.at(i);
 }
 
-// Fin métodos Encargos
+// Fin metodos Encargos

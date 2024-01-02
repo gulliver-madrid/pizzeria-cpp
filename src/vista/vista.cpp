@@ -45,7 +45,7 @@ void Vista::setup(
 }
 
 /*
- * Actualiza el interfaz gráfico
+ * Actualiza el interfaz grafico
  */
 void Vista::actualizarIU(      //
     sf::RenderWindow &ventana, //
@@ -84,7 +84,7 @@ void Vista::esconder_botones_gestion_pizzeria() { //
 }
 
 /*
- * Activa o desactiva cada botón despachar dependiendo de si hay pizzas
+ * Activa o desactiva cada boton despachar dependiendo de si hay pizzas
  * preparadas de ese tipo.
  */
 void activar_botones_despachar_si_hay_preparadas(
@@ -98,8 +98,8 @@ void activar_botones_despachar_si_hay_preparadas(
 }
 
 /* Desactiva los botones encargar de cada tipo de pizza que ya tenga suficientes
- * unidades encargadas, preparadas y/o servidas.  Solo se ejecutará en modo
- * estático.
+ * unidades encargadas, preparadas y/o servidas.  Solo se ejecutara en modo
+ * estatico.
  */
 void desactivar_botones_encargar_si_se_sobrepasan_objetivos(
     TipoPizzaToBoton &botones_encargar,          //

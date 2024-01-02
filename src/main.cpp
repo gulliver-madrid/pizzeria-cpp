@@ -67,12 +67,12 @@ int _main(int argc, char *argv[]) {
                 try {
                     num_nivel_introducido = std::stoi(argc > 2 ? argv[2] : "");
                 } catch (std::invalid_argument) {
-                    write_line("Debe introducirse un número de nivel (un "
+                    write_line("Debe introducirse un numero de nivel (un "
                                "entero positivo)");
                     return USER_ERROR;
                 }
                 if (num_nivel_introducido <= 0) {
-                    write_line("El número de nivel debe ser mayor que 0");
+                    write_line("El numero de nivel debe ser mayor que 0");
                     return USER_ERROR;
                 }
                 NumNivel num_nivel(num_nivel_introducido);
@@ -112,7 +112,7 @@ int main(int argc, char *argv[]) {
         try {
             result = _main(argc, argv);
         } catch (const std::exception &e) {
-            std::cout << "Capturada una excepción en el programa principal: "
+            std::cout << "Capturada una excepcion en el programa principal: "
                       << e.what() << std::endl;
             throw;
         }

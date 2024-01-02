@@ -29,7 +29,7 @@ FabricaEtiquetasContadores::_obtener_posicion_etiqueta_contador_pizzas(
 }
 
 /*
- * Crea una etiqueta para un contador (dependiendo del panel tendrá uno u
+ * Crea una etiqueta para un contador (dependiendo del panel tendra uno u
  * otro significado)
  */
 sf::Text FabricaEtiquetasContadores::_crearEtiquetaContadorPizzas( //

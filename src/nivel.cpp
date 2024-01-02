@@ -71,7 +71,7 @@ Nivel::Nivel(
 }
 
 /*
- * Incluye toda la lógica para procesar un evento. Devuelve la nueva fase,
+ * Incluye toda la logica para procesar un evento. Devuelve la nueva fase,
  * en caso de que debiera cambiar.
  */
 std::optional<FaseNivel> Nivel::procesarEvento(

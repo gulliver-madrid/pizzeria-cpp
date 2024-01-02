@@ -22,7 +22,7 @@ int demo_visual_textos() {
         return EXIT_FAILURE;
     int tamano_letra = 128;
 
-    // Representa la línea de abajo
+    // Representa la linea de abajo
     sf::Text etiqueta_invisible_una_linea("Que tal?", font, tamano_letra);
     // Para poder obtener la altura
     sf::FloatRect bounds = etiqueta_invisible_una_linea.getGlobalBounds();
@@ -60,7 +60,7 @@ int demo_visual_textos() {
     bg_rect_2.setPosition(0, altura_con_margenes);
     bg_rect_2.setFillColor(sf::Color::Green);
 
-    // Rects que visibilizan los límites
+    // Rects que visibilizan los limites
     sf::RectangleShape first_rect(bounds.getPosition());
     first_rect.setFillColor(sf::Color::Red);
     sf::RectangleShape last_rect(bounds.getSize());

@@ -13,15 +13,15 @@ int demo_prueba() {
 
         const auto e = contenido.at(TipoPizza::CuatroQuesos);
     } catch (const std::out_of_range &e) {
-        std::cout << "Capturada excepción out_of_range: " << e.what()
+        std::cout << "Capturada excepcion out_of_range: " << e.what()
                   << std::endl;
         throw;
     } catch (const std::exception &e) {
-        std::cout << "Capturada otra excepción: " << e.what() << std::endl;
+        std::cout << "Capturada otra excepcion: " << e.what() << std::endl;
         return 2;
     }
 
-    std::cout << "Ninguna excepción capturada." << std::endl;
+    std::cout << "Ninguna excepcion capturada." << std::endl;
     return 0;
     // Pedido pedido(std::move(contenido));
     // auto c = contenido;

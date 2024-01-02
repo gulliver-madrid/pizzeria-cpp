@@ -12,7 +12,7 @@ namespace sf {
 
 constexpr bool MODO_DESARROLLO = true;
 
-/* NewType para el número de nivel del juego */
+/* NewType para el numero de nivel del juego */
 struct NumNivel {
     const int valor;
     explicit NumNivel(int v) : valor(v) { //

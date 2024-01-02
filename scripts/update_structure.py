@@ -11,7 +11,7 @@ TO_IGNORE = "demos"
 def extraer_dependencias_de_archivo(archivo: Path) -> list[Formatted]:
     """
     Extrae las dependencias (includes) de un archivo C++.
-    Busca líneas que contienen #include "filename.ext".
+    Busca lineas que contienen #include "filename.ext".
     """
     try:
         with open(archivo, "r") as file:
@@ -103,7 +103,7 @@ def format_dependencies_as_text(
 
 def main() -> None:
     """
-    Función principal del script.
+    Funcion principal del script.
     """
     directorio_actual = Path(os.getcwd()) / "src"
     dependencias = leer_dependencias(directorio_actual)

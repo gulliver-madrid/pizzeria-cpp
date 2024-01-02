@@ -8,7 +8,6 @@ bool Globales::detecta_colision(
     if (hay_colision) {
         const auto id_boton = boton.get_id();
         sf::Sound &sound = sounds[id_boton];
-        // std::cout << "Pulsado botón" << id_boton << std::endl;
         if (button_click_buffer) {
             sound.setBuffer(button_click_buffer.value());
             sound.play();
