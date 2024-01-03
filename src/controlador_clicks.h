@@ -24,7 +24,7 @@ struct ControladorClicks {
     std::optional<Comando> procesa_click(
         Globales &,                   //
         const BotonesApp &,           //
-        const Estado &,               //
+        const FaseNivel fase_actual,  //
         const sf::Vector2i &mouse_pos //
     );
 };

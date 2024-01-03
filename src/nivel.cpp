@@ -55,7 +55,7 @@ std::optional<FaseNivel> Nivel::procesarEvento(
 
                 const sf::Vector2i mouse_pos = sf::Mouse::getPosition(ventana);
                 const auto comando = controlador_clicks->procesa_click(
-                    globales, botones, estado, mouse_pos
+                    globales, botones, estado.fase_actual, mouse_pos
                 );
                 if (!comando) {
                     return std::nullopt;
