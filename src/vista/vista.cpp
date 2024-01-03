@@ -97,6 +97,19 @@ void activar_botones_despachar_si_hay_preparadas(
     }
 }
 
+bool objetivos_sobrepasados(
+    dominio::TipoPizza tp,                       //
+    const modelo::PizzasAContadores &contadores, //
+    const Encargos &encargos,                    //
+    const Pedido &pedido                         //
+) {
+    auto &contadores_tp = contadores.at(tp);
+    int potenciales = contadores_tp.preparadas + contadores_tp.servidas +
+                      encargos.del_tipo(tp);
+    auto contador_estatico_tp = pedido.contenido.at(tp);
+    return (potenciales >= contador_estatico_tp.objetivo);
+}
+
 /* Desactiva los botones encargar de cada tipo de pizza que ya tenga suficientes
  * unidades encargadas, preparadas y/o servidas.  Solo se ejecutara en modo
  * estatico.
@@ -112,10 +125,7 @@ void desactivar_botones_encargar_si_se_sobrepasan_objetivos(
         if (!boton_encargar.esta_activo()) {
             continue;
         }
-        int potenciales = contadores_tp.preparadas + contadores_tp.servidas +
-                          encargos.del_tipo(tp);
-        auto contador_estatico_tp = pedido.contenido.at(tp);
-        if (potenciales >= contador_estatico_tp.objetivo) {
+        if (objetivos_sobrepasados(tp, contadores, encargos, pedido)) {
             boton_encargar.desactivar();
         }
     }
