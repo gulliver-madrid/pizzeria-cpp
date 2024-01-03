@@ -97,35 +97,21 @@ void activar_botones_despachar_si_hay_preparadas(
     }
 }
 
-bool objetivos_sobrepasados(
-    dominio::TipoPizza tp,                       //
-    const modelo::PizzasAContadores &contadores, //
-    const Encargos &encargos,                    //
-    const Pedido &pedido                         //
-) {
-    auto &contadores_tp = contadores.at(tp);
-    int potenciales = contadores_tp.preparadas + contadores_tp.servidas +
-                      encargos.del_tipo(tp);
-    auto contador_estatico_tp = pedido.contenido.at(tp);
-    return (potenciales >= contador_estatico_tp.objetivo);
-}
-
 /* Desactiva los botones encargar de cada tipo de pizza que ya tenga suficientes
  * unidades encargadas, preparadas y/o servidas.  Solo se ejecutara en modo
  * estatico.
  */
 void desactivar_botones_encargar_si_se_sobrepasan_objetivos(
-    TipoPizzaToBoton &botones_encargar,          //
-    const modelo::PizzasAContadores &contadores, //
-    const Encargos &encargos,                    //
-    const Pedido &pedido                         //
+    const EstadoModelo &estado_modelo,          //
+    TipoPizzaToBoton &botones_encargar,         //
+    const modelo::PizzasAContadores &contadores //
 ) {
-    for (auto &[tp, contadores_tp] : contadores) {
+    for (auto &[tp, _] : contadores) {
         auto &boton_encargar = botones_encargar.at(tp);
         if (!boton_encargar.esta_activo()) {
             continue;
         }
-        if (objetivos_sobrepasados(tp, contadores, encargos, pedido)) {
+        if (estado_modelo.objetivos_sobrepasados(tp)) {
             boton_encargar.desactivar();
         }
     }
@@ -149,11 +135,8 @@ void actualizar_estado_botones(BotonesApp &botones, const Estado &estado) {
     }
 
     if (se_pueden_preparar_mas && control_pizzas.es_estatico.valor) {
-        const auto &pedidos = control_pizzas.pedidos;
-        assert(pedidos.size() == 1);
-        const auto &pedido = pedidos[0];
         desactivar_botones_encargar_si_se_sobrepasan_objetivos(
-            botones.encargar, contadores, estado.estado_modelo.encargos, pedido
+            estado.estado_modelo, botones.encargar, contadores
         );
     }
 }
