@@ -4,7 +4,6 @@
 #include "shared.h"
 #include "tiempo.h"
 #include "vista/grid.h"
-#include <memory>
 
 struct BotonesApp;
 struct EnlaceVista;

@@ -1,15 +1,14 @@
 #include "nivel.h"
+#include "aplicador.h"
 #include "controlador_clicks.h"
 #include "datos_nivel.h"
 #include "estado_nivel.h"
 #include "general.h"
 #include "modelo_amplio.h"
 #include "realizador_base.h"
-#include "tiempo.h"
 #include "vista/enlace_vista.h"
 #include "vista/vista.h"
 #include <cassert>
-#include <functional>
 #include <memory>
 #include <optional>
 
@@ -104,7 +103,7 @@ std::optional<FaseNivel> Nivel::procesarEvento(
                 if (!comando) {
                     return std::nullopt;
                 }
-                return aplica_comando(realizador, comando.value());
+                return aplicador::aplicar_comando(realizador, comando.value());
             }
             break;
         default:

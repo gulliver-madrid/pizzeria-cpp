@@ -21,6 +21,7 @@ FetchContent_MakeAvailable(googletest)
 
 add_executable(pizzeria
     src/main.cpp
+    src/aplicador.cpp
     src/controlador_clicks.cpp
     src/datos_niveles.cpp
     src/debug_sfml.cpp

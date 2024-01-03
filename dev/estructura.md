@@ -1,6 +1,15 @@
 - main.cpp:
     - juego.h
 
+- aplicador.cpp:
+    - aplicador.h
+    - comandos.h
+    - estado_nivel.h
+    - realizador_base.h
+
+- aplicador.h:
+    - general.h
+
 - comandos.h:
     - modelo/dominio.h
 
@@ -9,7 +18,6 @@
     - estado_nivel.h
     - general.h
     - globales.h
-    - realizador_base.h
     - vista/botones_app.h
 
 - controlador_clicks.h:
@@ -92,13 +100,13 @@
 
 - nivel.cpp:
     - nivel.h
+    - aplicador.h
     - controlador_clicks.h
     - datos_nivel.h
     - estado_nivel.h
     - general.h
     - modelo_amplio.h
     - realizador_base.h
-    - tiempo.h
     - vista/enlace_vista.h
     - vista/vista.h
 
@@ -125,6 +133,7 @@
     - modelo/modelo.h
 
 - tests/modelo/test_modelo_amplio.cpp:
+    - comandos.h
     - datos_nivel.h
     - modelo_amplio.h
 

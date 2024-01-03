@@ -28,8 +28,3 @@ struct ControladorClicks {
         const sf::Vector2i &mouse_pos //
     );
 };
-
-std::optional<FaseNivel> aplica_comando(
-    RealizadorBase &, //
-    const Comando &   //
-);
