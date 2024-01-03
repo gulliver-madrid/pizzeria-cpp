@@ -27,9 +27,8 @@ struct Nivel {
         const BotonesApp &botones,  //
         const FaseNivel fase_actual //
     );
-    EnlaceVista _crear_enlace_vista(
-        const modelo::ControlPizzas &control_pizzas, //
-        std::optional<int> objetivo_estatico         //
+    EnlaceVista _crear_enlace_vista( //
+        const modelo::ControlPizzas &control_pizzas
     );
     std::optional<FaseNivel> _procesarEvento(
         sf::Event,          //

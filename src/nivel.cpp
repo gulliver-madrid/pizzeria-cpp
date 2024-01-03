@@ -49,15 +49,18 @@ std::optional<FaseNivel> Nivel::_procesa_click(
     return modelo_amplio.value().aplica_comando(comando.value());
 }
 
-EnlaceVista Nivel::_crear_enlace_vista(
-    const modelo::ControlPizzas &control_pizzas, //
-    std::optional<int> objetivo_estatico         //
+EnlaceVista Nivel::_crear_enlace_vista( //
+    const modelo::ControlPizzas &control_pizzas
 ) {
+    std::optional<int> objetivo_estatico; // Solo se define en estaticos
+    if (datos_nivel.es_estatico().valor) {
+        objetivo_estatico = control_pizzas.obtener_objetivo_total_estatico();
+    }
     const auto vista_ptr = std::make_shared<Vista>(
-        datos_nivel.datos_nivel_para_modelo.es_estatico, //
-        globales.font,                                   //
-        grid,                                            //
-        control_pizzas.get_tipos_disponibles()           //
+        datos_nivel.es_estatico(),             //
+        globales.font,                         //
+        grid,                                  //
+        control_pizzas.get_tipos_disponibles() //
     );
     vista_ptr->setup(
         datos_nivel.instrucciones, //
@@ -149,32 +152,26 @@ Nivel::Nivel(
 }
 
 AccionGeneral Nivel::ejecutar() {
-    std::optional<int> objetivo_estatico; // Solo se define en estaticos
     modelo_amplio.emplace(ModeloAmplio{datos_nivel});
     assert(modelo_amplio.has_value());
     auto &estado = modelo_amplio.value().estado;
     assert(estado.establecido);
     auto &control_pizzas = estado.estado_modelo.control_pizzas;
     auto &contadores = control_pizzas.contadores;
-    if (datos_nivel.es_estatico().valor) {
-        objetivo_estatico = control_pizzas.obtener_objetivo_total_estatico();
-    }
 
-    const auto enlace_vista = _crear_enlace_vista(
-        control_pizzas, objetivo_estatico //
-    );
+    const auto enlace_vista = _crear_enlace_vista(control_pizzas);
+    assert(!contadores.empty());
+    auto &gestor_tiempo = estado.estado_modelo.gestor_tiempo;
 
     Timer timer_espera_antes_de_resultado;
     Timer timer_fin_nivel;
     sf::Sound sound;
-    assert(!contadores.empty());
-
-    auto &gestor_tiempo = estado.estado_modelo.gestor_tiempo;
     while (globales.window.isOpen()) {
         sf::Event event;
         while (globales.window.pollEvent(event)) {
-            auto siguiente_fase =
-                _procesarEvento(event, enlace_vista.vista->botones, estado);
+            auto siguiente_fase = _procesarEvento( //
+                event, enlace_vista.vista->botones, estado
+            );
             if (!siguiente_fase.has_value()) {
                 continue;
             }
