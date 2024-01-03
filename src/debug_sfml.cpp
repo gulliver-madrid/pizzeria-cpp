@@ -1,4 +1,5 @@
 #include "debug_sfml.h"
+#include <SFML/Graphics/RectangleShape.hpp>
 
 namespace debug {
     void debug_rect(sf::RectangleShape &rect, std::string name) {

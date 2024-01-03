@@ -5,6 +5,7 @@
 #include "etiquetas_barra_estado.h"
 #include "etiquetas_contadores.h"
 #include "etiquetas_info.h"
+#include <SFML/Graphics/RenderWindow.hpp>
 
 namespace medidas {
     constexpr int TAMANO_FUENTE_TITULO_PANELES = 36;

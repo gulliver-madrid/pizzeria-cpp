@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../../shared.h"
-#include <SFML/Graphics.hpp>
+#include <SFML/Graphics/Text.hpp>
 #include <optional>
 
 struct EtiquetasInfo : public ObjetoConFont {

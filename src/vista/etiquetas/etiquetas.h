@@ -3,9 +3,13 @@
 #include "../../modelo/control_pizzas.h"
 #include "../../modelo/modelo.h"
 #include "../../shared.h"
-#include <SFML/Graphics.hpp>
+#include <SFML/System/Vector2.hpp>
 #include <memory>
 #include <optional>
+
+namespace sf {
+    class Text;
+}
 
 struct EtiquetasBarraEstado;
 struct EtiquetasContadores;

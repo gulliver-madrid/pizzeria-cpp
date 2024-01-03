@@ -2,7 +2,11 @@
 
 #include "../../general.h"
 #include "../../modelo/control_pizzas.h"
-#include <SFML/Graphics.hpp>
+#include <SFML/Graphics/Text.hpp>
+
+namespace sf {
+    class RenderWindow;
+}
 
 struct EtiquetasContadores : public ObjetoConFont {
     using TipoPizza = dominio::TipoPizza;

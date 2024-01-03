@@ -1,7 +1,5 @@
 #pragma once
 
-#include <vector>
-
 #define TITLE "Pizzer%ia"
 
 struct Globales;

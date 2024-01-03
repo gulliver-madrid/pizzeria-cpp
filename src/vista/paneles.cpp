@@ -2,7 +2,6 @@
 #include "../shared.h"
 #include "basicos_vista.h"
 #include "etiquetas/etiquetas.h"
-#include <SFML/Graphics.hpp>
 #include <cassert>
 #include <iostream>
 

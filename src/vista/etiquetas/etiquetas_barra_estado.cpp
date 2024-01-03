@@ -5,6 +5,8 @@
 #include "../basicos_vista.h"
 #include "../cadenas.h"
 #include "../componentes/varios.h"
+#include <SFML/Graphics/Font.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
 
 EtiquetasBarraEstado::EtiquetasBarraEstado(const sf::Font &font)
     : ObjetoConFont(font) {

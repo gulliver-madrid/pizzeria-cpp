@@ -1,8 +1,15 @@
 
 #pragma once
 
-#include <SFML/Graphics.hpp>
+#include <SFML/Graphics/Color.hpp>
+#include <SFML/System/Vector2.hpp>
 #include <optional>
+#include <string>
+
+namespace sf {
+    class Font;
+    class Text;
+} // namespace sf
 
 namespace medidas {
     constexpr int TAMANO_TEXTO_GRANDE = 32;
@@ -28,5 +35,4 @@ sf::Text crearEtiqueta(
     const EstiloTexto &,                         //
     const sf::Font &,                            //
     const sf::Vector2f &posicion = Vector2f_CERO //
-
 );

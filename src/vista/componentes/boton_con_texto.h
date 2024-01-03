@@ -2,10 +2,14 @@
 
 #include "boton_data.h"
 #include "componente.h"
-#include <SFML/Graphics.hpp>
-#include <SFML/Window.hpp>
+#include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/Graphics/Text.hpp>
 #include <memory>
 #include <optional>
+
+namespace sf {
+    class RenderWindow;
+}
 
 struct Posicionamiento;
 

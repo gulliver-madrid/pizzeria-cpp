@@ -1,4 +1,5 @@
 #include "varios.h"
+#include <SFML/Graphics/Text.hpp>
 
 sf::Text crearEtiqueta(
     const std::string &texto,    //

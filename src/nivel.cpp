@@ -5,6 +5,7 @@
 #include "general.h"
 #include "vista/enlace_vista.h"
 #include "vista/vista.h"
+#include <SFML/Window/Event.hpp>
 #include <cassert>
 #include <memory>
 #include <optional>

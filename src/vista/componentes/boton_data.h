@@ -1,6 +1,11 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
+#include <SFML/Graphics/Color.hpp>
+#include <string>
+
+namespace sf {
+    class Font;
+}
 
 struct BotonData {
     std::string texto;

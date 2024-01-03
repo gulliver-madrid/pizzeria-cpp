@@ -1,16 +1,16 @@
 #pragma once
 
 #include "modelo_amplio/comandos.h"
-#include <SFML/Graphics.hpp>
+#include <SFML/System/Vector2.hpp>
 #include <functional>
 #include <optional>
 
+enum class FaseNivel;
 struct BotonConTexto;
 struct BotonesApp;
 struct Estado;
 struct Globales;
-class RealizadorBase;
-enum class FaseNivel;
+struct RealizadorBase;
 
 struct ControladorClicks {
   private:

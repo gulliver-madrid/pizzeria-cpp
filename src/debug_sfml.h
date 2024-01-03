@@ -1,8 +1,12 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
+#include <SFML/Graphics/Rect.hpp>
 #include <iostream>
 #include <string>
+
+namespace sf {
+    class RectangleShape;
+}
 
 namespace debug {
     void debug_rect(sf::RectangleShape &rect, std::string name);

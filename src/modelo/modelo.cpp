@@ -1,5 +1,6 @@
 #include "modelo.h"
 #include "encargos.h"
+#include <algorithm> // sort
 #include <iostream>
 #include <unordered_set>
 

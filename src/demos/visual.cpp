@@ -1,6 +1,7 @@
 #include "visual.h"
 #include "../debug_sfml.h"
-#include <SFML/Graphics.hpp>
+#include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window.hpp>
 #include <iostream>
 #include <string>

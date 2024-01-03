@@ -1,5 +1,8 @@
 #include "unicode.h"
-#include <SFML/Graphics.hpp>
+#include <SFML/Graphics/Font.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/Text.hpp>
+#include <SFML/Window/Event.hpp>
 
 #define DEMO_UNICODE_FONT_PATH "C:\\Windows\\Fonts\\arial.ttf"
 

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "componentes/barra_progreso.h"
-#include <SFML/Graphics.hpp>
 
 struct EstadoPreparacionPizzas;
 

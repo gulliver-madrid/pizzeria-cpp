@@ -1,5 +1,4 @@
 #include "presentador.h"
-
 #include "../modelo/dominio.h"
 #include "../modelo/modelo.h"
 

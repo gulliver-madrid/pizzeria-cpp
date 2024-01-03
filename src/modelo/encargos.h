@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../tiempo.h"
+#include <vector>
 
 namespace dominio {
     enum class TipoPizza;

@@ -1,7 +1,12 @@
 #pragma once
 
 #include "../../shared.h"
-#include <SFML/Graphics.hpp>
+#include <SFML/Graphics/Text.hpp>
+
+namespace sf {
+    class Font;
+    class RenderWindow;
+} // namespace sf
 
 struct Tiempo;
 struct TiempoJuego;

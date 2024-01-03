@@ -1,6 +1,6 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
+#include <SFML/Graphics/Color.hpp>
 
 #define TAMANO_INICIAL_VENTANA 1800, 920
 #define FPS 60

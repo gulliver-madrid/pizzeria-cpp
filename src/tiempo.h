@@ -1,8 +1,9 @@
 #pragma once
 
 #include "templates.h"
-#include <SFML/Graphics.hpp>
+#include <SFML/System/Clock.hpp>
 #include <optional>
+#include <string>
 
 ///////////////////////////////////////////
 // Tiempo

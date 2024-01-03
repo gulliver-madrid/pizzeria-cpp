@@ -1,7 +1,9 @@
 #include "visual_textos.h"
 #include "../debug_sfml.h"
 #include "../vista/grid.h"
-#include <SFML/Graphics.hpp>
+#include <SFML/Graphics/Font.hpp>
+#include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/Graphics/Text.hpp>
 #include <SFML/Window.hpp>
 #include <cassert>
 #include <iostream>

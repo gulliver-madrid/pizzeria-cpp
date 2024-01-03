@@ -1,5 +1,6 @@
 #include "grid.h"
-#include <SFML/Graphics.hpp>
+#include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/Graphics/RenderTexture.hpp>
 #include <iostream>
 
 void _draw_grid(
