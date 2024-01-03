@@ -1,6 +1,6 @@
 #include "modelo_amplio.h"
+#include "../general.h"
 #include "comandos.h"
-#include "general.h"
 #include "realizador.h"
 
 ModeloAmplio::ModeloAmplio(const DatosNivel &datos_nivel)

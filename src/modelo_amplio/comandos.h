@@ -1,6 +1,6 @@
 #pragma once
 
-#include "modelo/dominio.h"
+#include "../modelo/dominio.h"
 #include <variant>
 
 class Comando {

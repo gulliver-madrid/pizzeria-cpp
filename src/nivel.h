@@ -1,7 +1,7 @@
 #pragma once
 
 #include "globales.h"
-#include "modelo_amplio.h"
+#include "modelo_amplio/modelo_amplio.h"
 #include "shared.h"
 #include "tiempo.h"
 #include "vista/grid.h"

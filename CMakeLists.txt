@@ -21,7 +21,6 @@ FetchContent_MakeAvailable(googletest)
 
 add_executable(pizzeria
     src/main.cpp
-    src/aplicador.cpp
     src/controlador_clicks.cpp
     src/datos_niveles.cpp
     src/debug_sfml.cpp
@@ -33,9 +32,10 @@ add_executable(pizzeria
     src/modelo/encargos.cpp
     src/modelo/estado_modelo.cpp
     src/modelo/modelo.cpp
-    src/modelo_amplio.cpp
+    src/modelo_amplio/aplicador.cpp
+    src/modelo_amplio/modelo_amplio.cpp
+    src/modelo_amplio/realizador.cpp
     src/nivel.cpp
-    src/realizador.cpp
     src/setup_juego.cpp
     src/textos.cpp
     src/tiempo.cpp
@@ -99,16 +99,16 @@ add_executable(
     src/tests/test_timer.cpp
 
     # archivos del proyecto
-    src/aplicador.cpp
     src/debug_sfml.cpp
     src/estado_nivel.cpp
-    src/modelo_amplio.cpp
     src/modelo/control_pizzas.cpp
     src/modelo/dominio.cpp
     src/modelo/encargos.cpp
     src/modelo/estado_modelo.cpp
     src/modelo/modelo.cpp
-    src/realizador.cpp
+    src/modelo_amplio/aplicador.cpp
+    src/modelo_amplio/modelo_amplio.cpp
+    src/modelo_amplio/realizador.cpp
     src/textos.cpp
     src/tiempo.cpp
     src/vista/cadenas.cpp

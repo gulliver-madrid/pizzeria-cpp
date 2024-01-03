@@ -1,5 +1,4 @@
 #include "nivel.h"
-#include "aplicador.h"
 #include "controlador_clicks.h"
 #include "datos_nivel.h"
 #include "estado_nivel.h"

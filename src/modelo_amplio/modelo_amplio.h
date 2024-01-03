@@ -1,7 +1,7 @@
 #pragma once
 
+#include "../estado_nivel.h"
 #include "aplicador.h"
-#include "estado_nivel.h"
 
 struct Comando;
 

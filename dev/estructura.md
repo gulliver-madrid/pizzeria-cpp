@@ -1,18 +1,6 @@
 - main.cpp:
     - juego.h
 
-- aplicador.cpp:
-    - aplicador.h
-    - comandos.h
-    - estado_nivel.h
-    - realizador_base.h
-
-- aplicador.h:
-    - general.h
-
-- comandos.h:
-    - modelo/dominio.h
-
 - controlador_clicks.cpp:
     - controlador_clicks.h
     - estado_nivel.h
@@ -21,7 +9,7 @@
     - vista/botones_app.h
 
 - controlador_clicks.h:
-    - comandos.h
+    - modelo_amplio/comandos.h
 
 - datos_nivel.h:
     - modelo/datos_nivel_para_modelo.h
@@ -94,19 +82,41 @@
 - modelo/modelo.h:
     - modelo/dominio.h
 
-- modelo_amplio.cpp:
-    - modelo_amplio.h
-    - comandos.h
-    - general.h
-    - realizador.h
-
-- modelo_amplio.h:
-    - aplicador.h
+- modelo_amplio/aplicador.cpp:
+    - modelo_amplio/aplicador.h
     - estado_nivel.h
+    - modelo_amplio/comandos.h
+    - modelo_amplio/realizador_base.h
+
+- modelo_amplio/aplicador.h:
+    - general.h
+
+- modelo_amplio/comandos.h:
+    - modelo/dominio.h
+
+- modelo_amplio/modelo_amplio.cpp:
+    - modelo_amplio/modelo_amplio.h
+    - general.h
+    - modelo_amplio/comandos.h
+    - modelo_amplio/realizador.h
+
+- modelo_amplio/modelo_amplio.h:
+    - estado_nivel.h
+    - modelo_amplio/aplicador.h
+
+- modelo_amplio/realizador.cpp:
+    - modelo_amplio/realizador.h
+    - estado_nivel.h
+    - general.h
+
+- modelo_amplio/realizador.h:
+    - modelo_amplio/realizador_base.h
+
+- modelo_amplio/realizador_base.h:
+    - modelo/dominio.h
 
 - nivel.cpp:
     - nivel.h
-    - aplicador.h
     - controlador_clicks.h
     - datos_nivel.h
     - estado_nivel.h
@@ -116,21 +126,10 @@
 
 - nivel.h:
     - globales.h
-    - modelo_amplio.h
+    - modelo_amplio/modelo_amplio.h
     - shared.h
     - tiempo.h
     - vista/grid.h
-
-- realizador.cpp:
-    - realizador.h
-    - estado_nivel.h
-    - general.h
-
-- realizador.h:
-    - realizador_base.h
-
-- realizador_base.h:
-    - modelo/dominio.h
 
 - setup_juego.cpp:
     - setup_juego.h
@@ -149,10 +148,10 @@
     - modelo/modelo.h
 
 - tests/modelo/test_modelo_amplio.cpp:
-    - comandos.h
     - datos_nivel.h
     - general.h
-    - modelo_amplio.h
+    - modelo_amplio/comandos.h
+    - modelo_amplio/modelo_amplio.h
 
 - tests/test_cadenas.cpp:
     - vista/cadenas.h

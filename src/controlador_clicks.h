@@ -1,6 +1,6 @@
 #pragma once
 
-#include "comandos.h"
+#include "modelo_amplio/comandos.h"
 #include <SFML/Graphics.hpp>
 #include <functional>
 #include <optional>
