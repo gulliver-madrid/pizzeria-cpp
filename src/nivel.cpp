@@ -107,18 +107,18 @@ std::optional<AccionGeneral> Nivel::_procesa_cambio_de_fase(
     const EnlaceVista &enlace_vista,        //
     Timer &timer_espera_antes_de_resultado, //
     FaseNivel fase_previa,                  //
-    GestorTiempoJuego &gestor_tiempo        //
+    GestorTiempoJuego &gestor_tiempo_juego  //
 ) {
     std::optional<AccionGeneral> posible_accion;
     switch (nueva_fase) {
         case FaseNivel::Activa:
             assert(fase_previa == FaseNivel::MostrandoInstrucciones);
-            gestor_tiempo.activar();
+            gestor_tiempo_juego.activar();
             enlace_vista.on_cambio_a_fase_activa();
             break;
         case FaseNivel::EsperaAntesDeResultado:
             assert(fase_previa == FaseNivel::Activa);
-            gestor_tiempo.pausar();
+            gestor_tiempo_juego.pausar();
             timer_espera_antes_de_resultado.start(
                 tiempos::RETARDO_ANTES_DE_RESULTADO
             );
@@ -161,11 +161,12 @@ AccionGeneral Nivel::ejecutar() {
 
     const auto enlace_vista = _crear_enlace_vista(control_pizzas);
     assert(!contadores.empty());
-    auto &gestor_tiempo = estado.estado_modelo.gestor_tiempo;
+    auto &gestor_tiempo_juego = estado.estado_modelo.gestor_tiempo;
 
     Timer timer_espera_antes_de_resultado;
     Timer timer_fin_nivel;
     sf::Sound sound;
+    Tiempo previo = tiempo::obtener_tiempo_actual();
     while (globales.window.isOpen()) {
         sf::Event event;
         while (globales.window.pollEvent(event)) {
@@ -183,7 +184,7 @@ AccionGeneral Nivel::ejecutar() {
                 enlace_vista,                    //
                 timer_espera_antes_de_resultado, //
                 fase_previa,                     //
-                gestor_tiempo                    //
+                gestor_tiempo_juego              //
             );
             if (accion.has_value()) {
                 return accion.value();
@@ -206,8 +207,13 @@ AccionGeneral Nivel::ejecutar() {
                 };
                 break;
         }
-
-        enlace_vista.actualizarIU(globales.window, estado);
+        const auto tiempo_real_actual = tiempo::obtener_tiempo_actual();
+        const auto transcurrido = TiempoJuego::desde_milisegundos(
+            (tiempo_real_actual - previo).obtener_milisegundos()
+        );
+        gestor_tiempo_juego.tick(transcurrido);
+        previo = tiempo_real_actual;
+        enlace_vista.actualizarIU(globales.window, estado, tiempo_real_actual);
         globales.window.display();
     }
     assert(false); // No deberiamos llegar aqui

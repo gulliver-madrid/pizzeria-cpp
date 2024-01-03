@@ -27,8 +27,9 @@ struct Tiempo : public templates::Comparable<Tiempo> {
     bool operator<(const Tiempo &otro) const;
     virtual std::string to_string() const;
 };
-
-Tiempo obtener_tiempo_actual();
+namespace tiempo {
+    Tiempo obtener_tiempo_actual();
+}
 
 ///////////////////////////////////////////
 // TiempoJuego
@@ -84,15 +85,15 @@ struct TiempoPreparacion {
 //////////////////////////////////////////
 
 struct GestorTiempoJuego {
+    // Debe activarse para poder utilizarlo
 
   private:
-    // Tiempo de juego contabilizado previamente
-    TiempoJuego previo = TiempoJuego_CERO;
-    Tiempo ultima_activacion = Tiempo::CERO;
+    TiempoJuego _actual = TiempoJuego_CERO;
     bool en_pausa = true;
 
   public:
     TiempoJuego obtener_tiempo_juego() const;
+    void tick(TiempoJuego tiempo);
     void activar();
     void pausar();
     void reiniciar();

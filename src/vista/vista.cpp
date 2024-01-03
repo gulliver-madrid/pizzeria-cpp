@@ -10,7 +10,8 @@ void actualizar_estado_botones(BotonesApp &botones, const Estado &estado);
 void actualizar_etiquetas(
     sf::RenderWindow &ventana,               //
     EtiquetasGenerales &etiquetas_generales, //
-    const Estado &estado                     //
+    const Estado &estado,                    //
+    const Tiempo &tiempo_real_actual         //
 );
 
 Vista::Vista(
@@ -47,9 +48,10 @@ void Vista::setup(
 /*
  * Actualiza el interfaz grafico
  */
-void Vista::actualizarIU(      //
-    sf::RenderWindow &ventana, //
-    const Estado &estado       //
+void Vista::actualizarIU(            //
+    sf::RenderWindow &ventana,       //
+    const Estado &estado,            //
+    const Tiempo &tiempo_real_actual //
 ) {
     // std::cout << "\nActualizando IU" << std::endl;
 
@@ -69,7 +71,7 @@ void Vista::actualizarIU(      //
         actualizar_paneles(ventana, paneles_completos, preparacion);
     }
 
-    actualizar_etiquetas(ventana, etiquetas, estado);
+    actualizar_etiquetas(ventana, etiquetas, estado, tiempo_real_actual);
     botones.dibujar(ventana);
 }
 
@@ -143,9 +145,10 @@ void actualizar_estado_botones(BotonesApp &botones, const Estado &estado) {
 
 /* Actualiza y dibuja las etiquetas */
 void actualizar_etiquetas(
-    sf::RenderWindow &ventana,     //
-    EtiquetasGenerales &etiquetas, //
-    const Estado &estado           //
+    sf::RenderWindow &ventana,       //
+    EtiquetasGenerales &etiquetas,   //
+    const Estado &estado,            //
+    const Tiempo &tiempo_real_actual //
 ) {
 
     const modelo::PizzasAContadores &contadores =
@@ -168,7 +171,7 @@ void actualizar_etiquetas(
         default:
             break;
     }
-    const auto tiempo_real_actual = obtener_tiempo_actual();
+
     const auto tiempo_juego_actual =
         estado.estado_modelo.obtener_tiempo_juego();
     etiquetas.actualizar_barra_estado(tiempo_real_actual, tiempo_juego_actual);

@@ -4,6 +4,7 @@
 
 struct Estado;
 struct Vista;
+struct Tiempo;
 namespace sf {
     class RenderWindow;
 }
@@ -20,7 +21,8 @@ class EnlaceVista {
     void on_cambio_a_fase_espera_antes_de_resultado() const;
     void esconder_paneles() const;
     void actualizarIU(
-        sf::RenderWindow &ventana, //
-        const Estado &estado       //
+        sf::RenderWindow &ventana,       //
+        const Estado &estado,            //
+        const Tiempo &tiempo_real_actual //
     ) const;
 };

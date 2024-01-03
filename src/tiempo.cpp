@@ -87,7 +87,7 @@ int TiempoPreparacion::obtener_porcentaje(const TiempoJuego &tiempo_actual
 /* Devuelve un objeto tiempo que cuenta el tiempo de manera circular por
  * periodos de 10_000 segundos
  */
-Tiempo obtener_tiempo_actual() {
+Tiempo tiempo::obtener_tiempo_actual() {
     auto ahora = std::chrono::system_clock::now();
     auto duracion = ahora.time_since_epoch();
     auto milisegundos =
@@ -125,30 +125,25 @@ const TiempoJuego TiempoJuego::operator-(const TiempoJuego &otro) const {
 // GestorTiempoJuego
 //////////////////////////////////////////
 
-TiempoJuego GestorTiempoJuego::obtener_tiempo_juego() const {
-    if (en_pausa) {
-        return previo;
-    }
-    const auto transcurrido = obtener_tiempo_actual() - ultima_activacion;
-    return previo + TiempoJuego::desde_milisegundos( //
-                        transcurrido.obtener_milisegundos()
-                    );
-}
+TiempoJuego GestorTiempoJuego::obtener_tiempo_juego() const { return _actual; }
 
+void GestorTiempoJuego::tick(TiempoJuego transcurrido) {
+    if (en_pausa)
+        return;
+    _actual = _actual + transcurrido;
+}
 void GestorTiempoJuego::activar() {
     assert(en_pausa);
-    ultima_activacion = obtener_tiempo_actual();
     en_pausa = false;
 }
+
 void GestorTiempoJuego::pausar() {
     assert(!en_pausa);
-    previo = obtener_tiempo_juego();
     en_pausa = true;
 }
 void GestorTiempoJuego::reiniciar() {
     en_pausa = true;
-    previo = TiempoJuego_CERO;
-    ultima_activacion = Tiempo::CERO;
+    _actual = TiempoJuego_CERO;
 }
 
 const Tiempo Tiempo::CERO = Tiempo::desde_milisegundos(0);

@@ -35,8 +35,9 @@ class Vista : public ObjetoConFont {
     );
 
     void actualizarIU(
-        sf::RenderWindow &ventana, //
-        const Estado &estado       //
+        sf::RenderWindow &,              //
+        const Estado &,                  //
+        const Tiempo &tiempo_real_actual //
     );
     void mostrar_elementos_fase_activa();
     void esconder_botones_gestion_pizzeria();

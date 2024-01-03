@@ -12,8 +12,9 @@ void EnlaceVista::esconder_paneles() const {
     vista->paneles_completos.visible = false;
 }
 void EnlaceVista::actualizarIU(
-    sf::RenderWindow &ventana, //
-    const Estado &estado       //
+    sf::RenderWindow &ventana,       //
+    const Estado &estado,            //
+    const Tiempo &tiempo_real_actual //
 ) const {
-    vista->actualizarIU(ventana, estado);
+    vista->actualizarIU(ventana, estado, tiempo_real_actual);
 }
