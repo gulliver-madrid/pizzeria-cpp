@@ -1,6 +1,6 @@
 #pragma once
 
-#include "templates.h"
+#include "templates/comparable.h"
 #include <SFML/System/Clock.hpp>
 #include <optional>
 #include <string>

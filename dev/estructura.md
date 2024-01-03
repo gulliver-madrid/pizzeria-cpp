@@ -180,7 +180,7 @@
     - juego_assert.h
 
 - tiempo.h:
-    - templates.h
+    - templates/comparable.h
 
 - vista/barras_progreso.cpp:
     - vista/barras_progreso.h
@@ -210,12 +210,12 @@
 
 - vista/componentes/barra_progreso.cpp:
     - vista/componentes/barra_progreso.h
-    - shared.h
+    - templates/dibujar_elementos.h
     - vista/componentes/varios.h
 
 - vista/componentes/boton_con_texto.cpp:
     - vista/componentes/boton_con_texto.h
-    - shared.h
+    - templates/dibujar_elementos.h
     - vista/componentes/varios.h
 
 - vista/componentes/boton_con_texto.h:
@@ -263,7 +263,7 @@
 - vista/etiquetas/etiquetas_contadores.cpp:
     - vista/etiquetas/etiquetas_contadores.h
     - modelo/modelo.h
-    - shared.h
+    - templates/dibujar_elementos.h
     - vista/basicos_vista.h
     - vista/componentes/varios.h
     - vista/etiquetas/fabrica_etiquetas_contadores.h
@@ -295,7 +295,7 @@
 
 - vista/paneles.cpp:
     - vista/paneles.h
-    - shared.h
+    - templates/dibujar_elementos.h
     - vista/basicos_vista.h
     - vista/etiquetas/etiquetas.h
 

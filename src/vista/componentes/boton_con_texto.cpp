@@ -1,5 +1,5 @@
 #include "boton_con_texto.h"
-#include "../../shared.h"
+#include "../../templates/dibujar_elementos.h"
 #include "varios.h"
 #include <cassert>
 

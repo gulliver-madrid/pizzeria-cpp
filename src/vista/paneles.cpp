@@ -1,5 +1,5 @@
 #include "paneles.h"
-#include "../shared.h"
+#include "../templates/dibujar_elementos.h"
 #include "basicos_vista.h"
 #include "etiquetas/etiquetas.h"
 #include <cassert>

@@ -8,6 +8,7 @@
 #include "juego.h"
 #include <cassert>
 #include <iostream>
+#include <map>
 
 #define USER_ERROR 1
 

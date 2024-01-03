@@ -9,7 +9,8 @@
 
 namespace sf {
     class Text;
-}
+    class RenderWindow;
+} // namespace sf
 
 struct EtiquetasBarraEstado;
 struct EtiquetasContadores;
