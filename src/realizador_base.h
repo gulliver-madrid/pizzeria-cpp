@@ -1,13 +1,15 @@
 #pragma once
 
+#include "modelo/dominio.h"
 #include <optional>
 
 enum class FaseNivel;
 
 class RealizadorBase {
-  public:
+  protected:
     using NuevaFase = std::optional<FaseNivel>;
 
+  public:
     virtual ~RealizadorBase() = default; // Destructor virtual
 
     // Metodos virtuales puros

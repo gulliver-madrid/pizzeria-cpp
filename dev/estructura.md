@@ -106,7 +106,7 @@
     - estado_nivel.h
     - general.h
     - modelo_amplio.h
-    - realizador_base.h
+    - realizador.h
     - vista/enlace_vista.h
     - vista/vista.h
 
@@ -115,6 +115,17 @@
     - shared.h
     - tiempo.h
     - vista/grid.h
+
+- realizador.cpp:
+    - realizador.h
+    - estado_nivel.h
+    - general.h
+
+- realizador.h:
+    - realizador_base.h
+
+- realizador_base.h:
+    - modelo/dominio.h
 
 - setup_juego.cpp:
     - setup_juego.h

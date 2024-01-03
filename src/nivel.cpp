@@ -5,7 +5,7 @@
 #include "estado_nivel.h"
 #include "general.h"
 #include "modelo_amplio.h"
-#include "realizador_base.h"
+#include "realizador.h"
 #include "vista/enlace_vista.h"
 #include "vista/vista.h"
 #include <cassert>
@@ -16,47 +16,6 @@ namespace tiempos {
     const auto RETARDO_ANTES_DE_RESULTADO = Tiempo::desde_segundos(2.5);
     const auto ESPERA_ENTRE_NIVELES = Tiempo::desde_segundos(2);
 } // namespace tiempos
-
-class Realizador : public RealizadorBase {
-  private:
-    Estado &estado;
-
-  public:
-    Realizador(Estado &estado) : estado(estado) {}
-
-    /* Encarga una pizza a la cocina del tipo indicado */
-    NuevaFase encargar_pizza( //
-        const dominio::TipoPizza tp
-    ) {
-        assert(estado.fase_actual == FaseNivel::Activa);
-        estado.estado_modelo.anadir_encargo(tp);
-        return std::nullopt;
-    }
-
-    /*
-     * Despacha una pizza a los clientes del tipo indicado. Devuelve la nueva
-     * fase si corresponde.
-     */
-    NuevaFase despachar_pizza( //
-        const dominio::TipoPizza tp
-    ) {
-        assert(estado.fase_actual == FaseNivel::Activa);
-        const auto pedidos_cubiertos = estado.estado_modelo.despachar_pizza(tp);
-        if (pedidos_cubiertos) {
-            return FaseNivel::EsperaAntesDeResultado;
-        }
-        return std::nullopt;
-    }
-    NuevaFase alternar_grid() {
-        assert(MODO_DESARROLLO);
-        estado.mostrando_grid = !estado.mostrando_grid;
-        return std::nullopt;
-    }
-    NuevaFase empezar() {
-        assert(estado.fase_actual == FaseNivel::MostrandoInstrucciones);
-        return FaseNivel::Activa;
-    }
-};
 
 Nivel::Nivel(
     Globales &globales,            //
