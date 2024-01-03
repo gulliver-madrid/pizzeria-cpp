@@ -15,17 +15,24 @@ namespace tiempos {
     const auto ESPERA_ENTRE_NIVELES = Tiempo::desde_segundos(2);
 } // namespace tiempos
 
-Nivel::Nivel(
-    Globales &globales,            //
-    const DatosNivel &datos_nivel, //
-    const NumNivel &num_nivel,     //
-    Grid &grid,                    //
-    bool es_el_ultimo              //
-)
-    : globales(globales), datos_nivel(datos_nivel), num_nivel(num_nivel),
-      grid(grid), es_el_ultimo(es_el_ultimo) {
-    controlador_clicks = std::shared_ptr<ControladorClicks>();
+void mostrar_resultado(
+    const Globales &globales,        //
+    Estado &estado,                  //
+    const EnlaceVista &enlace_vista, //
+    Timer &timer_fin_nivel,          //
+    sf::Sound &sound                 //
+) {
+    // Pasa a fase MostrandoResultado
+    estado.fase_actual = FaseNivel::MostrandoResultado;
+    if (globales.success_buffer) {
+        sound.setBuffer(globales.success_buffer.value());
+        sound.play();
+    }
+    timer_fin_nivel.start(tiempos::ESPERA_ENTRE_NIVELES);
+    enlace_vista.esconder_paneles();
 }
+
+///// Nivel (private) /////
 
 std::optional<FaseNivel> Nivel::_procesa_click(
     const BotonesApp &botones, const FaseNivel fase_actual //
@@ -42,11 +49,29 @@ std::optional<FaseNivel> Nivel::_procesa_click(
     return modelo_amplio.value().aplica_comando(comando.value());
 }
 
+EnlaceVista Nivel::_crear_enlace_vista(
+    const modelo::ControlPizzas &control_pizzas, //
+    std::optional<int> objetivo_estatico         //
+) {
+    const auto vista_ptr = std::make_shared<Vista>(
+        datos_nivel.datos_nivel_para_modelo.es_estatico, //
+        globales.font,                                   //
+        grid,                                            //
+        control_pizzas.get_tipos_disponibles()           //
+    );
+    vista_ptr->setup(
+        datos_nivel.instrucciones, //
+        num_nivel,                 //
+        objetivo_estatico          //
+    );
+    return EnlaceVista(vista_ptr);
+}
+
 /*
  * Incluye toda la logica para procesar un evento. Devuelve la nueva fase,
  * en caso de que debiera cambiar.
  */
-std::optional<FaseNivel> Nivel::procesarEvento(
+std::optional<FaseNivel> Nivel::_procesarEvento(
     sf::Event evento, const BotonesApp &botones, Estado &estado
 ) {
     auto &ventana = globales.window;
@@ -74,7 +99,7 @@ std::optional<FaseNivel> Nivel::procesarEvento(
 };
 
 /* Procesa un cambio de fase reciente */
-std::optional<AccionGeneral> Nivel::procesa_cambio_de_fase(
+std::optional<AccionGeneral> Nivel::_procesa_cambio_de_fase(
     FaseNivel nueva_fase,                   //
     const EnlaceVista &enlace_vista,        //
     Timer &timer_espera_antes_de_resultado, //
@@ -109,39 +134,18 @@ std::optional<AccionGeneral> Nivel::procesa_cambio_de_fase(
     return posible_accion;
 }
 
-void mostrar_resultado(
-    const Globales &globales,        //
-    Estado &estado,                  //
-    const EnlaceVista &enlace_vista, //
-    Timer &timer_fin_nivel,          //
-    sf::Sound &sound                 //
-) {
-    // Pasa a fase MostrandoResultado
-    estado.fase_actual = FaseNivel::MostrandoResultado;
-    if (globales.success_buffer) {
-        sound.setBuffer(globales.success_buffer.value());
-        sound.play();
-    }
-    timer_fin_nivel.start(tiempos::ESPERA_ENTRE_NIVELES);
-    enlace_vista.esconder_paneles();
-}
+///// Nivel (public) /////
 
-EnlaceVista Nivel::crear_enlace_vista(
-    const modelo::ControlPizzas &control_pizzas, //
-    std::optional<int> objetivo_estatico         //
-) {
-    const auto vista_ptr = std::make_shared<Vista>(
-        datos_nivel.datos_nivel_para_modelo.es_estatico, //
-        globales.font,                                   //
-        grid,                                            //
-        control_pizzas.get_tipos_disponibles()           //
-    );
-    vista_ptr->setup(
-        datos_nivel.instrucciones, //
-        num_nivel,                 //
-        objetivo_estatico          //
-    );
-    return EnlaceVista(vista_ptr);
+Nivel::Nivel(
+    Globales &globales,            //
+    const DatosNivel &datos_nivel, //
+    const NumNivel &num_nivel,     //
+    Grid &grid,                    //
+    bool es_el_ultimo              //
+)
+    : globales(globales), datos_nivel(datos_nivel), num_nivel(num_nivel),
+      grid(grid), es_el_ultimo(es_el_ultimo) {
+    controlador_clicks = std::shared_ptr<ControladorClicks>();
 }
 
 AccionGeneral Nivel::ejecutar() {
@@ -150,14 +154,14 @@ AccionGeneral Nivel::ejecutar() {
     assert(modelo_amplio.has_value());
     auto &estado = modelo_amplio.value().estado;
     assert(estado.establecido);
-    modelo::ControlPizzas &control_pizzas = estado.estado_modelo.control_pizzas;
-    modelo::PizzasAContadores &contadores = control_pizzas.contadores;
+    auto &control_pizzas = estado.estado_modelo.control_pizzas;
+    auto &contadores = control_pizzas.contadores;
     if (datos_nivel.es_estatico().valor) {
         objetivo_estatico = control_pizzas.obtener_objetivo_total_estatico();
     }
 
-    const auto enlace_vista = crear_enlace_vista( //
-        control_pizzas, objetivo_estatico
+    const auto enlace_vista = _crear_enlace_vista(
+        control_pizzas, objetivo_estatico //
     );
 
     Timer timer_espera_antes_de_resultado;
@@ -170,14 +174,14 @@ AccionGeneral Nivel::ejecutar() {
         sf::Event event;
         while (globales.window.pollEvent(event)) {
             auto siguiente_fase =
-                procesarEvento(event, enlace_vista.vista->botones, estado);
-            // Cambio de fase reciente
+                _procesarEvento(event, enlace_vista.vista->botones, estado);
             if (!siguiente_fase.has_value()) {
                 continue;
             }
+            // Cambio de fase reciente
             const auto fase_previa = estado.fase_actual;
             estado.fase_actual = siguiente_fase.value();
-            const auto accion = procesa_cambio_de_fase(
+            const auto accion = _procesa_cambio_de_fase(
                 estado.fase_actual,              //
                 enlace_vista,                    //
                 timer_espera_antes_de_resultado, //
