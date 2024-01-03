@@ -39,6 +39,10 @@ struct Nivel {
         std::optional<int> objetivo_estatico         //
     );
 
+    std::optional<FaseNivel> _procesa_click(
+        const BotonesApp &botones, const FaseNivel fase_actual //
+    );
+
   public:
     Globales &globales;
     const DatosNivel &datos_nivel;

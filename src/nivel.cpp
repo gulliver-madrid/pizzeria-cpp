@@ -27,6 +27,21 @@ Nivel::Nivel(
     controlador_clicks = std::shared_ptr<ControladorClicks>();
 }
 
+std::optional<FaseNivel> Nivel::_procesa_click(
+    const BotonesApp &botones, const FaseNivel fase_actual //
+) {
+    auto &ventana = globales.window;
+    const sf::Vector2i mouse_pos = sf::Mouse::getPosition(ventana);
+    const auto comando = controlador_clicks->procesa_click(
+        globales, botones, fase_actual, mouse_pos
+    );
+    if (!comando) {
+        return std::nullopt;
+    }
+    assert(modelo_amplio.has_value());
+    return modelo_amplio.value().aplica_comando(comando.value());
+}
+
 /*
  * Incluye toda la logica para procesar un evento. Devuelve la nueva fase,
  * en caso de que debiera cambiar.
@@ -39,8 +54,7 @@ std::optional<FaseNivel> Nivel::procesarEvento(
     switch (evento.type) {
         case sf::Event::Closed:
             ventana.close();
-            siguiente_fase = FaseNivel::Saliendo;
-            break;
+            return FaseNivel::Saliendo;
         case sf::Event::Resized:
             {
                 // Actualiza la View al nuevo tamano de la ventana
@@ -51,24 +65,12 @@ std::optional<FaseNivel> Nivel::procesarEvento(
             }
             break;
         case sf::Event::MouseButtonPressed:
-            {
-
-                const sf::Vector2i mouse_pos = sf::Mouse::getPosition(ventana);
-                const auto comando = controlador_clicks->procesa_click(
-                    globales, botones, estado.fase_actual, mouse_pos
-                );
-                if (!comando) {
-                    return std::nullopt;
-                }
-                assert(modelo_amplio.has_value());
-                return modelo_amplio.value().aplica_comando(comando.value());
-            }
-            break;
+            return _procesa_click(botones, estado.fase_actual);
         default:
             /* Eventos ignorados */
             break;
     }
-    return siguiente_fase;
+    return std::nullopt;
 };
 
 /* Procesa un cambio de fase reciente */
