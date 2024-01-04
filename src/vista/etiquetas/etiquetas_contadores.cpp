@@ -20,14 +20,17 @@ namespace {
 
     /* Builds the shape of PedidoCard */
     sf::RectangleShape build_card_pedido_shape(size_t num_items) {
-        auto shape = sf::RectangleShape{};
-        shape.setOutlineColor(sf::Color::Blue);
-        shape.setOutlineThickness(5);
         const int height = 30 + 26 * (num_items - 1);
-        shape.setSize(
-            sf::Vector2f(250 + top_left_padding, height + top_left_padding)
+        const auto size = sf::Vector2f(
+            250 + top_left_padding,   //
+            height + top_left_padding //
         );
+        static const auto outline_color = sf::Color::Blue;
         static const auto fill_color = sf::Color(46, 134, 193);
+        auto shape = sf::RectangleShape{};
+        shape.setOutlineColor(outline_color);
+        shape.setOutlineThickness(5);
+        shape.setSize(size);
         shape.setFillColor(fill_color);
         return shape;
     }
