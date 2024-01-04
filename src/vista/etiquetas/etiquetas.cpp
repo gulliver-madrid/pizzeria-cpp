@@ -21,11 +21,9 @@ namespace estilos {
 // EtiquetasGenerales
 //////////////////////////////////////////
 
-EtiquetasGenerales::EtiquetasGenerales(
-    const EsSistemaEstatico &es_estatico, const sf::Font &font
-)
+EtiquetasGenerales::EtiquetasGenerales(const sf::Font &font)
     : ObjetoConFont(font) {
-    contadores = std::make_unique<EtiquetasContadores>(es_estatico, font);
+    contadores = std::make_unique<EtiquetasContadores>(font);
     info = std::make_unique<EtiquetasInfo>(font);
     barra_estado = std::make_unique<EtiquetasBarraEstado>(font);
 }
@@ -33,12 +31,11 @@ EtiquetasGenerales::EtiquetasGenerales(
 EtiquetasGenerales::~EtiquetasGenerales() = default;
 
 void EtiquetasGenerales::setup(
-    const std::string &instr,                    //
-    const NumNivel &num_nivel,                   //
-    const dominio::TiposDePizza &tp_disponibles, //
-    const std::optional<int> objetivo_estatico   //
+    const std::string &instr,                   //
+    const NumNivel &num_nivel,                  //
+    const dominio::TiposDePizza &tp_disponibles //
 ) {
-    info->setup(instr, num_nivel, objetivo_estatico);
+    info->setup(instr, num_nivel);
     contadores->setup(tp_disponibles);
 }
 

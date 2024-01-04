@@ -8,11 +8,16 @@ using modelo::Pedidos;
 const DatosNivel datos_niveles[] = {
     // TODO: adaptar texto instrucciones al nivel correspondiente
     DatosNivel{
-        INSTRUCCIONES_NIVEL_ESTATICO, //
+        INSTRUCCIONES_NIVEL_DINAMICO, //
         Pedidos{{
-            Pedido({{TipoPizza::Margarita, 3}, {TipoPizza::CuatroQuesos, 2}}),
-        }},
-        true
+            Pedido({{TipoPizza::Margarita, 2}, {TipoPizza::CuatroQuesos, 1}}),
+        }}
+    },
+    DatosNivel{
+        INSTRUCCIONES_NIVEL_DINAMICO, //
+        Pedidos{{
+            Pedido({{TipoPizza::Margarita, 3}, {TipoPizza::CuatroQuesos, 1}}),
+        }}
     },
     DatosNivel{
         INSTRUCCIONES_NIVEL_DINAMICO, //
@@ -46,14 +51,13 @@ const DatosNivel datos_niveles[] = {
             ),
         }}
     },
-    {INSTRUCCIONES_NIVEL_ESTATICO, //
+    {INSTRUCCIONES_NIVEL_DINAMICO, //
      Pedidos{{
          Pedido({
              {TipoPizza::Margarita, 6},
              {TipoPizza::Pepperoni, 4},
              {TipoPizza::CuatroQuesos, 3},
          }),
-     }},
-     true}
+     }}}
 };
 const int NUM_DATOS_NIVELES = sizeof(datos_niveles) / sizeof(datos_niveles[0]);

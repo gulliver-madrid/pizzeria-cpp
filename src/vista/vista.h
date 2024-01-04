@@ -25,16 +25,14 @@ class Vista : public ObjetoConFont {
     Grid &grid;
 
     Vista(
-        const EsSistemaEstatico &es_estatico,       //
         const sf::Font &font,                       //
         Grid &grid,                                 //
         const dominio::TiposDePizza &tp_disponibles //
     );
 
     void setup(
-        const std::string &instrucciones,          //
-        const NumNivel &,                          //
-        const std::optional<int> objetivo_estatico //
+        const std::string &instrucciones, //
+        const NumNivel &                  //
     );
 
     void actualizarIU(

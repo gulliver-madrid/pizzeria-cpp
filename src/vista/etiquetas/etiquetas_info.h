@@ -10,8 +10,7 @@ struct EtiquetasInfo : public ObjetoConFont {
     sf::Text resultado;
     EtiquetasInfo(const sf::Font &);
     void setup(
-        const std::string &instr,                  //
-        const NumNivel &,                          //
-        const std::optional<int> objetivo_estatico //
+        const std::string &instr, //
+        const NumNivel &          //
     );
 };

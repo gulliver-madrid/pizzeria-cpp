@@ -3,10 +3,7 @@
 
 using modelo::ControlPizzas;
 
-ControlPizzas::ControlPizzas(
-    Pedidos pedidos_, const EsSistemaEstatico &es_estatico
-)
-    : pedidos(pedidos_), es_estatico(es_estatico) {
+ControlPizzas::ControlPizzas(Pedidos pedidos) : pedidos(pedidos) {
     for (auto &pedido : pedidos) {
         for (auto &[tp, _] : pedido.contenido) {
             if (contadores.find(tp) == contadores.end()) {
@@ -14,9 +11,6 @@ ControlPizzas::ControlPizzas(
                 _tipos_disponibles.push_back(tp);
             }
         }
-    }
-    if (es_estatico.valor) {
-        assert(pedidos.size() == 1);
     }
 }
 
@@ -54,18 +48,6 @@ int ControlPizzas::obtener_total_preparadas() const {
     return total_preparadas;
 }
 
-/* Calcular objetivo total. Solo tiene sentido con pedidos estaticos. */
-int ControlPizzas::obtener_objetivo_total_estatico() const {
-    assert(es_estatico.valor);
-    assert(pedidos.size() == 1);
-    auto &pedido = pedidos[0];
-    int objetivo = 0;
-    for (auto &[tp, pedido_tp] : pedido.contenido) {
-        assert(contadores.at(tp).preparadas == 0);
-        objetivo += pedido_tp.objetivo;
-    }
-    return objetivo;
-}
 bool ControlPizzas::faltan_pedidos_por_cubrir() const {
     bool faltan = false;
     for (auto &pedido : pedidos) {

@@ -4,7 +4,7 @@
 //////// EstadoModelo
 
 EstadoModelo::EstadoModelo(const DatosNivelParaModelo &datos_nivel)
-    : control_pizzas(datos_nivel.pedidos, datos_nivel.es_estatico) {
+    : control_pizzas(datos_nivel.pedidos) {
     assert(encargos.total() == 0);
     gestor_tiempo.reiniciar();
 }

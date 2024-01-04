@@ -30,18 +30,15 @@ struct EtiquetasGenerales : public ObjetoConFont {
     std::unique_ptr<EtiquetasBarraEstado> barra_estado;
 
   public:
-    EtiquetasGenerales(
-        const EsSistemaEstatico &es_estatico, const sf::Font &font
-    );
+    EtiquetasGenerales(const sf::Font &font);
     EtiquetasGenerales(const EtiquetasGenerales &) = delete;
     EtiquetasGenerales &operator=(const EtiquetasGenerales &) = delete;
     ~EtiquetasGenerales();
 
     void setup(
-        const std::string &instr,                    //
-        const NumNivel &,                            //
-        const dominio::TiposDePizza &tp_disponibles, //
-        const std::optional<int> objetivo_estatico   //
+        const std::string &instr,                   //
+        const NumNivel &,                           //
+        const dominio::TiposDePizza &tp_disponibles //
     );
 
     void actualizar_y_dibujar_contadores(

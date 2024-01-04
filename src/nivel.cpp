@@ -54,19 +54,14 @@ EnlaceVista Nivel::_crear_enlace_vista( //
     const modelo::ControlPizzas &control_pizzas
 ) {
     std::optional<int> objetivo_estatico; // Solo se define en estaticos
-    if (datos_nivel.es_estatico().valor) {
-        objetivo_estatico = control_pizzas.obtener_objetivo_total_estatico();
-    }
     const auto vista_ptr = std::make_shared<Vista>(
-        datos_nivel.es_estatico(),             //
         globales.font,                         //
         grid,                                  //
         control_pizzas.get_tipos_disponibles() //
     );
     vista_ptr->setup(
         datos_nivel.instrucciones, //
-        num_nivel,                 //
-        objetivo_estatico          //
+        num_nivel                  //
     );
     return EnlaceVista(vista_ptr);
 }

@@ -16,7 +16,6 @@ void actualizar_etiquetas(
 );
 
 Vista::Vista(
-    const EsSistemaEstatico &es_estatico,       //
     const sf::Font &font,                       //
     Grid &grid,                                 //
     const dominio::TiposDePizza &tp_disponibles //
@@ -24,20 +23,18 @@ Vista::Vista(
     : ObjetoConFont(font),           //
       botones(font, tp_disponibles), //
       paneles_completos(font),       //
-      etiquetas(es_estatico, font),  //
+      etiquetas(font),               //
       grid(grid),                    //
       tp_disponibles(tp_disponibles) {}
 
 void Vista::setup(
-    const std::string &instrucciones,          //
-    const NumNivel &num_nivel,                 //
-    const std::optional<int> objetivo_estatico //
+    const std::string &instrucciones, //
+    const NumNivel &num_nivel         //
 ) {
     etiquetas.setup(
-        instrucciones,    //
-        num_nivel,        //
-        tp_disponibles,   //
-        objetivo_estatico //
+        instrucciones, //
+        num_nivel,     //
+        tp_disponibles //
     );
     // Mostrar botones iniciales
     botones.generales.alternar_grid.visible = MODO_DESARROLLO;
@@ -100,23 +97,6 @@ void activar_botones_despachar_si_hay_preparadas(
     }
 }
 
-/* Desactiva los botones encargar de cada tipo de pizza que ya tenga suficientes
- * unidades encargadas, preparadas y/o servidas.  Solo se ejecutara en modo
- * estatico.
- */
-void desactivar_botones_encargar_si_se_sobrepasan_objetivos(
-    const EstadoModelo &estado_modelo,          //
-    TipoPizzaToBoton &botones_encargar,         //
-    const modelo::PizzasAContadores &contadores //
-) {
-    for (auto &[tp, _] : contadores) {
-        auto &boton_encargar = botones_encargar.at(tp);
-        if (!boton_encargar.esta_activo()) {
-            continue;
-        }
-    }
-}
-
 /* Actualiza el estado de los botones en funcion de varios factores */
 void actualizar_estado_botones(BotonesApp &botones, const Estado &estado) {
     const auto &control_pizzas = estado.estado_modelo.control_pizzas;
@@ -132,12 +112,6 @@ void actualizar_estado_botones(BotonesApp &botones, const Estado &estado) {
 
     for (auto &[_, boton] : botones.encargar) {
         boton.activacion_condicional(se_pueden_preparar_mas);
-    }
-
-    if (se_pueden_preparar_mas && control_pizzas.es_estatico.valor) {
-        desactivar_botones_encargar_si_se_sobrepasan_objetivos(
-            estado.estado_modelo, botones.encargar, contadores
-        );
     }
 }
 

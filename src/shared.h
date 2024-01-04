@@ -20,13 +20,6 @@ struct NumNivel {
     NumNivel &operator=(const NumNivel &) = delete;
 };
 
-/* NewType para definir si el sistema de tipos es estatico */
-struct EsSistemaEstatico {
-    const bool valor;
-    explicit EsSistemaEstatico(bool v) : valor(v) {}
-    EsSistemaEstatico &operator=(const EsSistemaEstatico &) = delete;
-};
-
 class ObjetoConFont {
   protected:
     const sf::Font &font;

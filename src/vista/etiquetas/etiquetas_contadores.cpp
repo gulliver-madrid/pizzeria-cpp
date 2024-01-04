@@ -5,6 +5,7 @@
 #include "../componentes/varios.h"
 #include "../presentador.h"
 #include "fabrica_etiquetas_contadores.h"
+#include <iostream>
 
 namespace medidas {
     constexpr int SEPARACION_VERTICAL_ENTRE_PEDIDOS = 24;
@@ -89,21 +90,6 @@ void PedidoCard::setPosition(float pos_x, float pos_y) {
 
 ///// EtiquetasContadores (private) /////
 
-/* Actualiza etiquetas_servidas */
-void EtiquetasContadores::_actualizar_pedido_estatico(
-    const modelo::PizzasAContadores &pizzas_a_contadores, //
-    const modelo::Pedidos &pedidos                        //
-) {
-    assert(pedidos.size() == 1);
-    const auto &pedido_unico = pedidos.at(0);
-    for (auto &[tp, contadores_tp] : pizzas_a_contadores) {
-        std::string linea = presentador::crea_linea_completitud_pizza(
-            tp, contadores_tp.servidas, pedido_unico.contenido.at(tp).objetivo
-        );
-        etiquetas_servidas.at(tp).setString(linea);
-    }
-}
-
 void EtiquetasContadores::_actualizar_pedidos_dinamicos( //
     const modelo::Pedidos &pedidos
 ) {
@@ -112,10 +98,8 @@ void EtiquetasContadores::_actualizar_pedidos_dinamicos( //
 
 ///// EtiquetasContadores (public) /////
 
-EtiquetasContadores::EtiquetasContadores(
-    const EsSistemaEstatico &es_estatico, const sf::Font &font
-)
-    : ObjetoConFont(font), es_estatico(es_estatico) {}
+EtiquetasContadores::EtiquetasContadores(const sf::Font &font)
+    : ObjetoConFont(font) {}
 
 void EtiquetasContadores::setup(const dominio::TiposDePizza &tp_disponibles) {
     FabricaEtiquetasContadores fabrica(font);
@@ -124,11 +108,6 @@ void EtiquetasContadores::setup(const dominio::TiposDePizza &tp_disponibles) {
         etiquetas_preparadas.emplace(
             tp, fabrica.crearEtiquetaPizzasPreparadas(i)
         );
-        if (es_estatico.valor) {
-            etiquetas_servidas.emplace(
-                tp, fabrica.crearEtiquetaPizzasServidas(i)
-            );
-        }
         i++;
     }
 };
@@ -143,11 +122,8 @@ void EtiquetasContadores::actualizar(
             nombre_pizza + ": " + std::to_string(contadores_tp.preparadas);
         etiquetas_preparadas.at(tp).setString(linea);
     }
-    if (es_estatico.valor) {
-        _actualizar_pedido_estatico(pizzas_a_contadores, pedidos);
-    } else {
-        _actualizar_pedidos_dinamicos(pedidos);
-    }
+
+    _actualizar_pedidos_dinamicos(pedidos);
 }
 
 void EtiquetasContadores::dibujar(sf::RenderWindow &ventana) const {

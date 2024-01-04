@@ -37,13 +37,6 @@ struct EtiquetasContadores : public ObjetoConFont {
     using TipoPizza = dominio::TipoPizza;
 
   private:
-    // Indica si el sistema de pedidos es estatico
-    const EsSistemaEstatico &es_estatico;
-
-    void _actualizar_pedido_estatico(
-        const modelo::PizzasAContadores &, //
-        const modelo::Pedidos &            //
-    );
     void _actualizar_pedidos_dinamicos(const modelo::Pedidos &);
 
   public:
@@ -51,7 +44,7 @@ struct EtiquetasContadores : public ObjetoConFont {
     std::map<TipoPizza, sf::Text> etiquetas_servidas;
     std::vector<PedidoCard> cards_pedidos;
 
-    EtiquetasContadores(const EsSistemaEstatico &, const sf::Font &);
+    EtiquetasContadores(const sf::Font &);
     void setup(const dominio::TiposDePizza &tp_disponibles);
     void actualizar(
         const modelo::PizzasAContadores &, //
