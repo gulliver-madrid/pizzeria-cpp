@@ -4,8 +4,8 @@
 #include <string>
 #include <vector>
 
-#define TIPOS_DE_PIZZA Margarita, Pepperoni, CuatroQuesos
-#define NUMERO_DE_TIPOS_DE_PIZZA 3
+#define TIPOS_DE_PIZZA Margarita, Pepperoni, CuatroQuesos, Funghi, Vegetariana
+#define NUMERO_DE_TIPOS_DE_PIZZA 5
 
 namespace dominio {
     enum class TipoPizza { TIPOS_DE_PIZZA };
