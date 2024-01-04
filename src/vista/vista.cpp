@@ -111,6 +111,8 @@ void Vista::_actualizar_paneles(
     PanelesCompletos &paneles_completos,       //
     const EstadoPreparacionPizzas &preparacion //
 ) {
+    // TODO: diferenciar entre actualizacion de datos y dibujado
+    // TODO: usar el sistema nativo de dibujo de SFML.
     paneles_completos.dibujar(ventana, preparacion);
 }
 
