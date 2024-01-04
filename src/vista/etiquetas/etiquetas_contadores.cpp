@@ -15,7 +15,21 @@ float get_bottom(const sf::FloatRect &rect) { //
 }
 
 const int top_left_padding = 5;
-namespace{
+
+sf::RectangleShape build_card_pedido_shape(size_t num_items) {
+    auto shape = sf::RectangleShape{};
+    shape.setOutlineColor(sf::Color::Blue);
+    shape.setOutlineThickness(5);
+    const int height = 30 + 26 * (num_items - 1);
+    shape.setSize(
+        sf::Vector2f(250 + top_left_padding, height + top_left_padding)
+    );
+    static const auto fill_color = sf::Color(46, 134, 193);
+    shape.setFillColor(fill_color);
+    return shape;
+}
+
+namespace {
     void actualizar_card_pedidos(
         const modelo::Pedidos &pedidos,         //
         std::vector<PedidoCard> &cards_pedidos, //
@@ -27,16 +41,8 @@ namespace{
         for (auto &pedido : pedidos) {
             const auto texto = presentador::pedido_to_string(pedido);
             const auto etiqueta = sf::Text(texto, font, tamano_fuente);
-            auto shape = sf::RectangleShape{};
-            shape.setOutlineColor(sf::Color::Blue);
-            shape.setOutlineThickness(5);
             const size_t num_items = pedido.contenido.size();
-            const int height = 30 + 26 * (num_items - 1);
-            shape.setSize(
-                sf::Vector2f(250 + top_left_padding, height + top_left_padding)
-            );
-            static const auto fill_color = sf::Color(46, 134, 193);
-            shape.setFillColor(fill_color);
+            const auto shape = build_card_pedido_shape(num_items);
             const PedidoCard card = {etiqueta, shape};
             cards_pedidos.emplace_back(card);
         }
@@ -55,15 +61,19 @@ namespace{
         pos_y = pos_panel.y + medidas::FILA_CONTENIDO_PANEL;
 
         for (auto &card : cards_pedidos) {
-            card.label.setPosition(pos_x, pos_y);
-            card.shape.setPosition(
-                pos_x - top_left_padding, pos_y - top_left_padding
-            );
+            card.setPosition(pos_x, pos_y);
             //  Calcula la posicion del siguiente pedido
             const auto g_bounds = card.label.getGlobalBounds();
             pos_y = get_bottom(g_bounds) + separacion_vertical;
         }
     }
+} // namespace
+
+///// PedidoCard (public) /////
+
+void PedidoCard::setPosition(float pos_x, float pos_y) {
+    label.setPosition(pos_x, pos_y);
+    shape.setPosition(pos_x - top_left_padding, pos_y - top_left_padding);
 }
 
 ///// EtiquetasContadores (private) /////

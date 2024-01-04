@@ -20,6 +20,8 @@ class PedidoCard : public sf::Drawable {
     PedidoCard(sf::Text label, sf::RectangleShape shape)
         : label(label), shape(shape) {}
 
+    void setPosition(float pos_x, float pos_y);
+
     virtual void draw(
         sf::RenderTarget &target, //
         sf::RenderStates states   //
