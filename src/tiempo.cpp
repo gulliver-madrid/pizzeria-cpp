@@ -15,6 +15,14 @@ std::string pad_with_zeroes(int n) {
     return cadena;
 }
 
+std::string time_to_string(int ms) {
+    const int segundos_brutos = ms / 1000;
+    const auto minutos = segundos_brutos / 60;
+    const auto segundos = segundos_brutos % 60;
+    assert(segundos < 60);
+    return pad_with_zeroes(minutos) + ":" + pad_with_zeroes(segundos);
+}
+
 ///////////////////////////////////////////
 // Tiempo
 //////////////////////////////////////////
@@ -39,11 +47,7 @@ Tiempo Tiempo::desde_segundos(double valor) {
 }
 
 std::string Tiempo::to_string() const {
-    const int segundos_brutos = _ms / 1000;
-    const auto minutos = segundos_brutos / 60;
-    const auto segundos = segundos_brutos % 60;
-    assert(segundos < 60);
-    return pad_with_zeroes(minutos) + ":" + pad_with_zeroes(segundos);
+    return time_to_string(_ms); //
 }
 
 ///////////////////////////////////////////
