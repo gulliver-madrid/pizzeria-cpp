@@ -20,14 +20,15 @@ EtiquetasBarraEstado::EtiquetasBarraEstado(const sf::Font &font)
 }
 
 void EtiquetasBarraEstado::actualizar(
-    const Tiempo &tiempo_real, const TiempoJuego &tiempo_juego
+    const sf::Time &tiempo_real, const sf::Time &tiempo_juego
 ) {
     CadenaJuego cadena(
         "Tiempo Juego: {tiempo_juego}       Tiempo Real: {tiempo_real}"
     );
     const std::string str =
-        cadena.interpolar_por_clave("tiempo_juego", tiempo_juego.to_string())
-            .interpolar_por_clave("tiempo_real", tiempo_real.to_string());
+        cadena
+            .interpolar_por_clave("tiempo_juego", time_to_string(tiempo_juego))
+            .interpolar_por_clave("tiempo_real", time_to_string(tiempo_real));
     etiqueta.setString(str);
 }
 

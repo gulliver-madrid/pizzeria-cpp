@@ -17,8 +17,8 @@ namespace debug {
 } // namespace debug
 
 EstadoPreparacionPizzas::EstadoPreparacionPizzas(
-    const Encargos &encargos,        //
-    const TiempoJuego &tiempo_actual //
+    const Encargos &encargos,     //
+    const sf::Time &tiempo_actual //
 ) {
     assert(datos.empty());
     for (auto &encargo : encargos) {
@@ -95,14 +95,14 @@ bool Pedido::intentar_servir(const dominio::TipoPizza tp) {
  * [in, out] encargos: Lista de encargos en la cocina
  * [out] contadores: Mapa de contadores para cada tipo de pizza
  * [in] preparables: Numero maximo de pizzas que pueden salir de la cocina
- * [in] tiempo_actual: TiempoJuego actual para comparar con el tiempo de
+ * [in] tiempo_actual: sf::Time actual para comparar con el tiempo de
  * finalizacion de la preparacion
  */
 void evaluar_preparacion(
     Encargos &encargos,                    //
     modelo::PizzasAContadores &contadores, //
     int preparables,                       //
-    const TiempoJuego &tiempo_actual       //
+    const sf::Time &tiempo_actual          //
 ) {
     size_t i = 0;
     std::vector<std::pair<size_t, int>> pizzas_listas_con_tiempo;
@@ -111,11 +111,11 @@ void evaluar_preparacion(
     // Primera ronda para identificar pizzas listas
     i = 0;
     for (auto &encargo : encargos) {
-        TiempoJuego exceso_tiempo =
+        sf::Time exceso_tiempo =
             (tiempo_actual - encargo.tiempo_preparacion.finalizacion);
-        if (exceso_tiempo >= TiempoJuego_CERO) {
+        if (exceso_tiempo >= sf::Time::Zero) {
             pizzas_listas_con_tiempo.push_back(
-                {i, exceso_tiempo.obtener_milisegundos()}
+                {i, exceso_tiempo.asMilliseconds()}
             );
         }
         i++;

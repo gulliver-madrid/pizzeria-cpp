@@ -15,7 +15,8 @@ std::string pad_with_zeroes(int n) {
     return cadena;
 }
 
-std::string time_to_string(int ms) {
+std::string time_to_string(sf::Time time) {
+    int ms = time.asMilliseconds();
     const int segundos_brutos = ms / 1000;
     const auto minutos = segundos_brutos / 60;
     const auto segundos = segundos_brutos % 60;
@@ -23,45 +24,21 @@ std::string time_to_string(int ms) {
     return pad_with_zeroes(minutos) + ":" + pad_with_zeroes(segundos);
 }
 
-///////////////////////////////////////////
-// Tiempo
-//////////////////////////////////////////
-
-bool Tiempo::operator<(const Tiempo &otro) const { //
-    return _ms < otro._ms;
-}
-
-int Tiempo::obtener_milisegundos() const { return _ms; }
-const Tiempo Tiempo::operator+(const Tiempo &otro) const {
-    return Tiempo{this->_ms + otro._ms};
-}
-const Tiempo Tiempo::operator-(const Tiempo &otro) const {
-    return Tiempo{this->_ms - otro._ms};
-}
-bool Tiempo::operator==(const Tiempo &otro) const { return _ms == otro._ms; }
-
-Tiempo::Tiempo(int ms) : _ms(ms) {}
-Tiempo Tiempo::desde_milisegundos(int valor) { return Tiempo{valor}; }
-Tiempo Tiempo::desde_segundos(double valor) {
-    return Tiempo{static_cast<int>(valor * 1000)};
-}
-
-std::string Tiempo::to_string() const {
-    return time_to_string(_ms); //
+int calcular_porcentaje(const sf::Time &parte, const sf::Time &total) {
+    return (parte / total) * 100;
 }
 
 ///////////////////////////////////////////
 // Timer
 //////////////////////////////////////////
 
-Tiempo Timer::obtener_tiempo_transcurrido() {
+sf::Time Timer::obtener_tiempo_transcurrido() {
     assert(clock.has_value());
-    auto segundos = clock.value().getElapsedTime().asSeconds();
-    return Tiempo::desde_segundos(segundos);
+    return clock.value().getElapsedTime();
 }
 
-void Timer::start(Tiempo finalizacion) {
-    assert(finalizacion > Tiempo::CERO);
+void Timer::start(sf::Time finalizacion) {
+    assert(finalizacion > sf::Time::Zero);
     assert(!this->finalizacion.has_value());
     this->finalizacion.emplace(finalizacion);
     clock.emplace();
@@ -76,11 +53,10 @@ bool Timer::termino() {
 // TiempoPreparacion
 //////////////////////////////////////////
 
-int TiempoPreparacion::obtener_porcentaje(const TiempoJuego &tiempo_actual
-) const {
+int TiempoPreparacion::obtener_porcentaje(const sf::Time &tiempo_actual) const {
     const auto inicio = finalizacion - total;
     const auto transcurrido = tiempo_actual - inicio;
-    int porcentaje = TiempoJuego::calcular_porcentaje(transcurrido, total);
+    int porcentaje = calcular_porcentaje(transcurrido, total);
     if (porcentaje > 100) {
         porcentaje = 100;
     }
@@ -91,47 +67,23 @@ int TiempoPreparacion::obtener_porcentaje(const TiempoJuego &tiempo_actual
 /* Devuelve un objeto tiempo que cuenta el tiempo de manera circular por
  * periodos de 10_000 segundos
  */
-Tiempo tiempo::obtener_tiempo_actual() {
+sf::Time tiempo::obtener_tiempo_actual() {
     auto ahora = std::chrono::system_clock::now();
     auto duracion = ahora.time_since_epoch();
-    auto milisegundos =
-        std::chrono::duration_cast<std::chrono::milliseconds>(duracion).count(
-        ) %
-        10'000'000;
-    const static auto inicial = Tiempo::desde_milisegundos(milisegundos);
-    return Tiempo::desde_milisegundos(milisegundos) - inicial;
+    auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(duracion) //
+                  .count() %
+              10'000'000;
+    const static auto inicial = sf::milliseconds(ms);
+    return sf::milliseconds(ms) - inicial;
 };
-
-///////////////////////////////////////////
-// TiempoJuego
-//////////////////////////////////////////
-
-TiempoJuego TiempoJuego::desde_milisegundos(int valor) {
-    return TiempoJuego{valor};
-}
-TiempoJuego TiempoJuego::desde_segundos(double valor) {
-    return TiempoJuego{static_cast<int>(valor * 1000)};
-}
-int TiempoJuego::calcular_porcentaje(
-    const TiempoJuego &parte, const TiempoJuego &total
-) {
-    return parte._ms * 100 / total._ms;
-}
-
-const TiempoJuego TiempoJuego::operator+(const TiempoJuego &otro) const {
-    return TiempoJuego{this->_ms + otro._ms};
-}
-const TiempoJuego TiempoJuego::operator-(const TiempoJuego &otro) const {
-    return TiempoJuego{this->_ms - otro._ms};
-}
 
 ///////////////////////////////////////////
 // GestorTiempoJuego
 //////////////////////////////////////////
 
-TiempoJuego GestorTiempoJuego::obtener_tiempo_juego() const { return _actual; }
+sf::Time GestorTiempoJuego::obtener_tiempo_juego() const { return _actual; }
 
-void GestorTiempoJuego::tick(TiempoJuego transcurrido) {
+void GestorTiempoJuego::tick(sf::Time transcurrido) {
     if (en_pausa)
         return;
     _actual = _actual + transcurrido;
@@ -147,7 +99,5 @@ void GestorTiempoJuego::pausar() {
 }
 void GestorTiempoJuego::reiniciar() {
     en_pausa = true;
-    _actual = TiempoJuego_CERO;
+    _actual = sf::Time::Zero;
 }
-
-const Tiempo Tiempo::CERO = Tiempo::desde_milisegundos(0);

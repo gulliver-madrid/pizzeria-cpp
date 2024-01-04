@@ -1,12 +1,12 @@
 #pragma once
 
 #include "dominio.h"
+#include <SFML/System/Time.hpp>
 #include <cassert>
 #include <map>
 #include <vector>
 
 struct Encargos;
-struct TiempoJuego;
 
 /*
  * Contabiliza el numero de pizzas servidas y preparadas de un determinado tipo
@@ -51,14 +51,14 @@ class Pedido {
 
 void evaluar_preparacion(
     Encargos &encargos, modelo::PizzasAContadores &contadores, int maximo,
-    const TiempoJuego &tiempo_actual
+    const sf::Time &tiempo_actual
 );
 
 /** Representa el estado de preparacion de las pizzas en un momento concreto */
 struct EstadoPreparacionPizzas {
     std::vector<EstadoPreparacionPizzaIndividual> datos;
     EstadoPreparacionPizzas(
-        const Encargos &encargos,        //
-        const TiempoJuego &tiempo_actual //
+        const Encargos &encargos,     //
+        const sf::Time &tiempo_actual //
     );
 };

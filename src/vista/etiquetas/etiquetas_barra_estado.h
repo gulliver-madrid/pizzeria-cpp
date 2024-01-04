@@ -2,14 +2,12 @@
 
 #include "../../shared.h"
 #include <SFML/Graphics/Text.hpp>
+#include <SFML/System/Time.hpp>
 
 namespace sf {
     class Font;
     class RenderWindow;
 } // namespace sf
-
-struct Tiempo;
-struct TiempoJuego;
 
 struct EtiquetasBarraEstado : public ObjetoConFont {
 
@@ -18,6 +16,6 @@ struct EtiquetasBarraEstado : public ObjetoConFont {
 
   public:
     EtiquetasBarraEstado(const sf::Font &);
-    void actualizar(const Tiempo &, const TiempoJuego &);
+    void actualizar(const sf::Time &, const sf::Time &);
     void dibujar(sf::RenderWindow &ventana) const;
 };

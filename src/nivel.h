@@ -6,6 +6,7 @@
 #include "tiempo.h"
 #include "vista/grid.h"
 
+enum class FaseNivel;
 struct BotonesApp;
 struct EnlaceVista;
 struct Estado;
@@ -15,7 +16,6 @@ struct DatosNivel;
 namespace modelo {
     struct ControlPizzas;
 }
-enum class FaseNivel;
 
 enum class AccionGeneral { SiguienteNivel, Reiniciar, Salir };
 

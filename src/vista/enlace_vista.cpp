@@ -8,13 +8,15 @@ void EnlaceVista::on_cambio_a_fase_activa() const {
 void EnlaceVista::on_cambio_a_fase_espera_antes_de_resultado() const {
     vista->esconder_botones_gestion_pizzeria();
 }
+
 void EnlaceVista::esconder_paneles() const {
     vista->paneles_completos.visible = false;
 }
+
 void EnlaceVista::actualizarIU(
-    sf::RenderWindow &ventana,       //
-    const Estado &estado,            //
-    const Tiempo &tiempo_real_actual //
+    sf::RenderWindow &ventana,         //
+    const Estado &estado,              //
+    const sf::Time &tiempo_real_actual //
 ) const {
     vista->actualizarIU(ventana, estado, tiempo_real_actual);
 }

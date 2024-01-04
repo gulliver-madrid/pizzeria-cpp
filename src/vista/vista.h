@@ -6,6 +6,9 @@
 
 struct Estado;
 struct Grid;
+namespace sf {
+    struct Time;
+}
 
 class Vista : public ObjetoConFont {
     const dominio::TiposDePizza &tp_disponibles;
@@ -35,9 +38,9 @@ class Vista : public ObjetoConFont {
     );
 
     void actualizarIU(
-        sf::RenderWindow &,              //
-        const Estado &,                  //
-        const Tiempo &tiempo_real_actual //
+        sf::RenderWindow &,                //
+        const Estado &,                    //
+        const sf::Time &tiempo_real_actual //
     );
     void mostrar_elementos_fase_activa();
     void esconder_botones_gestion_pizzeria();

@@ -3,6 +3,7 @@
 #include "../../modelo/control_pizzas.h"
 #include "../../modelo/modelo.h"
 #include "../../shared.h"
+#include <SFML/System/Time.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <memory>
 #include <optional>
@@ -16,8 +17,6 @@ struct EtiquetasBarraEstado;
 struct EtiquetasContadores;
 struct EtiquetasInfo;
 struct Globales;
-struct Tiempo;
-struct TiempoJuego;
 
 ///////////////////////////////////////////
 // EtiquetasGenerales
@@ -52,7 +51,7 @@ struct EtiquetasGenerales : public ObjetoConFont {
     );
 
     void actualizar_barra_estado(
-        const Tiempo &tiempo_real_actual, const TiempoJuego &tiempo_juego_actual
+        const sf::Time &tiempo_real_actual, const sf::Time &tiempo_juego_actual
     );
 
     void dibujar_instrucciones(sf::RenderWindow &ventana);

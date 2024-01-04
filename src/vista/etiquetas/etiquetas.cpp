@@ -52,7 +52,7 @@ void EtiquetasGenerales::actualizar_y_dibujar_contadores(
 }
 
 void EtiquetasGenerales::actualizar_barra_estado(
-    const Tiempo &tiempo_real_actual, const TiempoJuego &tiempo_juego_actual
+    const sf::Time &tiempo_real_actual, const sf::Time &tiempo_juego_actual
 ) {
     barra_estado->actualizar(tiempo_real_actual, tiempo_juego_actual);
 }

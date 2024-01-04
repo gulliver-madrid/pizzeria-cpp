@@ -34,7 +34,7 @@ EstadoModelo::obtener_estado_preparacion_pizzas() const {
     return {encargos, tiempo_actual};
 }
 
-TiempoJuego EstadoModelo::obtener_tiempo_juego() const {
+sf::Time EstadoModelo::obtener_tiempo_juego() const {
     return gestor_tiempo.obtener_tiempo_juego();
 }
 

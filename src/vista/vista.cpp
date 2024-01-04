@@ -4,6 +4,7 @@
 #include "basicos_vista.h"
 #include "grid.h"
 #include "vista_data.h"
+#include <SFML/System/Time.hpp>
 #include <cassert>
 
 void actualizar_estado_botones(BotonesApp &botones, const Estado &estado);
@@ -11,7 +12,7 @@ void actualizar_etiquetas(
     sf::RenderWindow &ventana,               //
     EtiquetasGenerales &etiquetas_generales, //
     const Estado &estado,                    //
-    const Tiempo &tiempo_real_actual         //
+    const sf::Time &tiempo_real_actual       //
 );
 
 Vista::Vista(
@@ -48,10 +49,10 @@ void Vista::setup(
 /*
  * Actualiza el interfaz grafico
  */
-void Vista::actualizarIU(            //
-    sf::RenderWindow &ventana,       //
-    const Estado &estado,            //
-    const Tiempo &tiempo_real_actual //
+void Vista::actualizarIU(              //
+    sf::RenderWindow &ventana,         //
+    const Estado &estado,              //
+    const sf::Time &tiempo_real_actual //
 ) {
     // std::cout << "\nActualizando IU" << std::endl;
 
@@ -145,10 +146,10 @@ void actualizar_estado_botones(BotonesApp &botones, const Estado &estado) {
 
 /* Actualiza y dibuja las etiquetas */
 void actualizar_etiquetas(
-    sf::RenderWindow &ventana,       //
-    EtiquetasGenerales &etiquetas,   //
-    const Estado &estado,            //
-    const Tiempo &tiempo_real_actual //
+    sf::RenderWindow &ventana,         //
+    EtiquetasGenerales &etiquetas,     //
+    const Estado &estado,              //
+    const sf::Time &tiempo_real_actual //
 ) {
 
     const modelo::PizzasAContadores &contadores =

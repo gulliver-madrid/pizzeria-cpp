@@ -1,5 +1,6 @@
 #include "../../modelo/encargos.h"
 #include "../../modelo/modelo.h"
+#include "../../tiempo.h"
 #include <gtest/gtest.h>
 
 using dominio::TipoPizza;
@@ -9,7 +10,7 @@ TEST(EvaluarPreparacion, NoHayPizzasEncargadas) {
     // No hay pizzas encargadas
     PizzasAContadores contadores;
     Encargos encargos;
-    const auto tiempo_actual = TiempoJuego::desde_segundos(5);
+    const auto tiempo_actual = sf::seconds(5);
 
     evaluar_preparacion(encargos, contadores, 3, tiempo_actual);
 
@@ -21,12 +22,10 @@ TEST(EvaluarPreparacion, VariasPizzasPreparadas) {
     // 2 de los 3 encargos estan listos
     PizzasAContadores contadores;
     Encargos encargos;
-    encargos.anadir(EncargoACocina(TipoPizza::Margarita, TiempoJuego_CERO));
-    encargos.anadir(EncargoACocina(TipoPizza::Pepperoni, TiempoJuego_CERO));
-    encargos.anadir(
-        EncargoACocina(TipoPizza::Pepperoni, TiempoJuego::desde_segundos(2))
-    );
-    const auto tiempo_actual = TiempoJuego::desde_segundos(5);
+    encargos.anadir(EncargoACocina(TipoPizza::Margarita, sf::Time::Zero));
+    encargos.anadir(EncargoACocina(TipoPizza::Pepperoni, sf::Time::Zero));
+    encargos.anadir(EncargoACocina(TipoPizza::Pepperoni, sf::seconds(2)));
+    const auto tiempo_actual = sf::seconds(5);
 
     evaluar_preparacion(encargos, contadores, 3, tiempo_actual);
 
@@ -45,11 +44,11 @@ TEST(EvaluarPreparacion, LimiteMaximoDePizzas) {
         {TipoPizza::CuatroQuesos, 7.0f},
     };
     for (const auto &encargo : data) {
-        encargos.anadir(EncargoACocina(
-            encargo.first, TiempoJuego::desde_segundos(encargo.second)
-        ));
+        encargos.anadir(
+            EncargoACocina(encargo.first, sf::seconds(encargo.second))
+        );
     }
-    const auto tiempo_actual = TiempoJuego::desde_segundos(10);
+    const auto tiempo_actual = sf::seconds(10);
 
     const int maximo = 2;
     evaluar_preparacion(encargos, contadores, maximo, tiempo_actual);

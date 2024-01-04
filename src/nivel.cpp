@@ -5,14 +5,15 @@
 #include "general.h"
 #include "vista/enlace_vista.h"
 #include "vista/vista.h"
+#include <SFML/System/Time.hpp>
 #include <SFML/Window/Event.hpp>
 #include <cassert>
 #include <memory>
 #include <optional>
 
 namespace tiempos {
-    const auto RETARDO_ANTES_DE_RESULTADO = Tiempo::desde_segundos(2.5);
-    const auto ESPERA_ENTRE_NIVELES = Tiempo::desde_segundos(2);
+    const auto RETARDO_ANTES_DE_RESULTADO = sf::seconds(2.5);
+    const auto ESPERA_ENTRE_NIVELES = sf::seconds(2);
 } // namespace tiempos
 
 void mostrar_resultado(
@@ -166,7 +167,7 @@ AccionGeneral Nivel::ejecutar() {
     Timer timer_espera_antes_de_resultado;
     Timer timer_fin_nivel;
     sf::Sound sound;
-    Tiempo previo = tiempo::obtener_tiempo_actual();
+    sf::Time previo = tiempo::obtener_tiempo_actual();
     while (globales.window.isOpen()) {
         sf::Event event;
         while (globales.window.pollEvent(event)) {
@@ -208,9 +209,7 @@ AccionGeneral Nivel::ejecutar() {
                 break;
         }
         const auto tiempo_real_actual = tiempo::obtener_tiempo_actual();
-        const auto transcurrido = TiempoJuego::desde_milisegundos(
-            (tiempo_real_actual - previo).obtener_milisegundos()
-        );
+        const auto transcurrido = tiempo_real_actual - previo;
         gestor_tiempo_juego.tick(transcurrido);
         previo = tiempo_real_actual;
         enlace_vista.actualizarIU(globales.window, estado, tiempo_real_actual);

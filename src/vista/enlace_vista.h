@@ -1,13 +1,14 @@
 #pragma once
 
+#include <SFML/System/Time.hpp>
 #include <memory>
 
 struct Estado;
 struct Vista;
-struct Tiempo;
+
 namespace sf {
     class RenderWindow;
-}
+} // namespace sf
 
 /* Debe ser un intermediario entre el modelo y la vista */
 class EnlaceVista {
@@ -21,8 +22,8 @@ class EnlaceVista {
     void on_cambio_a_fase_espera_antes_de_resultado() const;
     void esconder_paneles() const;
     void actualizarIU(
-        sf::RenderWindow &ventana,       //
-        const Estado &estado,            //
-        const Tiempo &tiempo_real_actual //
+        sf::RenderWindow &ventana,         //
+        const Estado &estado,              //
+        const sf::Time &tiempo_real_actual //
     ) const;
 };

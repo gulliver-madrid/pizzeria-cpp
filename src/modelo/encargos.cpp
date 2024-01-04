@@ -4,10 +4,10 @@
 using dominio::TipoPizza;
 
 // En segundos
-const std::map<TipoPizza, TiempoJuego> tiempos_preparacion = {
-    {TipoPizza::Margarita, TiempoJuego::desde_segundos(2.5)},
-    {TipoPizza::Pepperoni, TiempoJuego::desde_segundos(4.0)},
-    {TipoPizza::CuatroQuesos, TiempoJuego::desde_segundos(7.0)},
+const std::map<TipoPizza, sf::Time> tiempos_preparacion = {
+    {TipoPizza::Margarita, sf::seconds(2.5)},
+    {TipoPizza::Pepperoni, sf::seconds(4.0)},
+    {TipoPizza::CuatroQuesos, sf::seconds(7.0)},
 };
 
 /*
@@ -15,14 +15,14 @@ const std::map<TipoPizza, TiempoJuego> tiempos_preparacion = {
  * tiempo actual.
  */
 TiempoPreparacion calcular_tiempo_preparacion( //
-    const TipoPizza tipo, const TiempoJuego &tiempo_actual
+    const TipoPizza tipo, const sf::Time &tiempo_actual
 ) {
     auto total = tiempos_preparacion.at(tipo);
     return TiempoPreparacion{tiempo_actual + total, total};
 }
 
 EncargoACocina::EncargoACocina(
-    const TipoPizza tipo, const TiempoJuego &tiempo_actual
+    const TipoPizza tipo, const sf::Time &tiempo_actual
 )
     : tipo(tipo),
       tiempo_preparacion(calcular_tiempo_preparacion(tipo, tiempo_actual)) {}
