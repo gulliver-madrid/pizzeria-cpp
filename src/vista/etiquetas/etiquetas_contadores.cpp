@@ -7,7 +7,7 @@
 #include "fabrica_etiquetas_contadores.h"
 
 namespace medidas {
-    constexpr int SEPARACION_VERTICAL_ENTRE_PEDIDOS = 20;
+    constexpr int SEPARACION_VERTICAL_ENTRE_PEDIDOS = 24;
 } // namespace medidas
 
 float get_bottom(const sf::FloatRect &rect) { //
@@ -49,7 +49,7 @@ void EtiquetasContadores::_actualizar_pedido_estatico(
         etiquetas_servidas.at(tp).setString(linea);
     }
 }
-
+const int top_left_padding = 5;
 /* Actualiza cards_pedidos */
 void EtiquetasContadores::_actualizar_pedidos_dinamicos( //
     const modelo::Pedidos &pedidos
@@ -63,7 +63,11 @@ void EtiquetasContadores::_actualizar_pedidos_dinamicos( //
         auto shape = sf::RectangleShape{};
         shape.setOutlineColor(sf::Color::Blue);
         shape.setOutlineThickness(5);
-        shape.setSize(sf::Vector2f(250, 60));
+        const size_t num_items = pedido.contenido.size();
+        const int height = 30 + 26 * (num_items - 1);
+        shape.setSize(
+            sf::Vector2f(250 + top_left_padding, height + top_left_padding)
+        );
         static const auto fill_color = sf::Color(46, 134, 193);
         shape.setFillColor(fill_color);
         const PedidoCard card = {etiqueta, shape};
@@ -84,7 +88,9 @@ void EtiquetasContadores::_actualizar_pedidos_dinamicos( //
 
     for (auto &card : cards_pedidos) {
         card.label.setPosition(pos_x, pos_y);
-        card.shape.setPosition(pos_x, pos_y);
+        card.shape.setPosition(
+            pos_x - top_left_padding, pos_y - top_left_padding
+        );
         //  Calcula la posicion del siguiente pedido
         const auto g_bounds = card.label.getGlobalBounds();
         pos_y = get_bottom(g_bounds) + separacion_vertical;
