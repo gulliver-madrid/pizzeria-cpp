@@ -17,8 +17,10 @@ namespace impl {
 ///// Vista /////
 
 class Vista : public ObjetoConFont {
+  private:
     const dominio::TiposDePizza &tp_disponibles;
-    void actualizar_paneles(
+
+    void _actualizar_paneles(
         sf::RenderWindow &ventana,                 //
         PanelesCompletos &paneles_completos,       //
         const EstadoPreparacionPizzas &preparacion //

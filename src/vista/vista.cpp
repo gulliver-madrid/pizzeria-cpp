@@ -88,21 +88,33 @@ namespace {
 
 } // namespace
 
-std::map<TipoPizza, std::string> impl::contadores_to_preparadas( //
-    modelo::PizzasAContadores &contadores                        //
-) {
-    std::map<dominio::TipoPizza, std::string> textos_preparadas;
-    for (auto &[tp, contadores_tp] : contadores) {
-        auto &nombre_pizza = tipo_pizza_to_string.at(tp);
-        std::string linea =
-            nombre_pizza + ": " + std::to_string(contadores_tp.preparadas);
-        textos_preparadas[tp] = linea;
+namespace impl {
+    std::map<TipoPizza, std::string> contadores_to_preparadas( //
+        modelo::PizzasAContadores &contadores                  //
+    ) {
+        std::map<dominio::TipoPizza, std::string> textos_preparadas;
+        for (auto &[tp, contadores_tp] : contadores) {
+            auto &nombre_pizza = tipo_pizza_to_string.at(tp);
+            std::string linea =
+                nombre_pizza + ": " + std::to_string(contadores_tp.preparadas);
+            textos_preparadas[tp] = linea;
+        }
+        return textos_preparadas;
     }
-    return textos_preparadas;
-}
+} // namespace impl
 // namespace impl
 
-///// Vista /////
+///// Vista (private) /////
+
+void Vista::_actualizar_paneles(
+    sf::RenderWindow &ventana,                 //
+    PanelesCompletos &paneles_completos,       //
+    const EstadoPreparacionPizzas &preparacion //
+) {
+    paneles_completos.dibujar(ventana, preparacion);
+}
+
+///// Vista (public) /////
 
 Vista::Vista(
     const sf::Font &font,                       //
@@ -153,7 +165,7 @@ void Vista::actualizarIU(              //
     ) {
         const auto preparacion =
             estado.estado_modelo.obtener_estado_preparacion_pizzas();
-        actualizar_paneles(ventana, paneles_completos, preparacion);
+        _actualizar_paneles(ventana, paneles_completos, preparacion);
     }
 
     actualizar_etiquetas(ventana, etiquetas, estado, tiempo_real_actual);
@@ -168,12 +180,4 @@ void Vista::mostrar_elementos_fase_activa() {
 
 void Vista::esconder_botones_gestion_pizzeria() { //
     botones.mostrar_botones_nivel(false);
-}
-
-void Vista::actualizar_paneles(
-    sf::RenderWindow &ventana,                 //
-    PanelesCompletos &paneles_completos,       //
-    const EstadoPreparacionPizzas &preparacion //
-) {
-    paneles_completos.dibujar(ventana, preparacion);
 }
