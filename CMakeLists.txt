@@ -99,8 +99,12 @@ add_executable(
     src/tests/test_timer.cpp
 
     # archivos del proyecto
+    src/controlador_clicks.cpp
+    src/datos_niveles.cpp
     src/debug_sfml.cpp
     src/estado_nivel.cpp
+    src/globales.cpp
+    src/juego.cpp
     src/modelo/control_pizzas.cpp
     src/modelo/dominio.cpp
     src/modelo/encargos.cpp
@@ -109,10 +113,34 @@ add_executable(
     src/modelo_amplio/aplicador.cpp
     src/modelo_amplio/modelo_amplio.cpp
     src/modelo_amplio/realizador.cpp
+    src/nivel.cpp
+    src/setup_juego.cpp
     src/textos.cpp
     src/tiempo.cpp
+    src/vista/barras_progreso.cpp
+    src/vista/botones_app.cpp
     src/vista/cadenas.cpp
+    src/vista/componentes/barra_progreso.cpp
+    src/vista/componentes/boton_con_texto.cpp
+    src/vista/componentes/botones.cpp
+    src/vista/componentes/varios.cpp
+    src/vista/enlace_vista.cpp
+    src/vista/etiquetas/etiquetas.cpp
+    src/vista/etiquetas/etiquetas_barra_estado.cpp
+    src/vista/etiquetas/etiquetas_contadores.cpp
+    src/vista/etiquetas/etiquetas_info.cpp
+    src/vista/etiquetas/fabrica_etiquetas_contadores.cpp
+    src/vista/grid.cpp
+    src/vista/paneles.cpp
     src/vista/presentador.cpp
+    src/vista/vista.cpp
+    src/vista/basicos_vista.cpp
+    src/demos/demo_nivel.cpp
+    src/demos/map.cpp
+    src/demos/prueba.cpp
+    src/demos/unicode.cpp
+    src/demos/visual.cpp
+    src/demos/visual_textos.cpp
 )
 target_link_libraries(runUnitTests PRIVATE sfml-graphics sfml-audio )
 target_link_libraries(runUnitTests PUBLIC gtest gtest_main)
