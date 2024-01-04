@@ -6,6 +6,12 @@
 #include "vista_data.h"
 #include <SFML/System/Time.hpp>
 #include <cassert>
+#include <iostream>
+#include <map>
+#include <string>
+
+using dominio::TipoPizza;
+using dominio::TiposDePizza;
 
 namespace {
     /*
@@ -51,7 +57,6 @@ namespace {
         const Estado &estado,              //
         const sf::Time &tiempo_real_actual //
     ) {
-
         const modelo::PizzasAContadores &contadores =
             estado.estado_modelo.control_pizzas.contadores;
 
@@ -82,6 +87,22 @@ namespace {
     }
 
 } // namespace
+
+std::map<TipoPizza, std::string> impl::contadores_to_preparadas( //
+    modelo::PizzasAContadores &contadores                        //
+) {
+    std::map<dominio::TipoPizza, std::string> textos_preparadas;
+    for (auto &[tp, contadores_tp] : contadores) {
+        auto &nombre_pizza = tipo_pizza_to_string.at(tp);
+        std::string linea =
+            nombre_pizza + ": " + std::to_string(contadores_tp.preparadas);
+        textos_preparadas[tp] = linea;
+    }
+    return textos_preparadas;
+}
+// namespace impl
+
+///// Vista /////
 
 Vista::Vista(
     const sf::Font &font,                       //
@@ -119,8 +140,6 @@ void Vista::actualizarIU(              //
     const Estado &estado,              //
     const sf::Time &tiempo_real_actual //
 ) {
-    // std::cout << "\nActualizando IU" << std::endl;
-
     actualizar_estado_botones(botones, estado);
 
     // Limpia la ventana y empieza a pintar los componentes visuales

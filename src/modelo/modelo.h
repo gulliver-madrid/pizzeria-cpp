@@ -9,10 +9,14 @@
 struct Encargos;
 
 /*
- * Contabiliza el numero de pizzas servidas y preparadas de un determinado tipo
+ * Contabiliza el numero de pizzas servidas y preparadas de un determinado tipo.
+ * Una vez servidas se descuentan de las preparadas.
+ * TODO: crear un unico constructor y metodos explicitos para evitar confusion
+ * entre preparadas y servidas.
  */
 struct Contadores {
     int servidas = 0;
+    // Actualmente en el area de preparadas
     int preparadas = 0;
 };
 

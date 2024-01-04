@@ -1,14 +1,20 @@
 #pragma once
 
+#include "../modelo/modelo.h"
 #include "botones_app.h"
 #include "etiquetas/etiquetas.h"
 #include "paneles.h"
 
 struct Estado;
 struct Grid;
-namespace sf {
-    struct Time;
-}
+
+namespace impl {
+    std::map<dominio::TipoPizza, std::string> contadores_to_preparadas( //
+        modelo::PizzasAContadores &
+    );
+} // namespace impl
+
+///// Vista /////
 
 class Vista : public ObjetoConFont {
     const dominio::TiposDePizza &tp_disponibles;
