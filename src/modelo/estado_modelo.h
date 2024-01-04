@@ -20,5 +20,4 @@ struct EstadoModelo {
     EstadoPreparacionPizzas obtener_estado_preparacion_pizzas() const;
     sf::Time obtener_tiempo_juego() const;
     void evaluar_preparacion_pizzas();
-    bool EstadoModelo::objetivos_sobrepasados(dominio::TipoPizza tp) const;
 };

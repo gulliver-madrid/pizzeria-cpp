@@ -48,19 +48,3 @@ void EstadoModelo::evaluar_preparacion_pizzas() {
         );
     }
 }
-
-/*
- * Solo tiene sentido en modo estatico.
- */
-bool EstadoModelo::objetivos_sobrepasados(dominio::TipoPizza tp) const {
-    if (!control_pizzas.es_estatico.valor)
-        return false;
-    const auto &pedidos = control_pizzas.pedidos;
-    assert(pedidos.size() == 1);
-    const auto &pedido = pedidos[0];
-    auto &contadores_tp = control_pizzas.contadores.at(tp);
-    int potenciales = contadores_tp.preparadas + contadores_tp.servidas +
-                      encargos.del_tipo(tp);
-    auto contador_estatico_tp = pedido.contenido.at(tp);
-    return (potenciales >= contador_estatico_tp.objetivo);
-}

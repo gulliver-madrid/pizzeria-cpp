@@ -114,9 +114,6 @@ void desactivar_botones_encargar_si_se_sobrepasan_objetivos(
         if (!boton_encargar.esta_activo()) {
             continue;
         }
-        if (estado_modelo.objetivos_sobrepasados(tp)) {
-            boton_encargar.desactivar();
-        }
     }
 }
 
