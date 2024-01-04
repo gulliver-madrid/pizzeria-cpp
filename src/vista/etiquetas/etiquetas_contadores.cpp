@@ -10,46 +10,54 @@ namespace medidas {
     constexpr int SEPARACION_VERTICAL_ENTRE_PEDIDOS = 24;
 } // namespace medidas
 
-float get_bottom(const sf::FloatRect &rect) { //
-    return rect.top + rect.height;
-}
-
-const int top_left_padding = 5;
-
-sf::RectangleShape build_card_pedido_shape(size_t num_items) {
-    auto shape = sf::RectangleShape{};
-    shape.setOutlineColor(sf::Color::Blue);
-    shape.setOutlineThickness(5);
-    const int height = 30 + 26 * (num_items - 1);
-    shape.setSize(
-        sf::Vector2f(250 + top_left_padding, height + top_left_padding)
-    );
-    static const auto fill_color = sf::Color(46, 134, 193);
-    shape.setFillColor(fill_color);
-    return shape;
-}
-
 namespace {
+
+    float get_bottom(const sf::FloatRect &rect) { //
+        return rect.top + rect.height;
+    }
+
+    const int top_left_padding = 5;
+
+    /* Builds the shape of PedidoCard */
+    sf::RectangleShape build_card_pedido_shape(size_t num_items) {
+        auto shape = sf::RectangleShape{};
+        shape.setOutlineColor(sf::Color::Blue);
+        shape.setOutlineThickness(5);
+        const int height = 30 + 26 * (num_items - 1);
+        shape.setSize(
+            sf::Vector2f(250 + top_left_padding, height + top_left_padding)
+        );
+        static const auto fill_color = sf::Color(46, 134, 193);
+        shape.setFillColor(fill_color);
+        return shape;
+    }
+
+    /* Builds a PedidoCard */
+    PedidoCard build_pedido_card(
+        std::string texto, const sf::Font &font, size_t num_items //
+    ) {
+        static const auto tamano_fuente = 22;
+        const auto etiqueta = sf::Text(texto, font, tamano_fuente);
+        const auto shape = build_card_pedido_shape(num_items);
+        return {etiqueta, shape};
+    }
+
     void actualizar_card_pedidos(
         const modelo::Pedidos &pedidos,         //
         std::vector<PedidoCard> &cards_pedidos, //
         const sf::Font &font                    //
     ) {
-        // Creamos las etiquetas con los textos
-        const auto tamano_fuente = 22;
+        // Creamos las tarjetas de los pedidos
         cards_pedidos.clear();
         for (auto &pedido : pedidos) {
             const auto texto = presentador::pedido_to_string(pedido);
-            const auto etiqueta = sf::Text(texto, font, tamano_fuente);
             const size_t num_items = pedido.contenido.size();
-            const auto shape = build_card_pedido_shape(num_items);
-            const PedidoCard card = {etiqueta, shape};
+            const PedidoCard card = build_pedido_card(texto, font, num_items);
             cards_pedidos.emplace_back(card);
         }
         assert(cards_pedidos.size() == pedidos.size());
 
         // Les asignamos su posicion correcta
-        float pos_x, pos_y;
         const auto separacion_vertical =
             medidas::SEPARACION_VERTICAL_ENTRE_PEDIDOS;
 
@@ -57,8 +65,8 @@ namespace {
         const auto pos_panel = basicos_vista::obtener_posicion_panel( //
             IndicePanel::PANEL_PEDIDOS
         );
-        pos_x = pos_panel.x + medidas::MARGEN_IZQ_ETIQUETAS;
-        pos_y = pos_panel.y + medidas::FILA_CONTENIDO_PANEL;
+        float pos_x = pos_panel.x + medidas::MARGEN_IZQ_ETIQUETAS;
+        float pos_y = pos_panel.y + medidas::FILA_CONTENIDO_PANEL;
 
         for (auto &card : cards_pedidos) {
             card.setPosition(pos_x, pos_y);
