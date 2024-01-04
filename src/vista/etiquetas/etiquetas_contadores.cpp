@@ -50,19 +50,26 @@ void EtiquetasContadores::_actualizar_pedido_estatico(
     }
 }
 
-/* Actualiza etiquetas_pedidos */
+/* Actualiza cards_pedidos */
 void EtiquetasContadores::_actualizar_pedidos_dinamicos( //
     const modelo::Pedidos &pedidos
 ) {
     // Creamos las etiquetas con los textos
     const auto tamano_fuente = 22;
-    etiquetas_pedidos.clear();
+    cards_pedidos.clear();
     for (auto &pedido : pedidos) {
         const auto texto = presentador::pedido_to_string(pedido);
         const auto etiqueta = sf::Text(texto, font, tamano_fuente);
-        etiquetas_pedidos.push_back(etiqueta);
+        auto shape = sf::RectangleShape{};
+        shape.setOutlineColor(sf::Color::Blue);
+        shape.setOutlineThickness(5);
+        shape.setSize(sf::Vector2f(250, 60));
+        static const auto fill_color = sf::Color(46, 134, 193);
+        shape.setFillColor(fill_color);
+        const PedidoCard card = {etiqueta, shape};
+        cards_pedidos.emplace_back(card);
     }
-    assert(etiquetas_pedidos.size() == pedidos.size());
+    assert(cards_pedidos.size() == pedidos.size());
 
     // Les asignamos su posicion correcta
     float pos_x, pos_y;
@@ -75,10 +82,11 @@ void EtiquetasContadores::_actualizar_pedidos_dinamicos( //
     pos_x = pos_panel.x + medidas::MARGEN_IZQ_ETIQUETAS;
     pos_y = pos_panel.y + medidas::FILA_CONTENIDO_PANEL;
 
-    for (auto &texto_pedido : etiquetas_pedidos) {
-        texto_pedido.setPosition(pos_x, pos_y);
+    for (auto &card : cards_pedidos) {
+        card.label.setPosition(pos_x, pos_y);
+        card.shape.setPosition(pos_x, pos_y);
         //  Calcula la posicion del siguiente pedido
-        const auto g_bounds = texto_pedido.getGlobalBounds();
+        const auto g_bounds = card.label.getGlobalBounds();
         pos_y = get_bottom(g_bounds) + separacion_vertical;
     }
 }
@@ -86,7 +94,7 @@ void EtiquetasContadores::_actualizar_pedidos_dinamicos( //
 void EtiquetasContadores::dibujar(sf::RenderWindow &ventana) const {
     dibujar_elementos(ventana, etiquetas_preparadas);
     dibujar_elementos(ventana, etiquetas_servidas);
-    dibujar_elementos(ventana, etiquetas_pedidos);
+    dibujar_elementos(ventana, cards_pedidos);
 }
 
 void EtiquetasContadores::actualizar(
