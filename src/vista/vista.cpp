@@ -7,13 +7,81 @@
 #include <SFML/System/Time.hpp>
 #include <cassert>
 
-void actualizar_estado_botones(BotonesApp &botones, const Estado &estado);
-void actualizar_etiquetas(
-    sf::RenderWindow &ventana,               //
-    EtiquetasGenerales &etiquetas_generales, //
-    const Estado &estado,                    //
-    const sf::Time &tiempo_real_actual       //
-);
+namespace {
+    /*
+     * Activa o desactiva cada boton despachar dependiendo de si hay pizzas
+     * preparadas de ese tipo.
+     */
+    void activar_botones_despachar_si_hay_preparadas(
+        TipoPizzaToBoton &botones_despachar,
+        const modelo::PizzasAContadores &contadores
+    ) {
+        for (auto &[tp, contadores_tp] : contadores) {
+            auto &boton_despachar = botones_despachar.at(tp);
+            boton_despachar.activacion_condicional(
+                contadores_tp.preparadas > 0
+            );
+        }
+    }
+
+    /* Actualiza el estado de los botones en funcion de varios factores */
+    void actualizar_estado_botones(BotonesApp &botones, const Estado &estado) {
+        const auto &control_pizzas = estado.estado_modelo.control_pizzas;
+        // Botones despachar
+        const modelo::PizzasAContadores &contadores = control_pizzas.contadores;
+        activar_botones_despachar_si_hay_preparadas(
+            botones.despachar, contadores
+        );
+
+        // Botones encargar
+        constexpr int maximo = modelo_info::MAXIMO_PIZZAS_EN_PREPARACION;
+        const int en_preparacion = estado.estado_modelo.encargos.total();
+        assert(en_preparacion <= maximo);
+        const bool se_pueden_preparar_mas = en_preparacion < maximo;
+
+        for (auto &[_, boton] : botones.encargar) {
+            boton.activacion_condicional(se_pueden_preparar_mas);
+        }
+    }
+
+    /* Actualiza y dibuja las etiquetas */
+    void actualizar_etiquetas(
+        sf::RenderWindow &ventana,         //
+        EtiquetasGenerales &etiquetas,     //
+        const Estado &estado,              //
+        const sf::Time &tiempo_real_actual //
+    ) {
+
+        const modelo::PizzasAContadores &contadores =
+            estado.estado_modelo.control_pizzas.contadores;
+
+        auto pedidos = estado.estado_modelo.control_pizzas.pedidos;
+        switch (estado.fase_actual) {
+            case FaseNivel::MostrandoInstrucciones:
+                etiquetas.dibujar_instrucciones(ventana);
+                break;
+            case FaseNivel::Activa:
+            case FaseNivel::EsperaAntesDeResultado:
+                etiquetas.actualizar_y_dibujar_contadores(
+                    contadores, pedidos, ventana
+                );
+                break;
+            case FaseNivel::MostrandoResultado:
+                etiquetas.dibujar_resultado(ventana);
+                break;
+            default:
+                break;
+        }
+
+        const auto tiempo_juego_actual =
+            estado.estado_modelo.obtener_tiempo_juego();
+        etiquetas.actualizar_barra_estado(
+            tiempo_real_actual, tiempo_juego_actual
+        );
+        etiquetas.dibujar_barra_estado(ventana);
+    }
+
+} // namespace
 
 Vista::Vista(
     const sf::Font &font,                       //
@@ -81,73 +149,6 @@ void Vista::mostrar_elementos_fase_activa() {
 
 void Vista::esconder_botones_gestion_pizzeria() { //
     botones.mostrar_botones_nivel(false);
-}
-
-/*
- * Activa o desactiva cada boton despachar dependiendo de si hay pizzas
- * preparadas de ese tipo.
- */
-void activar_botones_despachar_si_hay_preparadas(
-    TipoPizzaToBoton &botones_despachar,
-    const modelo::PizzasAContadores &contadores
-) {
-    for (auto &[tp, contadores_tp] : contadores) {
-        auto &boton_despachar = botones_despachar.at(tp);
-        boton_despachar.activacion_condicional(contadores_tp.preparadas > 0);
-    }
-}
-
-/* Actualiza el estado de los botones en funcion de varios factores */
-void actualizar_estado_botones(BotonesApp &botones, const Estado &estado) {
-    const auto &control_pizzas = estado.estado_modelo.control_pizzas;
-    // Botones despachar
-    const modelo::PizzasAContadores &contadores = control_pizzas.contadores;
-    activar_botones_despachar_si_hay_preparadas(botones.despachar, contadores);
-
-    // Botones encargar
-    constexpr int maximo = modelo_info::MAXIMO_PIZZAS_EN_PREPARACION;
-    const int en_preparacion = estado.estado_modelo.encargos.total();
-    assert(en_preparacion <= maximo);
-    const bool se_pueden_preparar_mas = en_preparacion < maximo;
-
-    for (auto &[_, boton] : botones.encargar) {
-        boton.activacion_condicional(se_pueden_preparar_mas);
-    }
-}
-
-/* Actualiza y dibuja las etiquetas */
-void actualizar_etiquetas(
-    sf::RenderWindow &ventana,         //
-    EtiquetasGenerales &etiquetas,     //
-    const Estado &estado,              //
-    const sf::Time &tiempo_real_actual //
-) {
-
-    const modelo::PizzasAContadores &contadores =
-        estado.estado_modelo.control_pizzas.contadores;
-
-    auto pedidos = estado.estado_modelo.control_pizzas.pedidos;
-    switch (estado.fase_actual) {
-        case FaseNivel::MostrandoInstrucciones:
-            etiquetas.dibujar_instrucciones(ventana);
-            break;
-        case FaseNivel::Activa:
-        case FaseNivel::EsperaAntesDeResultado:
-            etiquetas.actualizar_y_dibujar_contadores(
-                contadores, pedidos, ventana
-            );
-            break;
-        case FaseNivel::MostrandoResultado:
-            etiquetas.dibujar_resultado(ventana);
-            break;
-        default:
-            break;
-    }
-
-    const auto tiempo_juego_actual =
-        estado.estado_modelo.obtener_tiempo_juego();
-    etiquetas.actualizar_barra_estado(tiempo_real_actual, tiempo_juego_actual);
-    etiquetas.dibujar_barra_estado(ventana);
 }
 
 void Vista::actualizar_paneles(
