@@ -10,6 +10,8 @@ namespace sf {
     class RenderWindow;
 }
 
+///// PedidoCard /////
+
 class PedidoCard : public sf::Drawable {
   public:
     sf::Text label;
@@ -27,6 +29,8 @@ class PedidoCard : public sf::Drawable {
     }
 };
 
+///// EtiquetasContadores /////
+
 struct EtiquetasContadores : public ObjetoConFont {
     using TipoPizza = dominio::TipoPizza;
 
@@ -34,16 +38,17 @@ struct EtiquetasContadores : public ObjetoConFont {
     // Indica si el sistema de pedidos es estatico
     const EsSistemaEstatico &es_estatico;
 
-    void _actualizar_pedidos_dinamicos(const modelo::Pedidos &);
     void _actualizar_pedido_estatico(
         const modelo::PizzasAContadores &, //
         const modelo::Pedidos &            //
     );
+    void _actualizar_pedidos_dinamicos(const modelo::Pedidos &);
 
   public:
     std::map<TipoPizza, sf::Text> etiquetas_preparadas;
     std::map<TipoPizza, sf::Text> etiquetas_servidas;
     std::vector<PedidoCard> cards_pedidos;
+
     EtiquetasContadores(const EsSistemaEstatico &, const sf::Font &);
     void setup(const dominio::TiposDePizza &tp_disponibles);
     void actualizar(
