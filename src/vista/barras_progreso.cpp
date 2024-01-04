@@ -24,7 +24,7 @@ std::vector<BarraProgresoConNombre> crear_barras_progreso(
             i * medidas::DIFERENCIA_VERTICAL_ENTRE_BARRAS_PROGRESO;
         const int pos_y = pos_y_inicial + offset_y;
         const auto posicion = sf::Vector2f(pos_x, pos_y);
-        const auto texto = tipo_pizza_to_string[preparacion_pizza.tipo];
+        const auto texto = tipo_pizza_to_string.at(preparacion_pizza.tipo);
         const BPNColors bpn_colors = {
             colores::barra_progreso::FONDO,
             colores::barra_progreso::RELLENO,
