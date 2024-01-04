@@ -36,7 +36,7 @@ bool setup_juego(Globales &globales) {
 
     if (globales.music.openFromFile(getResourcePath(MUSIC_PATH).string())) {
         globales.music.setVolume(50);
-        // TODO: hacer que la musica siga tras acabar
+        globales.music.setLoop(true);
         globales.music.play();
     }
     return true;
