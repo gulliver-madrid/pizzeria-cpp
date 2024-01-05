@@ -1,7 +1,11 @@
 #include "encargos.h"
+#include "../templates/helpers.h"
 #include "dominio.h"
+#include <cassert>
 
 using dominio::TipoPizza;
+
+const auto default_time = sf::seconds(20.0);
 
 // En segundos
 const std::map<TipoPizza, sf::Time> tiempos_preparacion = {
@@ -15,24 +19,24 @@ const std::map<TipoPizza, sf::Time> tiempos_preparacion = {
  * tiempo actual.
  */
 TiempoPreparacion calcular_tiempo_preparacion( //
-    const TipoPizza tipo, const sf::Time &tiempo_actual
+    const TipoPizza tp, const sf::Time &tiempo_actual
 ) {
-    auto total = tiempos_preparacion.at(tipo);
+    auto total = get_or(tiempos_preparacion, tp, default_time);
     return TiempoPreparacion{tiempo_actual + total, total};
 }
 
 EncargoACocina::EncargoACocina(
-    const TipoPizza tipo, const sf::Time &tiempo_actual
+    const TipoPizza tp, const sf::Time &tiempo_actual
 )
-    : tipo(tipo),
-      tiempo_preparacion(calcular_tiempo_preparacion(tipo, tiempo_actual)) {}
+    : tipo(tp),
+      tiempo_preparacion(calcular_tiempo_preparacion(tp, tiempo_actual)) {}
 
 // Definicion metodos Encargos
 
-int Encargos::del_tipo(TipoPizza tipo) const {
+int Encargos::del_tipo(TipoPizza tp) const {
     int contador = 0;
     for (auto &encargo : _datos) {
-        if (encargo.tipo == tipo) {
+        if (encargo.tipo == tp) {
             contador++;
         }
     }

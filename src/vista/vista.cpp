@@ -1,6 +1,7 @@
 #include "vista.h"
 #include "../estado_nivel.h"
 #include "../general.h"
+#include "../templates/helpers.h"
 #include "basicos_vista.h"
 #include "grid.h"
 #include "vista_data.h"
@@ -23,6 +24,7 @@ namespace {
         const modelo::PizzasAContadores &contadores
     ) {
         for (auto &[tp, contadores_tp] : contadores) {
+            assert(has_key(botones_despachar, tp));
             auto &boton_despachar = botones_despachar.at(tp);
             boton_despachar.activacion_condicional(
                 contadores_tp.preparadas > 0
@@ -98,6 +100,7 @@ namespace impl {
     ) {
         VistaPizzasToStrings textos_preparadas;
         for (auto &[tp, contadores_tp] : contadores) {
+            assert(has_key(tipo_pizza_to_string, tp));
             auto &nombre_pizza = tipo_pizza_to_string.at(tp);
             std::string linea =
                 nombre_pizza + ": " + std::to_string(contadores_tp.preparadas);

@@ -87,6 +87,7 @@ namespace {
 
         // Lambda para crear boton data
         const auto crear_boton_data = [](dominio::TipoPizza tp) {
+            assert(has_key(tipo_pizza_to_string, tp));
             const std::string pizza_str = tipo_pizza_to_string.at(tp);
             return BotonData{
                 pizza_str,                        //

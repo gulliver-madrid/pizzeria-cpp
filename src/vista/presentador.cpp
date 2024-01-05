@@ -1,11 +1,13 @@
 #include "presentador.h"
 #include "../modelo/dominio.h"
 #include "../modelo/modelo.h"
+#include "../templates/helpers.h"
 
 namespace presentador {
     std::string crea_linea_completitud_pizza(
         const dominio::TipoPizza tp, int parte, int todo
     ) {
+        assert(has_key(tipo_pizza_to_string, tp));
         const auto nombre_pizza = tipo_pizza_to_string.at(tp);
         std::string s = (           //
             nombre_pizza + ": " +   //

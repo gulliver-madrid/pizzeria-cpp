@@ -2,6 +2,7 @@
 #include "../estado_nivel.h"
 #include "../general.h"
 #include <cassert>
+#include <iostream>
 
 using NuevaFase = std::optional<FaseNivel>;
 
@@ -12,7 +13,9 @@ NuevaFase Realizador::encargar_pizza( //
     const dominio::TipoPizza tp
 ) {
     assert(estado.fase_actual == FaseNivel::Activa);
+    std::cout << "antes de anadir encargo" << std::endl;
     estado.estado_modelo.anadir_encargo(tp);
+    std::cout << "despues de anadir encargo" << std::endl;
     return std::nullopt;
 }
 
