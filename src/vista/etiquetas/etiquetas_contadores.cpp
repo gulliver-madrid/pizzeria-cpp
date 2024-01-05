@@ -1,10 +1,12 @@
 #include "etiquetas_contadores.h"
 #include "../../modelo/modelo.h"
 #include "../../templates/dibujar_elementos.h"
+#include "../../templates/helpers.h"
 #include "../basicos_vista.h"
 #include "../componentes/varios.h"
 #include "../presentador.h"
 #include "fabrica_etiquetas_contadores.h"
+#include <cassert>
 #include <iostream>
 
 namespace medidas {
@@ -117,6 +119,7 @@ void EtiquetasContadores::actualizar(
     const modelo::Pedidos &pedidos //
 ) {
     for (auto &[tp, linea] : vista_preparadas) {
+        assert(has_key(etiquetas_preparadas, tp));
         etiquetas_preparadas.at(tp).setString(linea);
     }
     _actualizar_pedidos_dinamicos(pedidos);

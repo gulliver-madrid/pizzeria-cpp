@@ -48,6 +48,7 @@
 
 - modelo/control_pizzas.cpp:
     - modelo/control_pizzas.h
+    - templates/helpers.h
 
 - modelo/control_pizzas.h:
     - modelo/modelo.h
@@ -78,6 +79,7 @@
 - modelo/modelo.cpp:
     - modelo/modelo.h
     - modelo/encargos.h
+    - templates/helpers.h
 
 - modelo/modelo.h:
     - modelo/dominio.h
@@ -146,6 +148,7 @@
 - tests/modelo/test_evaluar_preparacion.cpp:
     - modelo/encargos.h
     - modelo/modelo.h
+    - tiempo.h
 
 - tests/modelo/test_modelo_amplio.cpp:
     - datos_nivel.h
@@ -160,6 +163,7 @@
     - modelo/dominio.h
     - modelo/modelo.h
     - vista/presentador.h
+    - vista/vista.h
 
 - tests/test_tiempo.cpp:
     - tiempo.h
@@ -197,6 +201,7 @@
 - vista/botones_app.cpp:
     - vista/botones_app.h
     - modelo/dominio.h
+    - templates/helpers.h
     - vista/basicos_vista.h
     - vista/componentes/botones.h
     - vista/componentes/varios.h
@@ -249,6 +254,7 @@
     - modelo/control_pizzas.h
     - modelo/modelo.h
     - shared.h
+    - vista/vista_shared.h
 
 - vista/etiquetas/etiquetas_barra_estado.cpp:
     - vista/etiquetas/etiquetas_barra_estado.h
@@ -264,6 +270,7 @@
     - vista/etiquetas/etiquetas_contadores.h
     - modelo/modelo.h
     - templates/dibujar_elementos.h
+    - templates/helpers.h
     - vista/basicos_vista.h
     - vista/componentes/varios.h
     - vista/etiquetas/fabrica_etiquetas_contadores.h
@@ -272,6 +279,7 @@
 - vista/etiquetas/etiquetas_contadores.h:
     - general.h
     - modelo/control_pizzas.h
+    - vista/vista_shared.h
 
 - vista/etiquetas/etiquetas_info.cpp:
     - vista/etiquetas/etiquetas_info.h
@@ -319,7 +327,11 @@
     - vista/vista_data.h
 
 - vista/vista.h:
+    - modelo/modelo.h
     - vista/botones_app.h
     - vista/etiquetas/etiquetas.h
     - vista/paneles.h
+
+- vista/vista_shared.h:
+    - modelo/dominio.h
 

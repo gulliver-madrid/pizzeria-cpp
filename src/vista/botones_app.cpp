@@ -1,5 +1,6 @@
 #include "botones_app.h"
 #include "../modelo/dominio.h"
+#include "../templates/helpers.h"
 #include "basicos_vista.h"
 #include "componentes/botones.h"
 #include "componentes/varios.h"
@@ -140,6 +141,7 @@ namespace {
                     escala                                //
                 )
             );
+            assert(has_key(botones, tp));
             botones.at(tp).establecer_contenedor(rect_panel);
             ordenados.push_back(&botones.at(tp));
         }

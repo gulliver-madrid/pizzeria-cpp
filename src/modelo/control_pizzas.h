@@ -2,7 +2,6 @@
 
 #include "../shared.h"
 #include "modelo.h"
-#include <cassert>
 #include <vector>
 
 namespace modelo_info {

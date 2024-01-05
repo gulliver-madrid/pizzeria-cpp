@@ -1,6 +1,8 @@
 #include "modelo.h"
+#include "../templates/helpers.h"
 #include "encargos.h"
 #include <algorithm> // sort
+#include <cassert>
 #include <iostream>
 #include <unordered_set>
 
@@ -79,6 +81,7 @@ bool Pedido::intentar_servir(const dominio::TipoPizza tp) {
     if (!incluye(tp)) {
         return false;
     }
+    assert(has_key(contenido, tp));
     auto &pedido_tp = contenido.at(tp);
     if (pedido_tp.cubierto()) {
         return false;

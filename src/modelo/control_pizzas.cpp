@@ -1,4 +1,6 @@
 #include "control_pizzas.h"
+#include "../templates/helpers.h"
+#include <cassert>
 #include <iostream>
 
 using modelo::ControlPizzas;
@@ -24,6 +26,7 @@ ControlPizzas::get_tipos_disponibles() const {
  * pedido disponible y evaluando si ya esta completo.
  */
 void ControlPizzas::procesar_despacho(const dominio::TipoPizza tp) {
+    assert(has_key(contadores, tp));
     auto &contador = contadores.at(tp);
     assert(contador.preparadas > 0);
     contador.preparadas--;
@@ -62,6 +65,7 @@ bool ControlPizzas::faltan_pedidos_por_cubrir() const {
 void debug::debug_pedidos(const modelo::Pedidos &pedidos) {
     for (auto &pedido : pedidos) {
         for (auto &[tp, pedido_tp] : pedido.contenido) {
+            assert(has_key(tipo_pizza_to_string, tp));
             std::cout << tipo_pizza_to_string.at(tp) << ": "
                       << pedido_tp.objetivo << std::endl;
         }
