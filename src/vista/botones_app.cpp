@@ -3,6 +3,7 @@
 #include "basicos_vista.h"
 #include "componentes/botones.h"
 #include "componentes/varios.h"
+#include <SFML/Graphics/RenderTarget.hpp>
 #include <algorithm>
 #include <cassert>
 
@@ -229,7 +230,8 @@ void BotonesApp::draw(
 ) const {
     for (auto boton_ptr : todos) {
         assert(boton_ptr != nullptr);
-        boton_ptr->actualizar_y_dibujar(target);
+        boton_ptr->actualizar();
+        target.draw(*boton_ptr);
     }
 }
 

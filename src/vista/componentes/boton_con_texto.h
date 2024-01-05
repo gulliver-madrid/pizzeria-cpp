@@ -69,7 +69,11 @@ class BotonConTexto : public Componente {
     sf::FloatRect get_rect() const { //
         return _forma.getGlobalBounds();
     }
-    virtual void actualizar_y_dibujar(sf::RenderTarget &target);
+    void actualizar();
+    virtual void draw(
+        sf::RenderTarget &target, //
+        sf::RenderStates states   //
+    ) const override;
 
   private:
     std::optional<sf::Color> colorBotonActivo;

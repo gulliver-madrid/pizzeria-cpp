@@ -1,6 +1,7 @@
 #include "boton_con_texto.h"
 #include "../../templates/dibujar_elementos.h"
 #include "varios.h"
+#include <SFML/Graphics/RenderTarget.hpp>
 #include <cassert>
 
 namespace medidas {
@@ -249,19 +250,15 @@ bool BotonConTexto::colisiona(const sf::Vector2i &pos_raton) const {
     );
 }
 /**
- * @brief Dibuja el boton en el target de renderizado proporcionado.
+ * @brief Actualiza la parte visual del boton.
  *
- * Esta funcion es responsable de renderizar el boton en el target de
- * renderizado (como la ventana de la aplicacion). Verifica si el boton esta
- * marcado como visible antes de proceder. Si el boton esta activo, se muestra
- * con su color activo; de lo contrario, se muestra con un color gris por
- * defecto. La etiqueta del boton se dibuja sobre el boton.
- *
- * @param target Referencia al target de renderizado donde se dibujara el
- * boton.
+ *   Verifica si el boton esta marcado como visible antes de proceder.
+ * Si el boton esta activo, se muestra con su color activo; de lo contrario,
+ * se muestra con un color gris por defecto.
+ *   La etiqueta del boton se dibuja sobre el boton.
  */
-// TODO: separar renderizado y actualizacion
-void BotonConTexto::actualizar_y_dibujar(sf::RenderTarget &target) {
+
+void BotonConTexto::actualizar() {
     if (!visible)
         return;
     if (!colorBotonActivo.has_value())
@@ -271,6 +268,24 @@ void BotonConTexto::actualizar_y_dibujar(sf::RenderTarget &target) {
     } else {
         _forma.setFillColor(sf::Color(100, 100, 100));
     }
+}
+
+/**
+ * @brief Dibuja el boton en el target de renderizado proporcionado.
+ *
+ * Esta funcion es responsable de renderizar el boton en el target de
+ * renderizado (como la ventana de la aplicacion). Verifica si el boton esta
+ * marcado como visible antes de proceder.
+ *
+ * @param target Referencia al target de renderizado donde se dibujara el
+ * boton.
+ */
+void BotonConTexto::draw(
+    sf::RenderTarget &target, //
+    sf::RenderStates states   //
+) const {
+    if (!visible)
+        return;
     dibujar_elementos(target, std::make_tuple(_forma, _etiqueta));
 }
 
