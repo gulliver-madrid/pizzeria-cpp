@@ -10,7 +10,8 @@
 
 namespace sf {
     class Text;
-    class RenderWindow;
+    class RenderTarget;
+    class RenderTarget;
 } // namespace sf
 
 struct EtiquetasBarraEstado;
@@ -44,16 +45,16 @@ struct EtiquetasGenerales : public ObjetoConFont {
     void actualizar_y_dibujar_contadores(
         const modelo::PizzasAContadores &pizzas_a_contadores, //
         const modelo::Pedidos &pedidos,                       //
-        sf::RenderWindow &ventana                             //
+        sf::RenderTarget &target                              //
     );
 
     void actualizar_barra_estado(
         const sf::Time &tiempo_real_actual, const sf::Time &tiempo_juego_actual
     );
 
-    void dibujar_instrucciones(sf::RenderWindow &ventana);
-    void dibujar_resultado(sf::RenderWindow &ventana);
-    void dibujar_barra_estado(sf::RenderWindow &ventana);
+    void dibujar_instrucciones(sf::RenderTarget &target);
+    void dibujar_resultado(sf::RenderTarget &target);
+    void dibujar_barra_estado(sf::RenderTarget &target);
 };
 
 ///////////////////////////////////////////

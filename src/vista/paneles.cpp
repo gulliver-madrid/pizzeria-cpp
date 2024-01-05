@@ -40,8 +40,8 @@ Paneles::Paneles() {
     }
 }
 
-void Paneles::dibujar(sf::RenderWindow &ventana) {
-    dibujar_elementos(ventana, contenido);
+void Paneles::dibujar(sf::RenderTarget &target) {
+    dibujar_elementos(target, contenido);
 }
 
 TitulosPaneles::TitulosPaneles(const sf::Font &font) : ObjetoConFont(font) {
@@ -60,22 +60,22 @@ TitulosPaneles::TitulosPaneles(const sf::Font &font) : ObjetoConFont(font) {
     }
 }
 
-void TitulosPaneles::dibujar(sf::RenderWindow &ventana) {
-    dibujar_elementos(ventana, contenido);
+void TitulosPaneles::dibujar(sf::RenderTarget &target) {
+    dibujar_elementos(target, contenido);
 }
 
 PanelesCompletos::PanelesCompletos(const sf::Font &font)
     : ObjetoConFont(font), titulos_paneles(font) {}
 
 void PanelesCompletos::dibujar(
-    sf::RenderWindow &ventana,                 //
+    sf::RenderTarget &(target),                //
     const EstadoPreparacionPizzas &preparacion //
 
 ) {
     if (!visible)
         return;
-    paneles.dibujar(ventana);
-    titulos_paneles.dibujar(ventana);
+    paneles.dibujar(target);
+    titulos_paneles.dibujar(target);
     auto pos_panel = basicos_vista::obtener_posicion_panel( //
         IndicePanel::PANEL_EN_PREPARACION
     );
@@ -83,6 +83,6 @@ void PanelesCompletos::dibujar(
         preparacion, pos_panel, font
     );
     for (auto &bpn : barras_progreso_con_nombres) {
-        bpn.dibujar(ventana);
+        bpn.dibujar(target);
     }
 }

@@ -6,7 +6,7 @@
 
 namespace sf {
     class Font;
-    class RenderWindow;
+    class RenderTarget;
 } // namespace sf
 
 struct EtiquetasBarraEstado : public ObjetoConFont {
@@ -17,5 +17,5 @@ struct EtiquetasBarraEstado : public ObjetoConFont {
   public:
     EtiquetasBarraEstado(const sf::Font &);
     void actualizar(const sf::Time &, const sf::Time &);
-    void dibujar(sf::RenderWindow &ventana) const;
+    void dibujar(sf::RenderTarget &target) const;
 };

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics/RectangleShape.hpp>
-#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/System/Vector2.hpp>
 
@@ -32,7 +32,7 @@ struct BarraProgreso {
         const ColorPair &color_pair      //
     );
     void actualizar_porcentaje(int porcentaje);
-    void dibujar(sf::RenderWindow &ventana) const;
+    void dibujar(sf::RenderTarget &target) const;
 };
 
 ///////////////////////////////////////////
@@ -65,5 +65,5 @@ struct BarraProgresoConNombre {
         const sf::Font &                 //
     );
     void actualizar_porcentaje(int porcentaje);
-    void dibujar(sf::RenderWindow &ventana) const;
+    void dibujar(sf::RenderTarget &target) const;
 };

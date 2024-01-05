@@ -7,7 +7,7 @@ struct Estado;
 struct Vista;
 
 namespace sf {
-    class RenderWindow;
+    class RenderTarget;
 } // namespace sf
 
 /* Debe ser un intermediario entre el modelo y la vista */
@@ -22,7 +22,7 @@ class EnlaceVista {
     void on_cambio_a_fase_espera_antes_de_resultado() const;
     void esconder_paneles() const;
     void actualizarIU(
-        sf::RenderWindow &ventana,         //
+        sf::RenderTarget &(target),         //
         const Estado &estado,              //
         const sf::Time &tiempo_real_actual //
     ) const;

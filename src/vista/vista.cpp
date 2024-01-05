@@ -52,7 +52,7 @@ namespace {
 
     /* Actualiza y dibuja las etiquetas */
     void actualizar_etiquetas(
-        sf::RenderWindow &ventana,         //
+        sf::RenderTarget &(target),        //
         EtiquetasGenerales &etiquetas,     //
         const Estado &estado,              //
         const sf::Time &tiempo_real_actual //
@@ -63,16 +63,16 @@ namespace {
         auto pedidos = estado.estado_modelo.control_pizzas.pedidos;
         switch (estado.fase_actual) {
             case FaseNivel::MostrandoInstrucciones:
-                etiquetas.dibujar_instrucciones(ventana);
+                etiquetas.dibujar_instrucciones(target);
                 break;
             case FaseNivel::Activa:
             case FaseNivel::EsperaAntesDeResultado:
                 etiquetas.actualizar_y_dibujar_contadores(
-                    contadores, pedidos, ventana
+                    contadores, pedidos, target
                 );
                 break;
             case FaseNivel::MostrandoResultado:
-                etiquetas.dibujar_resultado(ventana);
+                etiquetas.dibujar_resultado(target);
                 break;
             default:
                 break;
@@ -83,7 +83,7 @@ namespace {
         etiquetas.actualizar_barra_estado(
             tiempo_real_actual, tiempo_juego_actual
         );
-        etiquetas.dibujar_barra_estado(ventana);
+        etiquetas.dibujar_barra_estado(target);
     }
 
 } // namespace
@@ -107,13 +107,13 @@ namespace impl {
 ///// Vista (private) /////
 
 void Vista::_actualizar_paneles(
-    sf::RenderWindow &ventana,                 //
+    sf::RenderTarget &(target),                //
     PanelesCompletos &paneles_completos,       //
     const EstadoPreparacionPizzas &preparacion //
 ) {
     // TODO: diferenciar entre actualizacion de datos y dibujado
     // TODO: usar el sistema nativo de dibujo de SFML.
-    paneles_completos.dibujar(ventana, preparacion);
+    paneles_completos.dibujar(target, preparacion);
 }
 
 ///// Vista (public) /////
@@ -150,16 +150,16 @@ void Vista::setup(
  * Actualiza el interfaz grafico
  */
 void Vista::actualizarIU(              //
-    sf::RenderWindow &ventana,         //
+    sf::RenderTarget &(target),        //
     const Estado &estado,              //
     const sf::Time &tiempo_real_actual //
 ) {
     actualizar_estado_botones(botones, estado);
 
-    // Limpia la ventana y empieza a pintar los componentes visuales
-    ventana.clear(colores::COLOR_FONDO);
+    // Limpia la target y empieza a pintar los componentes visuales
+    target.clear(colores::COLOR_FONDO);
     if (estado.mostrando_grid)
-        grid.draw(ventana, GRID_SIZE, GRID_TONE);
+        grid.draw(target, GRID_SIZE, GRID_TONE);
 
     if ( //
         estado.fase_actual == FaseNivel::Activa ||
@@ -167,11 +167,11 @@ void Vista::actualizarIU(              //
     ) {
         const auto preparacion =
             estado.estado_modelo.obtener_estado_preparacion_pizzas();
-        _actualizar_paneles(ventana, paneles_completos, preparacion);
+        _actualizar_paneles(target, paneles_completos, preparacion);
     }
 
-    actualizar_etiquetas(ventana, etiquetas, estado, tiempo_real_actual);
-    botones.dibujar(ventana);
+    actualizar_etiquetas(target, etiquetas, estado, tiempo_real_actual);
+    botones.dibujar(target);
 }
 
 void Vista::mostrar_elementos_fase_activa() {

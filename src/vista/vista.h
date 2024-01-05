@@ -21,7 +21,7 @@ class Vista : public ObjetoConFont {
     const dominio::TiposDePizza &tp_disponibles;
 
     void _actualizar_paneles(
-        sf::RenderWindow &ventana,                 //
+        sf::RenderTarget &(target),                //
         PanelesCompletos &paneles_completos,       //
         const EstadoPreparacionPizzas &preparacion //
     );
@@ -44,7 +44,7 @@ class Vista : public ObjetoConFont {
     );
 
     void actualizarIU(
-        sf::RenderWindow &,                //
+        sf::RenderTarget &,                //
         const Estado &,                    //
         const sf::Time &tiempo_real_actual //
     );

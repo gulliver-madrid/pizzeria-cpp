@@ -30,6 +30,6 @@ struct BotonesApp {
     BotonesApp(
         const sf::Font &font, const dominio::TiposDePizza &tp_disponibles
     );
-    void dibujar(sf::RenderWindow &ventana) const;
+    void dibujar(sf::RenderTarget &target) const;
     void mostrar_botones_nivel(bool nuevo_valor);
 };

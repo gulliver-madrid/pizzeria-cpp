@@ -6,7 +6,7 @@
 #include "../cadenas.h"
 #include "../componentes/varios.h"
 #include <SFML/Graphics/Font.hpp>
-#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/RenderTarget.hpp>
 
 EtiquetasBarraEstado::EtiquetasBarraEstado(const sf::Font &font)
     : ObjetoConFont(font) {
@@ -32,6 +32,6 @@ void EtiquetasBarraEstado::actualizar(
     etiqueta.setString(str);
 }
 
-void EtiquetasBarraEstado::dibujar(sf::RenderWindow &ventana) const {
-    ventana.draw(etiqueta);
+void EtiquetasBarraEstado::dibujar(sf::RenderTarget &target) const {
+    target.draw(etiqueta);
 }

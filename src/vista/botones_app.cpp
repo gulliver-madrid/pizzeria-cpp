@@ -223,10 +223,10 @@ BotonesApp::BotonesApp(
     _establecer_todos();
 }
 
-void BotonesApp::dibujar(sf::RenderWindow &ventana) const {
+void BotonesApp::dibujar(sf::RenderTarget &target) const {
     for (auto boton_ptr : todos) {
         assert(boton_ptr != nullptr);
-        boton_ptr->dibujar(ventana);
+        boton_ptr->dibujar(target);
     }
 }
 

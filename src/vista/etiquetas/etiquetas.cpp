@@ -5,7 +5,7 @@
 #include "etiquetas_barra_estado.h"
 #include "etiquetas_contadores.h"
 #include "etiquetas_info.h"
-#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/RenderTarget.hpp>
 
 namespace medidas {
     constexpr int TAMANO_FUENTE_TITULO_PANELES = 36;
@@ -42,10 +42,10 @@ void EtiquetasGenerales::setup(
 void EtiquetasGenerales::actualizar_y_dibujar_contadores(
     const modelo::PizzasAContadores &pizzas_a_contadores, //
     const modelo::Pedidos &pedidos,                       //
-    sf::RenderWindow &ventana                             //
+    sf::RenderTarget &target                              //
 ) {
     contadores->actualizar(pizzas_a_contadores, pedidos);
-    contadores->dibujar(ventana);
+    contadores->dibujar(target);
 }
 
 void EtiquetasGenerales::actualizar_barra_estado(
@@ -54,15 +54,15 @@ void EtiquetasGenerales::actualizar_barra_estado(
     barra_estado->actualizar(tiempo_real_actual, tiempo_juego_actual);
 }
 
-void EtiquetasGenerales::dibujar_instrucciones(sf::RenderWindow &ventana) {
-    ventana.draw(info->instrucciones);
+void EtiquetasGenerales::dibujar_instrucciones(sf::RenderTarget &target) {
+    target.draw(info->instrucciones);
 }
-void EtiquetasGenerales::dibujar_resultado(sf::RenderWindow &ventana) {
-    ventana.draw(info->resultado);
+void EtiquetasGenerales::dibujar_resultado(sf::RenderTarget &target) {
+    target.draw(info->resultado);
 }
 
-void EtiquetasGenerales::dibujar_barra_estado(sf::RenderWindow &ventana) {
-    barra_estado->dibujar(ventana);
+void EtiquetasGenerales::dibujar_barra_estado(sf::RenderTarget &target) {
+    barra_estado->dibujar(target);
 }
 
 ///////////////////////////////////////////

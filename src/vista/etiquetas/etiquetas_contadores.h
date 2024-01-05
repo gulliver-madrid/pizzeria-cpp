@@ -7,7 +7,7 @@
 #include <SFML/Graphics/Text.hpp>
 
 namespace sf {
-    class RenderWindow;
+    class RenderTarget;
 }
 
 ///// PedidoCard /////
@@ -50,5 +50,5 @@ struct EtiquetasContadores : public ObjetoConFont {
         const modelo::PizzasAContadores &, //
         const modelo::Pedidos &            //
     );
-    void dibujar(sf::RenderWindow &ventana) const;
+    void dibujar(sf::RenderTarget &target) const;
 };

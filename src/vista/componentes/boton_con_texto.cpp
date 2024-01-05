@@ -249,18 +249,18 @@ bool BotonConTexto::colisiona(const sf::Vector2i &pos_raton) const {
     );
 }
 /**
- * @brief Dibuja el boton en la ventana proporcionada.
+ * @brief Dibuja el boton en el target de renderizado proporcionado.
  *
- * Esta funcion es responsable de renderizar el boton en la ventana de la
- * aplicacion. Verifica si el boton esta marcado como visible antes de proceder.
- * Si el boton esta activo, se muestra con su color activo; de lo contrario, se
- * muestra con un color gris por defecto. La etiqueta del boton se dibuja sobre
- * el boton.
+ * Esta funcion es responsable de renderizar el boton en el target de
+ * renderizado (como la ventana de la aplicacion). Verifica si el boton esta
+ * marcado como visible antes de proceder. Si el boton esta activo, se muestra
+ * con su color activo; de lo contrario, se muestra con un color gris por
+ * defecto. La etiqueta del boton se dibuja sobre el boton.
  *
- * @param window Referencia a la ventana de renderizado donde se dibujara el
+ * @param target Referencia al target de renderizado donde se dibujara el
  * boton.
  */
-void BotonConTexto::dibujar(sf::RenderWindow &window) {
+void BotonConTexto::dibujar(sf::RenderTarget &target) {
     if (!visible)
         return;
     if (!colorBotonActivo.has_value())
@@ -270,7 +270,7 @@ void BotonConTexto::dibujar(sf::RenderWindow &window) {
     } else {
         _forma.setFillColor(sf::Color(100, 100, 100));
     }
-    dibujar_elementos(window, std::make_tuple(_forma, _etiqueta));
+    dibujar_elementos(target, std::make_tuple(_forma, _etiqueta));
 }
 
 /**

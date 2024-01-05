@@ -126,8 +126,8 @@ void EtiquetasContadores::actualizar(
     _actualizar_pedidos_dinamicos(pedidos);
 }
 
-void EtiquetasContadores::dibujar(sf::RenderWindow &ventana) const {
-    dibujar_elementos(ventana, etiquetas_preparadas);
-    dibujar_elementos(ventana, etiquetas_servidas);
-    dibujar_elementos(ventana, cards_pedidos);
+void EtiquetasContadores::dibujar(sf::RenderTarget &target) const {
+    dibujar_elementos(target, etiquetas_preparadas);
+    dibujar_elementos(target, etiquetas_servidas);
+    dibujar_elementos(target, cards_pedidos);
 }

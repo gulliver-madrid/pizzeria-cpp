@@ -14,9 +14,9 @@ void EnlaceVista::esconder_paneles() const {
 }
 
 void EnlaceVista::actualizarIU(
-    sf::RenderWindow &ventana,         //
+    sf::RenderTarget &(target),        //
     const Estado &estado,              //
     const sf::Time &tiempo_real_actual //
 ) const {
-    vista->actualizarIU(ventana, estado, tiempo_real_actual);
+    vista->actualizarIU(target, estado, tiempo_real_actual);
 }

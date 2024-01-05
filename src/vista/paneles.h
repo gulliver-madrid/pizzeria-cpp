@@ -12,13 +12,13 @@ struct Paneles {
     std::map<IndicePanel, sf::RectangleShape> contenido;
 
     Paneles();
-    void dibujar(sf::RenderWindow &);
+    void dibujar(sf::RenderTarget &);
 };
 
 struct TitulosPaneles : public ObjetoConFont {
     std::map<IndicePanel, sf::Text> contenido;
     TitulosPaneles(const sf::Font &);
-    void dibujar(sf::RenderWindow &);
+    void dibujar(sf::RenderTarget &);
 };
 
 struct PanelesCompletos : public ObjetoConFont {
@@ -29,7 +29,7 @@ struct PanelesCompletos : public ObjetoConFont {
 
     PanelesCompletos(const sf::Font &);
     void dibujar(
-        sf::RenderWindow &,             //
+        sf::RenderTarget &,             //
         const EstadoPreparacionPizzas & //
     );
 };

@@ -8,7 +8,7 @@
 #include <optional>
 
 namespace sf {
-    class RenderWindow;
+    class RenderTarget;
 }
 
 struct Posicionamiento;
@@ -61,7 +61,7 @@ class BotonConTexto : public Componente {
         Align align = Align::Left     //
     );
     bool colisiona(const sf::Vector2i &mousePos) const;
-    void dibujar(sf::RenderWindow &window);
+    void dibujar(sf::RenderTarget &target);
     void activar();
     void desactivar();
     void activacion_condicional(bool condicion);
