@@ -67,10 +67,15 @@ namespace {
                 break;
             case FaseNivel::Activa:
             case FaseNivel::EsperaAntesDeResultado:
-                etiquetas.actualizar_y_dibujar_contadores(
-                    contadores, pedidos, target
-                );
-                break;
+                {
+                    const auto vista_preparadas =
+                        impl::contadores_to_preparadas(contadores);
+                    etiquetas.actualizar_y_dibujar_contadores(
+                        vista_preparadas, pedidos, target
+                    );
+                    break;
+                }
+
             case FaseNivel::MostrandoResultado:
                 etiquetas.dibujar_resultado(target);
                 break;
@@ -89,10 +94,10 @@ namespace {
 } // namespace
 
 namespace impl {
-    std::map<TipoPizza, std::string> contadores_to_preparadas( //
-        modelo::PizzasAContadores &contadores                  //
+    VistaPizzasToStrings contadores_to_preparadas(  //
+        const modelo::PizzasAContadores &contadores //
     ) {
-        std::map<dominio::TipoPizza, std::string> textos_preparadas;
+        VistaPizzasToStrings textos_preparadas;
         for (auto &[tp, contadores_tp] : contadores) {
             auto &nombre_pizza = tipo_pizza_to_string.at(tp);
             std::string linea =
@@ -102,7 +107,6 @@ namespace impl {
         return textos_preparadas;
     }
 } // namespace impl
-// namespace impl
 
 ///// Vista (private) /////
 

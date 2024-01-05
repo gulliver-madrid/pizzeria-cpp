@@ -2,6 +2,7 @@
 
 #include "../../general.h"
 #include "../../modelo/control_pizzas.h"
+#include "../vista_shared.h"
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Text.hpp>
@@ -47,8 +48,8 @@ struct EtiquetasContadores : public ObjetoConFont, public sf::Drawable {
     EtiquetasContadores(const sf::Font &);
     void setup(const dominio::TiposDePizza &tp_disponibles);
     void actualizar(
-        const modelo::PizzasAContadores &, //
-        const modelo::Pedidos &            //
+        const VistaPizzasToStrings &vista_preparadas, //
+        const modelo::Pedidos &                       //
     );
     virtual void draw(
         sf::RenderTarget &target, //

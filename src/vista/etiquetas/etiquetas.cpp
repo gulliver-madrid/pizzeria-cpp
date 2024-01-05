@@ -40,11 +40,11 @@ void EtiquetasGenerales::setup(
 }
 // TODO: separar actualizacion y dibujado
 void EtiquetasGenerales::actualizar_y_dibujar_contadores(
-    const modelo::PizzasAContadores &pizzas_a_contadores, //
-    const modelo::Pedidos &pedidos,                       //
-    sf::RenderTarget &target                              //
+    const VistaPizzasToStrings &vista_preparadas, //
+    const modelo::Pedidos &pedidos,               //
+    sf::RenderTarget &target                      //
 ) {
-    contadores->actualizar(pizzas_a_contadores, pedidos);
+    contadores->actualizar(vista_preparadas, pedidos);
     target.draw(*contadores);
 }
 

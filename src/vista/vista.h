@@ -9,8 +9,8 @@ struct Estado;
 struct Grid;
 
 namespace impl {
-    std::map<dominio::TipoPizza, std::string> contadores_to_preparadas( //
-        modelo::PizzasAContadores &
+    VistaPizzasToStrings contadores_to_preparadas( //
+        const modelo::PizzasAContadores &
     );
 } // namespace impl
 

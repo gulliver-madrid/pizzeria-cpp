@@ -113,18 +113,15 @@ void EtiquetasContadores::setup(const dominio::TiposDePizza &tp_disponibles) {
 };
 
 void EtiquetasContadores::actualizar(
-    const modelo::PizzasAContadores &pizzas_a_contadores, //
-    const modelo::Pedidos &pedidos                        //
+    const VistaPizzasToStrings &vista_preparadas,
+    const modelo::Pedidos &pedidos //
 ) {
-    for (auto &[tp, contadores_tp] : pizzas_a_contadores) {
-        auto &nombre_pizza = tipo_pizza_to_string.at(tp);
-        std::string linea =
-            nombre_pizza + ": " + std::to_string(contadores_tp.preparadas);
+    for (auto &[tp, linea] : vista_preparadas) {
         etiquetas_preparadas.at(tp).setString(linea);
     }
-
     _actualizar_pedidos_dinamicos(pedidos);
 }
+
 void EtiquetasContadores::draw(
     sf::RenderTarget &target, //
     sf::RenderStates states   //

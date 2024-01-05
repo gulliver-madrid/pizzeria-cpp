@@ -3,6 +3,7 @@
 #include "../../modelo/control_pizzas.h"
 #include "../../modelo/modelo.h"
 #include "../../shared.h"
+#include "../vista_shared.h"
 #include <SFML/System/Time.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <memory>
@@ -43,9 +44,9 @@ struct EtiquetasGenerales : public ObjetoConFont {
     );
 
     void actualizar_y_dibujar_contadores(
-        const modelo::PizzasAContadores &pizzas_a_contadores, //
-        const modelo::Pedidos &pedidos,                       //
-        sf::RenderTarget &target                              //
+        const VistaPizzasToStrings &vista_preparadas, //
+        const modelo::Pedidos &pedidos,               //
+        sf::RenderTarget &target                      //
     );
 
     void actualizar_barra_estado(

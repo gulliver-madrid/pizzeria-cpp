@@ -26,6 +26,6 @@ TEST(Presentador, ContadoresToPreparadasString) {
 
     contadores.emplace(TipoPizza::Margarita, Contadores{});
     contadores.at(TipoPizza::Margarita).preparadas++;
-    auto textos_preparadas = impl::contadores_to_preparadas(contadores);
-    ASSERT_EQ(textos_preparadas.at(TipoPizza::Margarita), "Margarita: 1");
+    auto vista_preparadas = impl::contadores_to_preparadas(contadores);
+    ASSERT_EQ(vista_preparadas.at(TipoPizza::Margarita), "Margarita: 1");
 }
