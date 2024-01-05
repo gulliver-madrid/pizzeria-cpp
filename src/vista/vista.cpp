@@ -70,9 +70,8 @@ namespace {
                 {
                     const auto vista_preparadas =
                         impl::contadores_to_preparadas(contadores);
-                    etiquetas.actualizar_y_dibujar_contadores(
-                        vista_preparadas, pedidos, target
-                    );
+                    etiquetas.actualizar_contadores(vista_preparadas, pedidos);
+                    etiquetas.dibujar_contadores(target);
                     break;
                 }
 

@@ -43,11 +43,12 @@ struct EtiquetasGenerales : public ObjetoConFont {
         const dominio::TiposDePizza &tp_disponibles //
     );
 
-    void actualizar_y_dibujar_contadores(
+    void actualizar_contadores(
         const VistaPizzasToStrings &vista_preparadas, //
-        const modelo::Pedidos &pedidos,               //
-        sf::RenderTarget &target                      //
+        const modelo::Pedidos &pedidos                //
+
     );
+    void dibujar_contadores(sf::RenderTarget &target);
 
     void actualizar_barra_estado(
         const sf::Time &tiempo_real_actual, const sf::Time &tiempo_juego_actual
