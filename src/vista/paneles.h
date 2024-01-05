@@ -27,15 +27,18 @@ struct TitulosPaneles : public ObjetoConFont, public sf::Drawable {
     ) const override;
 };
 
-struct PanelesCompletos : public ObjetoConFont {
+struct PanelesCompletos : public ObjetoConFont, public sf::Drawable {
     Paneles paneles;
     TitulosPaneles titulos_paneles;
     std::vector<BarraProgresoConNombre> barras_progreso_con_nombres;
     bool visible = false;
 
     PanelesCompletos(const sf::Font &);
-    void actualizar_y_dibujar(
-        sf::RenderTarget &,             //
-        const EstadoPreparacionPizzas & //
+
+    void actualizar(const EstadoPreparacionPizzas & //
     );
+    virtual void draw(
+        sf::RenderTarget &target, //
+        sf::RenderStates states   //
+    ) const override;
 };

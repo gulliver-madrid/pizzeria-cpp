@@ -73,21 +73,26 @@ void TitulosPaneles::draw(
 PanelesCompletos::PanelesCompletos(const sf::Font &font)
     : ObjetoConFont(font), titulos_paneles(font) {}
 
-// TODO: separar actualizacion y dibujado
-void PanelesCompletos::actualizar_y_dibujar(
-    sf::RenderTarget &(target),                //
-    const EstadoPreparacionPizzas &preparacion //
+void PanelesCompletos::actualizar(const EstadoPreparacionPizzas &preparacion //
 ) {
     if (!visible)
         return;
-    target.draw(paneles);
-    target.draw(titulos_paneles);
     auto pos_panel = basicos_vista::obtener_posicion_panel( //
         IndicePanel::PANEL_EN_PREPARACION
     );
     barras_progreso_con_nombres = crear_barras_progreso( //
         preparacion, pos_panel, font
     );
+}
+
+void PanelesCompletos::draw(
+    sf::RenderTarget &target, //
+    sf::RenderStates states   //
+) const {
+    if (!visible)
+        return;
+    target.draw(paneles);
+    target.draw(titulos_paneles);
     for (auto &bpn : barras_progreso_con_nombres) {
         target.draw(bpn);
     }
