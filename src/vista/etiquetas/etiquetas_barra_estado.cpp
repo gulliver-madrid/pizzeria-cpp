@@ -32,6 +32,9 @@ void EtiquetasBarraEstado::actualizar(
     etiqueta.setString(str);
 }
 
-void EtiquetasBarraEstado::dibujar(sf::RenderTarget &target) const {
+void EtiquetasBarraEstado::draw(
+    sf::RenderTarget &target, //
+    sf::RenderStates states   //
+) const {
     target.draw(etiqueta);
 }

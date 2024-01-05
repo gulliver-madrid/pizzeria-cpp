@@ -33,7 +33,7 @@ class PedidoCard : public sf::Drawable {
 
 ///// EtiquetasContadores /////
 
-struct EtiquetasContadores : public ObjetoConFont {
+struct EtiquetasContadores : public ObjetoConFont, public sf::Drawable {
     using TipoPizza = dominio::TipoPizza;
 
   private:
@@ -50,5 +50,8 @@ struct EtiquetasContadores : public ObjetoConFont {
         const modelo::PizzasAContadores &, //
         const modelo::Pedidos &            //
     );
-    void dibujar(sf::RenderTarget &target) const;
+    virtual void draw(
+        sf::RenderTarget &target, //
+        sf::RenderStates states   //
+    ) const override;
 };

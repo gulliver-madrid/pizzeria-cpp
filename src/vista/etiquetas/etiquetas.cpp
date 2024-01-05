@@ -38,14 +38,14 @@ void EtiquetasGenerales::setup(
     info->setup(instr, num_nivel);
     contadores->setup(tp_disponibles);
 }
-
+// TODO: separar actualizacion y dibujado
 void EtiquetasGenerales::actualizar_y_dibujar_contadores(
     const modelo::PizzasAContadores &pizzas_a_contadores, //
     const modelo::Pedidos &pedidos,                       //
     sf::RenderTarget &target                              //
 ) {
     contadores->actualizar(pizzas_a_contadores, pedidos);
-    contadores->dibujar(target);
+    target.draw(*contadores);
 }
 
 void EtiquetasGenerales::actualizar_barra_estado(
@@ -62,7 +62,7 @@ void EtiquetasGenerales::dibujar_resultado(sf::RenderTarget &target) {
 }
 
 void EtiquetasGenerales::dibujar_barra_estado(sf::RenderTarget &target) {
-    barra_estado->dibujar(target);
+    target.draw(*barra_estado);
 }
 
 ///////////////////////////////////////////

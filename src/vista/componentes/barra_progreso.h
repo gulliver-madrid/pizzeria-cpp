@@ -14,7 +14,7 @@ struct ColorPair {
     sf::Color fg;
 };
 
-struct BarraProgreso {
+struct BarraProgreso : public sf::Drawable {
   private:
     sf::Vector2f dimensiones;
     sf::RectangleShape fondo;
@@ -32,7 +32,10 @@ struct BarraProgreso {
         const ColorPair &color_pair      //
     );
     void actualizar_porcentaje(int porcentaje);
-    void dibujar(sf::RenderTarget &target) const;
+    virtual void draw(
+        sf::RenderTarget &target, //
+        sf::RenderStates states   //
+    ) const override;
 };
 
 ///////////////////////////////////////////
@@ -45,7 +48,7 @@ struct BPNColors {
     sf::Color color_texto;
 };
 
-struct BarraProgresoConNombre {
+struct BarraProgresoConNombre : public sf::Drawable {
   private:
     sf::Text etiqueta;
     BarraProgreso bp;
@@ -65,5 +68,8 @@ struct BarraProgresoConNombre {
         const sf::Font &                 //
     );
     void actualizar_porcentaje(int porcentaje);
-    void dibujar(sf::RenderTarget &target) const;
+    virtual void draw(
+        sf::RenderTarget &target, //
+        sf::RenderStates states   //
+    ) const override;
 };

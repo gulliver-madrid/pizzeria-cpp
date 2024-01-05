@@ -113,7 +113,7 @@ void Vista::_actualizar_paneles(
 ) {
     // TODO: diferenciar entre actualizacion de datos y dibujado
     // TODO: usar el sistema nativo de dibujo de SFML.
-    paneles_completos.dibujar(target, preparacion);
+    paneles_completos.actualizar_y_dibujar(target, preparacion);
 }
 
 ///// Vista (public) /////
@@ -171,7 +171,7 @@ void Vista::actualizarIU(              //
     }
 
     actualizar_etiquetas(target, etiquetas, estado, tiempo_real_actual);
-    botones.dibujar(target);
+    target.draw(botones);
 }
 
 void Vista::mostrar_elementos_fase_activa() {

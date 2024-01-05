@@ -9,7 +9,7 @@ namespace sf {
     class RenderTarget;
 } // namespace sf
 
-struct EtiquetasBarraEstado : public ObjetoConFont {
+struct EtiquetasBarraEstado : public ObjetoConFont, public sf::Drawable {
 
   private:
     sf::Text etiqueta;
@@ -17,5 +17,8 @@ struct EtiquetasBarraEstado : public ObjetoConFont {
   public:
     EtiquetasBarraEstado(const sf::Font &);
     void actualizar(const sf::Time &, const sf::Time &);
-    void dibujar(sf::RenderTarget &target) const;
+    virtual void draw(
+        sf::RenderTarget &target, //
+        sf::RenderStates states   //
+    ) const override;
 };

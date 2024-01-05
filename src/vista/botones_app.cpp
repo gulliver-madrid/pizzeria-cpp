@@ -223,10 +223,13 @@ BotonesApp::BotonesApp(
     _establecer_todos();
 }
 
-void BotonesApp::dibujar(sf::RenderTarget &target) const {
+void BotonesApp::draw(
+    sf::RenderTarget &target, //
+    sf::RenderStates states   //
+) const {
     for (auto boton_ptr : todos) {
         assert(boton_ptr != nullptr);
-        boton_ptr->dibujar(target);
+        boton_ptr->actualizar_y_dibujar(target);
     }
 }
 

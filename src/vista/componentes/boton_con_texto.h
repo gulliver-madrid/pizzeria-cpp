@@ -61,7 +61,6 @@ class BotonConTexto : public Componente {
         Align align = Align::Left     //
     );
     bool colisiona(const sf::Vector2i &mousePos) const;
-    void dibujar(sf::RenderTarget &target);
     void activar();
     void desactivar();
     void activacion_condicional(bool condicion);
@@ -70,6 +69,7 @@ class BotonConTexto : public Componente {
     sf::FloatRect get_rect() const { //
         return _forma.getGlobalBounds();
     }
+    virtual void actualizar_y_dibujar(sf::RenderTarget &target);
 
   private:
     std::optional<sf::Color> colorBotonActivo;

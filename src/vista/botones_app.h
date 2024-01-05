@@ -16,7 +16,7 @@ struct BotonesGenerales {
     const std::vector<BotonConTexto *> obtener_todos();
 };
 
-struct BotonesApp {
+struct BotonesApp : public sf::Drawable {
   private:
     std::vector<BotonConTexto *> todos;
     void _establecer_todos();
@@ -30,6 +30,9 @@ struct BotonesApp {
     BotonesApp(
         const sf::Font &font, const dominio::TiposDePizza &tp_disponibles
     );
-    void dibujar(sf::RenderTarget &target) const;
     void mostrar_botones_nivel(bool nuevo_valor);
+    virtual void draw(
+        sf::RenderTarget &target, //
+        sf::RenderStates states   //
+    ) const override;
 };

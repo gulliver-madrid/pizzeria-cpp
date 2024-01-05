@@ -260,7 +260,8 @@ bool BotonConTexto::colisiona(const sf::Vector2i &pos_raton) const {
  * @param target Referencia al target de renderizado donde se dibujara el
  * boton.
  */
-void BotonConTexto::dibujar(sf::RenderTarget &target) {
+// TODO: separar renderizado y actualizacion
+void BotonConTexto::actualizar_y_dibujar(sf::RenderTarget &target) {
     if (!visible)
         return;
     if (!colorBotonActivo.has_value())
