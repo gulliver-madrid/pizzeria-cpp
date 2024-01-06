@@ -25,10 +25,9 @@ FetchContent_MakeAvailable(googletest)
 # Boost
 set(BOOST_ROOT $ENV{BOOST_ROOT})
 set(BOOST_LIBRARYDIR "$ENV{BOOST_ROOT}/stage/lib")
-find_package(Boost 1.82 REQUIRED COMPONENTS log)
+find_package(Boost 1.82 REQUIRED COMPONENTS log filesystem)
 include_directories( ${Boost_INCLUDE_DIRS} )
 link_directories(${BOOST_LIBRARYDIR})
-
 
 add_executable(pizzeria
     src/main.cpp
@@ -77,7 +76,11 @@ add_executable(pizzeria
     src/demos/visual.cpp
     src/demos/visual_textos.cpp
 )
-target_link_libraries(pizzeria PRIVATE sfml-graphics sfml-audio Boost::log)
+target_link_libraries(pizzeria PRIVATE sfml-graphics sfml-audio Boost::log Boost::filesystem)
+
+# esto es si estamos es modo dinamico (?)
+add_definitions(-DBOOST_ALL_DYN_LINK)
+
 target_compile_features(pizzeria PRIVATE cxx_std_17)
 
 # Tratar los warnings como errores en modo Debug.
@@ -157,7 +160,7 @@ add_executable(
     src/demos/visual.cpp
     src/demos/visual_textos.cpp
 )
-target_link_libraries(runUnitTests PRIVATE sfml-graphics sfml-audio Boost::log)
+target_link_libraries(runUnitTests PRIVATE sfml-graphics sfml-audio Boost::log Boost::filesystem)
 target_link_libraries(runUnitTests PUBLIC gtest gtest_main)
 target_compile_features(runUnitTests PRIVATE cxx_std_17)
 add_test(NAME runUnitTests COMMAND runUnitTests)
