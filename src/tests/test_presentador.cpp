@@ -68,3 +68,23 @@ TEST(Presentador, ObtenerActivacionBotonesSiHayDemasiadosPedidosSimultaneos) {
     activacion_botones = impl::obtener_activacion_botones(estado_modelo);
     ASSERT_EQ(activacion_botones.encargar, false);
 }
+
+TEST(Presentador, ObtenerActivacionBotonesSiHayUnaPizzaPreparada) {
+    modelo::Pedidos pedidos = {Pedido({{TipoPizza::Margarita, 2}})};
+    DatosNivelParaModelo datos_nivel_para_modelo(pedidos);
+    EstadoModelo estado_modelo(datos_nivel_para_modelo);
+    auto activacion_botones = impl::obtener_activacion_botones(estado_modelo);
+    // hay un boton despachar desactivado
+    ASSERT_EQ(activacion_botones.despachar.size(), 1);
+    ASSERT_EQ(activacion_botones.despachar.at(TipoPizza::Margarita), false);
+
+    estado_modelo.gestor_tiempo.activar();
+
+    estado_modelo.anadir_encargo(TipoPizza::Margarita);
+    estado_modelo.gestor_tiempo.tick(sf::seconds(10));
+    estado_modelo.evaluar_preparacion_pizzas();
+
+    activacion_botones = impl::obtener_activacion_botones(estado_modelo);
+    ASSERT_EQ(activacion_botones.despachar.size(), 1);
+    ASSERT_EQ(activacion_botones.despachar.at(TipoPizza::Margarita), true);
+}
