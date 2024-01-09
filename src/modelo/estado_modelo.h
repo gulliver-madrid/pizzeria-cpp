@@ -3,14 +3,14 @@
 #include "control_pizzas.h"
 #include "encargos.h"
 
-struct DatosNivelParaModelo;
+struct DatosModeloInterno;
 
 struct EstadoModelo {
     GestorTiempoJuego gestor_tiempo;
     modelo::ControlPizzas control_pizzas;
     Encargos encargos;
 
-    EstadoModelo(const DatosNivelParaModelo &datos_nivel);
+    EstadoModelo(const DatosModeloInterno &datos_nivel);
     /* Encarga una pizza de tipo tp */
     void anadir_encargo(dominio::TipoPizza tp);
     /* Despacha una pizza del tipo indicado. */

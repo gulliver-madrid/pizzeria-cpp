@@ -1,9 +1,9 @@
 #include "estado_modelo.h"
-#include "datos_nivel_para_modelo.h"
+#include "datos_modelo_interno.h"
 
 //////// EstadoModelo
 
-EstadoModelo::EstadoModelo(const DatosNivelParaModelo &datos_nivel)
+EstadoModelo::EstadoModelo(const DatosModeloInterno &datos_nivel)
     : control_pizzas(datos_nivel.pedidos) {
     assert(encargos.total() == 0);
     gestor_tiempo.reiniciar();

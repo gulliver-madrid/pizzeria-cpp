@@ -1,4 +1,4 @@
-#include "../modelo/datos_nivel_para_modelo.h"
+#include "../modelo/datos_modelo_interno.h"
 #include "../modelo/dominio.h"
 #include "../modelo/estado_modelo.h"
 #include "../modelo/modelo.h"
@@ -38,8 +38,8 @@ TEST(Presentador, ObtenerActivacionBotonesSiPedidosEstaVacio) {
     // que hagan referencia a ningun tipo de pizza
     // Y cualquier boton encargar estaria activo al no haber
     // demasiadas pizzas en el area de preparadas
-    DatosNivelParaModelo datos_nivel_para_modelo({});
-    EstadoModelo estado_modelo(datos_nivel_para_modelo);
+    DatosModeloInterno datos_modelo_interno({});
+    EstadoModelo estado_modelo(datos_modelo_interno);
     const auto activacion_botones =
         impl::obtener_activacion_botones(estado_modelo);
     ASSERT_TRUE(activacion_botones.despachar.empty());
@@ -48,8 +48,8 @@ TEST(Presentador, ObtenerActivacionBotonesSiPedidosEstaVacio) {
 
 TEST(Presentador, ObtenerActivacionBotonesSiHayDemasiadosPedidosSimultaneos) {
     modelo::Pedidos pedidos = {Pedido({{TipoPizza::Margarita, 4}})};
-    DatosNivelParaModelo datos_nivel_para_modelo(pedidos);
-    EstadoModelo estado_modelo(datos_nivel_para_modelo);
+    DatosModeloInterno datos_modelo_interno(pedidos);
+    EstadoModelo estado_modelo(datos_modelo_interno);
     auto activacion_botones = impl::obtener_activacion_botones(estado_modelo);
     // hay un boton despachar desactivado
     ASSERT_EQ(activacion_botones.despachar.size(), 1);
@@ -71,8 +71,8 @@ TEST(Presentador, ObtenerActivacionBotonesSiHayDemasiadosPedidosSimultaneos) {
 
 TEST(Presentador, ObtenerActivacionBotonesSiHayUnaPizzaPreparada) {
     modelo::Pedidos pedidos = {Pedido({{TipoPizza::Margarita, 2}})};
-    DatosNivelParaModelo datos_nivel_para_modelo(pedidos);
-    EstadoModelo estado_modelo(datos_nivel_para_modelo);
+    DatosModeloInterno datos_modelo_interno(pedidos);
+    EstadoModelo estado_modelo(datos_modelo_interno);
     auto activacion_botones = impl::obtener_activacion_botones(estado_modelo);
     // hay un boton despachar desactivado
     ASSERT_EQ(activacion_botones.despachar.size(), 1);

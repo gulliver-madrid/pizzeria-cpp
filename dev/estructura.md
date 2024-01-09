@@ -12,7 +12,7 @@
     - modelo_amplio/comandos.h
 
 - datos_nivel.h:
-    - modelo/datos_nivel_para_modelo.h
+    - modelo/datos_modelo_interno.h
 
 - datos_niveles.cpp:
     - datos_niveles.h
@@ -54,7 +54,7 @@
     - modelo/modelo.h
     - shared.h
 
-- modelo/datos_nivel_para_modelo.h:
+- modelo/datos_modelo_interno.h:
     - modelo/control_pizzas.h
     - modelo/encargos.h
 
@@ -70,7 +70,7 @@
 
 - modelo/estado_modelo.cpp:
     - modelo/estado_modelo.h
-    - modelo/datos_nivel_para_modelo.h
+    - modelo/datos_modelo_interno.h
 
 - modelo/estado_modelo.h:
     - modelo/control_pizzas.h
@@ -334,4 +334,3 @@
 
 - vista/vista_shared.h:
     - modelo/dominio.h
-
