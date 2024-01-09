@@ -49,7 +49,7 @@ add_executable(pizzeria
     src/setup_juego.cpp
     src/textos.cpp
     src/tiempo.cpp
-    src/shared.cpp
+    src/log_init.cpp
     src/vista/barras_progreso.cpp
     src/vista/botones_app.cpp
     src/vista/cadenas.cpp
@@ -133,7 +133,7 @@ add_executable(
     src/setup_juego.cpp
     src/textos.cpp
     src/tiempo.cpp
-    src/shared.cpp
+    src/log_init.cpp
     src/vista/barras_progreso.cpp
     src/vista/botones_app.cpp
     src/vista/cadenas.cpp

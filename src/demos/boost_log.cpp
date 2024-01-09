@@ -1,6 +1,6 @@
 #include "boost_log.h"
 
-#include "../shared.h"
+#include "../log_init.h"
 #include <iostream>
 
 int demo_boost_log() {

@@ -1,8 +1,8 @@
 #include "realizador.h"
 #include "../estado_nivel.h"
 #include "../general.h"
+#include "../log_init.h"
 #include <cassert>
-#include <iostream>
 
 using NuevaFase = std::optional<FaseNivel>;
 

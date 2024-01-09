@@ -3,6 +3,7 @@
 #include "datos_nivel.h"
 #include "estado_nivel.h"
 #include "general.h"
+#include "log_init.h"
 #include "vista/enlace_vista.h"
 #include "vista/vista.h"
 #include <SFML/System/Time.hpp>

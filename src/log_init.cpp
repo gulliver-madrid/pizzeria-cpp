@@ -1,4 +1,4 @@
-#include "shared.h"
+#include "log_init.h"
 #include <boost/log/core.hpp>
 #include <boost/log/expressions.hpp>
 #include <boost/log/utility/setup/common_attributes.hpp>

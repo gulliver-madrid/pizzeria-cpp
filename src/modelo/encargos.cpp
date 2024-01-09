@@ -1,5 +1,5 @@
 #include "encargos.h"
-#include "../shared.h"
+#include "../log_init.h"
 #include "../templates/helpers.h"
 #include "dominio.h"
 #include <cassert>
