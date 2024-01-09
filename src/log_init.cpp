@@ -13,8 +13,8 @@ namespace keywords = boost::log::keywords;
 void init_log() {
     auto core = logging::core::get();
     core->set_logging_enabled(_DEBUG);
-    std::filesystem::path logFileFolder = std::filesystem::current_path();
-    logFileFolder.append("logs");
+    std::filesystem::path logFileFolder =
+        std::filesystem::current_path() / "logs";
     auto info_file = logFileFolder / "log_info_%N.log";
     auto debug_file = logFileFolder / "log_debug_%N.log";
     // Sink para mensajes de info y superiores
@@ -22,7 +22,7 @@ void init_log() {
         keywords::file_name = info_file,
         keywords::rotation_size = 100 * 1024, // Rotacion cada 100Kb
         keywords::max_files = 8,              //
-        keywords::target = logFileFolder,
+        keywords::target = logFileFolder,     //
         keywords::filter = logging::trivial::severity >= logging::trivial::info,
         keywords::format = "[%TimeStamp%] [%Severity%]: %Message%"
     );
@@ -30,7 +30,9 @@ void init_log() {
     // Sink para mensajes de debug
     logging::add_file_log(
         keywords::file_name = debug_file,
-        keywords::rotation_size = 10 * 1024 * 1024,
+        keywords::rotation_size = 100 * 1024, // Rotacion cada 100Kb
+        keywords::max_files = 8,              //
+        keywords::target = logFileFolder,     //
         keywords::filter =
             logging::trivial::severity == logging::trivial::debug,
         keywords::format = "[%TimeStamp%]: %Message%"
