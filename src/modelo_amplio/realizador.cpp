@@ -1,20 +1,21 @@
 #include "realizador.h"
-#include "../estado_nivel.h"
 #include "../general.h"
 #include "../log_init.h"
+#include "modelo_amplio.h"
 #include <cassert>
 
 using NuevaFase = std::optional<FaseNivel>;
 
-Realizador::Realizador(Estado &estado) : estado(estado) {}
+Realizador::Realizador(ModeloAmplio &modelo_amplio)
+    : modelo_amplio(modelo_amplio) {}
 
 /* Encarga una pizza a la cocina del tipo indicado */
 NuevaFase Realizador::encargar_pizza( //
     const dominio::TipoPizza tp
 ) {
-    assert(estado.fase_actual == FaseNivel::Activa);
+    assert(modelo_amplio.fase_actual == FaseNivel::Activa);
     LOG(info) << "Antes de anadir encargo" << std::endl;
-    estado.modelo_interno.anadir_encargo(tp);
+    modelo_amplio.modelo_interno.anadir_encargo(tp);
     LOG(info) << "Despues de anadir encargo" << std::endl;
     return std::nullopt;
 }
@@ -26,8 +27,9 @@ NuevaFase Realizador::encargar_pizza( //
 NuevaFase Realizador::despachar_pizza( //
     const dominio::TipoPizza tp
 ) {
-    assert(estado.fase_actual == FaseNivel::Activa);
-    const auto pedidos_cubiertos = estado.modelo_interno.despachar_pizza(tp);
+    assert(modelo_amplio.fase_actual == FaseNivel::Activa);
+    const auto pedidos_cubiertos =
+        modelo_amplio.modelo_interno.despachar_pizza(tp);
     if (pedidos_cubiertos) {
         return FaseNivel::EsperaAntesDeResultado;
     }
@@ -36,11 +38,11 @@ NuevaFase Realizador::despachar_pizza( //
 
 NuevaFase Realizador::alternar_grid() {
     assert(MODO_DESARROLLO);
-    estado.mostrando_grid = !estado.mostrando_grid;
+    modelo_amplio.mostrando_grid = !modelo_amplio.mostrando_grid;
     return std::nullopt;
 }
 
 NuevaFase Realizador::empezar() {
-    assert(estado.fase_actual == FaseNivel::MostrandoInstrucciones);
+    assert(modelo_amplio.fase_actual == FaseNivel::MostrandoInstrucciones);
     return FaseNivel::Activa;
 }

@@ -1,5 +1,5 @@
 #include "enlace_vista.h"
-#include "../estado_nivel.h"
+#include "../modelo_amplio/modelo_amplio.h"
 #include "../templates/helpers.h"
 #include "vista.h"
 #include <cassert>
@@ -56,11 +56,11 @@ void EnlaceVista::esconder_paneles() const {
 
 void EnlaceVista::actualizarIU(
     sf::RenderTarget &(target),        //
-    const Estado &estado,              //
+    const ModeloAmplio &modelo_amplio, //
     const sf::Time &tiempo_real_actual //
 ) {
     const auto activacion_botones =
-        impl::obtener_activacion_botones(estado.modelo_interno);
+        impl::obtener_activacion_botones(modelo_amplio.modelo_interno);
     vista->activar_botones_condicionalmente(activacion_botones);
-    vista->actualizarIU(target, estado, tiempo_real_actual);
+    vista->actualizarIU(target, modelo_amplio, tiempo_real_actual);
 }

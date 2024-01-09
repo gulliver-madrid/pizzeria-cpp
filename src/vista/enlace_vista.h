@@ -4,7 +4,7 @@
 #include <memory>
 
 struct ActivacionBotones;
-struct Estado;
+struct ModeloAmplio;
 struct ModeloInterno;
 struct Vista;
 
@@ -31,7 +31,7 @@ class EnlaceVista {
     void esconder_paneles() const;
     void actualizarIU(
         sf::RenderTarget &(target),        //
-        const Estado &estado,              //
+        const ModeloAmplio &,              //
         const sf::Time &tiempo_real_actual //
     );
 };

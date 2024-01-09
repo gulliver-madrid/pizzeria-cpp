@@ -1,6 +1,6 @@
 #include "vista.h"
-#include "../estado_nivel.h"
 #include "../general.h"
+#include "../modelo_amplio/modelo_amplio.h"
 #include "../templates/helpers.h"
 #include "basicos_vista.h"
 #include "grid.h"
@@ -33,14 +33,14 @@ namespace {
     void actualizar_etiquetas(
         sf::RenderTarget &(target),        //
         EtiquetasGenerales &etiquetas,     //
-        const Estado &estado,              //
+        const ModeloAmplio &modelo_amplio, //
         const sf::Time &tiempo_real_actual //
     ) {
         const modelo::PizzasAContadores &contadores =
-            estado.modelo_interno.control_pizzas.contadores;
+            modelo_amplio.modelo_interno.control_pizzas.contadores;
 
-        auto pedidos = estado.modelo_interno.control_pizzas.pedidos;
-        switch (estado.fase_actual) {
+        auto pedidos = modelo_amplio.modelo_interno.control_pizzas.pedidos;
+        switch (modelo_amplio.fase_actual) {
             case FaseNivel::MostrandoInstrucciones:
                 etiquetas.dibujar_instrucciones(target);
                 break;
@@ -62,7 +62,7 @@ namespace {
         }
 
         const auto tiempo_juego_actual =
-            estado.modelo_interno.obtener_tiempo_juego();
+            modelo_amplio.modelo_interno.obtener_tiempo_juego();
         etiquetas.actualizar_barra_estado(
             tiempo_real_actual, tiempo_juego_actual
         );
@@ -135,26 +135,26 @@ void Vista::setup(
  */
 void Vista::actualizarIU(              //
     sf::RenderTarget &(target),        //
-    const Estado &estado,              //
+    const ModeloAmplio &modelo_amplio, //
     const sf::Time &tiempo_real_actual //
 ) {
 
     // Limpia la target y empieza a pintar los componentes visuales
     target.clear(colores::COLOR_FONDO);
-    if (estado.mostrando_grid)
+    if (modelo_amplio.mostrando_grid)
         grid.draw(target, GRID_SIZE, GRID_TONE);
 
     if ( //
-        estado.fase_actual == FaseNivel::Activa ||
-        estado.fase_actual == FaseNivel::EsperaAntesDeResultado
+        modelo_amplio.fase_actual == FaseNivel::Activa ||
+        modelo_amplio.fase_actual == FaseNivel::EsperaAntesDeResultado
     ) {
         const auto preparacion =
-            estado.modelo_interno.obtener_estado_preparacion_pizzas();
+            modelo_amplio.modelo_interno.obtener_estado_preparacion_pizzas();
         _actualizar_paneles(preparacion);
         _dibujar_paneles(target);
     }
 
-    actualizar_etiquetas(target, etiquetas, estado, tiempo_real_actual);
+    actualizar_etiquetas(target, etiquetas, modelo_amplio, tiempo_real_actual);
     target.draw(botones);
 }
 

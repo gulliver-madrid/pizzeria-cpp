@@ -4,9 +4,9 @@
 
 - controlador_clicks.cpp:
     - controlador_clicks.h
-    - estado_nivel.h
     - general.h
     - globales.h
+    - modelo_amplio/modelo_amplio.h
     - vista/botones_app.h
 
 - controlador_clicks.h:
@@ -25,14 +25,6 @@
 
 - debug_sfml.cpp:
     - debug_sfml.h
-
-- estado_nivel.cpp:
-    - estado_nivel.h
-    - datos_nivel.h
-    - general.h
-
-- estado_nivel.h:
-    - modelo/modelo_interno.h
 
 - globales.cpp:
     - globales.h
@@ -92,8 +84,9 @@
 
 - modelo_amplio/aplicador.cpp:
     - modelo_amplio/aplicador.h
-    - estado_nivel.h
     - modelo_amplio/comandos.h
+    - modelo_amplio/modelo_amplio.h
+    - modelo_amplio/realizador.h
     - modelo_amplio/realizador_base.h
 
 - modelo_amplio/aplicador.h:
@@ -106,17 +99,16 @@
     - modelo_amplio/modelo_amplio.h
     - general.h
     - modelo_amplio/comandos.h
-    - modelo_amplio/realizador.h
 
 - modelo_amplio/modelo_amplio.h:
-    - estado_nivel.h
-    - modelo_amplio/aplicador.h
+    - modelo/datos_modelo_interno.h
+    - modelo/modelo_interno.h
 
 - modelo_amplio/realizador.cpp:
     - modelo_amplio/realizador.h
-    - estado_nivel.h
     - general.h
     - log_init.h
+    - modelo_amplio/modelo_amplio.h
 
 - modelo_amplio/realizador.h:
     - modelo_amplio/realizador_base.h
@@ -128,9 +120,10 @@
     - nivel.h
     - controlador_clicks.h
     - datos_nivel.h
-    - estado_nivel.h
     - general.h
     - log_init.h
+    - modelo_amplio/aplicador.h
+    - modelo_amplio/modelo_amplio.h
     - vista/enlace_vista.h
     - vista/vista.h
 
@@ -161,6 +154,7 @@
 - tests/modelo/test_modelo_amplio.cpp:
     - datos_nivel.h
     - general.h
+    - modelo_amplio/aplicador.h
     - modelo_amplio/comandos.h
     - modelo_amplio/modelo_amplio.h
 
@@ -250,7 +244,7 @@
 
 - vista/enlace_vista.cpp:
     - vista/enlace_vista.h
-    - estado_nivel.h
+    - modelo_amplio/modelo_amplio.h
     - templates/helpers.h
     - vista/vista.h
 
@@ -334,8 +328,8 @@
 
 - vista/vista.cpp:
     - vista/vista.h
-    - estado_nivel.h
     - general.h
+    - modelo_amplio/modelo_amplio.h
     - templates/helpers.h
     - vista/basicos_vista.h
     - vista/grid.h

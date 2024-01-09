@@ -1,9 +1,10 @@
 #include "nivel.h"
 #include "controlador_clicks.h"
 #include "datos_nivel.h"
-#include "estado_nivel.h"
 #include "general.h"
 #include "log_init.h"
+#include "modelo_amplio/aplicador.h"
+#include "modelo_amplio/modelo_amplio.h"
 #include "vista/enlace_vista.h"
 #include "vista/vista.h"
 #include <SFML/System/Time.hpp>
@@ -20,13 +21,13 @@ namespace tiempos {
 
 void mostrar_resultado(
     const Globales &globales,        //
-    Estado &estado,                  //
+    ModeloAmplio &modelo_amplio,     //
     const EnlaceVista &enlace_vista, //
     Timer &timer_fin_nivel,          //
     sf::Sound &sound                 //
 ) {
     // Pasa a fase MostrandoResultado
-    estado.fase_actual = FaseNivel::MostrandoResultado;
+    modelo_amplio.fase_actual = FaseNivel::MostrandoResultado;
     if (globales.success_buffer) {
         sound.setBuffer(globales.success_buffer.value());
         sound.play();
@@ -49,9 +50,10 @@ std::optional<FaseNivel> Nivel::_procesa_click(
     if (!comando) {
         return std::nullopt;
     }
-    assert(modelo_amplio.has_value());
+    assert(modelo_amplio_opcional.has_value());
     LOG(info) << "Antes de aplicar comando" << std::endl;
-    auto nueva_fase = modelo_amplio.value().aplica_comando(comando.value());
+    auto nueva_fase =
+        aplica_comando(modelo_amplio_opcional.value(), comando.value());
     LOG(info) << "Comando aplicado" << std::endl;
     return nueva_fase;
 }
@@ -77,7 +79,7 @@ EnlaceVista Nivel::_crear_enlace_vista( //
  * en caso de que debiera cambiar.
  */
 std::optional<FaseNivel> Nivel::_procesarEvento(
-    sf::Event evento, const BotonesApp &botones, Estado &estado
+    sf::Event evento, const BotonesApp &botones, ModeloAmplio &modelo_amplio
 ) {
     auto &ventana = globales.window;
     std::optional<FaseNivel> siguiente_fase;
@@ -96,7 +98,7 @@ std::optional<FaseNivel> Nivel::_procesarEvento(
             break;
         case sf::Event::MouseButtonPressed:
             LOG(info) << "Antes de procesar click" << std::endl;
-            return _procesa_click(botones, estado.fase_actual);
+            return _procesa_click(botones, modelo_amplio.fase_actual);
         default:
             LOG(info) << "Evento ignorado" << std::endl;
             LOG(info) << "Tipo de evento: " << evento.type << std::endl;
@@ -157,16 +159,17 @@ Nivel::Nivel(
 }
 
 AccionGeneral Nivel::ejecutar() {
-    modelo_amplio.emplace(ModeloAmplio{datos_nivel});
-    assert(modelo_amplio.has_value());
-    auto &estado = modelo_amplio.value().estado;
-    assert(estado.establecido);
-    auto &control_pizzas = estado.modelo_interno.control_pizzas;
+    modelo_amplio_opcional.emplace(ModeloAmplio{datos_nivel.datos_modelo_interno
+    });
+    assert(modelo_amplio_opcional.has_value());
+    auto &modelo_amplio = modelo_amplio_opcional.value();
+    assert(modelo_amplio.establecido);
+    auto &control_pizzas = modelo_amplio.modelo_interno.control_pizzas;
     auto &contadores = control_pizzas.contadores;
 
     auto enlace_vista = _crear_enlace_vista(control_pizzas);
     assert(!contadores.empty());
-    auto &gestor_tiempo_juego = estado.modelo_interno.gestor_tiempo;
+    auto &gestor_tiempo_juego = modelo_amplio.modelo_interno.gestor_tiempo;
 
     Timer timer_espera_antes_de_resultado;
     Timer timer_fin_nivel;
@@ -177,17 +180,17 @@ AccionGeneral Nivel::ejecutar() {
         while (globales.window.pollEvent(event)) {
             LOG(info) << "Antes de procesar evento" << std::endl;
             auto siguiente_fase = _procesarEvento( //
-                event, enlace_vista.vista->botones, estado
+                event, enlace_vista.vista->botones, modelo_amplio
             );
             LOG(info) << "Despues de procesar evento" << std::endl;
             if (!siguiente_fase.has_value()) {
                 continue;
             }
             // Cambio de fase reciente
-            const auto fase_previa = estado.fase_actual;
-            estado.fase_actual = siguiente_fase.value();
+            const auto fase_previa = modelo_amplio.fase_actual;
+            modelo_amplio.fase_actual = siguiente_fase.value();
             const auto accion = _procesa_cambio_de_fase(
-                estado.fase_actual,              //
+                modelo_amplio.fase_actual,       //
                 enlace_vista,                    //
                 timer_espera_antes_de_resultado, //
                 fase_previa,                     //
@@ -197,14 +200,15 @@ AccionGeneral Nivel::ejecutar() {
                 return accion.value();
             }
         }
-        estado.modelo_interno.evaluar_preparacion_pizzas();
+        modelo_amplio.modelo_interno.evaluar_preparacion_pizzas();
 
         // En funcion de la fase actual (no necesariamente recien iniciada)
-        switch (estado.fase_actual) {
+        switch (modelo_amplio.fase_actual) {
             case FaseNivel::EsperaAntesDeResultado:
                 if (timer_espera_antes_de_resultado.termino()) {
                     mostrar_resultado(
-                        globales, estado, enlace_vista, timer_fin_nivel, sound
+                        globales, modelo_amplio, enlace_vista, timer_fin_nivel,
+                        sound
                     );
                 }
                 break;
@@ -218,7 +222,9 @@ AccionGeneral Nivel::ejecutar() {
         const auto transcurrido = tiempo_real_actual - previo;
         gestor_tiempo_juego.tick(transcurrido);
         previo = tiempo_real_actual;
-        enlace_vista.actualizarIU(globales.window, estado, tiempo_real_actual);
+        enlace_vista.actualizarIU(
+            globales.window, modelo_amplio, tiempo_real_actual
+        );
         globales.window.display();
     }
     assert(false); // No deberiamos llegar aqui

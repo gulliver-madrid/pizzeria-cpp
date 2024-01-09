@@ -5,6 +5,7 @@
 
 class Comando;
 class RealizadorBase;
+struct ModeloAmplio;
 
 namespace aplicador {
     /*
@@ -16,3 +17,8 @@ namespace aplicador {
         const Comando &comando                //
     );
 } // namespace aplicador
+
+std::optional<FaseNivel> aplica_comando(
+    ModeloAmplio &, //
+    const Comando & //
+);

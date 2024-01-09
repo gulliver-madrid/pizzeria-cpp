@@ -1,7 +1,7 @@
 #include "controlador_clicks.h"
-#include "estado_nivel.h"
 #include "general.h"
 #include "globales.h"
+#include "modelo_amplio/modelo_amplio.h"
 #include "vista/botones_app.h"
 
 std::optional<Comando> ControladorClicks::genera_comando(

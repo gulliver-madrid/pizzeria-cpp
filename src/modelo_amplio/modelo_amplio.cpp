@@ -1,19 +1,13 @@
 #include "modelo_amplio.h"
 #include "../general.h"
 #include "comandos.h"
-#include "realizador.h"
 
-ModeloAmplio::ModeloAmplio(const DatosNivel &datos_nivel)
-    : estado(FaseNivel::MostrandoInstrucciones, datos_nivel) {}
-
-FaseNivel ModeloAmplio::get_fase_actual() { //
-    return estado.fase_actual;
+ModeloAmplio::ModeloAmplio(const DatosModeloInterno &datos_modelo_interno)
+    : fase_actual(FaseNivel::MostrandoInstrucciones),
+      modelo_interno(datos_modelo_interno) {
+    establecido = true;
 }
 
-std::optional<FaseNivel> ModeloAmplio::aplica_comando( //
-    const Comando &comando                             //
-) {
-    Realizador realizador = {estado};
-    auto result = aplicador::aplicar_comando(realizador, comando);
-    return result;
+FaseNivel ModeloAmplio::get_fase_actual() { //
+    return fase_actual;
 }

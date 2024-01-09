@@ -8,7 +8,7 @@
 enum class FaseNivel;
 struct BotonConTexto;
 struct BotonesApp;
-struct Estado;
+struct ModeloAmplio;
 struct Globales;
 struct RealizadorBase;
 

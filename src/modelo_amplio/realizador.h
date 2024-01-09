@@ -2,16 +2,16 @@
 
 #include "realizador_base.h"
 
-struct Estado;
+struct ModeloAmplio;
 enum class FaseNivel;
 
 class Realizador : public RealizadorBase {
 
   private:
-    Estado &estado;
+    ModeloAmplio &modelo_amplio;
 
   public:
-    Realizador(Estado &estado);
+    Realizador(ModeloAmplio &modelo_amplio);
 
     /* Encarga una pizza a la cocina del tipo indicado */
     NuevaFase encargar_pizza( //

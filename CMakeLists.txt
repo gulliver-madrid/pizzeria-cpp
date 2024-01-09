@@ -34,7 +34,6 @@ add_executable(pizzeria
     src/controlador_clicks.cpp
     src/datos_niveles.cpp
     src/debug_sfml.cpp
-    src/estado_nivel.cpp
     src/globales.cpp
     src/juego.cpp
     src/modelo/control_pizzas.cpp
@@ -118,7 +117,6 @@ add_executable(
     src/controlador_clicks.cpp
     src/datos_niveles.cpp
     src/debug_sfml.cpp
-    src/estado_nivel.cpp
     src/globales.cpp
     src/juego.cpp
     src/modelo/control_pizzas.cpp

@@ -1,6 +1,7 @@
 #include "aplicador.h"
-#include "../estado_nivel.h"
 #include "comandos.h"
+#include "modelo_amplio.h"
+#include "realizador.h"
 #include "realizador_base.h"
 #include <variant>
 
@@ -38,3 +39,12 @@ std::optional<FaseNivel> aplicador::aplicar_comando( //
 }
 #undef SWITCH
 #undef CASE
+
+std::optional<FaseNivel> aplica_comando( //
+    ModeloAmplio &modelo_amplio,
+    const Comando &comando //
+) {
+    Realizador realizador = {modelo_amplio};
+    auto result = aplicador::aplicar_comando(realizador, comando);
+    return result;
+}

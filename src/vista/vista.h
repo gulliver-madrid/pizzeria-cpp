@@ -5,7 +5,7 @@
 #include "etiquetas/etiquetas.h"
 #include "paneles.h"
 
-struct Estado;
+struct ModeloAmplio;
 struct Grid;
 
 namespace impl {
@@ -48,7 +48,7 @@ class Vista : public ObjetoConFont {
 
     void actualizarIU(
         sf::RenderTarget &,                //
-        const Estado &,                    //
+        const ModeloAmplio &,                    //
         const sf::Time &tiempo_real_actual //
     );
     void mostrar_elementos_fase_activa();
