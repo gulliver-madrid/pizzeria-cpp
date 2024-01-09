@@ -110,13 +110,13 @@ namespace impl {
 ///// Vista (private) /////
 
 // TODO: diferenciar entre actualizacion de datos y dibujado
-void Vista::_actualizar_y_dibujar_paneles(
-    sf::RenderTarget &(target),                //
-    PanelesCompletos &paneles_completos,       //
-    const EstadoPreparacionPizzas &preparacion //
+void Vista::_actualizar_paneles(const EstadoPreparacionPizzas &preparacion //
 ) {
     // TODO: usar el sistema nativo de dibujo de SFML.
     paneles_completos.actualizar(preparacion);
+}
+void Vista::_dibujar_paneles(sf::RenderTarget &(target)) const {
+    // TODO: usar el sistema nativo de dibujo de SFML.
     target.draw(paneles_completos);
 }
 
@@ -171,7 +171,8 @@ void Vista::actualizarIU(              //
     ) {
         const auto preparacion =
             estado.estado_modelo.obtener_estado_preparacion_pizzas();
-        _actualizar_y_dibujar_paneles(target, paneles_completos, preparacion);
+        _actualizar_paneles(preparacion);
+        _dibujar_paneles(target);
     }
 
     actualizar_etiquetas(target, etiquetas, estado, tiempo_real_actual);

@@ -20,11 +20,8 @@ class Vista : public ObjetoConFont {
   private:
     const dominio::TiposDePizza &tp_disponibles;
 
-    void _actualizar_y_dibujar_paneles(
-        sf::RenderTarget &(target),                //
-        PanelesCompletos &paneles_completos,       //
-        const EstadoPreparacionPizzas &preparacion //
-    );
+    void _actualizar_paneles(const EstadoPreparacionPizzas &);
+    void _dibujar_paneles(sf::RenderTarget &(target)) const;
 
   public:
     BotonesApp botones;
