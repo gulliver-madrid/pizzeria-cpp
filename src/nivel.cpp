@@ -44,14 +44,14 @@ std::optional<FaseNivel> Nivel::_procesa_click(
     const auto comando = controlador_clicks->procesa_click(
         globales, botones, fase_actual, mouse_pos
     );
-    std::cout << "click procesado" << std::endl;
+    LOG(info) << "Click procesado" << std::endl;
     if (!comando) {
         return std::nullopt;
     }
     assert(modelo_amplio.has_value());
-    std::cout << "Antes de aplicar comando" << std::endl;
+    LOG(info) << "Antes de aplicar comando" << std::endl;
     auto nueva_fase = modelo_amplio.value().aplica_comando(comando.value());
-    std::cout << "comando aplicado" << std::endl;
+    LOG(info) << "Comando aplicado" << std::endl;
     return nueva_fase;
 }
 
@@ -94,9 +94,11 @@ std::optional<FaseNivel> Nivel::_procesarEvento(
             }
             break;
         case sf::Event::MouseButtonPressed:
-            std::cout << "antes d e procesar click" << std::endl;
+            LOG(info) << "Antes de procesar click" << std::endl;
             return _procesa_click(botones, estado.fase_actual);
         default:
+            LOG(info) << "Evento ignorado" << std::endl;
+            LOG(info) << "Tipo de evento: " << evento.type << std::endl;
             /* Eventos ignorados */
             break;
     }
@@ -172,11 +174,11 @@ AccionGeneral Nivel::ejecutar() {
     while (globales.window.isOpen()) {
         sf::Event event;
         while (globales.window.pollEvent(event)) {
-            std::cout << "antes de procesar evento" << std::endl;
+            LOG(info) << "Antes de procesar evento" << std::endl;
             auto siguiente_fase = _procesarEvento( //
                 event, enlace_vista.vista->botones, estado
             );
-            std::cout << "despues de procesar evento" << std::endl;
+            LOG(info) << "Despues de procesar evento" << std::endl;
             if (!siguiente_fase.has_value()) {
                 continue;
             }
