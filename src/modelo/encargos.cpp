@@ -1,4 +1,5 @@
 #include "encargos.h"
+#include "../shared.h"
 #include "../templates/helpers.h"
 #include "dominio.h"
 #include <cassert>
@@ -21,6 +22,11 @@ const std::map<TipoPizza, sf::Time> tiempos_preparacion = {
 TiempoPreparacion calcular_tiempo_preparacion( //
     const TipoPizza tp, const sf::Time &tiempo_actual
 ) {
+    if (!has_key(tiempos_preparacion, tp)) {
+        LOG(warning
+        ) << "No hay un tiempo de preparacion definido para el tipo de pizza "
+          << dominio::to_string(tp) << ". Usando default.";
+    }
     auto total = get_or(tiempos_preparacion, tp, default_time);
     return TiempoPreparacion{tiempo_actual + total, total};
 }

@@ -35,3 +35,7 @@ struct EstadoPreparacionPizzaIndividual {
     int porcentaje;
     dominio::TipoPizza tipo;
 };
+
+namespace dominio {
+    std::string to_string(TipoPizza tp);
+} // namespace dominio

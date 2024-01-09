@@ -1,4 +1,5 @@
 #include "dominio.h"
+#include "../templates/helpers.h"
 
 using dominio::TipoPizza;
 
@@ -13,3 +14,8 @@ const std::map<TipoPizza, std::string> tipo_pizza_to_string = {
     PIZZA_TYPES(MAP_OP)
 #undef MAP_OP
 };
+
+std::string dominio::to_string(TipoPizza tp) {
+    const auto default_value = std::string("tipo de pizza desconocido");
+    return get_or(tipo_pizza_to_string, tp, default_value);
+}
