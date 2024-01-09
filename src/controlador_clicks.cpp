@@ -1,5 +1,5 @@
 #include "controlador_clicks.h"
-#include "general.h"
+#include "fase_nivel.h"
 #include "globales.h"
 #include "modelo_amplio/modelo_amplio.h"
 #include "vista/botones_app.h"

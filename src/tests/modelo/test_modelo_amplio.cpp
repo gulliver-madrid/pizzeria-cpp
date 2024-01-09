@@ -1,6 +1,6 @@
 
 #include "../../datos_nivel.h"
-#include "../../general.h"
+#include "../../fase_nivel.h"
 #include "../../modelo_amplio/aplicador.h"
 #include "../../modelo_amplio/comandos.h"
 #include "../../modelo_amplio/modelo_amplio.h"

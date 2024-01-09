@@ -1,5 +1,5 @@
 #include "vista.h"
-#include "../general.h"
+#include "../fase_nivel.h"
 #include "../modelo_amplio/modelo_amplio.h"
 #include "../templates/helpers.h"
 #include "basicos_vista.h"

@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../../general.h"
 #include "../../modelo/control_pizzas.h"
 #include "../vista_shared.h"
 #include <SFML/Graphics/RectangleShape.hpp>

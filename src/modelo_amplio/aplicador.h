@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../general.h"
 #include <optional>
 
+enum class FaseNivel;
 class Comando;
 class RealizadorBase;
 struct ModeloAmplio;

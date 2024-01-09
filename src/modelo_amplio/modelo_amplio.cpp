@@ -1,5 +1,5 @@
 #include "modelo_amplio.h"
-#include "../general.h"
+#include "../fase_nivel.h"
 #include "comandos.h"
 
 ModeloAmplio::ModeloAmplio(const DatosModeloInterno &datos_modelo_interno)

@@ -1,7 +1,7 @@
 #include "nivel.h"
 #include "controlador_clicks.h"
 #include "datos_nivel.h"
-#include "general.h"
+#include "fase_nivel.h"
 #include "log_init.h"
 #include "modelo_amplio/aplicador.h"
 #include "modelo_amplio/modelo_amplio.h"

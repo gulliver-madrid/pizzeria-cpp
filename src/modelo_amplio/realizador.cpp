@@ -1,5 +1,5 @@
 #include "realizador.h"
-#include "../general.h"
+#include "../fase_nivel.h"
 #include "../log_init.h"
 #include "modelo_amplio.h"
 #include <cassert>

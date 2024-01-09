@@ -1,4 +1,5 @@
 #include "aplicador.h"
+#include "../fase_nivel.h"
 #include "comandos.h"
 #include "modelo_amplio.h"
 #include "realizador.h"

@@ -4,7 +4,7 @@
 
 - controlador_clicks.cpp:
     - controlador_clicks.h
-    - general.h
+    - fase_nivel.h
     - globales.h
     - modelo_amplio/modelo_amplio.h
     - vista/botones_app.h
@@ -84,20 +84,18 @@
 
 - modelo_amplio/aplicador.cpp:
     - modelo_amplio/aplicador.h
+    - fase_nivel.h
     - modelo_amplio/comandos.h
     - modelo_amplio/modelo_amplio.h
     - modelo_amplio/realizador.h
     - modelo_amplio/realizador_base.h
-
-- modelo_amplio/aplicador.h:
-    - general.h
 
 - modelo_amplio/comandos.h:
     - modelo/dominio.h
 
 - modelo_amplio/modelo_amplio.cpp:
     - modelo_amplio/modelo_amplio.h
-    - general.h
+    - fase_nivel.h
     - modelo_amplio/comandos.h
 
 - modelo_amplio/modelo_amplio.h:
@@ -106,7 +104,7 @@
 
 - modelo_amplio/realizador.cpp:
     - modelo_amplio/realizador.h
-    - general.h
+    - fase_nivel.h
     - log_init.h
     - modelo_amplio/modelo_amplio.h
 
@@ -120,7 +118,7 @@
     - nivel.h
     - controlador_clicks.h
     - datos_nivel.h
-    - general.h
+    - fase_nivel.h
     - log_init.h
     - modelo_amplio/aplicador.h
     - modelo_amplio/modelo_amplio.h
@@ -153,7 +151,7 @@
 
 - tests/modelo/test_modelo_amplio.cpp:
     - datos_nivel.h
-    - general.h
+    - fase_nivel.h
     - modelo_amplio/aplicador.h
     - modelo_amplio/comandos.h
     - modelo_amplio/modelo_amplio.h
@@ -284,7 +282,6 @@
     - vista/presentador.h
 
 - vista/etiquetas/etiquetas_contadores.h:
-    - general.h
     - modelo/control_pizzas.h
     - vista/vista_shared.h
 
@@ -328,7 +325,7 @@
 
 - vista/vista.cpp:
     - vista/vista.h
-    - general.h
+    - fase_nivel.h
     - modelo_amplio/modelo_amplio.h
     - templates/helpers.h
     - vista/basicos_vista.h
