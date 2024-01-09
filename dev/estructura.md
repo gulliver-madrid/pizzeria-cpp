@@ -1,5 +1,6 @@
 - main.cpp:
     - juego.h
+    - log_init.h
 
 - controlador_clicks.cpp:
     - controlador_clicks.h
@@ -46,6 +47,9 @@
     - textos.h
     - vista/grid.h
 
+- log_init.cpp:
+    - log_init.h
+
 - modelo/control_pizzas.cpp:
     - modelo/control_pizzas.h
     - templates/helpers.h
@@ -56,14 +60,16 @@
 
 - modelo/datos_modelo_interno.h:
     - modelo/control_pizzas.h
-    - modelo/encargos.h
 
 - modelo/dominio.cpp:
     - modelo/dominio.h
+    - templates/helpers.h
 
 - modelo/encargos.cpp:
     - modelo/encargos.h
+    - log_init.h
     - modelo/dominio.h
+    - templates/helpers.h
 
 - modelo/encargos.h:
     - tiempo.h
@@ -110,6 +116,7 @@
     - modelo_amplio/realizador.h
     - estado_nivel.h
     - general.h
+    - log_init.h
 
 - modelo_amplio/realizador.h:
     - modelo_amplio/realizador_base.h
@@ -123,6 +130,7 @@
     - datos_nivel.h
     - estado_nivel.h
     - general.h
+    - log_init.h
     - vista/enlace_vista.h
     - vista/vista.h
 
@@ -160,8 +168,11 @@
     - vista/cadenas.h
 
 - tests/test_presentador.cpp:
+    - modelo/datos_modelo_interno.h
     - modelo/dominio.h
+    - modelo/estado_modelo.h
     - modelo/modelo.h
+    - vista/enlace_vista.h
     - vista/presentador.h
     - vista/vista.h
 
@@ -239,6 +250,8 @@
 
 - vista/enlace_vista.cpp:
     - vista/enlace_vista.h
+    - estado_nivel.h
+    - templates/helpers.h
     - vista/vista.h
 
 - vista/etiquetas/etiquetas.cpp:
@@ -317,11 +330,13 @@
     - vista/presentador.h
     - modelo/dominio.h
     - modelo/modelo.h
+    - templates/helpers.h
 
 - vista/vista.cpp:
     - vista/vista.h
     - estado_nivel.h
     - general.h
+    - templates/helpers.h
     - vista/basicos_vista.h
     - vista/grid.h
     - vista/vista_data.h
@@ -334,3 +349,4 @@
 
 - vista/vista_shared.h:
     - modelo/dominio.h
+
