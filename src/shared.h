@@ -1,8 +1,6 @@
 #pragma once
 
 #include <cassert>
-#include <tuple>
-#include <vector>
 
 namespace sf {
     class Font;
