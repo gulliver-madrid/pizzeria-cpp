@@ -1,3 +1,4 @@
+#include "demos/boost_log.h"
 #include "demos/demo_nivel.h"
 #include "demos/map.h"
 #include "demos/min_ex.h"
@@ -6,6 +7,7 @@
 #include "demos/visual.h"
 #include "demos/visual_textos.h"
 #include "juego.h"
+#include "shared.h"
 #include <cassert>
 #include <iostream>
 #include <map>
@@ -13,6 +15,7 @@
 #define USER_ERROR 1
 
 enum class AppNombrada {
+    Boost,
     Juego,
     Nivel,
     Visual,
@@ -26,6 +29,7 @@ enum class AppNombrada {
 
 const std::map<std::string, AppNombrada> cadena_to_app_nombrada = {
     {"", AppNombrada::Juego},          //
+    {"boost-log", AppNombrada::Boost}, //
     {"nivel", AppNombrada::Nivel},     //
     {"visual", AppNombrada::Visual},   //
     {"textos", AppNombrada::Textos},   //
@@ -61,6 +65,9 @@ int _main(int argc, char *argv[]) {
     switch (app_nombrada) {
         case AppNombrada::Juego:
             return juego();
+            break;
+        case AppNombrada::Boost:
+            return demo_boost_log();
             break;
         case AppNombrada::Nivel:
             {
@@ -107,6 +114,7 @@ int _main(int argc, char *argv[]) {
 }
 
 int main(int argc, char *argv[]) {
+    init_log();
     if (MODO_DESARROLLO) {
 
         int result;

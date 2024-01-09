@@ -3,6 +3,10 @@ project(pizzeria LANGUAGES CXX)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
+cmake_policy(SET CMP0144 NEW)
+
+
+# SFML
 include(FetchContent)
 FetchContent_Declare(SFML
     GIT_REPOSITORY https://github.com/SFML/SFML.git
@@ -17,6 +21,13 @@ FetchContent_Declare(
     GIT_TAG        v1.14.0
 )
 FetchContent_MakeAvailable(googletest)
+
+# Boost
+set(BOOST_ROOT $ENV{BOOST_ROOT})
+set(BOOST_LIBRARYDIR "$ENV{BOOST_ROOT}/stage/lib")
+find_package(Boost 1.82 REQUIRED COMPONENTS log)
+include_directories( ${Boost_INCLUDE_DIRS} )
+link_directories(${BOOST_LIBRARYDIR})
 
 
 add_executable(pizzeria
@@ -39,6 +50,7 @@ add_executable(pizzeria
     src/setup_juego.cpp
     src/textos.cpp
     src/tiempo.cpp
+    src/shared.cpp
     src/vista/barras_progreso.cpp
     src/vista/botones_app.cpp
     src/vista/cadenas.cpp
@@ -57,6 +69,7 @@ add_executable(pizzeria
     src/vista/presentador.cpp
     src/vista/vista.cpp
     src/vista/basicos_vista.cpp
+    src/demos/boost_log.cpp
     src/demos/demo_nivel.cpp
     src/demos/map.cpp
     src/demos/prueba.cpp
@@ -64,7 +77,7 @@ add_executable(pizzeria
     src/demos/visual.cpp
     src/demos/visual_textos.cpp
 )
-target_link_libraries(pizzeria PRIVATE sfml-graphics sfml-audio)
+target_link_libraries(pizzeria PRIVATE sfml-graphics sfml-audio Boost::log)
 target_compile_features(pizzeria PRIVATE cxx_std_17)
 
 # Tratar los warnings como errores en modo Debug.
@@ -117,6 +130,7 @@ add_executable(
     src/setup_juego.cpp
     src/textos.cpp
     src/tiempo.cpp
+    src/shared.cpp
     src/vista/barras_progreso.cpp
     src/vista/botones_app.cpp
     src/vista/cadenas.cpp
@@ -135,6 +149,7 @@ add_executable(
     src/vista/presentador.cpp
     src/vista/vista.cpp
     src/vista/basicos_vista.cpp
+    src/demos/boost_log.cpp
     src/demos/demo_nivel.cpp
     src/demos/map.cpp
     src/demos/prueba.cpp
@@ -142,7 +157,7 @@ add_executable(
     src/demos/visual.cpp
     src/demos/visual_textos.cpp
 )
-target_link_libraries(runUnitTests PRIVATE sfml-graphics sfml-audio )
+target_link_libraries(runUnitTests PRIVATE sfml-graphics sfml-audio Boost::log)
 target_link_libraries(runUnitTests PUBLIC gtest gtest_main)
 target_compile_features(runUnitTests PRIVATE cxx_std_17)
 add_test(NAME runUnitTests COMMAND runUnitTests)
