@@ -1,5 +1,8 @@
+#include "../modelo/datos_nivel_para_modelo.h"
 #include "../modelo/dominio.h"
+#include "../modelo/estado_modelo.h"
 #include "../modelo/modelo.h"
+#include "../vista/enlace_vista.h"
 #include "../vista/presentador.h"
 #include "../vista/vista.h"
 #include <gtest/gtest.h>
@@ -28,4 +31,17 @@ TEST(Presentador, ContadoresToPreparadasString) {
     contadores.at(TipoPizza::Margarita).preparadas++;
     auto vista_preparadas = impl::contadores_to_preparadas(contadores);
     ASSERT_EQ(vista_preparadas.at(TipoPizza::Margarita), "Margarita: 1");
+}
+
+TEST(Presentador, ObtenerActivacionBotonesSiPedidosEstaVacio) {
+    // No habria botones despachar al no haber pedidos
+    // que hagan referencia a ningun tipo de pizza
+    // Y cualquier boton encargar estaria activo al no haber
+    // demasiadas pizzas en el area de preparadas
+    DatosNivelParaModelo datos_nivel_para_modelo({});
+    EstadoModelo estado_modelo(datos_nivel_para_modelo);
+    const auto activacion_botones =
+        impl::obtener_activacion_botones(estado_modelo);
+    ASSERT_TRUE(activacion_botones.despachar.empty());
+    ASSERT_EQ(activacion_botones.encargar, true);
 }

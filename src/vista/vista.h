@@ -14,6 +14,12 @@ namespace impl {
     );
 } // namespace impl
 
+// ActivacionBotones
+struct ActivacionBotones {
+    bool encargar;
+    std::map<dominio::TipoPizza, bool> despachar;
+};
+
 ///// Vista /////
 
 class Vista : public ObjetoConFont {
@@ -47,4 +53,7 @@ class Vista : public ObjetoConFont {
     );
     void mostrar_elementos_fase_activa();
     void esconder_botones_gestion_pizzeria();
+    void activar_botones_condicionalmente(
+        const ActivacionBotones &activacion_botones //
+    );
 };

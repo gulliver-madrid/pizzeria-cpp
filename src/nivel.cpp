@@ -164,7 +164,7 @@ AccionGeneral Nivel::ejecutar() {
     auto &control_pizzas = estado.estado_modelo.control_pizzas;
     auto &contadores = control_pizzas.contadores;
 
-    const auto enlace_vista = _crear_enlace_vista(control_pizzas);
+    auto enlace_vista = _crear_enlace_vista(control_pizzas);
     assert(!contadores.empty());
     auto &gestor_tiempo_juego = estado.estado_modelo.gestor_tiempo;
 

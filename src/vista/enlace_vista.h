@@ -3,12 +3,20 @@
 #include <SFML/System/Time.hpp>
 #include <memory>
 
+struct ActivacionBotones;
 struct Estado;
+struct EstadoModelo;
 struct Vista;
 
 namespace sf {
     class RenderTarget;
 } // namespace sf
+
+namespace impl {
+    ActivacionBotones obtener_activacion_botones( //
+        const EstadoModelo &estado_modelo
+    );
+}
 
 /* Debe ser un intermediario entre el modelo y la vista */
 class EnlaceVista {
@@ -22,8 +30,8 @@ class EnlaceVista {
     void on_cambio_a_fase_espera_antes_de_resultado() const;
     void esconder_paneles() const;
     void actualizarIU(
-        sf::RenderTarget &(target),         //
+        sf::RenderTarget &(target),        //
         const Estado &estado,              //
         const sf::Time &tiempo_real_actual //
-    ) const;
+    );
 };

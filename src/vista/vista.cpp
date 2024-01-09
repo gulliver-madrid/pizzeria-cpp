@@ -16,39 +16,16 @@ using dominio::TiposDePizza;
 
 namespace {
     /*
-     * Activa o desactiva cada boton despachar dependiendo de si hay pizzas
-     * preparadas de ese tipo.
+     * Activa o desactiva cada boton despachar segun proceda.
      */
-    void activar_botones_despachar_si_hay_preparadas(
+    void activar_botones_despachar_si_procede(
         TipoPizzaToBoton &botones_despachar,
-        const modelo::PizzasAContadores &contadores
+        const ActivacionBotones &activacion_botones
     ) {
-        for (auto &[tp, contadores_tp] : contadores) {
+        for (auto &[tp, debe_estar_activo] : activacion_botones.despachar) {
             assert(has_key(botones_despachar, tp));
             auto &boton_despachar = botones_despachar.at(tp);
-            boton_despachar.activacion_condicional(
-                contadores_tp.preparadas > 0
-            );
-        }
-    }
-
-    /* Actualiza el estado de los botones en funcion de varios factores */
-    void actualizar_estado_botones(BotonesApp &botones, const Estado &estado) {
-        const auto &control_pizzas = estado.estado_modelo.control_pizzas;
-        // Botones despachar
-        const modelo::PizzasAContadores &contadores = control_pizzas.contadores;
-        activar_botones_despachar_si_hay_preparadas(
-            botones.despachar, contadores
-        );
-
-        // Botones encargar
-        constexpr int maximo = modelo_info::MAXIMO_PIZZAS_EN_PREPARACION;
-        const int en_preparacion = estado.estado_modelo.encargos.total();
-        assert(en_preparacion <= maximo);
-        const bool se_pueden_preparar_mas = en_preparacion < maximo;
-
-        for (auto &[_, boton] : botones.encargar) {
-            boton.activacion_condicional(se_pueden_preparar_mas);
+            boton_despachar.activacion_condicional(debe_estar_activo);
         }
     }
 
@@ -161,7 +138,6 @@ void Vista::actualizarIU(              //
     const Estado &estado,              //
     const sf::Time &tiempo_real_actual //
 ) {
-    actualizar_estado_botones(botones, estado);
 
     // Limpia la target y empieza a pintar los componentes visuales
     target.clear(colores::COLOR_FONDO);
@@ -190,4 +166,13 @@ void Vista::mostrar_elementos_fase_activa() {
 
 void Vista::esconder_botones_gestion_pizzeria() { //
     botones.mostrar_botones_nivel(false);
+}
+
+void Vista::activar_botones_condicionalmente(
+    const ActivacionBotones &activacion_botones
+) {
+    activar_botones_despachar_si_procede(botones.despachar, activacion_botones);
+    for (auto &[_, boton] : botones.encargar) {
+        boton.activacion_condicional(activacion_botones.encargar);
+    }
 }
