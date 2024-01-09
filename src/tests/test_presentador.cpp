@@ -45,3 +45,26 @@ TEST(Presentador, ObtenerActivacionBotonesSiPedidosEstaVacio) {
     ASSERT_TRUE(activacion_botones.despachar.empty());
     ASSERT_EQ(activacion_botones.encargar, true);
 }
+
+TEST(Presentador, ObtenerActivacionBotonesSiHayDemasiadosPedidosSimultaneos) {
+    modelo::Pedidos pedidos = {Pedido({{TipoPizza::Margarita, 4}})};
+    DatosNivelParaModelo datos_nivel_para_modelo(pedidos);
+    EstadoModelo estado_modelo(datos_nivel_para_modelo);
+    auto activacion_botones = impl::obtener_activacion_botones(estado_modelo);
+    // hay un boton despachar desactivado
+    ASSERT_EQ(activacion_botones.despachar.size(), 1);
+    ASSERT_EQ(activacion_botones.despachar.at(TipoPizza::Margarita), false);
+
+    // Verifica el estado de activacion de los botones encargar
+    assert(modelo_info::MAXIMO_PIZZAS_EN_PREPARACION == 3);
+    for (int i = 0; i < 3; i++) {
+        // Mientras no llega al maximo el boton estara activado
+        activacion_botones = impl::obtener_activacion_botones(estado_modelo);
+        ASSERT_EQ(activacion_botones.encargar, true);
+        estado_modelo.anadir_encargo(TipoPizza::Margarita);
+    }
+
+    // Tras encargar la ultima no es posible encargar mas
+    activacion_botones = impl::obtener_activacion_botones(estado_modelo);
+    ASSERT_EQ(activacion_botones.encargar, false);
+}
