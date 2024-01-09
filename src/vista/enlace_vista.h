@@ -5,7 +5,7 @@
 
 struct ActivacionBotones;
 struct Estado;
-struct EstadoModelo;
+struct ModeloInterno;
 struct Vista;
 
 namespace sf {
@@ -14,7 +14,7 @@ namespace sf {
 
 namespace impl {
     ActivacionBotones obtener_activacion_botones( //
-        const EstadoModelo &estado_modelo
+        const ModeloInterno &modelo_interno
     );
 }
 

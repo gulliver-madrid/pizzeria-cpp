@@ -32,7 +32,7 @@
     - general.h
 
 - estado_nivel.h:
-    - modelo/estado_modelo.h
+    - modelo/modelo_interno.h
 
 - globales.cpp:
     - globales.h
@@ -74,14 +74,6 @@
 - modelo/encargos.h:
     - tiempo.h
 
-- modelo/estado_modelo.cpp:
-    - modelo/estado_modelo.h
-    - modelo/datos_modelo_interno.h
-
-- modelo/estado_modelo.h:
-    - modelo/control_pizzas.h
-    - modelo/encargos.h
-
 - modelo/modelo.cpp:
     - modelo/modelo.h
     - modelo/encargos.h
@@ -89,6 +81,14 @@
 
 - modelo/modelo.h:
     - modelo/dominio.h
+
+- modelo/modelo_interno.cpp:
+    - modelo/modelo_interno.h
+    - modelo/datos_modelo_interno.h
+
+- modelo/modelo_interno.h:
+    - modelo/control_pizzas.h
+    - modelo/encargos.h
 
 - modelo_amplio/aplicador.cpp:
     - modelo_amplio/aplicador.h
@@ -170,8 +170,8 @@
 - tests/test_presentador.cpp:
     - modelo/datos_modelo_interno.h
     - modelo/dominio.h
-    - modelo/estado_modelo.h
     - modelo/modelo.h
+    - modelo/modelo_interno.h
     - vista/enlace_vista.h
     - vista/presentador.h
     - vista/vista.h

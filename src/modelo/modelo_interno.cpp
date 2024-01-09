@@ -1,16 +1,16 @@
-#include "estado_modelo.h"
 #include "datos_modelo_interno.h"
+#include "modelo_interno.h"
 
-//////// EstadoModelo
+//////// ModeloInterno
 
-EstadoModelo::EstadoModelo(const DatosModeloInterno &datos_nivel)
+ModeloInterno::ModeloInterno(const DatosModeloInterno &datos_nivel)
     : control_pizzas(datos_nivel.pedidos) {
     assert(encargos.total() == 0);
     gestor_tiempo.reiniciar();
 }
 
 /* Encarga una pizza de tipo tp */
-void EstadoModelo::anadir_encargo(dominio::TipoPizza tp) {
+void ModeloInterno::anadir_encargo(dominio::TipoPizza tp) {
     auto encargo = EncargoACocina( //
         tp, gestor_tiempo.obtener_tiempo_juego()
     );
@@ -21,7 +21,7 @@ void EstadoModelo::anadir_encargo(dominio::TipoPizza tp) {
  * Despacha una pizza a los clientes del tipo indicado. Devuelve true si ya
  * se han cubierto todos los pedidos, y false en caso contrario.
  */
-bool EstadoModelo::despachar_pizza( //
+bool ModeloInterno::despachar_pizza( //
     const dominio::TipoPizza tp
 ) {
     control_pizzas.procesar_despacho(tp);
@@ -29,16 +29,16 @@ bool EstadoModelo::despachar_pizza( //
 }
 
 EstadoPreparacionPizzas
-EstadoModelo::obtener_estado_preparacion_pizzas() const {
+ModeloInterno::obtener_estado_preparacion_pizzas() const {
     const auto tiempo_actual = gestor_tiempo.obtener_tiempo_juego();
     return {encargos, tiempo_actual};
 }
 
-sf::Time EstadoModelo::obtener_tiempo_juego() const {
+sf::Time ModeloInterno::obtener_tiempo_juego() const {
     return gestor_tiempo.obtener_tiempo_juego();
 }
 
-void EstadoModelo::evaluar_preparacion_pizzas() {
+void ModeloInterno::evaluar_preparacion_pizzas() {
     int total_preparadas = control_pizzas.obtener_total_preparadas();
     int preparables = modelo_info::MAXIMO_PIZZAS_PREPARADAS - total_preparadas;
     if (preparables > 0) {

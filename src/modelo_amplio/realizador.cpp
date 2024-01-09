@@ -14,7 +14,7 @@ NuevaFase Realizador::encargar_pizza( //
 ) {
     assert(estado.fase_actual == FaseNivel::Activa);
     LOG(info) << "Antes de anadir encargo" << std::endl;
-    estado.estado_modelo.anadir_encargo(tp);
+    estado.modelo_interno.anadir_encargo(tp);
     LOG(info) << "Despues de anadir encargo" << std::endl;
     return std::nullopt;
 }
@@ -27,7 +27,7 @@ NuevaFase Realizador::despachar_pizza( //
     const dominio::TipoPizza tp
 ) {
     assert(estado.fase_actual == FaseNivel::Activa);
-    const auto pedidos_cubiertos = estado.estado_modelo.despachar_pizza(tp);
+    const auto pedidos_cubiertos = estado.modelo_interno.despachar_pizza(tp);
     if (pedidos_cubiertos) {
         return FaseNivel::EsperaAntesDeResultado;
     }

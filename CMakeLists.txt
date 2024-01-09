@@ -40,7 +40,7 @@ add_executable(pizzeria
     src/modelo/control_pizzas.cpp
     src/modelo/dominio.cpp
     src/modelo/encargos.cpp
-    src/modelo/estado_modelo.cpp
+    src/modelo/modelo_interno.cpp
     src/modelo/modelo.cpp
     src/modelo_amplio/aplicador.cpp
     src/modelo_amplio/modelo_amplio.cpp
@@ -124,7 +124,7 @@ add_executable(
     src/modelo/control_pizzas.cpp
     src/modelo/dominio.cpp
     src/modelo/encargos.cpp
-    src/modelo/estado_modelo.cpp
+    src/modelo/modelo_interno.cpp
     src/modelo/modelo.cpp
     src/modelo_amplio/aplicador.cpp
     src/modelo_amplio/modelo_amplio.cpp

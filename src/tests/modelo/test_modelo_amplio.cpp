@@ -32,5 +32,5 @@ TEST(ModeloAmplio, ModeloAmplioAplicaComandoEncargarPizza) {
     modelo_amplio.estado.fase_actual = FaseNivel::Activa;
     const std::optional<FaseNivel> result =
         modelo_amplio.aplica_comando(Comando::Encargar{TipoPizza::Margarita});
-    EXPECT_EQ(modelo_amplio.estado.estado_modelo.encargos.total(), 1);
+    EXPECT_EQ(modelo_amplio.estado.modelo_interno.encargos.total(), 1);
 }

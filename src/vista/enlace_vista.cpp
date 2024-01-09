@@ -23,9 +23,9 @@ namespace {
 } // namespace
 
 ActivacionBotones impl::obtener_activacion_botones( //
-    const EstadoModelo &estado_modelo
+    const ModeloInterno &modelo_interno
 ) {
-    const auto &control_pizzas = estado_modelo.control_pizzas;
+    const auto &control_pizzas = modelo_interno.control_pizzas;
     // Activacion botones despachar
     const modelo::PizzasAContadores &contadores = control_pizzas.contadores;
     ActivacionBotones activacion_botones;
@@ -35,7 +35,7 @@ ActivacionBotones impl::obtener_activacion_botones( //
 
     // Activacion botones encargar
     constexpr int maximo = modelo_info::MAXIMO_PIZZAS_EN_PREPARACION;
-    const int en_preparacion = estado_modelo.encargos.total();
+    const int en_preparacion = modelo_interno.encargos.total();
     assert(en_preparacion <= maximo);
     const bool se_pueden_preparar_mas = en_preparacion < maximo;
     activacion_botones.encargar = se_pueden_preparar_mas;
@@ -60,7 +60,7 @@ void EnlaceVista::actualizarIU(
     const sf::Time &tiempo_real_actual //
 ) {
     const auto activacion_botones =
-        impl::obtener_activacion_botones(estado.estado_modelo);
+        impl::obtener_activacion_botones(estado.modelo_interno);
     vista->activar_botones_condicionalmente(activacion_botones);
     vista->actualizarIU(target, estado, tiempo_real_actual);
 }

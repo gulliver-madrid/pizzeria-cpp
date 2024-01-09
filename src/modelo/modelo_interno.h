@@ -5,12 +5,12 @@
 
 struct DatosModeloInterno;
 
-struct EstadoModelo {
+struct ModeloInterno {
     GestorTiempoJuego gestor_tiempo;
     modelo::ControlPizzas control_pizzas;
     Encargos encargos;
 
-    EstadoModelo(const DatosModeloInterno &datos_nivel);
+    ModeloInterno(const DatosModeloInterno &datos_nivel);
     /* Encarga una pizza de tipo tp */
     void anadir_encargo(dominio::TipoPizza tp);
     /* Despacha una pizza del tipo indicado. */

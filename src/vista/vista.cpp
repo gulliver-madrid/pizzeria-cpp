@@ -37,9 +37,9 @@ namespace {
         const sf::Time &tiempo_real_actual //
     ) {
         const modelo::PizzasAContadores &contadores =
-            estado.estado_modelo.control_pizzas.contadores;
+            estado.modelo_interno.control_pizzas.contadores;
 
-        auto pedidos = estado.estado_modelo.control_pizzas.pedidos;
+        auto pedidos = estado.modelo_interno.control_pizzas.pedidos;
         switch (estado.fase_actual) {
             case FaseNivel::MostrandoInstrucciones:
                 etiquetas.dibujar_instrucciones(target);
@@ -62,7 +62,7 @@ namespace {
         }
 
         const auto tiempo_juego_actual =
-            estado.estado_modelo.obtener_tiempo_juego();
+            estado.modelo_interno.obtener_tiempo_juego();
         etiquetas.actualizar_barra_estado(
             tiempo_real_actual, tiempo_juego_actual
         );
@@ -149,7 +149,7 @@ void Vista::actualizarIU(              //
         estado.fase_actual == FaseNivel::EsperaAntesDeResultado
     ) {
         const auto preparacion =
-            estado.estado_modelo.obtener_estado_preparacion_pizzas();
+            estado.modelo_interno.obtener_estado_preparacion_pizzas();
         _actualizar_paneles(preparacion);
         _dibujar_paneles(target);
     }

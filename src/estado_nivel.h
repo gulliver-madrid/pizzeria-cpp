@@ -1,6 +1,6 @@
 #pragma once
 
-#include "modelo/estado_modelo.h"
+#include "modelo/modelo_interno.h"
 
 enum class FaseNivel;
 struct DatosNivel;
@@ -8,7 +8,7 @@ struct DatosNivel;
 /* Estado mutable de un nivel */
 struct Estado {
     FaseNivel fase_actual;
-    EstadoModelo estado_modelo;
+    ModeloInterno modelo_interno;
 
     bool establecido = false;
     bool mostrando_grid = false;

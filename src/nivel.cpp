@@ -161,12 +161,12 @@ AccionGeneral Nivel::ejecutar() {
     assert(modelo_amplio.has_value());
     auto &estado = modelo_amplio.value().estado;
     assert(estado.establecido);
-    auto &control_pizzas = estado.estado_modelo.control_pizzas;
+    auto &control_pizzas = estado.modelo_interno.control_pizzas;
     auto &contadores = control_pizzas.contadores;
 
     auto enlace_vista = _crear_enlace_vista(control_pizzas);
     assert(!contadores.empty());
-    auto &gestor_tiempo_juego = estado.estado_modelo.gestor_tiempo;
+    auto &gestor_tiempo_juego = estado.modelo_interno.gestor_tiempo;
 
     Timer timer_espera_antes_de_resultado;
     Timer timer_fin_nivel;
@@ -197,7 +197,7 @@ AccionGeneral Nivel::ejecutar() {
                 return accion.value();
             }
         }
-        estado.estado_modelo.evaluar_preparacion_pizzas();
+        estado.modelo_interno.evaluar_preparacion_pizzas();
 
         // En funcion de la fase actual (no necesariamente recien iniciada)
         switch (estado.fase_actual) {
