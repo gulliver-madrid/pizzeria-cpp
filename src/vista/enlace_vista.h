@@ -3,6 +3,7 @@
 #include <SFML/System/Time.hpp>
 #include <memory>
 
+enum class FaseNivel;
 struct ActivacionBotones;
 struct ModeloAmplio;
 struct ModeloInterno;
@@ -22,12 +23,15 @@ namespace enlace_vista_impl {
 class EnlaceVista {
     // TODO: hacer vista privado
     // TODO: implementar los metodos que faltan
+  private:
+    void on_cambio_a_fase_activa() const;
+    void on_cambio_a_fase_espera_antes_de_resultado() const;
 
   public:
     std::shared_ptr<Vista> vista;
+
     EnlaceVista(std::shared_ptr<Vista> vista) : vista(vista) {}
-    void on_cambio_a_fase_activa() const;
-    void on_cambio_a_fase_espera_antes_de_resultado() const;
+    void on_cambio_de_fase(FaseNivel &);
     void esconder_paneles() const;
     void actualizarIU(
         sf::RenderTarget &(target),        //

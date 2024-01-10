@@ -1,4 +1,5 @@
 #include "enlace_vista.h"
+#include "../fase_nivel.h"
 #include "../modelo_amplio/modelo_amplio.h"
 #include "../templates/helpers.h"
 #include "vista.h"
@@ -42,12 +43,29 @@ ActivacionBotones enlace_vista_impl::obtener_activacion_botones( //
     return activacion_botones;
 }
 
+///// EnlaceVista (private) /////
+
 void EnlaceVista::on_cambio_a_fase_activa() const {
     vista->mostrar_elementos_fase_activa();
 }
 
 void EnlaceVista::on_cambio_a_fase_espera_antes_de_resultado() const {
     vista->esconder_botones_gestion_pizzeria();
+}
+
+///// EnlaceVista (private) /////
+
+void EnlaceVista::on_cambio_de_fase(FaseNivel &nueva_fase) {
+    switch (nueva_fase) {
+        case FaseNivel::Activa:
+            on_cambio_a_fase_activa();
+            break;
+        case FaseNivel::EsperaAntesDeResultado:
+            on_cambio_a_fase_espera_antes_de_resultado();
+            break;
+        default:
+            break;
+    }
 }
 
 void EnlaceVista::esconder_paneles() const {

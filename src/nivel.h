@@ -36,7 +36,7 @@ struct Nivel {
     );
     std::optional<AccionGeneral> _procesa_cambio_de_fase(
         FaseNivel nueva_fase,                   //
-        const EnlaceVista &,                    //
+        EnlaceVista &,                          //
         Timer &timer_espera_antes_de_resultado, //
         FaseNivel fase_previa,                  //
         GestorTiempoJuego &                     //
