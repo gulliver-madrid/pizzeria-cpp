@@ -4,12 +4,18 @@
 #include <SFML/Graphics/Text.hpp>
 #include <optional>
 
+struct VisibilidadEtiquetasInfo {
+    bool mostrar_instrucciones;
+    bool mostrar_resultado;
+};
+
 struct EtiquetasInfo : public ObjetoConFont, public sf::Drawable {
+  private:
+    VisibilidadEtiquetasInfo &visibilidad;
+
   public:
     sf::Text instrucciones;
     sf::Text resultado;
-    bool mostrar_instrucciones;
-    bool mostrar_resultado;
 
     EtiquetasInfo(const sf::Font &);
     void setup(

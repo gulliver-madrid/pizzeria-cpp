@@ -22,7 +22,7 @@ struct ActivacionBotones {
 
 ///// Vista /////
 
-class Vista : public ObjetoConFont {
+class Vista : public ObjetoConFont, public sf::Drawable {
   private:
     const dominio::TiposDePizza &tp_disponibles;
 
@@ -48,12 +48,19 @@ class Vista : public ObjetoConFont {
 
     void actualizarIU(
         sf::RenderTarget &,                //
-        const ModeloAmplio &,                    //
+        const ModeloAmplio &,              //
         const sf::Time &tiempo_real_actual //
     );
+
     void mostrar_elementos_fase_activa();
     void esconder_botones_gestion_pizzeria();
     void activar_botones_condicionalmente(
         const ActivacionBotones &activacion_botones //
     );
+    void cambiar_visibilidad_instrucciones(bool);
+    void cambiar_visibilidad_resultado(bool);
+    virtual void draw(
+        sf::RenderTarget &target, //
+        sf::RenderStates states   //
+    ) const override;
 };

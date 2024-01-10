@@ -43,7 +43,7 @@ namespace {
         auto pedidos = modelo_amplio.modelo_interno.control_pizzas.pedidos;
         switch (modelo_amplio.fase_actual) {
             case FaseNivel::MostrandoInstrucciones:
-                etiquetas.dibujar_instrucciones(target);
+                // etiquetas.dibujar_instrucciones(target);
                 break;
             case FaseNivel::Activa:
             case FaseNivel::EsperaAntesDeResultado:
@@ -56,7 +56,7 @@ namespace {
                 }
 
             case FaseNivel::MostrandoResultado:
-                etiquetas.dibujar_resultado(target);
+                // etiquetas.dibujar_resultado(target);
                 break;
             default:
                 break;
@@ -176,4 +176,18 @@ void Vista::activar_botones_condicionalmente(
     for (auto &[_, boton] : botones.encargar) {
         boton.activacion_condicional(activacion_botones.encargar);
     }
+}
+
+void Vista::cambiar_visibilidad_instrucciones(bool visibilidad) {
+    etiquetas.cambiar_visibilidad_instrucciones(visibilidad);
+}
+void Vista::cambiar_visibilidad_resultado(bool visibilidad) {
+    etiquetas.cambiar_visibilidad_resultado(visibilidad);
+}
+
+void Vista::draw(
+    sf::RenderTarget &target, //
+    sf::RenderStates states   //
+) const {
+    etiquetas.dibujar_info(target);
 }

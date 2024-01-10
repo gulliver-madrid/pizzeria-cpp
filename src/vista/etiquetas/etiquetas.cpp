@@ -46,29 +46,29 @@ void EtiquetasGenerales::actualizar_contadores(
 ) {
     contadores->actualizar(vista_preparadas, pedidos);
 }
-void EtiquetasGenerales::dibujar_contadores(sf::RenderTarget &target) {
-    target.draw(*contadores);
-}
 
 void EtiquetasGenerales::actualizar_barra_estado(
     const sf::Time &tiempo_real_actual, const sf::Time &tiempo_juego_actual
 ) {
     barra_estado->actualizar(tiempo_real_actual, tiempo_juego_actual);
 }
-
-void EtiquetasGenerales::dibujar_instrucciones(sf::RenderTarget &target) {
-    info->mostrar_instrucciones = true;
-    target.draw(*info);
-    info->mostrar_instrucciones = false;
+void EtiquetasGenerales::cambiar_visibilidad_instrucciones(bool visibilidad) {
+    info->mostrar_instrucciones = visibilidad;
 }
-void EtiquetasGenerales::dibujar_resultado(sf::RenderTarget &target) {
-    info->mostrar_resultado = true;
-    target.draw(*info);
-    info->mostrar_resultado = false;
+void EtiquetasGenerales::cambiar_visibilidad_resultado(bool visibilidad) {
+    info->mostrar_resultado = visibilidad;
+}
+
+void EtiquetasGenerales::dibujar_contadores(sf::RenderTarget &target) {
+    target.draw(*contadores);
 }
 
 void EtiquetasGenerales::dibujar_barra_estado(sf::RenderTarget &target) {
     target.draw(*barra_estado);
+}
+
+void EtiquetasGenerales::dibujar_info(sf::RenderTarget &target) const {
+    target.draw(*info);
 }
 
 ///////////////////////////////////////////

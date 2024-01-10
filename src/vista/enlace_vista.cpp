@@ -43,25 +43,25 @@ ActivacionBotones enlace_vista_impl::obtener_activacion_botones( //
     return activacion_botones;
 }
 
-///// EnlaceVista (private) /////
-
-void EnlaceVista::on_cambio_a_fase_activa() const {
-    vista->mostrar_elementos_fase_activa();
-}
-
-void EnlaceVista::on_cambio_a_fase_espera_antes_de_resultado() const {
-    vista->esconder_botones_gestion_pizzeria();
-}
-
-///// EnlaceVista (private) /////
+///// EnlaceVista (public) /////
 
 void EnlaceVista::on_cambio_de_fase(FaseNivel &nueva_fase) {
     switch (nueva_fase) {
+        case FaseNivel::MostrandoInstrucciones:
+            vista->cambiar_visibilidad_instrucciones(true);
+            break;
         case FaseNivel::Activa:
-            on_cambio_a_fase_activa();
+            vista->cambiar_visibilidad_instrucciones(false);
+            vista->mostrar_elementos_fase_activa();
             break;
         case FaseNivel::EsperaAntesDeResultado:
-            on_cambio_a_fase_espera_antes_de_resultado();
+            vista->esconder_botones_gestion_pizzeria();
+            break;
+        case FaseNivel::MostrandoResultado:
+            vista->cambiar_visibilidad_resultado(true);
+            break;
+        case FaseNivel::Reiniciando:
+            vista->cambiar_visibilidad_resultado(false);
             break;
         default:
             break;
@@ -83,4 +83,7 @@ void EnlaceVista::actualizarIU(
         );
     vista->activar_botones_condicionalmente(activacion_botones);
     vista->actualizarIU(target, modelo_amplio, tiempo_real_actual);
+}
+void EnlaceVista::dibujar_vista(sf::RenderTarget &target) { //
+    target.draw(*vista);
 }
