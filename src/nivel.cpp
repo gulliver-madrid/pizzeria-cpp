@@ -67,11 +67,14 @@ EnlaceVista Nivel::_crear_enlace_vista( //
         grid,                                  //
         control_pizzas.get_tipos_disponibles() //
     );
+    EnlaceVista enlace_vista;
     vista_ptr->setup(
         datos_nivel.instrucciones, //
         num_nivel                  //
+
     );
-    return EnlaceVista(vista_ptr);
+    enlace_vista.set_vista(vista_ptr);
+    return enlace_vista;
 }
 
 /*

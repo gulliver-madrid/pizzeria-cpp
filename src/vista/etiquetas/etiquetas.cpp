@@ -2,6 +2,7 @@
 #include "../basicos_vista.h"
 #include "../cadenas.h"
 #include "../componentes/varios.h"
+#include "../visibilidad_vista.h"
 #include "etiquetas_barra_estado.h"
 #include "etiquetas_contadores.h"
 #include "etiquetas_info.h"
@@ -34,9 +35,16 @@ void EtiquetasGenerales::setup(
     const std::string &instr,                   //
     const NumNivel &num_nivel,                  //
     const dominio::TiposDePizza &tp_disponibles //
+
 ) {
     info->setup(instr, num_nivel);
     contadores->setup(tp_disponibles);
+}
+void EtiquetasGenerales::set_visibilidad(
+
+    std::shared_ptr<Visibilidad> visibilidad
+) {
+    info->set_visibilidad(visibilidad);
 }
 
 void EtiquetasGenerales::actualizar_contadores(
@@ -51,12 +59,6 @@ void EtiquetasGenerales::actualizar_barra_estado(
     const sf::Time &tiempo_real_actual, const sf::Time &tiempo_juego_actual
 ) {
     barra_estado->actualizar(tiempo_real_actual, tiempo_juego_actual);
-}
-void EtiquetasGenerales::cambiar_visibilidad_instrucciones(bool visibilidad) {
-    info->mostrar_instrucciones = visibilidad;
-}
-void EtiquetasGenerales::cambiar_visibilidad_resultado(bool visibilidad) {
-    info->mostrar_resultado = visibilidad;
 }
 
 void EtiquetasGenerales::dibujar_contadores(sf::RenderTarget &target) {

@@ -4,11 +4,11 @@
 #include "modelo_amplio/modelo_amplio.h"
 #include "shared.h"
 #include "tiempo.h"
+#include "vista/enlace_vista.h"
 #include "vista/grid.h"
 
 enum class FaseNivel;
 struct BotonesApp;
-struct EnlaceVista;
 struct Globales;
 struct ControladorClicks;
 struct DatosNivel;

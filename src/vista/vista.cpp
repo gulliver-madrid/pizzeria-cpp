@@ -118,17 +118,24 @@ Vista::Vista(
 void Vista::setup(
     const std::string &instrucciones, //
     const NumNivel &num_nivel         //
+
 ) {
     etiquetas.setup(
         instrucciones, //
         num_nivel,     //
         tp_disponibles //
+
     );
     // Mostrar botones iniciales
     botones.generales.alternar_grid.visible = MODO_DESARROLLO;
     botones.generales.reiniciar.visible = true;
     botones.generales.salir.visible = true;
     botones.empezar.visible = true;
+}
+
+void Vista::set_visibilidad(std::shared_ptr<Visibilidad> visibilidad //
+) {
+    etiquetas.set_visibilidad(visibilidad);
 }
 
 /*
@@ -176,13 +183,6 @@ void Vista::activar_botones_condicionalmente(
     for (auto &[_, boton] : botones.encargar) {
         boton.activacion_condicional(activacion_botones.encargar);
     }
-}
-
-void Vista::cambiar_visibilidad_instrucciones(bool visibilidad) {
-    etiquetas.cambiar_visibilidad_instrucciones(visibilidad);
-}
-void Vista::cambiar_visibilidad_resultado(bool visibilidad) {
-    etiquetas.cambiar_visibilidad_resultado(visibilidad);
 }
 
 void Vista::draw(

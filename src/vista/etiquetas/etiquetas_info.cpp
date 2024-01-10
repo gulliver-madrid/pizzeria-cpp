@@ -3,6 +3,7 @@
 #include "../basicos_vista.h"
 #include "../componentes/varios.h"
 #include <SFML/Graphics/RenderTarget.hpp>
+#include <memory>
 
 namespace medidas {
     const sf::Vector2f POSICION_INSTRUCCIONES_O_RESULTADO = {200, 200};
@@ -61,25 +62,27 @@ EtiquetasInfo::EtiquetasInfo(const sf::Font &font) : ObjetoConFont(font) {}
 void EtiquetasInfo::setup(
     const std::string &instr, //
     const NumNivel &num_nivel //
+
 ) {
     const auto fabrica = FabricaEtiquetasInfo(font);
     instrucciones = fabrica.crear_etiqueta_instrucciones(instr, num_nivel);
     resultado = fabrica.crear_etiqueta_resultado();
+}
+void EtiquetasInfo::set_visibilidad(
+
+    std::shared_ptr<Visibilidad> visibilidad //
+) {
+    visibilidad = visibilidad;
 }
 
 void EtiquetasInfo::draw(
     sf::RenderTarget &target, //
     sf::RenderStates states   //
 ) const {
-    if (mostrar_instrucciones) {
+    if (visibilidad->etiquetas_info.mostrar_instrucciones) {
         target.draw(instrucciones);
     }
-    if (mostrar_resultado) {
+    if (visibilidad->etiquetas_info.mostrar_resultado) {
         target.draw(resultado);
     }
-}
-
-void EtiquetasInfo::set_clean() {
-    mostrar_instrucciones = false;
-    mostrar_resultado = false;
 }

@@ -43,25 +43,39 @@ ActivacionBotones enlace_vista_impl::obtener_activacion_botones( //
     return activacion_botones;
 }
 
+///// EnlaceVista (private) /////
+
+void EnlaceVista::cambiar_visibilidad_instrucciones(bool nueva) {
+    visibilidad.etiquetas_info.mostrar_instrucciones = nueva;
+}
+void EnlaceVista::cambiar_visibilidad_resultado(bool nueva) {
+    visibilidad.etiquetas_info.mostrar_resultado = nueva;
+}
+
 ///// EnlaceVista (public) /////
+
+void EnlaceVista::set_vista(std::shared_ptr<Vista> vista) {
+    this->vista = vista;
+    vista->set_visibilidad(std::make_shared<Visibilidad>(visibilidad));
+}
 
 void EnlaceVista::on_cambio_de_fase(FaseNivel &nueva_fase) {
     switch (nueva_fase) {
         case FaseNivel::MostrandoInstrucciones:
-            vista->cambiar_visibilidad_instrucciones(true);
+            cambiar_visibilidad_instrucciones(true);
             break;
         case FaseNivel::Activa:
-            vista->cambiar_visibilidad_instrucciones(false);
+            cambiar_visibilidad_instrucciones(false);
             vista->mostrar_elementos_fase_activa();
             break;
         case FaseNivel::EsperaAntesDeResultado:
             vista->esconder_botones_gestion_pizzeria();
             break;
         case FaseNivel::MostrandoResultado:
-            vista->cambiar_visibilidad_resultado(true);
+            cambiar_visibilidad_resultado(true);
             break;
         case FaseNivel::Reiniciando:
-            vista->cambiar_visibilidad_resultado(false);
+            cambiar_visibilidad_resultado(false);
             break;
         default:
             break;
@@ -86,4 +100,8 @@ void EnlaceVista::actualizarIU(
 }
 void EnlaceVista::dibujar_vista(sf::RenderTarget &target) { //
     target.draw(*vista);
+}
+
+Visibilidad EnlaceVista::get_visibilidad() const { //
+    return visibilidad;
 }

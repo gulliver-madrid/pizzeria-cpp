@@ -1,5 +1,6 @@
 #pragma once
 
+#include "visibilidad_vista.h"
 #include <SFML/System/Time.hpp>
 #include <memory>
 
@@ -23,11 +24,16 @@ namespace enlace_vista_impl {
 class EnlaceVista {
     // TODO: hacer vista privado
     // TODO: implementar los metodos que faltan
+  private:
+    Visibilidad visibilidad;
+
+    void cambiar_visibilidad_instrucciones(bool);
+    void cambiar_visibilidad_resultado(bool);
 
   public:
     std::shared_ptr<Vista> vista;
 
-    EnlaceVista(std::shared_ptr<Vista> vista) : vista(vista) {}
+    void set_vista(std::shared_ptr<Vista> vista);
     void on_cambio_de_fase(FaseNivel &);
     void esconder_paneles() const;
     void actualizarIU(
@@ -35,5 +41,6 @@ class EnlaceVista {
         const ModeloAmplio &,              //
         const sf::Time &tiempo_real_actual //
     );
+    Visibilidad get_visibilidad() const;
     void dibujar_vista(sf::RenderTarget &);
 };
