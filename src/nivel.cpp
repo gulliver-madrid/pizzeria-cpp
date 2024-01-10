@@ -61,7 +61,7 @@ std::optional<FaseNivel> Nivel::_procesa_click(
 EnlaceVista Nivel::_crear_enlace_vista( //
     const modelo::ControlPizzas &control_pizzas
 ) {
-    std::optional<int> objetivo_estatico; // Solo se define en estaticos
+    assert(!enlace_vista_opcional.has_value());
     const auto vista_ptr = std::make_shared<Vista>(
         globales.font,                         //
         grid,                                  //
@@ -166,8 +166,8 @@ AccionGeneral Nivel::ejecutar() {
     assert(modelo_amplio.establecido);
     auto &control_pizzas = modelo_amplio.modelo_interno.control_pizzas;
     auto &contadores = control_pizzas.contadores;
-
-    auto enlace_vista = _crear_enlace_vista(control_pizzas);
+    enlace_vista_opcional.emplace(_crear_enlace_vista(control_pizzas));
+    auto &enlace_vista = enlace_vista_opcional.value();
     assert(!contadores.empty());
     auto &gestor_tiempo_juego = modelo_amplio.modelo_interno.gestor_tiempo;
 
