@@ -19,8 +19,8 @@ struct EtiquetasInfo : public ObjetoConFont, public sf::Drawable {
         const NumNivel &          //
 
     );
-    void
-    set_visibilidad(std::shared_ptr<PresentacionVista> presentacion_vista //
+    void set_presentacion_vista(
+        std::shared_ptr<PresentacionVista> presentacion_vista //
     );
     virtual void draw(
         sf::RenderTarget &target, //

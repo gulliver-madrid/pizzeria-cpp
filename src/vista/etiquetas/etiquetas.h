@@ -44,7 +44,7 @@ struct EtiquetasGenerales : public ObjetoConFont {
         const dominio::TiposDePizza &tp_disponibles //
     );
 
-    void set_visibilidad(                                     //
+    void set_presentacion_vista(                              //
         std::shared_ptr<PresentacionVista> presentacion_vista //
     );
 

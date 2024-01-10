@@ -25,7 +25,7 @@ class EnlaceVista {
     // TODO: hacer vista privado
     // TODO: implementar los metodos que faltan
   private:
-    PresentacionVista presentacion_vista;
+    std::shared_ptr<PresentacionVista> presentacion_vista;
 
     void cambiar_visibilidad_instrucciones(bool);
     void cambiar_visibilidad_resultado(bool);
@@ -33,6 +33,7 @@ class EnlaceVista {
   public:
     std::shared_ptr<Vista> vista;
 
+    EnlaceVista();
     void set_vista(std::shared_ptr<Vista> vista);
     void on_cambio_de_fase(FaseNivel &);
     void esconder_paneles() const;

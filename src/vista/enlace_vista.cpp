@@ -1,9 +1,11 @@
 #include "enlace_vista.h"
 #include "../fase_nivel.h"
+#include "../log_init.h"
 #include "../modelo_amplio/modelo_amplio.h"
 #include "../templates/helpers.h"
 #include "vista.h"
 #include <cassert>
+#include <iostream>
 
 namespace {
     /*
@@ -46,22 +48,27 @@ ActivacionBotones enlace_vista_impl::obtener_activacion_botones( //
 ///// EnlaceVista (private) /////
 
 void EnlaceVista::cambiar_visibilidad_instrucciones(bool nueva) {
-    presentacion_vista.etiquetas_info.mostrar_instrucciones = nueva;
+    presentacion_vista->etiquetas_info.mostrar_instrucciones = nueva;
 }
 void EnlaceVista::cambiar_visibilidad_resultado(bool nueva) {
-    presentacion_vista.etiquetas_info.mostrar_resultado = nueva;
+    LOG(debug) << "Cambiando visibilidad resultado: " << nueva;
+    presentacion_vista->etiquetas_info.mostrar_resultado = nueva;
 }
 
 ///// EnlaceVista (public) /////
 
+EnlaceVista::EnlaceVista() {
+    presentacion_vista = std::make_shared<PresentacionVista>();
+}
+
 void EnlaceVista::set_vista(std::shared_ptr<Vista> vista) {
     this->vista = vista;
-    vista->set_visibilidad(
-        std::make_shared<PresentacionVista>(presentacion_vista)
-    );
+    vista->set_presentacion_vista(presentacion_vista);
 }
 
 void EnlaceVista::on_cambio_de_fase(FaseNivel &nueva_fase) {
+    LOG(debug) << "Cambio de fase en EnlaceVista: "
+               << static_cast<int>(nueva_fase);
     switch (nueva_fase) {
         case FaseNivel::MostrandoInstrucciones:
             cambiar_visibilidad_instrucciones(true);
@@ -100,10 +107,11 @@ void EnlaceVista::actualizarIU(
     vista->activar_botones_condicionalmente(activacion_botones);
     vista->actualizarIU(target, modelo_amplio, tiempo_real_actual);
 }
+
 void EnlaceVista::dibujar_vista(sf::RenderTarget &target) { //
     target.draw(*vista);
 }
 
 PresentacionVista EnlaceVista::get_presentacion_vista() const { //
-    return presentacion_vista;
+    return *presentacion_vista;
 }

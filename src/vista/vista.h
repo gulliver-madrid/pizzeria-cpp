@@ -47,7 +47,7 @@ class Vista : public ObjetoConFont, public sf::Drawable {
         const std::string &instrucciones, //
         const NumNivel &
     );
-    void set_visibilidad(                  //
+    void set_presentacion_vista(           //
         std::shared_ptr<PresentacionVista> //
     );
 

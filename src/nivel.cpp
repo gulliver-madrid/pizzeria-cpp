@@ -124,7 +124,6 @@ std::optional<AccionGeneral> Nivel::_procesa_cambio_de_fase(
         case FaseNivel::Activa:
             assert(fase_previa == FaseNivel::MostrandoInstrucciones);
             gestor_tiempo_juego.activar();
-            enlace_vista.on_cambio_de_fase(nueva_fase);
             break;
         case FaseNivel::EsperaAntesDeResultado:
             assert(fase_previa == FaseNivel::Activa);
@@ -132,7 +131,6 @@ std::optional<AccionGeneral> Nivel::_procesa_cambio_de_fase(
             timer_espera_antes_de_resultado.start(
                 tiempos::RETARDO_ANTES_DE_RESULTADO
             );
-            enlace_vista.on_cambio_de_fase(nueva_fase);
             break;
         case FaseNivel::Reiniciando:
             posible_accion = AccionGeneral::Reiniciar;
@@ -144,6 +142,7 @@ std::optional<AccionGeneral> Nivel::_procesa_cambio_de_fase(
             assert(false);
             break;
     }
+    enlace_vista.on_cambio_de_fase(nueva_fase);
     return posible_accion;
 }
 
@@ -171,6 +170,7 @@ AccionGeneral Nivel::ejecutar() {
     auto &contadores = control_pizzas.contadores;
     enlace_vista_opcional.emplace(_crear_enlace_vista(control_pizzas));
     auto &enlace_vista = enlace_vista_opcional.value();
+    enlace_vista.on_cambio_de_fase(modelo_amplio.fase_actual);
     assert(!contadores.empty());
     auto &gestor_tiempo_juego = modelo_amplio.modelo_interno.gestor_tiempo;
 
@@ -204,15 +204,12 @@ AccionGeneral Nivel::ejecutar() {
             }
         }
         modelo_amplio.modelo_interno.evaluar_preparacion_pizzas();
-
+        const auto fase_previa = modelo_amplio.fase_actual;
         // En funcion de la fase actual (no necesariamente recien iniciada)
         switch (modelo_amplio.fase_actual) {
             case FaseNivel::EsperaAntesDeResultado:
                 if (timer_espera_antes_de_resultado.termino()) {
-                    mostrar_resultado(
-                        globales, modelo_amplio, enlace_vista, timer_fin_nivel,
-                        sound
-                    );
+                    modelo_amplio.fase_actual = FaseNivel::MostrandoResultado;
                 }
                 break;
             case FaseNivel::MostrandoResultado:
@@ -221,6 +218,13 @@ AccionGeneral Nivel::ejecutar() {
                 };
                 break;
         }
+        if (modelo_amplio.fase_actual != fase_previa &&
+            modelo_amplio.fase_actual == FaseNivel::MostrandoResultado) {
+            enlace_vista.on_cambio_de_fase(modelo_amplio.fase_actual);
+            mostrar_resultado(
+                globales, modelo_amplio, enlace_vista, timer_fin_nivel, sound
+            );
+        }
         const auto tiempo_real_actual = tiempo::obtener_tiempo_actual();
         const auto transcurrido = tiempo_real_actual - previo;
         gestor_tiempo_juego.tick(transcurrido);
@@ -228,6 +232,7 @@ AccionGeneral Nivel::ejecutar() {
         enlace_vista.actualizarIU(
             globales.window, modelo_amplio, tiempo_real_actual
         );
+        enlace_vista.dibujar_vista(globales.window);
         globales.window.display();
     }
     assert(false); // No deberiamos llegar aqui

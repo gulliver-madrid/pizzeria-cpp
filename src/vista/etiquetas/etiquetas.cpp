@@ -40,11 +40,11 @@ void EtiquetasGenerales::setup(
     info->setup(instr, num_nivel);
     contadores->setup(tp_disponibles);
 }
-void EtiquetasGenerales::set_visibilidad(
+void EtiquetasGenerales::set_presentacion_vista(
 
     std::shared_ptr<PresentacionVista> presentacion_vista
 ) {
-    info->set_visibilidad(presentacion_vista);
+    info->set_presentacion_vista(presentacion_vista);
 }
 
 void EtiquetasGenerales::actualizar_contadores(

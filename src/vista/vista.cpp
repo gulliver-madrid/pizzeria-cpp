@@ -133,10 +133,11 @@ void Vista::setup(
     botones.empezar.visible = true;
 }
 
-void Vista::set_visibilidad(
+void Vista::set_presentacion_vista(
     std::shared_ptr<PresentacionVista> presentacion_vista //
 ) {
-    etiquetas.set_visibilidad(presentacion_vista);
+    this->presentacion_vista = presentacion_vista;
+    etiquetas.set_presentacion_vista(presentacion_vista);
 }
 
 /*

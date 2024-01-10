@@ -3,6 +3,7 @@
 #include "../basicos_vista.h"
 #include "../componentes/varios.h"
 #include <SFML/Graphics/RenderTarget.hpp>
+#include <iostream>
 #include <memory>
 
 namespace medidas {
@@ -68,11 +69,10 @@ void EtiquetasInfo::setup(
     instrucciones = fabrica.crear_etiqueta_instrucciones(instr, num_nivel);
     resultado = fabrica.crear_etiqueta_resultado();
 }
-void EtiquetasInfo::set_visibilidad(
-
+void EtiquetasInfo::set_presentacion_vista(
     std::shared_ptr<PresentacionVista> presentacion_vista //
 ) {
-    presentacion_vista = presentacion_vista;
+    this->presentacion_vista = presentacion_vista;
 }
 
 void EtiquetasInfo::draw(
