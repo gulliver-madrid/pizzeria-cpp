@@ -251,6 +251,7 @@
 - vista/enlace_vista.cpp:
     - vista/enlace_vista.h
     - fase_nivel.h
+    - log_init.h
     - modelo_amplio/modelo_amplio.h
     - templates/helpers.h
     - vista/vista.h
