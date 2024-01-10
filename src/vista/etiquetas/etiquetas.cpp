@@ -2,7 +2,7 @@
 #include "../basicos_vista.h"
 #include "../cadenas.h"
 #include "../componentes/varios.h"
-#include "../visibilidad_vista.h"
+#include "../presentacion_vista.h"
 #include "etiquetas_barra_estado.h"
 #include "etiquetas_contadores.h"
 #include "etiquetas_info.h"
@@ -42,9 +42,9 @@ void EtiquetasGenerales::setup(
 }
 void EtiquetasGenerales::set_visibilidad(
 
-    std::shared_ptr<Visibilidad> visibilidad
+    std::shared_ptr<PresentacionVista> presentacion_vista
 ) {
-    info->set_visibilidad(visibilidad);
+    info->set_visibilidad(presentacion_vista);
 }
 
 void EtiquetasGenerales::actualizar_contadores(

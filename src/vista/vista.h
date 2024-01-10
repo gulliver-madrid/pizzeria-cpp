@@ -4,7 +4,7 @@
 #include "botones_app.h"
 #include "etiquetas/etiquetas.h"
 #include "paneles.h"
-#include "visibilidad_vista.h"
+#include "presentacion_vista.h"
 
 struct ModeloAmplio;
 struct Grid;
@@ -31,7 +31,7 @@ class Vista : public ObjetoConFont, public sf::Drawable {
     void _dibujar_paneles(sf::RenderTarget &(target)) const;
 
   public:
-    std::shared_ptr<Visibilidad> visibilidad;
+    std::shared_ptr<PresentacionVista> presentacion_vista;
     BotonesApp botones;
     PanelesCompletos paneles_completos;
     EtiquetasGenerales etiquetas;
@@ -47,8 +47,8 @@ class Vista : public ObjetoConFont, public sf::Drawable {
         const std::string &instrucciones, //
         const NumNivel &
     );
-    void set_visibilidad(            //
-        std::shared_ptr<Visibilidad> //
+    void set_visibilidad(                  //
+        std::shared_ptr<PresentacionVista> //
     );
 
     void actualizarIU(

@@ -46,17 +46,19 @@ ActivacionBotones enlace_vista_impl::obtener_activacion_botones( //
 ///// EnlaceVista (private) /////
 
 void EnlaceVista::cambiar_visibilidad_instrucciones(bool nueva) {
-    visibilidad.etiquetas_info.mostrar_instrucciones = nueva;
+    presentacion_vista.etiquetas_info.mostrar_instrucciones = nueva;
 }
 void EnlaceVista::cambiar_visibilidad_resultado(bool nueva) {
-    visibilidad.etiquetas_info.mostrar_resultado = nueva;
+    presentacion_vista.etiquetas_info.mostrar_resultado = nueva;
 }
 
 ///// EnlaceVista (public) /////
 
 void EnlaceVista::set_vista(std::shared_ptr<Vista> vista) {
     this->vista = vista;
-    vista->set_visibilidad(std::make_shared<Visibilidad>(visibilidad));
+    vista->set_visibilidad(
+        std::make_shared<PresentacionVista>(presentacion_vista)
+    );
 }
 
 void EnlaceVista::on_cambio_de_fase(FaseNivel &nueva_fase) {
@@ -102,6 +104,6 @@ void EnlaceVista::dibujar_vista(sf::RenderTarget &target) { //
     target.draw(*vista);
 }
 
-Visibilidad EnlaceVista::get_visibilidad() const { //
-    return visibilidad;
+PresentacionVista EnlaceVista::get_visibilidad() const { //
+    return presentacion_vista;
 }

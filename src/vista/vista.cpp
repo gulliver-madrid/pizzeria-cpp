@@ -133,9 +133,10 @@ void Vista::setup(
     botones.empezar.visible = true;
 }
 
-void Vista::set_visibilidad(std::shared_ptr<Visibilidad> visibilidad //
+void Vista::set_visibilidad(
+    std::shared_ptr<PresentacionVista> presentacion_vista //
 ) {
-    etiquetas.set_visibilidad(visibilidad);
+    etiquetas.set_visibilidad(presentacion_vista);
 }
 
 /*

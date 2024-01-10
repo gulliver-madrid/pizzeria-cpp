@@ -1,13 +1,13 @@
 #pragma once
 
 #include "../../shared.h"
-#include "../visibilidad_vista.h"
+#include "../presentacion_vista.h"
 #include <SFML/Graphics/Text.hpp>
 #include <optional>
 
 struct EtiquetasInfo : public ObjetoConFont, public sf::Drawable {
   private:
-    std::shared_ptr<Visibilidad> visibilidad;
+    std::shared_ptr<PresentacionVista> presentacion_vista;
 
   public:
     sf::Text instrucciones;
@@ -19,7 +19,8 @@ struct EtiquetasInfo : public ObjetoConFont, public sf::Drawable {
         const NumNivel &          //
 
     );
-    void set_visibilidad(std::shared_ptr<Visibilidad> visibilidad //
+    void
+    set_visibilidad(std::shared_ptr<PresentacionVista> presentacion_vista //
     );
     virtual void draw(
         sf::RenderTarget &target, //

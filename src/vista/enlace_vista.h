@@ -1,6 +1,6 @@
 #pragma once
 
-#include "visibilidad_vista.h"
+#include "presentacion_vista.h"
 #include <SFML/System/Time.hpp>
 #include <memory>
 
@@ -25,7 +25,7 @@ class EnlaceVista {
     // TODO: hacer vista privado
     // TODO: implementar los metodos que faltan
   private:
-    Visibilidad visibilidad;
+    PresentacionVista presentacion_vista;
 
     void cambiar_visibilidad_instrucciones(bool);
     void cambiar_visibilidad_resultado(bool);
@@ -41,6 +41,6 @@ class EnlaceVista {
         const ModeloAmplio &,              //
         const sf::Time &tiempo_real_actual //
     );
-    Visibilidad get_visibilidad() const;
+    PresentacionVista get_visibilidad() const;
     void dibujar_vista(sf::RenderTarget &);
 };
