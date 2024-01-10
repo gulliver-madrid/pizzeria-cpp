@@ -22,7 +22,7 @@ namespace {
 
 } // namespace
 
-ActivacionBotones impl::obtener_activacion_botones( //
+ActivacionBotones enlace_vista_impl::obtener_activacion_botones( //
     const ModeloInterno &modelo_interno
 ) {
     const auto &control_pizzas = modelo_interno.control_pizzas;
@@ -60,7 +60,9 @@ void EnlaceVista::actualizarIU(
     const sf::Time &tiempo_real_actual //
 ) {
     const auto activacion_botones =
-        impl::obtener_activacion_botones(modelo_amplio.modelo_interno);
+        enlace_vista_impl::obtener_activacion_botones(
+            modelo_amplio.modelo_interno
+        );
     vista->activar_botones_condicionalmente(activacion_botones);
     vista->actualizarIU(target, modelo_amplio, tiempo_real_actual);
 }

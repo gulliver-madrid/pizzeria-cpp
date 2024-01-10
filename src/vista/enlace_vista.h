@@ -12,7 +12,7 @@ namespace sf {
     class RenderTarget;
 } // namespace sf
 
-namespace impl {
+namespace enlace_vista_impl {
     ActivacionBotones obtener_activacion_botones( //
         const ModeloInterno &modelo_interno
     );
