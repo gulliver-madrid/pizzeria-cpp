@@ -48,7 +48,6 @@ struct EtiquetasGenerales : public ObjetoConFont {
         const modelo::Pedidos &pedidos                //
 
     );
-    void dibujar_contadores(sf::RenderTarget &target);
 
     void actualizar_barra_estado(
         const sf::Time &tiempo_real_actual, const sf::Time &tiempo_juego_actual
@@ -56,6 +55,7 @@ struct EtiquetasGenerales : public ObjetoConFont {
 
     void dibujar_instrucciones(sf::RenderTarget &target);
     void dibujar_resultado(sf::RenderTarget &target);
+    void dibujar_contadores(sf::RenderTarget &target);
     void dibujar_barra_estado(sf::RenderTarget &target);
 };
 

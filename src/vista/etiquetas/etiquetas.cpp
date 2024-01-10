@@ -57,10 +57,14 @@ void EtiquetasGenerales::actualizar_barra_estado(
 }
 
 void EtiquetasGenerales::dibujar_instrucciones(sf::RenderTarget &target) {
-    target.draw(info->instrucciones);
+    info->mostrar_instrucciones = true;
+    target.draw(*info);
+    info->mostrar_instrucciones = false;
 }
 void EtiquetasGenerales::dibujar_resultado(sf::RenderTarget &target) {
-    target.draw(info->resultado);
+    info->mostrar_resultado = true;
+    target.draw(*info);
+    info->mostrar_resultado = false;
 }
 
 void EtiquetasGenerales::dibujar_barra_estado(sf::RenderTarget &target) {

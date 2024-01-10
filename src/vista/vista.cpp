@@ -28,7 +28,8 @@ namespace {
             boton_despachar.activacion_condicional(debe_estar_activo);
         }
     }
-
+    // TODO:  separar la parte de actualizacion y de dibujo
+    // TODO:  ir pasando a enlace_vista la logica que deba conocer el modelo
     /* Actualiza y dibuja las etiquetas */
     void actualizar_etiquetas(
         sf::RenderTarget &(target),        //
