@@ -130,6 +130,7 @@
     - modelo_amplio/modelo_amplio.h
     - shared.h
     - tiempo.h
+    - vista/enlace_vista.h
     - vista/grid.h
 
 - setup_juego.cpp:
@@ -156,17 +157,24 @@
     - modelo_amplio/comandos.h
     - modelo_amplio/modelo_amplio.h
 
-- tests/test_cadenas.cpp:
-    - vista/cadenas.h
-
-- tests/test_presentador.cpp:
+- tests/presentador/test_activacion_botones.cpp:
     - modelo/datos_modelo_interno.h
     - modelo/dominio.h
-    - modelo/modelo.h
     - modelo/modelo_interno.h
     - vista/enlace_vista.h
+    - vista/vista.h
+
+- tests/presentador/test_enlace_vista.cpp:
+    - vista/enlace_vista.h
+
+- tests/presentador/test_presentador.cpp:
+    - modelo/datos_modelo_interno.h
+    - modelo/dominio.h
     - vista/presentador.h
     - vista/vista.h
+
+- tests/test_cadenas.cpp:
+    - vista/cadenas.h
 
 - tests/test_tiempo.cpp:
     - tiempo.h
@@ -242,9 +250,13 @@
 
 - vista/enlace_vista.cpp:
     - vista/enlace_vista.h
+    - fase_nivel.h
     - modelo_amplio/modelo_amplio.h
     - templates/helpers.h
     - vista/vista.h
+
+- vista/enlace_vista.h:
+    - vista/presentacion_vista.h
 
 - vista/etiquetas/etiquetas.cpp:
     - vista/etiquetas/etiquetas.h
@@ -254,11 +266,13 @@
     - vista/etiquetas/etiquetas_barra_estado.h
     - vista/etiquetas/etiquetas_contadores.h
     - vista/etiquetas/etiquetas_info.h
+    - vista/presentacion_vista.h
 
 - vista/etiquetas/etiquetas.h:
     - modelo/control_pizzas.h
     - modelo/modelo.h
     - shared.h
+    - vista/presentacion_vista.h
     - vista/vista_shared.h
 
 - vista/etiquetas/etiquetas_barra_estado.cpp:
@@ -293,6 +307,7 @@
 
 - vista/etiquetas/etiquetas_info.h:
     - shared.h
+    - vista/presentacion_vista.h
 
 - vista/etiquetas/fabrica_etiquetas_contadores.cpp:
     - vista/etiquetas/fabrica_etiquetas_contadores.h
@@ -317,6 +332,9 @@
     - vista/barras_progreso.h
     - vista/componentes/varios.h
 
+- vista/presentacion_vista.h:
+    - vista/etiquetas/visibilidad_etiquetas_info.h
+
 - vista/presentador.cpp:
     - vista/presentador.h
     - modelo/dominio.h
@@ -337,6 +355,7 @@
     - vista/botones_app.h
     - vista/etiquetas/etiquetas.h
     - vista/paneles.h
+    - vista/presentacion_vista.h
 
 - vista/vista_shared.h:
     - modelo/dominio.h
