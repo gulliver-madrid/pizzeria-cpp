@@ -104,6 +104,6 @@ void EnlaceVista::dibujar_vista(sf::RenderTarget &target) { //
     target.draw(*vista);
 }
 
-PresentacionVista EnlaceVista::get_visibilidad() const { //
+PresentacionVista EnlaceVista::get_presentacion_vista() const { //
     return presentacion_vista;
 }

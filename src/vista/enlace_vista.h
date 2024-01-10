@@ -41,6 +41,6 @@ class EnlaceVista {
         const ModeloAmplio &,              //
         const sf::Time &tiempo_real_actual //
     );
-    PresentacionVista get_visibilidad() const;
+    PresentacionVista get_presentacion_vista() const;
     void dibujar_vista(sf::RenderTarget &);
 };

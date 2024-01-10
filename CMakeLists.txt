@@ -109,6 +109,7 @@ add_executable(
     src/tests/modelo/test_evaluar_preparacion.cpp
     src/tests/modelo/test_modelo_amplio.cpp
     src/tests/test_cadenas.cpp
+    src/tests/presentador/test_enlace_vista.cpp
     src/tests/presentador/test_presentador.cpp
     src/tests/presentador/test_activacion_botones.cpp
     src/tests/test_tiempo.cpp
