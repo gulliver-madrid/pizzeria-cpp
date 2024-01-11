@@ -2,10 +2,12 @@
 
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <map>
+#include <tuple>
+#include <vector>
 
 template <typename Key, typename Drawable>
 void dibujar_elementos(
-    sf::RenderTarget &(target),              //
+    sf::RenderTarget &target,                //
     const std::map<Key, Drawable> &elementos //
 ) {
     for (const auto &[_, elemento] : elementos) {
@@ -15,7 +17,7 @@ void dibujar_elementos(
 
 template <typename Drawable>
 void dibujar_elementos(
-    sf::RenderTarget &(target), const std::vector<Drawable> &elementos
+    sf::RenderTarget &target, const std::vector<Drawable> &elementos
 ) {
     for (const auto &elemento : elementos) {
         target.draw(elemento);
