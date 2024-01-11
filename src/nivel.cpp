@@ -19,15 +19,13 @@ namespace tiempos {
     const auto ESPERA_ENTRE_NIVELES = sf::seconds(2);
 } // namespace tiempos
 
-void mostrar_resultado(
+void on_cambio_a_fase_mostrar_resultado(
     const Globales &globales,        //
     ModeloAmplio &modelo_amplio,     //
     const EnlaceVista &enlace_vista, //
     Timer &timer_fin_nivel,          //
     sf::Sound &sound                 //
 ) {
-    // Pasa a fase MostrandoResultado
-    modelo_amplio.fase_actual = FaseNivel::MostrandoResultado;
     if (globales.success_buffer) {
         sound.setBuffer(globales.success_buffer.value());
         sound.play();
@@ -101,7 +99,7 @@ std::optional<FaseNivel> Nivel::_procesarEvento(
             break;
         case sf::Event::MouseButtonPressed:
             LOG(info) << "Antes de procesar click" << std::endl;
-            return _procesa_click(botones, modelo_amplio.fase_actual);
+            return _procesa_click(botones, modelo_amplio.get_fase_actual());
         default:
             LOG(info) << "Evento ignorado" << std::endl;
             LOG(info) << "Tipo de evento: " << evento.type << std::endl;
@@ -170,7 +168,8 @@ AccionGeneral Nivel::ejecutar() {
     auto &contadores = control_pizzas.contadores;
     enlace_vista_opcional.emplace(_crear_enlace_vista(control_pizzas));
     auto &enlace_vista = enlace_vista_opcional.value();
-    enlace_vista.on_cambio_de_fase(modelo_amplio.fase_actual);
+    modelo_amplio.observadores_fase.push_back(enlace_vista);
+    modelo_amplio.set_fase_actual(FaseNivel::MostrandoInstrucciones);
     assert(!contadores.empty());
     auto &gestor_tiempo_juego = modelo_amplio.modelo_interno.gestor_tiempo;
 
@@ -190,10 +189,10 @@ AccionGeneral Nivel::ejecutar() {
                 continue;
             }
             // Cambio de fase reciente
-            const auto fase_previa = modelo_amplio.fase_actual;
-            modelo_amplio.fase_actual = siguiente_fase.value();
+            const auto fase_previa = modelo_amplio.get_fase_actual();
+            modelo_amplio.set_fase_actual(siguiente_fase.value());
             const auto accion = _procesa_cambio_de_fase(
-                modelo_amplio.fase_actual,       //
+                modelo_amplio.get_fase_actual(), //
                 enlace_vista,                    //
                 timer_espera_antes_de_resultado, //
                 fase_previa,                     //
@@ -204,12 +203,13 @@ AccionGeneral Nivel::ejecutar() {
             }
         }
         modelo_amplio.modelo_interno.evaluar_preparacion_pizzas();
-        const auto fase_previa = modelo_amplio.fase_actual;
+        const auto fase_previa = modelo_amplio.get_fase_actual();
         // En funcion de la fase actual (no necesariamente recien iniciada)
-        switch (modelo_amplio.fase_actual) {
+        switch (modelo_amplio.get_fase_actual()) {
             case FaseNivel::EsperaAntesDeResultado:
                 if (timer_espera_antes_de_resultado.termino()) {
-                    modelo_amplio.fase_actual = FaseNivel::MostrandoResultado;
+                    modelo_amplio.set_fase_actual(FaseNivel::MostrandoResultado
+                    );
                 }
                 break;
             case FaseNivel::MostrandoResultado:
@@ -218,10 +218,10 @@ AccionGeneral Nivel::ejecutar() {
                 };
                 break;
         }
-        if (modelo_amplio.fase_actual != fase_previa &&
-            modelo_amplio.fase_actual == FaseNivel::MostrandoResultado) {
-            enlace_vista.on_cambio_de_fase(modelo_amplio.fase_actual);
-            mostrar_resultado(
+        const auto fase_actual = modelo_amplio.get_fase_actual();
+        if (fase_actual != fase_previa &&
+            fase_actual == FaseNivel::MostrandoResultado) {
+            on_cambio_a_fase_mostrar_resultado(
                 globales, modelo_amplio, enlace_vista, timer_fin_nivel, sound
             );
         }
@@ -229,7 +229,7 @@ AccionGeneral Nivel::ejecutar() {
         const auto transcurrido = tiempo_real_actual - previo;
         gestor_tiempo_juego.tick(transcurrido);
         previo = tiempo_real_actual;
-        enlace_vista.actualizarIU(
+        enlace_vista.actualizar_interfaz_grafico(
             globales.window, modelo_amplio, tiempo_real_actual
         );
         enlace_vista.dibujar_vista(globales.window);

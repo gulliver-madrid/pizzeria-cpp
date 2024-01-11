@@ -1,6 +1,5 @@
 #include "vista.h"
 #include "../fase_nivel.h"
-#include "../modelo_amplio/modelo_amplio.h"
 #include "../templates/helpers.h"
 #include "basicos_vista.h"
 #include "grid.h"
@@ -41,7 +40,7 @@ namespace {
             modelo_amplio.modelo_interno.control_pizzas.contadores;
 
         auto pedidos = modelo_amplio.modelo_interno.control_pizzas.pedidos;
-        switch (modelo_amplio.fase_actual) {
+        switch (modelo_amplio.get_fase_actual()) {
             case FaseNivel::MostrandoInstrucciones:
                 // etiquetas.dibujar_instrucciones(target);
                 break;
@@ -144,7 +143,7 @@ void Vista::set_presentacion_vista(
  * Actualiza el interfaz grafico
  */
 void Vista::actualizarIU(              //
-    sf::RenderTarget &(target),        //
+    sf::RenderTarget &target,          //
     const ModeloAmplio &modelo_amplio, //
     const sf::Time &tiempo_real_actual //
 ) {
@@ -153,10 +152,10 @@ void Vista::actualizarIU(              //
     target.clear(colores::COLOR_FONDO);
     if (modelo_amplio.mostrando_grid)
         grid.draw(target, GRID_SIZE, GRID_TONE);
-
+    const auto fase_actual = modelo_amplio.get_fase_actual();
     if ( //
-        modelo_amplio.fase_actual == FaseNivel::Activa ||
-        modelo_amplio.fase_actual == FaseNivel::EsperaAntesDeResultado
+        fase_actual == FaseNivel::Activa ||
+        fase_actual == FaseNivel::EsperaAntesDeResultado
     ) {
         const auto preparacion =
             modelo_amplio.modelo_interno.obtener_estado_preparacion_pizzas();

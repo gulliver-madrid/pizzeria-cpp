@@ -1,7 +1,6 @@
 #include "enlace_vista.h"
 #include "../fase_nivel.h"
 #include "../log_init.h"
-#include "../modelo_amplio/modelo_amplio.h"
 #include "../templates/helpers.h"
 #include "vista.h"
 #include <cassert>
@@ -66,7 +65,7 @@ void EnlaceVista::set_vista(std::shared_ptr<Vista> vista) {
     vista->set_presentacion_vista(presentacion_vista);
 }
 
-void EnlaceVista::on_cambio_de_fase(FaseNivel &nueva_fase) {
+void EnlaceVista::on_cambio_de_fase(FaseNivel nueva_fase) {
     LOG(debug) << "Cambio de fase en EnlaceVista: "
                << static_cast<int>(nueva_fase);
     switch (nueva_fase) {
@@ -95,8 +94,8 @@ void EnlaceVista::esconder_paneles() const {
     vista->paneles_completos.visible = false;
 }
 
-void EnlaceVista::actualizarIU(
-    sf::RenderTarget &(target),        //
+void EnlaceVista::actualizar_interfaz_grafico(
+    sf::RenderTarget &target,          //
     const ModeloAmplio &modelo_amplio, //
     const sf::Time &tiempo_real_actual //
 ) {
@@ -108,10 +107,9 @@ void EnlaceVista::actualizarIU(
     vista->actualizarIU(target, modelo_amplio, tiempo_real_actual);
 }
 
-void EnlaceVista::dibujar_vista(sf::RenderTarget &target) { //
-    target.draw(*vista);
-}
-
 PresentacionVista EnlaceVista::get_presentacion_vista() const { //
     return *presentacion_vista;
+}
+void EnlaceVista::dibujar_vista(sf::RenderTarget &target) { //
+    target.draw(*vista);
 }

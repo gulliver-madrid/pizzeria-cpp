@@ -1,13 +1,21 @@
 #include "modelo_amplio.h"
-#include "../fase_nivel.h"
+#include "../observador_fase.h"
 #include "comandos.h"
 
 ModeloAmplio::ModeloAmplio(const DatosModeloInterno &datos_modelo_interno)
-    : fase_actual(FaseNivel::MostrandoInstrucciones),
-      modelo_interno(datos_modelo_interno) {
+    : modelo_interno(datos_modelo_interno) {
     establecido = true;
 }
 
-FaseNivel ModeloAmplio::get_fase_actual() { //
+void ModeloAmplio::set_fase_actual(FaseNivel nueva) { //
+    if (nueva == fase_actual)
+        return;
+    fase_actual = nueva;
+    for (auto &observador : observadores_fase) {
+        observador.get().on_cambio_de_fase(nueva);
+    }
+}
+
+FaseNivel ModeloAmplio::get_fase_actual() const { //
     return fase_actual;
 }

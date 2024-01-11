@@ -1,12 +1,14 @@
 #pragma once
 
 #include "../modelo/modelo.h"
+#include "../modelo_amplio/modelo_amplio.h"
 #include "botones_app.h"
 #include "etiquetas/etiquetas.h"
 #include "paneles.h"
 #include "presentacion_vista.h"
+#include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/System/Time.hpp>
 
-struct ModeloAmplio;
 struct Grid;
 
 namespace impl {
@@ -52,8 +54,8 @@ class Vista : public ObjetoConFont, public sf::Drawable {
     );
 
     void actualizarIU(
-        sf::RenderTarget &,                //
-        const ModeloAmplio &,              //
+        sf::RenderTarget &target,          //
+        const ModeloAmplio &modelo_amplio, //
         const sf::Time &tiempo_real_actual //
     );
 

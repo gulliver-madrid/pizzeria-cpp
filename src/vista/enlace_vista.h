@@ -1,12 +1,13 @@
 #pragma once
 
+#include "../modelo_amplio/modelo_amplio.h"
+#include "../observador_fase.h"
 #include "presentacion_vista.h"
+#include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/System/Time.hpp>
 #include <memory>
 
-enum class FaseNivel;
 struct ActivacionBotones;
-struct ModeloAmplio;
 struct ModeloInterno;
 struct Vista;
 
@@ -21,7 +22,7 @@ namespace enlace_vista_impl {
 }
 
 /* Debe ser un intermediario entre el modelo y la vista */
-class EnlaceVista {
+class EnlaceVista : public ObservadorFase {
     // TODO: hacer vista privado
     // TODO: implementar los metodos que faltan
   private:
@@ -35,11 +36,11 @@ class EnlaceVista {
 
     EnlaceVista();
     void set_vista(std::shared_ptr<Vista> vista);
-    void on_cambio_de_fase(FaseNivel &);
+    void on_cambio_de_fase(FaseNivel);
     void esconder_paneles() const;
-    void actualizarIU(
-        sf::RenderTarget &,                //
-        const ModeloAmplio &,              //
+    void actualizar_interfaz_grafico(
+        sf::RenderTarget &target,          //
+        const ModeloAmplio &modelo_amplio, //
         const sf::Time &tiempo_real_actual //
     );
     PresentacionVista get_presentacion_vista() const;

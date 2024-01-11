@@ -13,7 +13,7 @@ Realizador::Realizador(ModeloAmplio &modelo_amplio)
 NuevaFase Realizador::encargar_pizza( //
     const dominio::TipoPizza tp
 ) {
-    assert(modelo_amplio.fase_actual == FaseNivel::Activa);
+    assert(modelo_amplio.get_fase_actual() == FaseNivel::Activa);
     LOG(info) << "Antes de anadir encargo" << std::endl;
     modelo_amplio.modelo_interno.anadir_encargo(tp);
     LOG(info) << "Despues de anadir encargo" << std::endl;
@@ -27,7 +27,7 @@ NuevaFase Realizador::encargar_pizza( //
 NuevaFase Realizador::despachar_pizza( //
     const dominio::TipoPizza tp
 ) {
-    assert(modelo_amplio.fase_actual == FaseNivel::Activa);
+    assert(modelo_amplio.get_fase_actual() == FaseNivel::Activa);
     const auto pedidos_cubiertos =
         modelo_amplio.modelo_interno.despachar_pizza(tp);
     if (pedidos_cubiertos) {
@@ -43,6 +43,8 @@ NuevaFase Realizador::alternar_grid() {
 }
 
 NuevaFase Realizador::empezar() {
-    assert(modelo_amplio.fase_actual == FaseNivel::MostrandoInstrucciones);
+    assert(
+        modelo_amplio.get_fase_actual() == FaseNivel::MostrandoInstrucciones
+    );
     return FaseNivel::Activa;
 }

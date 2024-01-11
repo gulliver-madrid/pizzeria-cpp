@@ -95,10 +95,11 @@
 
 - modelo_amplio/modelo_amplio.cpp:
     - modelo_amplio/modelo_amplio.h
-    - fase_nivel.h
     - modelo_amplio/comandos.h
+    - observador_fase.h
 
 - modelo_amplio/modelo_amplio.h:
+    - fase_nivel.h
     - modelo/datos_modelo_interno.h
     - modelo/modelo_interno.h
 
@@ -252,11 +253,12 @@
     - vista/enlace_vista.h
     - fase_nivel.h
     - log_init.h
-    - modelo_amplio/modelo_amplio.h
     - templates/helpers.h
     - vista/vista.h
 
 - vista/enlace_vista.h:
+    - modelo_amplio/modelo_amplio.h
+    - observador_fase.h
     - vista/presentacion_vista.h
 
 - vista/etiquetas/etiquetas.cpp:
@@ -345,7 +347,6 @@
 - vista/vista.cpp:
     - vista/vista.h
     - fase_nivel.h
-    - modelo_amplio/modelo_amplio.h
     - templates/helpers.h
     - vista/basicos_vista.h
     - vista/grid.h
@@ -353,6 +354,7 @@
 
 - vista/vista.h:
     - modelo/modelo.h
+    - modelo_amplio/modelo_amplio.h
     - vista/botones_app.h
     - vista/etiquetas/etiquetas.h
     - vista/paneles.h
