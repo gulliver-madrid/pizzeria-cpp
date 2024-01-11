@@ -32,7 +32,7 @@ void _draw_grid(
     render_texture.display();
 }
 
-void Grid::draw(sf::RenderTarget &(target), int distancia, int tono_gris) {
+void Grid::draw(sf::RenderTarget &target, int distancia, int tono_gris) {
     // Verificamos si ya se ha creado la textura
     bool diff_tamano =
         (texture.getSize().x != target.getSize().x ||

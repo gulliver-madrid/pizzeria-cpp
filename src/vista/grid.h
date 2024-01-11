@@ -14,5 +14,5 @@ struct Grid {
     sf::RenderTexture render_texture;
     bool construido = false;
     void
-    draw(sf::RenderTarget &(target), int distancia = 50, int tono_gris = 60);
+    draw(sf::RenderTarget &target, int distancia = 50, int tono_gris = 60);
 };

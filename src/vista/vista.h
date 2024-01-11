@@ -30,7 +30,7 @@ class Vista : public ObjetoConFont, public sf::Drawable {
     const dominio::TiposDePizza &tp_disponibles;
 
     void _actualizar_paneles(const EstadoPreparacionPizzas &);
-    void _dibujar_paneles(sf::RenderTarget &(target)) const;
+    void _dibujar_paneles(sf::RenderTarget &target) const;
 
   public:
     std::shared_ptr<PresentacionVista> presentacion_vista;

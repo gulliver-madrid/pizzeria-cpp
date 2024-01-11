@@ -26,7 +26,7 @@ void dibujar_elementos(
 
 template <typename... Drawables>
 void dibujar_elementos(
-    sf::RenderTarget &(target), const std::tuple<Drawables...> &drawables
+    sf::RenderTarget &target, const std::tuple<Drawables...> &drawables
 ) {
     std::apply(
         [&target](const auto &...drawable) { //

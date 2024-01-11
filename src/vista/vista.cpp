@@ -31,7 +31,7 @@ namespace {
     // TODO:  ir pasando a enlace_vista la logica que deba conocer el modelo
     /* Actualiza y dibuja las etiquetas */
     void actualizar_etiquetas(
-        sf::RenderTarget &(target),        //
+        sf::RenderTarget &target,          //
         EtiquetasGenerales &etiquetas,     //
         const ModeloAmplio &modelo_amplio, //
         const sf::Time &tiempo_real_actual //
@@ -42,7 +42,6 @@ namespace {
         auto pedidos = modelo_amplio.modelo_interno.control_pizzas.pedidos;
         switch (modelo_amplio.get_fase_actual()) {
             case FaseNivel::MostrandoInstrucciones:
-                // etiquetas.dibujar_instrucciones(target);
                 break;
             case FaseNivel::Activa:
             case FaseNivel::EsperaAntesDeResultado:
@@ -53,10 +52,6 @@ namespace {
                     etiquetas.dibujar_contadores(target);
                     break;
                 }
-
-            case FaseNivel::MostrandoResultado:
-                // etiquetas.dibujar_resultado(target);
-                break;
             default:
                 break;
         }
@@ -95,7 +90,7 @@ void Vista::_actualizar_paneles(const EstadoPreparacionPizzas &preparacion //
     // TODO: usar el sistema nativo de dibujo de SFML.
     paneles_completos.actualizar(preparacion);
 }
-void Vista::_dibujar_paneles(sf::RenderTarget &(target)) const {
+void Vista::_dibujar_paneles(sf::RenderTarget &target) const {
     // TODO: usar el sistema nativo de dibujo de SFML.
     target.draw(paneles_completos);
 }
