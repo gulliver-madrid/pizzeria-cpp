@@ -12,7 +12,11 @@ namespace keywords = boost::log::keywords;
 
 void init_log() {
     auto core = logging::core::get();
-    core->set_logging_enabled(_DEBUG);
+#ifdef _DEBUG
+    core->set_logging_enabled(true);
+#else
+    core->set_logging_enabled(false);
+#endif
     std::filesystem::path logFileFolder =
         std::filesystem::current_path() / "logs";
     auto info_file = logFileFolder / "log_info_%N.log";
