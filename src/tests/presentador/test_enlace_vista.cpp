@@ -5,11 +5,11 @@ TEST(EnlaceVista, CreacionEnlaceVista) {
     EnlaceVista enlace_vista;
     ASSERT_EQ(
         enlace_vista.get_presentacion_vista()
-            .etiquetas_info.mostrar_instrucciones,
+            .visibilidad.instrucciones,
         false
     );
     ASSERT_EQ(
-        enlace_vista.get_presentacion_vista().etiquetas_info.mostrar_resultado,
+        enlace_vista.get_presentacion_vista().visibilidad.resultado,
         false
     );
 }

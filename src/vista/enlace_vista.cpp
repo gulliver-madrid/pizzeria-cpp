@@ -49,11 +49,10 @@ ActivacionBotones enlace_vista_impl::obtener_activacion_botones( //
 ///// EnlaceVista (private) /////
 
 void EnlaceVista::cambiar_visibilidad_instrucciones(bool nueva) {
-    presentacion_vista->etiquetas_info.mostrar_instrucciones = nueva;
+    presentacion_vista->visibilidad.instrucciones = nueva;
 }
 void EnlaceVista::cambiar_visibilidad_resultado(bool nueva) {
-    LOG(debug) << "Cambiando visibilidad resultado: " << nueva;
-    presentacion_vista->etiquetas_info.mostrar_resultado = nueva;
+    presentacion_vista->visibilidad.resultado = nueva;
 }
 
 ///// EnlaceVista (public) /////

@@ -79,10 +79,10 @@ void EtiquetasInfo::draw(
     sf::RenderTarget &target, //
     sf::RenderStates states   //
 ) const {
-    if (presentacion_vista->etiquetas_info.mostrar_instrucciones) {
+    if (presentacion_vista->visibilidad.instrucciones) {
         target.draw(instrucciones);
     }
-    if (presentacion_vista->etiquetas_info.mostrar_resultado) {
+    if (presentacion_vista->visibilidad.resultado) {
         target.draw(resultado);
     }
 }

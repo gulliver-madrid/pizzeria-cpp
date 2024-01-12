@@ -1,8 +1,12 @@
 #pragma once
-#include "etiquetas/visibilidad_etiquetas_info.h"
 
 ///// PresentacionVista /////
 
+struct Visibilidad {
+    bool instrucciones = false;
+    bool resultado = false;
+};
+
 struct PresentacionVista {
-    VisibilidadEtiquetasInfo etiquetas_info;
+    Visibilidad visibilidad;
 };
