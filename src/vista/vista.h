@@ -13,12 +13,6 @@ namespace sf {
     class Time;
 } // namespace sf
 
-namespace impl {
-    VistaPizzasToStrings contadores_to_preparadas( //
-        const modelo::PizzasAContadores &
-    );
-} // namespace impl
-
 // ActivacionBotones
 struct ActivacionBotones {
     bool encargar;

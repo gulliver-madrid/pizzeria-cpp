@@ -1,6 +1,7 @@
 #pragma once
 
 #include "dominio.h"
+#include "modelo_shared.h"
 #include <cassert>
 #include <map>
 #include <vector>
@@ -21,10 +22,6 @@ struct Contadores {
     // Actualmente en el area de preparadas
     int preparadas = 0;
 };
-
-namespace modelo {
-    using PizzasAContadores = std::map<dominio::TipoPizza, Contadores>;
-}
 
 namespace debug {
     void debug_contadores(const modelo::PizzasAContadores &contadores);

@@ -2,6 +2,7 @@
 #include "../modelo/dominio.h"
 #include "../modelo/modelo.h"
 #include "../templates/helpers.h"
+#include "vista_shared.h"
 
 namespace presentador {
     std::string crea_linea_completitud_pizza(
@@ -36,4 +37,19 @@ namespace presentador {
         }
         return s;
     }
+
+    VistaPizzasToStrings contadores_to_preparadas(  //
+        const modelo::PizzasAContadores &contadores //
+    ) {
+        VistaPizzasToStrings textos_preparadas;
+        for (auto &[tp, contadores_tp] : contadores) {
+            assert(has_key(tipo_pizza_to_string, tp));
+            auto &nombre_pizza = tipo_pizza_to_string.at(tp);
+            std::string linea =
+                nombre_pizza + ": " + std::to_string(contadores_tp.preparadas);
+            textos_preparadas[tp] = linea;
+        }
+        return textos_preparadas;
+    }
+
 } // namespace presentador

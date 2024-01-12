@@ -3,6 +3,7 @@
 #include "../templates/helpers.h"
 #include "basicos_vista.h"
 #include "grid.h"
+#include "presentador.h"
 #include "vista_data.h"
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <cassert>
@@ -47,7 +48,7 @@ namespace {
             case FaseNivel::EsperaAntesDeResultado:
                 {
                     const auto vista_preparadas =
-                        impl::contadores_to_preparadas(contadores);
+                        presentador::contadores_to_preparadas(contadores);
                     etiquetas.actualizar_contadores(vista_preparadas, pedidos);
                     etiquetas.dibujar_contadores(target);
                     break;
@@ -65,22 +66,6 @@ namespace {
     }
 
 } // namespace
-
-namespace impl {
-    VistaPizzasToStrings contadores_to_preparadas(  //
-        const modelo::PizzasAContadores &contadores //
-    ) {
-        VistaPizzasToStrings textos_preparadas;
-        for (auto &[tp, contadores_tp] : contadores) {
-            assert(has_key(tipo_pizza_to_string, tp));
-            auto &nombre_pizza = tipo_pizza_to_string.at(tp);
-            std::string linea =
-                nombre_pizza + ": " + std::to_string(contadores_tp.preparadas);
-            textos_preparadas[tp] = linea;
-        }
-        return textos_preparadas;
-    }
-} // namespace impl
 
 ///// Vista (private) /////
 
