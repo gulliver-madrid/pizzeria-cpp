@@ -33,10 +33,10 @@ class Vista : public ObjetoConFont, public sf::Drawable {
         const ModeloAmplio &modelo_amplio, //
         const sf::Time &tiempo_real_actual //
     );
-    void _actualizar_paneles(const EstadoPreparacionPizzas &);
     void _dibujar_paneles(sf::RenderTarget &target) const;
-    void
-    _actualizar_vista_paneles(const std::optional<EstadoPreparacionPizzas> &);
+    void _actualizar_vista_paneles( //
+        const std::optional<VistaPreparacionPizzas> &
+    );
 
   public:
     std::shared_ptr<PresentacionVista> presentacion_vista;
@@ -59,11 +59,11 @@ class Vista : public ObjetoConFont, public sf::Drawable {
         std::shared_ptr<PresentacionVista> //
     );
 
-    void actualizarIU(                                //
-        sf::RenderTarget &,                           //
-        const ModeloAmplio &,                         //
-        const std::optional<EstadoPreparacionPizzas>, //
-        const sf::Time &tiempo_real_actual            //
+    void actualizarIU(                                 //
+        sf::RenderTarget &,                            //
+        const ModeloAmplio &,                          //
+        const std::optional<VistaPreparacionPizzas> &, //
+        const sf::Time &tiempo_real_actual             //
     );
 
     void mostrar_elementos_fase_activa();

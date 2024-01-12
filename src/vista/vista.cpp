@@ -70,25 +70,18 @@ void Vista::_actualizar_etiquetas(
     etiquetas.dibujar_barra_estado(target);
 }
 
-// TODO: diferenciar entre actualizacion de datos y dibujado
-void Vista::_actualizar_paneles(const EstadoPreparacionPizzas &preparacion //
-) {
-    // TODO: usar el sistema nativo de dibujo de SFML.
-    paneles_completos.actualizar(preparacion);
-}
-
 void Vista::_dibujar_paneles(sf::RenderTarget &target) const {
     // TODO: usar el sistema nativo de dibujo de SFML.
     target.draw(paneles_completos);
 }
 
 void Vista::_actualizar_vista_paneles(
-    const std::optional<EstadoPreparacionPizzas> &preparacion
+    const std::optional<VistaPreparacionPizzas> &vista_preparacion
 
 ) {
-    paneles_completos.visible = preparacion.has_value();
-    if (preparacion) {
-        _actualizar_paneles(preparacion.value());
+    paneles_completos.visible = vista_preparacion.has_value();
+    if (vista_preparacion) {
+        paneles_completos.actualizar(vista_preparacion.value());
     }
 }
 
@@ -134,11 +127,11 @@ void Vista::set_presentacion_vista(
 /*
  * Actualiza el interfaz grafico
  */
-void Vista::actualizarIU(                                     //
-    sf::RenderTarget &target,                                 //
-    const ModeloAmplio &modelo_amplio,                        //
-    const std::optional<EstadoPreparacionPizzas> preparacion, //
-    const sf::Time &tiempo_real_actual                        //
+void Vista::actualizarIU(                                           //
+    sf::RenderTarget &target,                                       //
+    const ModeloAmplio &modelo_amplio,                              //
+    const std::optional<VistaPreparacionPizzas> &vista_preparacion, //
+    const sf::Time &tiempo_real_actual                              //
 ) {
 
     // Limpia la target y empieza a pintar los componentes visuales
@@ -147,7 +140,7 @@ void Vista::actualizarIU(                                     //
         grid.draw(target, GRID_SIZE, GRID_TONE);
     const auto fase_actual = modelo_amplio.get_fase_actual();
 
-    _actualizar_vista_paneles(preparacion);
+    _actualizar_vista_paneles(vista_preparacion);
 
     _actualizar_etiquetas(target, etiquetas, modelo_amplio, tiempo_real_actual);
 }

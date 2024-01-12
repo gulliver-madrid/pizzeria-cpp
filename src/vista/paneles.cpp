@@ -73,7 +73,8 @@ void TitulosPaneles::draw(
 PanelesCompletos::PanelesCompletos(const sf::Font &font)
     : ObjetoConFont(font), titulos_paneles(font) {}
 
-void PanelesCompletos::actualizar(const EstadoPreparacionPizzas &preparacion //
+void PanelesCompletos::actualizar(
+    const VistaPreparacionPizzas &vista_preparacion //
 ) {
     if (!visible)
         return;
@@ -81,7 +82,7 @@ void PanelesCompletos::actualizar(const EstadoPreparacionPizzas &preparacion //
         IndicePanel::PANEL_EN_PREPARACION
     );
     barras_progreso_con_nombres = crear_barras_progreso( //
-        preparacion, pos_panel, font
+        vista_preparacion, pos_panel, font
     );
 }
 

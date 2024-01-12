@@ -35,7 +35,7 @@ struct PanelesCompletos : public ObjetoConFont, public sf::Drawable {
 
     PanelesCompletos(const sf::Font &);
 
-    void actualizar(const EstadoPreparacionPizzas & //
+    void actualizar(const VistaPreparacionPizzas & //
     );
     virtual void draw(
         sf::RenderTarget &target, //

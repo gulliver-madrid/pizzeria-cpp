@@ -2,6 +2,7 @@
 #include "../fase_nivel.h"
 #include "../log_init.h"
 #include "../templates/helpers.h"
+#include "presentador.h"
 #include "vista.h"
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/System/Time.hpp>
@@ -105,17 +106,21 @@ void EnlaceVista::actualizar_interfaz_grafico(
             modelo_amplio.modelo_interno
         );
     vista->activar_botones_condicionalmente(activacion_botones);
-    std::optional<EstadoPreparacionPizzas> preparacion;
+    std::optional<VistaPreparacionPizzas> vista_preparacion;
     const auto fase_actual = modelo_amplio.get_fase_actual();
     if ( //
         fase_actual == FaseNivel::Activa ||
         fase_actual == FaseNivel::EsperaAntesDeResultado
     ) {
-        preparacion.emplace(
-            modelo_amplio.modelo_interno.obtener_estado_preparacion_pizzas()
+        const auto preparacion =
+            modelo_amplio.modelo_interno.obtener_estado_preparacion_pizzas();
+        vista_preparacion.emplace(
+            presentador::estado_preparacion_pizzas_to_vista(preparacion)
         );
     }
-    vista->actualizarIU(target, modelo_amplio, preparacion, tiempo_real_actual);
+    vista->actualizarIU(
+        target, modelo_amplio, vista_preparacion, tiempo_real_actual
+    );
 }
 
 PresentacionVista EnlaceVista::get_presentacion_vista() const { //

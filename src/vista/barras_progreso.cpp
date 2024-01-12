@@ -1,5 +1,4 @@
 #include "barras_progreso.h"
-#include "../modelo/modelo.h"
 #include "basicos_vista.h"
 #include "vista_data.h"
 
@@ -9,12 +8,9 @@ namespace medidas {
 
 /* Crea y actualiza las barras de progreso */
 std::vector<BarraProgresoConNombre> crear_barras_progreso(
-    const EstadoPreparacionPizzas &preparacion, const sf::Vector2f &pos_panel,
-    const sf::Font &font
+    const VistaPreparacionPizzas &vista_preparacion_pizzas,
+    const sf::Vector2f &pos_panel, const sf::Font &font
 ) {
-    const auto vista_preparaciones_pizzas =
-        presentador::estado_preparacion_pizzas_to_vista(preparacion);
-
     std::vector<BarraProgresoConNombre> vect{};
     const int pos_x = pos_panel.x + medidas::MARGEN_IZQ_ETIQUETAS;
     const int pos_y_inicial = pos_panel.y + medidas::FILA_CONTENIDO_PANEL;
@@ -22,7 +18,7 @@ std::vector<BarraProgresoConNombre> crear_barras_progreso(
     const int largo = 40;
     const auto dimensiones = sf::Vector2f(ancho, largo);
     int i = 0;
-    for (auto &vista_preparacion_pizza : vista_preparaciones_pizzas) {
+    for (auto &vista_preparacion_pizza : vista_preparacion_pizzas) {
         const int offset_y =
             i * medidas::DIFERENCIA_VERTICAL_ENTRE_BARRAS_PROGRESO;
         const int pos_y = pos_y_inicial + offset_y;

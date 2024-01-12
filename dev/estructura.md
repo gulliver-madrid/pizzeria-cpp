@@ -199,13 +199,12 @@
 
 - vista/barras_progreso.cpp:
     - vista/barras_progreso.h
-    - modelo/modelo.h
     - vista/basicos_vista.h
     - vista/vista_data.h
 
 - vista/barras_progreso.h:
     - vista/componentes/barra_progreso.h
-    - vista/presentador.h
+    - vista/presentaciones.h
 
 - vista/basicos_vista.cpp:
     - vista/basicos_vista.h
@@ -254,6 +253,7 @@
     - fase_nivel.h
     - log_init.h
     - templates/helpers.h
+    - vista/presentador.h
     - vista/vista.h
 
 - vista/enlace_vista.h:
@@ -344,6 +344,7 @@
 - vista/presentador.h:
     - modelo/modelo.h
     - modelo/modelo_shared.h
+    - vista/presentaciones.h
     - vista/vista_shared.h
 
 - vista/vista.cpp:
