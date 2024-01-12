@@ -61,7 +61,7 @@ void EtiquetasGenerales::actualizar_barra_estado(
     barra_estado->actualizar(tiempo_real_actual, tiempo_juego_actual);
 }
 
-void EtiquetasGenerales::dibujar_contadores(sf::RenderTarget &target) {
+void EtiquetasGenerales::dibujar_contadores(sf::RenderTarget &target) const {
     target.draw(*contadores);
 }
 

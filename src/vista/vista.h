@@ -24,12 +24,19 @@ struct ActivacionBotones {
 class Vista : public ObjetoConFont, public sf::Drawable {
   private:
     const dominio::TiposDePizza &tp_disponibles;
+    // provisional
+    bool _deben_dibujarse_etiquetas_contadores;
 
+    void _actualizar_etiquetas(
+        sf::RenderTarget &target,          //
+        EtiquetasGenerales &etiquetas,     //
+        const ModeloAmplio &modelo_amplio, //
+        const sf::Time &tiempo_real_actual //
+    );
     void _actualizar_paneles(const EstadoPreparacionPizzas &);
     void _dibujar_paneles(sf::RenderTarget &target) const;
-    void _actualizar_vista_paneles(
-        const EstadoPreparacionPizzas &preparacion, sf::RenderTarget &target
-    );
+    void
+    _actualizar_vista_paneles(const std::optional<EstadoPreparacionPizzas> &);
 
   public:
     std::shared_ptr<PresentacionVista> presentacion_vista;

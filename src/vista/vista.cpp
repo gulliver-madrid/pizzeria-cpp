@@ -28,46 +28,47 @@ namespace {
             boton_despachar.activacion_condicional(debe_estar_activo);
         }
     }
-    // TODO:  separar la parte de actualizacion y de dibujo
-    // TODO:  ir pasando a enlace_vista la logica que deba conocer el modelo
-    /* Actualiza y dibuja las etiquetas */
-    void actualizar_etiquetas(
-        sf::RenderTarget &target,          //
-        EtiquetasGenerales &etiquetas,     //
-        const ModeloAmplio &modelo_amplio, //
-        const sf::Time &tiempo_real_actual //
-    ) {
-        const modelo::PizzasAContadores &contadores =
-            modelo_amplio.modelo_interno.control_pizzas.contadores;
-
-        auto pedidos = modelo_amplio.modelo_interno.control_pizzas.pedidos;
-        switch (modelo_amplio.get_fase_actual()) {
-            case FaseNivel::MostrandoInstrucciones:
-                break;
-            case FaseNivel::Activa:
-            case FaseNivel::EsperaAntesDeResultado:
-                {
-                    const auto vista_preparadas =
-                        presentador::contadores_to_preparadas(contadores);
-                    etiquetas.actualizar_contadores(vista_preparadas, pedidos);
-                    etiquetas.dibujar_contadores(target);
-                    break;
-                }
-            default:
-                break;
-        }
-
-        const auto tiempo_juego_actual =
-            modelo_amplio.modelo_interno.obtener_tiempo_juego();
-        etiquetas.actualizar_barra_estado(
-            tiempo_real_actual, tiempo_juego_actual
-        );
-        etiquetas.dibujar_barra_estado(target);
-    }
 
 } // namespace
 
 ///// Vista (private) /////
+
+// TODO:  separar la parte de actualizacion y de dibujo
+// TODO:  ir pasando a enlace_vista la logica que deba conocer el modelo
+/* Actualiza y dibuja las etiquetas */
+void Vista::_actualizar_etiquetas(
+    sf::RenderTarget &target,          //
+    EtiquetasGenerales &etiquetas,     //
+    const ModeloAmplio &modelo_amplio, //
+    const sf::Time &tiempo_real_actual //
+) {
+    const modelo::PizzasAContadores &contadores =
+        modelo_amplio.modelo_interno.control_pizzas.contadores;
+
+    auto pedidos = modelo_amplio.modelo_interno.control_pizzas.pedidos;
+    _deben_dibujarse_etiquetas_contadores = false;
+    switch (modelo_amplio.get_fase_actual()) {
+        case FaseNivel::MostrandoInstrucciones:
+            break;
+        case FaseNivel::Activa:
+        case FaseNivel::EsperaAntesDeResultado:
+            {
+                const auto vista_preparadas =
+                    presentador::contadores_to_preparadas(contadores);
+                etiquetas.actualizar_contadores(vista_preparadas, pedidos);
+                _deben_dibujarse_etiquetas_contadores = true;
+
+                break;
+            }
+        default:
+            break;
+    }
+
+    const auto tiempo_juego_actual =
+        modelo_amplio.modelo_interno.obtener_tiempo_juego();
+    etiquetas.actualizar_barra_estado(tiempo_real_actual, tiempo_juego_actual);
+    etiquetas.dibujar_barra_estado(target);
+}
 
 // TODO: diferenciar entre actualizacion de datos y dibujado
 void Vista::_actualizar_paneles(const EstadoPreparacionPizzas &preparacion //
@@ -75,16 +76,20 @@ void Vista::_actualizar_paneles(const EstadoPreparacionPizzas &preparacion //
     // TODO: usar el sistema nativo de dibujo de SFML.
     paneles_completos.actualizar(preparacion);
 }
+
 void Vista::_dibujar_paneles(sf::RenderTarget &target) const {
     // TODO: usar el sistema nativo de dibujo de SFML.
     target.draw(paneles_completos);
 }
 
 void Vista::_actualizar_vista_paneles(
-    const EstadoPreparacionPizzas &preparacion, sf::RenderTarget &target
+    const std::optional<EstadoPreparacionPizzas> &preparacion
+
 ) {
-    _actualizar_paneles(preparacion);
-    _dibujar_paneles(target);
+    paneles_completos.visible = preparacion.has_value();
+    if (preparacion) {
+        _actualizar_paneles(preparacion.value());
+    }
 }
 
 ///// Vista (public) /////
@@ -140,17 +145,18 @@ void Vista::actualizarIU(              //
     if (modelo_amplio.mostrando_grid)
         grid.draw(target, GRID_SIZE, GRID_TONE);
     const auto fase_actual = modelo_amplio.get_fase_actual();
+    std::optional<EstadoPreparacionPizzas> preparacion;
     if ( //
         fase_actual == FaseNivel::Activa ||
         fase_actual == FaseNivel::EsperaAntesDeResultado
     ) {
-        const auto preparacion =
-            modelo_amplio.modelo_interno.obtener_estado_preparacion_pizzas();
-        _actualizar_vista_paneles(preparacion, target);
+        preparacion.emplace(
+            modelo_amplio.modelo_interno.obtener_estado_preparacion_pizzas()
+        );
     }
+    _actualizar_vista_paneles(preparacion);
 
-    actualizar_etiquetas(target, etiquetas, modelo_amplio, tiempo_real_actual);
-    target.draw(botones);
+    _actualizar_etiquetas(target, etiquetas, modelo_amplio, tiempo_real_actual);
 }
 
 void Vista::mostrar_elementos_fase_activa() {
@@ -176,5 +182,9 @@ void Vista::draw(
     sf::RenderTarget &target, //
     sf::RenderStates states   //
 ) const {
+    _dibujar_paneles(target);
     etiquetas.dibujar_info(target);
+    if (_deben_dibujarse_etiquetas_contadores)
+        etiquetas.dibujar_contadores(target);
+    target.draw(botones);
 }
