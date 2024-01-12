@@ -1,9 +1,15 @@
 #pragma once
 
+#include "../modelo/modelo.h"
 #include "../modelo/modelo_shared.h"
 #include "vista_shared.h"
+#include <string>
+#include <vector>
 
-class Pedido;
+struct VistaPreparacionPizza {
+    std::string nombre_pizza;
+    int porcentaje;
+};
 
 namespace presentador {
 
@@ -16,4 +22,8 @@ namespace presentador {
     VistaPizzasToStrings contadores_to_preparadas( //
         const modelo::PizzasAContadores &
     );
+    std::vector<VistaPreparacionPizza> estado_preparacion_pizzas_to_vista( //
+        const EstadoPreparacionPizzas &                                    //
+    );
+
 } // namespace presentador

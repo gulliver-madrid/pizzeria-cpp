@@ -73,6 +73,7 @@
 
 - modelo/modelo.h:
     - modelo/dominio.h
+    - modelo/modelo_shared.h
 
 - modelo/modelo_interno.cpp:
     - modelo/modelo_interno.h
@@ -204,6 +205,7 @@
 
 - vista/barras_progreso.h:
     - vista/componentes/barra_progreso.h
+    - vista/presentador.h
 
 - vista/basicos_vista.cpp:
     - vista/basicos_vista.h
@@ -333,14 +335,16 @@
     - vista/barras_progreso.h
     - vista/componentes/varios.h
 
-- vista/presentacion_vista.h:
-    - vista/etiquetas/visibilidad_etiquetas_info.h
-
 - vista/presentador.cpp:
     - vista/presentador.h
     - modelo/dominio.h
-    - modelo/modelo.h
     - templates/helpers.h
+    - vista/vista_shared.h
+
+- vista/presentador.h:
+    - modelo/modelo.h
+    - modelo/modelo_shared.h
+    - vista/vista_shared.h
 
 - vista/vista.cpp:
     - vista/vista.h
@@ -348,6 +352,7 @@
     - templates/helpers.h
     - vista/basicos_vista.h
     - vista/grid.h
+    - vista/presentador.h
     - vista/vista_data.h
 
 - vista/vista.h:
@@ -357,7 +362,4 @@
     - vista/etiquetas/etiquetas.h
     - vista/paneles.h
     - vista/presentacion_vista.h
-
-- vista/vista_shared.h:
-    - modelo/dominio.h
 

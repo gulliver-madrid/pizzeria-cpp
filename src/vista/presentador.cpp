@@ -1,8 +1,11 @@
 #include "presentador.h"
 #include "../modelo/dominio.h"
-#include "../modelo/modelo.h"
 #include "../templates/helpers.h"
 #include "vista_shared.h"
+#include <algorithm>
+#include <cassert>
+#include <iterator>
+#include <vector>
 
 namespace presentador {
     std::string crea_linea_completitud_pizza(
@@ -52,4 +55,23 @@ namespace presentador {
         return textos_preparadas;
     }
 
+    VistaPreparacionPizza to_vista(EstadoPreparacionPizzaIndividual preparacion
+    ) {
+        VistaPreparacionPizza vista;
+        vista.nombre_pizza = tipo_pizza_to_string.at(preparacion.tipo);
+        vista.porcentaje = preparacion.porcentaje;
+        return vista;
+    }
+
+    std::vector<VistaPreparacionPizza> estado_preparacion_pizzas_to_vista( //
+        const EstadoPreparacionPizzas &preparacion
+    ) {
+        std::vector<VistaPreparacionPizza> vista_preparaciones_pizzas;
+        std::transform(
+            preparacion.datos.begin(), preparacion.datos.end(),
+            std::back_inserter(vista_preparaciones_pizzas),
+            presentador::to_vista
+        );
+        return vista_preparaciones_pizzas;
+    }
 } // namespace presentador
