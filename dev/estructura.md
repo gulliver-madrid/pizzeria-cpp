@@ -122,8 +122,6 @@
     - fase_nivel.h
     - log_init.h
     - modelo_amplio/aplicador.h
-    - modelo_amplio/modelo_amplio.h
-    - vista/enlace_vista.h
     - vista/vista.h
 
 - nivel.h:

@@ -3,8 +3,6 @@
 #include "../modelo_amplio/modelo_amplio.h"
 #include "../observador_fase.h"
 #include "presentacion_vista.h"
-#include <SFML/Graphics/RenderTarget.hpp>
-#include <SFML/System/Time.hpp>
 #include <memory>
 
 struct ActivacionBotones;
@@ -13,6 +11,7 @@ struct Vista;
 
 namespace sf {
     class RenderTarget;
+    class Time;
 } // namespace sf
 
 namespace enlace_vista_impl {
@@ -39,8 +38,8 @@ class EnlaceVista : public ObservadorFase {
     void on_cambio_de_fase(FaseNivel);
     void esconder_paneles() const;
     void actualizar_interfaz_grafico(
-        sf::RenderTarget &target,          //
-        const ModeloAmplio &modelo_amplio, //
+        sf::RenderTarget &,                //
+        const ModeloAmplio &,              //
         const sf::Time &tiempo_real_actual //
     );
     PresentacionVista get_presentacion_vista() const;

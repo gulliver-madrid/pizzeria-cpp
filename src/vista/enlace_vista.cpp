@@ -3,6 +3,8 @@
 #include "../log_init.h"
 #include "../templates/helpers.h"
 #include "vista.h"
+#include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/System/Time.hpp>
 #include <cassert>
 #include <iostream>
 

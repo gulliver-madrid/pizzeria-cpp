@@ -6,10 +6,12 @@
 #include "etiquetas/etiquetas.h"
 #include "paneles.h"
 #include "presentacion_vista.h"
-#include <SFML/Graphics/RenderTarget.hpp>
-#include <SFML/System/Time.hpp>
 
 struct Grid;
+namespace sf {
+    class RenderTarget;
+    class Time;
+} // namespace sf
 
 namespace impl {
     VistaPizzasToStrings contadores_to_preparadas( //

@@ -1,11 +1,13 @@
 #pragma once
 
 #include "dominio.h"
-#include <SFML/System/Time.hpp>
 #include <cassert>
 #include <map>
 #include <vector>
 
+namespace sf {
+    class Time;
+} // namespace sf
 struct Encargos;
 
 /*

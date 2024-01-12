@@ -5,7 +5,6 @@
 #include "../../shared.h"
 #include "../presentacion_vista.h"
 #include "../vista_shared.h"
-#include <SFML/System/Time.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <memory>
 #include <optional>
@@ -14,6 +13,7 @@ namespace sf {
     class Text;
     class RenderTarget;
     class RenderTarget;
+    class Time;
 } // namespace sf
 
 struct EtiquetasBarraEstado;

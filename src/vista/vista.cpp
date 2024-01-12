@@ -4,7 +4,7 @@
 #include "basicos_vista.h"
 #include "grid.h"
 #include "vista_data.h"
-#include <SFML/System/Time.hpp>
+#include <SFML/Graphics/RenderTarget.hpp>
 #include <cassert>
 #include <iostream>
 #include <map>

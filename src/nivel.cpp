@@ -4,8 +4,6 @@
 #include "fase_nivel.h"
 #include "log_init.h"
 #include "modelo_amplio/aplicador.h"
-#include "modelo_amplio/modelo_amplio.h"
-#include "vista/enlace_vista.h"
 #include "vista/vista.h"
 #include <SFML/System/Time.hpp>
 #include <SFML/Window/Event.hpp>
@@ -101,9 +99,9 @@ std::optional<FaseNivel> Nivel::_procesarEvento(
             LOG(info) << "Antes de procesar click" << std::endl;
             return _procesa_click(botones, modelo_amplio.get_fase_actual());
         default:
+            /* Eventos ignorados */
             LOG(info) << "Evento ignorado" << std::endl;
             LOG(info) << "Tipo de evento: " << evento.type << std::endl;
-            /* Eventos ignorados */
             break;
     }
     return std::nullopt;
@@ -140,7 +138,6 @@ std::optional<AccionGeneral> Nivel::_procesa_cambio_de_fase(
             assert(false);
             break;
     }
-    enlace_vista.on_cambio_de_fase(nueva_fase);
     return posible_accion;
 }
 
