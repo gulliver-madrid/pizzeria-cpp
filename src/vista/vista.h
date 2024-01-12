@@ -59,10 +59,11 @@ class Vista : public ObjetoConFont, public sf::Drawable {
         std::shared_ptr<PresentacionVista> //
     );
 
-    void actualizarIU(
-        sf::RenderTarget &target,          //
-        const ModeloAmplio &modelo_amplio, //
-        const sf::Time &tiempo_real_actual //
+    void actualizarIU(                                //
+        sf::RenderTarget &,                           //
+        const ModeloAmplio &,                         //
+        const std::optional<EstadoPreparacionPizzas>, //
+        const sf::Time &tiempo_real_actual            //
     );
 
     void mostrar_elementos_fase_activa();

@@ -134,10 +134,11 @@ void Vista::set_presentacion_vista(
 /*
  * Actualiza el interfaz grafico
  */
-void Vista::actualizarIU(              //
-    sf::RenderTarget &target,          //
-    const ModeloAmplio &modelo_amplio, //
-    const sf::Time &tiempo_real_actual //
+void Vista::actualizarIU(                                     //
+    sf::RenderTarget &target,                                 //
+    const ModeloAmplio &modelo_amplio,                        //
+    const std::optional<EstadoPreparacionPizzas> preparacion, //
+    const sf::Time &tiempo_real_actual                        //
 ) {
 
     // Limpia la target y empieza a pintar los componentes visuales
@@ -145,15 +146,7 @@ void Vista::actualizarIU(              //
     if (modelo_amplio.mostrando_grid)
         grid.draw(target, GRID_SIZE, GRID_TONE);
     const auto fase_actual = modelo_amplio.get_fase_actual();
-    std::optional<EstadoPreparacionPizzas> preparacion;
-    if ( //
-        fase_actual == FaseNivel::Activa ||
-        fase_actual == FaseNivel::EsperaAntesDeResultado
-    ) {
-        preparacion.emplace(
-            modelo_amplio.modelo_interno.obtener_estado_preparacion_pizzas()
-        );
-    }
+
     _actualizar_vista_paneles(preparacion);
 
     _actualizar_etiquetas(target, etiquetas, modelo_amplio, tiempo_real_actual);
