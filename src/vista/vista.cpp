@@ -80,6 +80,13 @@ void Vista::_dibujar_paneles(sf::RenderTarget &target) const {
     target.draw(paneles_completos);
 }
 
+void Vista::_actualizar_vista_paneles(
+    const EstadoPreparacionPizzas &preparacion, sf::RenderTarget &target
+) {
+    _actualizar_paneles(preparacion);
+    _dibujar_paneles(target);
+}
+
 ///// Vista (public) /////
 
 Vista::Vista(
@@ -139,8 +146,7 @@ void Vista::actualizarIU(              //
     ) {
         const auto preparacion =
             modelo_amplio.modelo_interno.obtener_estado_preparacion_pizzas();
-        _actualizar_paneles(preparacion);
-        _dibujar_paneles(target);
+        _actualizar_vista_paneles(preparacion, target);
     }
 
     actualizar_etiquetas(target, etiquetas, modelo_amplio, tiempo_real_actual);

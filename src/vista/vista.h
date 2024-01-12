@@ -27,6 +27,9 @@ class Vista : public ObjetoConFont, public sf::Drawable {
 
     void _actualizar_paneles(const EstadoPreparacionPizzas &);
     void _dibujar_paneles(sf::RenderTarget &target) const;
+    void _actualizar_vista_paneles(
+        const EstadoPreparacionPizzas &preparacion, sf::RenderTarget &target
+    );
 
   public:
     std::shared_ptr<PresentacionVista> presentacion_vista;
