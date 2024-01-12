@@ -70,7 +70,7 @@ add_executable(pizzeria
     src/demos/boost_log.cpp
     src/demos/demo_nivel.cpp
     src/demos/map.cpp
-    src/demos/prueba.cpp
+    # src/demos/prueba.cpp
     src/demos/unicode.cpp
     src/demos/visual.cpp
     src/demos/visual_textos.cpp
@@ -152,15 +152,15 @@ add_executable(
     src/vista/presentador.cpp
     src/vista/vista.cpp
     src/vista/basicos_vista.cpp
-    # src/demos/boost_log.cpp
-    # src/demos/demo_nivel.cpp
-    # src/demos/map.cpp
-    # src/demos/prueba.cpp
-    # src/demos/unicode.cpp
-    # src/demos/visual.cpp
-    # src/demos/visual_textos.cpp
 )
 target_link_libraries(runUnitTests PRIVATE sfml-graphics sfml-audio Boost::log Boost::filesystem)
 target_link_libraries(runUnitTests PUBLIC gtest gtest_main)
 target_compile_features(runUnitTests PRIVATE cxx_std_17)
 add_test(NAME runUnitTests COMMAND runUnitTests)
+
+# demo_prueba
+add_executable(demo_prueba
+    src/_pruebas/main.cpp
+)
+# target_link_libraries(demo_prueba PRIVATE sfml-graphics sfml-audio Boost::log Boost::filesystem)
+target_compile_features(demo_prueba PRIVATE cxx_std_17)
