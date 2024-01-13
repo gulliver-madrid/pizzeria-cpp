@@ -8,7 +8,7 @@
 #include "vista/grid.h"
 
 enum class FaseNivel;
-struct BotonesApp;
+class BotonesApp;
 struct Globales;
 struct ControladorClicks;
 struct DatosNivel;

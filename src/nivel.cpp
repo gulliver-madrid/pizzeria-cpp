@@ -182,7 +182,7 @@ AccionGeneral Nivel::ejecutar() {
         while (globales.window.pollEvent(event)) {
             LOG(info) << "Antes de procesar evento" << std::endl;
             auto siguiente_fase = _procesarEvento( //
-                event, enlace_vista.vista->botones, modelo_amplio
+                event, enlace_vista.get_botones(), modelo_amplio
             );
             LOG(info) << "Despues de procesar evento" << std::endl;
             if (!siguiente_fase.has_value()) {

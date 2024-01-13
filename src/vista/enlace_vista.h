@@ -8,6 +8,7 @@
 struct ActivacionBotones;
 struct ModeloInterno;
 struct Vista;
+class BotonesApp;
 
 namespace sf {
     class RenderTarget;
@@ -26,13 +27,12 @@ class EnlaceVista : public ObservadorFase {
     // TODO: implementar los metodos que faltan
   private:
     std::shared_ptr<PresentacionVista> presentacion_vista;
+    std::shared_ptr<Vista> vista;
 
     void cambiar_visibilidad_instrucciones(bool);
     void cambiar_visibilidad_resultado(bool);
 
   public:
-    std::shared_ptr<Vista> vista;
-
     EnlaceVista();
     void set_vista(std::shared_ptr<Vista> vista);
     void on_cambio_de_fase(FaseNivel);
@@ -43,5 +43,6 @@ class EnlaceVista : public ObservadorFase {
         const sf::Time &tiempo_real_actual //
     );
     PresentacionVista get_presentacion_vista() const;
+    const std::shared_ptr<const BotonesApp> get_botones() const;
     void dibujar_vista(sf::RenderTarget &);
 };

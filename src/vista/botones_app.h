@@ -16,7 +16,7 @@ struct BotonesGenerales {
     const std::vector<BotonConTexto *> obtener_todos();
 };
 
-struct BotonesApp : public sf::Drawable {
+class BotonesApp : public sf::Drawable {
   private:
     std::vector<BotonConTexto *> todos;
     void _establecer_todos();

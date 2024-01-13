@@ -126,6 +126,11 @@ void EnlaceVista::actualizar_interfaz_grafico(
 PresentacionVista EnlaceVista::get_presentacion_vista() const { //
     return *presentacion_vista;
 }
+
+const std::shared_ptr<const BotonesApp> EnlaceVista::get_botones() const {
+    return vista->botones;
+}
+
 void EnlaceVista::dibujar_vista(sf::RenderTarget &target) { //
     target.draw(*vista);
 }
