@@ -58,7 +58,6 @@ std::optional<FaseNivel> Nivel::_procesa_click(
 EnlaceVista Nivel::_crear_enlace_vista( //
     const modelo::ControlPizzas &control_pizzas
 ) {
-    assert(!enlace_vista_opcional.has_value());
     const auto vista_ptr = std::make_shared<Vista>(
         globales.font,                         //
         grid,                                  //
@@ -166,8 +165,7 @@ AccionGeneral Nivel::ejecutar() {
     assert(modelo_amplio.establecido);
     auto &control_pizzas = modelo_amplio.modelo_interno.control_pizzas;
     auto &contadores = control_pizzas.contadores;
-    enlace_vista_opcional.emplace(_crear_enlace_vista(control_pizzas));
-    auto &enlace_vista = enlace_vista_opcional.value();
+    EnlaceVista enlace_vista = _crear_enlace_vista(control_pizzas);
     modelo_amplio.observadores_fase.push_back(enlace_vista);
     modelo_amplio.set_fase_actual(FaseNivel::MostrandoInstrucciones);
     assert(!contadores.empty());
