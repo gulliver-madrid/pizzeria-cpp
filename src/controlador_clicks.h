@@ -16,15 +16,15 @@ struct ControladorClicks {
   private:
     std::optional<Comando> genera_comando(
         const std::function<bool(const BotonConTexto &boton)> &pulsado, //
-        const BotonesApp &,                                             //
+        const std::shared_ptr<const BotonesApp> &,                      //
         const FaseNivel fase_actual                                     //
     );
 
   public:
     std::optional<Comando> procesa_click(
-        Globales &,                   //
-        const BotonesApp &,           //
-        const FaseNivel fase_actual,  //
-        const sf::Vector2i &mouse_pos //
+        Globales &,                                //
+        const std::shared_ptr<const BotonesApp> &, //
+        const FaseNivel fase_actual,               //
+        const sf::Vector2i &mouse_pos              //
     );
 };

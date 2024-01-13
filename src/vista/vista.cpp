@@ -92,11 +92,11 @@ Vista::Vista(
     Grid &grid,                                 //
     const dominio::TiposDePizza &tp_disponibles //
 )
-    : ObjetoConFont(font),           //
-      botones(font, tp_disponibles), //
-      paneles_completos(font),       //
-      etiquetas(font),               //
-      grid(grid),                    //
+    : ObjetoConFont(font),                                         //
+      botones(std::make_shared<BotonesApp>(font, tp_disponibles)), //
+      paneles_completos(font),                                     //
+      etiquetas(font),                                             //
+      grid(grid),                                                  //
       tp_disponibles(tp_disponibles) {}
 
 void Vista::setup(
@@ -111,10 +111,10 @@ void Vista::setup(
 
     );
     // Mostrar botones iniciales
-    botones.generales.alternar_grid.visible = MODO_DESARROLLO;
-    botones.generales.reiniciar.visible = true;
-    botones.generales.salir.visible = true;
-    botones.empezar.visible = true;
+    botones->generales.alternar_grid.visible = MODO_DESARROLLO;
+    botones->generales.reiniciar.visible = true;
+    botones->generales.salir.visible = true;
+    botones->empezar.visible = true;
 }
 
 void Vista::set_presentacion_vista(
@@ -141,25 +141,26 @@ void Vista::actualizarIU(                                           //
     const auto fase_actual = modelo_amplio.get_fase_actual();
 
     _actualizar_vista_paneles(vista_preparacion);
-
     _actualizar_etiquetas(target, etiquetas, modelo_amplio, tiempo_real_actual);
 }
 
 void Vista::mostrar_elementos_fase_activa() {
-    botones.empezar.visible = false;
-    botones.mostrar_botones_nivel(true);
+    botones->empezar.visible = false;
+    botones->mostrar_botones_nivel(true);
     paneles_completos.visible = true;
 }
 
 void Vista::esconder_botones_gestion_pizzeria() { //
-    botones.mostrar_botones_nivel(false);
+    botones->mostrar_botones_nivel(false);
 }
 
 void Vista::activar_botones_condicionalmente(
     const ActivacionBotones &activacion_botones
 ) {
-    activar_botones_despachar_si_procede(botones.despachar, activacion_botones);
-    for (auto &[_, boton] : botones.encargar) {
+    activar_botones_despachar_si_procede(
+        botones->despachar, activacion_botones
+    );
+    for (auto &[_, boton] : botones->encargar) {
         boton.activacion_condicional(activacion_botones.encargar);
     }
 }
@@ -172,5 +173,5 @@ void Vista::draw(
     etiquetas.dibujar_info(target);
     if (_deben_dibujarse_etiquetas_contadores)
         etiquetas.dibujar_contadores(target);
-    target.draw(botones);
+    target.draw(*botones);
 }

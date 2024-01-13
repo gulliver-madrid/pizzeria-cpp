@@ -35,7 +35,8 @@ void on_cambio_a_fase_mostrar_resultado(
 ///// Nivel (private) /////
 
 std::optional<FaseNivel> Nivel::_procesa_click(
-    const BotonesApp &botones, const FaseNivel fase_actual //
+    const std::shared_ptr<const BotonesApp> &botones,
+    const FaseNivel fase_actual //
 ) {
     auto &ventana = globales.window;
     const sf::Vector2i mouse_pos = sf::Mouse::getPosition(ventana);
@@ -78,7 +79,9 @@ EnlaceVista Nivel::_crear_enlace_vista( //
  * en caso de que debiera cambiar.
  */
 std::optional<FaseNivel> Nivel::_procesarEvento(
-    sf::Event evento, const BotonesApp &botones, ModeloAmplio &modelo_amplio
+    sf::Event evento,                                 //
+    const std::shared_ptr<const BotonesApp> &botones, //
+    ModeloAmplio &modelo_amplio                       //
 ) {
     auto &ventana = globales.window;
     std::optional<FaseNivel> siguiente_fase;

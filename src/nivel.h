@@ -24,16 +24,16 @@ struct Nivel {
     std::optional<EnlaceVista> enlace_vista_opcional;
 
     std::optional<FaseNivel> _procesa_click(
-        const BotonesApp &,         //
-        const FaseNivel fase_actual //
+        const std::shared_ptr<const BotonesApp> &, //
+        const FaseNivel fase_actual                //
     );
     EnlaceVista _crear_enlace_vista( //
         const modelo::ControlPizzas &
     );
     std::optional<FaseNivel> _procesarEvento(
-        sf::Event,          //
-        const BotonesApp &, //
-        ModeloAmplio &      //
+        sf::Event,                                 //
+        const std::shared_ptr<const BotonesApp> &, //
+        ModeloAmplio &                             //
     );
     std::optional<AccionGeneral> _procesa_cambio_de_fase(
         FaseNivel nueva_fase,                   //
