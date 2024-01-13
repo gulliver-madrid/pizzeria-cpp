@@ -2,6 +2,9 @@
     - juego.h
     - log_init.h
 
+- _pruebas/main.cpp:
+    - _pruebas/class_a.h
+
 - controlador_clicks.cpp:
     - controlador_clicks.h
     - fase_nivel.h
