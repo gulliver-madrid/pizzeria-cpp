@@ -27,10 +27,8 @@ namespace tiempos {
 namespace {
     /* Procesa un cambio de fase reciente */
     std::optional<AccionGeneral> procesa_cambio_de_fase(
-        CambioFase cambio_fase,                 //
-        EnlaceVista &enlace_vista,              //
-        Timer &timer_espera_antes_de_resultado, //
-        GestorTiempoJuego &gestor_tiempo_juego  //
+        EjecucionEnProceso &ejecucion, //
+        CambioFase cambio_fase         //
     ) {
         const auto fase_previa = cambio_fase.first;
         const auto nueva_fase = cambio_fase.second;
@@ -38,12 +36,12 @@ namespace {
         switch (nueva_fase) {
             case FaseNivel::Activa:
                 assert(fase_previa == FaseNivel::MostrandoInstrucciones);
-                gestor_tiempo_juego.activar();
+                ejecucion.gestor_tiempo_juego.activar();
                 break;
             case FaseNivel::EsperaAntesDeResultado:
                 assert(fase_previa == FaseNivel::Activa);
-                gestor_tiempo_juego.pausar();
-                timer_espera_antes_de_resultado.start(
+                ejecucion.gestor_tiempo_juego.pausar();
+                ejecucion.timer_espera_antes_de_resultado.start(
                     tiempos::RETARDO_ANTES_DE_RESULTADO
                 );
                 break;
@@ -155,19 +153,13 @@ std::optional<FaseNivel> Nivel::_procesarEvento(
 
 /* Procesa un cambio de fase reciente */
 std::optional<AccionGeneral> Nivel::_procesa_cambio_de_fase(
-    EjecucionEnProceso &ejecucion_en_proceso, FaseNivel nueva_fase
+    EjecucionEnProceso &ejecucion, FaseNivel nueva_fase
 ) {
     // Cambio de fase reciente
-    const auto fase_previa =
-        ejecucion_en_proceso.modelo_amplio.get_fase_actual();
+    const auto fase_previa = ejecucion.modelo_amplio.get_fase_actual();
     CambioFase cambio_fase = {fase_previa, nueva_fase};
-    ejecucion_en_proceso.modelo_amplio.set_fase_actual(nueva_fase);
-    return procesa_cambio_de_fase(
-        cambio_fase,                                          //
-        ejecucion_en_proceso.enlace_vista,                    //
-        ejecucion_en_proceso.timer_espera_antes_de_resultado, //
-        ejecucion_en_proceso.gestor_tiempo_juego              //
-    );
+    ejecucion.modelo_amplio.set_fase_actual(nueva_fase);
+    return procesa_cambio_de_fase(ejecucion, cambio_fase);
 }
 
 ///// Nivel (public) /////
