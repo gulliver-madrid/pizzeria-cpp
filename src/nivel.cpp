@@ -21,7 +21,7 @@ struct EjecucionEnProceso {
 
 namespace tiempos {
     const auto RETARDO_ANTES_DE_RESULTADO = sf::seconds(2.5);
-    const auto ESPERA_ENTRE_NIVELES = sf::seconds(2);
+    const auto ESPERA_ENTRE_NIVELES = sf::seconds(3);
 } // namespace tiempos
 
 namespace {

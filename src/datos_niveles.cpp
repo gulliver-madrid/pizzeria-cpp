@@ -10,7 +10,7 @@ const DatosNivel datos_niveles[] = {
     DatosNivel{
         INSTRUCCIONES_NIVEL_DINAMICO, //
         Pedidos{{
-            Pedido({{TipoPizza::Margarita, 2}, {TipoPizza::CuatroQuesos, 1}}),
+            Pedido({{TipoPizza::Margarita, 2}, {TipoPizza::Pepperoni, 1}}),
         }}
     },
     DatosNivel{
