@@ -20,6 +20,9 @@ enum class AccionGeneral { SiguienteNivel, Reiniciar, Salir };
 
 struct Nivel {
   private:
+    // CambioFase(previa, nueva)
+    using CambioFase = std::pair<FaseNivel, FaseNivel>;
+
     std::optional<ModeloAmplio> modelo_amplio_opcional;
 
     std::optional<FaseNivel> _procesa_click(
@@ -35,10 +38,9 @@ struct Nivel {
         ModeloAmplio &                             //
     );
     std::optional<AccionGeneral> _procesa_cambio_de_fase(
-        FaseNivel nueva_fase,                   //
+        CambioFase cambio_fase,                 //
         EnlaceVista &,                          //
         Timer &timer_espera_antes_de_resultado, //
-        FaseNivel fase_previa,                  //
         GestorTiempoJuego &                     //
     );
 

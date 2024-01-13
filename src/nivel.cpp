@@ -111,12 +111,13 @@ std::optional<FaseNivel> Nivel::_procesarEvento(
 
 /* Procesa un cambio de fase reciente */
 std::optional<AccionGeneral> Nivel::_procesa_cambio_de_fase(
-    FaseNivel nueva_fase,                   //
+    CambioFase cambio_fase,                 //
     EnlaceVista &enlace_vista,              //
     Timer &timer_espera_antes_de_resultado, //
-    FaseNivel fase_previa,                  //
     GestorTiempoJuego &gestor_tiempo_juego  //
 ) {
+    const auto fase_previa = cambio_fase.first;
+    const auto nueva_fase = cambio_fase.second;
     std::optional<AccionGeneral> posible_accion;
     switch (nueva_fase) {
         case FaseNivel::Activa:
@@ -189,11 +190,13 @@ AccionGeneral Nivel::ejecutar() {
             // Cambio de fase reciente
             const auto fase_previa = modelo_amplio.get_fase_actual();
             modelo_amplio.set_fase_actual(siguiente_fase.value());
+            CambioFase cambio_fase = {
+                fase_previa, modelo_amplio.get_fase_actual()
+            };
             const auto accion = _procesa_cambio_de_fase(
-                modelo_amplio.get_fase_actual(), //
+                cambio_fase,                     //
                 enlace_vista,                    //
                 timer_espera_antes_de_resultado, //
-                fase_previa,                     //
                 gestor_tiempo_juego              //
             );
             if (accion.has_value()) {
