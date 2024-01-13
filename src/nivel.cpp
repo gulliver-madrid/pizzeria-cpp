@@ -12,10 +12,54 @@
 #include <memory>
 #include <optional>
 
+struct EjecucionEnProceso {
+    ModeloAmplio &modelo_amplio;
+    EnlaceVista &enlace_vista;
+    GestorTiempoJuego &gestor_tiempo_juego;
+    Timer &timer_espera_antes_de_resultado;
+};
+
 namespace tiempos {
     const auto RETARDO_ANTES_DE_RESULTADO = sf::seconds(2.5);
     const auto ESPERA_ENTRE_NIVELES = sf::seconds(2);
 } // namespace tiempos
+
+namespace {
+    /* Procesa un cambio de fase reciente */
+    std::optional<AccionGeneral> procesa_cambio_de_fase(
+        CambioFase cambio_fase,                 //
+        EnlaceVista &enlace_vista,              //
+        Timer &timer_espera_antes_de_resultado, //
+        GestorTiempoJuego &gestor_tiempo_juego  //
+    ) {
+        const auto fase_previa = cambio_fase.first;
+        const auto nueva_fase = cambio_fase.second;
+        std::optional<AccionGeneral> posible_accion;
+        switch (nueva_fase) {
+            case FaseNivel::Activa:
+                assert(fase_previa == FaseNivel::MostrandoInstrucciones);
+                gestor_tiempo_juego.activar();
+                break;
+            case FaseNivel::EsperaAntesDeResultado:
+                assert(fase_previa == FaseNivel::Activa);
+                gestor_tiempo_juego.pausar();
+                timer_espera_antes_de_resultado.start(
+                    tiempos::RETARDO_ANTES_DE_RESULTADO
+                );
+                break;
+            case FaseNivel::Reiniciando:
+                posible_accion = AccionGeneral::Reiniciar;
+                break;
+            case FaseNivel::Saliendo:
+                posible_accion = AccionGeneral::Salir;
+                break;
+            default:
+                assert(false);
+                break;
+        }
+        return posible_accion;
+    }
+} // namespace
 
 void on_cambio_a_fase_mostrar_resultado(
     const Globales &globales,        //
@@ -111,37 +155,19 @@ std::optional<FaseNivel> Nivel::_procesarEvento(
 
 /* Procesa un cambio de fase reciente */
 std::optional<AccionGeneral> Nivel::_procesa_cambio_de_fase(
-    CambioFase cambio_fase,                 //
-    EnlaceVista &enlace_vista,              //
-    Timer &timer_espera_antes_de_resultado, //
-    GestorTiempoJuego &gestor_tiempo_juego  //
+    EjecucionEnProceso &ejecucion_en_proceso, FaseNivel nueva_fase
 ) {
-    const auto fase_previa = cambio_fase.first;
-    const auto nueva_fase = cambio_fase.second;
-    std::optional<AccionGeneral> posible_accion;
-    switch (nueva_fase) {
-        case FaseNivel::Activa:
-            assert(fase_previa == FaseNivel::MostrandoInstrucciones);
-            gestor_tiempo_juego.activar();
-            break;
-        case FaseNivel::EsperaAntesDeResultado:
-            assert(fase_previa == FaseNivel::Activa);
-            gestor_tiempo_juego.pausar();
-            timer_espera_antes_de_resultado.start(
-                tiempos::RETARDO_ANTES_DE_RESULTADO
-            );
-            break;
-        case FaseNivel::Reiniciando:
-            posible_accion = AccionGeneral::Reiniciar;
-            break;
-        case FaseNivel::Saliendo:
-            posible_accion = AccionGeneral::Salir;
-            break;
-        default:
-            assert(false);
-            break;
-    }
-    return posible_accion;
+    // Cambio de fase reciente
+    const auto fase_previa =
+        ejecucion_en_proceso.modelo_amplio.get_fase_actual();
+    CambioFase cambio_fase = {fase_previa, nueva_fase};
+    ejecucion_en_proceso.modelo_amplio.set_fase_actual(nueva_fase);
+    return procesa_cambio_de_fase(
+        cambio_fase,                                          //
+        ejecucion_en_proceso.enlace_vista,                    //
+        ejecucion_en_proceso.timer_espera_antes_de_resultado, //
+        ejecucion_en_proceso.gestor_tiempo_juego              //
+    );
 }
 
 ///// Nivel (public) /////
@@ -174,6 +200,10 @@ AccionGeneral Nivel::ejecutar() {
 
     Timer timer_espera_antes_de_resultado;
     Timer timer_fin_nivel;
+    EjecucionEnProceso ejecucion_en_proceso = {
+        modelo_amplio, enlace_vista, gestor_tiempo_juego,
+        timer_espera_antes_de_resultado
+    };
     sf::Sound sound;
     sf::Time previo = tiempo::obtener_tiempo_actual();
     while (globales.window.isOpen()) {
@@ -188,17 +218,10 @@ AccionGeneral Nivel::ejecutar() {
                 continue;
             }
 
-            // Cambio de fase reciente
-            const auto fase_previa = modelo_amplio.get_fase_actual();
-            const auto nueva_fase = siguiente_fase.value();
-            CambioFase cambio_fase = {fase_previa, nueva_fase};
-            modelo_amplio.set_fase_actual(nueva_fase);
             const auto accion = _procesa_cambio_de_fase(
-                cambio_fase,                     //
-                enlace_vista,                    //
-                timer_espera_antes_de_resultado, //
-                gestor_tiempo_juego              //
+                ejecucion_en_proceso, siguiente_fase.value()
             );
+
             if (accion.has_value()) {
                 return accion.value();
             }

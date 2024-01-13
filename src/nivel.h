@@ -9,20 +9,22 @@
 
 enum class FaseNivel;
 class BotonesApp;
-struct Globales;
 struct ControladorClicks;
 struct DatosNivel;
+struct EjecucionEnProceso;
+struct Globales;
+
 namespace modelo {
     struct ControlPizzas;
 }
 
 enum class AccionGeneral { SiguienteNivel, Reiniciar, Salir };
 
+// CambioFase(previa, nueva)
+using CambioFase = std::pair<FaseNivel, FaseNivel>;
+
 struct Nivel {
   private:
-    // CambioFase(previa, nueva)
-    using CambioFase = std::pair<FaseNivel, FaseNivel>;
-
     std::optional<ModeloAmplio> modelo_amplio_opcional;
 
     std::optional<FaseNivel> _procesa_click(
@@ -36,6 +38,9 @@ struct Nivel {
         sf::Event,                                 //
         const std::shared_ptr<const BotonesApp> &, //
         ModeloAmplio &                             //
+    );
+    std::optional<AccionGeneral> Nivel::_procesa_cambio_de_fase(
+        EjecucionEnProceso &ejecucion_en_proceso, FaseNivel nueva_fase
     );
     std::optional<AccionGeneral> _procesa_cambio_de_fase(
         CambioFase cambio_fase,                 //
