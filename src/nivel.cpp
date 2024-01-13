@@ -187,12 +187,12 @@ AccionGeneral Nivel::ejecutar() {
             if (!siguiente_fase.has_value()) {
                 continue;
             }
+
             // Cambio de fase reciente
             const auto fase_previa = modelo_amplio.get_fase_actual();
-            modelo_amplio.set_fase_actual(siguiente_fase.value());
-            CambioFase cambio_fase = {
-                fase_previa, modelo_amplio.get_fase_actual()
-            };
+            const auto nueva_fase = siguiente_fase.value();
+            CambioFase cambio_fase = {fase_previa, nueva_fase};
+            modelo_amplio.set_fase_actual(nueva_fase);
             const auto accion = _procesa_cambio_de_fase(
                 cambio_fase,                     //
                 enlace_vista,                    //
