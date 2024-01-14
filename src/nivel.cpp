@@ -115,6 +115,14 @@ EnlaceVista Nivel::_crear_enlace_vista( //
     return enlace_vista;
 }
 
+void update_view_on_window_resize(
+    sf::Event::SizeEvent size_event, sf::RenderWindow &ventana
+) {
+    // Actualiza la View al nuevo tamano de la ventana
+    sf::FloatRect visibleArea(0, 0, size_event.width, size_event.height);
+    ventana.setView(sf::View(visibleArea));
+}
+
 /*
  * Incluye toda la logica para procesar un evento. Devuelve la nueva fase,
  * en caso de que debiera cambiar.
@@ -131,13 +139,7 @@ std::optional<FaseNivel> Nivel::_procesarEvento(
             ventana.close();
             return FaseNivel::Saliendo;
         case sf::Event::Resized:
-            {
-                // Actualiza la View al nuevo tamano de la ventana
-                sf::FloatRect visibleArea(
-                    0, 0, evento.size.width, evento.size.height
-                );
-                ventana.setView(sf::View(visibleArea));
-            }
+            update_view_on_window_resize(evento.size, ventana);
             break;
         case sf::Event::MouseButtonPressed:
             LOG(info) << "Antes de procesar click" << std::endl;
