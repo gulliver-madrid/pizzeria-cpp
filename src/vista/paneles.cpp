@@ -80,19 +80,12 @@ void PanelEnPreparacion::draw(
 
 Paneles::Paneles(const sf::Font &font) : ObjetoConFont(font) {
     const FabricaEtiquetasTituloPanel fabrica(font);
-    const auto crea_titulo = [&fabrica](
-                                 const IndicePanel indice,      //
-                                 const std::string &texto_crudo //
-                             ) {
-        return fabrica.crearEtiquetaTituloPanel(
-            basicos_vista::obtener_posicion_panel(indice), //
-            texto_crudo
-        );
-    };
-
     for (auto indice : paneles_posibles) {
         std::unique_ptr<Panel> panel = nullptr;
-        auto titulo = crea_titulo(indice, texto_titulos_paneles.at(indice));
+        auto titulo = fabrica.crearEtiquetaTituloPanel(
+            basicos_vista::obtener_posicion_panel(indice), //
+            texto_titulos_paneles.at(indice)
+        );
         if (indice == IndicePanel::PANEL_EN_PREPARACION) {
             panel = std::make_unique<PanelEnPreparacion>(
                 indice, std::move(titulo), font
