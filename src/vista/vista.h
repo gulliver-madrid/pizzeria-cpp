@@ -41,7 +41,7 @@ class Vista : public ObjetoConFont, public sf::Drawable {
   public:
     std::shared_ptr<PresentacionVista> presentacion_vista;
     const std::shared_ptr<BotonesApp> botones;
-    PanelesCompletos paneles_completos;
+    Paneles paneles;
     EtiquetasGenerales etiquetas;
     Grid &grid;
 

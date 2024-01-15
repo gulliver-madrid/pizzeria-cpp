@@ -72,16 +72,16 @@ void Vista::_actualizar_etiquetas(
 
 void Vista::_dibujar_paneles(sf::RenderTarget &target) const {
     // TODO: usar el sistema nativo de dibujo de SFML.
-    target.draw(paneles_completos);
+    target.draw(paneles);
 }
 
 void Vista::_actualizar_vista_paneles(
     const std::optional<VistaPreparacionPizzas> &vista_preparacion
 
 ) {
-    paneles_completos.visible = vista_preparacion.has_value();
+    paneles.visible = vista_preparacion.has_value();
     if (vista_preparacion) {
-        paneles_completos.actualizar(vista_preparacion.value());
+        paneles.actualizar(vista_preparacion.value());
     }
 }
 
@@ -94,7 +94,7 @@ Vista::Vista(
 )
     : ObjetoConFont(font),                                         //
       botones(std::make_shared<BotonesApp>(font, tp_disponibles)), //
-      paneles_completos(font),                                     //
+      paneles(font),                                               //
       etiquetas(font),                                             //
       grid(grid),                                                  //
       tp_disponibles(tp_disponibles) {}
@@ -147,7 +147,7 @@ void Vista::actualizarIU(                                           //
 void Vista::mostrar_elementos_fase_activa() {
     botones->empezar.visible = false;
     botones->mostrar_botones_nivel(true);
-    paneles_completos.visible = true;
+    paneles.visible = true;
 }
 
 void Vista::esconder_botones_gestion_pizzeria() { //

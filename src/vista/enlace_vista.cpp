@@ -93,7 +93,7 @@ void EnlaceVista::on_cambio_de_fase(FaseNivel nueva_fase) {
 }
 
 void EnlaceVista::esconder_paneles() const {
-    vista->paneles_completos.visible = false;
+    vista->paneles.visible = false;
 }
 
 void EnlaceVista::actualizar_interfaz_grafico(

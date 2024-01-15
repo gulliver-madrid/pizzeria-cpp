@@ -34,11 +34,11 @@ namespace {
     }
 } // namespace
 
-PanelCompleto::PanelCompleto(IndicePanel indice, sf::Text etiqueta)
+Panel::Panel(IndicePanel indice, sf::Text etiqueta)
     : indice(indice), forma(crear_panel_estandar(indice)),
       etiqueta_titulo(etiqueta) {}
 
-void PanelCompleto::draw(
+void Panel::draw(
     sf::RenderTarget &target, //
     sf::RenderStates states   //
 ) const {
@@ -46,7 +46,7 @@ void PanelCompleto::draw(
     target.draw(etiqueta_titulo);
 }
 
-PanelesCompletos::PanelesCompletos(const sf::Font &font) : ObjetoConFont(font) {
+Paneles::Paneles(const sf::Font &font) : ObjetoConFont(font) {
     const FabricaEtiquetasTituloPanel fabrica(font);
     const auto crea_titulo = [&fabrica](
                                  const IndicePanel indice,      //
@@ -61,15 +61,12 @@ PanelesCompletos::PanelesCompletos(const sf::Font &font) : ObjetoConFont(font) {
     for (auto indice : paneles_posibles) {
         contenido.emplace(
             indice,
-            PanelCompleto(
-                indice, crea_titulo(indice, texto_titulos_paneles.at(indice))
-            )
+            Panel(indice, crea_titulo(indice, texto_titulos_paneles.at(indice)))
         );
     }
 }
 
-void PanelesCompletos::actualizar(
-    const VistaPreparacionPizzas &vista_preparacion //
+void Paneles::actualizar(const VistaPreparacionPizzas &vista_preparacion //
 ) {
     if (!visible)
         return;
@@ -81,7 +78,7 @@ void PanelesCompletos::actualizar(
     );
 }
 
-void PanelesCompletos::draw(
+void Paneles::draw(
     sf::RenderTarget &target, //
     sf::RenderStates states   //
 ) const {
