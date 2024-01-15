@@ -92,15 +92,13 @@ Paneles::Paneles(const sf::Font &font) : ObjetoConFont(font) {
 
     for (auto indice : paneles_posibles) {
         std::unique_ptr<Panel> panel = nullptr;
+        auto titulo = crea_titulo(indice, texto_titulos_paneles.at(indice));
         if (indice == IndicePanel::PANEL_EN_PREPARACION) {
             panel = std::make_unique<PanelEnPreparacion>(
-                indice, crea_titulo(indice, texto_titulos_paneles.at(indice)),
-                font
+                indice, std::move(titulo), font
             );
         } else {
-            panel = std::make_unique<Panel>(
-                indice, crea_titulo(indice, texto_titulos_paneles.at(indice))
-            );
+            panel = std::make_unique<Panel>(indice, std::move(titulo));
         }
         _paneles.emplace(indice, std::move(panel));
     }
