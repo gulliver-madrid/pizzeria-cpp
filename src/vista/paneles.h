@@ -32,9 +32,11 @@ struct PanelEnPreparacion : public Panel, public ObjetoConFont {
     ) const override;
 };
 
-struct Paneles : public ObjetoConFont, public sf::Drawable {
-    std::map<IndicePanel, std::unique_ptr<Panel>> contenido;
+class Paneles : public ObjetoConFont, public sf::Drawable {
+  private:
+    std::map<IndicePanel, std::unique_ptr<Panel>> _paneles;
 
+  public:
     bool visible = false;
 
     Paneles(const sf::Font &);

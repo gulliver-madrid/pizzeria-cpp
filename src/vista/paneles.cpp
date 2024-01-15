@@ -91,23 +91,18 @@ Paneles::Paneles(const sf::Font &font) : ObjetoConFont(font) {
     };
 
     for (auto indice : paneles_posibles) {
+        std::unique_ptr<Panel> panel = nullptr;
         if (indice == IndicePanel::PANEL_EN_PREPARACION) {
-            contenido.emplace(
-                indice,
-                std::make_unique<PanelEnPreparacion>(
-                    indice,
-                    crea_titulo(indice, texto_titulos_paneles.at(indice)), font
-                )
+            panel = std::make_unique<PanelEnPreparacion>(
+                indice, crea_titulo(indice, texto_titulos_paneles.at(indice)),
+                font
             );
         } else {
-            contenido.emplace(
-                indice,
-                std::make_unique<Panel>(Panel(
-                    indice,
-                    crea_titulo(indice, texto_titulos_paneles.at(indice))
-                ))
+            panel = std::make_unique<Panel>(
+                indice, crea_titulo(indice, texto_titulos_paneles.at(indice))
             );
         }
+        _paneles.emplace(indice, std::move(panel));
     }
 }
 
@@ -115,7 +110,7 @@ void Paneles::actualizar(const VistaPreparacionPizzas &vista_preparacion //
 ) {
     if (!visible)
         return;
-    Panel *panel = contenido.at(IndicePanel::PANEL_EN_PREPARACION).get();
+    Panel *panel = _paneles.at(IndicePanel::PANEL_EN_PREPARACION).get();
     PanelEnPreparacion *panel_en_preparacion =
         dynamic_cast<PanelEnPreparacion *>(panel);
     if (panel_en_preparacion != nullptr) {
@@ -129,5 +124,5 @@ void Paneles::draw(
 ) const {
     if (!visible)
         return;
-    dibujar_elementos(target, contenido);
+    dibujar_elementos(target, _paneles);
 }
