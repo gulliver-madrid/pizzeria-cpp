@@ -19,10 +19,22 @@ struct Panel : public sf::Drawable {
     ) const override;
 };
 
-struct Paneles : public ObjetoConFont, public sf::Drawable {
-    std::map<IndicePanel, Panel> contenido;
-
+struct PanelEnPreparacion : public Panel, public ObjetoConFont {
     std::vector<BarraProgresoConNombre> barras_progreso_con_nombres;
+    PanelEnPreparacion(
+        IndicePanel indice, sf::Text etiqueta, const sf::Font &font
+    );
+    void actualizar(const VistaPreparacionPizzas &vista_preparacion //
+    );
+    virtual void draw(
+        sf::RenderTarget &target, //
+        sf::RenderStates states   //
+    ) const override;
+};
+
+struct Paneles : public ObjetoConFont, public sf::Drawable {
+    std::map<IndicePanel, std::unique_ptr<Panel>> contenido;
+
     bool visible = false;
 
     Paneles(const sf::Font &);

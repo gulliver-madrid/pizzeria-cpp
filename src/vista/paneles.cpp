@@ -34,6 +34,8 @@ namespace {
     }
 } // namespace
 
+///// Panel /////
+
 Panel::Panel(IndicePanel indice, sf::Text etiqueta)
     : indice(indice), forma(crear_panel_estandar(indice)),
       etiqueta_titulo(etiqueta) {}
@@ -45,6 +47,36 @@ void Panel::draw(
     target.draw(forma);
     target.draw(etiqueta_titulo);
 }
+
+///// PanelEnPreparacion /////
+
+PanelEnPreparacion::PanelEnPreparacion(
+    IndicePanel indice, sf::Text etiqueta, const sf::Font &font
+)
+    : Panel(indice, etiqueta), ObjetoConFont(font) {}
+
+void PanelEnPreparacion::actualizar(
+    const VistaPreparacionPizzas &vista_preparacion //
+) {
+    auto pos_panel = basicos_vista::obtener_posicion_panel( //
+        IndicePanel::PANEL_EN_PREPARACION
+    );
+    barras_progreso_con_nombres = crear_barras_progreso( //
+        vista_preparacion, pos_panel, font
+    );
+}
+
+void PanelEnPreparacion::draw(
+    sf::RenderTarget &target, //
+    sf::RenderStates states   //
+) const {
+    Panel::draw(target, states);
+    for (auto &bpn : barras_progreso_con_nombres) {
+        target.draw(bpn);
+    }
+}
+
+/////  Paneles /////
 
 Paneles::Paneles(const sf::Font &font) : ObjetoConFont(font) {
     const FabricaEtiquetasTituloPanel fabrica(font);
@@ -59,10 +91,23 @@ Paneles::Paneles(const sf::Font &font) : ObjetoConFont(font) {
     };
 
     for (auto indice : paneles_posibles) {
-        contenido.emplace(
-            indice,
-            Panel(indice, crea_titulo(indice, texto_titulos_paneles.at(indice)))
-        );
+        if (indice == IndicePanel::PANEL_EN_PREPARACION) {
+            contenido.emplace(
+                indice,
+                std::make_unique<PanelEnPreparacion>(
+                    indice,
+                    crea_titulo(indice, texto_titulos_paneles.at(indice)), font
+                )
+            );
+        } else {
+            contenido.emplace(
+                indice,
+                std::make_unique<Panel>(Panel(
+                    indice,
+                    crea_titulo(indice, texto_titulos_paneles.at(indice))
+                ))
+            );
+        }
     }
 }
 
@@ -70,12 +115,12 @@ void Paneles::actualizar(const VistaPreparacionPizzas &vista_preparacion //
 ) {
     if (!visible)
         return;
-    auto pos_panel = basicos_vista::obtener_posicion_panel( //
-        IndicePanel::PANEL_EN_PREPARACION
-    );
-    barras_progreso_con_nombres = crear_barras_progreso( //
-        vista_preparacion, pos_panel, font
-    );
+    Panel *panel = contenido.at(IndicePanel::PANEL_EN_PREPARACION).get();
+    PanelEnPreparacion *panel_en_preparacion =
+        dynamic_cast<PanelEnPreparacion *>(panel);
+    if (panel_en_preparacion != nullptr) {
+        panel_en_preparacion->actualizar(vista_preparacion);
+    }
 }
 
 void Paneles::draw(
@@ -85,7 +130,4 @@ void Paneles::draw(
     if (!visible)
         return;
     dibujar_elementos(target, contenido);
-    for (auto &bpn : barras_progreso_con_nombres) {
-        target.draw(bpn);
-    }
 }
