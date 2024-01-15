@@ -37,8 +37,8 @@ struct FabricaEtiquetasInfo : public ObjetoConFont {
   public:
     FabricaEtiquetasInfo(const sf::Font &font) : ObjetoConFont(font) {}
     sf::Text crear_etiqueta_instrucciones(
-        const std::string &plantilla, //
-        const NumNivel &num_nivel     //
+        const std::string &plantilla,             //
+        const std::shared_ptr<NumNivel> num_nivel //
     ) const {
         const auto estilo = estilos::INSTRUCCIONES;
         const auto texto = construir_instrucciones(plantilla, num_nivel);
@@ -61,8 +61,8 @@ struct FabricaEtiquetasInfo : public ObjetoConFont {
 EtiquetasInfo::EtiquetasInfo(const sf::Font &font) : ObjetoConFont(font) {}
 
 void EtiquetasInfo::setup(
-    const std::string &instr, //
-    const NumNivel &num_nivel //
+    const std::string &instr,                 //
+    const std::shared_ptr<NumNivel> num_nivel //
 
 ) {
     const auto fabrica = FabricaEtiquetasInfo(font);

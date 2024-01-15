@@ -10,20 +10,20 @@
 // Inicia los elementos del juego que permaneceran entre niveles
 // Inicializa las variables globales window, font y buffer
 // Devuelve un booleano indicando si se completo con exito
-bool setup_juego(Globales &globales) {
+bool setup_juego(std::shared_ptr<Globales> globales) {
     std::string title = TITLE;
-    globales.window.create(
+    globales->window.create(
         sf::VideoMode(TAMANO_INICIAL_VENTANA), interpolar_unicode(title)
     );
-    globales.window.setFramerateLimit(FPS);
+    globales->window.setFramerateLimit(FPS);
 
-    if (!globales.font.loadFromFile(getResourcePath(FONT_PATH).string()))
+    if (!globales->font.loadFromFile(getResourcePath(FONT_PATH).string()))
         return false;
 
     {
         sf::SoundBuffer buffer;
         if (buffer.loadFromFile(getResourcePath(SUCCESS_SOUND_PATH).string()))
-            globales.success_buffer = buffer;
+            globales->success_buffer = buffer;
     }
 
     {
@@ -31,13 +31,13 @@ bool setup_juego(Globales &globales) {
         if (buffer.loadFromFile(
                 getResourcePath(BUTTON_CLICK_SOUND_PATH).string()
             ))
-            globales.button_click_buffer = buffer;
+            globales->button_click_buffer = buffer;
     }
 
-    if (globales.music.openFromFile(getResourcePath(MUSIC_PATH).string())) {
-        globales.music.setVolume(50);
-        globales.music.setLoop(true);
-        globales.music.play();
+    if (globales->music.openFromFile(getResourcePath(MUSIC_PATH).string())) {
+        globales->music.setVolume(50);
+        globales->music.setLoop(true);
+        globales->music.play();
     }
     return true;
 }

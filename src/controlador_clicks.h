@@ -22,7 +22,7 @@ struct ControladorClicks {
 
   public:
     std::optional<Comando> procesa_click(
-        Globales &,                                //
+        const std::shared_ptr<Globales>,           //
         const std::shared_ptr<const BotonesApp> &, //
         const FaseNivel fase_actual,               //
         const sf::Vector2i &mouse_pos              //

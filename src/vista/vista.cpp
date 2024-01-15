@@ -89,7 +89,7 @@ void Vista::_actualizar_vista_paneles(
 
 Vista::Vista(
     const sf::Font &font,                       //
-    Grid &grid,                                 //
+    std::shared_ptr<Grid> grid,                 //
     const dominio::TiposDePizza &tp_disponibles //
 )
     : ObjetoConFont(font),                                         //
@@ -100,8 +100,8 @@ Vista::Vista(
       tp_disponibles(tp_disponibles) {}
 
 void Vista::setup(
-    const std::string &instrucciones, //
-    const NumNivel &num_nivel         //
+    const std::string &instrucciones,         //
+    const std::shared_ptr<NumNivel> num_nivel //
 
 ) {
     etiquetas.setup(
@@ -136,8 +136,10 @@ void Vista::actualizarIU(                                           //
 
     // Limpia la target y empieza a pintar los componentes visuales
     target.clear(colores::COLOR_FONDO);
-    if (modelo_amplio.mostrando_grid)
-        grid.draw(target, GRID_SIZE, GRID_TONE);
+    if (modelo_amplio.mostrando_grid) {
+        assert(grid);
+        grid->draw(target, GRID_SIZE, GRID_TONE);
+    }
     const auto fase_actual = modelo_amplio.get_fase_actual();
 
     _actualizar_vista_paneles(vista_preparacion);

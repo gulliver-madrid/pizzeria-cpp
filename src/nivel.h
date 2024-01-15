@@ -42,27 +42,22 @@ struct Nivel {
     std::optional<AccionGeneral> Nivel::_procesa_cambio_de_fase(
         EjecucionEnProceso &ejecucion_en_proceso, FaseNivel nueva_fase
     );
-    std::optional<AccionGeneral> _procesa_cambio_de_fase(
-        CambioFase cambio_fase,                 //
-        EnlaceVista &,                          //
-        Timer &timer_espera_antes_de_resultado, //
-        GestorTiempoJuego &                     //
-    );
 
   public:
-    Globales &globales;
-    const DatosNivel &datos_nivel;
-    const NumNivel &num_nivel;
-    Grid &grid;
+    const std::shared_ptr<Globales> globales;
+    const std::shared_ptr<DatosNivel> datos_nivel;
+    const std::shared_ptr<NumNivel> num_nivel;
+    const std::shared_ptr<Grid> grid;
+
     const bool es_el_ultimo;
     std::shared_ptr<ControladorClicks> controlador_clicks;
 
     Nivel(
-        Globales &,         //
-        const DatosNivel &, //
-        const NumNivel &,   //
-        Grid &,             //
-        bool es_el_ultimo   //
+        std::shared_ptr<Globales> globales = nullptr,      //
+        std::shared_ptr<DatosNivel> datos_nivel = nullptr, //
+        std::shared_ptr<NumNivel> num_nivel = nullptr,     //
+        std::shared_ptr<Grid> grid = nullptr,              //
+        bool es_el_ultimo = false                          //
     );
     AccionGeneral ejecutar();
 };

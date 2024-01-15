@@ -6,11 +6,12 @@
 #include "textos.h"
 #include "vista/grid.h"
 #include <cassert>
+#include <iostream>
 #include <unordered_set>
 
 int juego() {
-    Globales globales;
-    Grid grid;
+    const auto globales = std::make_shared<Globales>();
+    const auto grid = std::make_shared<Grid>();
     bool resultado_setup = setup_juego(globales);
     if (!resultado_setup)
         return EXIT_FAILURE;
@@ -19,17 +20,18 @@ int juego() {
         bool reiniciar = false;
         for (int i = 0; i < NUM_DATOS_NIVELES; i++) {
             bool es_el_ultimo = (i == NUM_DATOS_NIVELES - 1);
-            auto num_nivel = NumNivel(i + 1);
-            Nivel nivel(
-                globales, datos_niveles[i], num_nivel, grid, es_el_ultimo
-            );
+            auto num_nivel = std::make_shared<NumNivel>(i + 1);
+            auto datos_nivel = std::make_shared<DatosNivel>(datos_niveles[i]);
+            assert(datos_nivel);
+            std::cout << "a punto de crear Nivel" << std::endl;
+            Nivel nivel(globales, datos_nivel, num_nivel, grid, es_el_ultimo);
 
             auto res = nivel.ejecutar();
             if (res == AccionGeneral::Reiniciar) {
                 reiniciar = true;
                 break;
             } else if (res == AccionGeneral::Salir) {
-                globales.window.close();
+                globales->window.close();
                 break;
             } else {
                 assert(res == AccionGeneral::SiguienteNivel);

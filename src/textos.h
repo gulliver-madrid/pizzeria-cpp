@@ -1,12 +1,13 @@
 #pragma once
 
 #include "shared.h"
+#include <memory>
 #include <optional>
 #include <string>
 
 std::string construir_instrucciones(
-    const std::string plantilla, //
-    const NumNivel &             //
+    const std::string plantilla,    //
+    const std::shared_ptr<NumNivel> //
 );
 std::string construir_resultado();
 

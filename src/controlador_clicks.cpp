@@ -43,13 +43,13 @@ std::optional<Comando> ControladorClicks::genera_comando(
 }
 
 std::optional<Comando> ControladorClicks::procesa_click(
-    Globales &globales,                               //
+    const std::shared_ptr<Globales> globales,         //
     const std::shared_ptr<const BotonesApp> &botones, //
     const FaseNivel fase_actual,                      //
     const sf::Vector2i &mouse_pos                     //
 ) {
-    const auto pulsado = [&globales, &mouse_pos](const BotonConTexto &boton) {
-        return globales.detecta_colision(boton, mouse_pos);
+    const auto pulsado = [globales, &mouse_pos](const BotonConTexto &boton) {
+        return globales->detecta_colision(boton, mouse_pos);
     };
     std::optional<Comando> comando = genera_comando( //
         pulsado, botones, fase_actual

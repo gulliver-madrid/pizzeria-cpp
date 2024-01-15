@@ -6,11 +6,11 @@
 #include <cassert>
 #include <iostream>
 
-int demo_nivel(const NumNivel &numero_nivel) {
-    std::cout << "DEMO NIVEL " << numero_nivel.valor << std::endl;
-    int indice_nivel = numero_nivel.valor - 1;
-    Globales globales;
-    Grid grid;
+int demo_nivel(std::shared_ptr<NumNivel> numero_nivel) {
+    std::cout << "DEMO NIVEL " << numero_nivel->valor << std::endl;
+    int indice_nivel = numero_nivel->valor - 1;
+    const auto globales = std::make_shared<Globales>();
+    const auto grid = std::make_shared<Grid>();
     bool resultado_setup = setup_juego(globales);
     if (!resultado_setup)
         return EXIT_FAILURE;
@@ -21,7 +21,8 @@ int demo_nivel(const NumNivel &numero_nivel) {
 
     while (true) {
         Nivel nivel(
-            globales, datos_niveles[indice_nivel], numero_nivel, grid, true
+            globales, std::make_shared<DatosNivel>(datos_niveles[indice_nivel]),
+            numero_nivel, grid, true
         );
         AccionGeneral res = nivel.ejecutar();
         if (res == AccionGeneral::Reiniciar) {

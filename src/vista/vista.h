@@ -43,17 +43,17 @@ class Vista : public ObjetoConFont, public sf::Drawable {
     const std::shared_ptr<BotonesApp> botones;
     Paneles paneles;
     EtiquetasGenerales etiquetas;
-    Grid &grid;
+    std::shared_ptr<Grid> grid;
 
     Vista(
         const sf::Font &font,                       //
-        Grid &grid,                                 //
+        std::shared_ptr<Grid>,                      //
         const dominio::TiposDePizza &tp_disponibles //
     );
 
     void setup(
         const std::string &instrucciones, //
-        const NumNivel &
+     const std::shared_ptr<NumNivel>
     );
     void set_presentacion_vista(           //
         std::shared_ptr<PresentacionVista> //

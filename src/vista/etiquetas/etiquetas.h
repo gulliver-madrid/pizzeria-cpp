@@ -40,7 +40,7 @@ struct EtiquetasGenerales : public ObjetoConFont {
 
     void setup(
         const std::string &instr,                   //
-        const NumNivel &,                           //
+        const std::shared_ptr<NumNivel>,            //
         const dominio::TiposDePizza &tp_disponibles //
     );
 
