@@ -8,19 +8,11 @@
 
 enum class IndicePanel;
 
-struct Paneles : public sf::Drawable {
-    std::map<IndicePanel, sf::RectangleShape> contenido;
-
-    Paneles();
-    virtual void draw(
-        sf::RenderTarget &target, //
-        sf::RenderStates states   //
-    ) const override;
-};
-
-struct TitulosPaneles : public ObjetoConFont, public sf::Drawable {
-    std::map<IndicePanel, sf::Text> contenido;
-    TitulosPaneles(const sf::Font &);
+struct PanelCompleto : public sf::Drawable {
+    IndicePanel indice;
+    sf::RectangleShape forma;
+    sf::Text etiqueta_titulo;
+    PanelCompleto(IndicePanel indice, sf::Text etiqueta);
     virtual void draw(
         sf::RenderTarget &target, //
         sf::RenderStates states   //
@@ -28,8 +20,8 @@ struct TitulosPaneles : public ObjetoConFont, public sf::Drawable {
 };
 
 struct PanelesCompletos : public ObjetoConFont, public sf::Drawable {
-    Paneles paneles;
-    TitulosPaneles titulos_paneles;
+    std::map<IndicePanel, PanelCompleto> contenido;
+
     std::vector<BarraProgresoConNombre> barras_progreso_con_nombres;
     bool visible = false;
 

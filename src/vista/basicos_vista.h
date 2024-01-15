@@ -5,9 +5,13 @@
 #include <SFML/System/Vector2.hpp>
 
 enum class IndicePanel {
+    // Contiene los botones para encargar las pizzas
     PANEL_ENCARGAR,
+    // Informa del grado de progreso de la preparacion de las pizzas
     PANEL_EN_PREPARACION,
+    // Muestra el estado del area de preparadas
     PANEL_PREPARADAS,
+    // Muestra el estado de los pedidos
     PANEL_PEDIDOS,
 };
 

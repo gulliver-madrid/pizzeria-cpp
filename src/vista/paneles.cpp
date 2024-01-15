@@ -9,7 +9,7 @@ namespace medidas {
     constexpr int GROSOR_BORDE_PANEL = 3;
 } // namespace medidas
 
-const std::map<IndicePanel, std::string> titulos_paneles = {
+const std::map<IndicePanel, std::string> texto_titulos_paneles = {
     {IndicePanel::PANEL_ENCARGAR, "Encargar"},
     {IndicePanel::PANEL_EN_PREPARACION, "En preparaci%on"},
     {IndicePanel::PANEL_PREPARADAS, "Preparadas"},
@@ -34,20 +34,19 @@ namespace {
     }
 } // namespace
 
-Paneles::Paneles() {
-    for (auto indice : paneles_posibles) {
-        contenido.emplace(indice, crear_panel_estandar(indice));
-    }
-}
+PanelCompleto::PanelCompleto(IndicePanel indice, sf::Text etiqueta)
+    : indice(indice), forma(crear_panel_estandar(indice)),
+      etiqueta_titulo(etiqueta) {}
 
-void Paneles::draw(
+void PanelCompleto::draw(
     sf::RenderTarget &target, //
     sf::RenderStates states   //
 ) const {
-    dibujar_elementos(target, contenido);
+    target.draw(forma);
+    target.draw(etiqueta_titulo);
 }
 
-TitulosPaneles::TitulosPaneles(const sf::Font &font) : ObjetoConFont(font) {
+PanelesCompletos::PanelesCompletos(const sf::Font &font) : ObjetoConFont(font) {
     const FabricaEtiquetasTituloPanel fabrica(font);
     const auto crea_titulo = [&fabrica](
                                  const IndicePanel indice,      //
@@ -58,20 +57,16 @@ TitulosPaneles::TitulosPaneles(const sf::Font &font) : ObjetoConFont(font) {
             texto_crudo
         );
     };
-    for (auto &[indice, texto_crudo] : titulos_paneles) {
-        contenido.emplace(indice, crea_titulo(indice, texto_crudo));
+
+    for (auto indice : paneles_posibles) {
+        contenido.emplace(
+            indice,
+            PanelCompleto(
+                indice, crea_titulo(indice, texto_titulos_paneles.at(indice))
+            )
+        );
     }
 }
-
-void TitulosPaneles::draw(
-    sf::RenderTarget &target, //
-    sf::RenderStates states   //
-) const {
-    dibujar_elementos(target, contenido);
-}
-
-PanelesCompletos::PanelesCompletos(const sf::Font &font)
-    : ObjetoConFont(font), titulos_paneles(font) {}
 
 void PanelesCompletos::actualizar(
     const VistaPreparacionPizzas &vista_preparacion //
@@ -92,8 +87,7 @@ void PanelesCompletos::draw(
 ) const {
     if (!visible)
         return;
-    target.draw(paneles);
-    target.draw(titulos_paneles);
+    dibujar_elementos(target, contenido);
     for (auto &bpn : barras_progreso_con_nombres) {
         target.draw(bpn);
     }
