@@ -49,8 +49,8 @@ struct EtiquetasGenerales : public ObjetoConFont {
     );
 
     void actualizar_contadores(
-        const VistaPizzasToStrings &vista_preparadas, //
-        const modelo::Pedidos &pedidos                //
+        const PizzasToStrings &vista_preparadas, //
+        const modelo::Pedidos &pedidos           //
 
     );
 

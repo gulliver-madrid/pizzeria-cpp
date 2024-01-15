@@ -15,7 +15,7 @@ namespace presentador {
 
     std::string pedido_to_string(const Pedido &pedido);
 
-    VistaPizzasToStrings contadores_to_preparadas( //
+    PizzasToStrings contadores_to_preparadas( //
         const modelo::PizzasAContadores &
     );
     std::vector<VistaPreparacionPizza> estado_preparacion_pizzas_to_vista( //

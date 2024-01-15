@@ -48,8 +48,8 @@ void EtiquetasGenerales::set_presentacion_vista(
 }
 
 void EtiquetasGenerales::actualizar_contadores(
-    const VistaPizzasToStrings &vista_preparadas, //
-    const modelo::Pedidos &pedidos                //
+    const PizzasToStrings &vista_preparadas, //
+    const modelo::Pedidos &pedidos           //
 
 ) {
     contadores->actualizar(vista_preparadas, pedidos);

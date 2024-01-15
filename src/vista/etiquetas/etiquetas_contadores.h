@@ -33,22 +33,27 @@ class PedidoCard : public sf::Drawable {
 
 ///// EtiquetasContadores /////
 
+/*
+ * Contiene los elementos visuales que muestran las pizzas en area de
+ * preparadas, servidas y los pedidos.
+ */
 struct EtiquetasContadores : public ObjetoConFont, public sf::Drawable {
     using TipoPizza = dominio::TipoPizza;
+    using PizzasToLabels = std::map<TipoPizza, sf::Text>;
 
   private:
     void _actualizar_pedidos_dinamicos(const modelo::Pedidos &);
 
   public:
-    std::map<TipoPizza, sf::Text> etiquetas_preparadas;
-    std::map<TipoPizza, sf::Text> etiquetas_servidas;
+    PizzasToLabels etiquetas_preparadas;
+    PizzasToLabels etiquetas_servidas;
     std::vector<PedidoCard> cards_pedidos;
 
     EtiquetasContadores(const sf::Font &);
     void setup(const dominio::TiposDePizza &tp_disponibles);
     void actualizar(
-        const VistaPizzasToStrings &vista_preparadas, //
-        const modelo::Pedidos &                       //
+        const PizzasToStrings &vista_preparadas, //
+        const modelo::Pedidos &                  //
     );
     virtual void draw(
         sf::RenderTarget &target, //

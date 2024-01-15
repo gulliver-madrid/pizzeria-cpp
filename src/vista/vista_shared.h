@@ -7,4 +7,4 @@ namespace dominio {
     enum class TipoPizza;
 }
 
-using VistaPizzasToStrings = std::map<dominio::TipoPizza, std::string>;
+using PizzasToStrings = std::map<dominio::TipoPizza, std::string>;

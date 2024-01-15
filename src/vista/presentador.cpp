@@ -41,10 +41,10 @@ namespace presentador {
         return s;
     }
 
-    VistaPizzasToStrings contadores_to_preparadas(  //
+    PizzasToStrings contadores_to_preparadas(  //
         const modelo::PizzasAContadores &contadores //
     ) {
-        VistaPizzasToStrings textos_preparadas;
+        PizzasToStrings textos_preparadas;
         for (auto &[tp, contadores_tp] : contadores) {
             assert(has_key(tipo_pizza_to_string, tp));
             auto &nombre_pizza = tipo_pizza_to_string.at(tp);

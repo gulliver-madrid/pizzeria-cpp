@@ -115,7 +115,7 @@ void EtiquetasContadores::setup(const dominio::TiposDePizza &tp_disponibles) {
 };
 
 void EtiquetasContadores::actualizar(
-    const VistaPizzasToStrings &vista_preparadas,
+    const PizzasToStrings &vista_preparadas,
     const modelo::Pedidos &pedidos //
 ) {
     for (auto &[tp, linea] : vista_preparadas) {
