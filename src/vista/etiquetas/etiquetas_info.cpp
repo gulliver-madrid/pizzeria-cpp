@@ -40,8 +40,10 @@ struct FabricaEtiquetasInfo : public ObjetoConFont {
         const std::string &plantilla,             //
         const std::shared_ptr<NumNivel> num_nivel //
     ) const {
+        std::cout << "en crear_etiqueta_instrucciones" << std::endl;
         const auto estilo = estilos::INSTRUCCIONES;
-        const auto texto = construir_instrucciones(plantilla, num_nivel);
+        const auto texto = construir_texto_instrucciones(plantilla, num_nivel);
+        std::cout << "Instrucciones construidas" << std::endl;
         const auto etiqueta = crear_etiqueta_info(texto, estilo);
         return etiqueta;
     }
@@ -63,12 +65,14 @@ EtiquetasInfo::EtiquetasInfo(const OptionalFont &font) : ObjetoConFont(font) {}
 void EtiquetasInfo::setup(
     const std::string &instr,                 //
     const std::shared_ptr<NumNivel> num_nivel //
-
 ) {
     const auto fabrica = FabricaEtiquetasInfo(font);
+    std::cout << "Construyendo instrucciones" << std::endl;
     instrucciones = fabrica.crear_etiqueta_instrucciones(instr, num_nivel);
+    std::cout << "Construyendo etiqueta resultado" << std::endl;
     resultado = fabrica.crear_etiqueta_resultado();
 }
+
 void EtiquetasInfo::set_presentacion_vista(
     std::shared_ptr<PresentacionVista> presentacion_vista //
 ) {

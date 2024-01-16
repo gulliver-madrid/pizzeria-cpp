@@ -35,13 +35,12 @@ void EtiquetasGenerales::setup(
     const std::string &instr,                   //
     const std::shared_ptr<NumNivel> num_nivel,  //
     const dominio::TiposDePizza &tp_disponibles //
-
 ) {
     info->setup(instr, num_nivel);
     contadores->setup(tp_disponibles);
 }
-void EtiquetasGenerales::set_presentacion_vista(
 
+void EtiquetasGenerales::set_presentacion_vista(
     std::shared_ptr<PresentacionVista> presentacion_vista
 ) {
     info->set_presentacion_vista(presentacion_vista);
@@ -50,7 +49,6 @@ void EtiquetasGenerales::set_presentacion_vista(
 void EtiquetasGenerales::actualizar_contadores(
     const PizzasToStrings &vista_preparadas, //
     const modelo::Pedidos &pedidos           //
-
 ) {
     contadores->actualizar(vista_preparadas, pedidos);
 }

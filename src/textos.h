@@ -5,8 +5,8 @@
 #include <optional>
 #include <string>
 
-std::string construir_instrucciones(
-    const std::string plantilla,    //
+std::string construir_texto_instrucciones(
+    const std::string &plantilla,   //
     const std::shared_ptr<NumNivel> //
 );
 std::string construir_resultado();
