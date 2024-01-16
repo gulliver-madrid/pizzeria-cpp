@@ -25,7 +25,6 @@ struct NumNivel {
     explicit NumNivel(int v) : valor(v) { //
         assert(valor > 0);
     }
-    NumNivel(const NumNivel &) = delete;
     NumNivel &operator=(const NumNivel &) = delete;
 };
 

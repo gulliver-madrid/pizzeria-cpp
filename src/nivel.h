@@ -47,7 +47,7 @@ struct Nivel {
   public:
     const std::shared_ptr<Globales> globales;
     const std::shared_ptr<DatosNivel> datos_nivel;
-    const std::shared_ptr<NumNivel> num_nivel;
+    const std::optional<NumNivel> num_nivel;
     const std::shared_ptr<Grid> grid;
 
     const bool es_el_ultimo;
@@ -57,7 +57,7 @@ struct Nivel {
     Nivel(
         std::shared_ptr<Globales> globales = nullptr,      //
         std::shared_ptr<DatosNivel> datos_nivel = nullptr, //
-        std::shared_ptr<NumNivel> num_nivel = nullptr,     //
+        std::optional<NumNivel> num_nivel = std::nullopt,  //
         std::shared_ptr<Grid> grid = nullptr,              //
         bool es_el_ultimo = false                          //
     );

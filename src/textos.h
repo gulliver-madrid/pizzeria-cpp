@@ -7,7 +7,7 @@
 
 std::string construir_texto_instrucciones(
     const std::string &plantilla,   //
-    const std::shared_ptr<NumNivel> //
+    const std::optional<NumNivel> //
 );
 std::string construir_resultado();
 

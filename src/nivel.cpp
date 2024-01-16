@@ -103,13 +103,13 @@ std::shared_ptr<EnlaceVista> Nivel::_crear_enlace_vista( //
         assert(globales->font);
         font.set_pointer(globales->font);
     }
-    std::cout << "Creando vista" << std::endl;
+    LOG(info) << "Creando vista" << std::endl;
     const auto vista_ptr = std::make_shared<Vista>(
         font,                                  //
         grid,                                  //
         control_pizzas.get_tipos_disponibles() //
     );
-    std::cout << "Vista creada" << std::endl;
+    LOG(info) << "Vista creada" << std::endl;
     std::string instrucciones;
     if (datos_nivel == nullptr) {
         instrucciones = "No hay instrucciones";
@@ -117,7 +117,7 @@ std::shared_ptr<EnlaceVista> Nivel::_crear_enlace_vista( //
         instrucciones = datos_nivel->instrucciones;
     }
     vista_ptr->setup(instrucciones, num_nivel);
-    std::cout << "Vista inicializada" << std::endl;
+    LOG(info) << "Vista inicializada" << std::endl;
     auto enlace_vista = std::make_shared<EnlaceVista>();
     enlace_vista->set_vista(vista_ptr);
     return enlace_vista;
@@ -177,7 +177,7 @@ std::optional<AccionGeneral> Nivel::_procesa_cambio_de_fase(
 Nivel::Nivel(
     std::shared_ptr<Globales> globales,      //
     std::shared_ptr<DatosNivel> datos_nivel, //
-    std::shared_ptr<NumNivel> num_nivel,     //
+    std::optional<NumNivel> num_nivel,       //
     std::shared_ptr<Grid> grid,              //
     bool es_el_ultimo                        //
 )
@@ -185,26 +185,26 @@ Nivel::Nivel(
       grid(grid), es_el_ultimo(es_el_ultimo) {
 
     controlador_clicks = std::shared_ptr<ControladorClicks>();
-    int valor_num_nivel;
-    if (num_nivel == nullptr) {
-        valor_num_nivel = 0;
+    std::string repr_num_nivel;
+    if (!num_nivel) {
+        repr_num_nivel = "-";
     } else {
-        valor_num_nivel = num_nivel->valor;
+        repr_num_nivel = std::to_string(num_nivel.value().valor);
     }
-    std::cout << "Creando nivel " << valor_num_nivel << std::endl;
+    LOG(info) << "Creando nivel " << repr_num_nivel << std::endl;
     if (datos_nivel) {
         modelo_amplio.emplace(datos_nivel->datos_modelo_interno);
     } else {
         modelo_amplio.emplace();
     };
-    std::cout << "modelo amplio creado" << std::endl;
     assert(modelo_amplio);
+    LOG(info) << "modelo amplio creado" << std::endl;
     assert(modelo_amplio->establecido);
-    std::cout << "modelo amplio establecido" << std::endl;
+    LOG(info) << "modelo amplio establecido" << std::endl;
     auto &control_pizzas = modelo_amplio->modelo_interno.control_pizzas;
-    std::cout << "tenemos control piezas" << std::endl;
+    LOG(info) << "tenemos control piezas" << std::endl;
     enlace_vista = _crear_enlace_vista(control_pizzas);
-    std::cout << "enlace_vista creado" << std::endl;
+    LOG(info) << "enlace_vista creado" << std::endl;
     modelo_amplio->observadores_fase.push_back(enlace_vista);
 }
 
@@ -213,7 +213,7 @@ AccionGeneral Nivel::ejecutar() {
     auto &contadores = control_pizzas.contadores;
     establecer_fase(FaseNivel::MostrandoInstrucciones);
     assert(!contadores.empty());
-    std::cout << "modelo amplio iniciado" << std::endl;
+    LOG(info) << "modelo amplio iniciado" << std::endl;
     auto &gestor_tiempo_juego = modelo_amplio->modelo_interno.gestor_tiempo;
 
     Timer timer_espera_antes_de_resultado;
@@ -224,8 +224,9 @@ AccionGeneral Nivel::ejecutar() {
     };
     sf::Sound sound;
     sf::Time previo = tiempo::obtener_tiempo_actual();
-    std::cout << "empezando bucle de juego" << std::endl;
+    LOG(info) << "Empezando bucle de juego" << std::endl;
     while (globales->window.isOpen()) {
+        LOG(info) << "Nueva iteracion del bucle de juego" << std::endl;
         sf::Event event;
         while (globales->window.pollEvent(event)) {
             LOG(info) << "Antes de procesar evento" << std::endl;

@@ -16,7 +16,7 @@ struct EtiquetasInfo : public ObjetoConFont, public sf::Drawable {
     EtiquetasInfo(const OptionalFont &);
     void setup(
         const std::string &instr,       //
-        const std::shared_ptr<NumNivel> //
+        const std::optional<NumNivel> //
 
     );
     void set_presentacion_vista(

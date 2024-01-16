@@ -101,8 +101,8 @@ Vista::Vista(
 }
 
 void Vista::setup(
-    const std::string &instrucciones,         //
-    const std::shared_ptr<NumNivel> num_nivel //
+    const std::string &instrucciones,       //
+    const std::optional<NumNivel> num_nivel //
 ) {
     std::cout << "Inicializando etiquetas" << std::endl;
     etiquetas.setup(

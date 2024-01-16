@@ -60,7 +60,7 @@ class Vista : public ObjetoConFont,
 
     void setup(
         const std::string &instrucciones, //
-     const std::shared_ptr<NumNivel>
+     const std::optional<NumNivel>
     );
     void set_presentacion_vista(           //
         std::shared_ptr<PresentacionVista> //

@@ -80,9 +80,7 @@ int _main(int argc, char *argv[]) {
                     write_line("El numero de nivel debe ser mayor que 0");
                     return USER_ERROR;
                 }
-                return demo_nivel(
-                    std::make_shared<NumNivel>(num_nivel_introducido)
-                );
+                return demo_nivel(NumNivel(num_nivel_introducido));
             }
             break;
         case AppNombrada::Visual:

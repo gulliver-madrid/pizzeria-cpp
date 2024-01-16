@@ -39,6 +39,5 @@ sf::Text crearEtiqueta(
     const sf::Vector2f &posicion //
 
 ) {
-    std::cout << "Creando etiqueta con EstiloTexto y mas" << std::endl;
     return crearEtiqueta(texto, estilo.tamano, estilo.color, font, posicion);
 }

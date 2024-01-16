@@ -6,10 +6,10 @@
 #include <cassert>
 #include <iostream>
 
-int demo_nivel(std::shared_ptr<NumNivel> numero_nivel) {
-    assert(numero_nivel);
-    std::cout << "DEMO NIVEL " << numero_nivel->valor << std::endl;
-    int indice_nivel = numero_nivel->valor - 1;
+int demo_nivel(NumNivel numero_nivel) {
+
+    std::cout << "DEMO NIVEL " << numero_nivel.valor << std::endl;
+    int indice_nivel = numero_nivel.valor - 1;
     const auto globales = std::make_shared<Globales>();
     const auto grid = std::make_shared<Grid>();
     bool resultado_setup = setup_juego(globales);
@@ -23,7 +23,7 @@ int demo_nivel(std::shared_ptr<NumNivel> numero_nivel) {
     while (true) {
         Nivel nivel(
             globales, std::make_shared<DatosNivel>(datos_niveles[indice_nivel]),
-            numero_nivel, grid, true
+            std::optional<NumNivel>(numero_nivel), grid, true
         );
         AccionGeneral res = nivel.ejecutar();
         if (res == AccionGeneral::Reiniciar) {

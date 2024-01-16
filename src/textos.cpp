@@ -1,4 +1,5 @@
 #include "textos.h"
+#include "log_init.h"
 #include "vista/cadenas.h"
 #include <iostream>
 
@@ -6,21 +7,19 @@
     "%!Enhorabuena! Todos los clientes est%an satisfechos."
 
 std::string construir_texto_instrucciones(
-    const std::string &plantilla,             //
-    const std::shared_ptr<NumNivel> num_nivel //
+    const std::string &plantilla,           //
+    const std::optional<NumNivel> num_nivel //
 ) {
     std::cout << "En construir_texto_instrucciones()" << std::endl;
     CadenaJuego cadena = interpolar_unicode(plantilla);
-    int valor_num_nivel;
-    if (num_nivel == nullptr) {
-        valor_num_nivel = 0;
+    std::string repr_num_nivel;
+    if (num_nivel == std::nullopt) {
+        repr_num_nivel = "-";
     } else {
-        valor_num_nivel = num_nivel->valor;
+        repr_num_nivel = std::to_string(num_nivel.value().valor);
     }
-    std::cout << "valor_num_nivel: " << valor_num_nivel << std::endl;
-    return cadena.interpolar_por_clave(
-        "num_nivel", std::to_string(valor_num_nivel)
-    );
+    LOG(debug) << "repr_num_nivel= " << repr_num_nivel;
+    return cadena.interpolar_por_clave("num_nivel", repr_num_nivel);
 }
 
 std::string construir_resultado() { //
