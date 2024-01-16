@@ -1,5 +1,6 @@
 #include "vista.h"
 #include "../fase_nivel.h"
+#include "../log_init.h"
 #include "../templates/helpers.h"
 #include "basicos_vista.h"
 #include "grid.h"
@@ -104,13 +105,13 @@ void Vista::setup(
     const std::string &instrucciones,       //
     const std::optional<NumNivel> num_nivel //
 ) {
-    std::cout << "Inicializando etiquetas" << std::endl;
+    LOG(info) << "Inicializando etiquetas" << std::endl;
     etiquetas.setup(
         instrucciones, //
         num_nivel,     //
         tp_disponibles //
     );
-    std::cout << "Etiquetas inicializadas" << std::endl;
+    LOG(info) << "Etiquetas inicializadas" << std::endl;
     // Mostrar botones iniciales
     botones->generales.alternar_grid.visible = MODO_DESARROLLO;
     botones->generales.reiniciar.visible = true;

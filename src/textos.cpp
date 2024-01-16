@@ -10,7 +10,6 @@ std::string construir_texto_instrucciones(
     const std::string &plantilla,           //
     const std::optional<NumNivel> num_nivel //
 ) {
-    std::cout << "En construir_texto_instrucciones()" << std::endl;
     CadenaJuego cadena = interpolar_unicode(plantilla);
     std::string repr_num_nivel;
     if (num_nivel == std::nullopt) {
