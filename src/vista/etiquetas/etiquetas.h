@@ -33,7 +33,7 @@ struct EtiquetasGenerales : public ObjetoConFont {
     std::unique_ptr<EtiquetasBarraEstado> barra_estado;
 
   public:
-    EtiquetasGenerales(const sf::Font &font);
+    EtiquetasGenerales(const OptionalFont &);
     EtiquetasGenerales(const EtiquetasGenerales &) = delete;
     EtiquetasGenerales &operator=(const EtiquetasGenerales &) = delete;
     ~EtiquetasGenerales();
@@ -73,7 +73,8 @@ struct FabricaEtiquetasTituloPanel : public ObjetoConFont {
     );
 
   public:
-    FabricaEtiquetasTituloPanel(const sf::Font &font) : ObjetoConFont(font) {}
+    FabricaEtiquetasTituloPanel(const OptionalFont &font)
+        : ObjetoConFont(font) {}
     sf::Text crearEtiquetaTituloPanel(
         const sf::Vector2f &posicion_panel, const std::string &texto_crudo
     ) const;

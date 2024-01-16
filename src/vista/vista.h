@@ -46,7 +46,7 @@ class Vista : public ObjetoConFont, public sf::Drawable {
     std::shared_ptr<Grid> grid;
 
     Vista(
-        const sf::Font &font,                       //
+        const OptionalFont &font,                   //
         std::shared_ptr<Grid>,                      //
         const dominio::TiposDePizza &tp_disponibles //
     );

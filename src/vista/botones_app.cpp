@@ -53,7 +53,7 @@ namespace {
     };
 
     vector<BotonDataConFont> anadir_fuente( //
-        const vector<BotonData> &datos, const sf::Font &font
+        const vector<BotonData> &datos, const OptionalFont &font
     ) {
         vector<BotonDataConFont> result;
         transform(
@@ -73,7 +73,7 @@ namespace {
      * BotonConTexto.
      */
     TipoPizzaToBoton _crear_botones_encargar(
-        const sf::Font &font,                       //
+        const OptionalFont &font,                   //
         const dominio::TiposDePizza &tp_disponibles //
     ) {
         // Constantes para definir la posicion de cada boton
@@ -115,7 +115,7 @@ namespace {
     }
 
     TipoPizzaToBoton _crear_botones_despachar(
-        const sf::Font &font,                       //
+        const OptionalFont &font,                   //
         const dominio::TiposDePizza &tp_disponibles //
     ) {
         TipoPizzaToBoton botones;
@@ -166,7 +166,7 @@ namespace {
     }
 
     BotonesGenerales _crear_botones_generales( //
-        const sf::Font &font
+        const OptionalFont &font
     ) {
         const auto pos_derecha = _obtener_pos_dcha_botones_generales();
         const auto datos_botones = anadir_fuente( //
@@ -188,7 +188,7 @@ namespace {
         };
     }
 
-    BotonConTexto _crear_boton_empezar(const sf::Font &font) {
+    BotonConTexto _crear_boton_empezar(const OptionalFont &font) {
         return BotonConTexto(
             {boton_data_empezar, font},     //
             medidas::POSICION_BOTON_EMPEZAR //
@@ -218,7 +218,7 @@ void BotonesApp::_establecer_todos() {
 
 /* Crea todos los botones */
 BotonesApp::BotonesApp(
-    const sf::Font &font, const dominio::TiposDePizza &tp_disponibles
+    const OptionalFont &font, const dominio::TiposDePizza &tp_disponibles
 )
     : empezar(_crear_boton_empezar(font)),
       generales(_crear_botones_generales(font)),

@@ -22,7 +22,7 @@ namespace estilos {
 // EtiquetasGenerales
 //////////////////////////////////////////
 
-EtiquetasGenerales::EtiquetasGenerales(const sf::Font &font)
+EtiquetasGenerales::EtiquetasGenerales(const OptionalFont &font)
     : ObjetoConFont(font) {
     contadores = std::make_unique<EtiquetasContadores>(font);
     info = std::make_unique<EtiquetasInfo>(font);

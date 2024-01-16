@@ -49,7 +49,7 @@ struct EtiquetasContadores : public ObjetoConFont, public sf::Drawable {
     PizzasToLabels etiquetas_servidas;
     std::vector<PedidoCard> cards_pedidos;
 
-    EtiquetasContadores(const sf::Font &);
+    EtiquetasContadores(const OptionalFont &);
     void setup(const dominio::TiposDePizza &tp_disponibles);
     void actualizar(
         const PizzasToStrings &vista_preparadas, //

@@ -8,7 +8,7 @@
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 
-EtiquetasBarraEstado::EtiquetasBarraEstado(const sf::Font &font)
+EtiquetasBarraEstado::EtiquetasBarraEstado(const OptionalFont &font)
     : ObjetoConFont(font) {
     const EstiloTexto estilo = {
         medidas::TAMANO_TEXTO_GRANDE, sf::Color::Yellow

@@ -28,7 +28,7 @@ class BotonesApp : public sf::Drawable {
     BotonesGenerales generales;
 
     BotonesApp(
-        const sf::Font &font, const dominio::TiposDePizza &tp_disponibles
+        const OptionalFont &font, const dominio::TiposDePizza &tp_disponibles
     );
     void mostrar_botones_nivel(bool nuevo_valor);
     virtual void draw(

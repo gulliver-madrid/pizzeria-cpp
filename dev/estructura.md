@@ -144,6 +144,9 @@
     - vista/cadenas.h
     - vista/vista_data.h
 
+- shared.cpp:
+    - shared.h
+
 - tests/modelo/test_encargadas.cpp:
     - modelo/encargos.h
     - modelo/modelo.h
@@ -185,6 +188,9 @@
 - tests/test_timer.cpp:
     - juego_assert.h
     - tiempo.h
+
+- tests/test_usecases.cpp:
+    - nivel.h
 
 - textos.cpp:
     - textos.h
@@ -232,6 +238,9 @@
     - templates/dibujar_elementos.h
     - vista/componentes/varios.h
 
+- vista/componentes/barra_progreso.h:
+    - shared.h
+
 - vista/componentes/boton_con_texto.cpp:
     - vista/componentes/boton_con_texto.h
     - templates/dibujar_elementos.h
@@ -240,6 +249,9 @@
 - vista/componentes/boton_con_texto.h:
     - vista/componentes/boton_data.h
     - vista/componentes/componente.h
+
+- vista/componentes/boton_data.h:
+    - shared.h
 
 - vista/componentes/botones.cpp:
     - vista/componentes/botones.h
@@ -250,6 +262,9 @@
 
 - vista/componentes/varios.cpp:
     - vista/componentes/varios.h
+
+- vista/componentes/varios.h:
+    - shared.h
 
 - vista/enlace_vista.cpp:
     - vista/enlace_vista.h

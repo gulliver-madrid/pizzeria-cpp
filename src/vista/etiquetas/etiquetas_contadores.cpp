@@ -40,10 +40,10 @@ namespace {
 
     /* Builds a PedidoCard */
     PedidoCard build_pedido_card(
-        std::string texto, const sf::Font &font, size_t num_items //
+        std::string texto, const OptionalFont &font, size_t num_items //
     ) {
         static const auto tamano_fuente = 22;
-        const auto etiqueta = sf::Text(texto, font, tamano_fuente);
+        const auto etiqueta = crearEtiqueta(texto, tamano_fuente, font);
         const auto shape = build_card_pedido_shape(num_items);
         return {etiqueta, shape};
     }
@@ -51,7 +51,7 @@ namespace {
     void actualizar_card_pedidos(
         const modelo::Pedidos &pedidos,         //
         std::vector<PedidoCard> &cards_pedidos, //
-        const sf::Font &font                    //
+        const OptionalFont &font                //
     ) {
         // Creamos las tarjetas de los pedidos
         cards_pedidos.clear();
@@ -100,7 +100,7 @@ void EtiquetasContadores::_actualizar_pedidos_dinamicos( //
 
 ///// EtiquetasContadores (public) /////
 
-EtiquetasContadores::EtiquetasContadores(const sf::Font &font)
+EtiquetasContadores::EtiquetasContadores(const OptionalFont &font)
     : ObjetoConFont(font) {}
 
 void EtiquetasContadores::setup(const dominio::TiposDePizza &tp_disponibles) {

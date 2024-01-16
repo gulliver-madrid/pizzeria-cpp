@@ -14,7 +14,8 @@ class FabricaEtiquetasContadores : public ObjetoConFont {
     sf::Text _crearEtiquetaContadorPizzas(sf::Vector2f posicion) const;
 
   public:
-    FabricaEtiquetasContadores(const sf::Font &font) : ObjetoConFont(font){};
+    FabricaEtiquetasContadores(const OptionalFont &font)
+        : ObjetoConFont(font){};
     sf::Text crearEtiquetaPizzasPreparadas(size_t indice_etiqueta) const;
     sf::Text crearEtiquetaPizzasServidas(size_t indice_etiqueta) const;
 };

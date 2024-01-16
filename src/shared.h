@@ -1,10 +1,21 @@
 #pragma once
 
 #include <cassert>
+#include <memory>
 
 namespace sf {
     class Font;
-} // namespace sf
+}
+
+class OptionalFont {
+  private:
+    std::shared_ptr<sf::Font> font_ptr;
+
+  public:
+    void set_pointer(std::shared_ptr<sf::Font> ptr);
+    std::shared_ptr<sf::Font> get_pointer() const;
+    bool exists() const;
+};
 
 constexpr bool MODO_DESARROLLO = true;
 
@@ -20,8 +31,8 @@ struct NumNivel {
 
 class ObjetoConFont {
   protected:
-    const sf::Font &font;
+    const OptionalFont &font;
 
   public:
-    ObjetoConFont(const sf::Font &font) : font(font) {}
+    ObjetoConFont(const OptionalFont &font) : font(font) {}
 };

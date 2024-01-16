@@ -51,7 +51,7 @@ void Panel::draw(
 ///// PanelEnPreparacion /////
 
 PanelEnPreparacion::PanelEnPreparacion(
-    IndicePanel indice, sf::Text etiqueta, const sf::Font &font
+    IndicePanel indice, sf::Text etiqueta, const OptionalFont &font
 )
     : Panel(indice, etiqueta), ObjetoConFont(font) {}
 
@@ -78,7 +78,7 @@ void PanelEnPreparacion::draw(
 
 /////  Paneles /////
 
-Paneles::Paneles(const sf::Font &font) : ObjetoConFont(font) {
+Paneles::Paneles(const OptionalFont &font) : ObjetoConFont(font) {
     const FabricaEtiquetasTituloPanel fabrica(font);
     for (auto indice : paneles_posibles) {
         std::unique_ptr<Panel> panel = nullptr;

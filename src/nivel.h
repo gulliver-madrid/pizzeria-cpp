@@ -26,6 +26,7 @@ using CambioFase = std::pair<FaseNivel, FaseNivel>;
 struct Nivel {
   private:
     std::optional<ModeloAmplio> modelo_amplio_opcional;
+    OptionalFont font;
 
     std::optional<FaseNivel> _procesa_click(
         const std::shared_ptr<const BotonesApp> &, //

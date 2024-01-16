@@ -13,7 +13,7 @@ struct EtiquetasInfo : public ObjetoConFont, public sf::Drawable {
     sf::Text instrucciones;
     sf::Text resultado;
 
-    EtiquetasInfo(const sf::Font &);
+    EtiquetasInfo(const OptionalFont &);
     void setup(
         const std::string &instr,       //
         const std::shared_ptr<NumNivel> //

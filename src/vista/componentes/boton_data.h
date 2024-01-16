@@ -1,11 +1,9 @@
 #pragma once
 
+#include "../../shared.h"
 #include <SFML/Graphics/Color.hpp>
+#include <optional>
 #include <string>
-
-namespace sf {
-    class Font;
-}
 
 struct BotonData {
     std::string texto;
@@ -15,5 +13,5 @@ struct BotonData {
 
 struct BotonDataConFont {
     BotonData data;
-    const sf::Font &font;
+    const OptionalFont &font;
 };

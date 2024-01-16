@@ -1,9 +1,11 @@
 #pragma once
 
+#include "../../shared.h"
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/System/Vector2.hpp>
+#include <optional>
 
 ///////////////////////////////////////////
 // BarraProgreso
@@ -56,7 +58,7 @@ struct BarraProgresoConNombre : public sf::Drawable {
         const std::string &texto,           //
         const sf::Vector2f &posicion_barra, //
         const sf::Color &color_texto,       //
-        const sf::Font &                    //
+        const OptionalFont &                //
     );
 
   public:
@@ -65,7 +67,7 @@ struct BarraProgresoConNombre : public sf::Drawable {
         const std::string &texto,        //
         const sf::Vector2f &posicion,    //
         const BPNColors &bpn_colors,     //
-        const sf::Font &                 //
+        const OptionalFont &             //
     );
     void actualizar_porcentaje(int porcentaje);
     virtual void draw(

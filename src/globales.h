@@ -19,7 +19,7 @@ struct Globales {
 
   public:
     sf::RenderWindow window;
-    sf::Font font;
+    std::shared_ptr<sf::Font> font = std::make_shared<sf::Font>();
     std::optional<sf::SoundBuffer> success_buffer;
     std::optional<sf::SoundBuffer> button_click_buffer;
     sf::Music music;

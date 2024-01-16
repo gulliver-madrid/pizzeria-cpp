@@ -51,7 +51,7 @@ sf::Text BarraProgresoConNombre::_crear_etiqueta(
     const std::string &texto,           //
     const sf::Vector2f &posicion_barra, //
     const sf::Color &color_texto,       //
-    const sf::Font &font                //
+    const OptionalFont &font            //
 ) {
     return crearEtiqueta(
         texto,                                        //
@@ -68,7 +68,7 @@ BarraProgresoConNombre::BarraProgresoConNombre(
     const std::string &texto,        //
     const sf::Vector2f &posicion,    //
     const BPNColors &bpn_colors,     //
-    const sf::Font &font             //
+    const OptionalFont &font         //
 )
     : bp(dimensiones, posicion, bpn_colors.color_pair),
       etiqueta(_crear_etiqueta(texto, posicion, bpn_colors.color_texto, font)) {

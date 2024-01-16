@@ -9,5 +9,5 @@ struct EstadoPreparacionPizzas;
 std::vector<BarraProgresoConNombre> crear_barras_progreso( //
     const VistaPreparacionPizzas &,                        //
     const sf::Vector2f &pos_panel,                         //
-    const sf::Font &                                       //
+    const OptionalFont &                                   //
 );

@@ -9,7 +9,7 @@ namespace medidas {
 /* Crea y actualiza las barras de progreso */
 std::vector<BarraProgresoConNombre> crear_barras_progreso(
     const VistaPreparacionPizzas &vista_preparacion_pizzas,
-    const sf::Vector2f &pos_panel, const sf::Font &font
+    const sf::Vector2f &pos_panel, const OptionalFont &font
 ) {
     std::vector<BarraProgresoConNombre> vect{};
     const int pos_x = pos_panel.x + medidas::MARGEN_IZQ_ETIQUETAS;

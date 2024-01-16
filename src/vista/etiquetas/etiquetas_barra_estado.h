@@ -15,7 +15,7 @@ struct EtiquetasBarraEstado : public ObjetoConFont, public sf::Drawable {
     sf::Text etiqueta;
 
   public:
-    EtiquetasBarraEstado(const sf::Font &);
+    EtiquetasBarraEstado(const OptionalFont &);
     void actualizar(const sf::Time &, const sf::Time &);
     virtual void draw(
         sf::RenderTarget &target, //

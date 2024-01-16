@@ -100,8 +100,14 @@ std::optional<FaseNivel> Nivel::_procesa_click(
 EnlaceVista Nivel::_crear_enlace_vista( //
     const modelo::ControlPizzas &control_pizzas
 ) {
+    assert(!font.exists());
+    if (globales) {
+        assert(globales->font);
+        font.set_pointer(globales->font);
+    }
+    std::cout << "Creando vista" << std::endl;
     const auto vista_ptr = std::make_shared<Vista>(
-        globales->font,                        //
+        font,                                  //
         grid,                                  //
         control_pizzas.get_tipos_disponibles() //
     );

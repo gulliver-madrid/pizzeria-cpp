@@ -88,7 +88,7 @@ void Vista::_actualizar_vista_paneles(
 ///// Vista (public) /////
 
 Vista::Vista(
-    const sf::Font &font,                       //
+    const OptionalFont &font,                   //
     std::shared_ptr<Grid> grid,                 //
     const dominio::TiposDePizza &tp_disponibles //
 )

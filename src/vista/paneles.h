@@ -22,7 +22,7 @@ struct Panel : public sf::Drawable {
 struct PanelEnPreparacion : public Panel, public ObjetoConFont {
     std::vector<BarraProgresoConNombre> barras_progreso_con_nombres;
     PanelEnPreparacion(
-        IndicePanel indice, sf::Text etiqueta, const sf::Font &font
+        IndicePanel indice, sf::Text etiqueta, const OptionalFont &font
     );
     void actualizar(const VistaPreparacionPizzas &vista_preparacion //
     );
@@ -39,7 +39,7 @@ class Paneles : public ObjetoConFont, public sf::Drawable {
   public:
     bool visible = false;
 
-    Paneles(const sf::Font &);
+    Paneles(const OptionalFont &);
 
     void actualizar(const VistaPreparacionPizzas & //
     );
