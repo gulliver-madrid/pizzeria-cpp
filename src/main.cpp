@@ -7,6 +7,7 @@
 #include "demos/visual_textos.h"
 #include "juego.h"
 #include "log_init.h"
+#include "shared.h"
 #include <cassert>
 #include <iostream>
 #include <map>

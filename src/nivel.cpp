@@ -4,6 +4,7 @@
 #include "fase_nivel.h"
 #include "log_init.h"
 #include "modelo_amplio/aplicador.h"
+#include "shared_num_nivel.h"
 #include <SFML/System/Time.hpp>
 #include <SFML/Window/Event.hpp>
 #include <cassert>

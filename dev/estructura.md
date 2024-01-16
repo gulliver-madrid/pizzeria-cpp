@@ -1,6 +1,7 @@
 - main.cpp:
     - juego.h
     - log_init.h
+    - shared.h
 
 - _pruebas/main.cpp:
     - _pruebas/class_a.h
@@ -127,6 +128,7 @@
     - fase_nivel.h
     - log_init.h
     - modelo_amplio/aplicador.h
+    - shared_num_nivel.h
 
 - nivel.h:
     - globales.h
@@ -183,6 +185,12 @@
 - tests/test_cadenas.cpp:
     - vista/cadenas.h
 
+- tests/test_main.cpp:
+    - log_init.h
+
+- tests/test_num_nivel.cpp:
+    - shared_num_nivel.h
+
 - tests/test_tiempo.cpp:
     - tiempo.h
 
@@ -200,10 +208,12 @@
 
 - textos.cpp:
     - textos.h
+    - log_init.h
     - vista/cadenas.h
 
 - textos.h:
     - shared.h
+    - shared_num_nivel.h
 
 - tiempo.cpp:
     - tiempo.h
@@ -299,6 +309,7 @@
     - modelo/control_pizzas.h
     - modelo/modelo.h
     - shared.h
+    - shared_num_nivel.h
     - vista/presentacion_vista.h
     - vista/vista_shared.h
 
@@ -328,12 +339,14 @@
 
 - vista/etiquetas/etiquetas_info.cpp:
     - vista/etiquetas/etiquetas_info.h
+    - log_init.h
     - textos.h
     - vista/basicos_vista.h
     - vista/componentes/varios.h
 
 - vista/etiquetas/etiquetas_info.h:
     - shared.h
+    - shared_num_nivel.h
     - vista/presentacion_vista.h
 
 - vista/etiquetas/fabrica_etiquetas_contadores.cpp:
@@ -374,6 +387,8 @@
 - vista/vista.cpp:
     - vista/vista.h
     - fase_nivel.h
+    - log_init.h
+    - shared_num_nivel.h
     - templates/helpers.h
     - vista/basicos_vista.h
     - vista/grid.h

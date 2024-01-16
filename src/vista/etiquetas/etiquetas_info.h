@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../../shared.h"
+#include "../../shared_num_nivel.h"
 #include "../presentacion_vista.h"
 #include <SFML/Graphics/Text.hpp>
 #include <optional>
@@ -15,8 +16,8 @@ struct EtiquetasInfo : public ObjetoConFont, public sf::Drawable {
 
     EtiquetasInfo(const OptionalFont &);
     void setup(
-        const std::string &instr,       //
-       const NumNivelOpcional& //
+        const std::string &instr, //
+        const NumNivelOpcional &  //
 
     );
     void set_presentacion_vista(

@@ -1,6 +1,7 @@
 #include "vista.h"
 #include "../fase_nivel.h"
 #include "../log_init.h"
+#include "../shared_num_nivel.h"
 #include "../templates/helpers.h"
 #include "basicos_vista.h"
 #include "grid.h"

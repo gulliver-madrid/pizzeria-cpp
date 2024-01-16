@@ -3,6 +3,7 @@
 #include "../../modelo/control_pizzas.h"
 #include "../../modelo/modelo.h"
 #include "../../shared.h"
+#include "../../shared_num_nivel.h"
 #include "../presentacion_vista.h"
 #include "../vista_shared.h"
 #include <SFML/System/Vector2.hpp>
@@ -40,18 +41,17 @@ struct EtiquetasGenerales : public ObjetoConFont {
 
     void setup(
         const std::string &instr,                   //
-       const NumNivelOpcional&,            //
+        const NumNivelOpcional &,                   //
         const dominio::TiposDePizza &tp_disponibles //
     );
 
-    void set_presentacion_vista(                              //
+    void set_presentacion_vista(
         std::shared_ptr<PresentacionVista> presentacion_vista //
     );
 
     void actualizar_contadores(
         const PizzasToStrings &vista_preparadas, //
         const modelo::Pedidos &pedidos           //
-
     );
 
     void actualizar_barra_estado(

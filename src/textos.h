@@ -1,13 +1,14 @@
 #pragma once
 
 #include "shared.h"
+#include "shared_num_nivel.h"
 #include <memory>
 #include <optional>
 #include <string>
 
 std::string construir_texto_instrucciones(
-    const std::string &plantilla,   //
-   const NumNivelOpcional& //
+    const std::string &plantilla, //
+    const NumNivelOpcional &      //
 );
 std::string construir_resultado();
 

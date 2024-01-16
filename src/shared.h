@@ -1,8 +1,8 @@
 #pragma once
 
-#include "shared_num_nivel.h"
-#include <cassert>
 #include <memory>
+
+constexpr bool MODO_DESARROLLO = true;
 
 namespace sf {
     class Font;
@@ -18,12 +18,10 @@ class OptionalFont {
     bool exists() const;
 };
 
-constexpr bool MODO_DESARROLLO = true;
-
 class ObjetoConFont {
   protected:
     const OptionalFont &font;
 
   public:
-    ObjetoConFont(const OptionalFont &font) : font(font) {}
+    ObjetoConFont(const OptionalFont &font);
 };
