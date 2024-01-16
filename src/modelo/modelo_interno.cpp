@@ -1,10 +1,10 @@
-#include "datos_modelo_interno.h"
 #include "modelo_interno.h"
+#include "datos_modelo_interno.h"
 
 //////// ModeloInterno
 
-ModeloInterno::ModeloInterno(const DatosModeloInterno &datos_nivel)
-    : control_pizzas(datos_nivel.pedidos) {
+ModeloInterno::ModeloInterno(const DatosModeloInterno &datos_nivel) {
+    control_pizzas.add_pedidos(datos_nivel.pedidos);
     assert(encargos.total() == 0);
     gestor_tiempo.reiniciar();
 }

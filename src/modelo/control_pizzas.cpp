@@ -5,7 +5,8 @@
 
 using modelo::ControlPizzas;
 
-ControlPizzas::ControlPizzas(Pedidos pedidos) : pedidos(pedidos) {
+void ControlPizzas::add_pedidos(Pedidos pedidos) {
+    this->pedidos = pedidos;
     for (auto &pedido : pedidos) {
         for (auto &[tp, _] : pedido.contenido) {
             if (contadores.find(tp) == contadores.end()) {
