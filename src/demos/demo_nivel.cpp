@@ -7,6 +7,7 @@
 #include <iostream>
 
 int demo_nivel(std::shared_ptr<NumNivel> numero_nivel) {
+    assert(numero_nivel);
     std::cout << "DEMO NIVEL " << numero_nivel->valor << std::endl;
     int indice_nivel = numero_nivel->valor - 1;
     const auto globales = std::make_shared<Globales>();

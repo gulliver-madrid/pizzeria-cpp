@@ -13,6 +13,7 @@ int juego() {
     const auto globales = std::make_shared<Globales>();
     const auto grid = std::make_shared<Grid>();
     bool resultado_setup = setup_juego(globales);
+    std::cout << "resultado_setup: " << resultado_setup << std::endl;
     if (!resultado_setup)
         return EXIT_FAILURE;
 
@@ -23,7 +24,8 @@ int juego() {
             auto num_nivel = std::make_shared<NumNivel>(i + 1);
             auto datos_nivel = std::make_shared<DatosNivel>(datos_niveles[i]);
             assert(datos_nivel);
-            std::cout << "a punto de crear Nivel" << std::endl;
+            std::cout << "a punto de crear Nivel " << num_nivel->valor
+                      << std::endl;
             Nivel nivel(globales, datos_nivel, num_nivel, grid, es_el_ultimo);
 
             auto res = nivel.ejecutar();

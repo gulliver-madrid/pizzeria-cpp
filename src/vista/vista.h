@@ -19,18 +19,25 @@ struct ActivacionBotones {
     std::map<dominio::TipoPizza, bool> despachar;
 };
 
+class VistaObservable {
+  public:
+    virtual std::shared_ptr<PanelesObservables> get_paneles() const = 0;
+};
+
 ///// Vista /////
 
-class Vista : public ObjetoConFont, public sf::Drawable {
+class Vista : public ObjetoConFont,
+              public sf::Drawable,
+              public VistaObservable {
   private:
     const dominio::TiposDePizza &tp_disponibles;
     // provisional
     bool _deben_dibujarse_etiquetas_contadores;
 
     void _actualizar_etiquetas(
-        sf::RenderTarget &target,          //
-        EtiquetasGenerales &etiquetas,     //
-        const ModeloAmplio &modelo_amplio, //
+        sf::RenderTarget &,                //
+        EtiquetasGenerales &,              //
+        const ModeloAmplio &,              //
         const sf::Time &tiempo_real_actual //
     );
     void _dibujar_paneles(sf::RenderTarget &target) const;
@@ -41,7 +48,7 @@ class Vista : public ObjetoConFont, public sf::Drawable {
   public:
     std::shared_ptr<PresentacionVista> presentacion_vista;
     const std::shared_ptr<BotonesApp> botones;
-    Paneles paneles;
+    std::shared_ptr<Paneles> paneles;
     EtiquetasGenerales etiquetas;
     std::shared_ptr<Grid> grid;
 
@@ -71,6 +78,8 @@ class Vista : public ObjetoConFont, public sf::Drawable {
     void activar_botones_condicionalmente(
         const ActivacionBotones &activacion_botones //
     );
+
+    virtual std::shared_ptr<PanelesObservables> get_paneles() const override;
 
     virtual void draw(
         sf::RenderTarget &target, //

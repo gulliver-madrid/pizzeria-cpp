@@ -3,8 +3,11 @@
 
 //////// ModeloInterno
 
-ModeloInterno::ModeloInterno(const DatosModeloInterno &datos_nivel) {
-    control_pizzas.add_pedidos(datos_nivel.pedidos);
+ModeloInterno::ModeloInterno(const std::optional<DatosModeloInterno> datos_nivel
+) {
+    if (datos_nivel) {
+        control_pizzas.add_pedidos(datos_nivel->pedidos);
+    }
     assert(encargos.total() == 0);
     gestor_tiempo.reiniciar();
 }

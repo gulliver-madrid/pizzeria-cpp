@@ -1,16 +1,17 @@
 #pragma once
 
 #include "control_pizzas.h"
+#include "datos_modelo_interno.h"
 #include "encargos.h"
-
-struct DatosModeloInterno;
 
 struct ModeloInterno {
     GestorTiempoJuego gestor_tiempo;
     modelo::ControlPizzas control_pizzas;
     Encargos encargos;
 
-    ModeloInterno(const DatosModeloInterno &datos_nivel);
+    ModeloInterno(
+        const std::optional<DatosModeloInterno> datos_nivel = std::nullopt
+    );
     /* Encarga una pizza de tipo tp */
     void anadir_encargo(dominio::TipoPizza tp);
     /* Despacha una pizza del tipo indicado. */

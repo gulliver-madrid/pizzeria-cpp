@@ -32,7 +32,16 @@ struct PanelEnPreparacion : public Panel, public ObjetoConFont {
     ) const override;
 };
 
-class Paneles : public ObjetoConFont, public sf::Drawable {
+class PanelesObservables {
+  public:
+    virtual bool get_visibilidad() const { //
+        return false;
+    };
+};
+
+class Paneles : public ObjetoConFont,
+                public sf::Drawable,
+                public PanelesObservables {
   private:
     std::map<IndicePanel, std::unique_ptr<Panel>> _paneles;
 

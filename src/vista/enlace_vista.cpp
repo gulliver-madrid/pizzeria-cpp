@@ -3,7 +3,6 @@
 #include "../log_init.h"
 #include "../templates/helpers.h"
 #include "presentador.h"
-#include "vista.h"
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/System/Time.hpp>
 #include <cassert>
@@ -68,8 +67,8 @@ void EnlaceVista::set_vista(std::shared_ptr<Vista> vista) {
 }
 
 void EnlaceVista::on_cambio_de_fase(FaseNivel nueva_fase) {
-    LOG(debug) << "Cambio de fase en EnlaceVista: "
-               << static_cast<int>(nueva_fase);
+    LOG(info) << "Cambio de fase en EnlaceVista: "
+              << static_cast<int>(nueva_fase);
     switch (nueva_fase) {
         case FaseNivel::MostrandoInstrucciones:
             cambiar_visibilidad_instrucciones(true);
@@ -92,9 +91,7 @@ void EnlaceVista::on_cambio_de_fase(FaseNivel nueva_fase) {
     }
 }
 
-void EnlaceVista::esconder_paneles() const {
-    vista->paneles.visible = false;
-}
+void EnlaceVista::esconder_paneles() const { vista->paneles->visible = false; }
 
 void EnlaceVista::actualizar_interfaz_grafico(
     sf::RenderTarget &target,          //
@@ -129,6 +126,10 @@ PresentacionVista EnlaceVista::get_presentacion_vista() const { //
 
 const std::shared_ptr<const BotonesApp> EnlaceVista::get_botones() const {
     return vista->botones;
+}
+
+std::shared_ptr<VistaObservable> EnlaceVista::get_vista() const { //
+    return vista;
 }
 
 void EnlaceVista::dibujar_vista(sf::RenderTarget &target) { //

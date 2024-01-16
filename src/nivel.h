@@ -6,6 +6,7 @@
 #include "tiempo.h"
 #include "vista/enlace_vista.h"
 #include "vista/grid.h"
+#include "vista/vista.h"
 
 enum class FaseNivel;
 class BotonesApp;
@@ -25,20 +26,19 @@ using CambioFase = std::pair<FaseNivel, FaseNivel>;
 
 struct Nivel {
   private:
-    std::optional<ModeloAmplio> modelo_amplio_opcional;
+    std::optional<ModeloAmplio> modelo_amplio;
     OptionalFont font;
 
     std::optional<FaseNivel> _procesa_click(
-        const std::shared_ptr<const BotonesApp> &, //
-        const FaseNivel fase_actual                //
+        const std::shared_ptr<const BotonesApp>, //
+        const FaseNivel fase_actual              //
     );
-    EnlaceVista _crear_enlace_vista( //
-        const modelo::ControlPizzas &
+    std::shared_ptr<EnlaceVista> Nivel::_crear_enlace_vista( //
+        const modelo::ControlPizzas &control_pizzas
     );
     std::optional<FaseNivel> _procesarEvento(
-        sf::Event,                                 //
-        const std::shared_ptr<const BotonesApp> &, //
-        ModeloAmplio &                             //
+        sf::Event,                              //
+        const std::shared_ptr<const BotonesApp> //
     );
     std::optional<AccionGeneral> Nivel::_procesa_cambio_de_fase(
         EjecucionEnProceso &ejecucion_en_proceso, FaseNivel nueva_fase
@@ -52,6 +52,7 @@ struct Nivel {
 
     const bool es_el_ultimo;
     std::shared_ptr<ControladorClicks> controlador_clicks;
+    std::shared_ptr<EnlaceVista> enlace_vista;
 
     Nivel(
         std::shared_ptr<Globales> globales = nullptr,      //
@@ -61,4 +62,6 @@ struct Nivel {
         bool es_el_ultimo = false                          //
     );
     AccionGeneral ejecutar();
+    void establecer_fase(FaseNivel);
+    std::shared_ptr<VistaObservable> get_vista() const;
 };

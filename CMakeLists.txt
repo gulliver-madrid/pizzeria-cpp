@@ -71,7 +71,6 @@ add_executable(pizzeria
     src/demos/boost_log.cpp
     src/demos/demo_nivel.cpp
     src/demos/map.cpp
-    # src/demos/prueba.cpp
     src/demos/unicode.cpp
     src/demos/visual.cpp
     src/demos/visual_textos.cpp
@@ -115,13 +114,15 @@ add_executable(
     src/tests/presentador/test_activacion_botones.cpp
     src/tests/test_tiempo.cpp
     src/tests/test_timer.cpp
+    src/tests/test_usecases.cpp
+
 
     # archivos del proyecto
     src/controlador_clicks.cpp
     src/datos_niveles.cpp
     src/debug_sfml.cpp
     src/globales.cpp
-    # src/juego.cpp
+    src/juego.cpp
     src/modelo/control_pizzas.cpp
     src/modelo/dominio.cpp
     src/modelo/encargos.cpp
@@ -130,8 +131,8 @@ add_executable(
     src/modelo_amplio/aplicador.cpp
     src/modelo_amplio/modelo_amplio.cpp
     src/modelo_amplio/realizador.cpp
-    # src/nivel.cpp
-    # src/setup_juego.cpp
+    src/nivel.cpp
+    src/setup_juego.cpp
     src/shared.cpp
     src/textos.cpp
     src/tiempo.cpp
@@ -154,6 +155,12 @@ add_executable(
     src/vista/presentador.cpp
     src/vista/vista.cpp
     src/vista/basicos_vista.cpp
+    src/demos/boost_log.cpp
+    src/demos/demo_nivel.cpp
+    src/demos/map.cpp
+    src/demos/unicode.cpp
+    src/demos/visual.cpp
+    src/demos/visual_textos.cpp
 )
 target_link_libraries(runUnitTests PRIVATE sfml-graphics sfml-audio Boost::log Boost::filesystem)
 target_link_libraries(runUnitTests PUBLIC gtest gtest_main)

@@ -3,11 +3,12 @@
 #include "../modelo_amplio/modelo_amplio.h"
 #include "../observador_fase.h"
 #include "presentacion_vista.h"
+#include "vista.h"
 #include <memory>
 
 struct ActivacionBotones;
 struct ModeloInterno;
-struct Vista;
+class Vista;
 class BotonesApp;
 
 namespace sf {
@@ -23,7 +24,6 @@ namespace enlace_vista_impl {
 
 /* Debe ser un intermediario entre el modelo y la vista */
 class EnlaceVista : public ObservadorFase {
-    // TODO: hacer vista privado
     // TODO: implementar los metodos que faltan
   private:
     std::shared_ptr<PresentacionVista> presentacion_vista;
@@ -44,5 +44,6 @@ class EnlaceVista : public ObservadorFase {
     );
     PresentacionVista get_presentacion_vista() const;
     const std::shared_ptr<const BotonesApp> get_botones() const;
+    std::shared_ptr<VistaObservable> get_vista() const;
     void dibujar_vista(sf::RenderTarget &);
 };

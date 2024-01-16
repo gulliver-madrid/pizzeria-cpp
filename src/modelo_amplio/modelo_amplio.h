@@ -3,6 +3,7 @@
 #include "../fase_nivel.h"
 #include "../modelo/datos_modelo_interno.h"
 #include "../modelo/modelo_interno.h"
+#include <memory>
 
 class ObservadorFase;
 class Comando;
@@ -12,13 +13,16 @@ class ModeloAmplio {
     FaseNivel fase_actual = FaseNivel::None;
 
   public:
-    std::vector<std::reference_wrapper<ObservadorFase>> observadores_fase;
+    std::vector<std::shared_ptr<ObservadorFase>> observadores_fase;
     ModeloInterno modelo_interno;
 
     bool establecido = false;
     bool mostrando_grid = false;
 
-    ModeloAmplio::ModeloAmplio(const DatosModeloInterno &datos_modelo_interno);
+    ModeloAmplio(
+        const std::optional<DatosModeloInterno> datos_modelo_interno =
+            std::nullopt
+    );
 
     void set_fase_actual(FaseNivel);
     FaseNivel get_fase_actual() const;

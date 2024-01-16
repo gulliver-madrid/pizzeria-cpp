@@ -84,6 +84,7 @@
 
 - modelo/modelo_interno.h:
     - modelo/control_pizzas.h
+    - modelo/datos_modelo_interno.h
     - modelo/encargos.h
 
 - modelo_amplio/aplicador.cpp:
@@ -126,7 +127,6 @@
     - fase_nivel.h
     - log_init.h
     - modelo_amplio/aplicador.h
-    - vista/vista.h
 
 - nivel.h:
     - globales.h
@@ -135,6 +135,7 @@
     - tiempo.h
     - vista/enlace_vista.h
     - vista/grid.h
+    - vista/vista.h
 
 - setup_juego.cpp:
     - setup_juego.h
@@ -190,7 +191,12 @@
     - tiempo.h
 
 - tests/test_usecases.cpp:
+    - datos_niveles.h
+    - globales.h
+    - juego.h
     - nivel.h
+    - setup_juego.h
+    - vista/vista.h
 
 - textos.cpp:
     - textos.h
@@ -272,12 +278,12 @@
     - log_init.h
     - templates/helpers.h
     - vista/presentador.h
-    - vista/vista.h
 
 - vista/enlace_vista.h:
     - modelo_amplio/modelo_amplio.h
     - observador_fase.h
     - vista/presentacion_vista.h
+    - vista/vista.h
 
 - vista/etiquetas/etiquetas.cpp:
     - vista/etiquetas/etiquetas.h

@@ -33,6 +33,8 @@ bool setup_juego(std::shared_ptr<Globales> globales) {
             globales->success_buffer = buffer;
     }
 
+    std::cout << "Cargando mas recursos" << std::endl;
+
     {
         sf::SoundBuffer buffer;
         if (buffer.loadFromFile(

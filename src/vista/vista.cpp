@@ -72,16 +72,16 @@ void Vista::_actualizar_etiquetas(
 
 void Vista::_dibujar_paneles(sf::RenderTarget &target) const {
     // TODO: usar el sistema nativo de dibujo de SFML.
-    target.draw(paneles);
+    target.draw(*paneles);
 }
 
 void Vista::_actualizar_vista_paneles(
     const std::optional<VistaPreparacionPizzas> &vista_preparacion
 
 ) {
-    paneles.visible = vista_preparacion.has_value();
+    paneles->visible = vista_preparacion.has_value();
     if (vista_preparacion) {
-        paneles.actualizar(vista_preparacion.value());
+        paneles->actualizar(vista_preparacion.value());
     }
 }
 
@@ -94,22 +94,23 @@ Vista::Vista(
 )
     : ObjetoConFont(font),                                         //
       botones(std::make_shared<BotonesApp>(font, tp_disponibles)), //
-      paneles(font),                                               //
       etiquetas(font),                                             //
       grid(grid),                                                  //
-      tp_disponibles(tp_disponibles) {}
+      tp_disponibles(tp_disponibles) {
+    paneles = std::make_shared<Paneles>(font);
+}
 
 void Vista::setup(
     const std::string &instrucciones,         //
     const std::shared_ptr<NumNivel> num_nivel //
-
 ) {
+    std::cout << "Inicializando etiquetas" << std::endl;
     etiquetas.setup(
         instrucciones, //
         num_nivel,     //
         tp_disponibles //
-
     );
+    std::cout << "Etiquetas inicializadas" << std::endl;
     // Mostrar botones iniciales
     botones->generales.alternar_grid.visible = MODO_DESARROLLO;
     botones->generales.reiniciar.visible = true;
@@ -149,7 +150,7 @@ void Vista::actualizarIU(                                           //
 void Vista::mostrar_elementos_fase_activa() {
     botones->empezar.visible = false;
     botones->mostrar_botones_nivel(true);
-    paneles.visible = true;
+    paneles->visible = true;
 }
 
 void Vista::esconder_botones_gestion_pizzeria() { //
@@ -166,6 +167,10 @@ void Vista::activar_botones_condicionalmente(
         boton.activacion_condicional(activacion_botones.encargar);
     }
 }
+
+std::shared_ptr<PanelesObservables> Vista::get_paneles() const { //
+    return paneles;
+};
 
 void Vista::draw(
     sf::RenderTarget &target, //
