@@ -45,11 +45,11 @@ add_executable(pizzeria
     src/modelo_amplio/modelo_amplio.cpp
     src/modelo_amplio/realizador.cpp
     src/nivel.cpp
-    src/shared.cpp
+    src/shared/font.cpp
     src/setup_juego.cpp
     src/textos.cpp
     src/tiempo.cpp
-    src/log_init.cpp
+    src/shared/log_init.cpp
     src/vista/barras_progreso.cpp
     src/vista/botones_app.cpp
     src/vista/cadenas.cpp
@@ -133,10 +133,10 @@ add_executable(
     src/modelo_amplio/realizador.cpp
     src/nivel.cpp
     src/setup_juego.cpp
-    src/shared.cpp
+    src/shared/font.cpp
     src/textos.cpp
     src/tiempo.cpp
-    src/log_init.cpp
+    src/shared/log_init.cpp
     src/vista/barras_progreso.cpp
     src/vista/botones_app.cpp
     src/vista/cadenas.cpp

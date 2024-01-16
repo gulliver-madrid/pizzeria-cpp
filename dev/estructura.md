@@ -1,7 +1,8 @@
 - main.cpp:
     - juego.h
-    - log_init.h
-    - shared.h
+    - shared/dev.h
+    - shared/font.h
+    - shared/log_init.h
 
 - _pruebas/main.cpp:
     - _pruebas/class_a.h
@@ -43,16 +44,13 @@
     - textos.h
     - vista/grid.h
 
-- log_init.cpp:
-    - log_init.h
-
 - modelo/control_pizzas.cpp:
     - modelo/control_pizzas.h
     - templates/helpers.h
 
 - modelo/control_pizzas.h:
     - modelo/modelo.h
-    - shared.h
+    - shared/font.h
 
 - modelo/datos_modelo_interno.h:
     - modelo/control_pizzas.h
@@ -63,8 +61,8 @@
 
 - modelo/encargos.cpp:
     - modelo/encargos.h
-    - log_init.h
     - modelo/dominio.h
+    - shared/log_init.h
     - templates/helpers.h
 
 - modelo/encargos.h:
@@ -112,8 +110,9 @@
 - modelo_amplio/realizador.cpp:
     - modelo_amplio/realizador.h
     - fase_nivel.h
-    - log_init.h
     - modelo_amplio/modelo_amplio.h
+    - shared/dev.h
+    - shared/log_init.h
 
 - modelo_amplio/realizador.h:
     - modelo_amplio/realizador_base.h
@@ -126,14 +125,14 @@
     - controlador_clicks.h
     - datos_nivel.h
     - fase_nivel.h
-    - log_init.h
     - modelo_amplio/aplicador.h
-    - shared_num_nivel.h
+    - shared/log_init.h
+    - shared/num_nivel.h
 
 - nivel.h:
     - globales.h
     - modelo_amplio/modelo_amplio.h
-    - shared.h
+    - shared/font.h
     - tiempo.h
     - vista/enlace_vista.h
     - vista/grid.h
@@ -147,8 +146,11 @@
     - vista/cadenas.h
     - vista/vista_data.h
 
-- shared.cpp:
-    - shared.h
+- shared/font.cpp:
+    - shared/font.h
+
+- shared/log_init.cpp:
+    - shared/log_init.h
 
 - tests/modelo/test_encargadas.cpp:
     - modelo/encargos.h
@@ -186,10 +188,10 @@
     - vista/cadenas.h
 
 - tests/test_main.cpp:
-    - log_init.h
+    - shared/log_init.h
 
 - tests/test_num_nivel.cpp:
-    - shared_num_nivel.h
+    - shared/num_nivel.h
 
 - tests/test_tiempo.cpp:
     - tiempo.h
@@ -208,12 +210,12 @@
 
 - textos.cpp:
     - textos.h
-    - log_init.h
+    - shared/log_init.h
     - vista/cadenas.h
 
 - textos.h:
-    - shared.h
-    - shared_num_nivel.h
+    - shared/font.h
+    - shared/num_nivel.h
 
 - tiempo.cpp:
     - tiempo.h
@@ -255,7 +257,7 @@
     - vista/componentes/varios.h
 
 - vista/componentes/barra_progreso.h:
-    - shared.h
+    - shared/font.h
 
 - vista/componentes/boton_con_texto.cpp:
     - vista/componentes/boton_con_texto.h
@@ -267,7 +269,7 @@
     - vista/componentes/componente.h
 
 - vista/componentes/boton_data.h:
-    - shared.h
+    - shared/font.h
 
 - vista/componentes/botones.cpp:
     - vista/componentes/botones.h
@@ -280,12 +282,12 @@
     - vista/componentes/varios.h
 
 - vista/componentes/varios.h:
-    - shared.h
+    - shared/font.h
 
 - vista/enlace_vista.cpp:
     - vista/enlace_vista.h
     - fase_nivel.h
-    - log_init.h
+    - shared/log_init.h
     - templates/helpers.h
     - vista/presentador.h
 
@@ -308,8 +310,8 @@
 - vista/etiquetas/etiquetas.h:
     - modelo/control_pizzas.h
     - modelo/modelo.h
-    - shared.h
-    - shared_num_nivel.h
+    - shared/font.h
+    - shared/num_nivel.h
     - vista/presentacion_vista.h
     - vista/vista_shared.h
 
@@ -321,7 +323,7 @@
     - vista/componentes/varios.h
 
 - vista/etiquetas/etiquetas_barra_estado.h:
-    - shared.h
+    - shared/font.h
 
 - vista/etiquetas/etiquetas_contadores.cpp:
     - vista/etiquetas/etiquetas_contadores.h
@@ -339,14 +341,14 @@
 
 - vista/etiquetas/etiquetas_info.cpp:
     - vista/etiquetas/etiquetas_info.h
-    - log_init.h
+    - shared/log_init.h
     - textos.h
     - vista/basicos_vista.h
     - vista/componentes/varios.h
 
 - vista/etiquetas/etiquetas_info.h:
-    - shared.h
-    - shared_num_nivel.h
+    - shared/font.h
+    - shared/num_nivel.h
     - vista/presentacion_vista.h
 
 - vista/etiquetas/fabrica_etiquetas_contadores.cpp:
@@ -355,7 +357,7 @@
     - vista/componentes/varios.h
 
 - vista/etiquetas/fabrica_etiquetas_contadores.h:
-    - shared.h
+    - shared/font.h
 
 - vista/grid.cpp:
     - vista/grid.h
@@ -368,7 +370,7 @@
 
 - vista/paneles.h:
     - modelo/modelo.h
-    - shared.h
+    - shared/font.h
     - vista/barras_progreso.h
     - vista/componentes/varios.h
 
@@ -387,8 +389,9 @@
 - vista/vista.cpp:
     - vista/vista.h
     - fase_nivel.h
-    - log_init.h
-    - shared_num_nivel.h
+    - shared/dev.h
+    - shared/log_init.h
+    - shared/num_nivel.h
     - templates/helpers.h
     - vista/basicos_vista.h
     - vista/grid.h

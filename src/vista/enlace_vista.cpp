@@ -1,6 +1,6 @@
 #include "enlace_vista.h"
 #include "../fase_nivel.h"
-#include "../log_init.h"
+#include "../shared/log_init.h"
 #include "../templates/helpers.h"
 #include "presentador.h"
 #include <SFML/Graphics/RenderTarget.hpp>

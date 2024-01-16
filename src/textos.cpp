@@ -1,5 +1,5 @@
 #include "textos.h"
-#include "log_init.h"
+#include "shared/log_init.h"
 #include "vista/cadenas.h"
 #include <iostream>
 

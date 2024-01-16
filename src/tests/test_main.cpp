@@ -1,4 +1,4 @@
-#include "../log_init.h"
+#include "../shared/log_init.h"
 #include <gtest/gtest.h>
 
 int main(int argc, char **argv) {

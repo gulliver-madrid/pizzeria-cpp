@@ -2,8 +2,8 @@
 
 #include "../../modelo/control_pizzas.h"
 #include "../../modelo/modelo.h"
-#include "../../shared.h"
-#include "../../shared_num_nivel.h"
+#include "../../shared/font.h"
+#include "../../shared/num_nivel.h"
 #include "../presentacion_vista.h"
 #include "../vista_shared.h"
 #include <SFML/System/Vector2.hpp>

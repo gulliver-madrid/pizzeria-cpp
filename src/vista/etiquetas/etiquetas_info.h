@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../../shared.h"
-#include "../../shared_num_nivel.h"
+#include "../../shared/font.h"
+#include "../../shared/num_nivel.h"
 #include "../presentacion_vista.h"
 #include <SFML/Graphics/Text.hpp>
 #include <optional>

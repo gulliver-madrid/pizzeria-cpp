@@ -2,8 +2,6 @@
 
 #include <memory>
 
-constexpr bool MODO_DESARROLLO = true;
-
 namespace sf {
     class Font;
 }

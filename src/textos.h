@@ -1,7 +1,7 @@
 #pragma once
 
-#include "shared.h"
-#include "shared_num_nivel.h"
+#include "shared/font.h"
+#include "shared/num_nivel.h"
 #include <memory>
 #include <optional>
 #include <string>

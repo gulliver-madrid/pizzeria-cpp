@@ -1,4 +1,4 @@
-#include "../shared_num_nivel.h"
+#include "../shared/num_nivel.h"
 #include <gtest/gtest.h>
 
 TEST(NumNivelOpcional, SePuedeCrearSinArgumentos) { //

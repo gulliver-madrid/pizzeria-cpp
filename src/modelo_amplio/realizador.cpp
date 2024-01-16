@@ -1,6 +1,7 @@
 #include "realizador.h"
 #include "../fase_nivel.h"
-#include "../log_init.h"
+#include "../shared/dev.h"
+#include "../shared/log_init.h"
 #include "modelo_amplio.h"
 #include <cassert>
 

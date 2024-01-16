@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../modelo/modelo.h"
-#include "../shared.h"
+#include "../shared/font.h"
 #include "barras_progreso.h"
 #include "componentes/varios.h"
 #include <vector>

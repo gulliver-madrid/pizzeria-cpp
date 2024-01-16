@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../shared.h"
+#include "../shared/font.h"
 #include "modelo.h"
 #include <vector>
 

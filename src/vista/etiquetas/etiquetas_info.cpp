@@ -1,5 +1,5 @@
 #include "etiquetas_info.h"
-#include "../../log_init.h"
+#include "../../shared/log_init.h"
 #include "../../textos.h"
 #include "../basicos_vista.h"
 #include "../componentes/varios.h"

@@ -2,9 +2,9 @@
 #include "controlador_clicks.h"
 #include "datos_nivel.h"
 #include "fase_nivel.h"
-#include "log_init.h"
+#include "shared/log_init.h"
 #include "modelo_amplio/aplicador.h"
-#include "shared_num_nivel.h"
+#include "shared/num_nivel.h"
 #include <SFML/System/Time.hpp>
 #include <SFML/Window/Event.hpp>
 #include <cassert>

@@ -2,7 +2,7 @@
 
 #include "globales.h"
 #include "modelo_amplio/modelo_amplio.h"
-#include "shared.h"
+#include "shared/font.h"
 #include "tiempo.h"
 #include "vista/enlace_vista.h"
 #include "vista/grid.h"

@@ -6,8 +6,9 @@
 #include "demos/visual.h"
 #include "demos/visual_textos.h"
 #include "juego.h"
-#include "log_init.h"
-#include "shared.h"
+#include "shared/dev.h"
+#include "shared/font.h"
+#include "shared/log_init.h"
 #include <cassert>
 #include <iostream>
 #include <map>
