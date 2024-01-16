@@ -1,5 +1,6 @@
 #pragma once
 
+#include "shared_num_nivel.h"
 #include <cassert>
 #include <memory>
 
@@ -18,15 +19,6 @@ class OptionalFont {
 };
 
 constexpr bool MODO_DESARROLLO = true;
-
-/* NewType para el numero de nivel del juego */
-struct NumNivel {
-    const int valor;
-    explicit NumNivel(int v) : valor(v) { //
-        assert(valor > 0);
-    }
-    NumNivel &operator=(const NumNivel &) = delete;
-};
 
 class ObjetoConFont {
   protected:

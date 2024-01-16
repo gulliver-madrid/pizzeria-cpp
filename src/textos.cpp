@@ -7,18 +7,11 @@
     "%!Enhorabuena! Todos los clientes est%an satisfechos."
 
 std::string construir_texto_instrucciones(
-    const std::string &plantilla,           //
-    const std::optional<NumNivel> num_nivel //
+    const std::string &plantilla,     //
+    const NumNivelOpcional &num_nivel //
 ) {
     CadenaJuego cadena = interpolar_unicode(plantilla);
-    std::string repr_num_nivel;
-    if (num_nivel == std::nullopt) {
-        repr_num_nivel = "-";
-    } else {
-        repr_num_nivel = std::to_string(num_nivel.value().valor);
-    }
-    LOG(debug) << "repr_num_nivel= " << repr_num_nivel;
-    return cadena.interpolar_por_clave("num_nivel", repr_num_nivel);
+    return cadena.interpolar_por_clave("num_nivel", num_nivel.to_string());
 }
 
 std::string construir_resultado() { //

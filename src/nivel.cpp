@@ -177,7 +177,7 @@ std::optional<AccionGeneral> Nivel::_procesa_cambio_de_fase(
 Nivel::Nivel(
     std::shared_ptr<Globales> globales,      //
     std::shared_ptr<DatosNivel> datos_nivel, //
-    std::optional<NumNivel> num_nivel,       //
+    const NumNivelOpcional num_nivel,        //
     std::shared_ptr<Grid> grid,              //
     bool es_el_ultimo                        //
 )
@@ -185,13 +185,8 @@ Nivel::Nivel(
       grid(grid), es_el_ultimo(es_el_ultimo) {
 
     controlador_clicks = std::shared_ptr<ControladorClicks>();
-    std::string repr_num_nivel;
-    if (!num_nivel) {
-        repr_num_nivel = "-";
-    } else {
-        repr_num_nivel = std::to_string(num_nivel.value().valor);
-    }
-    LOG(info) << "Creando nivel " << repr_num_nivel << std::endl;
+
+    LOG(info) << "Creando nivel " << num_nivel.to_string() << std::endl;
     if (datos_nivel) {
         modelo_amplio.emplace(datos_nivel->datos_modelo_interno);
     } else {

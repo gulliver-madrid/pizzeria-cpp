@@ -47,7 +47,7 @@ struct Nivel {
   public:
     const std::shared_ptr<Globales> globales;
     const std::shared_ptr<DatosNivel> datos_nivel;
-    const std::optional<NumNivel> num_nivel;
+    const NumNivelOpcional &num_nivel;
     const std::shared_ptr<Grid> grid;
 
     const bool es_el_ultimo;
@@ -55,11 +55,11 @@ struct Nivel {
     std::shared_ptr<EnlaceVista> enlace_vista;
 
     Nivel(
-        std::shared_ptr<Globales> globales = nullptr,      //
-        std::shared_ptr<DatosNivel> datos_nivel = nullptr, //
-        std::optional<NumNivel> num_nivel = std::nullopt,  //
-        std::shared_ptr<Grid> grid = nullptr,              //
-        bool es_el_ultimo = false                          //
+        std::shared_ptr<Globales> globales = nullptr,          //
+        std::shared_ptr<DatosNivel> datos_nivel = nullptr,     //
+        const NumNivelOpcional num_nivel = NumNivelOpcional(), //
+        std::shared_ptr<Grid> grid = nullptr,                  //
+        bool es_el_ultimo = false                              //
     );
     AccionGeneral ejecutar();
     void establecer_fase(FaseNivel);

@@ -14,7 +14,6 @@
 
 TEST(Usecases, EnModoInstruccionesNoSeMuestranLosPaneles) { //
     Nivel nivel;
-    std::cout << "Nivel creado" << std::endl;
     nivel.establecer_fase(FaseNivel::MostrandoInstrucciones);
     auto paneles = nivel.get_vista()->get_paneles();
     ASSERT_EQ(paneles->get_visibilidad(), false);

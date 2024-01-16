@@ -112,10 +112,10 @@ add_executable(
     src/tests/presentador/test_enlace_vista.cpp
     src/tests/presentador/test_presentador.cpp
     src/tests/presentador/test_activacion_botones.cpp
+    src/tests/test_num_nivel.cpp
     src/tests/test_tiempo.cpp
     src/tests/test_timer.cpp
     src/tests/test_usecases.cpp
-
 
     # archivos del proyecto
     src/controlador_clicks.cpp

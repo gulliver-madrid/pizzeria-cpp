@@ -33,7 +33,7 @@ EtiquetasGenerales::~EtiquetasGenerales() = default;
 
 void EtiquetasGenerales::setup(
     const std::string &instr,                   //
-    const std::optional<NumNivel> num_nivel,  //
+   const NumNivelOpcional& num_nivel,  //
     const dominio::TiposDePizza &tp_disponibles //
 ) {
     info->setup(instr, num_nivel);
