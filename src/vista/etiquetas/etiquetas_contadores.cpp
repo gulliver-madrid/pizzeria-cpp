@@ -6,6 +6,7 @@
 #include "../componentes/varios.h"
 #include "../presentador.h"
 #include "fabrica_etiquetas_contadores.h"
+#include <SFML/Graphics/RenderTarget.hpp>
 #include <cassert>
 #include <iostream>
 
@@ -21,7 +22,7 @@ namespace {
 
     const int top_left_padding = 5;
 
-    /* Builds the shape of PedidoCard */
+    /* Builds the shape of TarjetaPedido */
     sf::RectangleShape build_card_pedido_shape(size_t num_items) {
         const int height = 30 + 26 * (num_items - 1);
         const auto size = sf::Vector2f(
@@ -38,8 +39,8 @@ namespace {
         return shape;
     }
 
-    /* Builds a PedidoCard */
-    PedidoCard build_pedido_card(
+    /* Builds a TarjetaPedido */
+    TarjetaPedido construye_tarjeta_pedido(
         std::string texto, const OptionalFont &font, size_t num_items //
     ) {
         static const auto tamano_fuente = 22;
@@ -48,20 +49,21 @@ namespace {
         return {etiqueta, shape};
     }
 
-    void actualizar_card_pedidos(
-        const modelo::Pedidos &pedidos,         //
-        std::vector<PedidoCard> &cards_pedidos, //
-        const OptionalFont &font                //
+    void actualizar_tarjetas_pedidos(
+        const modelo::Pedidos &pedidos,       //
+        std::vector<TarjetaPedido> &tarjetas, //
+        const OptionalFont &font              //
     ) {
         // Creamos las tarjetas de los pedidos
-        cards_pedidos.clear();
+        tarjetas.clear();
         for (auto &pedido : pedidos) {
             const auto texto = presentador::pedido_to_string(pedido);
             const size_t num_items = pedido.contenido.size();
-            const PedidoCard card = build_pedido_card(texto, font, num_items);
-            cards_pedidos.emplace_back(card);
+            const TarjetaPedido card =
+                construye_tarjeta_pedido(texto, font, num_items);
+            tarjetas.emplace_back(card);
         }
-        assert(cards_pedidos.size() == pedidos.size());
+        assert(tarjetas.size() == pedidos.size());
 
         // Les asignamos su posicion correcta
         const auto separacion_vertical =
@@ -74,7 +76,7 @@ namespace {
         float pos_x = pos_panel.x + medidas::MARGEN_IZQ_ETIQUETAS;
         float pos_y = pos_panel.y + medidas::FILA_CONTENIDO_PANEL;
 
-        for (auto &card : cards_pedidos) {
+        for (auto &card : tarjetas) {
             card.setPosition(pos_x, pos_y);
             //  Calcula la posicion del siguiente pedido
             const auto g_bounds = card.label.getGlobalBounds();
@@ -83,22 +85,39 @@ namespace {
     }
 } // namespace
 
-///// PedidoCard (public) /////
+///////////////////////////////////////////
+// TarjetaPedido (public)
+//////////////////////////////////////////
 
-void PedidoCard::setPosition(float pos_x, float pos_y) {
+TarjetaPedido::TarjetaPedido(sf::Text label, sf::RectangleShape shape)
+    : label(label), shape(shape) {}
+
+void TarjetaPedido::setPosition(float pos_x, float pos_y) {
     label.setPosition(pos_x, pos_y);
     shape.setPosition(pos_x - top_left_padding, pos_y - top_left_padding);
 }
 
-///// EtiquetasContadores (private) /////
-
-void EtiquetasContadores::_actualizar_pedidos_dinamicos( //
-    const modelo::Pedidos &pedidos
-) {
-    actualizar_card_pedidos(pedidos, cards_pedidos, font);
+void TarjetaPedido::draw(
+    sf::RenderTarget &target, //
+    sf::RenderStates states   //
+) const {
+    target.draw(shape);
+    target.draw(label);
 }
 
-///// EtiquetasContadores (public) /////
+///////////////////////////////////////////
+// EtiquetasContadores (private)
+//////////////////////////////////////////
+
+void EtiquetasContadores::_actualizar_vista_pedidos( //
+    const modelo::Pedidos &pedidos
+) {
+    actualizar_tarjetas_pedidos(pedidos, tarjetas_pedidos, font);
+}
+
+///////////////////////////////////////////
+// EtiquetasContadores (public)
+//////////////////////////////////////////
 
 EtiquetasContadores::EtiquetasContadores(const OptionalFont &font)
     : ObjetoConFont(font) {}
@@ -122,7 +141,7 @@ void EtiquetasContadores::actualizar(
         assert(has_key(etiquetas_preparadas, tp));
         etiquetas_preparadas.at(tp).setString(linea);
     }
-    _actualizar_pedidos_dinamicos(pedidos);
+    _actualizar_vista_pedidos(pedidos);
 }
 
 void EtiquetasContadores::draw(
@@ -131,5 +150,5 @@ void EtiquetasContadores::draw(
 ) const {
     dibujar_elementos(target, etiquetas_preparadas);
     dibujar_elementos(target, etiquetas_servidas);
-    dibujar_elementos(target, cards_pedidos);
+    dibujar_elementos(target, tarjetas_pedidos);
 }

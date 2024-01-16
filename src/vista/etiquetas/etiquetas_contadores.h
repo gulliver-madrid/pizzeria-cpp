@@ -3,32 +3,25 @@
 #include "../../modelo/control_pizzas.h"
 #include "../vista_shared.h"
 #include <SFML/Graphics/RectangleShape.hpp>
-#include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Text.hpp>
 
 namespace sf {
     class RenderTarget;
 }
 
-///// PedidoCard /////
+///// TarjetaPedido /////
 
-class PedidoCard : public sf::Drawable {
+class TarjetaPedido : public sf::Drawable {
   public:
     sf::Text label;
     sf::RectangleShape shape;
 
-    PedidoCard(sf::Text label, sf::RectangleShape shape)
-        : label(label), shape(shape) {}
-
+    TarjetaPedido(sf::Text label, sf::RectangleShape shape);
     void setPosition(float pos_x, float pos_y);
-
     virtual void draw(
         sf::RenderTarget &target, //
         sf::RenderStates states   //
-    ) const override {
-        target.draw(shape);
-        target.draw(label);
-    }
+    ) const override;
 };
 
 ///// EtiquetasContadores /////
@@ -42,12 +35,12 @@ struct EtiquetasContadores : public ObjetoConFont, public sf::Drawable {
     using PizzasToLabels = std::map<TipoPizza, sf::Text>;
 
   private:
-    void _actualizar_pedidos_dinamicos(const modelo::Pedidos &);
+    void _actualizar_vista_pedidos(const modelo::Pedidos &);
 
   public:
     PizzasToLabels etiquetas_preparadas;
     PizzasToLabels etiquetas_servidas;
-    std::vector<PedidoCard> cards_pedidos;
+    std::vector<TarjetaPedido> tarjetas_pedidos;
 
     EtiquetasContadores(const OptionalFont &);
     void setup(const dominio::TiposDePizza &tp_disponibles);
