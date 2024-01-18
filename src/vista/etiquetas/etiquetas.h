@@ -17,7 +17,7 @@ namespace sf {
     class Time;
 } // namespace sf
 
-struct EtiquetasBarraEstado;
+class EtiquetasBarraEstado;
 struct EtiquetasContadores;
 struct EtiquetasInfo;
 struct Globales;

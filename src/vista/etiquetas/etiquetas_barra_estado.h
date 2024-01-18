@@ -1,18 +1,19 @@
 #pragma once
 
 #include "../../shared/font.h"
-#include <SFML/Graphics/Text.hpp>
-#include <SFML/System/Time.hpp>
+#include <SFML/Graphics/Drawable.hpp>
 
 namespace sf {
     class Font;
     class RenderTarget;
+    class Text;
+    class Time;
 } // namespace sf
 
-struct EtiquetasBarraEstado : public ObjetoConFont, public sf::Drawable {
+class EtiquetasBarraEstado : public ObjetoConFont, public sf::Drawable {
 
   private:
-    sf::Text etiqueta;
+    std::unique_ptr<sf::Text> etiqueta;
 
   public:
     EtiquetasBarraEstado(const OptionalFont &);
