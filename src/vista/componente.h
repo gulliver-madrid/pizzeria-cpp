@@ -7,10 +7,8 @@
 
 class Componente {
 
-  protected:
-    std::vector<std::shared_ptr<Componente>> children;
-
   public:
+    std::vector<std::shared_ptr<Componente>> children;
     // Indica si es un componente con posible font
     bool has_font;
 

@@ -15,6 +15,7 @@ TEST(Componente, ConPosibleFont) {
     class B : public ComponenteConPosibleFont {};
     std::shared_ptr<A> a = std::make_shared<A>();
     B b;
-    b.add_child(a);
     ASSERT_EQ(true, a->has_font);
+    b.add_child(a);
+    ASSERT_EQ(1, b.children.size());
 }
