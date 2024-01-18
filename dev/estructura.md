@@ -266,7 +266,7 @@
 
 - vista/componentes/boton_con_texto.h:
     - vista/componentes/boton_data.h
-    - vista/componentes/componente.h
+    - vista/componentes/componente_old_style.h
 
 - vista/componentes/boton_data.h:
     - shared/font.h
@@ -321,6 +321,7 @@
     - vista/basicos_vista.h
     - vista/cadenas.h
     - vista/componentes/varios.h
+    - vista/presentador.h
 
 - vista/etiquetas/etiquetas_barra_estado.h:
     - shared/font.h
@@ -378,6 +379,8 @@
     - vista/presentador.h
     - modelo/dominio.h
     - templates/helpers.h
+    - tiempo.h
+    - vista/cadenas.h
     - vista/vista_shared.h
 
 - vista/presentador.h:

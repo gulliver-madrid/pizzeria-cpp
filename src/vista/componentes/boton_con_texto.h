@@ -1,7 +1,7 @@
 #pragma once
 
 #include "boton_data.h"
-#include "componente.h"
+#include "componente_old_style.h"
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Text.hpp>
 #include <memory>
@@ -13,7 +13,7 @@ namespace sf {
 
 struct Posicionamiento;
 
-class BotonConTexto : public Componente {
+class BotonConTexto : public ComponenteOldStyle {
   private:
     static size_t _proximo_id;
     std::optional<size_t> _id;

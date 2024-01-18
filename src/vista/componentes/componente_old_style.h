@@ -8,7 +8,7 @@ enum class Align { //
     Right
 };
 
-class Componente : public sf::Drawable {
+class ComponenteOldStyle : public sf::Drawable {
   public:
     void virtual establecer_contenedor(const sf::FloatRect &) = 0;
 };
