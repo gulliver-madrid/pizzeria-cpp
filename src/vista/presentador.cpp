@@ -1,6 +1,8 @@
 #include "presentador.h"
 #include "../modelo/dominio.h"
 #include "../templates/helpers.h"
+#include "../tiempo.h"
+#include "cadenas.h"
 #include "vista_shared.h"
 #include <algorithm>
 #include <cassert>
@@ -41,7 +43,7 @@ namespace presentador {
         return s;
     }
 
-    PizzasToStrings contadores_to_preparadas(  //
+    PizzasToStrings contadores_to_preparadas(       //
         const modelo::PizzasAContadores &contadores //
     ) {
         PizzasToStrings textos_preparadas;
@@ -73,5 +75,18 @@ namespace presentador {
             presentador::to_vista
         );
         return vista_preparaciones_pizzas;
+    }
+
+    std::string crea_texto_etiqueta_barra_estado(
+        const sf::Time &tiempo_real, const sf::Time &tiempo_juego
+    ) {
+        static const auto espacios = std::string(7, ' ');
+        CadenaJuego cadena(
+            "Tiempo Juego: {tiempo_juego}" + espacios +
+            "Tiempo Real: {tiempo_real}"
+        );
+        return cadena
+            .interpolar_por_clave("tiempo_juego", time_to_string(tiempo_juego))
+            .interpolar_por_clave("tiempo_real", time_to_string(tiempo_real));
     }
 } // namespace presentador

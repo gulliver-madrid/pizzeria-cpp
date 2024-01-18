@@ -2,6 +2,7 @@
 #include "../../modelo/dominio.h"
 #include "../../vista/presentador.h"
 #include "../../vista/vista.h"
+
 #include <gtest/gtest.h>
 
 using dominio::TipoPizza;
@@ -29,4 +30,13 @@ TEST(Presentador, ContadoresToPreparadasString) {
     contadores.at(TipoPizza::Margarita).preparadas++;
     auto vista_preparadas = presentador::contadores_to_preparadas(contadores);
     ASSERT_EQ(vista_preparadas.at(TipoPizza::Margarita), "Margarita: 1");
+}
+
+TEST(Presentador, CreaTextoEtiquetaBarraEstado) {
+    const auto tiempo_real = sf::seconds(62);
+    const auto tiempo_juego = sf::seconds(35);
+    const auto result = presentador::crea_texto_etiqueta_barra_estado(
+        tiempo_real, tiempo_juego
+    );
+    ASSERT_EQ("Tiempo Juego: 00:35       Tiempo Real: 01:02", result);
 }

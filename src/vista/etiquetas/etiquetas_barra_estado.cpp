@@ -5,31 +5,29 @@
 #include "../basicos_vista.h"
 #include "../cadenas.h"
 #include "../componentes/varios.h"
+#include "../presentador.h"
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
+
+const auto crear_texto = presentador::crea_texto_etiqueta_barra_estado;
 
 EtiquetasBarraEstado::EtiquetasBarraEstado(const OptionalFont &font)
     : ObjetoConFont(font) {
     const EstiloTexto estilo = {
         medidas::TAMANO_TEXTO_GRANDE, sf::Color::Yellow
     };
-    etiqueta = crearEtiqueta(
-        "Tiempo Juego: 00:00       Tiempo Real: 00:00", estilo, font,
-        {medidas::MARGEN_IZQ_PANELES, medidas::FILA_BARRA_ESTADO}
-    );
+    const auto texto_inicial = crear_texto(sf::Time::Zero, sf::Time::Zero);
+    const sf::Vector2f posicion = {
+        medidas::MARGEN_IZQ_PANELES, medidas::FILA_BARRA_ESTADO
+    };
+    etiqueta = crearEtiqueta(texto_inicial, estilo, font, posicion);
 }
 
 void EtiquetasBarraEstado::actualizar(
     const sf::Time &tiempo_real, const sf::Time &tiempo_juego
 ) {
-    CadenaJuego cadena(
-        "Tiempo Juego: {tiempo_juego}       Tiempo Real: {tiempo_real}"
-    );
-    const std::string str =
-        cadena
-            .interpolar_por_clave("tiempo_juego", time_to_string(tiempo_juego))
-            .interpolar_por_clave("tiempo_real", time_to_string(tiempo_real));
-    etiqueta.setString(str);
+    const auto texto = crear_texto(tiempo_real, tiempo_juego);
+    etiqueta.setString(texto);
 }
 
 void EtiquetasBarraEstado::draw(
