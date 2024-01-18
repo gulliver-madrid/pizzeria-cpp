@@ -17,4 +17,5 @@ bool OptionalFont::exists() const { //
     return font_ptr != nullptr;
 }
 
+ObjetoConFont::ObjetoConFont() {}
 ObjetoConFont::ObjetoConFont(const OptionalFont &font) : font(font) {}

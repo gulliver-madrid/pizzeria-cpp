@@ -18,8 +18,9 @@ class OptionalFont {
 
 class ObjetoConFont {
   protected:
-    const OptionalFont &font;
+    OptionalFont font;
 
   public:
+    ObjetoConFont();
     ObjetoConFont(const OptionalFont &font);
 };

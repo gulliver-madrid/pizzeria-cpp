@@ -30,13 +30,11 @@ class Vista : public ObjetoConFont,
               public sf::Drawable,
               public VistaObservable {
   private:
-    const dominio::TiposDePizza &tp_disponibles;
     // provisional
     bool _deben_dibujarse_etiquetas_contadores;
 
     void _actualizar_etiquetas(
         sf::RenderTarget &,                //
-        EtiquetasGenerales &,              //
         const ModeloAmplio &,              //
         const sf::Time &tiempo_real_actual //
     );
@@ -47,20 +45,19 @@ class Vista : public ObjetoConFont,
 
   public:
     std::shared_ptr<PresentacionVista> presentacion_vista;
-    const std::shared_ptr<BotonesApp> botones;
+    std::shared_ptr<BotonesApp> botones;
     std::shared_ptr<Paneles> paneles;
-    EtiquetasGenerales etiquetas;
+    std::shared_ptr<EtiquetasGenerales> etiquetas;
     std::shared_ptr<Grid> grid;
 
-    Vista(
-        const OptionalFont &font,                   //
-        std::shared_ptr<Grid>,                      //
-        const dominio::TiposDePizza &tp_disponibles //
-    );
+    Vista();
 
     void setup(
-        const std::string &instrucciones, //
-    const NumNivelOpcional&
+        const OptionalFont &font,                    //
+        std::shared_ptr<Grid>,                       //
+        const dominio::TiposDePizza &tp_disponibles, //
+        const std::string &instrucciones,            //
+        const NumNivelOpcional &                     //
     );
     void set_presentacion_vista(           //
         std::shared_ptr<PresentacionVista> //

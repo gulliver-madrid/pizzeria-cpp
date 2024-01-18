@@ -2,8 +2,8 @@
 #include "controlador_clicks.h"
 #include "datos_nivel.h"
 #include "fase_nivel.h"
-#include "shared/log_init.h"
 #include "modelo_amplio/aplicador.h"
+#include "shared/log_init.h"
 #include "shared/num_nivel.h"
 #include <SFML/System/Time.hpp>
 #include <SFML/Window/Event.hpp>
@@ -105,11 +105,7 @@ std::shared_ptr<EnlaceVista> Nivel::_crear_enlace_vista( //
         font.set_pointer(globales->font);
     }
     LOG(info) << "Creando vista" << std::endl;
-    const auto vista_ptr = std::make_shared<Vista>(
-        font,                                  //
-        grid,                                  //
-        control_pizzas.get_tipos_disponibles() //
-    );
+    const auto vista_ptr = std::make_shared<Vista>();
     LOG(info) << "Vista creada" << std::endl;
     std::string instrucciones;
     if (datos_nivel == nullptr) {
@@ -117,7 +113,13 @@ std::shared_ptr<EnlaceVista> Nivel::_crear_enlace_vista( //
     } else {
         instrucciones = datos_nivel->instrucciones;
     }
-    vista_ptr->setup(instrucciones, num_nivel);
+    vista_ptr->setup(
+        font,                                   //
+        grid,                                   //
+        control_pizzas.get_tipos_disponibles(), //
+        instrucciones,                          //
+        num_nivel                               //
+    );
     LOG(info) << "Vista inicializada" << std::endl;
     auto enlace_vista = std::make_shared<EnlaceVista>();
     enlace_vista->set_vista(vista_ptr);

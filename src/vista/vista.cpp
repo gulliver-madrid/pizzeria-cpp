@@ -41,7 +41,6 @@ namespace {
 /* Actualiza y dibuja las etiquetas */
 void Vista::_actualizar_etiquetas(
     sf::RenderTarget &target,          //
-    EtiquetasGenerales &etiquetas,     //
     const ModeloAmplio &modelo_amplio, //
     const sf::Time &tiempo_real_actual //
 ) {
@@ -58,7 +57,7 @@ void Vista::_actualizar_etiquetas(
             {
                 const auto vista_preparadas =
                     presentador::contadores_to_preparadas(contadores);
-                etiquetas.actualizar_contadores(vista_preparadas, pedidos);
+                etiquetas->actualizar_contadores(vista_preparadas, pedidos);
                 _deben_dibujarse_etiquetas_contadores = true;
 
                 break;
@@ -69,8 +68,8 @@ void Vista::_actualizar_etiquetas(
 
     const auto tiempo_juego_actual =
         modelo_amplio.modelo_interno.obtener_tiempo_juego();
-    etiquetas.actualizar_barra_estado(tiempo_real_actual, tiempo_juego_actual);
-    etiquetas.dibujar_barra_estado(target);
+    etiquetas->actualizar_barra_estado(tiempo_real_actual, tiempo_juego_actual);
+    etiquetas->dibujar_barra_estado(target);
 }
 
 void Vista::_dibujar_paneles(sf::RenderTarget &target) const {
@@ -90,25 +89,21 @@ void Vista::_actualizar_vista_paneles(
 
 ///// Vista (public) /////
 
-Vista::Vista(
-    const OptionalFont &font,                   //
-    std::shared_ptr<Grid> grid,                 //
-    const dominio::TiposDePizza &tp_disponibles //
-)
-    : ObjetoConFont(font),                                         //
-      botones(std::make_shared<BotonesApp>(font, tp_disponibles)), //
-      etiquetas(font),                                             //
-      grid(grid),                                                  //
-      tp_disponibles(tp_disponibles) {
-    paneles = std::make_shared<Paneles>(font);
-}
+Vista::Vista() {}
 
 void Vista::setup(
-    const std::string &instrucciones, //
-    const NumNivelOpcional &num_nivel //
+    const OptionalFont &font,                    //
+    std::shared_ptr<Grid> grid,                  //
+    const dominio::TiposDePizza &tp_disponibles, //
+    const std::string &instrucciones,            //
+    const NumNivelOpcional &num_nivel            //
 ) {
+    this->grid = grid;
+    botones = std::make_shared<BotonesApp>(font, tp_disponibles);
+    paneles = std::make_shared<Paneles>(font);
     LOG(info) << "Inicializando etiquetas" << std::endl;
-    etiquetas.setup(
+    etiquetas = std::make_shared<EtiquetasGenerales>(font);
+    etiquetas->setup(
         instrucciones, //
         num_nivel,     //
         tp_disponibles //
@@ -125,7 +120,7 @@ void Vista::set_presentacion_vista(
     std::shared_ptr<PresentacionVista> presentacion_vista //
 ) {
     this->presentacion_vista = presentacion_vista;
-    etiquetas.set_presentacion_vista(presentacion_vista);
+    etiquetas->set_presentacion_vista(presentacion_vista);
 }
 
 /*
@@ -147,7 +142,7 @@ void Vista::actualizarIU(                                           //
     const auto fase_actual = modelo_amplio.get_fase_actual();
 
     _actualizar_vista_paneles(vista_preparacion);
-    _actualizar_etiquetas(target, etiquetas, modelo_amplio, tiempo_real_actual);
+    _actualizar_etiquetas(target, modelo_amplio, tiempo_real_actual);
 }
 
 void Vista::mostrar_elementos_fase_activa() {
@@ -180,8 +175,8 @@ void Vista::draw(
     sf::RenderStates states   //
 ) const {
     _dibujar_paneles(target);
-    etiquetas.dibujar_info(target);
+    etiquetas->dibujar_info(target);
     if (_deben_dibujarse_etiquetas_contadores)
-        etiquetas.dibujar_contadores(target);
+        etiquetas->dibujar_contadores(target);
     target.draw(*botones);
 }
