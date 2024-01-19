@@ -1,7 +1,5 @@
 #include "componente.h"
 
-using ComponentePtr = std::shared_ptr<Componente>;
-
 namespace {
     /* Anade la fuente si el componente es componente con font */
     void try_to_add_font(ComponentePtr &comp, OptionalFont &font) {

@@ -5,23 +5,25 @@
 #include <memory>
 #include <vector>
 
+class Componente;
+using ComponentePtr = std::shared_ptr<Componente>;
+
 ///// Componente /////
 
 class Componente {
   protected:
-    std::vector<std::shared_ptr<Componente>> children;
+    std::vector<ComponentePtr> children;
 
   public:
     virtual ~Componente() = default;
-    virtual void add_child(std::shared_ptr<Componente> child);
-    std::vector<std::shared_ptr<Componente>> get_children() const;
+    virtual void add_child(ComponentePtr child);
+    std::vector<ComponentePtr> get_children() const;
 };
 
 ///// ComponenteConPosibleFont /////
 
-class ComponenteConPosibleFont : public Componente {
+class ComponenteConPosibleFont : public Componente, public ObjetoConFont {
   public:
-    OptionalFont font;
-    virtual void add_child(std::shared_ptr<Componente> child) override;
-    void set_font(OptionalFont &new_font);
+    virtual void add_child(ComponentePtr child) override;
+    virtual void set_font(OptionalFont &new_font) override;
 };
