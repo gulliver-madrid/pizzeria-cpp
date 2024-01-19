@@ -18,7 +18,7 @@ TEST(Componente, ConPosibleFont) {
     B b;
     ASSERT_EQ(true, a->has_font);
     b.add_child(a);
-    ASSERT_EQ(1, b.children.size());
+    ASSERT_EQ(1, b.get_children().size());
 }
 
 TEST(Componente, AnadeFont) {
@@ -31,6 +31,6 @@ TEST(Componente, AnadeFont) {
     ASSERT_EQ(false, a->font.exists());
     b.font.set_pointer(font);
     b.add_child(a);
-    ASSERT_EQ(1, b.children.size());
+    ASSERT_EQ(1, b.get_children().size());
     ASSERT_EQ(true, a->font.exists());
 }

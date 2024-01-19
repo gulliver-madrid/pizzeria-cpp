@@ -8,14 +8,16 @@
 ///// Componente /////
 
 class Componente {
+  protected:
+    std::vector<std::shared_ptr<Componente>> children;
 
   public:
-    std::vector<std::shared_ptr<Componente>> children;
     // Indica si es un componente con posible font
     bool has_font = false;
 
     virtual ~Componente() = default;
     virtual void add_child(std::shared_ptr<Componente> child);
+    std::vector<std::shared_ptr<Componente>> get_children() const;
 };
 
 ///// ComponenteConPosibleFont /////

@@ -6,6 +6,10 @@ void Componente::add_child(std::shared_ptr<Componente> child) {
     children.push_back(child);
 }
 
+std::vector<std::shared_ptr<Componente>> Componente::get_children() const {
+    return children;
+}
+
 ///// ComponenteConPosibleFont /////
 ComponenteConPosibleFont::ComponenteConPosibleFont() { //
     has_font = true;
