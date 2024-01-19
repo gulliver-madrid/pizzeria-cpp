@@ -53,6 +53,7 @@ add_executable(pizzeria
     src/vista/barras_progreso.cpp
     src/vista/botones_app.cpp
     src/vista/cadenas.cpp
+    src/vista/componente.cpp
     src/vista/componentes/barra_progreso.cpp
     src/vista/componentes/boton_con_texto.cpp
     src/vista/componentes/botones.cpp
@@ -141,6 +142,7 @@ add_executable(
     src/vista/barras_progreso.cpp
     src/vista/botones_app.cpp
     src/vista/cadenas.cpp
+    src/vista/componente.cpp
     src/vista/componentes/barra_progreso.cpp
     src/vista/componentes/boton_con_texto.cpp
     src/vista/componentes/botones.cpp
