@@ -24,11 +24,9 @@ namespace estilos {
 
 EtiquetasGenerales::EtiquetasGenerales(const OptionalFont &font) {
     set_font(font);
-    etiquetas_preparadas = std::make_shared<EtiquetasPreparadas>();
     etiquetas_pedidos = std::make_shared<EtiquetasPedidos>();
     info = std::make_unique<EtiquetasInfo>(font);
     barra_estado = std::make_unique<EtiquetasBarraEstado>(font);
-    add_child(etiquetas_preparadas);
     add_child(etiquetas_pedidos);
 }
 
@@ -40,7 +38,6 @@ void EtiquetasGenerales::setup(
     const dominio::TiposDePizza &tp_disponibles //
 ) {
     info->setup(instr, num_nivel);
-    etiquetas_preparadas->setup(tp_disponibles);
 }
 
 void EtiquetasGenerales::set_presentacion_vista(
@@ -53,7 +50,6 @@ void EtiquetasGenerales::actualizar_contadores(
     const PizzasToStrings &vista_preparadas, //
     const modelo::Pedidos &pedidos           //
 ) {
-    etiquetas_preparadas->actualizar(vista_preparadas);
     etiquetas_pedidos->actualizar(pedidos);
 }
 
@@ -63,9 +59,6 @@ void EtiquetasGenerales::actualizar_barra_estado(
     barra_estado->actualizar(tiempo_real_actual, tiempo_juego_actual);
 }
 
-void EtiquetasGenerales::dibujar_preparadas(sf::RenderTarget &target) const {
-    target.draw(*etiquetas_preparadas);
-}
 void EtiquetasGenerales::dibujar_pedidos(sf::RenderTarget &target) const {
     target.draw(*etiquetas_pedidos);
 }

@@ -1,5 +1,6 @@
 #include "etiquetas_contadores.h"
 #include "../../modelo/modelo.h"
+#include "../../shared/log_init.h"
 #include "../../templates/dibujar_elementos.h"
 #include "../../templates/helpers.h"
 #include "../basicos_vista.h"
@@ -112,6 +113,7 @@ void TarjetaPedido::draw(
 EtiquetasPreparadas::EtiquetasPreparadas() {}
 
 void EtiquetasPreparadas::setup(const dominio::TiposDePizza &tp_disponibles) {
+    LOG(debug) << "Tipos de pizza disponibles: " << tp_disponibles.size();
     FabricaEtiquetasContadores fabrica(font);
     int i = 0;
     for (auto tp : tp_disponibles) {
@@ -120,6 +122,7 @@ void EtiquetasPreparadas::setup(const dominio::TiposDePizza &tp_disponibles) {
         );
         i++;
     }
+    LOG(debug) << "etiquetas_preparadas: " << tp_disponibles.size();
 };
 
 void EtiquetasPreparadas::actualizar(const PizzasToStrings &vista_preparadas) {

@@ -4,6 +4,7 @@
 #include "../shared/font.h"
 #include "barras_progreso.h"
 #include "componentes/varios.h"
+#include "etiquetas/etiquetas_contadores.h"
 #include <vector>
 
 enum class IndicePanel;
@@ -41,6 +42,21 @@ struct PanelEnPreparacion : public Panel, public ObjetoConFont {
 };
 
 ///////////////////////////////////////////
+// PanelPreparadas
+/////////////////////////////////////////
+
+struct PanelPreparadas : public Panel, public ComponenteConFont {
+    std::shared_ptr<EtiquetasPreparadas> etiquetas_preparadas;
+    PanelPreparadas::PanelPreparadas(IndicePanel indice, sf::Text etiqueta);
+    void setup(const dominio::TiposDePizza &tp_disponibles);
+    void actualizar(const PizzasToStrings &vista_preparadas);
+    virtual void draw(
+        sf::RenderTarget &target, //
+        sf::RenderStates states   //
+    ) const override;
+};
+
+///////////////////////////////////////////
 // PanelesObservables
 /////////////////////////////////////////
 
@@ -64,9 +80,11 @@ class Paneles : public ObjetoConFont,
   public:
     bool visible = false;
 
-    Paneles(const OptionalFont &);
+    Paneles(const dominio::TiposDePizza &tp_disponibles, const OptionalFont &);
 
-    void actualizar(const VistaPreparacionPizzas & //
+    void Paneles::actualizar(                            //
+        const VistaPreparacionPizzas &vista_preparacion, //
+        const PizzasToStrings &vista_preparadas          //
     );
     virtual void draw(
         sf::RenderTarget &target, //

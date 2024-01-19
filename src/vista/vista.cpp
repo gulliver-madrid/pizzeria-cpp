@@ -78,12 +78,12 @@ void Vista::_dibujar_paneles(sf::RenderTarget &target) const {
 }
 
 void Vista::_actualizar_vista_paneles(
-    const std::optional<VistaPreparacionPizzas> &vista_preparacion
-
+    const std::optional<VistaPreparacionPizzas> &vista_preparacion,
+    const PizzasToStrings &vista_preparadas
 ) {
     paneles->visible = vista_preparacion.has_value();
     if (vista_preparacion) {
-        paneles->actualizar(vista_preparacion.value());
+        paneles->actualizar(vista_preparacion.value(), vista_preparadas);
     }
 }
 
@@ -100,7 +100,7 @@ void Vista::setup(
 ) {
     this->grid = grid;
     botones = std::make_shared<BotonesApp>(font, tp_disponibles);
-    paneles = std::make_shared<Paneles>(font);
+    paneles = std::make_shared<Paneles>(tp_disponibles, font);
     LOG(info) << "Inicializando etiquetas" << std::endl;
     etiquetas = std::make_shared<EtiquetasGenerales>(font);
     etiquetas->setup(
@@ -141,7 +141,15 @@ void Vista::actualizarIU(                                           //
     }
     const auto fase_actual = modelo_amplio.get_fase_actual();
 
-    _actualizar_vista_paneles(vista_preparacion);
+    if (fase_actual == FaseNivel::Activa ||
+        fase_actual == FaseNivel::EsperaAntesDeResultado) {
+        // temporalmente se obtiene aqui la vista_preparacion
+        const modelo::PizzasAContadores &contadores =
+            modelo_amplio.modelo_interno.control_pizzas.contadores;
+        const auto vista_preparadas =
+            presentador::contadores_to_preparadas(contadores);
+        _actualizar_vista_paneles(vista_preparacion, vista_preparadas);
+    }
     _actualizar_etiquetas(target, modelo_amplio, tiempo_real_actual);
 }
 
@@ -177,7 +185,7 @@ void Vista::draw(
     _dibujar_paneles(target);
     etiquetas->dibujar_info(target);
     if (_deben_dibujarse_etiquetas_contadores) {
-        etiquetas->dibujar_preparadas(target);
+        // etiquetas->dibujar_preparadas(target);
         etiquetas->dibujar_pedidos(target);
     }
     target.draw(*botones);

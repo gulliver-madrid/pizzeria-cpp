@@ -30,7 +30,7 @@ struct Globales;
 /* Agrupa las etiquetas principales para un nivel determinado */
 struct EtiquetasGenerales : public ComponenteConFont {
   private:
-    std::shared_ptr<EtiquetasPreparadas> etiquetas_preparadas;
+    // std::shared_ptr<EtiquetasPreparadas> etiquetas_preparadas;
     std::shared_ptr<EtiquetasPedidos> etiquetas_pedidos;
     std::unique_ptr<EtiquetasInfo> info;
     std::unique_ptr<EtiquetasBarraEstado> barra_estado;
@@ -59,8 +59,8 @@ struct EtiquetasGenerales : public ComponenteConFont {
     void actualizar_barra_estado(
         const sf::Time &tiempo_real_actual, const sf::Time &tiempo_juego_actual
     );
-    void EtiquetasGenerales::dibujar_preparadas(sf::RenderTarget &target) const;
-    void EtiquetasGenerales::dibujar_pedidos(sf::RenderTarget &target) const;
+
+    void dibujar_pedidos(sf::RenderTarget &target) const;
     void dibujar_barra_estado(sf::RenderTarget &target);
     void dibujar_info(sf::RenderTarget &target) const;
     virtual void draw(

@@ -25,6 +25,7 @@ std::vector<ComponentePtr> Componente::get_children() const { return children; }
 //////////////////////////////////////////
 
 void ComponenteConFont::add_child(ComponentePtr child) {
+
     if (font.exists()) {
         try_to_add_font(child, font);
     }

@@ -40,7 +40,8 @@ class Vista : public ObjetoConFont,
     );
     void _dibujar_paneles(sf::RenderTarget &target) const;
     void _actualizar_vista_paneles( //
-        const std::optional<VistaPreparacionPizzas> &
+        const std::optional<VistaPreparacionPizzas> &vista_preparacion,
+        const PizzasToStrings &vista_preparadas
     );
 
   public:
