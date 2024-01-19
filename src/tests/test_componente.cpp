@@ -17,7 +17,8 @@ TEST(Componente, AnadeHijo) {
     ASSERT_EQ(1, a.get_children().size());
 }
 
-TEST(Componente, AnadeHijoConPosibleFont) {
+class ComponenteConFontText : public testing::Test {
+  protected:
     class ComponenteConFontConcreto : public ComponenteConFont {
         virtual void draw(
             sf::RenderTarget &target, //
@@ -26,21 +27,18 @@ TEST(Componente, AnadeHijoConPosibleFont) {
     };
     class B : public ComponenteConFontConcreto {};
     class A : public ComponenteConFontConcreto {};
+};
+
+TEST_F(ComponenteConFontText, AnadeHijoConPosibleFont) {
     std::shared_ptr<B> b = std::make_shared<B>();
     A a;
     a.add_child(b);
     ASSERT_EQ(1, a.get_children().size());
 }
 
-TEST(Componente, AnadeFont) {
-    class ComponenteConFontConcreto : public ComponenteConFont {
-        virtual void draw(
-            sf::RenderTarget &target, //
-            sf::RenderStates states   //
-        ) const override {}
-    };
-    class B : public ComponenteConFontConcreto {};
-    class A : public ComponenteConFontConcreto {};
+TEST_F(ComponenteConFontText, AnadeFont) {
+    // Chequea que al anadir un hijo a un componente con la fuente
+    // establecida, esta se pasa tambien al hijo
     std::shared_ptr<B> b = std::make_shared<B>();
     A a;
     const auto font_ptr = std::make_shared<sf::Font>();
@@ -49,6 +47,5 @@ TEST(Componente, AnadeFont) {
     font.set_pointer(font_ptr);
     a.set_font(font);
     a.add_child(b);
-    ASSERT_EQ(1, a.get_children().size());
     ASSERT_EQ(true, b->has_font());
 }
