@@ -2,8 +2,9 @@
 #include <SFML/Graphics/Font.hpp>
 #include <gtest/gtest.h>
 
-TEST(Componente, AnadeHijo) {
-    class ComponenteConcreto : public Componente {
+template <typename C> class ComponenteGenericoTest : public testing::Test {
+  protected:
+    class ComponenteConcreto : public C {
         virtual void draw(
             sf::RenderTarget &target, //
             sf::RenderStates states   //
@@ -11,32 +12,26 @@ TEST(Componente, AnadeHijo) {
     };
     class B : public ComponenteConcreto {};
     class A : public ComponenteConcreto {};
-    std::shared_ptr<B> b = std::make_shared<B>();
-    A a;
-    a.add_child(b);
-    ASSERT_EQ(1, a.get_children().size());
-}
-
-class ComponenteConFontText : public testing::Test {
-  protected:
-    class ComponenteConFontConcreto : public ComponenteConFont {
-        virtual void draw(
-            sf::RenderTarget &target, //
-            sf::RenderStates states   //
-        ) const override {}
-    };
-    class B : public ComponenteConFontConcreto {};
-    class A : public ComponenteConFontConcreto {};
 };
 
-TEST_F(ComponenteConFontText, AnadeHijoConPosibleFont) {
+using ComponenteTest = ComponenteGenericoTest<Componente>;
+using ComponenteConFontTest = ComponenteGenericoTest<ComponenteConFont>;
+
+TEST_F(ComponenteTest, AnadeHijo) {
     std::shared_ptr<B> b = std::make_shared<B>();
     A a;
     a.add_child(b);
     ASSERT_EQ(1, a.get_children().size());
 }
 
-TEST_F(ComponenteConFontText, AnadeFont) {
+TEST_F(ComponenteConFontTest, AnadeHijoConPosibleFont) {
+    std::shared_ptr<B> b = std::make_shared<B>();
+    A a;
+    a.add_child(b);
+    ASSERT_EQ(1, a.get_children().size());
+}
+
+TEST_F(ComponenteConFontTest, AnadeFont) {
     // Chequea que al anadir un hijo a un componente con la fuente
     // establecida, esta se pasa tambien al hijo
     std::shared_ptr<B> b = std::make_shared<B>();
