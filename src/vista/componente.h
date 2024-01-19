@@ -20,9 +20,9 @@ class Componente {
     std::vector<ComponentePtr> get_children() const;
 };
 
-///// ComponenteConPosibleFont /////
+///// ComponenteConFont /////
 
-class ComponenteConPosibleFont : public Componente, public ObjetoConFont {
+class ComponenteConFont : public Componente, public ObjetoConFont {
   public:
     virtual void add_child(ComponentePtr child) override;
     virtual void set_font(OptionalFont &new_font) override;

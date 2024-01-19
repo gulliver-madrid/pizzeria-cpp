@@ -3,7 +3,7 @@
 namespace {
     /* Anade la fuente si el componente es componente con font */
     void try_to_add_font(ComponentePtr &comp, OptionalFont &font) {
-        auto comp_f = std::dynamic_pointer_cast<ComponenteConPosibleFont>(comp);
+        auto comp_f = std::dynamic_pointer_cast<ComponenteConFont>(comp);
         if (comp_f) {
             comp_f->set_font(font);
         }
@@ -21,17 +21,17 @@ void Componente::add_child(ComponentePtr child) { //
 std::vector<ComponentePtr> Componente::get_children() const { return children; }
 
 ///////////////////////////////////////////
-// ComponenteConPosibleFont (public)
+// ComponenteConFont (public)
 //////////////////////////////////////////
 
-void ComponenteConPosibleFont::add_child(ComponentePtr child) {
+void ComponenteConFont::add_child(ComponentePtr child) {
     if (font.exists()) {
         try_to_add_font(child, font);
     }
     Componente::add_child(child);
 }
 
-void ComponenteConPosibleFont::set_font(OptionalFont &new_font) {
+void ComponenteConFont::set_font(OptionalFont &new_font) {
     assert(new_font.exists());
     if (                                               //
         !font.exists() ||                              //

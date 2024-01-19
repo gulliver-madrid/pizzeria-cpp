@@ -12,8 +12,8 @@ TEST(Componente, Existe) {
 }
 
 TEST(Componente, ConPosibleFont) {
-    class A : public ComponenteConPosibleFont {};
-    class B : public ComponenteConPosibleFont {};
+    class A : public ComponenteConFont {};
+    class B : public ComponenteConFont {};
     std::shared_ptr<A> a = std::make_shared<A>();
     B b;
     b.add_child(a);
@@ -21,8 +21,8 @@ TEST(Componente, ConPosibleFont) {
 }
 
 TEST(Componente, AnadeFont) {
-    class A : public ComponenteConPosibleFont {};
-    class B : public ComponenteConPosibleFont {};
+    class A : public ComponenteConFont {};
+    class B : public ComponenteConFont {};
     std::shared_ptr<A> a = std::make_shared<A>();
     B b;
     const auto font_ptr = std::make_shared<sf::Font>();
