@@ -16,5 +16,4 @@ class FabricaEtiquetasContadores : public ObjetoConFont {
   public:
     FabricaEtiquetasContadores(const OptionalFont &font);
     sf::Text crearEtiquetaPizzasPreparadas(size_t indice_etiqueta) const;
-    sf::Text crearEtiquetaPizzasServidas(size_t indice_etiqueta) const;
 };

@@ -66,19 +66,3 @@ FabricaEtiquetasContadores::crearEtiquetaPizzasPreparadas(size_t indice_etiqueta
     );
     return _crear_etiqueta(posicion);
 }
-
-/*
- * Crea una etiqueta de pizzas servidasconst
- */
-sf::Text
-FabricaEtiquetasContadores::crearEtiquetaPizzasServidas(size_t indice_etiqueta
-) const {
-    const auto indice_panel = IndicePanel::PANEL_PEDIDOS;
-    const auto posicion_panel = obtener_posicion_panel(indice_panel);
-    const auto desplazamiento =
-        medidas::DESPLAZAMIENTO_VERTICAL_ETIQUETAS_PIZZAS_SERVIDAS;
-    const auto posicion = _obtener_posicion_etiqueta(
-        posicion_panel, indice_etiqueta, desplazamiento
-    );
-    return _crear_etiqueta(posicion);
-}
