@@ -148,6 +148,5 @@ void EtiquetasContadores::draw(
     sf::RenderStates states   //
 ) const {
     dibujar_elementos(target, etiquetas_preparadas);
-    dibujar_elementos(target, etiquetas_servidas);
     dibujar_elementos(target, tarjetas_pedidos);
 }

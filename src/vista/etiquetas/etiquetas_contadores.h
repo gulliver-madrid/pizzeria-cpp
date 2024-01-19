@@ -40,7 +40,6 @@ struct EtiquetasContadores : public ComponenteConFont {
 
   public:
     PizzasToLabels etiquetas_preparadas;
-    PizzasToLabels etiquetas_servidas;
     std::vector<TarjetaPedido> tarjetas_pedidos;
 
     EtiquetasContadores();
