@@ -106,22 +106,12 @@ void TarjetaPedido::draw(
 }
 
 ///////////////////////////////////////////
-// EtiquetasContadores (private)
+// EtiquetasPreparadas (public)
 //////////////////////////////////////////
 
-void EtiquetasContadores::_actualizar_vista_pedidos( //
-    const modelo::Pedidos &pedidos
-) {
-    actualizar_tarjetas_pedidos(pedidos, tarjetas_pedidos, font);
-}
+EtiquetasPreparadas::EtiquetasPreparadas() {}
 
-///////////////////////////////////////////
-// EtiquetasContadores (public)
-//////////////////////////////////////////
-
-EtiquetasContadores::EtiquetasContadores() {}
-
-void EtiquetasContadores::setup(const dominio::TiposDePizza &tp_disponibles) {
+void EtiquetasPreparadas::setup(const dominio::TiposDePizza &tp_disponibles) {
     FabricaEtiquetasContadores fabrica(font);
     int i = 0;
     for (auto tp : tp_disponibles) {
@@ -132,21 +122,43 @@ void EtiquetasContadores::setup(const dominio::TiposDePizza &tp_disponibles) {
     }
 };
 
-void EtiquetasContadores::actualizar(
-    const PizzasToStrings &vista_preparadas,
-    const modelo::Pedidos &pedidos //
-) {
+void EtiquetasPreparadas::actualizar(const PizzasToStrings &vista_preparadas) {
     for (auto &[tp, linea] : vista_preparadas) {
         assert(has_key(etiquetas_preparadas, tp));
         etiquetas_preparadas.at(tp).setString(linea);
     }
-    _actualizar_vista_pedidos(pedidos);
 }
 
-void EtiquetasContadores::draw(
+void EtiquetasPreparadas::draw(
     sf::RenderTarget &target, //
     sf::RenderStates states   //
 ) const {
     dibujar_elementos(target, etiquetas_preparadas);
+}
+///////////////////////////////////////////
+// EtiquetasPedidos (private)
+//////////////////////////////////////////
+
+void EtiquetasPedidos::_actualizar_vista_pedidos( //
+    const modelo::Pedidos &pedidos
+) {
+    actualizar_tarjetas_pedidos(pedidos, tarjetas_pedidos, font);
+}
+
+///////////////////////////////////////////
+// EtiquetasPedidos (public)
+//////////////////////////////////////////
+
+EtiquetasPedidos::EtiquetasPedidos() {}
+
+void EtiquetasPedidos::actualizar(const modelo::Pedidos &pedidos //
+) {
+    _actualizar_vista_pedidos(pedidos);
+}
+
+void EtiquetasPedidos::draw(
+    sf::RenderTarget &target, //
+    sf::RenderStates states   //
+) const {
     dibujar_elementos(target, tarjetas_pedidos);
 }

@@ -176,7 +176,9 @@ void Vista::draw(
 ) const {
     _dibujar_paneles(target);
     etiquetas->dibujar_info(target);
-    if (_deben_dibujarse_etiquetas_contadores)
-        etiquetas->dibujar_contadores(target);
+    if (_deben_dibujarse_etiquetas_contadores) {
+        etiquetas->dibujar_preparadas(target);
+        etiquetas->dibujar_pedidos(target);
+    }
     target.draw(*botones);
 }

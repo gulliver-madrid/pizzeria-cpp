@@ -28,10 +28,30 @@ class TarjetaPedido : public sf::Drawable {
 ///// EtiquetasContadores /////
 
 /*
+ * Contiene las etiquetas que muestran las pizzas en area de
+ * preparadas.
+ */
+class EtiquetasPreparadas : public ComponenteConFont {
+    using TipoPizza = dominio::TipoPizza;
+    using PizzasToLabels = std::map<TipoPizza, sf::Text>;
+
+  public:
+    PizzasToLabels etiquetas_preparadas;
+
+    EtiquetasPreparadas();
+    void setup(const dominio::TiposDePizza &tp_disponibles);
+    void actualizar(const PizzasToStrings &vista_preparadas //
+    );
+    virtual void draw(
+        sf::RenderTarget &target, //
+        sf::RenderStates states   //
+    ) const override;
+};
+/*
  * Contiene los elementos visuales que muestran las pizzas en area de
  * preparadas, servidas y los pedidos.
  */
-struct EtiquetasContadores : public ComponenteConFont {
+class EtiquetasPedidos : public ComponenteConFont {
     using TipoPizza = dominio::TipoPizza;
     using PizzasToLabels = std::map<TipoPizza, sf::Text>;
 
@@ -39,14 +59,10 @@ struct EtiquetasContadores : public ComponenteConFont {
     void _actualizar_vista_pedidos(const modelo::Pedidos &);
 
   public:
-    PizzasToLabels etiquetas_preparadas;
     std::vector<TarjetaPedido> tarjetas_pedidos;
 
-    EtiquetasContadores();
-    void setup(const dominio::TiposDePizza &tp_disponibles);
-    void actualizar(
-        const PizzasToStrings &vista_preparadas, //
-        const modelo::Pedidos &                  //
+    EtiquetasPedidos();
+    void actualizar(const modelo::Pedidos & //
     );
     virtual void draw(
         sf::RenderTarget &target, //
