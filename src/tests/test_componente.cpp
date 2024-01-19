@@ -8,7 +8,7 @@ TEST(Componente, Existe) {
     std::shared_ptr<A> a = std::make_shared<A>();
     B b;
     b.add_child(a);
-    ASSERT_EQ(false, a->has_font);
+    ASSERT_EQ(1, b.get_children().size());
 }
 
 TEST(Componente, ConPosibleFont) {
@@ -16,7 +16,6 @@ TEST(Componente, ConPosibleFont) {
     class B : public ComponenteConPosibleFont {};
     std::shared_ptr<A> a = std::make_shared<A>();
     B b;
-    ASSERT_EQ(true, a->has_font);
     b.add_child(a);
     ASSERT_EQ(1, b.get_children().size());
 }
@@ -26,7 +25,6 @@ TEST(Componente, AnadeFont) {
     class B : public ComponenteConPosibleFont {};
     std::shared_ptr<A> a = std::make_shared<A>();
     B b;
-    ASSERT_EQ(true, a->has_font);
     const auto font = std::make_shared<sf::Font>();
     ASSERT_EQ(false, a->font.exists());
     b.font.set_pointer(font);

@@ -1,5 +1,18 @@
 #include "componente.h"
 
+namespace {
+    /* Anade la fuente si el componente es componente con font */
+    void try_to_add_font(
+        std::shared_ptr<Componente> &componente, OptionalFont &font
+    ) {
+        auto componente_con_font =
+            std::dynamic_pointer_cast<ComponenteConPosibleFont>(componente);
+        if (componente_con_font) {
+            componente_con_font->set_font(font);
+        }
+    }
+} // namespace
+
 ///// Componente /////
 
 void Componente::add_child(std::shared_ptr<Componente> child) {
@@ -11,21 +24,6 @@ std::vector<std::shared_ptr<Componente>> Componente::get_children() const {
 }
 
 ///// ComponenteConPosibleFont /////
-ComponenteConPosibleFont::ComponenteConPosibleFont() { //
-    has_font = true;
-};
-
-/* Anade la fuente si el componente es componente con font */
-void try_to_add_font(
-    std::shared_ptr<Componente> &componente, OptionalFont &font
-) {
-    if (componente->has_font) {
-        auto componente_con_font =
-            std::dynamic_pointer_cast<ComponenteConPosibleFont>(componente);
-        assert(componente_con_font);
-        componente_con_font->set_font(font);
-    }
-}
 
 void ComponenteConPosibleFont::add_child(std::shared_ptr<Componente> child) {
     if (font.exists()) {
