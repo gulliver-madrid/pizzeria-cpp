@@ -2,35 +2,53 @@
 #include <SFML/Graphics/Font.hpp>
 #include <gtest/gtest.h>
 
-TEST(Componente, Existe) {
-    class A : public Componente {};
-    class B : public Componente {};
-    std::shared_ptr<A> a = std::make_shared<A>();
-    B b;
-    b.add_child(a);
-    ASSERT_EQ(1, b.get_children().size());
+TEST(Componente, AnadeHijo) {
+    class ComponenteConcreto : public Componente {
+        virtual void draw(
+            sf::RenderTarget &target, //
+            sf::RenderStates states   //
+        ) const override {}
+    };
+    class B : public ComponenteConcreto {};
+    class A : public ComponenteConcreto {};
+    std::shared_ptr<B> b = std::make_shared<B>();
+    A a;
+    a.add_child(b);
+    ASSERT_EQ(1, a.get_children().size());
 }
 
-TEST(Componente, ConPosibleFont) {
-    class A : public ComponenteConFont {};
-    class B : public ComponenteConFont {};
-    std::shared_ptr<A> a = std::make_shared<A>();
-    B b;
-    b.add_child(a);
-    ASSERT_EQ(1, b.get_children().size());
+TEST(Componente, AnadeHijoConPosibleFont) {
+    class ComponenteConFontConcreto : public ComponenteConFont {
+        virtual void draw(
+            sf::RenderTarget &target, //
+            sf::RenderStates states   //
+        ) const override {}
+    };
+    class B : public ComponenteConFontConcreto {};
+    class A : public ComponenteConFontConcreto {};
+    std::shared_ptr<B> b = std::make_shared<B>();
+    A a;
+    a.add_child(b);
+    ASSERT_EQ(1, a.get_children().size());
 }
 
 TEST(Componente, AnadeFont) {
-    class A : public ComponenteConFont {};
-    class B : public ComponenteConFont {};
-    std::shared_ptr<A> a = std::make_shared<A>();
-    B b;
+    class ComponenteConFontConcreto : public ComponenteConFont {
+        virtual void draw(
+            sf::RenderTarget &target, //
+            sf::RenderStates states   //
+        ) const override {}
+    };
+    class B : public ComponenteConFontConcreto {};
+    class A : public ComponenteConFontConcreto {};
+    std::shared_ptr<B> b = std::make_shared<B>();
+    A a;
     const auto font_ptr = std::make_shared<sf::Font>();
-    ASSERT_EQ(false, a->has_font());
+    ASSERT_EQ(false, b->has_font());
     OptionalFont font;
     font.set_pointer(font_ptr);
-    b.set_font(font);
-    b.add_child(a);
-    ASSERT_EQ(1, b.get_children().size());
-    ASSERT_EQ(true, a->has_font());
+    a.set_font(font);
+    a.add_child(b);
+    ASSERT_EQ(1, a.get_children().size());
+    ASSERT_EQ(true, b->has_font());
 }

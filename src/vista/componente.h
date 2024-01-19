@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../shared/font.h"
+#include <SFML/Graphics/Drawable.hpp>
 #include <cassert>
 #include <memory>
 #include <vector>
@@ -10,7 +11,7 @@ using ComponentePtr = std::shared_ptr<Componente>;
 
 ///// Componente /////
 
-class Componente {
+class Componente : public sf::Drawable {
   protected:
     std::vector<ComponentePtr> children;
 
