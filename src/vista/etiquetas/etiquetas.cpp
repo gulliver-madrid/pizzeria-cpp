@@ -22,18 +22,19 @@ namespace estilos {
 // EtiquetasGenerales
 //////////////////////////////////////////
 
-EtiquetasGenerales::EtiquetasGenerales(const OptionalFont &font)
-    : ObjetoConFont(font) {
-    contadores = std::make_unique<EtiquetasContadores>(font);
+EtiquetasGenerales::EtiquetasGenerales(const OptionalFont &font) {
+    set_font(font);
+    contadores = std::make_shared<EtiquetasContadores>();
     info = std::make_unique<EtiquetasInfo>(font);
     barra_estado = std::make_unique<EtiquetasBarraEstado>(font);
+    add_child(contadores);
 }
 
 EtiquetasGenerales::~EtiquetasGenerales() = default;
 
 void EtiquetasGenerales::setup(
     const std::string &instr,                   //
-   const NumNivelOpcional& num_nivel,  //
+    const NumNivelOpcional &num_nivel,          //
     const dominio::TiposDePizza &tp_disponibles //
 ) {
     info->setup(instr, num_nivel);
@@ -69,6 +70,13 @@ void EtiquetasGenerales::dibujar_barra_estado(sf::RenderTarget &target) {
 
 void EtiquetasGenerales::dibujar_info(sf::RenderTarget &target) const {
     target.draw(*info);
+}
+
+void EtiquetasGenerales::draw(
+    sf::RenderTarget &target, //
+    sf::RenderStates states   //
+) const {
+    // No implementado
 }
 
 ///////////////////////////////////////////

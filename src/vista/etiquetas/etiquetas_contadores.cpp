@@ -119,8 +119,7 @@ void EtiquetasContadores::_actualizar_vista_pedidos( //
 // EtiquetasContadores (public)
 //////////////////////////////////////////
 
-EtiquetasContadores::EtiquetasContadores(const OptionalFont &font)
-    : ObjetoConFont(font) {}
+EtiquetasContadores::EtiquetasContadores() {}
 
 void EtiquetasContadores::setup(const dominio::TiposDePizza &tp_disponibles) {
     FabricaEtiquetasContadores fabrica(font);

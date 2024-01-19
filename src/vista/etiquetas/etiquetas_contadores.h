@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../../modelo/control_pizzas.h"
+#include "../componente.h"
 #include "../vista_shared.h"
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Text.hpp>
@@ -30,7 +31,7 @@ class TarjetaPedido : public sf::Drawable {
  * Contiene los elementos visuales que muestran las pizzas en area de
  * preparadas, servidas y los pedidos.
  */
-struct EtiquetasContadores : public ObjetoConFont, public sf::Drawable {
+struct EtiquetasContadores : public ComponenteConFont {
     using TipoPizza = dominio::TipoPizza;
     using PizzasToLabels = std::map<TipoPizza, sf::Text>;
 
@@ -42,7 +43,7 @@ struct EtiquetasContadores : public ObjetoConFont, public sf::Drawable {
     PizzasToLabels etiquetas_servidas;
     std::vector<TarjetaPedido> tarjetas_pedidos;
 
-    EtiquetasContadores(const OptionalFont &);
+    EtiquetasContadores();
     void setup(const dominio::TiposDePizza &tp_disponibles);
     void actualizar(
         const PizzasToStrings &vista_preparadas, //

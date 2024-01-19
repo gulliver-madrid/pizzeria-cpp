@@ -31,8 +31,12 @@ void ComponenteConFont::add_child(ComponentePtr child) {
     Componente::add_child(child);
 }
 
-void ComponenteConFont::set_font(OptionalFont &new_font) {
-    assert(new_font.exists());
+void ComponenteConFont::set_font(const OptionalFont &new_font) {
+    // Solo actualiza la fuente si se aporta una nueva fuente
+    // Pero no si esta viene vacia
+    if (!new_font.exists()) {
+        return;
+    };
     if (                                               //
         !font.exists() ||                              //
         (font.get_pointer() != new_font.get_pointer()) //

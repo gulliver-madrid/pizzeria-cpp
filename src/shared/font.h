@@ -6,7 +6,9 @@ namespace sf {
     class Font;
 }
 
-///// OptionalFont /////
+///////////////////////////////////////////
+// OptionalFont
+//////////////////////////////////////////
 
 class OptionalFont {
   private:
@@ -18,7 +20,9 @@ class OptionalFont {
     bool exists() const;
 };
 
-///// ObjetoConFont /////
+///////////////////////////////////////////
+// ObjetoConFont
+//////////////////////////////////////////
 
 class ObjetoConFont {
   protected:
@@ -27,6 +31,6 @@ class ObjetoConFont {
   public:
     ObjetoConFont();
     ObjetoConFont(const OptionalFont &font);
-    virtual void set_font(OptionalFont &new_font);
+    virtual void set_font(const OptionalFont &new_font);
     virtual bool has_font();
 };

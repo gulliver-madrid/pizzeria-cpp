@@ -2,8 +2,8 @@
 
 #include "../../modelo/control_pizzas.h"
 #include "../../modelo/modelo.h"
-#include "../../shared/font.h"
 #include "../../shared/num_nivel.h"
+#include "../componente.h"
 #include "../presentacion_vista.h"
 #include "../vista_shared.h"
 #include <SFML/System/Vector2.hpp>
@@ -27,9 +27,9 @@ struct Globales;
 //////////////////////////////////////////
 
 /* Agrupa las etiquetas principales para un nivel determinado */
-struct EtiquetasGenerales : public ObjetoConFont {
+struct EtiquetasGenerales : public ComponenteConFont {
   private:
-    std::unique_ptr<EtiquetasContadores> contadores;
+    std::shared_ptr<EtiquetasContadores> contadores;
     std::unique_ptr<EtiquetasInfo> info;
     std::unique_ptr<EtiquetasBarraEstado> barra_estado;
 
@@ -60,6 +60,10 @@ struct EtiquetasGenerales : public ObjetoConFont {
     void dibujar_contadores(sf::RenderTarget &target) const;
     void dibujar_barra_estado(sf::RenderTarget &target);
     void dibujar_info(sf::RenderTarget &target) const;
+    virtual void draw(
+        sf::RenderTarget &target, //
+        sf::RenderStates states   //
+    ) const override;
 };
 
 ///////////////////////////////////////////
