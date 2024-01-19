@@ -9,6 +9,7 @@
 namespace sf {
     class RenderTarget;
 }
+class Etiqueta;
 
 ///// TarjetaPedido /////
 
@@ -25,7 +26,7 @@ class TarjetaPedido : public sf::Drawable {
     ) const override;
 };
 
-///// EtiquetasContadores /////
+///// EtiquetasPreparadas /////
 
 /*
  * Contiene las etiquetas que muestran las pizzas en area de
@@ -33,7 +34,7 @@ class TarjetaPedido : public sf::Drawable {
  */
 class EtiquetasPreparadas : public ComponenteConFont {
     using TipoPizza = dominio::TipoPizza;
-    using PizzasToLabels = std::map<TipoPizza, sf::Text>;
+    using PizzasToLabels = std::map<TipoPizza, std::shared_ptr<Etiqueta>>;
 
   public:
     PizzasToLabels etiquetas_preparadas;
@@ -47,13 +48,14 @@ class EtiquetasPreparadas : public ComponenteConFont {
         sf::RenderStates states   //
     ) const override;
 };
+
+///// EtiquetasPedidos /////
+
 /*
- * Contiene los elementos visuales que muestran las pizzas en area de
- * preparadas, servidas y los pedidos.
+ * Contiene los elementos visuales que muestran los pedidos.
  */
 class EtiquetasPedidos : public ComponenteConFont {
     using TipoPizza = dominio::TipoPizza;
-    using PizzasToLabels = std::map<TipoPizza, sf::Text>;
 
   private:
     void _actualizar_vista_pedidos(const modelo::Pedidos &);

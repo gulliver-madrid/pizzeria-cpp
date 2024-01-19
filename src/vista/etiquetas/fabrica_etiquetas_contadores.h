@@ -3,6 +3,8 @@
 #include "../../shared/font.h"
 #include <SFML/Graphics/Text.hpp>
 
+class Etiqueta;
+
 class FabricaEtiquetasContadores : public ObjetoConFont {
   private:
     sf::Vector2f _obtener_posicion_etiqueta(
@@ -11,9 +13,10 @@ class FabricaEtiquetasContadores : public ObjetoConFont {
         int desplazamiento_vertical //
     ) const;
 
-    sf::Text _crear_etiqueta(sf::Vector2f posicion) const;
+    std::shared_ptr<Etiqueta> _crear_etiqueta(sf::Vector2f posicion) const;
 
   public:
     FabricaEtiquetasContadores(const OptionalFont &font);
-    sf::Text crearEtiquetaPizzasPreparadas(size_t indice_etiqueta) const;
+    std::shared_ptr<Etiqueta>
+    crearEtiquetaPizzasPreparadas(size_t indice_etiqueta) const;
 };

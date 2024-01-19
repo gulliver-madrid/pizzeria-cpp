@@ -289,6 +289,7 @@
 
 - vista/componentes/etiqueta.h:
     - shared/font.h
+    - vista/componente.h
 
 - vista/componentes/varios.cpp:
     - vista/componentes/varios.h
@@ -314,6 +315,7 @@
     - vista/etiquetas/etiquetas.h
     - vista/basicos_vista.h
     - vista/cadenas.h
+    - vista/componentes/etiqueta.h
     - vista/componentes/varios.h
     - vista/etiquetas/etiquetas_barra_estado.h
     - vista/etiquetas/etiquetas_contadores.h
@@ -333,6 +335,7 @@
     - tiempo.h
     - vista/basicos_vista.h
     - vista/cadenas.h
+    - vista/componentes/etiqueta.h
     - vista/componentes/varios.h
     - vista/presentador.h
 
@@ -346,6 +349,7 @@
     - templates/dibujar_elementos.h
     - templates/helpers.h
     - vista/basicos_vista.h
+    - vista/componentes/etiqueta.h
     - vista/componentes/varios.h
     - vista/etiquetas/fabrica_etiquetas_contadores.h
     - vista/presentador.h
@@ -360,6 +364,7 @@
     - shared/log_init.h
     - textos.h
     - vista/basicos_vista.h
+    - vista/componentes/etiqueta.h
     - vista/componentes/varios.h
 
 - vista/etiquetas/etiquetas_info.h:
@@ -370,6 +375,7 @@
 - vista/etiquetas/fabrica_etiquetas_contadores.cpp:
     - vista/etiquetas/fabrica_etiquetas_contadores.h
     - vista/basicos_vista.h
+    - vista/componentes/etiqueta.h
     - vista/componentes/varios.h
 
 - vista/etiquetas/fabrica_etiquetas_contadores.h:

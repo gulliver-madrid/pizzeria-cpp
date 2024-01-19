@@ -4,6 +4,7 @@
 #include "../../templates/dibujar_elementos.h"
 #include "../../templates/helpers.h"
 #include "../basicos_vista.h"
+#include "../componentes/etiqueta.h"
 #include "../componentes/varios.h"
 #include "../presentador.h"
 #include "fabrica_etiquetas_contadores.h"
@@ -128,7 +129,7 @@ void EtiquetasPreparadas::setup(const dominio::TiposDePizza &tp_disponibles) {
 void EtiquetasPreparadas::actualizar(const PizzasToStrings &vista_preparadas) {
     for (auto &[tp, linea] : vista_preparadas) {
         assert(has_key(etiquetas_preparadas, tp));
-        etiquetas_preparadas.at(tp).setString(linea);
+        etiquetas_preparadas.at(tp)->actualizar_texto(linea);
     }
 }
 

@@ -2,6 +2,7 @@
 #include "../../shared/log_init.h"
 #include "../../textos.h"
 #include "../basicos_vista.h"
+#include "../componentes/etiqueta.h"
 #include "../componentes/varios.h"
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <iostream>
@@ -38,8 +39,8 @@ struct FabricaEtiquetasInfo : public ObjetoConFont {
   public:
     FabricaEtiquetasInfo(const OptionalFont &font) : ObjetoConFont(font) {}
     sf::Text crear_etiqueta_instrucciones(
-        const std::string &plantilla,           //
-       const NumNivelOpcional& num_nivel //
+        const std::string &plantilla,     //
+        const NumNivelOpcional &num_nivel //
     ) const {
         const auto estilo = estilos::INSTRUCCIONES;
         const auto texto = construir_texto_instrucciones(plantilla, num_nivel);
@@ -63,8 +64,8 @@ struct FabricaEtiquetasInfo : public ObjetoConFont {
 EtiquetasInfo::EtiquetasInfo(const OptionalFont &font) : ObjetoConFont(font) {}
 
 void EtiquetasInfo::setup(
-    const std::string &instr,               //
-   const NumNivelOpcional& num_nivel //
+    const std::string &instr,         //
+    const NumNivelOpcional &num_nivel //
 ) {
     const auto fabrica = FabricaEtiquetasInfo(font);
     LOG(info) << "Construyendo instrucciones" << std::endl;

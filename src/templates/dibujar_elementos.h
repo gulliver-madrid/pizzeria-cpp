@@ -5,16 +5,17 @@
 #include <tuple>
 #include <vector>
 
-// template <typename Key, typename Drawable>
-// void dibujar_elementos(
-//     sf::RenderTarget &target,                                 //
-//     const std::map<Key, std::unique_ptr<Drawable>> &elementos //
-// ) {
-//     for (const auto &[_, elemento] : elementos) {
-//         target.draw(*elemento);
-//     }
-// }
-
+template <typename Key, typename Drawable>
+void dibujar_elementos(
+    sf::RenderTarget &target,                                 //
+    const std::map<Key, std::shared_ptr<Drawable>> &elementos //
+) {
+    for (const auto &[_, elemento] : elementos) {
+        if (elemento) {
+            target.draw(*elemento);
+        }
+    }
+}
 template <typename Key, typename Drawable>
 void dibujar_elementos(
     sf::RenderTarget &target,                                 //

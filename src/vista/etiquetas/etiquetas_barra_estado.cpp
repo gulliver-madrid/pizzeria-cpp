@@ -4,6 +4,7 @@
 #include "../../tiempo.h"
 #include "../basicos_vista.h"
 #include "../cadenas.h"
+#include "../componentes/etiqueta.h"
 #include "../componentes/varios.h"
 #include "../presentador.h"
 #include <SFML/Graphics/RenderTarget.hpp>

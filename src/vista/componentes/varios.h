@@ -13,24 +13,42 @@ namespace sf {
     class Text;
 } // namespace sf
 
-struct Etiqueta;
+class Etiqueta;
 
 namespace medidas {
     constexpr int TAMANO_TEXTO_GRANDE = 32;
 } // namespace medidas
 
-struct EstiloTexto {
-    const int tamano;
-    const sf::Color &color;
-};
+struct EstiloTexto;
 
 const auto Vector2f_CERO = sf::Vector2f(0, 0);
 
-Etiqueta crear_etiqueta(
+///// Creadores de Etiqueta /////
+
+std::shared_ptr<Etiqueta> crear_etiqueta(
     const std::string &texto, //
     int tamano_fuente,        //
     const OptionalFont &      //
 );
+
+std::shared_ptr<Etiqueta> crear_etiqueta(
+    const std::string &texto,    //
+    int tamano_fuente,           //
+    const sf::Color &color,      //
+    const OptionalFont &font,    //
+    const sf::Vector2f &posicion //
+
+);
+
+/* Sobrecarga para usar EstiloTexto */
+std::shared_ptr<Etiqueta> crear_etiqueta(
+    const std::string &texto,    //
+    const EstiloTexto &estilo,   //
+    const OptionalFont &font,    //
+    const sf::Vector2f &posicion //
+);
+
+///// Creadores de sf::Text /////
 
 sf::Text crearEtiqueta(
     const std::string &texto, //

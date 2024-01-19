@@ -1,5 +1,6 @@
 #include "fabrica_etiquetas_contadores.h"
 #include "../basicos_vista.h"
+#include "../componentes/etiqueta.h"
 #include "../componentes/varios.h"
 
 namespace medidas {
@@ -38,10 +39,10 @@ sf::Vector2f FabricaEtiquetasContadores::_obtener_posicion_etiqueta(
  * Crea una etiqueta para un contador (dependiendo del panel tendra uno u
  * otro significado)
  */
-sf::Text FabricaEtiquetasContadores::_crear_etiqueta( //
+std::shared_ptr<Etiqueta> FabricaEtiquetasContadores::_crear_etiqueta( //
     sf::Vector2f posicion
 ) const {
-    return crearEtiqueta("", estilos::CONTADORES, font, posicion);
+    return crear_etiqueta("", estilos::CONTADORES, font, posicion);
 }
 
 ///////////////////////////////////////////
@@ -54,7 +55,7 @@ FabricaEtiquetasContadores::FabricaEtiquetasContadores(const OptionalFont &font)
 /*
  * Crea una etiqueta de pizzas preparadas
  */
-sf::Text
+std::shared_ptr<Etiqueta>
 FabricaEtiquetasContadores::crearEtiquetaPizzasPreparadas(size_t indice_etiqueta
 ) const {
     const auto indice_panel = IndicePanel::PANEL_PREPARADAS;
