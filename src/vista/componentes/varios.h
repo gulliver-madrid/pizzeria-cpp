@@ -13,6 +13,8 @@ namespace sf {
     class Text;
 } // namespace sf
 
+struct Etiqueta;
+
 namespace medidas {
     constexpr int TAMANO_TEXTO_GRANDE = 32;
 } // namespace medidas
@@ -23,6 +25,12 @@ struct EstiloTexto {
 };
 
 const auto Vector2f_CERO = sf::Vector2f(0, 0);
+
+Etiqueta crear_etiqueta(
+    const std::string &texto, //
+    int tamano_fuente,        //
+    const OptionalFont &      //
+);
 
 sf::Text crearEtiqueta(
     const std::string &texto, //

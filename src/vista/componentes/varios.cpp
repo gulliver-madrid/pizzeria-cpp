@@ -1,4 +1,5 @@
 #include "varios.h"
+#include "etiqueta.h"
 #include <SFML/Graphics/Text.hpp>
 #include <iostream>
 
@@ -14,6 +15,14 @@ sf::Text crearEtiqueta(
         etiqueta.setCharacterSize(tamano_fuente);
     }
     return etiqueta;
+}
+
+Etiqueta crear_etiqueta(
+    const std::string &texto, //
+    int tamano_fuente,        //
+    const OptionalFont &font  //
+) {
+    return Etiqueta(texto, tamano_fuente, font);
 }
 
 sf::Text crearEtiqueta(
