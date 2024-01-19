@@ -19,3 +19,10 @@ bool OptionalFont::exists() const { //
 
 ObjetoConFont::ObjetoConFont() {}
 ObjetoConFont::ObjetoConFont(const OptionalFont &font) : font(font) {}
+
+void ObjetoConFont::set_font(OptionalFont &new_font) {
+    font = new_font; //
+}
+bool ObjetoConFont::has_font() {
+    return font.exists(); //
+}

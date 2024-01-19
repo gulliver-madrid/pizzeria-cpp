@@ -6,6 +6,8 @@ namespace sf {
     class Font;
 }
 
+///// OptionalFont /////
+
 class OptionalFont {
   private:
     std::shared_ptr<sf::Font> font_ptr;
@@ -16,6 +18,8 @@ class OptionalFont {
     bool exists() const;
 };
 
+///// ObjetoConFont /////
+
 class ObjetoConFont {
   protected:
     OptionalFont font;
@@ -23,4 +27,6 @@ class ObjetoConFont {
   public:
     ObjetoConFont();
     ObjetoConFont(const OptionalFont &font);
+    virtual void set_font(OptionalFont &new_font);
+    virtual bool has_font();
 };
