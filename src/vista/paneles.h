@@ -8,6 +8,10 @@
 
 enum class IndicePanel;
 
+///////////////////////////////////////////
+// Panel
+/////////////////////////////////////////
+
 struct Panel : public sf::Drawable {
     IndicePanel indice;
     sf::RectangleShape forma;
@@ -18,6 +22,10 @@ struct Panel : public sf::Drawable {
         sf::RenderStates states   //
     ) const override;
 };
+
+///////////////////////////////////////////
+// PanelEnPreparacion
+/////////////////////////////////////////
 
 struct PanelEnPreparacion : public Panel, public ObjetoConFont {
     std::vector<BarraProgresoConNombre> barras_progreso_con_nombres;
@@ -32,12 +40,20 @@ struct PanelEnPreparacion : public Panel, public ObjetoConFont {
     ) const override;
 };
 
+///////////////////////////////////////////
+// PanelesObservables
+/////////////////////////////////////////
+
 class PanelesObservables {
   public:
     virtual bool get_visibilidad() const { //
         return false;
     };
 };
+
+///////////////////////////////////////////
+// Paneles
+/////////////////////////////////////////
 
 class Paneles : public ObjetoConFont,
                 public sf::Drawable,

@@ -34,7 +34,9 @@ namespace {
     }
 } // namespace
 
-///// Panel /////
+///////////////////////////////////////////
+// Panel (public)
+/////////////////////////////////////////
 
 Panel::Panel(IndicePanel indice, sf::Text etiqueta)
     : indice(indice), forma(crear_panel_estandar(indice)),
@@ -48,7 +50,9 @@ void Panel::draw(
     target.draw(etiqueta_titulo);
 }
 
-///// PanelEnPreparacion /////
+///////////////////////////////////////////
+// PanelEnPreparacion (public)
+/////////////////////////////////////////
 
 PanelEnPreparacion::PanelEnPreparacion(
     IndicePanel indice, sf::Text etiqueta, const OptionalFont &font
@@ -76,7 +80,9 @@ void PanelEnPreparacion::draw(
     }
 }
 
-/////  Paneles /////
+///////////////////////////////////////////
+// Paneles (public)
+/////////////////////////////////////////
 
 Paneles::Paneles(const OptionalFont &font) : ObjetoConFont(font) {
     const FabricaEtiquetasTituloPanel fabrica(font);
