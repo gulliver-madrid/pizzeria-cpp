@@ -1,31 +1,32 @@
 #include "componente.h"
 
+using ComponentePtr = std::shared_ptr<Componente>;
+
 namespace {
     /* Anade la fuente si el componente es componente con font */
-    void try_to_add_font(
-        std::shared_ptr<Componente> &componente, OptionalFont &font
-    ) {
-        auto componente_con_font =
-            std::dynamic_pointer_cast<ComponenteConPosibleFont>(componente);
-        if (componente_con_font) {
-            componente_con_font->set_font(font);
+    void try_to_add_font(ComponentePtr &comp, OptionalFont &font) {
+        auto comp_f = std::dynamic_pointer_cast<ComponenteConPosibleFont>(comp);
+        if (comp_f) {
+            comp_f->set_font(font);
         }
     }
 } // namespace
 
-///// Componente /////
+///////////////////////////////////////////
+// Componente (public)
+//////////////////////////////////////////
 
-void Componente::add_child(std::shared_ptr<Componente> child) {
+void Componente::add_child(ComponentePtr child) { //
     children.push_back(child);
 }
 
-std::vector<std::shared_ptr<Componente>> Componente::get_children() const {
-    return children;
-}
+std::vector<ComponentePtr> Componente::get_children() const { return children; }
 
-///// ComponenteConPosibleFont /////
+///////////////////////////////////////////
+// ComponenteConPosibleFont (public)
+//////////////////////////////////////////
 
-void ComponenteConPosibleFont::add_child(std::shared_ptr<Componente> child) {
+void ComponenteConPosibleFont::add_child(ComponentePtr child) {
     if (font.exists()) {
         try_to_add_font(child, font);
     }
