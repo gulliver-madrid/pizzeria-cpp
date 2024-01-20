@@ -58,6 +58,7 @@ add_executable(pizzeria
     src/vista/componentes/boton_con_texto.cpp
     src/vista/componentes/botones.cpp
     src/vista/componentes/crear_etiqueta.cpp
+    src/vista/componentes/etiqueta.cpp
     src/vista/enlace_vista.cpp
     src/vista/etiquetas/etiquetas.cpp
     src/vista/etiquetas/etiquetas_barra_estado.cpp
@@ -148,6 +149,7 @@ add_executable(
     src/vista/componentes/boton_con_texto.cpp
     src/vista/componentes/botones.cpp
     src/vista/componentes/crear_etiqueta.cpp
+    src/vista/componentes/etiqueta.cpp
     src/vista/enlace_vista.cpp
     src/vista/etiquetas/etiquetas.cpp
     src/vista/etiquetas/etiquetas_barra_estado.cpp
