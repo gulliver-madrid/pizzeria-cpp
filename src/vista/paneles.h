@@ -75,7 +75,7 @@ class Paneles : public ObjetoConFont,
                 public sf::Drawable,
                 public PanelesObservables {
   private:
-    std::map<IndicePanel, std::unique_ptr<Panel>> _paneles;
+    std::map<IndicePanel, std::shared_ptr<Panel>> _paneles;
 
   public:
     bool visible = false;

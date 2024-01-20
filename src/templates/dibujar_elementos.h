@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <map>
+#include <memory>
 #include <tuple>
 #include <vector>
 
@@ -9,17 +10,6 @@ template <typename Key, typename Drawable>
 void dibujar_elementos(
     sf::RenderTarget &target,                                 //
     const std::map<Key, std::shared_ptr<Drawable>> &elementos //
-) {
-    for (const auto &[_, elemento] : elementos) {
-        if (elemento) {
-            target.draw(*elemento);
-        }
-    }
-}
-template <typename Key, typename Drawable>
-void dibujar_elementos(
-    sf::RenderTarget &target,                                 //
-    const std::map<Key, std::unique_ptr<Drawable>> &elementos //
 ) {
     for (const auto &[_, elemento] : elementos) {
         if (elemento) {
@@ -46,6 +36,16 @@ void dibujar_elementos(
         target.draw(elemento);
     }
 }
+
+// template <typename Drawable>
+// void dibujar_elementos(
+//     sf::RenderTarget &target,
+//     const std::vector<std::shared_ptr<Drawable>> &elementos
+// ) {
+//     for (const auto &elemento : elementos) {
+//         target.draw(elemento);
+//     }
+// }
 
 template <typename... Drawables>
 void dibujar_elementos(

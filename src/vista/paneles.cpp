@@ -153,6 +153,8 @@ Paneles::Paneles(
             panel = std::make_unique<Panel>(indice, std::move(titulo));
         }
         _paneles.emplace(indice, std::move(panel));
+        // La propiedad de panel se ha transferido debido al uso de move
+        assert(panel == nullptr);
     }
     LOG(debug) << "Paneles creados";
 }
