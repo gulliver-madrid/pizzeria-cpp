@@ -1,5 +1,6 @@
 #include "vista.h"
 #include "../fase_nivel.h"
+#include "../modelo_amplio/modelo_amplio.h"
 #include "../shared/dev.h"
 #include "../shared/log_init.h"
 #include "../shared/num_nivel.h"

@@ -433,6 +433,7 @@
 - vista/vista.cpp:
     - vista/vista.h
     - fase_nivel.h
+    - modelo_amplio/modelo_amplio.h
     - shared/dev.h
     - shared/log_init.h
     - shared/num_nivel.h
@@ -444,7 +445,6 @@
 
 - vista/vista.h:
     - modelo/modelo.h
-    - modelo_amplio/modelo_amplio.h
     - vista/botones_app.h
     - vista/etiquetas/etiquetas.h
     - vista/paneles.h

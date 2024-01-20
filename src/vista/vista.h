@@ -1,13 +1,14 @@
 #pragma once
 
 #include "../modelo/modelo.h"
-#include "../modelo_amplio/modelo_amplio.h"
 #include "botones_app.h"
 #include "etiquetas/etiquetas.h"
 #include "paneles.h"
 #include "presentacion_vista.h"
 
+class ModeloAmplio;
 struct Grid;
+
 namespace sf {
     class RenderTarget;
     class Time;
