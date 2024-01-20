@@ -17,6 +17,7 @@ namespace sf {
     class Time;
 } // namespace sf
 
+class Etiqueta;
 class EtiquetasBarraEstado;
 class EtiquetasPreparadas;
 class EtiquetasPedidos;
@@ -80,7 +81,7 @@ struct FabricaEtiquetasTituloPanel : public ObjetoConFont {
   public:
     FabricaEtiquetasTituloPanel(const OptionalFont &font)
         : ObjetoConFont(font) {}
-    sf::Text crearEtiquetaTituloPanel(
+    std::shared_ptr<Etiqueta> crearEtiquetaTituloPanel(
         const sf::Vector2f &posicion_panel, const std::string &texto_crudo
     ) const;
 };

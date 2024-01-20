@@ -403,6 +403,7 @@
     - shared/log_init.h
     - templates/dibujar_elementos.h
     - vista/basicos_vista.h
+    - vista/componentes/etiqueta.h
     - vista/etiquetas/etiquetas.h
 
 - vista/paneles.h:

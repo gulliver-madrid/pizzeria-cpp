@@ -5,8 +5,10 @@
 #include "barras_progreso.h"
 #include "componentes/varios.h"
 #include "etiquetas/etiquetas_preparadas.h"
+#include <memory>
 #include <vector>
 
+class Etiqueta;
 enum class IndicePanel;
 
 ///////////////////////////////////////////
@@ -16,8 +18,8 @@ enum class IndicePanel;
 struct Panel : public sf::Drawable {
     IndicePanel indice;
     sf::RectangleShape forma;
-    sf::Text etiqueta_titulo;
-    Panel(IndicePanel indice, sf::Text etiqueta);
+    std::shared_ptr<Etiqueta> etiqueta_titulo;
+    Panel(IndicePanel indice, std::shared_ptr<Etiqueta> etiqueta);
     virtual void draw(
         sf::RenderTarget &target, //
         sf::RenderStates states   //
@@ -31,7 +33,8 @@ struct Panel : public sf::Drawable {
 struct PanelEnPreparacion : public Panel, public ObjetoConFont {
     std::vector<BarraProgresoConNombre> barras_progreso_con_nombres;
     PanelEnPreparacion(
-        IndicePanel indice, sf::Text etiqueta, const OptionalFont &font
+        IndicePanel indice, std::shared_ptr<Etiqueta> etiqueta,
+        const OptionalFont &font
     );
     void actualizar(const VistaPreparacionPizzas &vista_preparacion //
     );
@@ -47,7 +50,9 @@ struct PanelEnPreparacion : public Panel, public ObjetoConFont {
 
 struct PanelPreparadas : public Panel, public ComponenteConFont {
     std::shared_ptr<EtiquetasPreparadas> etiquetas_preparadas;
-    PanelPreparadas::PanelPreparadas(IndicePanel indice, sf::Text etiqueta);
+    PanelPreparadas::PanelPreparadas(
+        IndicePanel indice, std::shared_ptr<Etiqueta> etiqueta
+    );
     void setup(const dominio::TiposDePizza &tp_disponibles);
     void actualizar(const PizzasToStrings &vista_preparadas);
     virtual void draw(

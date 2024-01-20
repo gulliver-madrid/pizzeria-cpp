@@ -2,6 +2,7 @@
 #include "../shared/log_init.h"
 #include "../templates/dibujar_elementos.h"
 #include "basicos_vista.h"
+#include "componentes/etiqueta.h"
 #include "etiquetas/etiquetas.h"
 #include <cassert>
 #include <iostream>
@@ -39,7 +40,7 @@ namespace {
 // Panel (public)
 /////////////////////////////////////////
 
-Panel::Panel(IndicePanel indice, sf::Text etiqueta)
+Panel::Panel(IndicePanel indice, std::shared_ptr<Etiqueta> etiqueta)
     : indice(indice), forma(crear_panel_estandar(indice)),
       etiqueta_titulo(etiqueta) {}
 
@@ -48,7 +49,7 @@ void Panel::draw(
     sf::RenderStates states   //
 ) const {
     target.draw(forma);
-    target.draw(etiqueta_titulo);
+    target.draw(*etiqueta_titulo);
 }
 
 ///////////////////////////////////////////
@@ -56,7 +57,8 @@ void Panel::draw(
 /////////////////////////////////////////
 
 PanelEnPreparacion::PanelEnPreparacion(
-    IndicePanel indice, sf::Text etiqueta, const OptionalFont &font
+    IndicePanel indice, std::shared_ptr<Etiqueta> etiqueta,
+    const OptionalFont &font
 )
     : Panel(indice, etiqueta), ObjetoConFont(font) {}
 
@@ -85,7 +87,9 @@ void PanelEnPreparacion::draw(
 // PanelPreparadas (public)
 /////////////////////////////////////////
 
-PanelPreparadas::PanelPreparadas(IndicePanel indice, sf::Text etiqueta)
+PanelPreparadas::PanelPreparadas(
+    IndicePanel indice, std::shared_ptr<Etiqueta> etiqueta
+)
     : Panel(indice, etiqueta) {
     etiquetas_preparadas = std::make_shared<EtiquetasPreparadas>();
     LOG(debug) << "antes de add child de etiquetas preparadas";
