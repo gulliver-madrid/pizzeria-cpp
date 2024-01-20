@@ -1,7 +1,7 @@
 #include "fabrica_etiquetas_preparadas.h"
 #include "../basicos_vista.h"
 #include "../componentes/etiqueta.h"
-#include "../componentes/varios.h"
+#include "../componentes/crear_etiqueta.h"
 
 namespace medidas {
     constexpr int TAMANO_FUENTE_ETIQUETAS = 24;

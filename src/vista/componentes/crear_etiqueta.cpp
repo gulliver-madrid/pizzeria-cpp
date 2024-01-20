@@ -1,4 +1,4 @@
-#include "varios.h"
+#include "crear_etiqueta.h"
 #include "etiqueta.h"
 #include <SFML/Graphics/Text.hpp>
 #include <iostream>

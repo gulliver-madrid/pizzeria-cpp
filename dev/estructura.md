@@ -245,7 +245,7 @@
     - templates/helpers.h
     - vista/basicos_vista.h
     - vista/componentes/botones.h
-    - vista/componentes/varios.h
+    - vista/componentes/crear_etiqueta.h
 
 - vista/botones_app.h:
     - modelo/dominio.h
@@ -264,7 +264,7 @@
     - vista/componentes/barra_progreso.h
     - templates/dibujar_elementos.h
     - vista/componentes/etiqueta.h
-    - vista/componentes/varios.h
+    - vista/componentes/crear_etiqueta.h
 
 - vista/componentes/barra_progreso.h:
     - shared/font.h
@@ -273,7 +273,7 @@
     - vista/componentes/boton_con_texto.h
     - templates/dibujar_elementos.h
     - vista/componentes/etiqueta.h
-    - vista/componentes/varios.h
+    - vista/componentes/crear_etiqueta.h
 
 - vista/componentes/boton_con_texto.h:
     - vista/componentes/boton_data.h
@@ -284,7 +284,7 @@
 
 - vista/componentes/botones.cpp:
     - vista/componentes/botones.h
-    - vista/componentes/varios.h
+    - vista/componentes/crear_etiqueta.h
 
 - vista/componentes/botones.h:
     - vista/componentes/boton_con_texto.h
@@ -293,11 +293,11 @@
     - shared/font.h
     - vista/componente.h
 
-- vista/componentes/varios.cpp:
-    - vista/componentes/varios.h
+- vista/componentes/crear_etiqueta.cpp:
+    - vista/componentes/crear_etiqueta.h
     - vista/componentes/etiqueta.h
 
-- vista/componentes/varios.h:
+- vista/componentes/crear_etiqueta.h:
     - shared/font.h
 
 - vista/enlace_vista.cpp:
@@ -318,7 +318,7 @@
     - vista/basicos_vista.h
     - vista/cadenas.h
     - vista/componentes/etiqueta.h
-    - vista/componentes/varios.h
+    - vista/componentes/crear_etiqueta.h
     - vista/etiquetas/etiquetas_barra_estado.h
     - vista/etiquetas/etiquetas_info.h
     - vista/etiquetas/etiquetas_pedidos.h
@@ -338,7 +338,7 @@
     - vista/basicos_vista.h
     - vista/cadenas.h
     - vista/componentes/etiqueta.h
-    - vista/componentes/varios.h
+    - vista/componentes/crear_etiqueta.h
     - vista/presentador.h
 
 - vista/etiquetas/etiquetas_barra_estado.h:
@@ -350,7 +350,7 @@
     - textos.h
     - vista/basicos_vista.h
     - vista/componentes/etiqueta.h
-    - vista/componentes/varios.h
+    - vista/componentes/crear_etiqueta.h
 
 - vista/etiquetas/etiquetas_info.h:
     - shared/font.h
@@ -366,7 +366,7 @@
     - templates/helpers.h
     - vista/basicos_vista.h
     - vista/componentes/etiqueta.h
-    - vista/componentes/varios.h
+    - vista/componentes/crear_etiqueta.h
     - vista/presentador.h
 
 - vista/etiquetas/etiquetas_pedidos.h:
@@ -390,7 +390,7 @@
     - vista/etiquetas/fabrica_etiquetas_preparadas.h
     - vista/basicos_vista.h
     - vista/componentes/etiqueta.h
-    - vista/componentes/varios.h
+    - vista/componentes/crear_etiqueta.h
 
 - vista/etiquetas/fabrica_etiquetas_preparadas.h:
     - shared/font.h
@@ -410,7 +410,7 @@
     - modelo/modelo.h
     - shared/font.h
     - vista/barras_progreso.h
-    - vista/componentes/varios.h
+    - vista/componentes/crear_etiqueta.h
     - vista/etiquetas/etiquetas_preparadas.h
 
 - vista/presentador.cpp:
@@ -446,4 +446,3 @@
     - vista/etiquetas/etiquetas.h
     - vista/paneles.h
     - vista/presentacion_vista.h
-

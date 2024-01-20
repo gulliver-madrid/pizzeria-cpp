@@ -1,5 +1,5 @@
 #include "botones.h"
-#include "varios.h"
+#include "crear_etiqueta.h"
 #include <cassert>
 
 /*

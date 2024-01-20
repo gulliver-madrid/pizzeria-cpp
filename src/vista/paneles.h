@@ -3,7 +3,7 @@
 #include "../modelo/modelo.h"
 #include "../shared/font.h"
 #include "barras_progreso.h"
-#include "componentes/varios.h"
+#include "componentes/crear_etiqueta.h"
 #include "etiquetas/etiquetas_preparadas.h"
 #include <memory>
 #include <vector>

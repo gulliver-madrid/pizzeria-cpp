@@ -1,7 +1,7 @@
 #include "boton_con_texto.h"
 #include "../../templates/dibujar_elementos.h"
 #include "etiqueta.h"
-#include "varios.h"
+#include "crear_etiqueta.h"
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <cassert>
 

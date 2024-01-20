@@ -6,7 +6,7 @@
 #include "../../templates/helpers.h"
 #include "../basicos_vista.h"
 #include "../componentes/etiqueta.h"
-#include "../componentes/varios.h"
+#include "../componentes/crear_etiqueta.h"
 #include "../presentador.h"
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <cassert>

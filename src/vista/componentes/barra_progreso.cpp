@@ -1,7 +1,7 @@
 #include "barra_progreso.h"
 #include "../../templates/dibujar_elementos.h"
 #include "etiqueta.h"
-#include "varios.h"
+#include "crear_etiqueta.h"
 #include <cassert>
 
 ///////////////////////////////////////////

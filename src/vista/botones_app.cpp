@@ -3,7 +3,7 @@
 #include "../templates/helpers.h"
 #include "basicos_vista.h"
 #include "componentes/botones.h"
-#include "componentes/varios.h"
+#include "componentes/crear_etiqueta.h"
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <algorithm>
 #include <cassert>

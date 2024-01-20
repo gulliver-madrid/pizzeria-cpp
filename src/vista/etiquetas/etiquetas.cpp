@@ -2,7 +2,7 @@
 #include "../basicos_vista.h"
 #include "../cadenas.h"
 #include "../componentes/etiqueta.h"
-#include "../componentes/varios.h"
+#include "../componentes/crear_etiqueta.h"
 #include "../presentacion_vista.h"
 #include "etiquetas_barra_estado.h"
 #include "etiquetas_info.h"
