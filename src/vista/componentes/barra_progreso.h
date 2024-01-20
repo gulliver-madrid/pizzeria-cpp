@@ -3,18 +3,20 @@
 #include "../../shared/font.h"
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
-#include <SFML/Graphics/Text.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <optional>
+#include <string>
 
-///////////////////////////////////////////
-// BarraProgreso
-//////////////////////////////////////////
+class Etiqueta;
 
 struct ColorPair {
     sf::Color bg;
     sf::Color fg;
 };
+
+///////////////////////////////////////////
+// BarraProgreso
+//////////////////////////////////////////
 
 struct BarraProgreso : public sf::Drawable {
   private:
@@ -52,9 +54,9 @@ struct BPNColors {
 
 struct BarraProgresoConNombre : public sf::Drawable {
   private:
-    sf::Text etiqueta;
+    std::shared_ptr<Etiqueta> etiqueta;
     BarraProgreso bp;
-    static sf::Text _crear_etiqueta(
+    static std::shared_ptr<Etiqueta> _crear_etiqueta(
         const std::string &texto,           //
         const sf::Vector2f &posicion_barra, //
         const sf::Color &color_texto,       //

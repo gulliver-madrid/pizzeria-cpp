@@ -263,6 +263,7 @@
 - vista/componentes/barra_progreso.cpp:
     - vista/componentes/barra_progreso.h
     - templates/dibujar_elementos.h
+    - vista/componentes/etiqueta.h
     - vista/componentes/varios.h
 
 - vista/componentes/barra_progreso.h:

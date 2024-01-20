@@ -1,5 +1,6 @@
 #include "barra_progreso.h"
 #include "../../templates/dibujar_elementos.h"
+#include "etiqueta.h"
 #include "varios.h"
 #include <cassert>
 
@@ -47,19 +48,18 @@ void BarraProgreso::draw(
 // BarraProgresoConNombre
 ///////////////////////////////////////////
 
-sf::Text BarraProgresoConNombre::_crear_etiqueta(
+std::shared_ptr<Etiqueta> BarraProgresoConNombre::_crear_etiqueta(
     const std::string &texto,           //
     const sf::Vector2f &posicion_barra, //
     const sf::Color &color_texto,       //
     const OptionalFont &font            //
 ) {
-    return crearEtiqueta(
+    return crear_etiqueta(
         texto,                                        //
         24,                                           //
         color_texto,                                  //
         font,                                         //
         {posicion_barra.x + 20, posicion_barra.y + 5} //
-
     );
 }
 
@@ -82,5 +82,5 @@ void BarraProgresoConNombre::draw(
     sf::RenderStates states   //
 ) const {                     //
     target.draw(bp);
-    target.draw(etiqueta);
+    target.draw(*etiqueta);
 }
