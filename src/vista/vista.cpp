@@ -44,22 +44,16 @@ void Vista::_actualizar_etiquetas(
     const ModeloAmplio &modelo_amplio, //
     const sf::Time &tiempo_real_actual //
 ) {
-    const modelo::PizzasAContadores &contadores =
-        modelo_amplio.modelo_interno.control_pizzas.contadores;
-
     auto pedidos = modelo_amplio.modelo_interno.control_pizzas.pedidos;
-    _deben_dibujarse_etiquetas_contadores = false;
+    _deben_dibujarse_etiquetas_pedidos = false;
     switch (modelo_amplio.get_fase_actual()) {
         case FaseNivel::MostrandoInstrucciones:
             break;
         case FaseNivel::Activa:
         case FaseNivel::EsperaAntesDeResultado:
             {
-                const auto vista_preparadas =
-                    presentador::contadores_to_preparadas(contadores);
-                etiquetas->actualizar_contadores(vista_preparadas, pedidos);
-                _deben_dibujarse_etiquetas_contadores = true;
-
+                etiquetas->actualizar_pedidos(pedidos);
+                _deben_dibujarse_etiquetas_pedidos = true;
                 break;
             }
         default:
@@ -184,7 +178,7 @@ void Vista::draw(
 ) const {
     _dibujar_paneles(target);
     etiquetas->dibujar_info(target);
-    if (_deben_dibujarse_etiquetas_contadores) {
+    if (_deben_dibujarse_etiquetas_pedidos) {
         // etiquetas->dibujar_preparadas(target);
         etiquetas->dibujar_pedidos(target);
     }

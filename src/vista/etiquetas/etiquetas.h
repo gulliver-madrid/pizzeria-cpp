@@ -51,9 +51,7 @@ struct EtiquetasGenerales : public ComponenteConFont {
         std::shared_ptr<PresentacionVista> presentacion_vista //
     );
 
-    void actualizar_contadores(
-        const PizzasToStrings &vista_preparadas, //
-        const modelo::Pedidos &pedidos           //
+    void actualizar_pedidos(const modelo::Pedidos &pedidos //
     );
 
     void actualizar_barra_estado(

@@ -31,7 +31,7 @@ class Vista : public ObjetoConFont,
               public VistaObservable {
   private:
     // provisional
-    bool _deben_dibujarse_etiquetas_contadores;
+    bool _deben_dibujarse_etiquetas_pedidos;
 
     void _actualizar_etiquetas(
         sf::RenderTarget &,                //

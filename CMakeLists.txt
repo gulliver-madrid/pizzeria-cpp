@@ -61,9 +61,10 @@ add_executable(pizzeria
     src/vista/enlace_vista.cpp
     src/vista/etiquetas/etiquetas.cpp
     src/vista/etiquetas/etiquetas_barra_estado.cpp
-    src/vista/etiquetas/etiquetas_contadores.cpp
+    src/vista/etiquetas/etiquetas_pedidos.cpp
+    src/vista/etiquetas/etiquetas_preparadas.cpp
     src/vista/etiquetas/etiquetas_info.cpp
-    src/vista/etiquetas/fabrica_etiquetas_contadores.cpp
+    src/vista/etiquetas/fabrica_etiquetas_preparadas.cpp
     src/vista/grid.cpp
     src/vista/paneles.cpp
     src/vista/presentador.cpp
@@ -150,9 +151,10 @@ add_executable(
     src/vista/enlace_vista.cpp
     src/vista/etiquetas/etiquetas.cpp
     src/vista/etiquetas/etiquetas_barra_estado.cpp
-    src/vista/etiquetas/etiquetas_contadores.cpp
+    src/vista/etiquetas/etiquetas_pedidos.cpp
+    src/vista/etiquetas/etiquetas_preparadas.cpp
     src/vista/etiquetas/etiquetas_info.cpp
-    src/vista/etiquetas/fabrica_etiquetas_contadores.cpp
+    src/vista/etiquetas/fabrica_etiquetas_preparadas.cpp
     src/vista/grid.cpp
     src/vista/paneles.cpp
     src/vista/presentador.cpp

@@ -4,7 +4,7 @@
 #include "../shared/font.h"
 #include "barras_progreso.h"
 #include "componentes/varios.h"
-#include "etiquetas/etiquetas_contadores.h"
+#include "etiquetas/etiquetas_preparadas.h"
 #include <vector>
 
 enum class IndicePanel;

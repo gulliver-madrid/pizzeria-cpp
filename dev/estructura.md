@@ -318,8 +318,8 @@
     - vista/componentes/etiqueta.h
     - vista/componentes/varios.h
     - vista/etiquetas/etiquetas_barra_estado.h
-    - vista/etiquetas/etiquetas_contadores.h
     - vista/etiquetas/etiquetas_info.h
+    - vista/etiquetas/etiquetas_pedidos.h
     - vista/presentacion_vista.h
 
 - vista/etiquetas/etiquetas.h:
@@ -342,23 +342,6 @@
 - vista/etiquetas/etiquetas_barra_estado.h:
     - shared/font.h
 
-- vista/etiquetas/etiquetas_contadores.cpp:
-    - vista/etiquetas/etiquetas_contadores.h
-    - modelo/modelo.h
-    - shared/log_init.h
-    - templates/dibujar_elementos.h
-    - templates/helpers.h
-    - vista/basicos_vista.h
-    - vista/componentes/etiqueta.h
-    - vista/componentes/varios.h
-    - vista/etiquetas/fabrica_etiquetas_contadores.h
-    - vista/presentador.h
-
-- vista/etiquetas/etiquetas_contadores.h:
-    - modelo/control_pizzas.h
-    - vista/componente.h
-    - vista/vista_shared.h
-
 - vista/etiquetas/etiquetas_info.cpp:
     - vista/etiquetas/etiquetas_info.h
     - shared/log_init.h
@@ -372,13 +355,46 @@
     - shared/num_nivel.h
     - vista/presentacion_vista.h
 
-- vista/etiquetas/fabrica_etiquetas_contadores.cpp:
-    - vista/etiquetas/fabrica_etiquetas_contadores.h
+- vista/etiquetas/etiquetas_pedidos.cpp:
+    - vista/etiquetas/etiquetas_pedidos.h
+    - modelo/modelo.h
+    - shared/log_init.h
+    - templates/dibujar_elementos.h
+    - templates/helpers.h
+    - vista/basicos_vista.h
+    - vista/componentes/etiqueta.h
+    - vista/componentes/varios.h
+    - vista/presentador.h
+
+- vista/etiquetas/etiquetas_pedidos.h:
+    - modelo/control_pizzas.h
+    - vista/componente.h
+    - vista/vista_shared.h
+
+- vista/etiquetas/etiquetas_preparadas.cpp:
+    - vista/etiquetas/etiquetas_preparadas.h
+    - modelo/modelo.h
+    - shared/log_init.h
+    - templates/dibujar_elementos.h
+    - templates/helpers.h
+    - vista/basicos_vista.h
+    - vista/componentes/etiqueta.h
+    - vista/componentes/varios.h
+    - vista/etiquetas/fabrica_etiquetas_preparadas.h
+    - vista/presentador.h
+
+- vista/etiquetas/etiquetas_preparadas.h:
+    - modelo/control_pizzas.h
+    - vista/componente.h
+    - vista/vista_shared.h
+
+- vista/etiquetas/fabrica_etiquetas_preparadas.cpp:
+    - vista/etiquetas/fabrica_etiquetas_preparadas.h
     - vista/basicos_vista.h
     - vista/componentes/etiqueta.h
     - vista/componentes/varios.h
 
-- vista/etiquetas/fabrica_etiquetas_contadores.h:
+- vista/etiquetas/fabrica_etiquetas_preparadas.h:
     - shared/font.h
 
 - vista/grid.cpp:
@@ -396,7 +412,7 @@
     - shared/font.h
     - vista/barras_progreso.h
     - vista/componentes/varios.h
-    - vista/etiquetas/etiquetas_contadores.h
+    - vista/etiquetas/etiquetas_preparadas.h
 
 - vista/presentador.cpp:
     - vista/presentador.h

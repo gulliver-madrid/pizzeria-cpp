@@ -5,7 +5,7 @@
 
 class Etiqueta;
 
-class FabricaEtiquetasContadores : public ObjetoConFont {
+class FabricaEtiquetasPreparadas : public ObjetoConFont {
   private:
     sf::Vector2f _obtener_posicion_etiqueta(
         sf::Vector2f pos_panel,     //
@@ -16,7 +16,7 @@ class FabricaEtiquetasContadores : public ObjetoConFont {
     std::shared_ptr<Etiqueta> _crear_etiqueta(sf::Vector2f posicion) const;
 
   public:
-    FabricaEtiquetasContadores(const OptionalFont &font);
+    FabricaEtiquetasPreparadas(const OptionalFont &font);
     std::shared_ptr<Etiqueta>
     crearEtiquetaPizzasPreparadas(size_t indice_etiqueta) const;
 };

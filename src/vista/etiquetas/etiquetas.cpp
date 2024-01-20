@@ -5,8 +5,8 @@
 #include "../componentes/varios.h"
 #include "../presentacion_vista.h"
 #include "etiquetas_barra_estado.h"
-#include "etiquetas_contadores.h"
 #include "etiquetas_info.h"
+#include "etiquetas_pedidos.h"
 #include <SFML/Graphics/RenderTarget.hpp>
 
 namespace medidas {
@@ -47,9 +47,7 @@ void EtiquetasGenerales::set_presentacion_vista(
     info->set_presentacion_vista(presentacion_vista);
 }
 
-void EtiquetasGenerales::actualizar_contadores(
-    const PizzasToStrings &vista_preparadas, //
-    const modelo::Pedidos &pedidos           //
+void EtiquetasGenerales::actualizar_pedidos(const modelo::Pedidos &pedidos //
 ) {
     etiquetas_pedidos->actualizar(pedidos);
 }
