@@ -24,11 +24,11 @@ class VistaObservable {
     virtual std::shared_ptr<PanelesObservables> get_paneles() const = 0;
 };
 
-///// Vista /////
+///////////////////////////////////////////
+// Vista
+//////////////////////////////////////////
 
-class Vista : public ObjetoConFont,
-              public sf::Drawable,
-              public VistaObservable {
+class Vista : public ComponenteConFont, public VistaObservable {
   private:
     // provisional
     bool _deben_dibujarse_etiquetas_pedidos;
@@ -54,7 +54,6 @@ class Vista : public ObjetoConFont,
     Vista();
 
     void setup(
-        const OptionalFont &font,                    //
         std::shared_ptr<Grid>,                       //
         const dominio::TiposDePizza &tp_disponibles, //
         const std::string &instrucciones,            //

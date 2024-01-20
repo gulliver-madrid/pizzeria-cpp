@@ -83,7 +83,9 @@ void on_cambio_a_fase_mostrar_resultado(
     enlace_vista->esconder_paneles();
 }
 
-///// Nivel (private) /////
+///////////////////////////////////////////
+// Nivel (private)
+//////////////////////////////////////////
 
 std::optional<FaseNivel> Nivel::_procesa_click(
     const std::shared_ptr<const BotonesApp> botones,
@@ -122,8 +124,8 @@ std::shared_ptr<EnlaceVista> Nivel::_crear_enlace_vista( //
     } else {
         instrucciones = datos_nivel->instrucciones;
     }
-    vista_ptr->setup(
-        font,                                   //
+    vista_ptr->set_font(font);
+    vista_ptr->setup(                           //
         grid,                                   //
         control_pizzas.get_tipos_disponibles(), //
         instrucciones,                          //
@@ -176,7 +178,9 @@ std::optional<AccionGeneral> Nivel::_procesa_cambio_de_fase(
     return procesa_cambio_de_fase(ejecucion, cambio_fase);
 }
 
-///// Nivel (public) /////
+///////////////////////////////////////////
+// Nivel (public)
+//////////////////////////////////////////
 
 Nivel::Nivel(
     std::shared_ptr<Globales> globales,      //
