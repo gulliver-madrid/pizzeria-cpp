@@ -6,14 +6,15 @@
 namespace sf {
     class Font;
     class RenderTarget;
-    class Text;
     class Time;
 } // namespace sf
+
+class Etiqueta;
 
 class EtiquetasBarraEstado : public ObjetoConFont, public sf::Drawable {
 
   private:
-    std::unique_ptr<sf::Text> etiqueta;
+    std::shared_ptr<Etiqueta> etiqueta;
 
   public:
     EtiquetasBarraEstado(const OptionalFont &);

@@ -22,14 +22,14 @@ EtiquetasBarraEstado::EtiquetasBarraEstado(const OptionalFont &font)
     const sf::Vector2f posicion = {
         medidas::MARGEN_IZQ_PANELES, medidas::FILA_BARRA_ESTADO
     };
-    etiqueta = crear_puntero_a_etiqueta(texto_inicial, estilo, font, posicion);
+    etiqueta = crear_etiqueta(texto_inicial, estilo, font, posicion);
 }
 
 void EtiquetasBarraEstado::actualizar(
     const sf::Time &tiempo_real, const sf::Time &tiempo_juego
 ) {
     const auto texto = crear_texto(tiempo_real, tiempo_juego);
-    etiqueta->setString(texto);
+    etiqueta->actualizar_texto(texto);
 }
 
 void EtiquetasBarraEstado::draw(

@@ -70,10 +70,3 @@ sf::Text crearEtiqueta(
     const OptionalFont &,                        //
     const sf::Vector2f &posicion = Vector2f_CERO //
 );
-
-std::unique_ptr<sf::Text> crear_puntero_a_etiqueta(
-    const std::string &texto,    //
-    const EstiloTexto &estilo,   //
-    const OptionalFont &font,    //
-    const sf::Vector2f &posicion //
-);

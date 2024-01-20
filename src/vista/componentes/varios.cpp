@@ -71,20 +71,3 @@ sf::Text crearEtiqueta(
 ) {
     return crearEtiqueta(texto, estilo.tamano, estilo.color, font, posicion);
 }
-
-std::unique_ptr<sf::Text> crear_puntero_a_etiqueta(
-    const std::string &texto,    //
-    const EstiloTexto &estilo,   //
-    const OptionalFont &font,    //
-    const sf::Vector2f &posicion //
-) {
-    auto etiqueta = std::make_unique<sf::Text>();
-    etiqueta->setString(texto);
-    if (font.exists()) {
-        etiqueta->setFont(*font.get_pointer());
-        etiqueta->setCharacterSize(estilo.tamano);
-    }
-    etiqueta->setFillColor(estilo.color);
-    etiqueta->setPosition(posicion);
-    return etiqueta;
-}
