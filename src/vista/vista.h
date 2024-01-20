@@ -36,8 +36,9 @@ class Vista : public ComponenteConFont, public VistaObservable {
     bool _mostrando_grid = false;
 
     void _actualizar_etiquetas(
-        const ModeloAmplio &,              //
-        const sf::Time &tiempo_real_actual //
+        const ModeloAmplio &,                         //
+        std::optional<modelo::Pedidos> &info_pedidos, //
+        const sf::Time &tiempo_real_actual            //
     );
 
     void _actualizar_vista_paneles( //
@@ -68,6 +69,7 @@ class Vista : public ComponenteConFont, public VistaObservable {
         const ModeloAmplio &,                             //
         const std::optional<VistaPreparacionPizzas> &,    //
         std::optional<PizzasToStrings> &vista_preparadas, //
+        std::optional<modelo::Pedidos> &info_pedidos,     //
         const sf::Time &tiempo_real_actual                //
     );
 

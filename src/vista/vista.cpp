@@ -42,24 +42,15 @@ namespace {
 // TODO:  ir pasando a enlace_vista la logica que deba conocer el modelo
 /* Actualiza las etiquetas */
 void Vista::_actualizar_etiquetas(
-    const ModeloAmplio &modelo_amplio, //
-    const sf::Time &tiempo_real_actual //
+    const ModeloAmplio &modelo_amplio,            //
+    std::optional<modelo::Pedidos> &info_pedidos, //
+    const sf::Time &tiempo_real_actual            //
 ) {
-    auto pedidos = modelo_amplio.modelo_interno.control_pizzas.pedidos;
-    _deben_dibujarse_etiquetas_pedidos = false;
-    switch (modelo_amplio.get_fase_actual()) {
-        case FaseNivel::MostrandoInstrucciones:
-            break;
-        case FaseNivel::Activa:
-        case FaseNivel::EsperaAntesDeResultado:
-            {
-                etiquetas->actualizar_pedidos(pedidos);
-                _deben_dibujarse_etiquetas_pedidos = true;
-                break;
-            }
-        default:
-            break;
+    if (info_pedidos) {
+        etiquetas->actualizar_pedidos(info_pedidos.value());
     }
+
+    _deben_dibujarse_etiquetas_pedidos = info_pedidos.has_value();
 
     const auto tiempo_juego_actual =
         modelo_amplio.modelo_interno.obtener_tiempo_juego();
@@ -124,13 +115,14 @@ void Vista::actualizar_interfaz_grafico(
     const ModeloAmplio &modelo_amplio,                              //
     const std::optional<VistaPreparacionPizzas> &vista_preparacion, //
     std::optional<PizzasToStrings> &vista_preparadas,               //
+    std::optional<modelo::Pedidos> &info_pedidos,                   //
     const sf::Time &tiempo_real_actual                              //
 ) {
     _mostrando_grid = modelo_amplio.mostrando_grid;
     const auto fase_actual = modelo_amplio.get_fase_actual();
 
     _actualizar_vista_paneles(vista_preparacion, vista_preparadas);
-    _actualizar_etiquetas(modelo_amplio, tiempo_real_actual);
+    _actualizar_etiquetas(modelo_amplio, info_pedidos, tiempo_real_actual);
 }
 
 void Vista::mostrar_elementos_fase_activa() {
