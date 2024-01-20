@@ -32,11 +32,11 @@ std::shared_ptr<Etiqueta> crear_etiqueta(
 );
 
 std::shared_ptr<Etiqueta> crear_etiqueta(
-    const std::string &texto,    //
-    int tamano_fuente,           //
-    const sf::Color &color,      //
-    const OptionalFont &font,    //
-    const sf::Vector2f &posicion //
+    const std::string &texto,                    //
+    int tamano_fuente,                           //
+    const sf::Color &color,                      //
+    const OptionalFont &font,                    //
+    const sf::Vector2f &posicion = Vector2f_CERO //
 
 );
 

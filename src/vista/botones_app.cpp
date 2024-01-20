@@ -7,6 +7,7 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <algorithm>
 #include <cassert>
+#include <iterator> // para back_inserter
 
 using std::move;
 using std::vector;

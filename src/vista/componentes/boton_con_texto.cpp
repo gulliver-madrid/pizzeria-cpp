@@ -1,5 +1,6 @@
 #include "boton_con_texto.h"
 #include "../../templates/dibujar_elementos.h"
+#include "etiqueta.h"
 #include "varios.h"
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <cassert>
@@ -128,7 +129,7 @@ void BotonConTexto::_actualizar_posicion_absoluta() {
         );
 
     _forma.setPosition(pos_forma);
-    _etiqueta.setPosition(pos_etiqueta);
+    _etiqueta->set_position(pos_etiqueta.x, pos_etiqueta.y);
 }
 
 //////// Metodos publicos
@@ -155,13 +156,13 @@ BotonConTexto::BotonConTexto(
     const auto margen_ambos_lados = margen * 2;
 
     // Primero creamos la etiqueta para usar sus limites en el Rect
-    _etiqueta = crearEtiqueta(
+    _etiqueta = crear_etiqueta(
         boton_data.data.texto,                  //
         medidas::TAMANO_TEXTO_BOTONES * escala, //
         boton_data.data.color_texto,            //
         boton_data.font                         //
     );
-    const sf::FloatRect rect_etiqueta = _etiqueta.getGlobalBounds();
+    const sf::FloatRect rect_etiqueta = _etiqueta->get_global_bounds();
 
     _forma.setSize(sf::Vector2f(
         rect_etiqueta.width + margen_ambos_lados,
@@ -286,7 +287,7 @@ void BotonConTexto::draw(
 ) const {
     if (!visible)
         return;
-    dibujar_elementos(target, std::make_tuple(_forma, _etiqueta));
+    dibujar_elementos(target, std::make_tuple(_forma, *_etiqueta));
 }
 
 /**

@@ -3,9 +3,10 @@
 #include "boton_data.h"
 #include "componente_old_style.h"
 #include <SFML/Graphics/RectangleShape.hpp>
-#include <SFML/Graphics/Text.hpp>
 #include <memory>
 #include <optional>
+
+class Etiqueta;
 
 namespace sf {
     class RenderTarget;
@@ -19,7 +20,7 @@ class BotonConTexto : public ComponenteOldStyle {
     std::optional<size_t> _id;
 
     sf::RectangleShape _forma;
-    sf::Text _etiqueta;
+    std::shared_ptr<Etiqueta> _etiqueta;
 
     std::unique_ptr<Posicionamiento> posicionamiento;
     // Solo puede modificarse la escala en la construccion

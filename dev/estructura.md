@@ -271,6 +271,7 @@
 - vista/componentes/boton_con_texto.cpp:
     - vista/componentes/boton_con_texto.h
     - templates/dibujar_elementos.h
+    - vista/componentes/etiqueta.h
     - vista/componentes/varios.h
 
 - vista/componentes/boton_con_texto.h:
