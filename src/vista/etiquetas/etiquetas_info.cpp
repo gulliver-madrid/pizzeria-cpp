@@ -29,16 +29,16 @@ namespace estilos {
 
 struct FabricaEtiquetasInfo : public ObjetoConFont {
   private:
-    sf::Text crear_etiqueta_info(
+    std::shared_ptr<Etiqueta> crear_etiqueta_info(
         const std::string &texto, const EstiloTexto &estilo
     ) const {
         const auto posicion = medidas::POSICION_INSTRUCCIONES_O_RESULTADO;
-        return crearEtiqueta(texto, estilo, font, posicion);
+        return crear_etiqueta(texto, estilo, font, posicion);
     }
 
   public:
     FabricaEtiquetasInfo(const OptionalFont &font) : ObjetoConFont(font) {}
-    sf::Text crear_etiqueta_instrucciones(
+    std::shared_ptr<Etiqueta> crear_etiqueta_instrucciones(
         const std::string &plantilla,     //
         const NumNivelOpcional &num_nivel //
     ) const {
@@ -49,7 +49,7 @@ struct FabricaEtiquetasInfo : public ObjetoConFont {
         return etiqueta;
     }
 
-    sf::Text crear_etiqueta_resultado() const {
+    std::shared_ptr<Etiqueta> crear_etiqueta_resultado() const {
         const auto estilo = estilos::RESULTADO;
         const auto texto = construir_resultado();
         const auto etiqueta = crear_etiqueta_info(texto, estilo);
@@ -85,9 +85,9 @@ void EtiquetasInfo::draw(
     sf::RenderStates states   //
 ) const {
     if (presentacion_vista->visibilidad.instrucciones) {
-        target.draw(instrucciones);
+        target.draw(*instrucciones);
     }
     if (presentacion_vista->visibilidad.resultado) {
-        target.draw(resultado);
+        target.draw(*resultado);
     }
 }

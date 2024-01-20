@@ -3,16 +3,19 @@
 #include "../../shared/font.h"
 #include "../../shared/num_nivel.h"
 #include "../presentacion_vista.h"
-#include <SFML/Graphics/Text.hpp>
+#include <SFML/Graphics/Drawable.hpp>
+#include <memory>
 #include <optional>
+
+class Etiqueta;
 
 struct EtiquetasInfo : public ObjetoConFont, public sf::Drawable {
   private:
     std::shared_ptr<PresentacionVista> presentacion_vista;
 
   public:
-    sf::Text instrucciones;
-    sf::Text resultado;
+    std::shared_ptr<Etiqueta> instrucciones;
+    std::shared_ptr<Etiqueta> resultado;
 
     EtiquetasInfo(const OptionalFont &);
     void setup(
