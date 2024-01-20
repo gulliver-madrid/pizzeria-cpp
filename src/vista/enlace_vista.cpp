@@ -111,6 +111,7 @@ void EnlaceVista::actualizar_interfaz_grafico(
     std::optional<modelo::Pedidos> info_pedidos;
 
     const auto fase_actual = modelo_amplio.get_fase_actual();
+
     if ( //
         fase_actual == FaseNivel::Activa ||
         fase_actual == FaseNivel::EsperaAntesDeResultado
@@ -129,9 +130,14 @@ void EnlaceVista::actualizar_interfaz_grafico(
             modelo_amplio.modelo_interno.control_pizzas.pedidos;
         info_pedidos.emplace(pedidos);
     }
+
+    const auto mostrando_grid = modelo_amplio.mostrando_grid;
+    const auto tiempo_juego_actual =
+        modelo_amplio.modelo_interno.obtener_tiempo_juego();
+
     vista->actualizar_interfaz_grafico(
-        modelo_amplio, vista_preparacion, vista_preparadas, info_pedidos,
-        tiempo_real_actual
+        mostrando_grid, fase_actual, vista_preparacion, vista_preparadas,
+        info_pedidos, tiempo_real_actual, tiempo_juego_actual
     );
 }
 
