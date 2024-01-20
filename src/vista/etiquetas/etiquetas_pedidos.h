@@ -1,15 +1,22 @@
 #pragma once
 
-#include "../../modelo/control_pizzas.h"
 #include "../componente.h"
-#include "../vista_shared.h"
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Text.hpp>
+#include <vector>
 
+class Etiqueta;
+class Pedido;
+
+namespace dominio {
+    enum class TipoPizza;
+}
+namespace modelo {
+    using Pedidos = std::vector<Pedido>;
+} // namespace modelo
 namespace sf {
     class RenderTarget;
 }
-class Etiqueta;
 
 ///////////////////////////////////////////
 // TarjetaPedido

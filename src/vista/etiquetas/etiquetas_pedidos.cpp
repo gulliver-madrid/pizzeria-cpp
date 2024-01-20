@@ -1,5 +1,6 @@
 #include "etiquetas_pedidos.h"
-#include "../../modelo/modelo.h"
+#include "../../modelo/control_pizzas.h"
+#include "../../modelo/dominio.h"
 #include "../../shared/log_init.h"
 #include "../../templates/dibujar_elementos.h"
 #include "../../templates/helpers.h"

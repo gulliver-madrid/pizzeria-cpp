@@ -1,12 +1,9 @@
 #include "etiquetas_preparadas.h"
-#include "../../modelo/modelo.h"
+#include "../../modelo/dominio.h"
 #include "../../shared/log_init.h"
 #include "../../templates/dibujar_elementos.h"
 #include "../../templates/helpers.h"
-#include "../basicos_vista.h"
 #include "../componentes/etiqueta.h"
-#include "../componentes/varios.h"
-#include "../presentador.h"
 #include "fabrica_etiquetas_preparadas.h"
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <cassert>

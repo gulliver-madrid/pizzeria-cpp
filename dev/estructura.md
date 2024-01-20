@@ -357,7 +357,8 @@
 
 - vista/etiquetas/etiquetas_pedidos.cpp:
     - vista/etiquetas/etiquetas_pedidos.h
-    - modelo/modelo.h
+    - modelo/control_pizzas.h
+    - modelo/dominio.h
     - shared/log_init.h
     - templates/dibujar_elementos.h
     - templates/helpers.h
@@ -367,21 +368,16 @@
     - vista/presentador.h
 
 - vista/etiquetas/etiquetas_pedidos.h:
-    - modelo/control_pizzas.h
     - vista/componente.h
-    - vista/vista_shared.h
 
 - vista/etiquetas/etiquetas_preparadas.cpp:
     - vista/etiquetas/etiquetas_preparadas.h
-    - modelo/modelo.h
+    - modelo/dominio.h
     - shared/log_init.h
     - templates/dibujar_elementos.h
     - templates/helpers.h
-    - vista/basicos_vista.h
     - vista/componentes/etiqueta.h
-    - vista/componentes/varios.h
     - vista/etiquetas/fabrica_etiquetas_preparadas.h
-    - vista/presentador.h
 
 - vista/etiquetas/etiquetas_preparadas.h:
     - modelo/control_pizzas.h
