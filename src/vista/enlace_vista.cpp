@@ -107,6 +107,7 @@ void EnlaceVista::actualizar_interfaz_grafico(
         );
     vista->activar_botones_condicionalmente(activacion_botones);
     std::optional<VistaPreparacionPizzas> vista_preparacion;
+    std::optional<PizzasToStrings> vista_preparadas;
     const auto fase_actual = modelo_amplio.get_fase_actual();
     if ( //
         fase_actual == FaseNivel::Activa ||
@@ -117,8 +118,15 @@ void EnlaceVista::actualizar_interfaz_grafico(
         vista_preparacion.emplace(
             presentador::estado_preparacion_pizzas_to_vista(preparacion)
         );
+        const modelo::PizzasAContadores &contadores =
+            modelo_amplio.modelo_interno.control_pizzas.contadores;
+        vista_preparadas.emplace(
+            presentador::contadores_to_preparadas(contadores)
+        );
     }
-    vista->actualizarIU(modelo_amplio, vista_preparacion, tiempo_real_actual);
+    vista->actualizar_interfaz_grafico(
+        modelo_amplio, vista_preparacion, vista_preparadas, tiempo_real_actual
+    );
 }
 
 PresentacionVista EnlaceVista::get_presentacion_vista() const { //

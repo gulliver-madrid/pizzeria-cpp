@@ -68,11 +68,15 @@ void Vista::_actualizar_etiquetas(
 
 void Vista::_actualizar_vista_paneles(
     const std::optional<VistaPreparacionPizzas> &vista_preparacion,
-    const PizzasToStrings &vista_preparadas
+    const std::optional<PizzasToStrings> &vista_preparadas
 ) {
     paneles->visible = vista_preparacion.has_value();
     if (vista_preparacion) {
-        paneles->actualizar(vista_preparacion.value(), vista_preparadas);
+        // Estaran definidas las dos o ninguna
+        assert(vista_preparacion);
+        paneles->actualizar(
+            vista_preparacion.value(), vista_preparadas.value()
+        );
     }
 }
 
@@ -116,23 +120,16 @@ void Vista::set_presentacion_vista(
 /*
  * Actualiza el interfaz grafico
  */
-void Vista::actualizarIU(
+void Vista::actualizar_interfaz_grafico(
     const ModeloAmplio &modelo_amplio,                              //
     const std::optional<VistaPreparacionPizzas> &vista_preparacion, //
+    std::optional<PizzasToStrings> &vista_preparadas,               //
     const sf::Time &tiempo_real_actual                              //
 ) {
     _mostrando_grid = modelo_amplio.mostrando_grid;
     const auto fase_actual = modelo_amplio.get_fase_actual();
 
-    if (fase_actual == FaseNivel::Activa ||
-        fase_actual == FaseNivel::EsperaAntesDeResultado) {
-        // temporalmente se obtiene aqui la vista_preparacion
-        const modelo::PizzasAContadores &contadores =
-            modelo_amplio.modelo_interno.control_pizzas.contadores;
-        const auto vista_preparadas =
-            presentador::contadores_to_preparadas(contadores);
-        _actualizar_vista_paneles(vista_preparacion, vista_preparadas);
-    }
+    _actualizar_vista_paneles(vista_preparacion, vista_preparadas);
     _actualizar_etiquetas(modelo_amplio, tiempo_real_actual);
 }
 
