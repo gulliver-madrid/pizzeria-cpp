@@ -32,13 +32,13 @@ class Vista : public ObjetoConFont,
   private:
     // provisional
     bool _deben_dibujarse_etiquetas_pedidos;
+    bool _mostrando_grid = false;
 
     void _actualizar_etiquetas(
-        sf::RenderTarget &,                //
         const ModeloAmplio &,              //
         const sf::Time &tiempo_real_actual //
     );
-    void _dibujar_paneles(sf::RenderTarget &target) const;
+
     void _actualizar_vista_paneles( //
         const std::optional<VistaPreparacionPizzas> &vista_preparacion,
         const PizzasToStrings &vista_preparadas
@@ -64,8 +64,7 @@ class Vista : public ObjetoConFont,
         std::shared_ptr<PresentacionVista> //
     );
 
-    void actualizarIU(                                 //
-        sf::RenderTarget &,                            //
+    void actualizarIU(
         const ModeloAmplio &,                          //
         const std::optional<VistaPreparacionPizzas> &, //
         const sf::Time &tiempo_real_actual             //

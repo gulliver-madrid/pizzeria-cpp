@@ -38,7 +38,6 @@ class EnlaceVista : public ObservadorFase {
     void on_cambio_de_fase(FaseNivel);
     void esconder_paneles() const;
     void actualizar_interfaz_grafico(
-        sf::RenderTarget &,                //
         const ModeloAmplio &,              //
         const sf::Time &tiempo_real_actual //
     );

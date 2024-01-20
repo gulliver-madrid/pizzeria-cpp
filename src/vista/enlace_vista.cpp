@@ -46,7 +46,9 @@ ActivacionBotones enlace_vista_impl::obtener_activacion_botones( //
     return activacion_botones;
 }
 
-///// EnlaceVista (private) /////
+///////////////////////////////////////////
+// EnlaceVista (private)
+//////////////////////////////////////////
 
 void EnlaceVista::cambiar_visibilidad_instrucciones(bool nueva) {
     presentacion_vista->visibilidad.instrucciones = nueva;
@@ -55,7 +57,9 @@ void EnlaceVista::cambiar_visibilidad_resultado(bool nueva) {
     presentacion_vista->visibilidad.resultado = nueva;
 }
 
-///// EnlaceVista (public) /////
+///////////////////////////////////////////
+// EnlaceVista (public)
+//////////////////////////////////////////
 
 EnlaceVista::EnlaceVista() {
     presentacion_vista = std::make_shared<PresentacionVista>();
@@ -94,7 +98,6 @@ void EnlaceVista::on_cambio_de_fase(FaseNivel nueva_fase) {
 void EnlaceVista::esconder_paneles() const { vista->paneles->visible = false; }
 
 void EnlaceVista::actualizar_interfaz_grafico(
-    sf::RenderTarget &target,          //
     const ModeloAmplio &modelo_amplio, //
     const sf::Time &tiempo_real_actual //
 ) {
@@ -115,9 +118,7 @@ void EnlaceVista::actualizar_interfaz_grafico(
             presentador::estado_preparacion_pizzas_to_vista(preparacion)
         );
     }
-    vista->actualizarIU(
-        target, modelo_amplio, vista_preparacion, tiempo_real_actual
-    );
+    vista->actualizarIU(modelo_amplio, vista_preparacion, tiempo_real_actual);
 }
 
 PresentacionVista EnlaceVista::get_presentacion_vista() const { //

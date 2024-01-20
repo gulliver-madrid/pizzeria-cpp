@@ -34,13 +34,13 @@ namespace {
 
 } // namespace
 
-///// Vista (private) /////
+///////////////////////////////////////////
+// Vista (private)
+//////////////////////////////////////////
 
-// TODO:  separar la parte de actualizacion y de dibujo
 // TODO:  ir pasando a enlace_vista la logica que deba conocer el modelo
-/* Actualiza y dibuja las etiquetas */
+/* Actualiza las etiquetas */
 void Vista::_actualizar_etiquetas(
-    sf::RenderTarget &target,          //
     const ModeloAmplio &modelo_amplio, //
     const sf::Time &tiempo_real_actual //
 ) {
@@ -63,12 +63,6 @@ void Vista::_actualizar_etiquetas(
     const auto tiempo_juego_actual =
         modelo_amplio.modelo_interno.obtener_tiempo_juego();
     etiquetas->actualizar_barra_estado(tiempo_real_actual, tiempo_juego_actual);
-    etiquetas->dibujar_barra_estado(target);
-}
-
-void Vista::_dibujar_paneles(sf::RenderTarget &target) const {
-    // TODO: usar el sistema nativo de dibujo de SFML.
-    target.draw(*paneles);
 }
 
 void Vista::_actualizar_vista_paneles(
@@ -81,7 +75,9 @@ void Vista::_actualizar_vista_paneles(
     }
 }
 
-///// Vista (public) /////
+///////////////////////////////////////////
+// Vista (public)
+//////////////////////////////////////////
 
 Vista::Vista() {}
 
@@ -120,19 +116,12 @@ void Vista::set_presentacion_vista(
 /*
  * Actualiza el interfaz grafico
  */
-void Vista::actualizarIU(                                           //
-    sf::RenderTarget &target,                                       //
+void Vista::actualizarIU(
     const ModeloAmplio &modelo_amplio,                              //
     const std::optional<VistaPreparacionPizzas> &vista_preparacion, //
     const sf::Time &tiempo_real_actual                              //
 ) {
-
-    // Limpia la target y empieza a pintar los componentes visuales
-    target.clear(colores::COLOR_FONDO);
-    if (modelo_amplio.mostrando_grid) {
-        assert(grid);
-        grid->draw(target, GRID_SIZE, GRID_TONE);
-    }
+    _mostrando_grid = modelo_amplio.mostrando_grid;
     const auto fase_actual = modelo_amplio.get_fase_actual();
 
     if (fase_actual == FaseNivel::Activa ||
@@ -144,7 +133,7 @@ void Vista::actualizarIU(                                           //
             presentador::contadores_to_preparadas(contadores);
         _actualizar_vista_paneles(vista_preparacion, vista_preparadas);
     }
-    _actualizar_etiquetas(target, modelo_amplio, tiempo_real_actual);
+    _actualizar_etiquetas(modelo_amplio, tiempo_real_actual);
 }
 
 void Vista::mostrar_elementos_fase_activa() {
@@ -176,10 +165,16 @@ void Vista::draw(
     sf::RenderTarget &target, //
     sf::RenderStates states   //
 ) const {
-    _dibujar_paneles(target);
+    // Limpia la target y empieza a pintar los componentes visuales
+    target.clear(colores::COLOR_FONDO);
+    if (_mostrando_grid) {
+        assert(grid);
+        grid->draw(target, GRID_SIZE, GRID_TONE);
+    }
+    etiquetas->dibujar_barra_estado(target);
+    target.draw(*paneles);
     etiquetas->dibujar_info(target);
     if (_deben_dibujarse_etiquetas_pedidos) {
-        // etiquetas->dibujar_preparadas(target);
         etiquetas->dibujar_pedidos(target);
     }
     target.draw(*botones);

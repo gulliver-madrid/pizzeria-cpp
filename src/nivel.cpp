@@ -276,7 +276,7 @@ AccionGeneral Nivel::ejecutar() {
         gestor_tiempo_juego.tick(transcurrido);
         previo = tiempo_real_actual;
         enlace_vista->actualizar_interfaz_grafico(
-            globales->window, modelo_amplio.value(), tiempo_real_actual
+            modelo_amplio.value(), tiempo_real_actual
         );
         enlace_vista->dibujar_vista(globales->window);
         globales->window.display();
