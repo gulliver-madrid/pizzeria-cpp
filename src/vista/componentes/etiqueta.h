@@ -52,6 +52,12 @@ class Etiqueta : public ComponenteConFont {
     void actualizar_texto(const std::string &texto) { //
         etiqueta.setString(texto);
     }
+    sf::FloatRect get_global_bounds() { //
+        return etiqueta.getGlobalBounds();
+    }
+    void set_position(float x, float y) { //
+        etiqueta.setPosition(x, y);
+    }
     virtual void draw(
         sf::RenderTarget &target, //
         sf::RenderStates states   //

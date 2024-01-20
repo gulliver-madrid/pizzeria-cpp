@@ -17,11 +17,11 @@ class Etiqueta;
 
 class TarjetaPedido : public sf::Drawable {
   public:
-    sf::Text label;
+    std::shared_ptr<Etiqueta> label;
     sf::RectangleShape shape;
 
-    TarjetaPedido(sf::Text label, sf::RectangleShape shape);
-    void setPosition(float pos_x, float pos_y);
+    TarjetaPedido(std::shared_ptr<Etiqueta>, sf::RectangleShape);
+    void set_position(float pos_x, float pos_y);
     virtual void draw(
         sf::RenderTarget &target, //
         sf::RenderStates states   //

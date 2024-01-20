@@ -45,7 +45,7 @@ namespace {
         std::string texto, const OptionalFont &font, size_t num_items //
     ) {
         static const auto tamano_fuente = 22;
-        const auto etiqueta = crearEtiqueta(texto, tamano_fuente, font);
+        const auto etiqueta = crear_etiqueta(texto, tamano_fuente, font);
         const auto shape = build_card_pedido_shape(num_items);
         return {etiqueta, shape};
     }
@@ -78,9 +78,9 @@ namespace {
         float pos_y = pos_panel.y + medidas::FILA_CONTENIDO_PANEL;
 
         for (auto &card : tarjetas) {
-            card.setPosition(pos_x, pos_y);
+            card.set_position(pos_x, pos_y);
             //  Calcula la posicion del siguiente pedido
-            const auto g_bounds = card.label.getGlobalBounds();
+            const auto g_bounds = card.label->get_global_bounds();
             pos_y = get_bottom(g_bounds) + separacion_vertical;
         }
     }
@@ -90,11 +90,13 @@ namespace {
 // TarjetaPedido (public)
 //////////////////////////////////////////
 
-TarjetaPedido::TarjetaPedido(sf::Text label, sf::RectangleShape shape)
+TarjetaPedido::TarjetaPedido(
+    std::shared_ptr<Etiqueta> label, sf::RectangleShape shape
+)
     : label(label), shape(shape) {}
 
-void TarjetaPedido::setPosition(float pos_x, float pos_y) {
-    label.setPosition(pos_x, pos_y);
+void TarjetaPedido::set_position(float pos_x, float pos_y) {
+    label->set_position(pos_x, pos_y);
     shape.setPosition(pos_x - top_left_padding, pos_y - top_left_padding);
 }
 
@@ -103,7 +105,7 @@ void TarjetaPedido::draw(
     sf::RenderStates states   //
 ) const {
     target.draw(shape);
-    target.draw(label);
+    target.draw(*label);
 }
 
 ///////////////////////////////////////////
