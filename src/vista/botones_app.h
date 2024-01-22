@@ -1,36 +1,38 @@
 #pragma once
 
 #include "../modelo/dominio.h"
+#include "componente.h"
 #include "componentes/boton_con_texto.h"
-
-namespace modelo {
-    enum class TipoPizza;
-}
-
-using TipoPizzaToBoton = std::map<dominio::TipoPizza, BotonConTexto>;
+#include "vista_shared.h"
 
 struct BotonesGenerales {
-    BotonConTexto alternar_grid;
-    BotonConTexto reiniciar;
-    BotonConTexto salir;
-    const std::vector<BotonConTexto *> obtener_todos();
+    std::shared_ptr<BotonConTexto> alternar_grid;
+    std::shared_ptr<BotonConTexto> reiniciar;
+    std::shared_ptr<BotonConTexto> salir;
+    void alinear();
+    Botones obtener_todos() const;
 };
 
-class BotonesApp : public sf::Drawable {
+class BotonesApp : public ComponenteConFont {
   private:
-    std::vector<BotonConTexto *> todos;
+    std::vector<std::shared_ptr<BotonConTexto>> todos;
     void _establecer_todos();
 
   public:
-    BotonConTexto empezar;
-    TipoPizzaToBoton encargar;
+    std::shared_ptr<BotonConTexto> empezar;
+    // Solo para recibir input
+    TipoPizzaToBoton &encargar;
     TipoPizzaToBoton despachar;
     BotonesGenerales generales;
-
+    // TODO: remove optional font del constructor
+    // ojo: podria haber algun error raro al liberar memoria segun el orden,
+    // debido a que botones encargar es una referencia
     BotonesApp(
-        const OptionalFont &font, const dominio::TiposDePizza &tp_disponibles
+        const OptionalFont &font, const dominio::TiposDePizza &tp_disponibles,
+        TipoPizzaToBoton &botones
     );
     void mostrar_botones_nivel(bool nuevo_valor);
+    virtual void set_font(const OptionalFont &new_font) override;
     virtual void draw(
         sf::RenderTarget &target, //
         sf::RenderStates states   //

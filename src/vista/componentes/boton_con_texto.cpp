@@ -1,9 +1,10 @@
 #include "boton_con_texto.h"
 #include "../../templates/dibujar_elementos.h"
-#include "etiqueta.h"
 #include "crear_etiqueta.h"
+#include "etiqueta.h"
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <cassert>
+#include <iostream>
 
 namespace medidas {
     constexpr int MARGEN_BOTON = 20;
@@ -132,6 +133,25 @@ void BotonConTexto::_actualizar_posicion_absoluta() {
     _etiqueta->set_position(pos_etiqueta.x, pos_etiqueta.y);
 }
 
+void BotonConTexto::resize() {
+    const auto margen_ambos_lados = get_margen_ambos_lados();
+    const sf::FloatRect rect_etiqueta = _etiqueta->get_global_bounds();
+
+    _forma.setSize(sf::Vector2f(
+        rect_etiqueta.width + margen_ambos_lados,
+        rect_etiqueta.height + margen_ambos_lados
+    ));
+}
+
+int BotonConTexto::get_margen_ambos_lados() {
+    // La escala del margen es proporcional al cuadrado de la escala del boton
+    const auto escala = this->_escala;
+    const int margen = medidas::MARGEN_BOTON * (escala * escala);
+    const auto margen_ambos_lados = margen * 2;
+    return margen_ambos_lados;
+}
+
+// TODO: corregir titulos secciones
 //////// Metodos publicos
 
 /**
@@ -146,29 +166,25 @@ void BotonConTexto::_actualizar_posicion_absoluta() {
  * @param escala Factor de escala para el tamano del boton y del texto.
  */
 BotonConTexto::BotonConTexto(
-    const BotonDataConFont &boton_data, //
-    double escala                       //
+    const BotonData boton_data, //
+    double escala               //
 )
     : BotonConTexto() {
     this->_escala = escala;
-    // La escala del margen es proporcional al cuadrado de la escala del boton
-    const int margen = medidas::MARGEN_BOTON * (escala * escala);
-    const auto margen_ambos_lados = margen * 2;
 
     // Primero creamos la etiqueta para usar sus limites en el Rect
     _etiqueta = crear_etiqueta(
-        boton_data.data.texto,                  //
-        medidas::TAMANO_TEXTO_BOTONES * escala, //
-        boton_data.data.color_texto,            //
-        boton_data.font                         //
+        boton_data.texto,                              //
+        medidas::TAMANO_TEXTO_BOTONES * escala,        //
+        boton_data.color_texto,                        //
+        Vector2f_CERO,                                 //
+        "etiqueta boton con texto " + boton_data.texto //
     );
-    const sf::FloatRect rect_etiqueta = _etiqueta->get_global_bounds();
+    add_child(_etiqueta);
+    _color_fondo = boton_data.color_fondo;
 
-    _forma.setSize(sf::Vector2f(
-        rect_etiqueta.width + margen_ambos_lados,
-        rect_etiqueta.height + margen_ambos_lados
-    ));
-    _forma.setFillColor(boton_data.data.color_fondo);
+    resize();
+    _forma.setFillColor(_color_fondo);
 };
 
 /**
@@ -186,10 +202,10 @@ BotonConTexto::BotonConTexto(
  * @param escala Factor de escala para el tamano del boton y del texto.
  */
 BotonConTexto::BotonConTexto(
-    const BotonDataConFont &boton_data, //
-    const sf::Vector2f &posicion,       //
-    Align align,                        //
-    double escala                       //
+    const BotonData boton_data,   //
+    const sf::Vector2f &posicion, //
+    Align align,                  //
+    double escala                 //
 )
     : BotonConTexto(boton_data, escala) {
     establecer_posicion(posicion, align);
@@ -287,6 +303,8 @@ void BotonConTexto::draw(
 ) const {
     if (!visible)
         return;
+    std::cout << "Dibujando boton con texto cuya etiqueta es "
+              << _etiqueta->nombre << std::endl;
     dibujar_elementos(target, std::make_tuple(_forma, *_etiqueta));
 }
 
@@ -335,4 +353,9 @@ size_t BotonConTexto::get_id() const { //
  */
 bool BotonConTexto::esta_activo() const { //
     return _activo;
+}
+
+void BotonConTexto::set_font(const OptionalFont &new_font) {
+    ComponenteConFont::set_font(new_font);
+    resize();
 }

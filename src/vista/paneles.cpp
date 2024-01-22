@@ -2,6 +2,7 @@
 #include "../shared/log_init.h"
 #include "../templates/dibujar_elementos.h"
 #include "basicos_vista.h"
+#include "botones_encargar.h"
 #include "componentes/etiqueta.h"
 #include "etiquetas/etiquetas.h"
 #include <cassert>
@@ -42,7 +43,9 @@ namespace {
 
 Panel::Panel(IndicePanel indice, std::shared_ptr<Etiqueta> etiqueta)
     : indice(indice), forma(crear_panel_estandar(indice)),
-      etiqueta_titulo(etiqueta) {}
+      etiqueta_titulo(etiqueta) {
+    add_child(etiqueta_titulo);
+}
 
 void Panel::draw(
     sf::RenderTarget &target, //
@@ -53,14 +56,45 @@ void Panel::draw(
 }
 
 ///////////////////////////////////////////
+// PanelEncargar (public)
+/////////////////////////////////////////
+
+PanelEncargar::PanelEncargar(
+    IndicePanel indice, std::shared_ptr<Etiqueta> etiqueta,
+    const dominio::TiposDePizza &tp_disponibles
+)
+    : Panel(indice, etiqueta),
+      encargar(_crear_botones_encargar(tp_disponibles)) {
+    for (auto [_, btn] : encargar) {
+        std::cout << "Panel encargar anade un boton" << std::endl;
+        add_child(btn);
+    }
+}
+
+void PanelEncargar::actualizar(
+    const VistaPreparacionPizzas &vista_preparacion //
+) {}
+
+void PanelEncargar::draw(
+    sf::RenderTarget &target, //
+    sf::RenderStates states   //
+) const {
+    Panel::draw(target, states);
+    for (auto &[_, boton_ptr] : encargar) {
+        assert(boton_ptr != nullptr);
+        boton_ptr->actualizar();
+        target.draw(*boton_ptr);
+    }
+}
+
+///////////////////////////////////////////
 // PanelEnPreparacion (public)
 /////////////////////////////////////////
 
 PanelEnPreparacion::PanelEnPreparacion(
-    IndicePanel indice, std::shared_ptr<Etiqueta> etiqueta,
-    const OptionalFont &font
+    IndicePanel indice, std::shared_ptr<Etiqueta> etiqueta
 )
-    : Panel(indice, etiqueta), ObjetoConFont(font) {}
+    : Panel(indice, etiqueta) {}
 
 void PanelEnPreparacion::actualizar(
     const VistaPreparacionPizzas &vista_preparacion //
@@ -68,9 +102,15 @@ void PanelEnPreparacion::actualizar(
     auto pos_panel = basicos_vista::obtener_posicion_panel( //
         IndicePanel::PANEL_EN_PREPARACION
     );
+    for (auto bpn : barras_progreso_con_nombres) {
+        remove_child(bpn);
+    }
     barras_progreso_con_nombres = crear_barras_progreso( //
         vista_preparacion, pos_panel, font
     );
+    for (auto bpn : barras_progreso_con_nombres) {
+        add_child(bpn);
+    }
 }
 
 void PanelEnPreparacion::draw(
@@ -78,8 +118,8 @@ void PanelEnPreparacion::draw(
     sf::RenderStates states   //
 ) const {
     Panel::draw(target, states);
-    for (auto &bpn : barras_progreso_con_nombres) {
-        target.draw(bpn);
+    for (auto bpn : barras_progreso_con_nombres) {
+        target.draw(*bpn);
     }
 }
 
@@ -121,46 +161,44 @@ void PanelPreparadas::draw(
 // Paneles (public)
 /////////////////////////////////////////
 
-Paneles::Paneles(
-    const dominio::TiposDePizza &tp_disponibles, const OptionalFont &font
-)
-    : ObjetoConFont(font) {
+Paneles::Paneles(const dominio::TiposDePizza &tp_disponibles) {
     const FabricaEtiquetasTituloPanel fabrica(font);
     LOG(debug) << "A punto de crear los paneles";
     for (auto indice : paneles_posibles) {
-        std::unique_ptr<Panel> panel = nullptr;
+        std::shared_ptr<Panel> panel = nullptr;
         auto titulo = fabrica.crearEtiquetaTituloPanel(
             basicos_vista::obtener_posicion_panel(indice), //
             texto_titulos_paneles.at(indice)
         );
-        if (indice == IndicePanel::PANEL_EN_PREPARACION) {
-            panel = std::make_unique<PanelEnPreparacion>(
-                indice, std::move(titulo), font
+
+        if (indice == IndicePanel::PANEL_ENCARGAR) {
+            panel = std::make_shared<PanelEncargar>( //
+                indice, titulo, tp_disponibles
             );
+        } else if (indice == IndicePanel::PANEL_EN_PREPARACION) {
+            panel = std::make_shared<PanelEnPreparacion>(indice, titulo);
         } else if (indice == IndicePanel::PANEL_PREPARADAS) {
             LOG(debug) << "A punto de crear panel preparadas";
-            panel =
-                std::make_unique<PanelPreparadas>(indice, std::move(titulo));
-            LOG(debug) << "A punto de obtener un puntero a panel preparadas";
+            panel = std::make_shared<PanelPreparadas>(indice, titulo);
             auto &panel_preparadas = dynamic_cast<PanelPreparadas &>(*panel);
-            // Por ahora es necesario pasar la fuente antes del setup
-            // porque despues no hay manera de pasarla a las instancias
-            // de sf::Text
-            LOG(debug) << "A punto de establecer la fuente de panel preparadas";
-            // Solo fuera de tests
-            // assert(font.exists());
-            panel_preparadas.set_font(font);
             LOG(debug) << "A punto de hacer el setup de panel preparadas";
             panel_preparadas.setup(tp_disponibles);
-            LOG(debug) << "Despues del setup de  panel preparadas";
+            LOG(debug) << "Despues del setup de panel preparadas";
         } else {
-            panel = std::make_unique<Panel>(indice, std::move(titulo));
+            panel = std::make_shared<Panel>(indice, titulo);
         }
-        _paneles.emplace(indice, std::move(panel));
-        // La propiedad de panel se ha transferido debido al uso de move
-        assert(panel == nullptr);
+
+        _paneles.emplace(indice, panel);
+        add_child(panel);
     }
     LOG(debug) << "Paneles creados";
+}
+
+std::shared_ptr<PanelEncargar> Paneles::get_panel_encargar() {
+    auto panel = _paneles.at(IndicePanel::PANEL_ENCARGAR);
+    auto panel_encargar = std::dynamic_pointer_cast<PanelEncargar>(panel);
+    assert(panel_encargar);
+    return panel_encargar;
 }
 
 void Paneles::actualizar(                            //
@@ -189,5 +227,6 @@ void Paneles::draw(
 ) const {
     if (!visible)
         return;
+    std::cout << "Dibujando " << _paneles.size() << " paneles" << std::endl;
     dibujar_elementos(target, _paneles);
 }

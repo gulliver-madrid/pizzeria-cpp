@@ -8,12 +8,12 @@
 #include "vista/grid.h"
 #include "vista/vista.h"
 
-enum class FaseNivel;
 class BotonesApp;
-struct ControladorClicks;
+class ControladorClicks;
+class Globales;
+enum class FaseNivel;
 struct DatosNivel;
 struct EjecucionEnProceso;
-struct Globales;
 
 namespace modelo {
     struct ControlPizzas;

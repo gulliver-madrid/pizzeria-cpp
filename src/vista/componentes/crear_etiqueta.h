@@ -1,4 +1,3 @@
-
 #pragma once
 
 #include "../../shared/font.h"
@@ -27,22 +26,23 @@ const auto Vector2f_CERO = sf::Vector2f(0, 0);
 std::shared_ptr<Etiqueta> crear_etiqueta(
     const std::string &texto, //
     int tamano_fuente,        //
-    const OptionalFont &      //
+    const std::string nombre  //
 );
 
 std::shared_ptr<Etiqueta> crear_etiqueta(
-    const std::string &texto,                    //
-    int tamano_fuente,                           //
-    const sf::Color &color,                      //
-    const OptionalFont &font,                    //
-    const sf::Vector2f &posicion = Vector2f_CERO //
+    const std::string &texto,     //
+    int tamano_fuente,            //
+    const sf::Color &color,       //
+    const sf::Vector2f &posicion, //
+    const std::string nombre      //
 
 );
+// const sf::Vector2f &posicion = Vector2f_CERO //
 
 /* Sobrecarga para usar EstiloTexto */
 std::shared_ptr<Etiqueta> crear_etiqueta(
-    const std::string &texto,    //
-    const EstiloTexto &estilo,   //
-    const OptionalFont &font,    //
-    const sf::Vector2f &posicion //
+    const std::string &texto,     //
+    const EstiloTexto &estilo,    //
+    const sf::Vector2f &posicion, //
+    const std::string nombre      //
 );

@@ -7,9 +7,9 @@
 #include <memory>
 
 struct ActivacionBotones;
-struct ModeloInterno;
-class Vista;
 class BotonesApp;
+class ModeloInterno;
+class Vista;
 
 namespace sf {
     class RenderTarget;

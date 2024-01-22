@@ -15,30 +15,33 @@ class Etiqueta : public ComponenteConFont {
     sf::Text etiqueta;
 
   public:
+    // nombre a propositos de debug
+    std::string nombre;
     Etiqueta(
         const std::string &texto, //
         int tamano_fuente,        //
-        const OptionalFont &font  //
+        const std::string nombre  //
     );
     Etiqueta(
-        const std::string &texto,    //
-        int tamano_fuente,           //
-        const sf::Color &color,      //
-        const OptionalFont &font,    //
-        const sf::Vector2f &posicion //
-
+        const std::string &texto,     //
+        int tamano_fuente,            //
+        const sf::Color &color,       //
+        const sf::Vector2f &posicion, //
+        const std::string nombre      //
     );
+
     /* Sobrecarga para usar EstiloTexto */
     Etiqueta(
-        const std::string &texto,    //
-        const EstiloTexto &estilo,   //
-        const OptionalFont &font,    //
-        const sf::Vector2f &posicion //
+        const std::string &texto,     //
+        const EstiloTexto &estilo,    //
+        const sf::Vector2f &posicion, //
+        const std::string nombre      //
     );
 
     void actualizar_texto(const std::string &texto);
     sf::FloatRect get_global_bounds();
     void set_position(float x, float y);
+    virtual void set_font(const OptionalFont &new_font) override;
     virtual void draw(
         sf::RenderTarget &target, //
         sf::RenderStates states   //

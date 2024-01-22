@@ -1,7 +1,7 @@
 #include "fabrica_etiquetas_preparadas.h"
 #include "../basicos_vista.h"
-#include "../componentes/etiqueta.h"
 #include "../componentes/crear_etiqueta.h"
+#include "../componentes/etiqueta.h"
 
 namespace medidas {
     constexpr int TAMANO_FUENTE_ETIQUETAS = 24;
@@ -42,7 +42,9 @@ sf::Vector2f FabricaEtiquetasPreparadas::_obtener_posicion_etiqueta(
 std::shared_ptr<Etiqueta> FabricaEtiquetasPreparadas::_crear_etiqueta( //
     sf::Vector2f posicion
 ) const {
-    return crear_etiqueta("", estilos::CONTADORES, font, posicion);
+    return crear_etiqueta(
+        "", estilos::CONTADORES, posicion, "etiqueta preparadas"
+    );
 }
 
 ///////////////////////////////////////////

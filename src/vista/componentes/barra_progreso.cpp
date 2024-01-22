@@ -1,7 +1,7 @@
 #include "barra_progreso.h"
 #include "../../templates/dibujar_elementos.h"
-#include "etiqueta.h"
 #include "crear_etiqueta.h"
+#include "etiqueta.h"
 #include <cassert>
 
 ///////////////////////////////////////////
@@ -51,15 +51,14 @@ void BarraProgreso::draw(
 std::shared_ptr<Etiqueta> BarraProgresoConNombre::_crear_etiqueta(
     const std::string &texto,           //
     const sf::Vector2f &posicion_barra, //
-    const sf::Color &color_texto,       //
-    const OptionalFont &font            //
+    const sf::Color &color_texto        //
 ) {
     return crear_etiqueta(
-        texto,                                        //
-        24,                                           //
-        color_texto,                                  //
-        font,                                         //
-        {posicion_barra.x + 20, posicion_barra.y + 5} //
+        texto,                                         //
+        24,                                            //
+        color_texto,                                   //
+        {posicion_barra.x + 20, posicion_barra.y + 5}, //
+        std::string("etiqueta barra progreso")
     );
 }
 
@@ -67,11 +66,11 @@ BarraProgresoConNombre::BarraProgresoConNombre(
     const sf::Vector2f &dimensiones, //
     const std::string &texto,        //
     const sf::Vector2f &posicion,    //
-    const BPNColors &bpn_colors,     //
-    const OptionalFont &font         //
+    const BPNColors &bpn_colors      //
 )
     : bp(dimensiones, posicion, bpn_colors.color_pair),
-      etiqueta(_crear_etiqueta(texto, posicion, bpn_colors.color_texto, font)) {
+      etiqueta(_crear_etiqueta(texto, posicion, bpn_colors.color_texto)) {
+    add_child(etiqueta);
 }
 
 void BarraProgresoConNombre::actualizar_porcentaje(int porcentaje) { //

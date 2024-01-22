@@ -28,7 +28,7 @@ namespace {
         for (auto &[tp, debe_estar_activo] : activacion_botones.despachar) {
             assert(has_key(botones_despachar, tp));
             auto &boton_despachar = botones_despachar.at(tp);
-            boton_despachar.activacion_condicional(debe_estar_activo);
+            boton_despachar->activacion_condicional(debe_estar_activo);
         }
     }
 
@@ -80,21 +80,28 @@ void Vista::setup(
     const NumNivelOpcional &num_nivel            //
 ) {
     this->grid = grid;
-    botones = std::make_shared<BotonesApp>(font, tp_disponibles);
-    paneles = std::make_shared<Paneles>(tp_disponibles, font);
+    paneles = std::make_shared<Paneles>(tp_disponibles);
+    auto panel_encargar = paneles->get_panel_encargar();
+    auto &botones_encargar = panel_encargar->encargar;
+    botones =
+        std::make_shared<BotonesApp>(font, tp_disponibles, botones_encargar);
     LOG(info) << "Inicializando etiquetas" << std::endl;
-    etiquetas = std::make_shared<EtiquetasGenerales>(font);
+    etiquetas = std::make_shared<EtiquetasGenerales>();
     etiquetas->setup(
         instrucciones, //
         num_nivel,     //
         tp_disponibles //
     );
+    add_child(botones);
+    add_child(paneles);
+    add_child(etiquetas);
+
     LOG(info) << "Etiquetas inicializadas" << std::endl;
     // Mostrar botones iniciales
-    botones->generales.alternar_grid.visible = MODO_DESARROLLO;
-    botones->generales.reiniciar.visible = true;
-    botones->generales.salir.visible = true;
-    botones->empezar.visible = true;
+    botones->generales.alternar_grid->visible = MODO_DESARROLLO;
+    botones->generales.reiniciar->visible = true;
+    botones->generales.salir->visible = true;
+    botones->empezar->visible = true;
 }
 
 void Vista::set_presentacion_vista(
@@ -124,7 +131,7 @@ void Vista::actualizar_interfaz_grafico(
 }
 
 void Vista::mostrar_elementos_fase_activa() {
-    botones->empezar.visible = false;
+    botones->empezar->visible = false;
     botones->mostrar_botones_nivel(true);
     paneles->visible = true;
 }
@@ -140,7 +147,7 @@ void Vista::activar_botones_condicionalmente(
         botones->despachar, activacion_botones
     );
     for (auto &[_, boton] : botones->encargar) {
-        boton.activacion_condicional(activacion_botones.encargar);
+        boton->activacion_condicional(activacion_botones.encargar);
     }
 }
 

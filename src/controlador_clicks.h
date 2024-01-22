@@ -3,21 +3,21 @@
 #include "modelo_amplio/comandos.h"
 #include <SFML/System/Vector2.hpp>
 #include <functional>
+#include <memory>
 #include <optional>
 
 enum class FaseNivel;
-struct BotonConTexto;
+class BotonConTexto;
 class BotonesApp;
-struct ModeloAmplio;
-struct Globales;
-struct RealizadorBase;
+class Globales;
 
-struct ControladorClicks {
+class ControladorClicks {
   private:
     std::optional<Comando> genera_comando(
-        const std::function<bool(const BotonConTexto &boton)> &pulsado, //
-        const std::shared_ptr<const BotonesApp> &,                      //
-        const FaseNivel fase_actual                                     //
+        const std::function<bool(const std::shared_ptr<BotonConTexto> boton)>
+            &pulsado,                              //
+        const std::shared_ptr<const BotonesApp> &, //
+        const FaseNivel fase_actual                //
     );
 
   public:

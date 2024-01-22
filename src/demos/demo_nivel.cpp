@@ -7,7 +7,6 @@
 #include <iostream>
 
 int demo_nivel(NumNivelOpcional numero_nivel) {
-
     std::cout << "DEMO NIVEL " << numero_nivel.to_string() << std::endl;
     int indice_nivel = numero_nivel.get_valor() - 1;
     const auto globales = std::make_shared<Globales>();

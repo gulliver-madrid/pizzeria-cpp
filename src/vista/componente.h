@@ -7,7 +7,7 @@
 #include <vector>
 
 class Componente;
-using ComponentePtr = std::shared_ptr<Componente>;
+using ComponenteSharedPtr = std::shared_ptr<Componente>;
 
 ///////////////////////////////////////////
 // Componente
@@ -15,12 +15,13 @@ using ComponentePtr = std::shared_ptr<Componente>;
 
 class Componente : public sf::Drawable {
   protected:
-    std::vector<ComponentePtr> children;
+    std::vector<ComponenteSharedPtr> children;
 
   public:
     virtual ~Componente() = default;
-    virtual void add_child(ComponentePtr child);
-    std::vector<ComponentePtr> get_children() const;
+    virtual void add_child(ComponenteSharedPtr child);
+    virtual void remove_child(ComponenteSharedPtr child);
+    std::vector<ComponenteSharedPtr> get_children() const;
 };
 
 ///////////////////////////////////////////
@@ -29,6 +30,6 @@ class Componente : public sf::Drawable {
 
 class ComponenteConFont : public Componente, public ObjetoConFont {
   public:
-    virtual void add_child(ComponentePtr child) override;
+    virtual void add_child(ComponenteSharedPtr child) override;
     virtual void set_font(const OptionalFont &new_font) override;
 };

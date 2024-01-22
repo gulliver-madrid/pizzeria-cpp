@@ -1,8 +1,8 @@
 #include "etiquetas.h"
 #include "../basicos_vista.h"
 #include "../cadenas.h"
-#include "../componentes/etiqueta.h"
 #include "../componentes/crear_etiqueta.h"
+#include "../componentes/etiqueta.h"
 #include "../presentacion_vista.h"
 #include "etiquetas_barra_estado.h"
 #include "etiquetas_info.h"
@@ -23,12 +23,13 @@ namespace estilos {
 // EtiquetasGenerales
 //////////////////////////////////////////
 
-EtiquetasGenerales::EtiquetasGenerales(const OptionalFont &font) {
-    set_font(font);
+EtiquetasGenerales::EtiquetasGenerales() {
     etiquetas_pedidos = std::make_shared<EtiquetasPedidos>();
-    info = std::make_unique<EtiquetasInfo>(font);
-    barra_estado = std::make_unique<EtiquetasBarraEstado>(font);
+    info = std::make_shared<EtiquetasInfo>();
+    barra_estado = std::make_shared<EtiquetasBarraEstado>();
     add_child(etiquetas_pedidos);
+    add_child(info);
+    add_child(barra_estado);
 }
 
 EtiquetasGenerales::~EtiquetasGenerales() = default;
@@ -95,5 +96,8 @@ std::shared_ptr<Etiqueta> FabricaEtiquetasTituloPanel::crearEtiquetaTituloPanel(
 ) const {
     const auto posicion = get_posicion_etiqueta_titulo_panel(posicion_panel);
     const auto texto = interpolar_unicode(texto_crudo);
-    return crear_etiqueta(texto, estilos::TITULO_PANEL, font, posicion);
+    return crear_etiqueta(
+        texto, estilos::TITULO_PANEL, posicion,
+        "etiqueta titulo panel " + texto_crudo
+    );
 }

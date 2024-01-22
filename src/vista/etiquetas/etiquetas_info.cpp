@@ -27,17 +27,17 @@ namespace estilos {
 // FabricaEtiquetasInfo
 //////////////////////////////////////////
 
-struct FabricaEtiquetasInfo : public ObjetoConFont {
+struct FabricaEtiquetasInfo {
   private:
     std::shared_ptr<Etiqueta> crear_etiqueta_info(
         const std::string &texto, const EstiloTexto &estilo
     ) const {
         const auto posicion = medidas::POSICION_INSTRUCCIONES_O_RESULTADO;
-        return crear_etiqueta(texto, estilo, font, posicion);
+        return crear_etiqueta(texto, estilo, posicion, "etiqueta info");
     }
 
   public:
-    FabricaEtiquetasInfo(const OptionalFont &font) : ObjetoConFont(font) {}
+    FabricaEtiquetasInfo() {}
     std::shared_ptr<Etiqueta> crear_etiqueta_instrucciones(
         const std::string &plantilla,     //
         const NumNivelOpcional &num_nivel //
@@ -61,17 +61,19 @@ struct FabricaEtiquetasInfo : public ObjetoConFont {
 // EtiquetasInfo
 //////////////////////////////////////////
 
-EtiquetasInfo::EtiquetasInfo(const OptionalFont &font) : ObjetoConFont(font) {}
+EtiquetasInfo::EtiquetasInfo() {}
 
 void EtiquetasInfo::setup(
     const std::string &instr,         //
     const NumNivelOpcional &num_nivel //
 ) {
-    const auto fabrica = FabricaEtiquetasInfo(font);
+    const auto fabrica = FabricaEtiquetasInfo();
     LOG(info) << "Construyendo instrucciones" << std::endl;
     instrucciones = fabrica.crear_etiqueta_instrucciones(instr, num_nivel);
     LOG(info) << "Construyendo etiqueta resultado" << std::endl;
     resultado = fabrica.crear_etiqueta_resultado();
+    add_child(instrucciones);
+    add_child(resultado);
 }
 
 void EtiquetasInfo::set_presentacion_vista(

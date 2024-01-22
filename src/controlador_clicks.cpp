@@ -5,9 +5,10 @@
 #include "vista/botones_app.h"
 
 std::optional<Comando> ControladorClicks::genera_comando(
-    const std::function<bool(const BotonConTexto &boton)> &pulsado, //
-    const std::shared_ptr<const BotonesApp> &botones,               //
-    const FaseNivel fase_actual                                     //
+    const std::function<bool(const std::shared_ptr<BotonConTexto> boton)>
+        &pulsado,                                     //
+    const std::shared_ptr<const BotonesApp> &botones, //
+    const FaseNivel fase_actual                       //
 ) {
     // Fijos
     if (pulsado(botones->generales.salir)) {
@@ -48,9 +49,11 @@ std::optional<Comando> ControladorClicks::procesa_click(
     const FaseNivel fase_actual,                      //
     const sf::Vector2i &mouse_pos                     //
 ) {
-    const auto pulsado = [globales, &mouse_pos](const BotonConTexto &boton) {
-        return globales->detecta_colision(boton, mouse_pos);
-    };
+    const auto pulsado =
+        [globales, &mouse_pos](const std::shared_ptr<BotonConTexto> boton) {
+            auto deteccion = globales->detecta_colision(boton, mouse_pos);
+            return deteccion;
+        };
     std::optional<Comando> comando = genera_comando( //
         pulsado, botones, fase_actual
     );

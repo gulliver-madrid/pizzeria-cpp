@@ -21,8 +21,8 @@ class Etiqueta;
 class EtiquetasBarraEstado;
 class EtiquetasPreparadas;
 class EtiquetasPedidos;
-struct EtiquetasInfo;
-struct Globales;
+class Globales;
+class EtiquetasInfo;
 
 ///////////////////////////////////////////
 // EtiquetasGenerales
@@ -33,11 +33,11 @@ struct EtiquetasGenerales : public ComponenteConFont {
   private:
     // std::shared_ptr<EtiquetasPreparadas> etiquetas_preparadas;
     std::shared_ptr<EtiquetasPedidos> etiquetas_pedidos;
-    std::unique_ptr<EtiquetasInfo> info;
-    std::unique_ptr<EtiquetasBarraEstado> barra_estado;
+    std::shared_ptr<EtiquetasInfo> info;
+    std::shared_ptr<EtiquetasBarraEstado> barra_estado;
 
   public:
-    EtiquetasGenerales(const OptionalFont &);
+    EtiquetasGenerales();
     EtiquetasGenerales(const EtiquetasGenerales &) = delete;
     EtiquetasGenerales &operator=(const EtiquetasGenerales &) = delete;
     ~EtiquetasGenerales();

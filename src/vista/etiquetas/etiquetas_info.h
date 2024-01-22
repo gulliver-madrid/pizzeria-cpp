@@ -2,6 +2,7 @@
 
 #include "../../shared/font.h"
 #include "../../shared/num_nivel.h"
+#include "../componente.h"
 #include "../presentacion_vista.h"
 #include <SFML/Graphics/Drawable.hpp>
 #include <memory>
@@ -9,7 +10,7 @@
 
 class Etiqueta;
 
-struct EtiquetasInfo : public ObjetoConFont, public sf::Drawable {
+class EtiquetasInfo : public ComponenteConFont {
   private:
     std::shared_ptr<PresentacionVista> presentacion_vista;
 
@@ -17,7 +18,7 @@ struct EtiquetasInfo : public ObjetoConFont, public sf::Drawable {
     std::shared_ptr<Etiqueta> instrucciones;
     std::shared_ptr<Etiqueta> resultado;
 
-    EtiquetasInfo(const OptionalFont &);
+    EtiquetasInfo();
     void setup(
         const std::string &instr, //
         const NumNivelOpcional &  //

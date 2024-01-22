@@ -4,7 +4,8 @@
 #include "datos_modelo_interno.h"
 #include "encargos.h"
 
-struct ModeloInterno {
+class ModeloInterno {
+  public:
     GestorTiempoJuego gestor_tiempo;
     modelo::ControlPizzas control_pizzas;
     Encargos encargos;

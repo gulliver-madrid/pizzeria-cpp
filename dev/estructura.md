@@ -246,10 +246,21 @@
     - vista/basicos_vista.h
     - vista/componentes/botones.h
     - vista/componentes/crear_etiqueta.h
+    - vista/datos_botones.h
 
 - vista/botones_app.h:
     - modelo/dominio.h
+    - vista/componente.h
     - vista/componentes/boton_con_texto.h
+    - vista/vista_shared.h
+
+- vista/botones_encargar.h:
+    - modelo/dominio.h
+    - templates/helpers.h
+    - vista/basicos_vista.h
+    - vista/componentes/boton_con_texto.h
+    - vista/componentes/botones.h
+    - vista/datos_botones.h
 
 - vista/cadenas.cpp:
     - vista/cadenas.h
@@ -268,6 +279,7 @@
 
 - vista/componentes/barra_progreso.h:
     - shared/font.h
+    - vista/componente.h
 
 - vista/componentes/boton_con_texto.cpp:
     - vista/componentes/boton_con_texto.h
@@ -276,6 +288,7 @@
     - vista/componentes/etiqueta.h
 
 - vista/componentes/boton_con_texto.h:
+    - vista/componente.h
     - vista/componentes/boton_data.h
     - vista/componentes/componente_old_style.h
 
@@ -288,6 +301,7 @@
 
 - vista/componentes/botones.h:
     - vista/componentes/boton_con_texto.h
+    - vista/vista_shared.h
 
 - vista/componentes/crear_etiqueta.cpp:
     - vista/componentes/crear_etiqueta.h
@@ -298,6 +312,7 @@
 
 - vista/componentes/etiqueta.cpp:
     - vista/componentes/etiqueta.h
+    - juego_assert.h
     - shared/font.h
 
 - vista/componentes/etiqueta.h:
@@ -346,6 +361,7 @@
 
 - vista/etiquetas/etiquetas_barra_estado.h:
     - shared/font.h
+    - vista/componente.h
 
 - vista/etiquetas/etiquetas_info.cpp:
     - vista/etiquetas/etiquetas_info.h
@@ -358,6 +374,7 @@
 - vista/etiquetas/etiquetas_info.h:
     - shared/font.h
     - shared/num_nivel.h
+    - vista/componente.h
     - vista/presentacion_vista.h
 
 - vista/etiquetas/etiquetas_pedidos.cpp:
@@ -406,6 +423,7 @@
     - shared/log_init.h
     - templates/dibujar_elementos.h
     - vista/basicos_vista.h
+    - vista/botones_encargar.h
     - vista/componentes/etiqueta.h
     - vista/etiquetas/etiquetas.h
 

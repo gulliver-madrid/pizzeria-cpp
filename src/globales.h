@@ -5,15 +5,16 @@
 #include <SFML/Audio/SoundBuffer.hpp>
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <memory>
 #include <optional>
 
 namespace sf {
     class Sound;
 }
 
-struct BotonConTexto;
+class BotonConTexto;
 
-struct Globales {
+class Globales {
   private:
     std::map<int, sf::Sound> sounds;
 
@@ -24,6 +25,6 @@ struct Globales {
     std::optional<sf::SoundBuffer> button_click_buffer;
     sf::Music music;
     bool detecta_colision(
-        const BotonConTexto &boton, const sf::Vector2i &mouse_pos //
+        std::shared_ptr<BotonConTexto> boton, const sf::Vector2i &mouse_pos
     );
 };

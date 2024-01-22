@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../componente.h"
 #include "boton_data.h"
 #include "componente_old_style.h"
 #include <SFML/Graphics/RectangleShape.hpp>
@@ -14,13 +15,16 @@ namespace sf {
 
 struct Posicionamiento;
 
-class BotonConTexto : public ComponenteOldStyle {
+class BotonConTexto : public ComponenteOldStyle, public ComponenteConFont {
   private:
     static size_t _proximo_id;
     std::optional<size_t> _id;
 
     sf::RectangleShape _forma;
     std::shared_ptr<Etiqueta> _etiqueta;
+
+    // TODO: ver si es necesario
+    sf::Color _color_fondo = sf::Color::White;
 
     std::unique_ptr<Posicionamiento> posicionamiento;
     // Solo puede modificarse la escala en la construccion
@@ -30,18 +34,20 @@ class BotonConTexto : public ComponenteOldStyle {
     BotonConTexto();
     void _asignar_id();
     void _actualizar_posicion_absoluta();
+    void resize();
+    int BotonConTexto::get_margen_ambos_lados();
 
   public:
     bool visible = false;
     BotonConTexto(
-        const BotonDataConFont &boton_data, //
-        double escala = 1                   //
+        const BotonData boton_data, //
+        double escala = 1           //
     );
     BotonConTexto(
-        const BotonDataConFont &boton_data, //
-        const sf::Vector2f &posicion,       //
-        Align align = Align::Left,          //
-        double escala = 1                   //
+        const BotonData boton_data,   //
+        const sf::Vector2f &posicion, //
+        Align align = Align::Left,    //
+        double escala = 1             //
     );
 
     // Eliminamos operadores de copia y asignacion
@@ -71,11 +77,12 @@ class BotonConTexto : public ComponenteOldStyle {
         return _forma.getGlobalBounds();
     }
     void actualizar();
+    virtual void set_font(const OptionalFont &new_font) override;
     virtual void draw(
         sf::RenderTarget &target, //
         sf::RenderStates states   //
     ) const override;
-
+    // TODO: reorganizar miembros
   private:
     std::optional<sf::Color> colorBotonActivo;
 };

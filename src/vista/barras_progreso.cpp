@@ -7,11 +7,11 @@ namespace medidas {
 } // namespace medidas
 
 /* Crea y actualiza las barras de progreso */
-std::vector<BarraProgresoConNombre> crear_barras_progreso(
+std::vector<std::shared_ptr<BarraProgresoConNombre>> crear_barras_progreso(
     const VistaPreparacionPizzas &vista_preparacion_pizzas,
     const sf::Vector2f &pos_panel, const OptionalFont &font
 ) {
-    std::vector<BarraProgresoConNombre> vect{};
+    std::vector<std::shared_ptr<BarraProgresoConNombre>> vect{};
     const int pos_x = pos_panel.x + medidas::MARGEN_IZQ_ETIQUETAS;
     const int pos_y_inicial = pos_panel.y + medidas::FILA_CONTENIDO_PANEL;
     const int ancho = 300;
@@ -28,14 +28,13 @@ std::vector<BarraProgresoConNombre> crear_barras_progreso(
             colores::barra_progreso::RELLENO,
             colores::barra_progreso::TEXTO,
         };
-        BarraProgresoConNombre bpn(
+        auto bpn = std::make_shared<BarraProgresoConNombre>(
             dimensiones,                          //
             vista_preparacion_pizza.nombre_pizza, //
             posicion,                             //
-            bpn_colors,                           //
-            font                                  //
+            bpn_colors                            //
         );
-        bpn.actualizar_porcentaje(vista_preparacion_pizza.porcentaje);
+        bpn->actualizar_porcentaje(vista_preparacion_pizza.porcentaje);
         vect.push_back(bpn);
         i++;
     }

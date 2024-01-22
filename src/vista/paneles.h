@@ -8,6 +8,7 @@
 #include <memory>
 #include <vector>
 
+class BotonConTexto;
 class Etiqueta;
 enum class IndicePanel;
 
@@ -15,7 +16,7 @@ enum class IndicePanel;
 // Panel
 /////////////////////////////////////////
 
-struct Panel : public sf::Drawable {
+struct Panel : public ComponenteConFont {
     IndicePanel indice;
     sf::RectangleShape forma;
     std::shared_ptr<Etiqueta> etiqueta_titulo;
@@ -27,15 +28,30 @@ struct Panel : public sf::Drawable {
 };
 
 ///////////////////////////////////////////
+// PanelEncargar
+/////////////////////////////////////////
+
+struct PanelEncargar : public Panel {
+    TipoPizzaToBoton encargar;
+    PanelEncargar(
+        IndicePanel indice, std::shared_ptr<Etiqueta> etiqueta,
+        const dominio::TiposDePizza &tp_disponibles
+    );
+    void actualizar(const VistaPreparacionPizzas &vista_preparacion //
+    );
+    virtual void draw(
+        sf::RenderTarget &target, //
+        sf::RenderStates states   //
+    ) const override;
+};
+
+///////////////////////////////////////////
 // PanelEnPreparacion
 /////////////////////////////////////////
 
-struct PanelEnPreparacion : public Panel, public ObjetoConFont {
-    std::vector<BarraProgresoConNombre> barras_progreso_con_nombres;
-    PanelEnPreparacion(
-        IndicePanel indice, std::shared_ptr<Etiqueta> etiqueta,
-        const OptionalFont &font
-    );
+struct PanelEnPreparacion : public Panel {
+    std::vector<std::shared_ptr<BarraProgresoConNombre>> barras_progreso_con_nombres;
+    PanelEnPreparacion(IndicePanel indice, std::shared_ptr<Etiqueta> etiqueta);
     void actualizar(const VistaPreparacionPizzas &vista_preparacion //
     );
     virtual void draw(
@@ -48,7 +64,7 @@ struct PanelEnPreparacion : public Panel, public ObjetoConFont {
 // PanelPreparadas
 /////////////////////////////////////////
 
-struct PanelPreparadas : public Panel, public ComponenteConFont {
+struct PanelPreparadas : public Panel {
     std::shared_ptr<EtiquetasPreparadas> etiquetas_preparadas;
     PanelPreparadas::PanelPreparadas(
         IndicePanel indice, std::shared_ptr<Etiqueta> etiqueta
@@ -76,17 +92,16 @@ class PanelesObservables {
 // Paneles
 /////////////////////////////////////////
 
-class Paneles : public ObjetoConFont,
-                public sf::Drawable,
-                public PanelesObservables {
+class Paneles : public ComponenteConFont, public PanelesObservables {
   private:
     std::map<IndicePanel, std::shared_ptr<Panel>> _paneles;
 
   public:
     bool visible = false;
 
-    Paneles(const dominio::TiposDePizza &tp_disponibles, const OptionalFont &);
+    Paneles(const dominio::TiposDePizza &tp_disponibles);
 
+    std::shared_ptr<PanelEncargar> get_panel_encargar();
     void Paneles::actualizar(                            //
         const VistaPreparacionPizzas &vista_preparacion, //
         const PizzasToStrings &vista_preparadas          //

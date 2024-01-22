@@ -20,11 +20,12 @@ void EtiquetasPreparadas::setup(const dominio::TiposDePizza &tp_disponibles) {
     FabricaEtiquetasPreparadas fabrica(font);
     int i = 0;
     for (auto tp : tp_disponibles) {
-        etiquetas_preparadas.emplace(
-            tp, fabrica.crearEtiquetaPizzasPreparadas(i)
-        );
+        auto etiqueta = fabrica.crearEtiquetaPizzasPreparadas(i);
+        etiquetas_preparadas.emplace(tp, etiqueta);
+        add_child(etiqueta);
         i++;
     }
+
     LOG(debug) << "etiquetas_preparadas: " << tp_disponibles.size();
 };
 

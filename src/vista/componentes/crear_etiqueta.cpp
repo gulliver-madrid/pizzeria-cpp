@@ -6,30 +6,30 @@
 std::shared_ptr<Etiqueta> crear_etiqueta(
     const std::string &texto, //
     int tamano_fuente,        //
-    const OptionalFont &font  //
+    const std::string nombre  //
 ) {
-    return std::make_shared<Etiqueta>(texto, tamano_fuente, font);
+    return std::make_shared<Etiqueta>(texto, tamano_fuente, nombre);
 }
 
 std::shared_ptr<Etiqueta> crear_etiqueta(
-    const std::string &texto,    //
-    int tamano_fuente,           //
-    const sf::Color &color,      //
-    const OptionalFont &font,    //
-    const sf::Vector2f &posicion //
+    const std::string &texto,     //
+    int tamano_fuente,            //
+    const sf::Color &color,       //
+    const sf::Vector2f &posicion, //
+    const std::string nombre      //
 
 ) {
     return std::make_shared<Etiqueta>(
-        texto, tamano_fuente, color, font, posicion
+        texto, tamano_fuente, color, posicion, nombre
     );
 }
 
 /* Sobrecarga para usar EstiloTexto */
 std::shared_ptr<Etiqueta> crear_etiqueta(
-    const std::string &texto,    //
-    const EstiloTexto &estilo,   //
-    const OptionalFont &font,    //
-    const sf::Vector2f &posicion //
+    const std::string &texto,     //
+    const EstiloTexto &estilo,    //
+    const sf::Vector2f &posicion, //
+    const std::string nombre      //
 ) {
-    return std::make_shared<Etiqueta>(texto, estilo, font, posicion);
+    return std::make_shared<Etiqueta>(texto, estilo, posicion, nombre);
 }

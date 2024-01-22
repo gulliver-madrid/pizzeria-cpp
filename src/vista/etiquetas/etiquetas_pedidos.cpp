@@ -5,8 +5,8 @@
 #include "../../templates/dibujar_elementos.h"
 #include "../../templates/helpers.h"
 #include "../basicos_vista.h"
-#include "../componentes/etiqueta.h"
 #include "../componentes/crear_etiqueta.h"
+#include "../componentes/etiqueta.h"
 #include "../presentador.h"
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <cassert>
@@ -46,7 +46,9 @@ namespace {
         std::string texto, const OptionalFont &font, size_t num_items //
     ) {
         static const auto tamano_fuente = 22;
-        const auto etiqueta = crear_etiqueta(texto, tamano_fuente, font);
+        const auto etiqueta =
+            crear_etiqueta(texto, tamano_fuente, "etiqueta pedidos");
+        etiqueta->set_font(font);
         const auto shape = build_card_pedido_shape(num_items);
         return {etiqueta, shape};
     }

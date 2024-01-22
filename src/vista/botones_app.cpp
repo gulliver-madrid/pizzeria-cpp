@@ -4,37 +4,15 @@
 #include "basicos_vista.h"
 #include "componentes/botones.h"
 #include "componentes/crear_etiqueta.h"
+#include "datos_botones.h"
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <algorithm>
 #include <cassert>
+#include <iostream>
 #include <iterator> // para back_inserter
+#include <memory>
 
-using std::move;
 using std::vector;
-
-namespace colores {
-    namespace botones_encargar {
-        const auto FONDO = sf::Color::Green;
-        const auto TEXTO = sf::Color::Black;
-    } // namespace botones_encargar
-    namespace botones_despachar {
-        const auto FONDO = sf::Color::Green;
-        const auto TEXTO = sf::Color::Black;
-    } // namespace botones_despachar
-} // namespace colores
-
-namespace medidas {
-    const auto POSICION_BOTON_EMPEZAR = sf::Vector2f(500, 450);
-    const auto DIF_VERTICAL_BOTONES_ENCARGAR = 80;
-} // namespace medidas
-
-///////////////////////////////////////////
-// BotonesGenerales
-//////////////////////////////////////////
-
-const vector<BotonConTexto *> BotonesGenerales::obtener_todos() {
-    return {&alternar_grid, &reiniciar, &salir};
-}
 
 namespace {
 
@@ -52,68 +30,6 @@ namespace {
     const BotonData boton_data_empezar{
         "Empezar", sf::Color::Green, sf::Color::Black
     };
-
-    vector<BotonDataConFont> anadir_fuente( //
-        const vector<BotonData> &datos, const OptionalFont &font
-    ) {
-        vector<BotonDataConFont> result;
-        transform(
-            datos.begin(), datos.end(), std::back_inserter(result),
-            [&font](BotonData data) -> BotonDataConFont { //
-                return {data, font};
-            }
-        );
-        return result;
-    }
-
-    /**
-     * Crea y posiciona los botones asociados con la accion "encargar".
-     * @param font: Fuente a utilizar para el texto del boton.
-     * @param tp_disponibles: Tipos de pizza disponibles para encargar.
-     * @return TipoPizzaToBoton: Un mapa que asocia cada TipoPizza con un
-     * BotonConTexto.
-     */
-    TipoPizzaToBoton _crear_botones_encargar(
-        const OptionalFont &font,                   //
-        const dominio::TiposDePizza &tp_disponibles //
-    ) {
-        // Constantes para definir la posicion de cada boton
-        const auto rect_panel = basicos_vista::obtener_rect_panel( //
-            IndicePanel::PANEL_ENCARGAR
-        );
-        const sf::Vector2f pos_panel = rect_panel.getPosition();
-        const auto pos_inicial_relativa_al_panel = sf::Vector2f(
-            medidas::MARGEN_IZQ_ETIQUETAS, medidas::FILA_CONTENIDO_PANEL
-        );
-
-        // Lambda para crear boton data
-        const auto crear_boton_data = [](dominio::TipoPizza tp) {
-            assert(has_key(tipo_pizza_to_string, tp));
-            const std::string pizza_str = tipo_pizza_to_string.at(tp);
-            return BotonData{
-                pizza_str,                        //
-                colores::botones_encargar::FONDO, //
-                colores::botones_encargar::TEXTO  //
-            };
-        };
-
-        // Crea los botones
-        TipoPizzaToBoton botones;
-        vector<BotonConTexto *> ordenados;
-        for (auto tp : tp_disponibles) {
-            const BotonData boton_data = crear_boton_data(tp);
-            botones.emplace(tp, BotonConTexto({boton_data, font}));
-            botones.at(tp).establecer_contenedor(rect_panel);
-            ordenados.push_back(&botones.at(tp));
-        }
-
-        // Posiciona los botones
-        const int dif_vertical = medidas::DIF_VERTICAL_BOTONES_ENCARGAR;
-        colocar_botones_en_vertical(
-            ordenados, pos_inicial_relativa_al_panel, dif_vertical
-        );
-        return botones;
-    }
 
     TipoPizzaToBoton _crear_botones_despachar(
         const OptionalFont &font,                   //
@@ -134,18 +50,15 @@ namespace {
         );
 
         // Crea los botones
-        vector<BotonConTexto *> ordenados;
+        vector<std::shared_ptr<BotonConTexto>> ordenados;
         for (auto tp : tp_disponibles) {
-            botones.emplace(
-                tp, //
-                BotonConTexto(
-                    {boton_data_botones_despachar, font}, //
-                    escala                                //
-                )
+            auto boton = std::make_shared<BotonConTexto>(
+                boton_data_botones_despachar, escala
             );
+            botones.insert(std::make_pair(tp, boton));
             assert(has_key(botones, tp));
-            botones.at(tp).establecer_contenedor(rect_panel);
-            ordenados.push_back(&botones.at(tp));
+            botones.at(tp)->establecer_contenedor(rect_panel);
+            ordenados.push_back(botones.at(tp));
         }
 
         // Posiciona los botones
@@ -170,28 +83,24 @@ namespace {
         const OptionalFont &font
     ) {
         const auto pos_derecha = _obtener_pos_dcha_botones_generales();
-        const auto datos_botones = anadir_fuente( //
-            datos_botones_generales, font
-        );
-
         auto botones = crear_botones_alineados_derecha(
             pos_derecha,                                           //
-            datos_botones,                                         //
+            datos_botones_generales,                               //
             sf::FloatRect(),                                       //
             medidas::SEPARACION_HORIZONTAL_ENTRE_BOTONES_GENERALES //
         );
 
         assert(botones.size() == 3);
         return {
-            move(botones.at(2)),
-            move(botones.at(1)),
-            move(botones.at(0)),
+            botones.at(2),
+            botones.at(1),
+            botones.at(0),
         };
     }
 
-    BotonConTexto _crear_boton_empezar(const OptionalFont &font) {
-        return BotonConTexto(
-            {boton_data_empezar, font},     //
+    std::shared_ptr<BotonConTexto> _crear_boton_empezar() {
+        return std::make_shared<BotonConTexto>(
+            boton_data_empezar,             //
             medidas::POSICION_BOTON_EMPEZAR //
         );
     }
@@ -199,33 +108,64 @@ namespace {
 } // namespace
 
 ///////////////////////////////////////////
+// BotonesGenerales
+//////////////////////////////////////////
+
+Botones BotonesGenerales::obtener_todos() const {
+    return {alternar_grid, reiniciar, salir};
+}
+void BotonesGenerales::alinear() {
+    // TODO: eliminar duplicacion con otro metodo
+    const auto pos_derecha = _obtener_pos_dcha_botones_generales();
+    const auto separacion =
+        medidas::SEPARACION_HORIZONTAL_ENTRE_BOTONES_GENERALES;
+    alinear_botones_derecha(
+        {alternar_grid, reiniciar, salir}, pos_derecha, separacion
+    );
+}
+
+///////////////////////////////////////////
 // BotonesApp
 //////////////////////////////////////////
 
 /* Establece la variable miembro 'todos', que agrupa todos los botones */
 void BotonesApp::_establecer_todos() {
-    todos = {&empezar};
+    todos = {empezar};
     const int num_fijos = todos.size();
-    for (auto &boton : generales.obtener_todos()) {
+    for (auto boton : generales.obtener_todos()) {
         todos.push_back(boton);
     }
-    for (auto &[_, boton] : despachar) {
-        todos.push_back(&boton);
+    for (auto [_, boton] : despachar) {
+        // TODO: usar log en vez de iostream
+        std::cout << "Anadiendo boton despachar con id " << boton->get_id()
+                  << std::endl;
+        todos.push_back(boton);
     }
-    for (auto &[_, boton] : encargar) {
-        todos.push_back(&boton);
+    for (auto [_, boton] : encargar) {
+        std::cout << "Anadiendo boton encargar con id " << boton->get_id()
+                  << std::endl;
+        todos.push_back(boton);
     }
 }
 
 /* Crea todos los botones */
 BotonesApp::BotonesApp(
-    const OptionalFont &font, const dominio::TiposDePizza &tp_disponibles
+    const OptionalFont &font, const dominio::TiposDePizza &tp_disponibles,
+    TipoPizzaToBoton &botones_encargar
 )
-    : empezar(_crear_boton_empezar(font)),
+    : empezar(_crear_boton_empezar()),
       generales(_crear_botones_generales(font)),
-      encargar(_crear_botones_encargar(font, tp_disponibles)),
-      despachar(_crear_botones_despachar(font, tp_disponibles)) {
+      despachar(_crear_botones_despachar(font, tp_disponibles)),
+      encargar(botones_encargar) {
     _establecer_todos();
+    for (auto btn : todos) {
+        add_child(btn);
+    }
+}
+
+void BotonesApp::set_font(const OptionalFont &new_font) {
+    ComponenteConFont::set_font(new_font);
+    generales.alinear();
 }
 
 void BotonesApp::draw(
@@ -240,10 +180,12 @@ void BotonesApp::draw(
 }
 
 void BotonesApp::mostrar_botones_nivel(bool nuevo_valor) {
+    // TODO:ver quien es el responsable de activar los botones encargar, si
+    // BotoneApp o su panel
     for (auto &[_, boton] : despachar) {
-        boton.visible = nuevo_valor;
+        boton->visible = nuevo_valor;
     }
     for (auto &[_, boton] : encargar) {
-        boton.visible = nuevo_valor;
+        boton->visible = nuevo_valor;
     }
 }

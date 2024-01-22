@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../../shared/font.h"
+#include "../componente.h"
 #include <SFML/Graphics/Drawable.hpp>
 
 namespace sf {
@@ -11,13 +12,13 @@ namespace sf {
 
 class Etiqueta;
 
-class EtiquetasBarraEstado : public ObjetoConFont, public sf::Drawable {
+class EtiquetasBarraEstado : public ComponenteConFont {
 
   private:
     std::shared_ptr<Etiqueta> etiqueta;
 
   public:
-    EtiquetasBarraEstado(const OptionalFont &);
+    EtiquetasBarraEstado();
     void actualizar(const sf::Time &, const sf::Time &);
     virtual void draw(
         sf::RenderTarget &target, //

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../../shared/font.h"
+#include "../componente.h"
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/System/Vector2.hpp>
@@ -52,15 +53,14 @@ struct BPNColors {
     sf::Color color_texto;
 };
 
-struct BarraProgresoConNombre : public sf::Drawable {
+class BarraProgresoConNombre : public ComponenteConFont {
   private:
     std::shared_ptr<Etiqueta> etiqueta;
     BarraProgreso bp;
     static std::shared_ptr<Etiqueta> _crear_etiqueta(
         const std::string &texto,           //
         const sf::Vector2f &posicion_barra, //
-        const sf::Color &color_texto,       //
-        const OptionalFont &                //
+        const sf::Color &color_texto        //
     );
 
   public:
@@ -68,8 +68,7 @@ struct BarraProgresoConNombre : public sf::Drawable {
         const sf::Vector2f &dimensiones, //
         const std::string &texto,        //
         const sf::Vector2f &posicion,    //
-        const BPNColors &bpn_colors,     //
-        const OptionalFont &             //
+        const BPNColors &bpn_colors      //
     );
     void actualizar_porcentaje(int porcentaje);
     virtual void draw(

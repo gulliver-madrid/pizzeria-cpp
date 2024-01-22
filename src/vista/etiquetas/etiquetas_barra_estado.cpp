@@ -4,8 +4,8 @@
 #include "../../tiempo.h"
 #include "../basicos_vista.h"
 #include "../cadenas.h"
-#include "../componentes/etiqueta.h"
 #include "../componentes/crear_etiqueta.h"
+#include "../componentes/etiqueta.h"
 #include "../presentador.h"
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Text.hpp>
@@ -13,8 +13,7 @@
 
 const auto crear_texto = presentador::crea_texto_etiqueta_barra_estado;
 
-EtiquetasBarraEstado::EtiquetasBarraEstado(const OptionalFont &font)
-    : ObjetoConFont(font) {
+EtiquetasBarraEstado::EtiquetasBarraEstado() {
     const EstiloTexto estilo = {
         medidas::TAMANO_TEXTO_GRANDE, sf::Color::Yellow
     };
@@ -22,7 +21,10 @@ EtiquetasBarraEstado::EtiquetasBarraEstado(const OptionalFont &font)
     const sf::Vector2f posicion = {
         medidas::MARGEN_IZQ_PANELES, medidas::FILA_BARRA_ESTADO
     };
-    etiqueta = crear_etiqueta(texto_inicial, estilo, font, posicion);
+    etiqueta = crear_etiqueta(
+        texto_inicial, estilo, posicion, "etiqueta barra estado"
+    );
+    add_child(etiqueta);
 }
 
 void EtiquetasBarraEstado::actualizar(

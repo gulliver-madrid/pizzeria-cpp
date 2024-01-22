@@ -4,6 +4,6 @@
 
 #include <memory>
 
-struct Globales;
+class Globales;
 
 bool setup_juego(std::shared_ptr<Globales>);
