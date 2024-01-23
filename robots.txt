@@ -1,0 +1,15 @@
+# The Common Crawl dataset. Original source for GPT and others.
+User-agent: CCBot
+Disallow: /
+
+# GPTBot is OpenAI's web crawler
+User-agent: GPTBot
+Disallow: /
+
+# ChatGPT-User is used by plugins in ChatGPT
+User-agent: ChatGPT-User
+Disallow: /
+
+# Google's Bard and Vertex AI generative APIs
+User-agent: Google-Extended
+Disallow: /
