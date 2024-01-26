@@ -1,5 +1,6 @@
 #include "botones_app.h"
 #include "../modelo/dominio.h"
+#include "../shared/log_init.h"
 #include "../templates/helpers.h"
 #include "basicos_vista.h"
 #include "componentes/botones.h"
@@ -8,7 +9,6 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <algorithm>
 #include <cassert>
-#include <iostream>
 #include <iterator> // para back_inserter
 #include <memory>
 
@@ -136,13 +136,12 @@ void BotonesApp::_establecer_todos() {
         todos.push_back(boton);
     }
     for (auto [_, boton] : despachar) {
-        // TODO: usar log en vez de iostream
-        std::cout << "Anadiendo boton despachar con id " << boton->get_id()
+        LOG(info) << "Anadiendo boton despachar con id " << boton->get_id()
                   << std::endl;
         todos.push_back(boton);
     }
     for (auto [_, boton] : encargar) {
-        std::cout << "Anadiendo boton encargar con id " << boton->get_id()
+        LOG(info) << "Anadiendo boton encargar con id " << boton->get_id()
                   << std::endl;
         todos.push_back(boton);
     }

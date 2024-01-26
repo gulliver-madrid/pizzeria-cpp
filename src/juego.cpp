@@ -3,17 +3,17 @@
 #include "globales.h"
 #include "nivel.h"
 #include "setup_juego.h"
+#include "shared/log_init.h"
 #include "textos.h"
 #include "vista/grid.h"
 #include <cassert>
-#include <iostream>
 #include <unordered_set>
 
 int juego() {
     const auto globales = std::make_shared<Globales>();
     const auto grid = std::make_shared<Grid>();
     bool resultado_setup = setup_juego(globales);
-    std::cout << "resultado_setup: " << resultado_setup << std::endl;
+    LOG(info) << "resultado_setup: " << resultado_setup << std::endl;
     if (!resultado_setup)
         return EXIT_FAILURE;
 
@@ -24,8 +24,7 @@ int juego() {
             auto num_nivel = NumNivelOpcional(i + 1);
             auto datos_nivel = std::make_shared<DatosNivel>(datos_niveles[i]);
             assert(datos_nivel);
-            std::cout << "a punto de crear Nivel " << num_nivel.to_string()
-                      << std::endl;
+            LOG(info) << "A punto de crear Nivel " << num_nivel.to_string();
             Nivel nivel(globales, datos_nivel, num_nivel, grid, es_el_ultimo);
 
             auto res = nivel.ejecutar();

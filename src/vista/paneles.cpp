@@ -6,7 +6,6 @@
 #include "componentes/etiqueta.h"
 #include "etiquetas/etiquetas.h"
 #include <cassert>
-#include <iostream>
 
 namespace medidas {
     constexpr int GROSOR_BORDE_PANEL = 3;
@@ -66,7 +65,6 @@ PanelEncargar::PanelEncargar(
     : Panel(indice, etiqueta),
       encargar(_crear_botones_encargar(tp_disponibles)) {
     for (auto [_, btn] : encargar) {
-        std::cout << "Panel encargar anade un boton" << std::endl;
         add_child(btn);
     }
 }
@@ -178,7 +176,6 @@ Paneles::Paneles(const dominio::TiposDePizza &tp_disponibles) {
         } else if (indice == IndicePanel::PANEL_EN_PREPARACION) {
             panel = std::make_shared<PanelEnPreparacion>(indice, titulo);
         } else if (indice == IndicePanel::PANEL_PREPARADAS) {
-            LOG(debug) << "A punto de crear panel preparadas";
             panel = std::make_shared<PanelPreparadas>(indice, titulo);
             auto &panel_preparadas = dynamic_cast<PanelPreparadas &>(*panel);
             LOG(debug) << "A punto de hacer el setup de panel preparadas";
@@ -227,6 +224,5 @@ void Paneles::draw(
 ) const {
     if (!visible)
         return;
-    std::cout << "Dibujando " << _paneles.size() << " paneles" << std::endl;
     dibujar_elementos(target, _paneles);
 }

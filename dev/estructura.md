@@ -41,6 +41,7 @@
     - globales.h
     - nivel.h
     - setup_juego.h
+    - shared/log_init.h
     - textos.h
     - vista/grid.h
 
@@ -243,6 +244,7 @@
 - vista/botones_app.cpp:
     - vista/botones_app.h
     - modelo/dominio.h
+    - shared/log_init.h
     - templates/helpers.h
     - vista/basicos_vista.h
     - vista/componentes/botones.h
