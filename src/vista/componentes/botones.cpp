@@ -36,7 +36,7 @@ void alinear_botones_derecha(
     const sf::Vector2f &posicion_inicial, //
     int separacion                        //
 ) {
-    int next_pos_x = posicion_inicial.x;
+    auto next_pos_x = posicion_inicial.x;
     for (auto &boton : botones) {
         const auto posicion = sf::Vector2f(next_pos_x, posicion_inicial.y);
         boton->establecer_posicion(posicion, Align::Right);

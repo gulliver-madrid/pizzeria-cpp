@@ -38,7 +38,7 @@ void EtiquetasPreparadas::actualizar(const PizzasToStrings &vista_preparadas) {
 
 void EtiquetasPreparadas::draw(
     sf::RenderTarget &target, //
-    sf::RenderStates states   //
+    sf::RenderStates          //
 ) const {
     dibujar_elementos(target, etiquetas_preparadas);
 }

@@ -48,7 +48,7 @@ void Etiqueta::set_font(const OptionalFont &new_font) {
 }
 void Etiqueta::draw(
     sf::RenderTarget &target, //
-    sf::RenderStates states   //
+    sf::RenderStates          //
 ) const {
     juego_assert(font.exists(), "Falta la fuente en " + nombre);
     target.draw(etiqueta);

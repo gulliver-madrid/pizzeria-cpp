@@ -26,10 +26,11 @@ namespace {
 
     /* Builds the shape of TarjetaPedido */
     sf::RectangleShape build_card_pedido_shape(size_t num_items) {
-        const int height = 30 + 26 * (num_items - 1);
+        assert(num_items > 0);
+        const int height = 30 + 26 * (static_cast<int>(num_items) - 1);
         const auto size = sf::Vector2f(
-            250 + top_left_padding,   //
-            height + top_left_padding //
+            static_cast<float>(250 + top_left_padding),   //
+            static_cast<float>(height + top_left_padding) //
         );
         static const auto outline_color = sf::Color::Blue;
         static const auto fill_color = sf::Color(46, 134, 193);
@@ -105,7 +106,7 @@ void TarjetaPedido::set_position(float pos_x, float pos_y) {
 
 void TarjetaPedido::draw(
     sf::RenderTarget &target, //
-    sf::RenderStates states   //
+    sf::RenderStates          //
 ) const {
     target.draw(shape);
     target.draw(*label);
@@ -134,7 +135,7 @@ void EtiquetasPedidos::actualizar(const modelo::Pedidos &pedidos //
 
 void EtiquetasPedidos::draw(
     sf::RenderTarget &target, //
-    sf::RenderStates states   //
+    sf::RenderStates          //
 ) const {
     dibujar_elementos(target, tarjetas_pedidos);
 }

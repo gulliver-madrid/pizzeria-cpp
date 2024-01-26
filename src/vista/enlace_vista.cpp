@@ -39,7 +39,7 @@ ActivacionBotones enlace_vista_impl::obtener_activacion_botones( //
 
     // Activacion botones encargar
     constexpr int maximo = modelo_info::MAXIMO_PIZZAS_EN_PREPARACION;
-    const int en_preparacion = modelo_interno.encargos.total();
+    const auto en_preparacion = modelo_interno.encargos.total();
     assert(en_preparacion <= maximo);
     const bool se_pueden_preparar_mas = en_preparacion < maximo;
     activacion_botones.encargar = se_pueden_preparar_mas;
@@ -65,8 +65,8 @@ EnlaceVista::EnlaceVista() {
     presentacion_vista = std::make_shared<PresentacionVista>();
 }
 
-void EnlaceVista::set_vista(std::shared_ptr<Vista> vista) {
-    this->vista = vista;
+void EnlaceVista::set_vista(std::shared_ptr<Vista> vista_) {
+    vista = vista_;
     vista->set_presentacion_vista(presentacion_vista);
 }
 

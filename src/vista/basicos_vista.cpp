@@ -1,7 +1,7 @@
 #include "basicos_vista.h"
 
 namespace medidas {
-    constexpr int DESPLAZAMIENTO_LATERAL = ANCHO_PANEL + 42;
+    constexpr float DESPLAZAMIENTO_LATERAL = ANCHO_PANEL + (float)42;
 } // namespace medidas
 
 IndicePanel paneles_posibles[] = {
@@ -22,7 +22,7 @@ sf::Vector2f basicos_vista::obtener_posicion_panel( //
     const IndicePanel &indice_panel
 ) {
     const auto pos_x_panel = _obtener_posicion_x_panel(indice_panel);
-    const float pos_y_panel = medidas::MARGEN_TOP_PANELES;
+    const auto pos_y_panel = medidas::MARGEN_TOP_PANELES;
     return {pos_x_panel, pos_y_panel};
 }
 

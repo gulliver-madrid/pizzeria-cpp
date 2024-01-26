@@ -74,12 +74,12 @@ void Vista::_actualizar_vista_paneles(
 Vista::Vista() {}
 
 void Vista::setup(
-    std::shared_ptr<Grid> grid,                  //
+    std::shared_ptr<Grid> grid_,                 //
     const dominio::TiposDePizza &tp_disponibles, //
     const std::string &instrucciones,            //
     const NumNivelOpcional &num_nivel            //
 ) {
-    this->grid = grid;
+    this->grid = grid_;
     paneles = std::make_shared<Paneles>(tp_disponibles);
     auto panel_encargar = paneles->get_panel_encargar();
     auto &botones_encargar = panel_encargar->encargar;
@@ -89,8 +89,7 @@ void Vista::setup(
     etiquetas = std::make_shared<EtiquetasGenerales>();
     etiquetas->setup(
         instrucciones, //
-        num_nivel,     //
-        tp_disponibles //
+        num_nivel      //
     );
     add_child(botones);
     add_child(paneles);
@@ -105,9 +104,9 @@ void Vista::setup(
 }
 
 void Vista::set_presentacion_vista(
-    std::shared_ptr<PresentacionVista> presentacion_vista //
+    std::shared_ptr<PresentacionVista> presentacion_vista_ //
 ) {
-    this->presentacion_vista = presentacion_vista;
+    this->presentacion_vista = presentacion_vista_;
     etiquetas->set_presentacion_vista(presentacion_vista);
 }
 
@@ -157,7 +156,7 @@ std::shared_ptr<PanelesObservables> Vista::get_paneles() const { //
 
 void Vista::draw(
     sf::RenderTarget &target, //
-    sf::RenderStates states   //
+    sf::RenderStates          //
 ) const {
     // Limpia la target y empieza a pintar los componentes visuales
     target.clear(colores::COLOR_FONDO);

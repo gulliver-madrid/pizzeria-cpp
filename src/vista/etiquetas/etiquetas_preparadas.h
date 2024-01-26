@@ -28,10 +28,7 @@ class EtiquetasPreparadas : public ComponenteConFont {
     void setup(const dominio::TiposDePizza &tp_disponibles);
     void actualizar(const PizzasToStrings &vista_preparadas //
     );
-    virtual void draw(
-        sf::RenderTarget &target, //
-        sf::RenderStates states   //
-    ) const override;
+    virtual void draw(sf::RenderTarget &, sf::RenderStates) const override;
 };
 
 ///// EtiquetasPedidos /////

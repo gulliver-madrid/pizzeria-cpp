@@ -29,10 +29,7 @@ class TarjetaPedido : public sf::Drawable {
 
     TarjetaPedido(std::shared_ptr<Etiqueta>, sf::RectangleShape);
     void set_position(float pos_x, float pos_y);
-    virtual void draw(
-        sf::RenderTarget &target, //
-        sf::RenderStates states   //
-    ) const override;
+    virtual void draw(sf::RenderTarget &, sf::RenderStates) const override;
 };
 
 ///////////////////////////////////////////
@@ -54,8 +51,5 @@ class EtiquetasPedidos : public ComponenteConFont {
     EtiquetasPedidos();
     void actualizar(const modelo::Pedidos & //
     );
-    virtual void draw(
-        sf::RenderTarget &target, //
-        sf::RenderStates states   //
-    ) const override;
+    virtual void draw(sf::RenderTarget &, sf::RenderStates) const override;
 };

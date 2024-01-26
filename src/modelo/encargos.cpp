@@ -61,7 +61,7 @@ std::vector<EncargoACocina>::const_iterator Encargos::end() const {
     return _datos.cend();
 }
 
-int Encargos::total() const { // fmt
+size_t Encargos::total() const { //
     return _datos.size();
 }
 

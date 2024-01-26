@@ -36,9 +36,9 @@ namespace {
         const dominio::TiposDePizza &tp_disponibles //
     ) {
         TipoPizzaToBoton botones;
-        const double escala = 0.7;
-        const int dif_vertical = 50;
-        const int pequeno_ajuste = (-5);
+        const auto escala = 0.7f;
+        const float dif_vertical = 50;
+        const float pequeno_ajuste = (-5);
 
         const auto rect_panel = basicos_vista::obtener_rect_panel( //
             IndicePanel::PANEL_PREPARADAS
@@ -46,7 +46,7 @@ namespace {
 
         const auto pos_inicial_relativa_al_panel = sf::Vector2f(
             medidas::MARGEN_IZQ_ETIQUETAS + (medidas::ANCHO_PANEL * 0.55),
-            medidas::FILA_CONTENIDO_PANEL + pequeno_ajuste
+            (medidas::FILA_CONTENIDO_PANEL + pequeno_ajuste)
         );
 
         // Crea los botones
@@ -131,7 +131,7 @@ void BotonesGenerales::alinear() {
 /* Establece la variable miembro 'todos', que agrupa todos los botones */
 void BotonesApp::_establecer_todos() {
     todos = {empezar};
-    const int num_fijos = todos.size();
+    const auto num_fijos = todos.size();
     for (auto boton : generales.obtener_todos()) {
         todos.push_back(boton);
     }
@@ -169,7 +169,7 @@ void BotonesApp::set_font(const OptionalFont &new_font) {
 
 void BotonesApp::draw(
     sf::RenderTarget &target, //
-    sf::RenderStates states   //
+    sf::RenderStates          //
 ) const {
     for (auto boton_ptr : todos) {
         assert(boton_ptr != nullptr);

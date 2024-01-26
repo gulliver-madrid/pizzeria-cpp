@@ -33,8 +33,5 @@ class BotonesApp : public ComponenteConFont {
     );
     void mostrar_botones_nivel(bool nuevo_valor);
     virtual void set_font(const OptionalFont &new_font) override;
-    virtual void draw(
-        sf::RenderTarget &target, //
-        sf::RenderStates states   //
-    ) const override;
+    virtual void draw(sf::RenderTarget &, sf::RenderStates) const override;
 };

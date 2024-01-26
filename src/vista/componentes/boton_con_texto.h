@@ -32,7 +32,7 @@ class BotonConTexto : public ComponenteOldStyle, public ComponenteConFont {
 
     std::unique_ptr<Posicionamiento> posicionamiento;
     // Solo puede modificarse la escala en la construccion
-    double _escala = 1;
+    float _escala = 1;
     bool _activo = true;
     std::optional<sf::Color> colorBotonActivo;
 
@@ -40,19 +40,19 @@ class BotonConTexto : public ComponenteOldStyle, public ComponenteConFont {
     void _asignar_id();
     void _actualizar_posicion_absoluta();
     void _resize();
-    int BotonConTexto::get_margen_ambos_lados();
+    float _get_margen_ambos_lados();
 
   public:
     bool visible = false;
     BotonConTexto(
         const BotonData boton_data, //
-        double escala = 1           //
+        float escala = 1            //
     );
     BotonConTexto(
         const BotonData boton_data,   //
         const sf::Vector2f &posicion, //
         Align align = Align::Left,    //
-        double escala = 1             //
+        float escala = 1              //
     );
 
     // Eliminamos operadores de copia y asignacion
@@ -81,8 +81,5 @@ class BotonConTexto : public ComponenteOldStyle, public ComponenteConFont {
     sf::FloatRect get_rect() const;
     void actualizar();
     virtual void set_font(const OptionalFont &new_font) override;
-    virtual void draw(
-        sf::RenderTarget &target, //
-        sf::RenderStates states   //
-    ) const override;
+    virtual void draw(sf::RenderTarget &, sf::RenderStates) const override;
 };

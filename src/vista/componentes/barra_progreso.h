@@ -37,10 +37,7 @@ struct BarraProgreso : public sf::Drawable {
         const ColorPair &color_pair      //
     );
     void actualizar_porcentaje(int porcentaje);
-    virtual void draw(
-        sf::RenderTarget &target, //
-        sf::RenderStates states   //
-    ) const override;
+    virtual void draw(sf::RenderTarget &, sf::RenderStates) const override;
 };
 
 ///////////////////////////////////////////
@@ -71,8 +68,5 @@ class BarraProgresoConNombre : public ComponenteConFont {
         const BPNColors &bpn_colors      //
     );
     void actualizar_porcentaje(int porcentaje);
-    virtual void draw(
-        sf::RenderTarget &target, //
-        sf::RenderStates states   //
-    ) const override;
+    virtual void draw(sf::RenderTarget &, sf::RenderStates) const override;
 };

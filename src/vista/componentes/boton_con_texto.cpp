@@ -7,7 +7,7 @@
 #include <cassert>
 
 namespace medidas {
-    constexpr int MARGEN_BOTON = 20;
+    constexpr float MARGEN_BOTON = 20;
     constexpr int TAMANO_TEXTO_BOTONES = TAMANO_TEXTO_GRANDE;
 } // namespace medidas
 
@@ -27,7 +27,7 @@ namespace medidas {
  */
 struct Posicionamiento {
   private:
-    int _obtener_pos_abs_x(float ancho_forma) const;
+    float _obtener_pos_abs_x(float ancho_forma) const;
 
   public:
     sf::FloatRect contenedor;
@@ -35,7 +35,7 @@ struct Posicionamiento {
     Align alineamiento = Align::Left;
 
     std::pair<sf::Vector2f, sf::Vector2f>
-    calcular_posicion_absoluta(double escala, float ancho_forma) const;
+    calcular_posicion_absoluta(float escala, float ancho_forma) const;
 };
 
 ///////////////////////////////////////////
@@ -43,7 +43,7 @@ struct Posicionamiento {
 //////////////////////////////////////////
 
 /** Devuelve la posicion absoluta del lado izquierdo del elemento UI */
-int Posicionamiento::_obtener_pos_abs_x(const float ancho_forma) const {
+float Posicionamiento::_obtener_pos_abs_x(const float ancho_forma) const {
     switch (alineamiento) {
         case Align::Left:
             return contenedor.left + posicion_relativa.x;
@@ -75,12 +75,12 @@ int Posicionamiento::_obtener_pos_abs_x(const float ancho_forma) const {
  */
 std::pair<sf::Vector2f, sf::Vector2f>
 Posicionamiento::calcular_posicion_absoluta(
-    const double escala, const float ancho_forma
+    const float escala, const float ancho_forma
 ) const {
-    const int margen = medidas::MARGEN_BOTON * (escala * escala);
-    const auto margen_corregido = margen * 0.7;
-    const int x = _obtener_pos_abs_x(ancho_forma);
-    const int y = contenedor.getPosition().y + posicion_relativa.y;
+    const auto margen = medidas::MARGEN_BOTON * (escala * escala);
+    const auto margen_corregido = margen * 0.7f;
+    const auto x = _obtener_pos_abs_x(ancho_forma);
+    const auto y = contenedor.getPosition().y + posicion_relativa.y;
     // Ajustamos para evitar un margen excesivo arriba y a la izquierda
     return {
         sf::Vector2f(x, y),
@@ -132,7 +132,7 @@ void BotonConTexto::_actualizar_posicion_absoluta() {
 }
 
 void BotonConTexto::_resize() {
-    const auto margen_ambos_lados = get_margen_ambos_lados();
+    const auto margen_ambos_lados = _get_margen_ambos_lados();
     const sf::FloatRect rect_etiqueta = _etiqueta->get_global_bounds();
 
     _forma.setSize(sf::Vector2f(
@@ -141,10 +141,10 @@ void BotonConTexto::_resize() {
     ));
 }
 
-int BotonConTexto::get_margen_ambos_lados() {
+float BotonConTexto::_get_margen_ambos_lados() {
     // La escala del margen es proporcional al cuadrado de la escala del boton
     const auto escala = this->_escala;
-    const int margen = medidas::MARGEN_BOTON * (escala * escala);
+    const auto margen = medidas::MARGEN_BOTON * (escala * escala);
     const auto margen_ambos_lados = margen * 2;
     return margen_ambos_lados;
 }
@@ -166,18 +166,18 @@ int BotonConTexto::get_margen_ambos_lados() {
  */
 BotonConTexto::BotonConTexto(
     const BotonData boton_data, //
-    double escala               //
+    float escala                //
 )
     : BotonConTexto() {
     this->_escala = escala;
 
     // Primero creamos la etiqueta para usar sus limites en el Rect
     _etiqueta = crear_etiqueta(
-        boton_data.texto,                              //
-        medidas::TAMANO_TEXTO_BOTONES * escala,        //
-        boton_data.color_texto,                        //
-        Vector2f_CERO,                                 //
-        "etiqueta boton con texto " + boton_data.texto //
+        boton_data.texto,                                         //
+        static_cast<int>(medidas::TAMANO_TEXTO_BOTONES * escala), //
+        boton_data.color_texto,                                   //
+        Vector2f_CERO,                                            //
+        "etiqueta boton con texto " + boton_data.texto            //
     );
     add_child(_etiqueta);
     _color_fondo = boton_data.color_fondo;
@@ -204,7 +204,7 @@ BotonConTexto::BotonConTexto(
     const BotonData boton_data,   //
     const sf::Vector2f &posicion, //
     Align align,                  //
-    double escala                 //
+    float escala                  //
 )
     : BotonConTexto(boton_data, escala) {
     establecer_posicion(posicion, align);
@@ -355,7 +355,7 @@ void BotonConTexto::set_font(const OptionalFont &new_font) {
  */
 void BotonConTexto::draw(
     sf::RenderTarget &target, //
-    sf::RenderStates states   //
+    sf::RenderStates          //
 ) const {
     if (!visible)
         return;

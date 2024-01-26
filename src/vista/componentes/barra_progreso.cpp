@@ -39,7 +39,7 @@ void BarraProgreso::actualizar_porcentaje(int porcentaje) {
 }
 void BarraProgreso::draw(
     sf::RenderTarget &target, //
-    sf::RenderStates states   //
+    sf::RenderStates          //
 ) const {
     dibujar_elementos(target, std::make_tuple(fondo, relleno));
 }
@@ -78,7 +78,7 @@ void BarraProgresoConNombre::actualizar_porcentaje(int porcentaje) { //
 }
 void BarraProgresoConNombre::draw(
     sf::RenderTarget &target, //
-    sf::RenderStates states   //
+    sf::RenderStates          //
 ) const {                     //
     target.draw(bp);
     target.draw(*etiqueta);

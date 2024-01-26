@@ -27,6 +27,6 @@ struct Encargos {
     void anadir(const EncargoACocina);
     std::vector<EncargoACocina>::const_iterator begin() const;
     std::vector<EncargoACocina>::const_iterator end() const;
-    int total() const;
+    size_t total() const;
     EncargoACocina por_indice(int i) const;
 };

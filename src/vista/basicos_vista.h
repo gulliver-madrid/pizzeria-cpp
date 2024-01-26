@@ -15,25 +15,25 @@ enum class IndicePanel {
     PANEL_PEDIDOS,
 };
 
-constexpr int NUMERO_DE_TIPOS_DE_PANEL = 4;
+constexpr size_t NUMERO_DE_TIPOS_DE_PANEL = 4;
 extern IndicePanel paneles_posibles[NUMERO_DE_TIPOS_DE_PANEL];
 
 namespace medidas {
-    constexpr int ANCHO_PANEL = 390;
-    constexpr int ALTO_PANEL = 700;
+    constexpr float ANCHO_PANEL = 390;
+    constexpr float ALTO_PANEL = 700;
 
     // Margenes externos de los paneles
-    constexpr int MARGEN_IZQ_PANELES = 50;
-    constexpr int MARGEN_TOP_PANELES = 50;
+    constexpr float MARGEN_IZQ_PANELES = 50;
+    constexpr float MARGEN_TOP_PANELES = 50;
 
-    constexpr int MARGEN_IZQ_ETIQUETAS = 30;
-    constexpr int FILA_BOTONES_GENERALES = 800;
-    constexpr int FILA_BARRA_ESTADO = FILA_BOTONES_GENERALES;
-    constexpr int SEPARACION_HORIZONTAL_ENTRE_BOTONES_GENERALES = 25;
+    constexpr float MARGEN_IZQ_ETIQUETAS = 30;
+    constexpr float FILA_BOTONES_GENERALES = 800;
+    constexpr float FILA_BARRA_ESTADO = FILA_BOTONES_GENERALES;
+    constexpr float SEPARACION_HORIZONTAL_ENTRE_BOTONES_GENERALES = 25;
 
     // Posiciones desde el inicio del panel respectivo
-    constexpr int FILA_TITULOS_PANELES = 50;
-    constexpr int FILA_CONTENIDO_PANEL = 150;
+    constexpr float FILA_TITULOS_PANELES = 50;
+    constexpr float FILA_CONTENIDO_PANEL = 150;
 } // namespace medidas
 
 namespace colores {

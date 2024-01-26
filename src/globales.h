@@ -16,7 +16,7 @@ class BotonConTexto;
 
 class Globales {
   private:
-    std::map<int, sf::Sound> sounds;
+    std::map<size_t, sf::Sound> sounds;
 
   public:
     sf::RenderWindow window;

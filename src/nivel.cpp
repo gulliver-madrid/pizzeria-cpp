@@ -30,7 +30,10 @@ namespace {
         sf::Event::SizeEvent size_event, sf::RenderWindow &ventana
     ) {
         // Actualiza la View al nuevo tamano de la ventana
-        sf::FloatRect visibleArea(0, 0, size_event.width, size_event.height);
+        sf::FloatRect visibleArea(
+            0, 0, static_cast<float>(size_event.width),
+            static_cast<float>(size_event.height)
+        );
         ventana.setView(sf::View(visibleArea));
     }
 
@@ -132,9 +135,9 @@ std::shared_ptr<EnlaceVista> Nivel::_crear_enlace_vista( //
         num_nivel                               //
     );
     LOG(info) << "Vista inicializada" << std::endl;
-    auto enlace_vista = std::make_shared<EnlaceVista>();
-    enlace_vista->set_vista(vista_ptr);
-    return enlace_vista;
+    auto enlace_vista_ = std::make_shared<EnlaceVista>();
+    enlace_vista_->set_vista(vista_ptr);
+    return enlace_vista_;
 }
 
 /*

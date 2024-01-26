@@ -48,7 +48,7 @@ Panel::Panel(IndicePanel indice, std::shared_ptr<Etiqueta> etiqueta)
 
 void Panel::draw(
     sf::RenderTarget &target, //
-    sf::RenderStates states   //
+    sf::RenderStates          //
 ) const {
     target.draw(forma);
     target.draw(*etiqueta_titulo);
@@ -104,7 +104,7 @@ void PanelEnPreparacion::actualizar(
         remove_child(bpn);
     }
     barras_progreso_con_nombres = crear_barras_progreso( //
-        vista_preparacion, pos_panel, font
+        vista_preparacion, pos_panel
     );
     for (auto bpn : barras_progreso_con_nombres) {
         add_child(bpn);
@@ -220,7 +220,7 @@ void Paneles::actualizar(                            //
 
 void Paneles::draw(
     sf::RenderTarget &target, //
-    sf::RenderStates states   //
+    sf::RenderStates          //
 ) const {
     if (!visible)
         return;

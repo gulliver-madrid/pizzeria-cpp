@@ -2,7 +2,7 @@
 
 #include "realizador_base.h"
 
-struct ModeloAmplio;
+class ModeloAmplio;
 enum class FaseNivel;
 
 class Realizador : public RealizadorBase {

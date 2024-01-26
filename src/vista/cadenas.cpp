@@ -38,14 +38,14 @@ std::string interpolar_unicode(const std::string plantilla) {
  * deshabilitar aquellas que no correspondan.
  */
 CadenaJuego &CadenaJuego::interpolar_por_clave(
-    const std::string &key, const std::string &value, bool considerar
+    const std::string &key, const std::string &value_, bool considerar
 ) {
     if (considerar) {
         std::string &result = this->value;
         std::string placeholder = "{" + key + "}";
         size_t pos = result.find(placeholder);
         if (pos != std::string::npos) {
-            result.replace(pos, placeholder.length(), value);
+            result.replace(pos, placeholder.length(), value_);
         }
     }
     return *this;

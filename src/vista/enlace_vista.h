@@ -17,9 +17,7 @@ namespace sf {
 } // namespace sf
 
 namespace enlace_vista_impl {
-    ActivacionBotones obtener_activacion_botones( //
-        const ModeloInterno &modelo_interno
-    );
+    ActivacionBotones obtener_activacion_botones(const ModeloInterno &);
 }
 
 /* Debe ser un intermediario entre el modelo y la vista */
@@ -34,7 +32,7 @@ class EnlaceVista : public ObservadorFase {
 
   public:
     EnlaceVista();
-    void set_vista(std::shared_ptr<Vista> vista);
+    void set_vista(std::shared_ptr<Vista>);
     void on_cambio_de_fase(FaseNivel);
     void esconder_paneles() const;
     void actualizar_interfaz_grafico(

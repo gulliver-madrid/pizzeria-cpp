@@ -27,8 +27,5 @@ class EtiquetasInfo : public ComponenteConFont {
     void set_presentacion_vista(
         std::shared_ptr<PresentacionVista> presentacion_vista //
     );
-    virtual void draw(
-        sf::RenderTarget &target, //
-        sf::RenderStates states   //
-    ) const override;
+    virtual void draw(sf::RenderTarget &, sf::RenderStates) const override;
 };

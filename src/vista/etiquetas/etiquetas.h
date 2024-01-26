@@ -43,9 +43,8 @@ struct EtiquetasGenerales : public ComponenteConFont {
     ~EtiquetasGenerales();
 
     void setup(
-        const std::string &instr,                   //
-        const NumNivelOpcional &,                   //
-        const dominio::TiposDePizza &tp_disponibles //
+        const std::string &instr, //
+        const NumNivelOpcional &  //
     );
 
     void set_presentacion_vista(
@@ -62,10 +61,7 @@ struct EtiquetasGenerales : public ComponenteConFont {
     void dibujar_pedidos(sf::RenderTarget &target) const;
     void dibujar_barra_estado(sf::RenderTarget &target);
     void dibujar_info(sf::RenderTarget &target) const;
-    virtual void draw(
-        sf::RenderTarget &target, //
-        sf::RenderStates states   //
-    ) const override;
+    virtual void draw(sf::RenderTarget &, sf::RenderStates) const override;
 };
 
 ///////////////////////////////////////////

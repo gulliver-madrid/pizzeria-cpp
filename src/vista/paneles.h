@@ -21,10 +21,7 @@ struct Panel : public ComponenteConFont {
     sf::RectangleShape forma;
     std::shared_ptr<Etiqueta> etiqueta_titulo;
     Panel(IndicePanel indice, std::shared_ptr<Etiqueta> etiqueta);
-    virtual void draw(
-        sf::RenderTarget &target, //
-        sf::RenderStates states   //
-    ) const override;
+    virtual void draw(sf::RenderTarget &, sf::RenderStates) const override;
 };
 
 ///////////////////////////////////////////
@@ -39,10 +36,7 @@ struct PanelEncargar : public Panel {
     );
     void actualizar(const VistaPreparacionPizzas &vista_preparacion //
     );
-    virtual void draw(
-        sf::RenderTarget &target, //
-        sf::RenderStates states   //
-    ) const override;
+    virtual void draw(sf::RenderTarget &, sf::RenderStates) const override;
 };
 
 ///////////////////////////////////////////
@@ -50,14 +44,12 @@ struct PanelEncargar : public Panel {
 /////////////////////////////////////////
 
 struct PanelEnPreparacion : public Panel {
-    std::vector<std::shared_ptr<BarraProgresoConNombre>> barras_progreso_con_nombres;
+    std::vector<std::shared_ptr<BarraProgresoConNombre>>
+        barras_progreso_con_nombres;
     PanelEnPreparacion(IndicePanel indice, std::shared_ptr<Etiqueta> etiqueta);
     void actualizar(const VistaPreparacionPizzas &vista_preparacion //
     );
-    virtual void draw(
-        sf::RenderTarget &target, //
-        sf::RenderStates states   //
-    ) const override;
+    virtual void draw(sf::RenderTarget &, sf::RenderStates) const override;
 };
 
 ///////////////////////////////////////////
@@ -71,10 +63,7 @@ struct PanelPreparadas : public Panel {
     );
     void setup(const dominio::TiposDePizza &tp_disponibles);
     void actualizar(const PizzasToStrings &vista_preparadas);
-    virtual void draw(
-        sf::RenderTarget &target, //
-        sf::RenderStates states   //
-    ) const override;
+    virtual void draw(sf::RenderTarget &, sf::RenderStates) const override;
 };
 
 ///////////////////////////////////////////
@@ -106,8 +95,5 @@ class Paneles : public ComponenteConFont, public PanelesObservables {
         const VistaPreparacionPizzas &vista_preparacion, //
         const PizzasToStrings &vista_preparadas          //
     );
-    virtual void draw(
-        sf::RenderTarget &target, //
-        sf::RenderStates states   //
-    ) const override;
+    virtual void draw(sf::RenderTarget &, sf::RenderStates) const override;
 };

@@ -5,10 +5,8 @@
 template <typename C> class ComponenteGenericoTest : public testing::Test {
   protected:
     class ComponenteConcreto : public C {
-        virtual void draw(
-            sf::RenderTarget &target, //
-            sf::RenderStates states   //
-        ) const override {}
+        virtual void draw(sf::RenderTarget &, sf::RenderStates) const override {
+        }
     };
     class B : public ComponenteConcreto {};
     class A : public ComponenteConcreto {};

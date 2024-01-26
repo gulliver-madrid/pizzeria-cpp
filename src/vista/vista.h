@@ -83,8 +83,5 @@ class Vista : public ComponenteConFont, public VistaObservable {
 
     virtual std::shared_ptr<PanelesObservables> get_paneles() const override;
 
-    virtual void draw(
-        sf::RenderTarget &target, //
-        sf::RenderStates states   //
-    ) const override;
+    virtual void draw(sf::RenderTarget &, sf::RenderStates) const override;
 };

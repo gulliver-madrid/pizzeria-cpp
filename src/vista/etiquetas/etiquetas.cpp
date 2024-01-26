@@ -35,9 +35,8 @@ EtiquetasGenerales::EtiquetasGenerales() {
 EtiquetasGenerales::~EtiquetasGenerales() = default;
 
 void EtiquetasGenerales::setup(
-    const std::string &instr,                   //
-    const NumNivelOpcional &num_nivel,          //
-    const dominio::TiposDePizza &tp_disponibles //
+    const std::string &instr,         //
+    const NumNivelOpcional &num_nivel //
 ) {
     info->setup(instr, num_nivel);
 }
@@ -72,8 +71,8 @@ void EtiquetasGenerales::dibujar_info(sf::RenderTarget &target) const {
 }
 
 void EtiquetasGenerales::draw(
-    sf::RenderTarget &target, //
-    sf::RenderStates states   //
+    sf::RenderTarget &, //
+    sf::RenderStates    //
 ) const {
     // No implementado
 }
@@ -85,8 +84,10 @@ void EtiquetasGenerales::draw(
 sf::Vector2f FabricaEtiquetasTituloPanel::get_posicion_etiqueta_titulo_panel(
     const sf::Vector2f &posicion_panel
 ) {
-    int pos_x = posicion_panel.x + medidas::MARGEN_IZQ_ETIQUETAS;
-    int pos_y = posicion_panel.y + medidas::FILA_TITULOS_PANELES;
+    auto pos_x =
+        (posicion_panel.x) + static_cast<float>(medidas::MARGEN_IZQ_ETIQUETAS);
+    auto pos_y =
+        posicion_panel.y + static_cast<float>(medidas::FILA_TITULOS_PANELES);
     return sf::Vector2f(pos_x, pos_y);
 }
 

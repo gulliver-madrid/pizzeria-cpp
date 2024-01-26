@@ -36,7 +36,7 @@ void EtiquetasBarraEstado::actualizar(
 
 void EtiquetasBarraEstado::draw(
     sf::RenderTarget &target, //
-    sf::RenderStates states   //
+    sf::RenderStates          //
 ) const {
     target.draw(*etiqueta);
 }

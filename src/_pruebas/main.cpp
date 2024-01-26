@@ -1,14 +1,15 @@
 #include "class_a.h"
 #include <iostream>
 
-struct Class_B {
+class Class_B {
+  public:
     int x;
 };
-void Class_A::f(Class_B b) {}
+void Class_A::f(Class_B) {}
 int main() {
     std::cout << "Esto es una prueba" << std::endl;
     Class_A a;
-    Class_B b = {1};
-    a.f(b);
+    Class_B b_instance = {1};
+    a.f(b_instance);
     return 0;
 }

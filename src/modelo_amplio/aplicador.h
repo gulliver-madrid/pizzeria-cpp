@@ -4,8 +4,8 @@
 
 enum class FaseNivel;
 class Comando;
+class ModeloAmplio;
 class RealizadorBase;
-struct ModeloAmplio;
 
 namespace aplicador {
     /*

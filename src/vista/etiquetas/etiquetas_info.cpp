@@ -77,14 +77,14 @@ void EtiquetasInfo::setup(
 }
 
 void EtiquetasInfo::set_presentacion_vista(
-    std::shared_ptr<PresentacionVista> presentacion_vista //
+    std::shared_ptr<PresentacionVista> presentacion_vista_ //
 ) {
-    this->presentacion_vista = presentacion_vista;
+    this->presentacion_vista = presentacion_vista_;
 }
 
 void EtiquetasInfo::draw(
     sf::RenderTarget &target, //
-    sf::RenderStates states   //
+    sf::RenderStates          //
 ) const {
     if (presentacion_vista->visibilidad.instrucciones) {
         target.draw(*instrucciones);

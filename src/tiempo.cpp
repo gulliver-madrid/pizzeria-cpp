@@ -25,7 +25,7 @@ std::string time_to_string(sf::Time time) {
 }
 
 int calcular_porcentaje(const sf::Time &parte, const sf::Time &total) {
-    return (parte / total) * 100;
+    return static_cast<int>((parte / total) * 100);
 }
 
 ///////////////////////////////////////////
@@ -37,10 +37,10 @@ sf::Time Timer::obtener_tiempo_transcurrido() {
     return clock.value().getElapsedTime();
 }
 
-void Timer::start(sf::Time finalizacion) {
-    assert(finalizacion > sf::Time::Zero);
+void Timer::start(sf::Time finalizacion_) {
+    assert(finalizacion_ > sf::Time::Zero);
     assert(!this->finalizacion.has_value());
-    this->finalizacion.emplace(finalizacion);
+    this->finalizacion.emplace(finalizacion_);
     clock.emplace();
 }
 
