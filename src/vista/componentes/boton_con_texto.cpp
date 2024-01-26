@@ -1,10 +1,10 @@
 #include "boton_con_texto.h"
+#include "../../shared/log_init.h"
 #include "../../templates/dibujar_elementos.h"
 #include "crear_etiqueta.h"
 #include "etiqueta.h"
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <cassert>
-#include <iostream>
 
 namespace medidas {
     constexpr int MARGEN_BOTON = 20;
@@ -89,12 +89,10 @@ Posicionamiento::calcular_posicion_absoluta(
 }
 
 ///////////////////////////////////////////
-// BotonConTexto
+// BotonConTexto (private)
 //////////////////////////////////////////
 
 size_t BotonConTexto::_proximo_id = 1;
-
-//////// Metodos privados
 
 /**
  * @brief Constructor por defecto privado.
@@ -133,7 +131,7 @@ void BotonConTexto::_actualizar_posicion_absoluta() {
     _etiqueta->set_position(pos_etiqueta.x, pos_etiqueta.y);
 }
 
-void BotonConTexto::resize() {
+void BotonConTexto::_resize() {
     const auto margen_ambos_lados = get_margen_ambos_lados();
     const sf::FloatRect rect_etiqueta = _etiqueta->get_global_bounds();
 
@@ -151,8 +149,9 @@ int BotonConTexto::get_margen_ambos_lados() {
     return margen_ambos_lados;
 }
 
-// TODO: corregir titulos secciones
-//////// Metodos publicos
+///////////////////////////////////////////
+// BotonConTexto (public)
+//////////////////////////////////////////
 
 /**
  * @brief Constructor que inicializa un boton con texto pero sin posicion
@@ -183,7 +182,7 @@ BotonConTexto::BotonConTexto(
     add_child(_etiqueta);
     _color_fondo = boton_data.color_fondo;
 
-    resize();
+    _resize();
     _forma.setFillColor(_color_fondo);
 };
 
@@ -266,47 +265,6 @@ bool BotonConTexto::colisiona(const sf::Vector2i &pos_raton) const {
         static_cast<float>(pos_raton.x), static_cast<float>(pos_raton.y)
     );
 }
-/**
- * @brief Actualiza la parte visual del boton.
- *
- *   Verifica si el boton esta marcado como visible antes de proceder.
- * Si el boton esta activo, se muestra con su color activo; de lo contrario,
- * se muestra con un color gris por defecto.
- *   La etiqueta del boton se dibuja sobre el boton.
- */
-
-void BotonConTexto::actualizar() {
-    if (!visible)
-        return;
-    if (!colorBotonActivo.has_value())
-        colorBotonActivo = _forma.getFillColor();
-    if (_activo) {
-        _forma.setFillColor(colorBotonActivo.value());
-    } else {
-        _forma.setFillColor(sf::Color(100, 100, 100));
-    }
-}
-
-/**
- * @brief Dibuja el boton en el target de renderizado proporcionado.
- *
- * Esta funcion es responsable de renderizar el boton en el target de
- * renderizado (como la ventana de la aplicacion). Verifica si el boton esta
- * marcado como visible antes de proceder.
- *
- * @param target Referencia al target de renderizado donde se dibujara el
- * boton.
- */
-void BotonConTexto::draw(
-    sf::RenderTarget &target, //
-    sf::RenderStates states   //
-) const {
-    if (!visible)
-        return;
-    std::cout << "Dibujando boton con texto cuya etiqueta es "
-              << _etiqueta->nombre << std::endl;
-    dibujar_elementos(target, std::make_tuple(_forma, *_etiqueta));
-}
 
 /**
  * Activa el boton solo si esta actualmente inactivo.
@@ -355,7 +313,53 @@ bool BotonConTexto::esta_activo() const { //
     return _activo;
 }
 
+sf::FloatRect BotonConTexto::get_rect() const { //
+    return _forma.getGlobalBounds();
+}
+
+/**
+ * @brief Actualiza la parte visual del boton.
+ *
+ *   Verifica si el boton esta marcado como visible antes de proceder.
+ * Si el boton esta activo, se muestra con su color activo; de lo contrario,
+ * se muestra con un color gris por defecto.
+ *   La etiqueta del boton se dibuja sobre el boton.
+ */
+
+void BotonConTexto::actualizar() {
+    if (!visible)
+        return;
+    if (!colorBotonActivo.has_value())
+        colorBotonActivo = _forma.getFillColor();
+    if (_activo) {
+        _forma.setFillColor(colorBotonActivo.value());
+    } else {
+        _forma.setFillColor(sf::Color(100, 100, 100));
+    }
+}
+
 void BotonConTexto::set_font(const OptionalFont &new_font) {
     ComponenteConFont::set_font(new_font);
-    resize();
+    _resize();
+}
+
+/**
+ * @brief Dibuja el boton en el target de renderizado proporcionado.
+ *
+ * Esta funcion es responsable de renderizar el boton en el target de
+ * renderizado (como la ventana de la aplicacion). Verifica si el boton esta
+ * marcado como visible antes de proceder.
+ *
+ * @param target Referencia al target de renderizado donde se dibujara el
+ * boton.
+ */
+void BotonConTexto::draw(
+    sf::RenderTarget &target, //
+    sf::RenderStates states   //
+) const {
+    if (!visible)
+        return;
+    LOG(debug) << "Dibujando boton con texto cuya etiqueta es "
+               << _etiqueta->nombre << std::endl;
+    dibujar_elementos(target, std::make_tuple(_forma, *_etiqueta));
 }

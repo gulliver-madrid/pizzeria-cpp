@@ -283,6 +283,7 @@
 
 - vista/componentes/boton_con_texto.cpp:
     - vista/componentes/boton_con_texto.h
+    - shared/log_init.h
     - templates/dibujar_elementos.h
     - vista/componentes/crear_etiqueta.h
     - vista/componentes/etiqueta.h

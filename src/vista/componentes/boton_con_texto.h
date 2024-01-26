@@ -15,6 +15,10 @@ namespace sf {
 
 struct Posicionamiento;
 
+///////////////////////////////////////////
+// BotonConTexto
+//////////////////////////////////////////
+
 class BotonConTexto : public ComponenteOldStyle, public ComponenteConFont {
   private:
     static size_t _proximo_id;
@@ -30,11 +34,12 @@ class BotonConTexto : public ComponenteOldStyle, public ComponenteConFont {
     // Solo puede modificarse la escala en la construccion
     double _escala = 1;
     bool _activo = true;
+    std::optional<sf::Color> colorBotonActivo;
 
     BotonConTexto();
     void _asignar_id();
     void _actualizar_posicion_absoluta();
-    void resize();
+    void _resize();
     int BotonConTexto::get_margen_ambos_lados();
 
   public:
@@ -73,16 +78,11 @@ class BotonConTexto : public ComponenteOldStyle, public ComponenteConFont {
     void activacion_condicional(bool condicion);
     size_t get_id() const;
     bool esta_activo() const;
-    sf::FloatRect get_rect() const { //
-        return _forma.getGlobalBounds();
-    }
+    sf::FloatRect get_rect() const;
     void actualizar();
     virtual void set_font(const OptionalFont &new_font) override;
     virtual void draw(
         sf::RenderTarget &target, //
         sf::RenderStates states   //
     ) const override;
-    // TODO: reorganizar miembros
-  private:
-    std::optional<sf::Color> colorBotonActivo;
 };
