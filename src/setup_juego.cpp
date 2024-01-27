@@ -23,13 +23,15 @@ bool setup_juego(std::shared_ptr<Globales> globales) {
 
     LOG(info) << "Anadiendo Font";
 
-    if (!globales->font->loadFromFile(getResourcePath(FONT_PATH).string()))
+    if (!globales->font->loadFromFile(obtener_ruta_recurso(FONT_PATH).string()))
         return false;
 
     LOG(info) << "Font anadida";
     {
         sf::SoundBuffer buffer;
-        if (buffer.loadFromFile(getResourcePath(SUCCESS_SOUND_PATH).string()))
+        if (buffer.loadFromFile(
+                obtener_ruta_recurso(SUCCESS_SOUND_PATH).string()
+            ))
             globales->success_buffer = buffer;
     }
 
@@ -38,12 +40,13 @@ bool setup_juego(std::shared_ptr<Globales> globales) {
     {
         sf::SoundBuffer buffer;
         if (buffer.loadFromFile(
-                getResourcePath(BUTTON_CLICK_SOUND_PATH).string()
+                obtener_ruta_recurso(BUTTON_CLICK_SOUND_PATH).string()
             ))
             globales->button_click_buffer = buffer;
     }
 
-    if (globales->music.openFromFile(getResourcePath(MUSIC_PATH).string())) {
+    if (globales->music.openFromFile(obtener_ruta_recurso(MUSIC_PATH).string()
+        )) {
         globales->music.setVolume(50);
         globales->music.setLoop(true);
         globales->music.play();
