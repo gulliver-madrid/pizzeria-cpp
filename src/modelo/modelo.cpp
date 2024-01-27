@@ -33,10 +33,11 @@ EstadoPreparacionPizzas::EstadoPreparacionPizzas(
 
 //////// PedidoTipoPizza
 
-PedidoTipoPizza::PedidoTipoPizza(int objetivo) : objetivo(objetivo) {
+PedidoTipoPizza::PedidoTipoPizza() {}
+PedidoTipoPizza::PedidoTipoPizza(UInt objetivo) : objetivo(objetivo) {
     assert(objetivo >= 0);
 }
-PedidoTipoPizza::PedidoTipoPizza(int servido, int objetivo)
+PedidoTipoPizza::PedidoTipoPizza(UInt servido, UInt objetivo)
     : servido(servido), objetivo(objetivo) {
     assert(objetivo >= 0);
     assert(servido >= 0);
@@ -50,7 +51,7 @@ bool PedidoTipoPizza::cubierto() const {
 
 //////// Pedido
 
-Pedido::Pedido(ContenidoPedido &&contenido) : contenido(std::move(contenido)) {}
+Pedido::Pedido(ContenidoPedido contenido) : contenido(contenido) {}
 
 /* Evalua si el pedido esta cubierto */
 void Pedido::evaluar() {
@@ -104,7 +105,7 @@ bool Pedido::intentar_servir(const dominio::TipoPizza tp) {
 void evaluar_preparacion(
     Encargos &encargos,                    //
     modelo::PizzasAContadores &contadores, //
-    int preparables,                       //
+    const UInt preparables,                //
     const sf::Time &tiempo_actual          //
 ) {
     size_t i = 0;
@@ -125,14 +126,14 @@ void evaluar_preparacion(
     }
 
     // Ordenar y limitar las pizzas que pueden salir
-    if (pizzas_listas_con_tiempo.size() > preparables) {
+    if (pizzas_listas_con_tiempo.size() > preparables.to_int()) {
         // Ordenamos la lista de manera descendente para que
         // las que llevan mas tiempo preparadas salgan antes
         std::sort(
             pizzas_listas_con_tiempo.begin(), pizzas_listas_con_tiempo.end(),
             [](const auto &a, const auto &b) { return a.second > b.second; }
         );
-        pizzas_listas_con_tiempo.resize(preparables);
+        pizzas_listas_con_tiempo.resize(preparables.to_int());
     }
 
     std::unordered_set<size_t> indices_para_pasar;

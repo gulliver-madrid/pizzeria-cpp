@@ -8,9 +8,9 @@ class Etiqueta;
 class FabricaEtiquetasPreparadas : public ObjetoConFont {
   private:
     sf::Vector2f _obtener_posicion_etiqueta(
-        sf::Vector2f pos_panel,     //
-        size_t indice_etiqueta,     //
-        int desplazamiento_vertical //
+        sf::Vector2f pos_panel,       //
+        size_t indice_etiqueta,       //
+        float desplazamiento_vertical //
     ) const;
 
     std::shared_ptr<Etiqueta> _crear_etiqueta(sf::Vector2f posicion) const;

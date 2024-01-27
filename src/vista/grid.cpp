@@ -1,4 +1,5 @@
 #include "grid.h"
+#include "../shared/types.h"
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderTexture.hpp>
 #include <iostream>

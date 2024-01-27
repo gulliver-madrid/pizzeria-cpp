@@ -11,15 +11,15 @@
 
 namespace presentador {
     std::string crea_linea_completitud_pizza(
-        const dominio::TipoPizza tp, int parte, int todo
+        const dominio::TipoPizza tp, UInt parte, UInt todo
     ) {
         assert(has_key(tipo_pizza_to_string, tp));
         const auto nombre_pizza = tipo_pizza_to_string.at(tp);
-        std::string s = (           //
-            nombre_pizza + ": " +   //
-            std::to_string(parte) + //
-            std::string("/") +      //
-            std::to_string(todo)    //
+        std::string s = (         //
+            nombre_pizza + ": " + //
+            parte.to_string() +   //
+            std::string("/") +    //
+            todo.to_string()      //
         );
         return s;
     }
@@ -51,7 +51,7 @@ namespace presentador {
             assert(has_key(tipo_pizza_to_string, tp));
             auto &nombre_pizza = tipo_pizza_to_string.at(tp);
             std::string linea =
-                nombre_pizza + ": " + std::to_string(contadores_tp.preparadas);
+                nombre_pizza + ": " + contadores_tp.preparadas.to_string();
             textos_preparadas[tp] = linea;
         }
         return textos_preparadas;

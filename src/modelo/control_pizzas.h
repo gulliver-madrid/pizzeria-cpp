@@ -26,7 +26,7 @@ namespace modelo {
         void add_pedidos(Pedidos);
         const dominio::TiposDePizza &get_tipos_disponibles() const;
         void procesar_despacho(dominio::TipoPizza tp);
-        int obtener_total_preparadas() const;
+        UInt obtener_total_preparadas() const;
         bool faltan_pedidos_por_cubrir() const;
     };
 } // namespace modelo

@@ -64,9 +64,11 @@
     - modelo/encargos.h
     - modelo/dominio.h
     - shared/log_init.h
+    - shared/types.h
     - templates/helpers.h
 
 - modelo/encargos.h:
+    - shared/types.h
     - tiempo.h
 
 - modelo/modelo.cpp:
@@ -77,6 +79,7 @@
 - modelo/modelo.h:
     - modelo/dominio.h
     - modelo/modelo_shared.h
+    - shared/types.h
 
 - modelo/modelo_interno.cpp:
     - modelo/modelo_interno.h
@@ -421,6 +424,7 @@
 
 - vista/grid.cpp:
     - vista/grid.h
+    - shared/types.h
 
 - vista/paneles.cpp:
     - vista/paneles.h

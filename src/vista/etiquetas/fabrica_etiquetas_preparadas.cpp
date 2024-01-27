@@ -5,8 +5,8 @@
 
 namespace medidas {
     constexpr int TAMANO_FUENTE_ETIQUETAS = 24;
-    constexpr int DESPLAZAMIENTO_VERTICAL_ETIQUETAS_PIZZAS_PREPARADAS = 50;
-    constexpr int DESPLAZAMIENTO_VERTICAL_ETIQUETAS_PIZZAS_SERVIDAS = 50;
+    constexpr float DESPLAZAMIENTO_VERTICAL_ETIQUETAS_PIZZAS_PREPARADAS = 50;
+    constexpr float DESPLAZAMIENTO_VERTICAL_ETIQUETAS_PIZZAS_SERVIDAS = 50;
 } // namespace medidas
 
 namespace estilos {
@@ -25,9 +25,9 @@ using basicos_vista::obtener_posicion_panel;
  * Obtiene la posicion de una etiqueta para un contador de pizzas
  */
 sf::Vector2f FabricaEtiquetasPreparadas::_obtener_posicion_etiqueta(
-    const sf::Vector2f pos_panel,     //
-    const size_t indice_etiqueta,     //
-    const int desplazamiento_vertical //
+    const sf::Vector2f pos_panel,       //
+    const size_t indice_etiqueta,       //
+    const float desplazamiento_vertical //
 ) const {
     const auto pos_x = pos_panel.x + medidas::MARGEN_IZQ_ETIQUETAS;
     const auto pos_y = pos_panel.y + medidas::FILA_CONTENIDO_PANEL +

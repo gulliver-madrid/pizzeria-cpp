@@ -1,5 +1,6 @@
 #include "encargos.h"
 #include "../shared/log_init.h"
+#include "../shared/types.h"
 #include "../templates/helpers.h"
 #include "dominio.h"
 #include <cassert>
@@ -39,8 +40,8 @@ EncargoACocina::EncargoACocina(
 
 // Definicion metodos Encargos
 
-int Encargos::del_tipo(TipoPizza tp) const {
-    int contador = 0;
+UInt Encargos::del_tipo(TipoPizza tp) const {
+    UInt contador = 0;
     for (auto &encargo : _datos) {
         if (encargo.tipo == tp) {
             contador++;

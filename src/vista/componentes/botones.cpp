@@ -34,7 +34,7 @@ Botones _crear_botones( //
 void alinear_botones_derecha(
     const Botones &botones,               //
     const sf::Vector2f &posicion_inicial, //
-    int separacion                        //
+    float separacion                      //
 ) {
     auto next_pos_x = posicion_inicial.x;
     for (auto &boton : botones) {
@@ -53,7 +53,7 @@ Botones crear_botones_alineados_derecha(
     const sf::Vector2f &posicion_inicial,        //
     const std::vector<BotonData> &datos_botones, //
     const sf::FloatRect &contenedor,             //
-    int separacion                               //
+    float separacion                             //
 ) {
     auto botones = _crear_botones(datos_botones, contenedor);
     alinear_botones_derecha(botones, posicion_inicial, separacion);

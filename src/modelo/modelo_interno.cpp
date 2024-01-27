@@ -42,8 +42,9 @@ sf::Time ModeloInterno::obtener_tiempo_juego() const {
 }
 
 void ModeloInterno::evaluar_preparacion_pizzas() {
-    int total_preparadas = control_pizzas.obtener_total_preparadas();
-    int preparables = modelo_info::MAXIMO_PIZZAS_PREPARADAS - total_preparadas;
+    UInt total_preparadas = control_pizzas.obtener_total_preparadas();
+    UInt preparables =
+        modelo_info::MAXIMO_PIZZAS_PREPARADAS - total_preparadas.to_int();
     if (preparables > 0) {
         const auto tiempo_actual = gestor_tiempo.obtener_tiempo_juego();
         evaluar_preparacion(

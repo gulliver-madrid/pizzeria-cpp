@@ -20,7 +20,7 @@ ModeloInterno crear_modelo_interno(modelo::Pedidos pedidos) {
     ModeloInterno modelo(datos_modelo_interno);
     return modelo;
 }
-Pedidos crear_pedidos_margarita(unsigned int num_pizzas) {
+Pedidos crear_pedidos_margarita(UInt num_pizzas) {
     return {Pedido({{TipoPizza::Margarita, num_pizzas}})};
 }
 

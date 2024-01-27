@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../shared/types.h"
 #include "../tiempo.h"
 #include <vector>
 
@@ -23,7 +24,7 @@ struct Encargos {
     std::vector<EncargoACocina> _datos;
 
   public:
-    int del_tipo(dominio::TipoPizza) const;
+    UInt del_tipo(dominio::TipoPizza) const;
     void anadir(const EncargoACocina);
     std::vector<EncargoACocina>::const_iterator begin() const;
     std::vector<EncargoACocina>::const_iterator end() const;

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../shared/types.h"
 #include "dominio.h"
 #include "modelo_shared.h"
 #include <cassert>
@@ -18,9 +19,9 @@ struct Encargos;
  * confusion entre preparadas y servidas.
  */
 struct Contadores {
-    int servidas = 0;
+    UInt servidas = 0;
     // Actualmente en el area de preparadas
-    int preparadas = 0;
+    UInt preparadas = 0;
 };
 
 namespace debug {
@@ -29,10 +30,14 @@ namespace debug {
 
 /* Parte de un pedido relativa a un tipo de pizza */
 struct PedidoTipoPizza {
-    int servido = 0;
-    int objetivo = 0;
-    PedidoTipoPizza(int objetivo);
-    PedidoTipoPizza(int servido, int objetivo);
+    UInt servido = 0;
+    UInt objetivo = 0;
+
+    // para usarlo en maps
+    PedidoTipoPizza();
+
+    PedidoTipoPizza(UInt objetivo);
+    PedidoTipoPizza(UInt servido, UInt objetivo);
     bool cubierto() const;
 };
 
@@ -44,7 +49,7 @@ class Pedido {
 
   public:
     ContenidoPedido contenido;
-    Pedido(ContenidoPedido &&);
+    Pedido(ContenidoPedido);
     void evaluar();
     bool incluye(dominio::TipoPizza) const;
     /* Devuelve true si acepta el servicio */
@@ -53,8 +58,10 @@ class Pedido {
 };
 
 void evaluar_preparacion(
-    Encargos &encargos, modelo::PizzasAContadores &contadores, int maximo,
-    const sf::Time &tiempo_actual
+    Encargos &,                   //
+    modelo::PizzasAContadores &,  //
+    UInt maximo,                  //
+    const sf::Time &tiempo_actual //
 );
 
 /** Representa el estado de preparacion de las pizzas en un momento concreto */

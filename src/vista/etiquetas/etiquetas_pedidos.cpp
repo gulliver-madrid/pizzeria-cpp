@@ -13,7 +13,7 @@
 #include <iostream>
 
 namespace medidas {
-    constexpr int SEPARACION_VERTICAL_ENTRE_PEDIDOS = 24;
+    constexpr float SEPARACION_VERTICAL_ENTRE_PEDIDOS = 24;
 } // namespace medidas
 
 namespace {
@@ -22,12 +22,12 @@ namespace {
         return rect.top + rect.height;
     }
 
-    const int top_left_padding = 5;
+    const float top_left_padding = 5;
 
     /* Builds the shape of TarjetaPedido */
     sf::RectangleShape build_card_pedido_shape(size_t num_items) {
         assert(num_items > 0);
-        const int height = 30 + 26 * (static_cast<int>(num_items) - 1);
+        const auto height = 30 + 26 * (static_cast<int>(num_items) - 1);
         const auto size = sf::Vector2f(
             static_cast<float>(250 + top_left_padding),   //
             static_cast<float>(height + top_left_padding) //

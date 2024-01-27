@@ -43,8 +43,8 @@ void ControlPizzas::procesar_despacho(const dominio::TipoPizza tp) {
     }
 }
 
-int ControlPizzas::obtener_total_preparadas() const {
-    int total_preparadas = 0;
+UInt ControlPizzas::obtener_total_preparadas() const {
+    UInt total_preparadas = 0;
     for (auto &[_, contador_tp] : contadores) {
         total_preparadas += contador_tp.preparadas;
     }
