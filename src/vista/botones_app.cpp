@@ -45,7 +45,7 @@ namespace {
         );
 
         const auto pos_inicial_relativa_al_panel = sf::Vector2f(
-            medidas::MARGEN_IZQ_ETIQUETAS + (medidas::ANCHO_PANEL * 0.55),
+            medidas::MARGEN_IZQ_ETIQUETAS + (medidas::ANCHO_PANEL * 0.55f),
             (medidas::FILA_CONTENIDO_PANEL + pequeno_ajuste)
         );
 

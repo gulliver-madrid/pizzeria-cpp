@@ -105,7 +105,6 @@ int _main(int argc, char *argv[]) {
             return USER_ERROR;
             break;
     }
-    return 0;
 }
 
 int main(int argc, char *argv[]) {

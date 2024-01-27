@@ -40,7 +40,7 @@ int demo_visual() {
                 window.close();
         }
         window.clear();
-        red_rect.setPosition(100 + i * 10, 400);
+        red_rect.setPosition(100.0f + static_cast<float>(i) * 10.0f, 400.0f);
         window.draw(yellow_rect);
         window.draw(blue_rect);
         window.draw(last_rect);

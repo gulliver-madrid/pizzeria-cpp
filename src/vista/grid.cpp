@@ -8,25 +8,27 @@ void _draw_grid(
     sf::RenderTexture &render_texture, sf::Vector2u tamano_u, int distancia,
     int tono_gris
 ) {
-    sf::Vector2i tamano(
-        static_cast<int>(tamano_u.x), static_cast<int>(tamano_u.y)
+    sf::Vector2f tamano(
+        static_cast<float>(tamano_u.x), static_cast<float>(tamano_u.y)
     );
-
-    sf::Color color(tono_gris, tono_gris, tono_gris);
+    assert(tono_gris < 256);
+    assert(tono_gris >= 0);
+    const auto tono = static_cast<sf::Uint8>(tono_gris);
+    sf::Color color(tono, tono, tono);
 
     // Lineas horizontales
-    for (int j = 0; j < tamano.y; j += distancia) {
-        sf::RectangleShape rect(sf::Vector2f(tamano.x, 1));
+    for (float x = 0; x < tamano.y; x += distancia) {
+        sf::RectangleShape rect(sf::Vector2f(tamano.x, 1.0f));
         rect.setFillColor(color);
-        rect.setPosition(0, j);
+        rect.setPosition(0, x);
         render_texture.draw(rect);
     }
 
     // Lineas verticales
-    for (int i = 0; i < tamano.x; i += distancia) {
-        sf::RectangleShape rect(sf::Vector2f(1, tamano.y));
+    for (float y = 0; y < tamano.x; y += distancia) {
+        sf::RectangleShape rect(sf::Vector2f(1.0f, tamano.y));
         rect.setFillColor(color);
-        rect.setPosition(i, 0);
+        rect.setPosition(y, 0);
         render_texture.draw(rect);
     }
     // Importante!
