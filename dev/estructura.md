@@ -297,7 +297,6 @@
 - vista/componentes/boton_con_texto.h:
     - vista/componente.h
     - vista/componentes/boton_data.h
-    - vista/componentes/componente_old_style.h
 
 - vista/componentes/boton_data.h:
     - shared/font.h

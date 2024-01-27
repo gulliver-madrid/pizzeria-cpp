@@ -8,7 +8,7 @@
 #include <cassert>
 
 namespace medidas {
-    constexpr int GROSOR_BORDE_PANEL = 3;
+    constexpr float GROSOR_BORDE_PANEL = 3;
 } // namespace medidas
 
 const std::map<IndicePanel, std::string> texto_titulos_paneles = {

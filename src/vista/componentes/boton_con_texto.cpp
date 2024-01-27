@@ -131,6 +131,7 @@ void BotonConTexto::_actualizar_posicion_absoluta() {
     _etiqueta->set_position(pos_etiqueta.x, pos_etiqueta.y);
 }
 
+/* Actualiza el tamano (por ejemplo tras un cambio de la fuente)*/
 void BotonConTexto::_resize() {
     const auto margen_ambos_lados = _get_margen_ambos_lados();
     const sf::FloatRect rect_etiqueta = _etiqueta->get_global_bounds();

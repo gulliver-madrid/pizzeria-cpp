@@ -2,7 +2,6 @@
 
 #include "../componente.h"
 #include "boton_data.h"
-#include "componente_old_style.h"
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <memory>
 #include <optional>
@@ -15,11 +14,16 @@ namespace sf {
 
 struct Posicionamiento;
 
+enum class Align { //
+    Left,
+    Right
+};
+
 ///////////////////////////////////////////
 // BotonConTexto
 //////////////////////////////////////////
 
-class BotonConTexto : public ComponenteOldStyle, public ComponenteConFont {
+class BotonConTexto : public ComponenteConFont {
   private:
     static size_t _proximo_id;
     std::optional<size_t> _id;
