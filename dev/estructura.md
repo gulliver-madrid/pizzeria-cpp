@@ -143,6 +143,7 @@
     - globales.h
     - manejo_rutas.h
     - paths.h
+    - shared/log_init.h
     - vista/cadenas.h
     - vista/vista_data.h
 

@@ -5,6 +5,9 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 cmake_policy(SET CMP0144 NEW)
 
+# mas mensajes de error
+# add_compile_options(/W4)
+
 
 # SFML
 include(FetchContent)
@@ -28,6 +31,10 @@ set(BOOST_LIBRARYDIR "$ENV{BOOST_ROOT}/stage/lib")
 find_package(Boost 1.82 REQUIRED COMPONENTS log filesystem)
 include_directories( ${Boost_INCLUDE_DIRS} )
 link_directories(${BOOST_LIBRARYDIR})
+
+# evitar bug en boost
+# more info: https://github.com/microsoft/vcpkg/issues/22495#issuecomment-1012967084
+add_definitions(-DBOOST_USE_WINAPI_VERSION=BOOST_WINAPI_VERSION_WIN7)
 
 add_executable(pizzeria
     src/main.cpp

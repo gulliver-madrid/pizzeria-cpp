@@ -2,6 +2,7 @@
 #include "globales.h"
 #include "manejo_rutas.h"
 #include "paths.h"
+#include "shared/log_init.h"
 #include "vista/cadenas.h"
 #include "vista/vista_data.h"
 #include <cassert>
