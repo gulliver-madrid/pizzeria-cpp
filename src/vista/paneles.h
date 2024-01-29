@@ -16,8 +16,9 @@ enum class IndicePanel;
 ///////////////////////////////////////////
 // Panel
 /////////////////////////////////////////
-// TODO: cambiar a class
-struct Panel : public ComponenteConFont {
+
+class Panel : public ComponenteConFont {
+  public:
     IndicePanel indice;
     sf::RectangleShape forma;
     std::shared_ptr<Etiqueta> etiqueta_titulo;
@@ -29,7 +30,8 @@ struct Panel : public ComponenteConFont {
 // PanelEncargar
 /////////////////////////////////////////
 
-struct PanelEncargar : public Panel {
+class PanelEncargar : public Panel {
+  public:
     TipoPizzaToBoton encargar;
     PanelEncargar(
         IndicePanel indice, std::shared_ptr<Etiqueta> etiqueta,
@@ -44,7 +46,8 @@ struct PanelEncargar : public Panel {
 // PanelEnPreparacion
 /////////////////////////////////////////
 
-struct PanelEnPreparacion : public Panel {
+class PanelEnPreparacion : public Panel {
+  public:
     std::vector<std::shared_ptr<BarraProgresoConNombre>>
         barras_progreso_con_nombres;
     PanelEnPreparacion(IndicePanel indice, std::shared_ptr<Etiqueta> etiqueta);
@@ -57,7 +60,8 @@ struct PanelEnPreparacion : public Panel {
 // PanelPreparadas
 /////////////////////////////////////////
 
-struct PanelPreparadas : public Panel {
+class PanelPreparadas : public Panel {
+  public:
     TipoPizzaToBoton despachar;
     std::shared_ptr<EtiquetasPreparadas> etiquetas_preparadas;
     PanelPreparadas::PanelPreparadas(
