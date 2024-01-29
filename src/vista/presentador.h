@@ -8,12 +8,16 @@
 #include <vector>
 
 namespace presentador {
+    namespace impl {
+        std::string crea_linea_completitud_pizza(
+            const dominio::TipoPizza tp, UInt parte, UInt todo
+        );
+        std::string pedido_to_string(const Pedido &pedido);
+    } // namespace impl
 
-    std::string crea_linea_completitud_pizza(
-        const dominio::TipoPizza tp, UInt parte, UInt todo
+    std::vector<std::pair<std::string, size_t>>
+    crear_presentacion_pedidos(const modelo::Pedidos &pedidos //
     );
-
-    std::string pedido_to_string(const Pedido &pedido);
 
     PizzasToStrings contadores_to_preparadas( //
         const modelo::PizzasAContadores &

@@ -8,7 +8,7 @@
 using dominio::TipoPizza;
 
 TEST(Presentador, LineaCompletitudPizza) {
-    auto result = presentador::crea_linea_completitud_pizza(
+    auto result = presentador::impl::crea_linea_completitud_pizza(
         TipoPizza::Margarita, 2, 5 //
     );
     ASSERT_EQ(result, "Margarita: 2/5");
@@ -19,7 +19,7 @@ TEST(Presentador, PedidoToString) {
         {{TipoPizza::Margarita, {2, 5}}, {TipoPizza::Pepperoni, {1, 4}}}
     );
     Pedido pedido(std::move(contenido));
-    auto result = presentador::pedido_to_string(pedido);
+    auto result = presentador::impl::pedido_to_string(pedido);
     ASSERT_EQ(result, "Margarita: 2/5\nPepperoni: 1/4");
 }
 

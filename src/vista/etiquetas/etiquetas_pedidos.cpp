@@ -61,14 +61,16 @@ namespace {
     ) {
         // Creamos las tarjetas de los pedidos
         tarjetas.clear();
-        for (auto &pedido : pedidos) {
-            const auto texto = presentador::pedido_to_string(pedido);
-            const size_t num_items = pedido.contenido.size();
+        const auto presentacion_pedidos =
+            presentador::crear_presentacion_pedidos(pedidos);
+        for (auto &presentacion_pedido : presentacion_pedidos) {
+            const auto texto = presentacion_pedido.first;
+            const size_t num_items = presentacion_pedido.second;
             const TarjetaPedido card =
                 construye_tarjeta_pedido(texto, font, num_items);
             tarjetas.emplace_back(card);
         }
-        assert(tarjetas.size() == pedidos.size());
+        assert(tarjetas.size() == presentacion_pedidos.size());
 
         // Les asignamos su posicion correcta
         const auto separacion_vertical =
