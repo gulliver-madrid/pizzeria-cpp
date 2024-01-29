@@ -22,9 +22,9 @@ namespace sf {
 // TarjetaPedido
 //////////////////////////////////////////
 
-class TarjetaPedido : public sf::Drawable {
+class TarjetaPedido : public ComponenteConFont {
   public:
-    std::shared_ptr<Etiqueta> label;
+    std::shared_ptr<Etiqueta> etiqueta;
     sf::RectangleShape shape;
 
     TarjetaPedido(std::shared_ptr<Etiqueta>, sf::RectangleShape);
@@ -46,7 +46,7 @@ class EtiquetasPedidos : public ComponenteConFont {
     void _actualizar_vista_pedidos(const modelo::Pedidos &);
 
   public:
-    std::vector<TarjetaPedido> tarjetas_pedidos;
+    std::vector<std::shared_ptr<TarjetaPedido>> tarjetas_pedidos;
 
     EtiquetasPedidos();
     void actualizar(const modelo::Pedidos & //

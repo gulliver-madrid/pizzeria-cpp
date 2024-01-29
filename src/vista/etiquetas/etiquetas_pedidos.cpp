@@ -44,21 +44,20 @@ namespace {
 
     /* Construye una TarjetaPedido */
     TarjetaPedido construye_tarjeta_pedido(
-        std::string texto, const OptionalFont &font, size_t num_items //
+        std::string texto, size_t num_items //
     ) {
         static const auto tamano_fuente = 22;
         const auto etiqueta =
             crear_etiqueta(texto, tamano_fuente, "etiqueta pedidos");
-        etiqueta->set_font(font);
         const auto shape = build_card_pedido_shape(num_items);
         return {etiqueta, shape};
     }
 
     void actualizar_tarjetas_pedidos(
-        const modelo::Pedidos &pedidos,       //
-        std::vector<TarjetaPedido> &tarjetas, //
-        const OptionalFont &font              //
+        const modelo::Pedidos &pedidos,                       //
+        std::vector<std::shared_ptr<TarjetaPedido>> &tarjetas //
     ) {
+        // TODO:actualizar solo si cambian
         // Creamos las tarjetas de los pedidos
         tarjetas.clear();
         const auto presentacion_pedidos =
@@ -66,9 +65,10 @@ namespace {
         for (auto &presentacion_pedido : presentacion_pedidos) {
             const auto texto = presentacion_pedido.first;
             const size_t num_items = presentacion_pedido.second;
-            const TarjetaPedido card =
-                construye_tarjeta_pedido(texto, font, num_items);
-            tarjetas.emplace_back(card);
+            const auto tarjeta = std::make_shared<TarjetaPedido>(
+                construye_tarjeta_pedido(texto, num_items)
+            );
+            tarjetas.emplace_back(tarjeta);
         }
         assert(tarjetas.size() == presentacion_pedidos.size());
 
@@ -83,10 +83,10 @@ namespace {
         float pos_x = pos_panel.x + medidas::MARGEN_IZQ_ETIQUETAS;
         float pos_y = pos_panel.y + medidas::FILA_CONTENIDO_PANEL;
 
-        for (auto &card : tarjetas) {
-            card.set_position(pos_x, pos_y);
+        for (auto &tarjeta : tarjetas) {
+            tarjeta->set_position(pos_x, pos_y);
             //  Calcula la posicion del siguiente pedido
-            const auto g_bounds = card.label->get_global_bounds();
+            const auto g_bounds = tarjeta->etiqueta->get_global_bounds();
             pos_y = get_bottom(g_bounds) + separacion_vertical;
         }
     }
@@ -97,12 +97,14 @@ namespace {
 //////////////////////////////////////////
 
 TarjetaPedido::TarjetaPedido(
-    std::shared_ptr<Etiqueta> label, sf::RectangleShape shape
+    std::shared_ptr<Etiqueta> etiqueta_, sf::RectangleShape shape
 )
-    : label(label), shape(shape) {}
+    : etiqueta(etiqueta_), shape(shape) {
+    add_child(etiqueta_);
+}
 
 void TarjetaPedido::set_position(float pos_x, float pos_y) {
-    label->set_position(pos_x, pos_y);
+    etiqueta->set_position(pos_x, pos_y);
     shape.setPosition(pos_x - top_left_padding, pos_y - top_left_padding);
 }
 
@@ -111,7 +113,7 @@ void TarjetaPedido::draw(
     sf::RenderStates          //
 ) const {
     target.draw(shape);
-    target.draw(*label);
+    target.draw(*etiqueta);
 }
 
 ///////////////////////////////////////////
@@ -121,7 +123,15 @@ void TarjetaPedido::draw(
 void EtiquetasPedidos::_actualizar_vista_pedidos( //
     const modelo::Pedidos &pedidos
 ) {
-    actualizar_tarjetas_pedidos(pedidos, tarjetas_pedidos, font);
+    for (auto tarjeta : tarjetas_pedidos) {
+        remove_child(tarjeta);
+    }
+    actualizar_tarjetas_pedidos(pedidos, tarjetas_pedidos);
+    for (auto tarjeta : tarjetas_pedidos) {
+        assert(font.exists());
+        add_child(tarjeta);
+        assert(tarjeta->has_font());
+    }
 }
 
 ///////////////////////////////////////////

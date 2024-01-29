@@ -37,15 +37,15 @@ void dibujar_elementos(
     }
 }
 
-// template <typename Drawable>
-// void dibujar_elementos(
-//     sf::RenderTarget &target,
-//     const std::vector<std::shared_ptr<Drawable>> &elementos
-// ) {
-//     for (const auto &elemento : elementos) {
-//         target.draw(elemento);
-//     }
-// }
+template <typename Drawable>
+void dibujar_elementos(
+    sf::RenderTarget &target,
+    const std::vector<std::shared_ptr<Drawable>> &elementos
+) {
+    for (const auto elemento : elementos) {
+        target.draw(*elemento);
+    }
+}
 
 template <typename... Drawables>
 void dibujar_elementos(
