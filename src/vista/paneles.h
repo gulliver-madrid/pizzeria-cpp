@@ -5,6 +5,7 @@
 #include "barras_progreso.h"
 #include "componentes/crear_etiqueta.h"
 #include "etiquetas/etiquetas_preparadas.h"
+#include "paneles_observables.h"
 #include <memory>
 #include <vector>
 
@@ -64,17 +65,6 @@ struct PanelPreparadas : public Panel {
     void setup(const dominio::TiposDePizza &tp_disponibles);
     void actualizar(const PizzasToStrings &vista_preparadas);
     virtual void draw(sf::RenderTarget &, sf::RenderStates) const override;
-};
-
-///////////////////////////////////////////
-// PanelesObservables
-/////////////////////////////////////////
-
-class PanelesObservables {
-  public:
-    virtual bool get_visibilidad() const { //
-        return false;
-    };
 };
 
 ///////////////////////////////////////////
