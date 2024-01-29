@@ -22,14 +22,16 @@ class BotonesApp : public ComponenteConFont {
     std::shared_ptr<BotonConTexto> empezar;
     // Solo para recibir input
     TipoPizzaToBoton &encargar;
-    TipoPizzaToBoton despachar;
+    TipoPizzaToBoton &despachar;
     BotonesGenerales generales;
     // TODO: remove optional font del constructor
-    // ojo: podria haber algun error raro al liberar memoria segun el orden,
+    // WARNING: podria haber algun error raro al liberar memoria segun el orden,
     // debido a que botones encargar es una referencia
     BotonesApp(
-        const OptionalFont &font, const dominio::TiposDePizza &tp_disponibles,
-        TipoPizzaToBoton &botones
+        const OptionalFont &font, //
+        const dominio::TiposDePizza &tp_disponibles,
+        TipoPizzaToBoton &botones_encargar, //
+        TipoPizzaToBoton &botones_despachar //
     );
     void mostrar_botones_nivel(bool nuevo_valor);
     virtual void set_font(const OptionalFont &new_font) override;

@@ -82,9 +82,12 @@ void Vista::setup(
     this->grid = grid_;
     paneles = std::make_shared<Paneles>(tp_disponibles);
     auto panel_encargar = paneles->get_panel_encargar();
+    auto panel_preparadas = paneles->get_panel_preparadas();
     auto &botones_encargar = panel_encargar->encargar;
-    botones =
-        std::make_shared<BotonesApp>(font, tp_disponibles, botones_encargar);
+    auto &botones_despachar = panel_preparadas->despachar;
+    botones = std::make_shared<BotonesApp>(
+        font, tp_disponibles, botones_encargar, botones_despachar
+    );
     LOG(info) << "Inicializando etiquetas" << std::endl;
     etiquetas = std::make_shared<EtiquetasGenerales>();
     etiquetas->setup(

@@ -2,6 +2,7 @@
 #include "../shared/log_init.h"
 #include "../templates/dibujar_elementos.h"
 #include "basicos_vista.h"
+#include "botones_despachar.h"
 #include "botones_encargar.h"
 #include "componentes/etiqueta.h"
 #include "etiquetas/etiquetas.h"
@@ -121,23 +122,21 @@ void PanelEnPreparacion::draw(
     }
 }
 
-///////////////////////////////////////////
-// PanelPreparadas (public)
-/////////////////////////////////////////
-
 PanelPreparadas::PanelPreparadas(
-    IndicePanel indice, std::shared_ptr<Etiqueta> etiqueta
+    IndicePanel indice, std::shared_ptr<Etiqueta> etiqueta,
+    const dominio::TiposDePizza &tp_disponibles
 )
-    : Panel(indice, etiqueta) {
+    : Panel(indice, etiqueta),
+      despachar(crear_botones_despachar(tp_disponibles)) {
     etiquetas_preparadas = std::make_shared<EtiquetasPreparadas>();
-    LOG(debug) << "antes de add child de etiquetas preparadas";
     add_child(etiquetas_preparadas);
-    LOG(debug) << "despues de add child de etiquetas preparadas";
+    for (auto [_, btn] : despachar) {
+        add_child(btn);
+    }
 }
 
 void PanelPreparadas::setup(const dominio::TiposDePizza &tp_disponibles) {
     assert(etiquetas_preparadas);
-    LOG(debug) << "antes del setup de etiquetas preparadas";
     etiquetas_preparadas->setup(tp_disponibles);
 }
 
@@ -153,12 +152,17 @@ void PanelPreparadas::draw(
 ) const {
     Panel::draw(target, states);
     target.draw(*etiquetas_preparadas);
+    for (auto &[_, boton_ptr] : despachar) {
+        assert(boton_ptr != nullptr);
+        boton_ptr->actualizar();
+        target.draw(*boton_ptr);
+    }
 }
 
 ///////////////////////////////////////////
 // Paneles (public)
 /////////////////////////////////////////
-
+// TODO: ver si es necesario pasar etiqueta a los paneles
 Paneles::Paneles(const dominio::TiposDePizza &tp_disponibles) {
     const FabricaEtiquetasTituloPanel fabrica(font);
     LOG(debug) << "A punto de crear los paneles";
@@ -176,11 +180,11 @@ Paneles::Paneles(const dominio::TiposDePizza &tp_disponibles) {
         } else if (indice == IndicePanel::PANEL_EN_PREPARACION) {
             panel = std::make_shared<PanelEnPreparacion>(indice, titulo);
         } else if (indice == IndicePanel::PANEL_PREPARADAS) {
-            panel = std::make_shared<PanelPreparadas>(indice, titulo);
+            panel = std::make_shared<PanelPreparadas>(
+                indice, titulo, tp_disponibles
+            );
             auto &panel_preparadas = dynamic_cast<PanelPreparadas &>(*panel);
-            LOG(debug) << "A punto de hacer el setup de panel preparadas";
             panel_preparadas.setup(tp_disponibles);
-            LOG(debug) << "Despues del setup de panel preparadas";
         } else {
             panel = std::make_shared<Panel>(indice, titulo);
         }
@@ -196,6 +200,13 @@ std::shared_ptr<PanelEncargar> Paneles::get_panel_encargar() {
     auto panel_encargar = std::dynamic_pointer_cast<PanelEncargar>(panel);
     assert(panel_encargar);
     return panel_encargar;
+}
+
+std::shared_ptr<PanelPreparadas> Paneles::get_panel_preparadas() {
+    auto panel = _paneles.at(IndicePanel::PANEL_PREPARADAS);
+    auto panel_preparadas = std::dynamic_pointer_cast<PanelPreparadas>(panel);
+    assert(panel_preparadas);
+    return panel_preparadas;
 }
 
 void Paneles::actualizar(                            //
