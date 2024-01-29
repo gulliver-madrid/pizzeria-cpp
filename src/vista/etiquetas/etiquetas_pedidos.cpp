@@ -1,6 +1,4 @@
 #include "etiquetas_pedidos.h"
-#include "../../modelo/control_pizzas.h"
-#include "../../modelo/dominio.h"
 #include "../../shared/log_init.h"
 #include "../../templates/dibujar_elementos.h"
 #include "../../templates/helpers.h"
@@ -10,7 +8,6 @@
 #include "../presentador.h"
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <cassert>
-#include <iostream>
 
 namespace medidas {
     constexpr float SEPARACION_VERTICAL_ENTRE_PEDIDOS = 24;
@@ -127,9 +124,7 @@ void EtiquetasPedidos::_actualizar_vista_pedidos( //
     }
     actualizar_tarjetas_pedidos(presentacion_pedidos, tarjetas_pedidos);
     for (auto tarjeta : tarjetas_pedidos) {
-        assert(font.exists());
         add_child(tarjeta);
-        assert(tarjeta->has_font());
     }
 }
 

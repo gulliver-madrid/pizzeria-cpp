@@ -10,7 +10,6 @@
 #include "vista_data.h"
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <cassert>
-#include <iostream>
 #include <map>
 #include <string>
 

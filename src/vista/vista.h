@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../modelo/modelo.h"
 #include "botones_app.h"
 #include "etiquetas/etiquetas.h"
 #include "paneles.h"

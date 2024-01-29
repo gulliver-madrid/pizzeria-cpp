@@ -6,14 +6,7 @@
 #include <vector>
 
 class Etiqueta;
-class Pedido;
 
-namespace dominio {
-    enum class TipoPizza;
-}
-namespace modelo {
-    using Pedidos = std::vector<Pedido>;
-} // namespace modelo
 namespace sf {
     class RenderTarget;
 }
@@ -40,7 +33,6 @@ class TarjetaPedido : public ComponenteConFont {
  * Contiene los elementos visuales que muestran los pedidos.
  */
 class EtiquetasPedidos : public ComponenteConFont {
-    using TipoPizza = dominio::TipoPizza;
 
   private:
     void _actualizar_vista_pedidos(
