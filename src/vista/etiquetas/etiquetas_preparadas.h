@@ -11,8 +11,6 @@ namespace sf {
 }
 class Etiqueta;
 
-///// EtiquetasPreparadas /////
-
 /*
  * Contiene las etiquetas que muestran las pizzas en area de
  * preparadas.
@@ -30,5 +28,3 @@ class EtiquetasPreparadas : public ComponenteConFont {
     );
     virtual void draw(sf::RenderTarget &, sf::RenderStates) const override;
 };
-
-///// EtiquetasPedidos /////

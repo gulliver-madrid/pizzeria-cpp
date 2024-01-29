@@ -434,9 +434,6 @@
     - vista/componentes/crear_etiqueta.h
     - vista/componentes/etiqueta.h
 
-- vista/etiquetas/fabrica_etiquetas_preparadas.h:
-    - shared/font.h
-
 - vista/grid.cpp:
     - vista/grid.h
     - shared/types.h

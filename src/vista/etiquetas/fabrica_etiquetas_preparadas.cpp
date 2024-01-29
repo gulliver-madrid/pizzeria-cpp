@@ -51,19 +51,16 @@ std::shared_ptr<Etiqueta> FabricaEtiquetasPreparadas::_crear_etiqueta( //
 // FabricaEtiquetasPreparadas (public)
 //////////////////////////////////////////
 
-FabricaEtiquetasPreparadas::FabricaEtiquetasPreparadas(const OptionalFont &font)
-    : ObjetoConFont(font){};
-
 /*
  * Crea una etiqueta de pizzas preparadas
  */
 std::shared_ptr<Etiqueta>
 FabricaEtiquetasPreparadas::crearEtiquetaPizzasPreparadas(size_t indice_etiqueta
 ) const {
-    const auto indice_panel = IndicePanel::PANEL_PREPARADAS;
-    const auto posicion_panel = obtener_posicion_panel(indice_panel);
-    const auto desplazamiento =
+    static const auto indice_panel = IndicePanel::PANEL_PREPARADAS;
+    static const auto desplazamiento =
         medidas::DESPLAZAMIENTO_VERTICAL_ETIQUETAS_PIZZAS_PREPARADAS;
+    const auto posicion_panel = obtener_posicion_panel(indice_panel);
     const auto posicion = _obtener_posicion_etiqueta(
         posicion_panel, indice_etiqueta, desplazamiento
     );

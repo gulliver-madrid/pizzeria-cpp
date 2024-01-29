@@ -1,11 +1,10 @@
 #pragma once
 
-#include "../../shared/font.h"
 #include <SFML/Graphics/Text.hpp>
 
 class Etiqueta;
 
-class FabricaEtiquetasPreparadas : public ObjetoConFont {
+class FabricaEtiquetasPreparadas {
   private:
     sf::Vector2f _obtener_posicion_etiqueta(
         sf::Vector2f pos_panel,       //
@@ -16,7 +15,6 @@ class FabricaEtiquetasPreparadas : public ObjetoConFont {
     std::shared_ptr<Etiqueta> _crear_etiqueta(sf::Vector2f posicion) const;
 
   public:
-    FabricaEtiquetasPreparadas(const OptionalFont &font);
     std::shared_ptr<Etiqueta>
     crearEtiquetaPizzasPreparadas(size_t indice_etiqueta) const;
 };
