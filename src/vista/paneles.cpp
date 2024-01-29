@@ -64,7 +64,7 @@ PanelEncargar::PanelEncargar(
     const dominio::TiposDePizza &tp_disponibles
 )
     : Panel(indice, etiqueta),
-      encargar(_crear_botones_encargar(tp_disponibles)) {
+      encargar(crear_botones_encargar(tp_disponibles)) {
     for (auto [_, btn] : encargar) {
         add_child(btn);
     }

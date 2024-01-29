@@ -260,13 +260,25 @@
     - vista/componentes/boton_con_texto.h
     - vista/vista_shared.h
 
-- vista/botones_encargar.h:
+- vista/botones_despachar.h:
     - modelo/dominio.h
     - templates/helpers.h
     - vista/basicos_vista.h
     - vista/componentes/boton_con_texto.h
     - vista/componentes/botones.h
     - vista/datos_botones.h
+
+- vista/botones_encargar.cpp:
+    - vista/botones_encargar.h
+    - modelo/dominio.h
+    - templates/helpers.h
+    - vista/basicos_vista.h
+    - vista/componentes/boton_con_texto.h
+    - vista/componentes/botones.h
+    - vista/datos_botones.h
+
+- vista/botones_encargar.h:
+    - vista/vista_shared.h
 
 - vista/cadenas.cpp:
     - vista/cadenas.h
@@ -430,6 +442,7 @@
     - shared/log_init.h
     - templates/dibujar_elementos.h
     - vista/basicos_vista.h
+    - vista/botones_despachar.h
     - vista/botones_encargar.h
     - vista/componentes/etiqueta.h
     - vista/etiquetas/etiquetas.h
@@ -440,6 +453,7 @@
     - vista/barras_progreso.h
     - vista/componentes/crear_etiqueta.h
     - vista/etiquetas/etiquetas_preparadas.h
+    - vista/paneles_observables.h
 
 - vista/presentador.cpp:
     - vista/presentador.h

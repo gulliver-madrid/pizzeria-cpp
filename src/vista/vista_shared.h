@@ -9,7 +9,8 @@ class BotonConTexto;
 
 namespace dominio {
     enum class TipoPizza;
-}
+    using TiposDePizza = std::vector<TipoPizza>;
+} // namespace dominio
 
 using PizzasToStrings = std::map<dominio::TipoPizza, std::string>;
 using TipoPizzaToBoton =
