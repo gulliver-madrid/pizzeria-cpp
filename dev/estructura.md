@@ -260,13 +260,17 @@
     - vista/componentes/boton_con_texto.h
     - vista/vista_shared.h
 
-- vista/botones_despachar.h:
+- vista/botones_despachar.cpp:
+    - vista/botones_despachar.h
     - modelo/dominio.h
     - templates/helpers.h
     - vista/basicos_vista.h
     - vista/componentes/boton_con_texto.h
     - vista/componentes/botones.h
     - vista/datos_botones.h
+
+- vista/botones_despachar.h:
+    - vista/vista_shared.h
 
 - vista/botones_encargar.cpp:
     - vista/botones_encargar.h
@@ -444,6 +448,7 @@
     - vista/basicos_vista.h
     - vista/botones_despachar.h
     - vista/botones_encargar.h
+    - vista/componentes/boton_con_texto.h
     - vista/componentes/etiqueta.h
     - vista/etiquetas/etiquetas.h
 

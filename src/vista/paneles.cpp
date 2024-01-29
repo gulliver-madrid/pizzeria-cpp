@@ -4,6 +4,7 @@
 #include "basicos_vista.h"
 #include "botones_despachar.h"
 #include "botones_encargar.h"
+#include "componentes/boton_con_texto.h"
 #include "componentes/etiqueta.h"
 #include "etiquetas/etiquetas.h"
 #include <cassert>
