@@ -108,7 +108,8 @@ void EnlaceVista::actualizar_interfaz_grafico(
     vista->activar_botones_condicionalmente(activacion_botones);
     std::optional<VistaPreparacionPizzas> vista_preparacion;
     std::optional<PizzasToStrings> vista_preparadas;
-    std::optional<modelo::Pedidos> info_pedidos;
+    std::optional<const std::vector<std::pair<std::string, size_t>>>
+        info_pedidos;
 
     const auto fase_actual = modelo_amplio.get_fase_actual();
 
@@ -126,9 +127,11 @@ void EnlaceVista::actualizar_interfaz_grafico(
         vista_preparadas.emplace(
             presentador::contadores_to_preparadas(contadores)
         );
-        const auto pedidos =
+        const auto &pedidos =
             modelo_amplio.modelo_interno.control_pizzas.pedidos;
-        info_pedidos.emplace(pedidos);
+        const auto presentacion_pedidos =
+            presentador::crear_presentacion_pedidos(pedidos);
+        info_pedidos.emplace(presentacion_pedidos);
     }
 
     const auto mostrando_grid = modelo_amplio.mostrando_grid;

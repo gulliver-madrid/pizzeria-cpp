@@ -41,9 +41,10 @@ namespace {
 // TODO:  ir pasando a enlace_vista la logica que deba conocer el modelo
 /* Actualiza las etiquetas */
 void Vista::_actualizar_etiquetas(
-    std::optional<modelo::Pedidos> &info_pedidos, //
-    const sf::Time &tiempo_real_actual,           //
-    const sf::Time &tiempo_juego_actual           //
+    std::optional<const std::vector<std::pair<std::string, size_t>>>
+        &info_pedidos,                  //
+    const sf::Time &tiempo_real_actual, //
+    const sf::Time &tiempo_juego_actual //
 ) {
     if (info_pedidos) {
         etiquetas->actualizar_pedidos(info_pedidos.value());
@@ -121,9 +122,10 @@ void Vista::actualizar_interfaz_grafico(
     FaseNivel fase_actual,                                          //
     const std::optional<VistaPreparacionPizzas> &vista_preparacion, //
     std::optional<PizzasToStrings> &vista_preparadas,               //
-    std::optional<modelo::Pedidos> &info_pedidos,                   //
-    const sf::Time &tiempo_real_actual,                             //
-    const sf::Time &tiempo_juego_actual                             //
+    std::optional<const std::vector<std::pair<std::string, size_t>>>
+        &info_pedidos,                  //
+    const sf::Time &tiempo_real_actual, //
+    const sf::Time &tiempo_juego_actual //
 ) {
     _mostrando_grid = mostrando_grid;
     _actualizar_vista_paneles(vista_preparacion, vista_preparadas);

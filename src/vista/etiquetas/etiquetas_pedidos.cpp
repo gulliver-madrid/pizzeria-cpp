@@ -54,14 +54,13 @@ namespace {
     }
 
     void actualizar_tarjetas_pedidos(
-        const modelo::Pedidos &pedidos,                       //
+        const std::vector<std::pair<std::string, size_t>>
+            &presentacion_pedidos,                            //
         std::vector<std::shared_ptr<TarjetaPedido>> &tarjetas //
     ) {
         // TODO:actualizar solo si cambian
         // Creamos las tarjetas de los pedidos
         tarjetas.clear();
-        const auto presentacion_pedidos =
-            presentador::crear_presentacion_pedidos(pedidos);
         for (auto &presentacion_pedido : presentacion_pedidos) {
             const auto texto = presentacion_pedido.first;
             const size_t num_items = presentacion_pedido.second;
@@ -121,12 +120,12 @@ void TarjetaPedido::draw(
 //////////////////////////////////////////
 
 void EtiquetasPedidos::_actualizar_vista_pedidos( //
-    const modelo::Pedidos &pedidos
+    const std::vector<std::pair<std::string, size_t>> &presentacion_pedidos
 ) {
     for (auto tarjeta : tarjetas_pedidos) {
         remove_child(tarjeta);
     }
-    actualizar_tarjetas_pedidos(pedidos, tarjetas_pedidos);
+    actualizar_tarjetas_pedidos(presentacion_pedidos, tarjetas_pedidos);
     for (auto tarjeta : tarjetas_pedidos) {
         assert(font.exists());
         add_child(tarjeta);
@@ -140,9 +139,10 @@ void EtiquetasPedidos::_actualizar_vista_pedidos( //
 
 EtiquetasPedidos::EtiquetasPedidos() {}
 
-void EtiquetasPedidos::actualizar(const modelo::Pedidos &pedidos //
+void EtiquetasPedidos::actualizar(
+    const std::vector<std::pair<std::string, size_t>> &presentacion_pedidos
 ) {
-    _actualizar_vista_pedidos(pedidos);
+    _actualizar_vista_pedidos(presentacion_pedidos);
 }
 
 void EtiquetasPedidos::draw(

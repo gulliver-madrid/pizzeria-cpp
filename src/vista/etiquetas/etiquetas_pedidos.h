@@ -43,13 +43,16 @@ class EtiquetasPedidos : public ComponenteConFont {
     using TipoPizza = dominio::TipoPizza;
 
   private:
-    void _actualizar_vista_pedidos(const modelo::Pedidos &);
+    void _actualizar_vista_pedidos(
+        const std::vector<std::pair<std::string, size_t>> &presentacion_pedidos
+    );
 
   public:
     std::vector<std::shared_ptr<TarjetaPedido>> tarjetas_pedidos;
 
     EtiquetasPedidos();
-    void actualizar(const modelo::Pedidos & //
+    void actualizar(
+        const std::vector<std::pair<std::string, size_t>> &presentacion_pedidos
     );
     virtual void draw(sf::RenderTarget &, sf::RenderStates) const override;
 };

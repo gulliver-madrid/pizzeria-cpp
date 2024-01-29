@@ -48,8 +48,8 @@ struct EtiquetasGenerales : public ComponenteConFont {
     void set_presentacion_vista(
         std::shared_ptr<PresentacionVista> presentacion_vista //
     );
-    //  TODO: etiquetas no deberia conocer pedidos
-    void actualizar_pedidos(const modelo::Pedidos &pedidos //
+    void actualizar_pedidos( //
+        const std::vector<std::pair<std::string, size_t>> &presentacion_pedidos
     );
 
     void actualizar_barra_estado(

@@ -36,9 +36,10 @@ class Vista : public ComponenteConFont, public VistaObservable {
     bool _mostrando_grid = false;
 
     void _actualizar_etiquetas(
-        std::optional<modelo::Pedidos> &info_pedidos, //
-        const sf::Time &tiempo_real_actual,           //
-        const sf::Time &tiempo_juego_actual           //
+        std::optional<const std::vector<std::pair<std::string, size_t>>>
+            &info_pedidos,                  //
+        const sf::Time &tiempo_real_actual, //
+        const sf::Time &tiempo_juego_actual //
     );
 
     void _actualizar_vista_paneles( //
@@ -70,9 +71,10 @@ class Vista : public ComponenteConFont, public VistaObservable {
         FaseNivel fase_actual,                            //
         const std::optional<VistaPreparacionPizzas> &,    //
         std::optional<PizzasToStrings> &vista_preparadas, //
-        std::optional<modelo::Pedidos> &info_pedidos,     //
-        const sf::Time &tiempo_real_actual,               //
-        const sf::Time &tiempo_juego_actual               //
+        std::optional<const std::vector<std::pair<std::string, size_t>>>
+            &info_pedidos,                  //
+        const sf::Time &tiempo_real_actual, //
+        const sf::Time &tiempo_juego_actual //
     );
 
     void mostrar_elementos_fase_activa();

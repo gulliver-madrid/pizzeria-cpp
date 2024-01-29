@@ -47,9 +47,10 @@ void EtiquetasGenerales::set_presentacion_vista(
     info->set_presentacion_vista(presentacion_vista);
 }
 
-void EtiquetasGenerales::actualizar_pedidos(const modelo::Pedidos &pedidos //
+void EtiquetasGenerales::actualizar_pedidos(
+    const std::vector<std::pair<std::string, size_t>> &presentacion_pedidos //
 ) {
-    etiquetas_pedidos->actualizar(pedidos);
+    etiquetas_pedidos->actualizar(presentacion_pedidos);
 }
 
 void EtiquetasGenerales::actualizar_barra_estado(
