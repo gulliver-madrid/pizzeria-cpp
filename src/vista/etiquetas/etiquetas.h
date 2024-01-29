@@ -68,15 +68,13 @@ struct EtiquetasGenerales : public ComponenteConFont {
 // FabricaEtiquetasTituloPanel
 //////////////////////////////////////////
 
-struct FabricaEtiquetasTituloPanel : public ObjetoConFont {
+class FabricaEtiquetasTituloPanel {
   private:
     static sf::Vector2f get_posicion_etiqueta_titulo_panel( //
         const sf::Vector2f &posicion_panel
     );
 
   public:
-    FabricaEtiquetasTituloPanel(const OptionalFont &font)
-        : ObjetoConFont(font) {}
     std::shared_ptr<Etiqueta> crearEtiquetaTituloPanel(
         const sf::Vector2f &posicion_panel, const std::string &texto_crudo
     ) const;

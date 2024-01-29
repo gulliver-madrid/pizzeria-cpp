@@ -165,7 +165,7 @@ void PanelPreparadas::draw(
 /////////////////////////////////////////
 // TODO: ver si es necesario pasar etiqueta a los paneles
 Paneles::Paneles(const dominio::TiposDePizza &tp_disponibles) {
-    const FabricaEtiquetasTituloPanel fabrica(font);
+    const FabricaEtiquetasTituloPanel fabrica;
     LOG(debug) << "A punto de crear los paneles";
     for (auto indice : paneles_posibles) {
         std::shared_ptr<Panel> panel = nullptr;
