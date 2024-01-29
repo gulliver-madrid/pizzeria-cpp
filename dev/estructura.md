@@ -137,6 +137,7 @@
     - globales.h
     - modelo_amplio/modelo_amplio.h
     - shared/font.h
+    - shared/num_nivel.h
     - tiempo.h
     - vista/enlace_vista.h
     - vista/grid.h
@@ -365,9 +366,7 @@
     - vista/presentacion_vista.h
 
 - vista/etiquetas/etiquetas.h:
-    - modelo/control_pizzas.h
-    - modelo/modelo.h
-    - shared/num_nivel.h
+    - modelo/modelo_shared.h
     - vista/componente.h
     - vista/presentacion_vista.h
     - vista/vista_shared.h

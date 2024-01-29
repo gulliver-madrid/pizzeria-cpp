@@ -1,8 +1,6 @@
 #pragma once
 
-#include "../../modelo/control_pizzas.h"
-#include "../../modelo/modelo.h"
-#include "../../shared/num_nivel.h"
+#include "../../modelo/modelo_shared.h"
 #include "../componente.h"
 #include "../presentacion_vista.h"
 #include "../vista_shared.h"
@@ -19,10 +17,11 @@ namespace sf {
 
 class Etiqueta;
 class EtiquetasBarraEstado;
+class EtiquetasInfo;
 class EtiquetasPreparadas;
 class EtiquetasPedidos;
+class NumNivelOpcional;
 class Globales;
-class EtiquetasInfo;
 
 ///////////////////////////////////////////
 // EtiquetasGenerales
@@ -31,7 +30,6 @@ class EtiquetasInfo;
 /* Agrupa las etiquetas principales para un nivel determinado */
 struct EtiquetasGenerales : public ComponenteConFont {
   private:
-    // std::shared_ptr<EtiquetasPreparadas> etiquetas_preparadas;
     std::shared_ptr<EtiquetasPedidos> etiquetas_pedidos;
     std::shared_ptr<EtiquetasInfo> info;
     std::shared_ptr<EtiquetasBarraEstado> barra_estado;
@@ -50,7 +48,7 @@ struct EtiquetasGenerales : public ComponenteConFont {
     void set_presentacion_vista(
         std::shared_ptr<PresentacionVista> presentacion_vista //
     );
-
+    //  TODO: etiquetas no deberia conocer pedidos
     void actualizar_pedidos(const modelo::Pedidos &pedidos //
     );
 

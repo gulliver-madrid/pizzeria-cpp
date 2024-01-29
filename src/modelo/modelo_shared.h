@@ -1,6 +1,7 @@
 #pragma once
 
 #include <map>
+#include <vector>
 
 class Pedido;
 struct Contadores;
@@ -12,4 +13,5 @@ namespace dominio {
 
 namespace modelo {
     using PizzasAContadores = std::map<dominio::TipoPizza, Contadores>;
-}
+    using Pedidos = std::vector<Pedido>;
+} // namespace modelo
