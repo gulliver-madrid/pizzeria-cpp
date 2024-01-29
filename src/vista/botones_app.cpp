@@ -37,9 +37,7 @@ namespace {
         );
     }
 
-    BotonesGenerales _crear_botones_generales( //
-        const OptionalFont &font
-    ) {
+    BotonesGenerales _crear_botones_generales() {
         const auto pos_derecha = _obtener_pos_dcha_botones_generales();
         auto botones = crear_botones_alineados_derecha(
             pos_derecha,                                           //
@@ -106,16 +104,13 @@ void BotonesApp::_establecer_todos() {
 }
 
 /* Crea todos los botones */
-// TODO: eliminar  font
 BotonesApp::BotonesApp(
-    const OptionalFont &font,                    //
     const dominio::TiposDePizza &tp_disponibles, //
     TipoPizzaToBoton &botones_encargar,          //
     TipoPizzaToBoton &botones_despachar          //
 )
-    : empezar(_crear_boton_empezar()),
-      generales(_crear_botones_generales(font)), encargar(botones_encargar),
-      despachar(botones_despachar) {
+    : empezar(_crear_boton_empezar()), generales(_crear_botones_generales()),
+      encargar(botones_encargar), despachar(botones_despachar) {
     _establecer_todos();
     for (auto btn : todos) {
         add_child(btn);

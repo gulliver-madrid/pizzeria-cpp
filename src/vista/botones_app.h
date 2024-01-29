@@ -24,11 +24,10 @@ class BotonesApp : public ComponenteConFont {
     TipoPizzaToBoton &encargar;
     TipoPizzaToBoton &despachar;
     BotonesGenerales generales;
-    // TODO: remove optional font del constructor
+
     // WARNING: podria haber algun error raro al liberar memoria segun el orden,
     // debido a que botones encargar es una referencia
     BotonesApp(
-        const OptionalFont &font, //
         const dominio::TiposDePizza &tp_disponibles,
         TipoPizzaToBoton &botones_encargar, //
         TipoPizzaToBoton &botones_despachar //

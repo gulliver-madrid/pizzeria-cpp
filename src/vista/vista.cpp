@@ -86,7 +86,7 @@ void Vista::setup(
     auto &botones_encargar = panel_encargar->encargar;
     auto &botones_despachar = panel_preparadas->despachar;
     botones = std::make_shared<BotonesApp>(
-        font, tp_disponibles, botones_encargar, botones_despachar
+        tp_disponibles, botones_encargar, botones_despachar
     );
     LOG(info) << "Inicializando etiquetas" << std::endl;
     etiquetas = std::make_shared<EtiquetasGenerales>();
