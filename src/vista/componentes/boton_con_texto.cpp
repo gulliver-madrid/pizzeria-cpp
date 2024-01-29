@@ -180,11 +180,9 @@ BotonConTexto::BotonConTexto(
         Vector2f_CERO,                                            //
         "etiqueta boton con texto " + boton_data.texto            //
     );
+    _forma.setFillColor(boton_data.color_fondo);
     add_child(_etiqueta);
-    _color_fondo = boton_data.color_fondo;
-
     _resize();
-    _forma.setFillColor(_color_fondo);
 };
 
 /**

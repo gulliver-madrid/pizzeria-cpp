@@ -31,9 +31,6 @@ class BotonConTexto : public ComponenteConFont {
     sf::RectangleShape _forma;
     std::shared_ptr<Etiqueta> _etiqueta;
 
-    // TODO: ver si es necesario
-    sf::Color _color_fondo = sf::Color::White;
-
     std::unique_ptr<Posicionamiento> posicionamiento;
     // Solo puede modificarse la escala en la construccion
     float _escala = 1;
