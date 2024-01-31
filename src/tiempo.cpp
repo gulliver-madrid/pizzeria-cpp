@@ -73,8 +73,8 @@ sf::Time tiempo::obtener_tiempo_actual() {
     auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(duracion) //
                   .count() %
               10'000'000;
-    const static auto inicial = sf::milliseconds(ms);
-    return sf::milliseconds(ms) - inicial;
+    const static auto inicial = sf::milliseconds((int)ms);
+    return sf::milliseconds((int)ms) - inicial;
 };
 
 ///////////////////////////////////////////

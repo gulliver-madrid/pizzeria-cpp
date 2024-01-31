@@ -88,9 +88,10 @@ class Paneles : public ComponenteConFont, public PanelesObservables {
 
     std::shared_ptr<PanelEncargar> get_panel_encargar();
     std::shared_ptr<PanelPreparadas> get_panel_preparadas();
-    void Paneles::actualizar(                            //
+    void actualizar(                                     //
         const VistaPreparacionPizzas &vista_preparacion, //
         const PizzasToStrings &vista_preparadas          //
     );
+    virtual bool get_visibilidad() const override;
     virtual void draw(sf::RenderTarget &, sf::RenderStates) const override;
 };

@@ -6,7 +6,5 @@
 
 class PanelesObservables {
   public:
-    virtual bool get_visibilidad() const { //
-        return false;
-    };
+    virtual bool get_visibilidad() const = 0;
 };

@@ -27,8 +27,9 @@ using CambioFase = std::pair<FaseNivel, FaseNivel>;
 
 struct Nivel {
   private:
-    std::optional<ModeloAmplio> modelo_amplio;
     OptionalFont font;
+    std::shared_ptr<EjecucionEnProceso> ejecucion_en_proceso;
+    Timer timer_espera_antes_de_resultado;
 
     std::optional<FaseNivel> _procesa_click(
         const std::shared_ptr<const BotonesApp>, //
@@ -41,11 +42,9 @@ struct Nivel {
         sf::Event,                              //
         const std::shared_ptr<const BotonesApp> //
     );
-    std::optional<AccionGeneral> Nivel::_procesa_cambio_de_fase(
-        EjecucionEnProceso &ejecucion_en_proceso, FaseNivel nueva_fase
-    );
 
   public:
+    std::optional<ModeloAmplio> modelo_amplio;
     const std::shared_ptr<Globales> globales;
     const std::shared_ptr<DatosNivel> datos_nivel;
     const NumNivelOpcional &num_nivel;
@@ -62,7 +61,10 @@ struct Nivel {
         std::shared_ptr<Grid> grid = nullptr,                  //
         bool es_el_ultimo = false                              //
     );
+    void setup();
     AccionGeneral ejecutar();
+    void actualizar_interfaz_grafico(const sf::Time tiempo_real_actual);
+    std::optional<AccionGeneral> procesa_cambio_de_fase(FaseNivel nueva_fase);
     void establecer_fase(FaseNivel);
     std::shared_ptr<VistaObservable> get_vista() const;
 };

@@ -213,6 +213,8 @@
     - datos_niveles.h
     - globales.h
     - juego.h
+    - modelo_amplio/aplicador.h
+    - modelo_amplio/comandos.h
     - nivel.h
     - setup_juego.h
     - vista/vista.h
@@ -400,8 +402,6 @@
 
 - vista/etiquetas/etiquetas_pedidos.cpp:
     - vista/etiquetas/etiquetas_pedidos.h
-    - modelo/control_pizzas.h
-    - modelo/dominio.h
     - shared/log_init.h
     - templates/dibujar_elementos.h
     - templates/helpers.h
@@ -483,7 +483,6 @@
     - vista/vista_data.h
 
 - vista/vista.h:
-    - modelo/modelo.h
     - vista/botones_app.h
     - vista/etiquetas/etiquetas.h
     - vista/paneles.h

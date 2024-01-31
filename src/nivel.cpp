@@ -17,6 +17,15 @@ struct EjecucionEnProceso {
     std::shared_ptr<EnlaceVista> enlace_vista;
     GestorTiempoJuego &gestor_tiempo_juego;
     Timer &timer_espera_antes_de_resultado;
+    EjecucionEnProceso(
+        std::optional<ModeloAmplio> &modelo_amplio_,
+        std::shared_ptr<EnlaceVista> enlace_vista_,
+        GestorTiempoJuego &gestor_tiempo_juego_,
+        Timer &timer_espera_antes_de_resultado_
+    )
+        : modelo_amplio(modelo_amplio_), enlace_vista(enlace_vista_),
+          gestor_tiempo_juego(gestor_tiempo_juego_),
+          timer_espera_antes_de_resultado(timer_espera_antes_de_resultado_) {}
 };
 
 namespace tiempos {
@@ -38,7 +47,7 @@ namespace {
     }
 
     /* Procesa un cambio de fase reciente */
-    std::optional<AccionGeneral> procesa_cambio_de_fase(
+    std::optional<AccionGeneral> impl_procesa_cambio_de_fase(
         EjecucionEnProceso &ejecucion, //
         CambioFase cambio_fase         //
     ) {
@@ -169,17 +178,6 @@ std::optional<FaseNivel> Nivel::_procesarEvento(
     return std::nullopt;
 };
 
-/* Procesa un cambio de fase reciente */
-std::optional<AccionGeneral> Nivel::_procesa_cambio_de_fase(
-    EjecucionEnProceso &ejecucion, FaseNivel nueva_fase
-) {
-    // Cambio de fase reciente
-    const auto fase_previa = modelo_amplio->get_fase_actual();
-    CambioFase cambio_fase = {fase_previa, nueva_fase};
-    establecer_fase(nueva_fase);
-    return procesa_cambio_de_fase(ejecucion, cambio_fase);
-}
-
 ///////////////////////////////////////////
 // Nivel (public)
 //////////////////////////////////////////
@@ -213,20 +211,25 @@ Nivel::Nivel(
     modelo_amplio->observadores_fase.push_back(enlace_vista);
 }
 
+// Inicializa elementos antes de la ejecucion
+void Nivel::setup() {
+    auto &gestor_tiempo_juego = modelo_amplio->modelo_interno.gestor_tiempo;
+    ejecucion_en_proceso = std::make_shared<EjecucionEnProceso>(
+        modelo_amplio, enlace_vista, gestor_tiempo_juego,
+        timer_espera_antes_de_resultado
+    );
+}
+
 AccionGeneral Nivel::ejecutar() {
     auto &control_pizzas = modelo_amplio->modelo_interno.control_pizzas;
     auto &contadores = control_pizzas.contadores;
     establecer_fase(FaseNivel::MostrandoInstrucciones);
     assert(!contadores.empty());
     LOG(info) << "modelo amplio iniciado" << std::endl;
-    auto &gestor_tiempo_juego = modelo_amplio->modelo_interno.gestor_tiempo;
 
-    Timer timer_espera_antes_de_resultado;
     Timer timer_fin_nivel;
-    EjecucionEnProceso ejecucion_en_proceso = {
-        modelo_amplio, enlace_vista, gestor_tiempo_juego,
-        timer_espera_antes_de_resultado
-    };
+    setup();
+
     sf::Sound sound;
     sf::Time previo = tiempo::obtener_tiempo_actual();
     LOG(info) << "Empezando bucle de juego" << std::endl;
@@ -243,9 +246,7 @@ AccionGeneral Nivel::ejecutar() {
                 continue;
             }
 
-            const auto accion = _procesa_cambio_de_fase(
-                ejecucion_en_proceso, siguiente_fase.value()
-            );
+            const auto accion = procesa_cambio_de_fase(siguiente_fase.value());
 
             if (accion.has_value()) {
                 return accion.value();
@@ -279,16 +280,31 @@ AccionGeneral Nivel::ejecutar() {
         }
         const auto tiempo_real_actual = tiempo::obtener_tiempo_actual();
         const auto transcurrido = tiempo_real_actual - previo;
-        gestor_tiempo_juego.tick(transcurrido);
+        ejecucion_en_proceso->gestor_tiempo_juego.tick(transcurrido);
         previo = tiempo_real_actual;
-        enlace_vista->actualizar_interfaz_grafico(
-            modelo_amplio.value(), tiempo_real_actual
-        );
+        actualizar_interfaz_grafico(tiempo_real_actual);
         enlace_vista->dibujar_vista(globales->window);
         globales->window.display();
     }
     assert(false); // No deberiamos llegar aqui
     return AccionGeneral::Salir;
+}
+
+void Nivel::actualizar_interfaz_grafico(const sf::Time tiempo_real_actual) {
+    enlace_vista->actualizar_interfaz_grafico(
+        modelo_amplio.value(), tiempo_real_actual
+    );
+}
+
+/* Procesa un cambio de fase reciente */
+std::optional<AccionGeneral> Nivel::procesa_cambio_de_fase(FaseNivel nueva_fase
+) {
+    // Cambio de fase reciente
+    const auto fase_previa = modelo_amplio->get_fase_actual();
+    CambioFase cambio_fase = {fase_previa, nueva_fase};
+    establecer_fase(nueva_fase);
+    assert(ejecucion_en_proceso);
+    return impl_procesa_cambio_de_fase(*ejecucion_en_proceso, cambio_fase);
 }
 
 void Nivel::establecer_fase(FaseNivel nueva_fase) {

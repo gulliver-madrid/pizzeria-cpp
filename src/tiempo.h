@@ -20,10 +20,10 @@ struct Timer {
   private:
     std::optional<sf::Clock> clock;
     std::optional<sf::Time> finalizacion = std::nullopt;
-    sf::Time Timer::obtener_tiempo_transcurrido();
+    sf::Time obtener_tiempo_transcurrido();
 
   public:
-    void Timer::start(sf::Time finalizacion);
+    void start(sf::Time finalizacion);
     bool termino();
 };
 

@@ -230,6 +230,10 @@ void Paneles::actualizar(                            //
     panel_preparadas->actualizar(vista_preparadas);
 }
 
+bool Paneles::get_visibilidad() const { //
+    return visible;
+};
+
 void Paneles::draw(
     sf::RenderTarget &target, //
     sf::RenderStates          //
