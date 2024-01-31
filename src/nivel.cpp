@@ -239,22 +239,12 @@ AccionGeneral Nivel::ejecutar() {
 
     std::optional<AccionGeneral> accion;
     sf::Time previo = tiempo::obtener_tiempo_actual();
-    LOG(info) << "Empezando bucle de juego" << std::endl;
+    LOG(info) << "Empezando bucle de juego";
     while (globales->window.isOpen()) {
-        LOG(info) << "Nueva iteracion del bucle de juego" << std::endl;
+        LOG(info) << "Nueva iteracion del bucle de juego";
         sf::Event event;
         while (globales->window.pollEvent(event)) {
-            LOG(info) << "Antes de procesar evento" << std::endl;
-            auto siguiente_fase = _procesarEvento( //
-                event, enlace_vista->get_botones()
-            );
-            LOG(info) << "Despues de procesar evento" << std::endl;
-            if (!siguiente_fase.has_value()) {
-                continue;
-            }
-
-            const auto accion = procesa_cambio_de_fase(siguiente_fase.value());
-
+            accion = procesar_evento(event);
             if (accion.has_value()) {
                 return accion.value();
             }
@@ -277,6 +267,19 @@ AccionGeneral Nivel::ejecutar() {
     }
     assert(accion.has_value());
     return accion.value();
+}
+
+std::optional<AccionGeneral> Nivel::procesar_evento(sf::Event event) {
+    LOG(info) << "Antes de procesar evento";
+    auto siguiente_fase = _procesarEvento( //
+        event, enlace_vista->get_botones()
+    );
+    LOG(info) << "Despues de procesar evento";
+    if (!siguiente_fase.has_value()) {
+        return std::nullopt;
+    }
+
+    return procesa_cambio_de_fase(siguiente_fase.value());
 }
 
 std::optional<AccionGeneral> Nivel::procesar_ciclo() {

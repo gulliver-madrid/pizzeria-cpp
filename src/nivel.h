@@ -61,6 +61,7 @@ struct Nivel {
     );
     void setup();
     AccionGeneral ejecutar();
+    std::optional<AccionGeneral> Nivel::procesar_evento(sf::Event);
     std::optional<AccionGeneral> procesar_ciclo();
     void actualizar_interfaz_grafico(const sf::Time tiempo_real_actual);
     std::optional<AccionGeneral> procesa_cambio_de_fase(FaseNivel nueva_fase);
