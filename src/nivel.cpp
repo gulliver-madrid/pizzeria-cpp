@@ -122,6 +122,7 @@ std::optional<FaseNivel> Nivel::_procesa_click(
 std::shared_ptr<EnlaceVista> Nivel::_crear_enlace_vista( //
     const modelo::ControlPizzas &control_pizzas
 ) {
+    OptionalFont font;
     assert(!font.exists());
     if (globales) {
         assert(globales->font);

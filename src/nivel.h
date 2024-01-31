@@ -27,7 +27,6 @@ using CambioFase = std::pair<FaseNivel, FaseNivel>;
 
 struct Nivel {
   private:
-    OptionalFont font;
     std::shared_ptr<EjecucionEnProceso> ejecucion_en_proceso;
     std::shared_ptr<GestorTimer> timer_espera_antes_de_resultado;
 
