@@ -272,15 +272,14 @@ AccionGeneral Nivel::ejecutar() {
         switch (modelo_amplio->get_fase_actual()) {
             case FaseNivel::EsperaAntesDeResultado:
                 if (timer_espera_antes_de_resultado->termino()) {
-                    std::cout << "Se debe mostrar el resultado" << std::endl;
+                    LOG(info) << "Se debe mostrar el resultado";
                     establecer_fase(FaseNivel::MostrandoResultado);
                 }
                 break;
             case FaseNivel::MostrandoResultado:
                 {
                     if (!es_el_ultimo && timer_fin_nivel->termino()) {
-                        std::cout << "Se debe pasar al siguiente nivel"
-                                  << std::endl;
+                        LOG(info) << "Se debe pasar al siguiente nivel";
                         return AccionGeneral::SiguienteNivel;
                     };
                 }
