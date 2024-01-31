@@ -1,6 +1,7 @@
 #include "juego.h"
 #include "datos_niveles.h"
 #include "globales.h"
+#include "motor_nivel.h"
 #include "nivel.h"
 #include "setup_juego.h"
 #include "shared/log_init.h"

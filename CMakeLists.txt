@@ -52,6 +52,7 @@ add_executable(pizzeria
     src/modelo_amplio/modelo_amplio.cpp
     src/modelo_amplio/realizador.cpp
     src/nivel.cpp
+    src/motor_nivel.cpp
     src/shared/font.cpp
     src/setup_juego.cpp
     src/textos.cpp
@@ -145,6 +146,7 @@ add_executable(
     src/modelo_amplio/modelo_amplio.cpp
     src/modelo_amplio/realizador.cpp
     src/nivel.cpp
+    src/motor_nivel.cpp
     src/setup_juego.cpp
     src/shared/font.cpp
     src/textos.cpp
