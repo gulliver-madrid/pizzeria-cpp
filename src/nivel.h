@@ -49,8 +49,6 @@ struct Nivel {
     const std::shared_ptr<DatosNivel> datos_nivel;
     const NumNivelOpcional &num_nivel;
     const std::shared_ptr<Grid> grid;
-
-    const bool es_el_ultimo;
     std::shared_ptr<ControladorClicks> controlador_clicks;
     std::shared_ptr<EnlaceVista> enlace_vista;
 
@@ -58,8 +56,7 @@ struct Nivel {
         std::shared_ptr<Globales> globales = nullptr,          //
         std::shared_ptr<DatosNivel> datos_nivel = nullptr,     //
         const NumNivelOpcional num_nivel = NumNivelOpcional(), //
-        std::shared_ptr<Grid> grid = nullptr,                  //
-        bool es_el_ultimo = false                              //
+        std::shared_ptr<Grid> grid = nullptr                   //
     );
     void setup();
     AccionGeneral ejecutar();

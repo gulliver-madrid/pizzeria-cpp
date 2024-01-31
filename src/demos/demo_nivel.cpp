@@ -22,13 +22,16 @@ int demo_nivel(NumNivelOpcional numero_nivel) {
     while (true) {
         Nivel nivel(
             globales, std::make_shared<DatosNivel>(datos_niveles[indice_nivel]),
-            numero_nivel, grid, true
+            numero_nivel, grid
         );
         AccionGeneral res = nivel.ejecutar();
         if (res == AccionGeneral::Reiniciar) {
             continue;
         } else {
-            assert(res == AccionGeneral::Salir);
+            assert(
+                res == AccionGeneral::Salir ||
+                res == AccionGeneral::SiguienteNivel
+            );
             break;
         }
     }

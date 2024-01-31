@@ -187,11 +187,10 @@ Nivel::Nivel(
     std::shared_ptr<Globales> globales,      //
     std::shared_ptr<DatosNivel> datos_nivel, //
     const NumNivelOpcional num_nivel,        //
-    std::shared_ptr<Grid> grid,              //
-    bool es_el_ultimo                        //
+    std::shared_ptr<Grid> grid               //
 )
     : globales(globales), datos_nivel(datos_nivel), num_nivel(num_nivel),
-      grid(grid), es_el_ultimo(es_el_ultimo) {
+      grid(grid) {
 
     controlador_clicks = std::shared_ptr<ControladorClicks>();
 
@@ -279,7 +278,7 @@ AccionGeneral Nivel::ejecutar() {
                 break;
             case FaseNivel::MostrandoResultado:
                 {
-                    if (!es_el_ultimo && timer_fin_nivel->termino()) {
+                    if (timer_fin_nivel->termino()) {
                         LOG(info) << "Se debe pasar al siguiente nivel";
                         return AccionGeneral::SiguienteNivel;
                     };
