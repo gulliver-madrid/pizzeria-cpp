@@ -153,7 +153,6 @@ std::optional<FaseNivel> Nivel::_procesarEvento(
     std::optional<FaseNivel> siguiente_fase;
     switch (evento.type) {
         case sf::Event::Closed:
-            ventana.close();
             return FaseNivel::Saliendo;
         case sf::Event::Resized:
             update_view_on_window_resize(evento.size, ventana);
