@@ -57,3 +57,22 @@ struct GestorTiempoJuego {
     void pausar();
     void reiniciar();
 };
+
+///////////////////////////////////////////
+// GestorTimer
+//////////////////////////////////////////
+
+// La idea de esta clase es que sea el sustituto de Timer que usa tick(), de
+// manera que no incluya un Clock interno.
+
+struct GestorTimer {
+  private:
+    GestorTiempoJuego _gestor_interno;
+    std::optional<sf::Time> finalizacion = std::nullopt;
+    sf::Time obtener_tiempo_transcurrido();
+
+  public:
+    void start(sf::Time finalizacion);
+    void tick(sf::Time tiempo);
+    bool termino();
+};

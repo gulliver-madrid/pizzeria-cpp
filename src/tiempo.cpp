@@ -101,3 +101,27 @@ void GestorTiempoJuego::reiniciar() {
     en_pausa = true;
     _actual = sf::Time::Zero;
 }
+
+///////////////////////////////////////////
+// GestorTimer
+//////////////////////////////////////////
+
+sf::Time GestorTimer::obtener_tiempo_transcurrido() {
+    return _gestor_interno.obtener_tiempo_juego();
+}
+
+void GestorTimer::start(sf::Time finalizacion_) {
+    assert(finalizacion_ > sf::Time::Zero);
+    assert(!this->finalizacion.has_value());
+    this->finalizacion.emplace(finalizacion_);
+    _gestor_interno.activar(); //
+}
+
+void GestorTimer::tick(sf::Time transcurrido) {
+    _gestor_interno.tick(transcurrido);
+}
+
+bool GestorTimer::termino() {
+    juego_assert(this->finalizacion.has_value(), "Timer no inicializado");
+    return obtener_tiempo_transcurrido() > finalizacion;
+}
