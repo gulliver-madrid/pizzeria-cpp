@@ -238,6 +238,12 @@ AccionGeneral Nivel::ejecutar() {
     setup();
 
     sf::Sound sound;
+
+    auto timer_fin_nivel_ = gestor_tiempo_general.gestores["timer_fin_nivel"];
+    auto timer_fin_nivel =
+        std::dynamic_pointer_cast<GestorTimer>(timer_fin_nivel_);
+    assert(timer_fin_nivel);
+
     sf::Time previo = tiempo::obtener_tiempo_actual();
     LOG(info) << "Empezando bucle de juego" << std::endl;
     while (globales->window.isOpen()) {
@@ -261,12 +267,6 @@ AccionGeneral Nivel::ejecutar() {
         }
         modelo_amplio->modelo_interno.evaluar_preparacion_pizzas();
         const auto fase_previa = modelo_amplio->get_fase_actual();
-
-        auto timer_fin_nivel_ =
-            gestor_tiempo_general.gestores["timer_fin_nivel"];
-        auto timer_fin_nivel =
-            std::dynamic_pointer_cast<GestorTimer>(timer_fin_nivel_);
-        assert(timer_fin_nivel);
 
         // En funcion de la fase actual (no necesariamente recien iniciada)
         switch (modelo_amplio->get_fase_actual()) {
@@ -297,9 +297,9 @@ AccionGeneral Nivel::ejecutar() {
         const auto transcurrido = tiempo_real_actual - previo;
 
         gestor_tiempo_general.tick(transcurrido);
+        actualizar_interfaz_grafico(tiempo_real_actual);
 
         previo = tiempo_real_actual;
-        actualizar_interfaz_grafico(tiempo_real_actual);
         enlace_vista->dibujar_vista(globales->window);
         globales->window.display();
     }
