@@ -9,13 +9,14 @@ ModeloInterno::ModeloInterno(const std::optional<DatosModeloInterno> datos_nivel
         control_pizzas.add_pedidos(datos_nivel->pedidos);
     }
     assert(encargos.total() == 0);
-    gestor_tiempo.reiniciar();
+    gestor_tiempo = std::make_shared<GestorTiempoJuego>();
+    gestor_tiempo->reiniciar();
 }
 
 /* Encarga una pizza de tipo tp */
 void ModeloInterno::anadir_encargo(dominio::TipoPizza tp) {
     auto encargo = EncargoACocina( //
-        tp, gestor_tiempo.obtener_tiempo_juego()
+        tp, gestor_tiempo->obtener_tiempo_juego()
     );
     encargos.anadir(encargo);
 }
@@ -33,12 +34,12 @@ bool ModeloInterno::despachar_pizza( //
 
 EstadoPreparacionPizzas
 ModeloInterno::obtener_estado_preparacion_pizzas() const {
-    const auto tiempo_actual = gestor_tiempo.obtener_tiempo_juego();
+    const auto tiempo_actual = gestor_tiempo->obtener_tiempo_juego();
     return {encargos, tiempo_actual};
 }
 
 sf::Time ModeloInterno::obtener_tiempo_juego() const {
-    return gestor_tiempo.obtener_tiempo_juego();
+    return gestor_tiempo->obtener_tiempo_juego();
 }
 
 void ModeloInterno::evaluar_preparacion_pizzas() {
@@ -46,7 +47,7 @@ void ModeloInterno::evaluar_preparacion_pizzas() {
     UInt preparables =
         modelo_info::MAXIMO_PIZZAS_PREPARADAS - total_preparadas.to_int();
     if (preparables > 0) {
-        const auto tiempo_actual = gestor_tiempo.obtener_tiempo_juego();
+        const auto tiempo_actual = gestor_tiempo->obtener_tiempo_juego();
         evaluar_preparacion(
             encargos, control_pizzas.contadores, preparables, tiempo_actual
         );

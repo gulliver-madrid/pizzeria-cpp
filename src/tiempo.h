@@ -3,6 +3,8 @@
 #include "templates/comparable.h"
 #include <SFML/System/Clock.hpp>
 #include <SFML/System/Time.hpp>
+#include <map>
+#include <memory>
 #include <optional>
 #include <string>
 
@@ -39,11 +41,16 @@ struct TiempoPreparacion {
     int obtener_porcentaje(const sf::Time &tiempo_actual) const;
 };
 
+// Clase base para gestores de tiempo que usan tick()
+struct GestorTiempo {
+    virtual void tick(sf::Time tiempo) = 0;
+};
+
 ///////////////////////////////////////////
 // GestorTiempoJuego
 //////////////////////////////////////////
 
-struct GestorTiempoJuego {
+struct GestorTiempoJuego : public GestorTiempo {
     // Debe activarse para poder utilizarlo
 
   private:
@@ -52,7 +59,7 @@ struct GestorTiempoJuego {
 
   public:
     sf::Time obtener_tiempo_juego() const;
-    void tick(sf::Time tiempo);
+    virtual void tick(sf::Time tiempo) override;
     void activar();
     void pausar();
     void reiniciar();
@@ -65,7 +72,7 @@ struct GestorTiempoJuego {
 // La idea de esta clase es que sea el sustituto de Timer que usa tick(), de
 // manera que no incluya un Clock interno.
 
-struct GestorTimer {
+struct GestorTimer : public GestorTiempo {
   private:
     GestorTiempoJuego _gestor_interno;
     std::optional<sf::Time> finalizacion = std::nullopt;
@@ -75,4 +82,13 @@ struct GestorTimer {
     void start(sf::Time finalizacion);
     void tick(sf::Time tiempo);
     bool termino();
+};
+
+struct GestorTiempoGeneral : public GestorTiempo {
+    std::map<std::string, std::shared_ptr<GestorTiempo>> gestores;
+    void tick(sf::Time tiempo) {
+        for (auto &[_, gestor] : gestores) {
+            gestor->tick(tiempo);
+        }
+    }
 };

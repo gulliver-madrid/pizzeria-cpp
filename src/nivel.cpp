@@ -15,13 +15,13 @@
 struct EjecucionEnProceso {
     std::optional<ModeloAmplio> &modelo_amplio;
     std::shared_ptr<EnlaceVista> enlace_vista;
-    GestorTiempoJuego &gestor_tiempo_juego;
-    Timer &timer_espera_antes_de_resultado;
+    std::shared_ptr<GestorTiempoJuego> gestor_tiempo_juego;
+    std::shared_ptr<GestorTimer> timer_espera_antes_de_resultado;
     EjecucionEnProceso(
         std::optional<ModeloAmplio> &modelo_amplio_,
         std::shared_ptr<EnlaceVista> enlace_vista_,
-        GestorTiempoJuego &gestor_tiempo_juego_,
-        Timer &timer_espera_antes_de_resultado_
+        std::shared_ptr<GestorTiempoJuego> gestor_tiempo_juego_,
+        std::shared_ptr<GestorTimer> timer_espera_antes_de_resultado_
     )
         : modelo_amplio(modelo_amplio_), enlace_vista(enlace_vista_),
           gestor_tiempo_juego(gestor_tiempo_juego_),
@@ -57,12 +57,12 @@ namespace {
         switch (nueva_fase) {
             case FaseNivel::Activa:
                 assert(fase_previa == FaseNivel::MostrandoInstrucciones);
-                ejecucion.gestor_tiempo_juego.activar();
+                ejecucion.gestor_tiempo_juego->activar();
                 break;
             case FaseNivel::EsperaAntesDeResultado:
                 assert(fase_previa == FaseNivel::Activa);
-                ejecucion.gestor_tiempo_juego.pausar();
-                ejecucion.timer_espera_antes_de_resultado.start(
+                ejecucion.gestor_tiempo_juego->pausar();
+                ejecucion.timer_espera_antes_de_resultado->start(
                     tiempos::RETARDO_ANTES_DE_RESULTADO
                 );
                 break;
@@ -81,17 +81,17 @@ namespace {
 } // namespace
 
 void on_cambio_a_fase_mostrar_resultado(
-    const std::shared_ptr<Globales> globales,  //
-    const ModeloAmplio &modelo_amplio,         //
-    std::shared_ptr<EnlaceVista> enlace_vista, //
-    Timer &timer_fin_nivel,                    //
-    sf::Sound &sound                           //
+    const std::shared_ptr<Globales> globales,     //
+    const ModeloAmplio &modelo_amplio,            //
+    std::shared_ptr<EnlaceVista> enlace_vista,    //
+    std::shared_ptr<GestorTimer> timer_fin_nivel, //
+    sf::Sound &sound                              //
 ) {
     if (globales->success_buffer) {
         sound.setBuffer(globales->success_buffer.value());
         sound.play();
     }
-    timer_fin_nivel.start(tiempos::ESPERA_ENTRE_NIVELES);
+    timer_fin_nivel->start(tiempos::ESPERA_ENTRE_NIVELES);
     enlace_vista->esconder_paneles();
 }
 
@@ -214,10 +214,18 @@ Nivel::Nivel(
 // Inicializa elementos antes de la ejecucion
 void Nivel::setup() {
     auto &gestor_tiempo_juego = modelo_amplio->modelo_interno.gestor_tiempo;
+    timer_espera_antes_de_resultado = std::make_shared<GestorTimer>();
+    assert(timer_espera_antes_de_resultado);
     ejecucion_en_proceso = std::make_shared<EjecucionEnProceso>(
         modelo_amplio, enlace_vista, gestor_tiempo_juego,
         timer_espera_antes_de_resultado
     );
+    gestor_tiempo_general.gestores["timer_espera_antes_de_resultado"] =
+        timer_espera_antes_de_resultado;
+    gestor_tiempo_general.gestores["timer_fin_nivel"] =
+        std::make_shared<GestorTimer>();
+    gestor_tiempo_general.gestores["gestor_tiempo_juego"] =
+        ejecucion_en_proceso->gestor_tiempo_juego;
 }
 
 AccionGeneral Nivel::ejecutar() {
@@ -227,7 +235,6 @@ AccionGeneral Nivel::ejecutar() {
     assert(!contadores.empty());
     LOG(info) << "modelo amplio iniciado" << std::endl;
 
-    Timer timer_fin_nivel;
     setup();
 
     sf::Sound sound;
@@ -254,20 +261,29 @@ AccionGeneral Nivel::ejecutar() {
         }
         modelo_amplio->modelo_interno.evaluar_preparacion_pizzas();
         const auto fase_previa = modelo_amplio->get_fase_actual();
+
+        auto timer_fin_nivel_ =
+            gestor_tiempo_general.gestores["timer_fin_nivel"];
+        auto timer_fin_nivel =
+            std::dynamic_pointer_cast<GestorTimer>(timer_fin_nivel_);
+        assert(timer_fin_nivel);
+
         // En funcion de la fase actual (no necesariamente recien iniciada)
         switch (modelo_amplio->get_fase_actual()) {
             case FaseNivel::EsperaAntesDeResultado:
-                if (timer_espera_antes_de_resultado.termino()) {
+                if (timer_espera_antes_de_resultado->termino()) {
                     std::cout << "Se debe mostrar el resultado" << std::endl;
                     establecer_fase(FaseNivel::MostrandoResultado);
                 }
                 break;
             case FaseNivel::MostrandoResultado:
-                if (!es_el_ultimo && timer_fin_nivel.termino()) {
-                    std::cout << "Se debe pasar al siguiente nivel"
-                              << std::endl;
-                    return AccionGeneral::SiguienteNivel;
-                };
+                {
+                    if (!es_el_ultimo && timer_fin_nivel->termino()) {
+                        std::cout << "Se debe pasar al siguiente nivel"
+                                  << std::endl;
+                        return AccionGeneral::SiguienteNivel;
+                    };
+                }
                 break;
         }
         const auto fase_actual = modelo_amplio->get_fase_actual();
@@ -280,7 +296,9 @@ AccionGeneral Nivel::ejecutar() {
         }
         const auto tiempo_real_actual = tiempo::obtener_tiempo_actual();
         const auto transcurrido = tiempo_real_actual - previo;
-        ejecucion_en_proceso->gestor_tiempo_juego.tick(transcurrido);
+
+        gestor_tiempo_general.tick(transcurrido);
+
         previo = tiempo_real_actual;
         actualizar_interfaz_grafico(tiempo_real_actual);
         enlace_vista->dibujar_vista(globales->window);

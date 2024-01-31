@@ -91,9 +91,9 @@ class ActivacionConPedidoDosMargaritasTest : public ActivacionTest {
         // Encarga una pizza y pasa el tiempo para prepararla
         assert(_modelo.has_value());
         auto &modelo = _modelo.value();
-        modelo.gestor_tiempo.activar();
+        modelo.gestor_tiempo->activar();
         modelo.anadir_encargo(TipoPizza::Margarita);
-        modelo.gestor_tiempo.tick(sf::seconds(10));
+        modelo.gestor_tiempo->tick(sf::seconds(10));
         modelo.evaluar_preparacion_pizzas();
     }
 };

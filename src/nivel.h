@@ -29,7 +29,7 @@ struct Nivel {
   private:
     OptionalFont font;
     std::shared_ptr<EjecucionEnProceso> ejecucion_en_proceso;
-    Timer timer_espera_antes_de_resultado;
+    std::shared_ptr<GestorTimer> timer_espera_antes_de_resultado;
 
     std::optional<FaseNivel> _procesa_click(
         const std::shared_ptr<const BotonesApp>, //
@@ -44,6 +44,7 @@ struct Nivel {
     );
 
   public:
+    GestorTiempoGeneral gestor_tiempo_general;
     std::optional<ModeloAmplio> modelo_amplio;
     const std::shared_ptr<Globales> globales;
     const std::shared_ptr<DatosNivel> datos_nivel;
