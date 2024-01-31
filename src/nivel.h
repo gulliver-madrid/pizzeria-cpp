@@ -29,6 +29,7 @@ struct Nivel {
   private:
     std::shared_ptr<EjecucionEnProceso> ejecucion_en_proceso;
     std::shared_ptr<GestorTimer> timer_espera_antes_de_resultado;
+    sf::Sound sound;
 
     std::optional<FaseNivel> _procesa_click(
         const std::shared_ptr<const BotonesApp>, //
@@ -60,6 +61,7 @@ struct Nivel {
     );
     void setup();
     AccionGeneral ejecutar();
+    std::optional<AccionGeneral> procesar_ciclo();
     void actualizar_interfaz_grafico(const sf::Time tiempo_real_actual);
     std::optional<AccionGeneral> procesa_cambio_de_fase(FaseNivel nueva_fase);
     void establecer_fase(FaseNivel);

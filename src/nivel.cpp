@@ -237,13 +237,7 @@ AccionGeneral Nivel::ejecutar() {
 
     setup();
 
-    sf::Sound sound;
-
-    auto timer_fin_nivel_ = gestor_tiempo_general.gestores["timer_fin_nivel"];
-    auto timer_fin_nivel =
-        std::dynamic_pointer_cast<GestorTimer>(timer_fin_nivel_);
-    assert(timer_fin_nivel);
-
+    std::optional<AccionGeneral> accion;
     sf::Time previo = tiempo::obtener_tiempo_actual();
     LOG(info) << "Empezando bucle de juego" << std::endl;
     while (globales->window.isOpen()) {
@@ -265,34 +259,12 @@ AccionGeneral Nivel::ejecutar() {
                 return accion.value();
             }
         }
-        modelo_amplio->modelo_interno.evaluar_preparacion_pizzas();
-        const auto fase_previa = modelo_amplio->get_fase_actual();
 
-        // En funcion de la fase actual (no necesariamente recien iniciada)
-        switch (modelo_amplio->get_fase_actual()) {
-            case FaseNivel::EsperaAntesDeResultado:
-                if (timer_espera_antes_de_resultado->termino()) {
-                    LOG(info) << "Se debe mostrar el resultado";
-                    establecer_fase(FaseNivel::MostrandoResultado);
-                }
-                break;
-            case FaseNivel::MostrandoResultado:
-                {
-                    if (timer_fin_nivel->termino()) {
-                        LOG(info) << "Se debe pasar al siguiente nivel";
-                        return AccionGeneral::SiguienteNivel;
-                    };
-                }
-                break;
+        accion = procesar_ciclo();
+        if (accion.has_value()) {
+            break;
         }
-        const auto fase_actual = modelo_amplio->get_fase_actual();
-        if (fase_actual != fase_previa &&
-            fase_actual == FaseNivel::MostrandoResultado) {
-            on_cambio_a_fase_mostrar_resultado(
-                globales, modelo_amplio.value(), enlace_vista, timer_fin_nivel,
-                sound
-            );
-        }
+
         const auto tiempo_real_actual = tiempo::obtener_tiempo_actual();
         const auto transcurrido = tiempo_real_actual - previo;
 
@@ -303,8 +275,45 @@ AccionGeneral Nivel::ejecutar() {
         enlace_vista->dibujar_vista(globales->window);
         globales->window.display();
     }
-    assert(false); // No deberiamos llegar aqui
-    return AccionGeneral::Salir;
+    assert(accion.has_value());
+    return accion.value();
+}
+
+std::optional<AccionGeneral> Nivel::procesar_ciclo() {
+    modelo_amplio->modelo_interno.evaluar_preparacion_pizzas();
+    const auto fase_previa = modelo_amplio->get_fase_actual();
+
+    auto timer_fin_nivel_ = gestor_tiempo_general.gestores["timer_fin_nivel"];
+    auto timer_fin_nivel =
+        std::dynamic_pointer_cast<GestorTimer>(timer_fin_nivel_);
+    assert(timer_fin_nivel);
+
+    // En funcion de la fase actual (no necesariamente recien iniciada)
+    switch (modelo_amplio->get_fase_actual()) {
+        case FaseNivel::EsperaAntesDeResultado:
+            if (timer_espera_antes_de_resultado->termino()) {
+                LOG(info) << "Se debe mostrar el resultado";
+                establecer_fase(FaseNivel::MostrandoResultado);
+            }
+            break;
+        case FaseNivel::MostrandoResultado:
+            {
+                if (timer_fin_nivel->termino()) {
+                    LOG(info) << "Se debe pasar al siguiente nivel";
+                    return AccionGeneral::SiguienteNivel;
+                };
+            }
+            break;
+    }
+    const auto fase_actual = modelo_amplio->get_fase_actual();
+    if (fase_actual != fase_previa &&
+        fase_actual == FaseNivel::MostrandoResultado) {
+        on_cambio_a_fase_mostrar_resultado(
+            globales, modelo_amplio.value(), enlace_vista, timer_fin_nivel,
+            sound
+        );
+    }
+    return std::nullopt;
 }
 
 void Nivel::actualizar_interfaz_grafico(const sf::Time tiempo_real_actual) {
