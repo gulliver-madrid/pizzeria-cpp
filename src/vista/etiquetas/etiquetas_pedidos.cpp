@@ -67,11 +67,13 @@ namespace {
             tarjetas.emplace_back(tarjeta);
         }
         assert(tarjetas.size() == presentacion_pedidos.size());
+    }
 
-        // Les asignamos su posicion correcta
+    void reposiciona_tarjetas(
+        std::vector<std::shared_ptr<TarjetaPedido>> &tarjetas //
+    ) {
         const auto separacion_vertical =
             medidas::SEPARACION_VERTICAL_ENTRE_PEDIDOS;
-
         // Calcula la posicion del primer pedido
         const auto pos_panel = basicos_vista::obtener_posicion_panel( //
             IndicePanel::PANEL_PEDIDOS
@@ -86,6 +88,7 @@ namespace {
             pos_y = get_bottom(g_bounds) + separacion_vertical;
         }
     }
+
 } // namespace
 
 ///////////////////////////////////////////
@@ -126,6 +129,7 @@ void EtiquetasPedidos::_actualizar_vista_pedidos( //
     for (auto tarjeta : tarjetas_pedidos) {
         add_child(tarjeta);
     }
+    reposiciona_tarjetas(tarjetas_pedidos);
 }
 
 ///////////////////////////////////////////
