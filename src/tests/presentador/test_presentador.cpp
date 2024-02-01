@@ -28,8 +28,8 @@ TEST(Presentador, ContadoresToPreparadasString) {
 
     contadores.emplace(TipoPizza::Margarita, Contadores{});
     contadores.at(TipoPizza::Margarita).preparadas++;
-    auto vista_preparadas = presentador::contadores_to_preparadas(contadores);
-    ASSERT_EQ(vista_preparadas.at(TipoPizza::Margarita), "Margarita: 1");
+    auto info_preparadas = presentador::contadores_to_preparadas(contadores);
+    ASSERT_EQ(info_preparadas.at(TipoPizza::Margarita), "Margarita: 1");
 }
 
 TEST(Presentador, CreaTextoEtiquetaBarraEstado) {

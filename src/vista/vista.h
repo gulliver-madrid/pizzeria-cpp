@@ -41,8 +41,8 @@ class Vista : public ComponenteConFont, public VistaObservable {
     );
 
     void _actualizar_vista_paneles( //
-        const std::optional<PresentacionPreparacionPizzas> &vista_preparacion,
-        const std::optional<PizzasToStrings> &vista_preparadas
+        const std::optional<PresentacionPreparacionPizzas> &info_preparacion,
+        const std::optional<PizzasToStrings> &info_preparadas
     );
 
   public:
@@ -68,7 +68,7 @@ class Vista : public ComponenteConFont, public VistaObservable {
         bool mostrando_grid,
         FaseNivel fase_actual,                                  //
         const std::optional<PresentacionPreparacionPizzas> &,   //
-        std::optional<PizzasToStrings> &vista_preparadas,       //
+        std::optional<PizzasToStrings> &info_preparadas,        //
         std::optional<const PresentacionPedidos> &info_pedidos, //
         const sf::Time &tiempo_real_actual,                     //
         const sf::Time &tiempo_juego_actual                     //

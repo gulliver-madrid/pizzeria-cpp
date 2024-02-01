@@ -37,8 +37,6 @@ class PanelEncargar : public Panel {
         IndicePanel indice, std::shared_ptr<Etiqueta> etiqueta,
         const dominio::TiposDePizza &tp_disponibles
     );
-    void actualizar(const PresentacionPreparacionPizzas &vista_preparacion //
-    );
     virtual void draw(sf::RenderTarget &, sf::RenderStates) const override;
 };
 
@@ -51,7 +49,7 @@ class PanelEnPreparacion : public Panel {
     std::vector<std::shared_ptr<BarraProgresoConNombre>>
         barras_progreso_con_nombres;
     PanelEnPreparacion(IndicePanel indice, std::shared_ptr<Etiqueta> etiqueta);
-    void actualizar(const PresentacionPreparacionPizzas &vista_preparacion //
+    void actualizar(const PresentacionPreparacionPizzas &info_preparacion //
     );
     virtual void draw(sf::RenderTarget &, sf::RenderStates) const override;
 };
@@ -69,7 +67,7 @@ class PanelPreparadas : public Panel {
         const dominio::TiposDePizza &tp_disponibles
     );
     void setup(const dominio::TiposDePizza &tp_disponibles);
-    void actualizar(const PizzasToStrings &vista_preparadas);
+    void actualizar(const PizzasToStrings &info_preparadas);
     virtual void draw(sf::RenderTarget &, sf::RenderStates) const override;
 };
 
@@ -88,9 +86,9 @@ class Paneles : public ComponenteConFont, public PanelesObservables {
 
     std::shared_ptr<PanelEncargar> get_panel_encargar();
     std::shared_ptr<PanelPreparadas> get_panel_preparadas();
-    void actualizar(                                            //
-        const PresentacionPreparacionPizzas &vista_preparacion, //
-        const PizzasToStrings &vista_preparadas                 //
+    void actualizar(                                       //
+        const PresentacionPreparacionPizzas &presentacion, //
+        const PizzasToStrings &info_preparadas             //
     );
     virtual bool get_visibilidad() const override;
     virtual void draw(sf::RenderTarget &, sf::RenderStates) const override;

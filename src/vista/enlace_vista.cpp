@@ -131,8 +131,8 @@ void EnlaceVista::actualizar_interfaz_grafico(
             modelo_amplio.modelo_interno
         );
     vista->activar_botones_condicionalmente(activacion_botones);
-    std::optional<PresentacionPreparacionPizzas> vista_preparacion;
-    std::optional<PizzasToStrings> vista_preparadas;
+    std::optional<PresentacionPreparacionPizzas> info_preparacion;
+    std::optional<PizzasToStrings> info_preparadas;
     std::optional<const PresentacionPedidos> info_pedidos;
 
     const auto fase_actual = modelo_amplio.get_fase_actual();
@@ -141,8 +141,8 @@ void EnlaceVista::actualizar_interfaz_grafico(
         fase_actual == FaseNivel::Activa ||
         fase_actual == FaseNivel::EsperaAntesDeResultado
     ) {
-        vista_preparacion.emplace(obtener_vista_preparacion(modelo_amplio));
-        vista_preparadas.emplace(obtener_vista_preparadas(modelo_amplio));
+        info_preparacion.emplace(obtener_vista_preparacion(modelo_amplio));
+        info_preparadas.emplace(obtener_vista_preparadas(modelo_amplio));
         info_pedidos.emplace(obtener_presentacion_pedidos(modelo_amplio));
     }
     const auto mostrando_grid = modelo_amplio.mostrando_grid;
@@ -150,7 +150,7 @@ void EnlaceVista::actualizar_interfaz_grafico(
         modelo_amplio.modelo_interno.obtener_tiempo_juego();
 
     vista->actualizar_interfaz_grafico(
-        mostrando_grid, fase_actual, vista_preparacion, vista_preparadas,
+        mostrando_grid, fase_actual, info_preparacion, info_preparadas,
         info_pedidos, tiempo_real_actual, tiempo_juego_actual
     );
 }

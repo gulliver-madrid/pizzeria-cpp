@@ -12,6 +12,8 @@ namespace dominio {
     using TiposDePizza = std::vector<TipoPizza>;
 } // namespace dominio
 
+// TODO:nombres mas descriptivo para distinguir los nombres de las pizzas de la
+// presentacion preparadas,
 using PizzasToStrings = std::map<dominio::TipoPizza, std::string>;
 using TipoPizzaToBoton =
     std::map<dominio::TipoPizza, std::shared_ptr<BotonConTexto>>;

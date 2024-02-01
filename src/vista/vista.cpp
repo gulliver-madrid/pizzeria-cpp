@@ -40,10 +40,9 @@ namespace {
 // TODO:  ir pasando a enlace_vista la logica que deba conocer el modelo
 /* Actualiza las etiquetas */
 void Vista::_actualizar_etiquetas(
-    std::optional<const PresentacionPedidos>
-        &info_pedidos,                  //
-    const sf::Time &tiempo_real_actual, //
-    const sf::Time &tiempo_juego_actual //
+    std::optional<const PresentacionPedidos> &info_pedidos, //
+    const sf::Time &tiempo_real_actual,                     //
+    const sf::Time &tiempo_juego_actual                     //
 ) {
     if (info_pedidos) {
         etiquetas->actualizar_pedidos(info_pedidos.value());
@@ -54,16 +53,14 @@ void Vista::_actualizar_etiquetas(
 }
 
 void Vista::_actualizar_vista_paneles(
-    const std::optional<PresentacionPreparacionPizzas> &vista_preparacion,
-    const std::optional<PizzasToStrings> &vista_preparadas
+    const std::optional<PresentacionPreparacionPizzas> &info_preparacion,
+    const std::optional<PizzasToStrings> &info_preparadas
 ) {
-    paneles->visible = vista_preparacion.has_value();
-    if (vista_preparacion) {
+    paneles->visible = info_preparacion.has_value();
+    if (info_preparacion) {
         // Estaran definidas las dos o ninguna
-        assert(vista_preparacion);
-        paneles->actualizar(
-            vista_preparacion.value(), vista_preparadas.value()
-        );
+        assert(info_preparacion);
+        paneles->actualizar(info_preparacion.value(), info_preparadas.value());
     }
 }
 
@@ -117,17 +114,16 @@ void Vista::set_presentacion_vista(
  * Actualiza el interfaz grafico
  */
 void Vista::actualizar_interfaz_grafico(
-    bool mostrando_grid,                                            //
-    FaseNivel fase_actual,                                          //
-    const std::optional<PresentacionPreparacionPizzas> &vista_preparacion, //
-    std::optional<PizzasToStrings> &vista_preparadas,               //
-    std::optional<const PresentacionPedidos>
-        &info_pedidos,                  //
-    const sf::Time &tiempo_real_actual, //
-    const sf::Time &tiempo_juego_actual //
+    bool mostrando_grid,                                                  //
+    FaseNivel fase_actual,                                                //
+    const std::optional<PresentacionPreparacionPizzas> &info_preparacion, //
+    std::optional<PizzasToStrings> &info_preparadas,                      //
+    std::optional<const PresentacionPedidos> &info_pedidos,               //
+    const sf::Time &tiempo_real_actual,                                   //
+    const sf::Time &tiempo_juego_actual                                   //
 ) {
     _mostrando_grid = mostrando_grid;
-    _actualizar_vista_paneles(vista_preparacion, vista_preparadas);
+    _actualizar_vista_paneles(info_preparacion, info_preparadas);
     _actualizar_etiquetas(
         info_pedidos, tiempo_real_actual, tiempo_juego_actual
     );

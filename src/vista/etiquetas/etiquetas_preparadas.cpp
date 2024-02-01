@@ -29,8 +29,8 @@ void EtiquetasPreparadas::setup(const dominio::TiposDePizza &tp_disponibles) {
     LOG(debug) << "etiquetas_preparadas: " << tp_disponibles.size();
 };
 
-void EtiquetasPreparadas::actualizar(const PizzasToStrings &vista_preparadas) {
-    for (auto &[tp, linea] : vista_preparadas) {
+void EtiquetasPreparadas::actualizar(const PizzasToStrings &info_preparadas) {
+    for (auto &[tp, linea] : info_preparadas) {
         assert(has_key(etiquetas_preparadas, tp));
         etiquetas_preparadas.at(tp)->actualizar_texto(linea);
     }

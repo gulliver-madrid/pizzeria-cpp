@@ -71,10 +71,6 @@ PanelEncargar::PanelEncargar(
     }
 }
 
-void PanelEncargar::actualizar(
-    const PresentacionPreparacionPizzas &vista_preparacion //
-) {}
-
 void PanelEncargar::draw(
     sf::RenderTarget &target, //
     sf::RenderStates states   //
@@ -97,7 +93,7 @@ PanelEnPreparacion::PanelEnPreparacion(
     : Panel(indice, etiqueta) {}
 
 void PanelEnPreparacion::actualizar(
-    const PresentacionPreparacionPizzas &vista_preparacion //
+    const PresentacionPreparacionPizzas &presentacion //
 ) {
     auto pos_panel = basicos_vista::obtener_posicion_panel( //
         IndicePanel::PANEL_EN_PREPARACION
@@ -106,7 +102,7 @@ void PanelEnPreparacion::actualizar(
         remove_child(bpn);
     }
     barras_progreso_con_nombres = crear_barras_progreso( //
-        vista_preparacion, pos_panel
+        presentacion, pos_panel
     );
     for (auto bpn : barras_progreso_con_nombres) {
         add_child(bpn);
@@ -141,10 +137,10 @@ void PanelPreparadas::setup(const dominio::TiposDePizza &tp_disponibles) {
     etiquetas_preparadas->setup(tp_disponibles);
 }
 
-void PanelPreparadas::actualizar(           //
-    const PizzasToStrings &vista_preparadas //
+void PanelPreparadas::actualizar(          //
+    const PizzasToStrings &info_preparadas //
 ) {
-    etiquetas_preparadas->actualizar(vista_preparadas);
+    etiquetas_preparadas->actualizar(info_preparadas);
 }
 
 void PanelPreparadas::draw(
@@ -210,9 +206,9 @@ std::shared_ptr<PanelPreparadas> Paneles::get_panel_preparadas() {
     return panel_preparadas;
 }
 
-void Paneles::actualizar(                                   //
-    const PresentacionPreparacionPizzas &vista_preparacion, //
-    const PizzasToStrings &vista_preparadas                 //
+void Paneles::actualizar(                                  //
+    const PresentacionPreparacionPizzas &info_preparacion, //
+    const PizzasToStrings &info_preparadas                 //
 ) {
     if (!visible)
         return;
@@ -222,13 +218,13 @@ void Paneles::actualizar(                                   //
         panel_ = _paneles.at(IndicePanel::PANEL_EN_PREPARACION).get();
         auto *panel = dynamic_cast<PanelEnPreparacion *>(panel_);
         assert(panel);
-        panel->actualizar(vista_preparacion);
+        panel->actualizar(info_preparacion);
     }
     {
         panel_ = _paneles.at(IndicePanel::PANEL_PREPARADAS).get();
         auto *panel = dynamic_cast<PanelPreparadas *>(panel_);
         assert(panel);
-        panel->actualizar(vista_preparadas);
+        panel->actualizar(info_preparadas);
     }
 }
 
