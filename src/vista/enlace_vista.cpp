@@ -24,6 +24,31 @@ namespace {
         }
     }
 
+    VistaPreparacionPizzas obtener_vista_preparacion( //
+        const ModeloAmplio &modelo_amplio
+    ) {
+        const auto preparacion =
+            modelo_amplio.modelo_interno.obtener_estado_preparacion_pizzas();
+        return presentador::estado_preparacion_pizzas_to_vista(preparacion);
+    }
+
+    PizzasToStrings obtener_vista_preparadas( //
+        const ModeloAmplio &modelo_amplio
+    ) {
+        const modelo::PizzasAContadores &contadores =
+            modelo_amplio.modelo_interno.control_pizzas.contadores;
+        return presentador::contadores_to_preparadas(contadores);
+    }
+    std::vector<std::pair<std::string, size_t>> obtener_presentacion_pedidos( //
+        const ModeloAmplio &modelo_amplio
+    ) {
+        const auto &pedidos =
+            modelo_amplio.modelo_interno.control_pizzas.pedidos;
+        const auto presentacion_pedidos =
+            presentador::crear_presentacion_pedidos(pedidos);
+        return presentacion_pedidos;
+    }
+
 } // namespace
 
 ActivacionBotones enlace_vista_impl::obtener_activacion_botones( //
@@ -117,23 +142,10 @@ void EnlaceVista::actualizar_interfaz_grafico(
         fase_actual == FaseNivel::Activa ||
         fase_actual == FaseNivel::EsperaAntesDeResultado
     ) {
-        const auto preparacion =
-            modelo_amplio.modelo_interno.obtener_estado_preparacion_pizzas();
-        vista_preparacion.emplace(
-            presentador::estado_preparacion_pizzas_to_vista(preparacion)
-        );
-        const modelo::PizzasAContadores &contadores =
-            modelo_amplio.modelo_interno.control_pizzas.contadores;
-        vista_preparadas.emplace(
-            presentador::contadores_to_preparadas(contadores)
-        );
-        const auto &pedidos =
-            modelo_amplio.modelo_interno.control_pizzas.pedidos;
-        const auto presentacion_pedidos =
-            presentador::crear_presentacion_pedidos(pedidos);
-        info_pedidos.emplace(presentacion_pedidos);
+        vista_preparacion.emplace(obtener_vista_preparacion(modelo_amplio));
+        vista_preparadas.emplace(obtener_vista_preparadas(modelo_amplio));
+        info_pedidos.emplace(obtener_presentacion_pedidos(modelo_amplio));
     }
-
     const auto mostrando_grid = modelo_amplio.mostrando_grid;
     const auto tiempo_juego_actual =
         modelo_amplio.modelo_interno.obtener_tiempo_juego();
