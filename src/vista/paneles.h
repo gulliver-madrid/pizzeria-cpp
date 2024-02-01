@@ -94,4 +94,7 @@ class Paneles : public ComponenteConFont, public PanelesObservables {
     );
     virtual bool get_visibilidad() const override;
     virtual void draw(sf::RenderTarget &, sf::RenderStates) const override;
+    std::shared_ptr<Panel> getPanel(IndicePanel indice) {
+        return _paneles.at(indice);
+    }
 };

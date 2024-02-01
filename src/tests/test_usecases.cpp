@@ -5,6 +5,7 @@
 #include "../modelo_amplio/comandos.h"
 #include "../motor_nivel.h"
 #include "../setup_juego.h"
+#include "../vista/basicos_vista.h"
 #include "../vista/vista.h"
 #include <gtest/gtest.h>
 
@@ -24,6 +25,8 @@ TEST(Usecases, AlEmpezarJuegoSeMuestranLosPaneles) { //
     MotorNivel nivel;
     nivel.establecer_fase(FaseNivel::MostrandoInstrucciones);
     nivel.setup();
+
+    // TODO: simplificar MotorNivel para que sea automatico el cambio de fase
     auto result =
         aplica_comando(nivel.modelo_amplio.value(), Comando::Empezar());
     assert(result.has_value());
@@ -32,4 +35,41 @@ TEST(Usecases, AlEmpezarJuegoSeMuestranLosPaneles) { //
     nivel.actualizar_interfaz_grafico(sf::Time::Zero);
     auto paneles = nivel.get_vista()->get_paneles();
     ASSERT_EQ(paneles->get_visibilidad(), true);
+}
+TEST(Usecases, AlEncargarUnaPizzaApareceUnaBarraDeProgreso) { //
+    MotorNivel nivel;
+    nivel.establecer_fase(FaseNivel::MostrandoInstrucciones);
+    nivel.setup();
+    auto result =
+        aplica_comando(nivel.modelo_amplio.value(), Comando::Empezar());
+    assert(result.has_value());
+    nivel.procesa_cambio_de_fase(result.value());
+    // en este caso el tiempo es irrelevante
+    nivel.actualizar_interfaz_grafico(sf::Time::Zero);
+    auto vista = nivel.get_vista();
+    auto vista_ = std::dynamic_pointer_cast<Vista>(vista);
+    assert(vista_);
+    auto paneles = vista_->get_paneles();
+    auto paneles_ = std::dynamic_pointer_cast<Paneles>(paneles);
+    auto panel_en_preparacion =
+        paneles_->getPanel(IndicePanel::PANEL_EN_PREPARACION);
+    auto panel_en_preparacion_ =
+        std::dynamic_pointer_cast<PanelEnPreparacion>(panel_en_preparacion);
+    ASSERT_EQ(panel_en_preparacion_->barras_progreso_con_nombres.size(), 0);
+
+    result = aplica_comando(
+        nivel.modelo_amplio.value(),
+        Comando::Encargar{dominio::TipoPizza::Margarita}
+    );
+    nivel.actualizar_interfaz_grafico(sf::Time::Zero);
+    vista = nivel.get_vista();
+    vista_ = std::dynamic_pointer_cast<Vista>(vista);
+    assert(vista_);
+    paneles = vista_->get_paneles();
+    paneles_ = std::dynamic_pointer_cast<Paneles>(paneles);
+    panel_en_preparacion =
+        paneles_->getPanel(IndicePanel::PANEL_EN_PREPARACION);
+    panel_en_preparacion_ =
+        std::dynamic_pointer_cast<PanelEnPreparacion>(panel_en_preparacion);
+    ASSERT_EQ(panel_en_preparacion_->barras_progreso_con_nombres.size(), 1);
 }
