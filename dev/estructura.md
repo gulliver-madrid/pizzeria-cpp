@@ -4,9 +4,6 @@
     - shared/font.h
     - shared/log_init.h
 
-- _pruebas/main.cpp:
-    - _pruebas/class_a.h
-
 - controlador_clicks.cpp:
     - controlador_clicks.h
     - fase_nivel.h
@@ -39,6 +36,7 @@
     - juego.h
     - datos_niveles.h
     - globales.h
+    - motor_nivel.h
     - nivel.h
     - setup_juego.h
     - shared/log_init.h
@@ -124,8 +122,8 @@
 - modelo_amplio/realizador_base.h:
     - modelo/dominio.h
 
-- nivel.cpp:
-    - nivel.h
+- motor_nivel.cpp:
+    - motor_nivel.h
     - controlador_clicks.h
     - datos_nivel.h
     - fase_nivel.h
@@ -133,7 +131,7 @@
     - shared/log_init.h
     - shared/num_nivel.h
 
-- nivel.h:
+- motor_nivel.h:
     - globales.h
     - modelo_amplio/modelo_amplio.h
     - shared/font.h
@@ -142,6 +140,16 @@
     - vista/enlace_vista.h
     - vista/grid.h
     - vista/vista.h
+
+- nivel.cpp:
+    - nivel.h
+    - datos_nivel.h
+    - motor_nivel.h
+    - shared/log_init.h
+    - shared/num_nivel.h
+
+- nivel.h:
+    - shared/num_nivel.h
 
 - setup_juego.cpp:
     - setup_juego.h
@@ -215,7 +223,7 @@
     - juego.h
     - modelo_amplio/aplicador.h
     - modelo_amplio/comandos.h
-    - nivel.h
+    - motor_nivel.h
     - setup_juego.h
     - vista/vista.h
 
