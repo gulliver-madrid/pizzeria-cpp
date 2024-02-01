@@ -72,7 +72,7 @@ PanelEncargar::PanelEncargar(
 }
 
 void PanelEncargar::actualizar(
-    const VistaPreparacionPizzas &vista_preparacion //
+    const PresentacionPreparacionPizzas &vista_preparacion //
 ) {}
 
 void PanelEncargar::draw(
@@ -97,7 +97,7 @@ PanelEnPreparacion::PanelEnPreparacion(
     : Panel(indice, etiqueta) {}
 
 void PanelEnPreparacion::actualizar(
-    const VistaPreparacionPizzas &vista_preparacion //
+    const PresentacionPreparacionPizzas &vista_preparacion //
 ) {
     auto pos_panel = basicos_vista::obtener_posicion_panel( //
         IndicePanel::PANEL_EN_PREPARACION
@@ -210,24 +210,26 @@ std::shared_ptr<PanelPreparadas> Paneles::get_panel_preparadas() {
     return panel_preparadas;
 }
 
-void Paneles::actualizar(                            //
-    const VistaPreparacionPizzas &vista_preparacion, //
-    const PizzasToStrings &vista_preparadas          //
+void Paneles::actualizar(                                   //
+    const PresentacionPreparacionPizzas &vista_preparacion, //
+    const PizzasToStrings &vista_preparadas                 //
 ) {
     if (!visible)
         return;
 
-    Panel *panel_en_prep = _paneles.at(IndicePanel::PANEL_EN_PREPARACION).get();
-    PanelEnPreparacion *panel_en_preparacion =
-        dynamic_cast<PanelEnPreparacion *>(panel_en_prep);
-    assert(panel_en_preparacion != nullptr);
-    panel_en_preparacion->actualizar(vista_preparacion);
-
-    Panel *panel_prep = _paneles.at(IndicePanel::PANEL_PREPARADAS).get();
-    PanelPreparadas *panel_preparadas =
-        dynamic_cast<PanelPreparadas *>(panel_prep);
-    assert(panel_preparadas != nullptr);
-    panel_preparadas->actualizar(vista_preparadas);
+    Panel *panel_;
+    {
+        panel_ = _paneles.at(IndicePanel::PANEL_EN_PREPARACION).get();
+        auto *panel = dynamic_cast<PanelEnPreparacion *>(panel_);
+        assert(panel);
+        panel->actualizar(vista_preparacion);
+    }
+    {
+        panel_ = _paneles.at(IndicePanel::PANEL_PREPARADAS).get();
+        auto *panel = dynamic_cast<PanelPreparadas *>(panel_);
+        assert(panel);
+        panel->actualizar(vista_preparadas);
+    }
 }
 
 bool Paneles::get_visibilidad() const { //

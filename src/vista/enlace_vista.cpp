@@ -24,7 +24,7 @@ namespace {
         }
     }
 
-    VistaPreparacionPizzas obtener_vista_preparacion( //
+    PresentacionPreparacionPizzas obtener_vista_preparacion( //
         const ModeloAmplio &modelo_amplio
     ) {
         const auto preparacion =
@@ -131,7 +131,7 @@ void EnlaceVista::actualizar_interfaz_grafico(
             modelo_amplio.modelo_interno
         );
     vista->activar_botones_condicionalmente(activacion_botones);
-    std::optional<VistaPreparacionPizzas> vista_preparacion;
+    std::optional<PresentacionPreparacionPizzas> vista_preparacion;
     std::optional<PizzasToStrings> vista_preparadas;
     std::optional<const PresentacionPedidos> info_pedidos;
 

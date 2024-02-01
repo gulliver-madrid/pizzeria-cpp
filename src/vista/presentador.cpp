@@ -88,16 +88,15 @@ namespace presentador {
         return vista;
     }
 
-    std::vector<VistaPreparacionPizza> estado_preparacion_pizzas_to_vista( //
+    PresentacionPreparacionPizzas estado_preparacion_pizzas_to_vista( //
         const EstadoPreparacionPizzas &preparacion
     ) {
-        std::vector<VistaPreparacionPizza> vista_preparaciones_pizzas;
+        PresentacionPreparacionPizzas presentacion;
         std::transform(
             preparacion.datos.begin(), preparacion.datos.end(),
-            std::back_inserter(vista_preparaciones_pizzas),
-            presentador::to_vista
+            std::back_inserter(presentacion), presentador::to_vista
         );
-        return vista_preparaciones_pizzas;
+        return presentacion;
     }
 
     std::string crea_texto_etiqueta_barra_estado(

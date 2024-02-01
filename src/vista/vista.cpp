@@ -54,7 +54,7 @@ void Vista::_actualizar_etiquetas(
 }
 
 void Vista::_actualizar_vista_paneles(
-    const std::optional<VistaPreparacionPizzas> &vista_preparacion,
+    const std::optional<PresentacionPreparacionPizzas> &vista_preparacion,
     const std::optional<PizzasToStrings> &vista_preparadas
 ) {
     paneles->visible = vista_preparacion.has_value();
@@ -119,7 +119,7 @@ void Vista::set_presentacion_vista(
 void Vista::actualizar_interfaz_grafico(
     bool mostrando_grid,                                            //
     FaseNivel fase_actual,                                          //
-    const std::optional<VistaPreparacionPizzas> &vista_preparacion, //
+    const std::optional<PresentacionPreparacionPizzas> &vista_preparacion, //
     std::optional<PizzasToStrings> &vista_preparadas,               //
     std::optional<const PresentacionPedidos>
         &info_pedidos,                  //

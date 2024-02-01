@@ -22,8 +22,8 @@ namespace presentador {
     PizzasToStrings contadores_to_preparadas( //
         const modelo::PizzasAContadores &
     );
-    std::vector<VistaPreparacionPizza> estado_preparacion_pizzas_to_vista( //
-        const EstadoPreparacionPizzas &                                    //
+    PresentacionPreparacionPizzas estado_preparacion_pizzas_to_vista( //
+        const EstadoPreparacionPizzas &                               //
     );
 
     std::string crea_texto_etiqueta_barra_estado(

@@ -8,4 +8,4 @@ struct VistaPreparacionPizza {
     int porcentaje;
 };
 
-using VistaPreparacionPizzas = std::vector<VistaPreparacionPizza>;
+using PresentacionPreparacionPizzas = std::vector<VistaPreparacionPizza>;
