@@ -6,7 +6,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 cmake_policy(SET CMP0144 NEW)
 
 # mas mensajes de error
-add_compile_options(/W4)
+# add_compile_options(/W4)
 
 
 # SFML
