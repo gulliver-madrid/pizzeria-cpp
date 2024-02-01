@@ -49,7 +49,7 @@ struct EtiquetasGenerales : public ComponenteConFont {
         std::shared_ptr<PresentacionVista> presentacion_vista //
     );
     void actualizar_pedidos( //
-        const std::vector<std::pair<std::string, size_t>> &presentacion_pedidos
+        const PresentacionPedidos &presentacion_pedidos
     );
 
     void actualizar_barra_estado(

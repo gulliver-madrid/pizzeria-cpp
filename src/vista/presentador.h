@@ -15,8 +15,8 @@ namespace presentador {
         std::string pedido_to_string(const Pedido &pedido);
     } // namespace impl
 
-    std::vector<std::pair<std::string, size_t>>
-    crear_presentacion_pedidos(const modelo::Pedidos &pedidos //
+    PresentacionPedidos crear_presentacion_pedidos( //
+        const modelo::Pedidos &pedidos
     );
 
     PizzasToStrings contadores_to_preparadas( //

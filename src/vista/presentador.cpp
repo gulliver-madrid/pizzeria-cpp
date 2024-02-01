@@ -54,11 +54,11 @@ namespace presentador {
         }
     } // namespace impl
 
-    std::vector<std::pair<std::string, size_t>>
+    PresentacionPedidos
     crear_presentacion_pedidos(const modelo::Pedidos &pedidos //
     ) {
         // Creamos las tarjetas de los pedidos
-        std::vector<std::pair<std::string, size_t>> presentacion_pedidos;
+        PresentacionPedidos presentacion_pedidos;
         for (auto &pedido : pedidos) {
             presentacion_pedidos.emplace_back(impl::pedido_to_vista(pedido));
         }

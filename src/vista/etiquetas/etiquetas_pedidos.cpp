@@ -51,7 +51,7 @@ namespace {
     }
 
     void actualizar_tarjetas_pedidos(
-        const std::vector<std::pair<std::string, size_t>>
+        const PresentacionPedidos
             &presentacion_pedidos,                            //
         std::vector<std::shared_ptr<TarjetaPedido>> &tarjetas //
     ) {
@@ -120,7 +120,7 @@ void TarjetaPedido::draw(
 //////////////////////////////////////////
 
 void EtiquetasPedidos::_actualizar_vista_pedidos( //
-    const std::vector<std::pair<std::string, size_t>> &presentacion_pedidos
+    const PresentacionPedidos &presentacion_pedidos
 ) {
     for (auto tarjeta : tarjetas_pedidos) {
         remove_child(tarjeta);
@@ -139,7 +139,7 @@ void EtiquetasPedidos::_actualizar_vista_pedidos( //
 EtiquetasPedidos::EtiquetasPedidos() {}
 
 void EtiquetasPedidos::actualizar(
-    const std::vector<std::pair<std::string, size_t>> &presentacion_pedidos
+    const PresentacionPedidos &presentacion_pedidos
 ) {
     _actualizar_vista_pedidos(presentacion_pedidos);
 }

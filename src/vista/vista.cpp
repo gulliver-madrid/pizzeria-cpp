@@ -40,7 +40,7 @@ namespace {
 // TODO:  ir pasando a enlace_vista la logica que deba conocer el modelo
 /* Actualiza las etiquetas */
 void Vista::_actualizar_etiquetas(
-    std::optional<const std::vector<std::pair<std::string, size_t>>>
+    std::optional<const PresentacionPedidos>
         &info_pedidos,                  //
     const sf::Time &tiempo_real_actual, //
     const sf::Time &tiempo_juego_actual //
@@ -121,7 +121,7 @@ void Vista::actualizar_interfaz_grafico(
     FaseNivel fase_actual,                                          //
     const std::optional<VistaPreparacionPizzas> &vista_preparacion, //
     std::optional<PizzasToStrings> &vista_preparadas,               //
-    std::optional<const std::vector<std::pair<std::string, size_t>>>
+    std::optional<const PresentacionPedidos>
         &info_pedidos,                  //
     const sf::Time &tiempo_real_actual, //
     const sf::Time &tiempo_juego_actual //

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../componente.h"
+#include "../vista_shared.h"
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Text.hpp>
 #include <vector>
@@ -35,16 +36,14 @@ class TarjetaPedido : public ComponenteConFont {
 class EtiquetasPedidos : public ComponenteConFont {
 
   private:
-    void _actualizar_vista_pedidos(
-        const std::vector<std::pair<std::string, size_t>> &presentacion_pedidos
+    void _actualizar_vista_pedidos( //
+        const PresentacionPedidos &presentacion_pedidos
     );
 
   public:
     std::vector<std::shared_ptr<TarjetaPedido>> tarjetas_pedidos;
 
     EtiquetasPedidos();
-    void actualizar(
-        const std::vector<std::pair<std::string, size_t>> &presentacion_pedidos
-    );
+    void actualizar(const PresentacionPedidos &);
     virtual void draw(sf::RenderTarget &, sf::RenderStates) const override;
 };

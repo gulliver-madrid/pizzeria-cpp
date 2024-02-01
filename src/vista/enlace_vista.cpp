@@ -39,7 +39,7 @@ namespace {
             modelo_amplio.modelo_interno.control_pizzas.contadores;
         return presentador::contadores_to_preparadas(contadores);
     }
-    std::vector<std::pair<std::string, size_t>> obtener_presentacion_pedidos( //
+    PresentacionPedidos obtener_presentacion_pedidos( //
         const ModeloAmplio &modelo_amplio
     ) {
         const auto &pedidos =
@@ -133,8 +133,7 @@ void EnlaceVista::actualizar_interfaz_grafico(
     vista->activar_botones_condicionalmente(activacion_botones);
     std::optional<VistaPreparacionPizzas> vista_preparacion;
     std::optional<PizzasToStrings> vista_preparadas;
-    std::optional<const std::vector<std::pair<std::string, size_t>>>
-        info_pedidos;
+    std::optional<const PresentacionPedidos> info_pedidos;
 
     const auto fase_actual = modelo_amplio.get_fase_actual();
 
