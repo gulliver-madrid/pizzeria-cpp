@@ -3,6 +3,7 @@
 #include "../../shared/log_init.h"
 #include "../../templates/helpers.h"
 #include "../basicos_vista.h"
+#include "../componentes/boton_con_texto.h"
 #include "../componentes/botones.h"
 #include "../componentes/crear_etiqueta.h"
 #include "datos_botones.h"

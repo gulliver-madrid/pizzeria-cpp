@@ -290,12 +290,12 @@
     - templates/helpers.h
     - vista/basicos_vista.h
     - vista/botones/datos_botones.h
+    - vista/componentes/boton_con_texto.h
     - vista/componentes/botones.h
     - vista/componentes/crear_etiqueta.h
 
 - vista/botones/botones_app.h:
     - modelo/dominio.h
-    - vista/componentes/boton_con_texto.h
     - vista/componentes/componente.h
     - vista/vista_shared.h
 
@@ -492,6 +492,7 @@
     - shared/num_nivel.h
     - templates/helpers.h
     - vista/basicos_vista.h
+    - vista/componentes/boton_con_texto.h
     - vista/grid.h
     - vista/vista_data.h
 

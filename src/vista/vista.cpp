@@ -5,6 +5,7 @@
 #include "../shared/num_nivel.h"
 #include "../templates/helpers.h"
 #include "basicos_vista.h"
+#include "componentes/boton_con_texto.h"
 #include "grid.h"
 #include "vista_data.h"
 #include <SFML/Graphics/RenderTarget.hpp>
