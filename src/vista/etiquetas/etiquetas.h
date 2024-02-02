@@ -42,11 +42,7 @@ class EtiquetasGenerales : public ComponenteConFont {
     );
 
     void set_presentacion_vista(std::shared_ptr<PresentacionVista>);
-
     void actualizar_barra_estado(const VistaBarraEstado &);
-
-    void dibujar_barra_estado(sf::RenderTarget &);
-    void dibujar_info(sf::RenderTarget &) const;
     virtual void draw(sf::RenderTarget &, sf::RenderStates) const override;
 };
 

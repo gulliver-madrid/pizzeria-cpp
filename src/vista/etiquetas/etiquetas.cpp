@@ -51,19 +51,12 @@ void EtiquetasGenerales::actualizar_barra_estado(
     barra_estado->actualizar(info_barra_estado);
 }
 
-void EtiquetasGenerales::dibujar_barra_estado(sf::RenderTarget &target) {
-    target.draw(*barra_estado);
-}
-
-void EtiquetasGenerales::dibujar_info(sf::RenderTarget &target) const {
-    target.draw(*info);
-}
-
 void EtiquetasGenerales::draw(
-    sf::RenderTarget &, //
-    sf::RenderStates    //
+    sf::RenderTarget &target, //
+    sf::RenderStates          //
 ) const {
-    // No implementado
+    target.draw(*barra_estado);
+    target.draw(*info);
 }
 
 ///////////////////////////////////////////

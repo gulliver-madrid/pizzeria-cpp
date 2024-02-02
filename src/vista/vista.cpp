@@ -151,15 +151,13 @@ void Vista::draw(
     sf::RenderTarget &target, //
     sf::RenderStates          //
 ) const {
-    // Limpia la target y empieza a pintar los componentes visuales
+    // Limpia la target y pinta los componentes visuales
     target.clear(colores::COLOR_FONDO);
     if (_mostrando_grid) {
         assert(grid);
         grid->draw(target, GRID_SIZE, GRID_TONE);
     }
-    // TODO:  etiquetas debe saber lo que debe dibujar por si misma
-    etiquetas->dibujar_barra_estado(target);
     target.draw(*paneles);
-    etiquetas->dibujar_info(target);
+    target.draw(*etiquetas);
     target.draw(*botones);
 }
