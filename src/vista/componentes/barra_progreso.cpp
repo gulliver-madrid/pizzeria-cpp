@@ -66,10 +66,10 @@ BarraProgresoConNombre::BarraProgresoConNombre(
     const sf::Vector2f &dimensiones, //
     const std::string &texto,        //
     const sf::Vector2f &posicion,    //
-    const BPNColors &bpn_colors      //
+    const ColoresBPN &colores_bpn      //
 )
-    : bp(dimensiones, posicion, bpn_colors.color_pair),
-      etiqueta(_crear_etiqueta(texto, posicion, bpn_colors.color_texto)) {
+    : bp(dimensiones, posicion, colores_bpn.color_pair),
+      etiqueta(_crear_etiqueta(texto, posicion, colores_bpn.color_texto)) {
     add_child(etiqueta);
 }
 

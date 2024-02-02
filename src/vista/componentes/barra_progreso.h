@@ -45,7 +45,7 @@ struct BarraProgreso : public sf::Drawable {
 ///////////////////////////////////////////
 
 // Colores de una BarraProgresoConNombre
-struct BPNColors {
+struct ColoresBPN {
     ColorPair color_pair;
     sf::Color color_texto;
 };
@@ -65,7 +65,7 @@ class BarraProgresoConNombre : public ComponenteConFont {
         const sf::Vector2f &dimensiones, //
         const std::string &texto,        //
         const sf::Vector2f &posicion,    //
-        const BPNColors &bpn_colors      //
+        const ColoresBPN &colores_bpn      //
     );
     void actualizar_porcentaje(int porcentaje);
     virtual void draw(sf::RenderTarget &, sf::RenderStates) const override;
