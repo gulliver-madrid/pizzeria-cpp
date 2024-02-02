@@ -2,7 +2,7 @@
 #include "fase_nivel.h"
 #include "globales.h"
 #include "modelo_amplio/modelo_amplio.h"
-#include "vista/botones_app.h"
+#include "vista/botones/botones_app.h"
 
 std::optional<Comando> ControladorClicks::genera_comando(
     const std::function<bool(const std::shared_ptr<BotonConTexto> boton)>

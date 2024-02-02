@@ -1,6 +1,7 @@
 #pragma once
 
-#include "botones_app.h"
+// TODO: reducir dependencias
+#include "botones/botones_app.h"
 #include "etiquetas/etiquetas.h"
 #include "paneles.h"
 #include "presentacion_vista.h"

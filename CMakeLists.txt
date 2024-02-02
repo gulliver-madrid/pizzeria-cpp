@@ -59,9 +59,9 @@ add_executable(pizzeria
     src/tiempo.cpp
     src/shared/log_init.cpp
     src/vista/barras_progreso.cpp
-    src/vista/botones_app.cpp
-    src/vista/botones_despachar.cpp
-    src/vista/botones_encargar.cpp
+    src/vista/botones/botones_app.cpp
+    src/vista/botones/botones_despachar.cpp
+    src/vista/botones/botones_encargar.cpp
     src/vista/cadenas.cpp
     src/vista/componentes/barra_progreso.cpp
     src/vista/componentes/boton_con_texto.cpp
@@ -153,9 +153,9 @@ add_executable(
     src/tiempo.cpp
     src/shared/log_init.cpp
     src/vista/barras_progreso.cpp
-    src/vista/botones_app.cpp
-    src/vista/botones_despachar.cpp
-    src/vista/botones_encargar.cpp
+    src/vista/botones/botones_app.cpp
+    src/vista/botones/botones_despachar.cpp
+    src/vista/botones/botones_encargar.cpp
     src/vista/cadenas.cpp
     src/vista/componentes/barra_progreso.cpp
     src/vista/componentes/boton_con_texto.cpp

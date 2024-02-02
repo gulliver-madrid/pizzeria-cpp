@@ -1,6 +1,6 @@
 #pragma once
 
-#include "vista_shared.h"
+#include "../vista_shared.h"
 
 /**
  * Crea y posiciona los botones asociados con la accion "encargar".

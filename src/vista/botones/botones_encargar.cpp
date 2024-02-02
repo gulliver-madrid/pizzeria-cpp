@@ -1,9 +1,9 @@
 #include "botones_encargar.h"
-#include "../modelo/dominio.h"
-#include "../templates/helpers.h"
-#include "basicos_vista.h"
-#include "componentes/boton_con_texto.h"
-#include "componentes/botones.h"
+#include "../../modelo/dominio.h"
+#include "../../templates/helpers.h"
+#include "../basicos_vista.h"
+#include "../componentes/boton_con_texto.h"
+#include "../componentes/botones.h"
 #include "datos_botones.h"
 #include <cassert>
 

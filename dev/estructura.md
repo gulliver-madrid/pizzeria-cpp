@@ -9,7 +9,7 @@
     - fase_nivel.h
     - globales.h
     - modelo_amplio/modelo_amplio.h
-    - vista/botones_app.h
+    - vista/botones/botones_app.h
 
 - controlador_clicks.h:
     - modelo_amplio/comandos.h
@@ -256,44 +256,44 @@
 - vista/basicos_vista.cpp:
     - vista/basicos_vista.h
 
-- vista/botones_app.cpp:
-    - vista/botones_app.h
+- vista/botones/botones_app.cpp:
+    - vista/botones/botones_app.h
     - modelo/dominio.h
     - shared/log_init.h
     - templates/helpers.h
     - vista/basicos_vista.h
+    - vista/botones/datos_botones.h
     - vista/componentes/botones.h
     - vista/componentes/crear_etiqueta.h
-    - vista/datos_botones.h
 
-- vista/botones_app.h:
+- vista/botones/botones_app.h:
     - modelo/dominio.h
     - vista/componentes/boton_con_texto.h
     - vista/componentes/componente.h
     - vista/vista_shared.h
 
-- vista/botones_despachar.cpp:
-    - vista/botones_despachar.h
+- vista/botones/botones_despachar.cpp:
+    - vista/botones/botones_despachar.h
     - modelo/dominio.h
     - templates/helpers.h
     - vista/basicos_vista.h
+    - vista/botones/datos_botones.h
     - vista/componentes/boton_con_texto.h
     - vista/componentes/botones.h
-    - vista/datos_botones.h
 
-- vista/botones_despachar.h:
+- vista/botones/botones_despachar.h:
     - vista/vista_shared.h
 
-- vista/botones_encargar.cpp:
-    - vista/botones_encargar.h
+- vista/botones/botones_encargar.cpp:
+    - vista/botones/botones_encargar.h
     - modelo/dominio.h
     - templates/helpers.h
     - vista/basicos_vista.h
+    - vista/botones/datos_botones.h
     - vista/componentes/boton_con_texto.h
     - vista/componentes/botones.h
-    - vista/datos_botones.h
 
-- vista/botones_encargar.h:
+- vista/botones/botones_encargar.h:
     - vista/vista_shared.h
 
 - vista/cadenas.cpp:
@@ -451,8 +451,8 @@
     - shared/log_init.h
     - templates/dibujar_elementos.h
     - vista/basicos_vista.h
-    - vista/botones_despachar.h
-    - vista/botones_encargar.h
+    - vista/botones/botones_despachar.h
+    - vista/botones/botones_encargar.h
     - vista/componentes/boton_con_texto.h
     - vista/componentes/etiqueta.h
     - vista/etiquetas/etiquetas.h
@@ -493,7 +493,7 @@
     - vista/vista_data.h
 
 - vista/vista.h:
-    - vista/botones_app.h
+    - vista/botones/botones_app.h
     - vista/etiquetas/etiquetas.h
     - vista/paneles.h
     - vista/presentacion_vista.h

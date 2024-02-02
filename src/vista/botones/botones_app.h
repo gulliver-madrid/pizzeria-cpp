@@ -1,9 +1,9 @@
 #pragma once
 
-#include "../modelo/dominio.h"
-#include "componentes/boton_con_texto.h"
-#include "componentes/componente.h"
-#include "vista_shared.h"
+#include "../../modelo/dominio.h"
+#include "../componentes/boton_con_texto.h"
+#include "../componentes/componente.h"
+#include "../vista_shared.h"
 
 struct BotonesGenerales {
     std::shared_ptr<BotonConTexto> alternar_grid;

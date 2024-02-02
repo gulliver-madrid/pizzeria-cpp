@@ -1,10 +1,10 @@
 #include "botones_app.h"
-#include "../modelo/dominio.h"
-#include "../shared/log_init.h"
-#include "../templates/helpers.h"
-#include "basicos_vista.h"
-#include "componentes/botones.h"
-#include "componentes/crear_etiqueta.h"
+#include "../../modelo/dominio.h"
+#include "../../shared/log_init.h"
+#include "../../templates/helpers.h"
+#include "../basicos_vista.h"
+#include "../componentes/botones.h"
+#include "../componentes/crear_etiqueta.h"
 #include "datos_botones.h"
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <algorithm>
