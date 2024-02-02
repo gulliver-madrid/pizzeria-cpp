@@ -153,8 +153,8 @@ void EnlaceVista::actualizar_interfaz_grafico(
     const auto info_barra_estado =
         presentador::crea_vista_barra_estado(tiempo_real, tiempo_juego);
     vista->actualizar_interfaz_grafico(
-        mostrando_grid, fase_actual, info_preparacion, info_preparadas,
-        info_pedidos, info_barra_estado
+        mostrando_grid, info_preparacion, info_preparadas, info_pedidos,
+        info_barra_estado
     );
 }
 

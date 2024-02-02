@@ -488,7 +488,6 @@
 
 - vista/vista.cpp:
     - vista/vista.h
-    - fase_nivel.h
     - shared/dev.h
     - shared/log_init.h
     - templates/helpers.h

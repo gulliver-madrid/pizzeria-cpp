@@ -1,5 +1,4 @@
 #include "vista.h"
-#include "../fase_nivel.h"
 #include "../shared/dev.h"
 #include "../shared/log_init.h"
 #include "../templates/helpers.h"
@@ -38,8 +37,6 @@ namespace {
 ///////////////////////////////////////////
 // Vista (private)
 //////////////////////////////////////////
-
-// TODO:  ir pasando a enlace_vista la logica que deba conocer el modelo
 
 /* Actualiza las etiquetas */
 void Vista::_actualizar_etiquetas(const VistaBarraEstado &info_barra_estado) {
@@ -114,8 +111,7 @@ void Vista::set_presentacion_vista(
  * Actualiza el interfaz grafico
  */
 void Vista::actualizar_interfaz_grafico(
-    bool mostrando_grid,                                                  //
-    FaseNivel fase_actual,                                                //
+    bool mostrando_grid, //                                            //
     const std::optional<PresentacionPreparacionPizzas> &info_preparacion, //
     const std::optional<PizzasToStrings> &info_preparadas,                //
     const std::optional<const PresentacionPedidos> &info_pedidos,         //

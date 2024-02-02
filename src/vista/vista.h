@@ -8,7 +8,6 @@
 
 class BotonesApp;
 class EtiquetasGenerales;
-enum class FaseNivel;
 struct Grid;
 class PanelesObservables;
 class Paneles;
@@ -62,10 +61,9 @@ class Vista : public ComponenteConFont, public VistaObservable {
     void set_presentacion_vista(           //
         std::shared_ptr<PresentacionVista> //
     );
-    // TODO: revisar si este metodo necesita FaseNivel
+
     void actualizar_interfaz_grafico(
-        bool mostrando_grid,
-        FaseNivel fase_actual,                                 //
+        bool mostrando_grid,                                   //
         const std::optional<PresentacionPreparacionPizzas> &,  //
         const std::optional<PizzasToStrings> &info_preparadas, //
         const std::optional<const PresentacionPedidos> &,      //
