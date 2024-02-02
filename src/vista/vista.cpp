@@ -37,12 +37,10 @@ namespace {
 //////////////////////////////////////////
 
 // TODO:  ir pasando a enlace_vista la logica que deba conocer el modelo
+
 /* Actualiza las etiquetas */
-void Vista::_actualizar_etiquetas(
-    const sf::Time &tiempo_real_actual, //
-    const sf::Time &tiempo_juego_actual //
-) {
-    etiquetas->actualizar_barra_estado(tiempo_real_actual, tiempo_juego_actual);
+void Vista::_actualizar_etiquetas(const VistaBarraEstado &info_barra_estado) {
+    etiquetas->actualizar_barra_estado(info_barra_estado);
 }
 
 void Vista::_actualizar_vista_paneles(
@@ -118,12 +116,11 @@ void Vista::actualizar_interfaz_grafico(
     const std::optional<PresentacionPreparacionPizzas> &info_preparacion, //
     const std::optional<PizzasToStrings> &info_preparadas,                //
     const std::optional<const PresentacionPedidos> &info_pedidos,         //
-    const sf::Time &tiempo_real_actual,                                   //
-    const sf::Time &tiempo_juego_actual                                   //
+    const VistaBarraEstado &info_barra_estado                             //
 ) {
     _mostrando_grid = mostrando_grid;
     _actualizar_vista_paneles(info_preparacion, info_preparadas, info_pedidos);
-    _actualizar_etiquetas(tiempo_real_actual, tiempo_juego_actual);
+    _actualizar_etiquetas(info_barra_estado);
 }
 
 void Vista::mostrar_elementos_fase_activa() {

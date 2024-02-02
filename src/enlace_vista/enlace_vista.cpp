@@ -124,7 +124,7 @@ void EnlaceVista::esconder_paneles() const { vista->paneles->visible = false; }
 
 void EnlaceVista::actualizar_interfaz_grafico(
     const ModeloAmplio &modelo_amplio, //
-    const sf::Time &tiempo_real_actual //
+    const sf::Time &tiempo_real        //
 ) {
     const auto activacion_botones =
         enlace_vista_impl::obtener_activacion_botones(
@@ -146,12 +146,14 @@ void EnlaceVista::actualizar_interfaz_grafico(
         info_pedidos.emplace(obtener_presentacion_pedidos(modelo_amplio));
     }
     const auto mostrando_grid = modelo_amplio.mostrando_grid;
-    const auto tiempo_juego_actual =
+    const auto tiempo_juego =
         modelo_amplio.modelo_interno.obtener_tiempo_juego();
 
+    const auto info_barra_estado =
+        presentador::crea_vista_barra_estado(tiempo_real, tiempo_juego);
     vista->actualizar_interfaz_grafico(
         mostrando_grid, fase_actual, info_preparacion, info_preparadas,
-        info_pedidos, tiempo_real_actual, tiempo_juego_actual
+        info_pedidos, info_barra_estado
     );
 }
 

@@ -35,8 +35,9 @@ TEST(Presentador, ContadoresToPreparadasString) {
 TEST(Presentador, CreaTextoEtiquetaBarraEstado) {
     const auto tiempo_real = sf::seconds(62);
     const auto tiempo_juego = sf::seconds(35);
-    const auto result = presentador::crea_texto_etiqueta_barra_estado(
-        tiempo_real, tiempo_juego
+    const auto result =
+        presentador::crea_vista_barra_estado(tiempo_real, tiempo_juego);
+    ASSERT_EQ(
+        "Tiempo Juego: 00:35       Tiempo Real: 01:02", result.texto.value
     );
-    ASSERT_EQ("Tiempo Juego: 00:35       Tiempo Real: 01:02", result);
 }

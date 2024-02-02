@@ -33,10 +33,7 @@ class Vista : public ComponenteConFont, public VistaObservable {
   private:
     bool _mostrando_grid = false;
 
-    void _actualizar_etiquetas(
-        const sf::Time &tiempo_real_actual, //
-        const sf::Time &tiempo_juego_actual //
-    );
+    void _actualizar_etiquetas(const VistaBarraEstado &info_barra_estado);
 
     void _actualizar_vista_paneles( //
         const std::optional<PresentacionPreparacionPizzas> &info_preparacion,
@@ -69,8 +66,7 @@ class Vista : public ComponenteConFont, public VistaObservable {
         const std::optional<PresentacionPreparacionPizzas> &,  //
         const std::optional<PizzasToStrings> &info_preparadas, //
         const std::optional<const PresentacionPedidos> &,      //
-        const sf::Time &tiempo_real_actual,                    //
-        const sf::Time &tiempo_juego_actual                    //
+        const VistaBarraEstado &info_barra_estado              //
     );
 
     void mostrar_elementos_fase_activa();

@@ -2,6 +2,7 @@
 
 #include "../../shared/font.h"
 #include "../componentes/componente.h"
+#include "../presentaciones.h"
 #include <SFML/Graphics/Drawable.hpp>
 
 namespace sf {
@@ -19,6 +20,6 @@ class EtiquetasBarraEstado : public ComponenteConFont {
 
   public:
     EtiquetasBarraEstado();
-    void actualizar(const sf::Time &, const sf::Time &);
+    void actualizar(const VistaBarraEstado &info_barra_estado);
     virtual void draw(sf::RenderTarget &, sf::RenderStates) const override;
 };

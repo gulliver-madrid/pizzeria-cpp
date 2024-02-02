@@ -4,6 +4,7 @@
 #include "../componentes/crear_etiqueta.h"
 #include "../componentes/etiqueta.h"
 #include "../presentacion_vista.h"
+#include "../presentaciones.h"
 #include "etiquetas_barra_estado.h"
 #include "etiquetas_info.h"
 #include <SFML/Graphics/RenderTarget.hpp>
@@ -45,9 +46,9 @@ void EtiquetasGenerales::set_presentacion_vista(
 }
 
 void EtiquetasGenerales::actualizar_barra_estado(
-    const sf::Time &tiempo_real_actual, const sf::Time &tiempo_juego_actual
+    const VistaBarraEstado &info_barra_estado
 ) {
-    barra_estado->actualizar(tiempo_real_actual, tiempo_juego_actual);
+    barra_estado->actualizar(info_barra_estado);
 }
 
 void EtiquetasGenerales::dibujar_barra_estado(sf::RenderTarget &target) {

@@ -388,16 +388,17 @@
     - vista/etiquetas/etiquetas_barra_estado.h
     - vista/etiquetas/etiquetas_info.h
     - vista/presentacion_vista.h
+    - vista/presentaciones.h
 
 - vista/etiquetas/etiquetas.h:
     - modelo/modelo_shared.h
     - vista/componentes/componente.h
     - vista/presentacion_vista.h
+    - vista/presentaciones.h
     - vista/vista_shared.h
 
 - vista/etiquetas/etiquetas_barra_estado.cpp:
     - vista/etiquetas/etiquetas_barra_estado.h
-    - enlace_vista/presentador.h
     - tiempo.h
     - vista/basicos_vista.h
     - vista/cadenas.h
@@ -407,6 +408,7 @@
 - vista/etiquetas/etiquetas_barra_estado.h:
     - shared/font.h
     - vista/componentes/componente.h
+    - vista/presentaciones.h
 
 - vista/etiquetas/etiquetas_info.cpp:
     - vista/etiquetas/etiquetas_info.h
@@ -479,6 +481,9 @@
     - vista/componentes/crear_etiqueta.h
     - vista/etiquetas/etiquetas_preparadas.h
     - vista/paneles_observables.h
+
+- vista/presentaciones.h:
+    - vista/cadenas.h
 
 - vista/vista.cpp:
     - vista/vista.h

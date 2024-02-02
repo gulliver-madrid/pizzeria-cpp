@@ -99,7 +99,7 @@ namespace presentador {
         return presentacion;
     }
 
-    std::string crea_texto_etiqueta_barra_estado(
+    VistaBarraEstado crea_vista_barra_estado(
         const sf::Time &tiempo_real, const sf::Time &tiempo_juego
     ) {
         static const auto espacios = std::string(7, ' ');
@@ -107,8 +107,14 @@ namespace presentador {
             "Tiempo Juego: {tiempo_juego}" + espacios +
             "Tiempo Real: {tiempo_real}"
         );
-        return cadena
-            .interpolar_por_clave("tiempo_juego", time_to_string(tiempo_juego))
-            .interpolar_por_clave("tiempo_real", time_to_string(tiempo_real));
+        return VistaBarraEstado{
+            cadena
+                .interpolar_por_clave(
+                    "tiempo_juego", time_to_string(tiempo_juego)
+                )
+                .interpolar_por_clave(
+                    "tiempo_real", time_to_string(tiempo_real)
+                )
+        };
     }
 } // namespace presentador

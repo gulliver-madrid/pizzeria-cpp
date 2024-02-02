@@ -26,7 +26,7 @@ namespace presentador {
         const EstadoPreparacionPizzas &                               //
     );
 
-    std::string crea_texto_etiqueta_barra_estado(
+    VistaBarraEstado crea_vista_barra_estado(
         const sf::Time &tiempo_real, const sf::Time &tiempo_juego
     );
 

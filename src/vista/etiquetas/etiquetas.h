@@ -3,6 +3,7 @@
 #include "../../modelo/modelo_shared.h"
 #include "../componentes/componente.h"
 #include "../presentacion_vista.h"
+#include "../presentaciones.h"
 #include "../vista_shared.h"
 #include <SFML/System/Vector2.hpp>
 #include <memory>
@@ -42,16 +43,12 @@ struct EtiquetasGenerales : public ComponenteConFont {
         const NumNivelOpcional &  //
     );
 
-    void set_presentacion_vista(
-        std::shared_ptr<PresentacionVista> presentacion_vista //
-    );
+    void set_presentacion_vista(std::shared_ptr<PresentacionVista>);
 
-    void actualizar_barra_estado(
-        const sf::Time &tiempo_real_actual, const sf::Time &tiempo_juego_actual
-    );
+    void actualizar_barra_estado(const VistaBarraEstado &);
 
-    void dibujar_barra_estado(sf::RenderTarget &target);
-    void dibujar_info(sf::RenderTarget &target) const;
+    void dibujar_barra_estado(sf::RenderTarget &);
+    void dibujar_info(sf::RenderTarget &) const;
     virtual void draw(sf::RenderTarget &, sf::RenderStates) const override;
 };
 
