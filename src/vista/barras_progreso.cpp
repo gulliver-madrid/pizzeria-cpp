@@ -18,12 +18,29 @@ namespace colores {
     };
 }
 
-sf::Vector2f obtener_dimensiones_barra_progreso() {
-    using medidas::barra_progreso::ancho;
-    using medidas::barra_progreso::largo;
-    static const auto dimensiones = sf::Vector2f(ancho, largo);
-    return dimensiones;
-}
+namespace {
+    sf::Vector2f obtener_dimensiones_barra_progreso() {
+        using medidas::barra_progreso::ancho;
+        using medidas::barra_progreso::largo;
+        static const auto dimensiones = sf::Vector2f(ancho, largo);
+        return dimensiones;
+    }
+
+    std::shared_ptr<BarraProgresoConNombre> crear_barra_progreso_con_nombre(
+        const sf::Vector2f &dimensiones,                 //
+        const VistaPreparacionPizza &presentacion_pizza, //
+        const sf::Vector2f &posicion                     //
+    ) {
+        const auto bpn = std::make_shared<BarraProgresoConNombre>(
+            dimensiones,                     //
+            presentacion_pizza.nombre_pizza, //
+            posicion,                        //
+            colores::colores_bpn             //
+        );
+        bpn->actualizar_porcentaje(presentacion_pizza.porcentaje);
+        return bpn;
+    }
+} // namespace
 
 /* Crea y actualiza las barras de progreso */
 std::vector<std::shared_ptr<BarraProgresoConNombre>> crear_barras_progreso(
@@ -40,13 +57,9 @@ std::vector<std::shared_ptr<BarraProgresoConNombre>> crear_barras_progreso(
     std::vector<std::shared_ptr<BarraProgresoConNombre>> barras{};
     for (auto &presentacion_pizza : presentacion) {
         const auto posicion = sf::Vector2f(pos_x, pos_y);
-        const auto bpn = std::make_shared<BarraProgresoConNombre>(
-            dimensiones,                     //
-            presentacion_pizza.nombre_pizza, //
-            posicion,                        //
-            colores::colores_bpn             //
+        const auto bpn = crear_barra_progreso_con_nombre(
+            dimensiones, presentacion_pizza, posicion
         );
-        bpn->actualizar_porcentaje(presentacion_pizza.porcentaje);
         barras.push_back(bpn);
         pos_y += diferencia_vertical;
     }
