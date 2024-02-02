@@ -1,5 +1,4 @@
 #include "etiquetas_pedidos.h"
-#include "../../enlace_vista/presentador.h"
 #include "../../shared/log_init.h"
 #include "../../templates/dibujar_elementos.h"
 #include "../../templates/helpers.h"
@@ -8,8 +7,6 @@
 #include "../componentes/etiqueta.h"
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <cassert>
-
-// TODO: eliminar dependencia de presentador
 
 namespace medidas {
     constexpr float SEPARACION_VERTICAL_ENTRE_PEDIDOS = 24;

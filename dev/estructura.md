@@ -426,7 +426,6 @@
 
 - vista/etiquetas/etiquetas_pedidos.cpp:
     - vista/etiquetas/etiquetas_pedidos.h
-    - enlace_vista/presentador.h
     - shared/log_init.h
     - templates/dibujar_elementos.h
     - templates/helpers.h
