@@ -2,7 +2,7 @@
 
 #include "../../shared/font.h"
 #include "../../shared/num_nivel.h"
-#include "../componente.h"
+#include "../componentes/componente.h"
 #include "../presentacion_vista.h"
 #include <SFML/Graphics/Drawable.hpp>
 #include <memory>

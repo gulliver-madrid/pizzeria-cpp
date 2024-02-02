@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../componente.h"
+#include "../componentes/componente.h"
 #include "../vista_shared.h"
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Text.hpp>

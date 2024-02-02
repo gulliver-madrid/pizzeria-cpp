@@ -1,8 +1,8 @@
 #pragma once
 
 #include "../modelo/dominio.h"
-#include "componente.h"
 #include "componentes/boton_con_texto.h"
+#include "componentes/componente.h"
 #include "vista_shared.h"
 
 struct BotonesGenerales {

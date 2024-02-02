@@ -63,10 +63,10 @@ add_executable(pizzeria
     src/vista/botones_despachar.cpp
     src/vista/botones_encargar.cpp
     src/vista/cadenas.cpp
-    src/vista/componente.cpp
     src/vista/componentes/barra_progreso.cpp
     src/vista/componentes/boton_con_texto.cpp
     src/vista/componentes/botones.cpp
+    src/vista/componentes/componente.cpp
     src/vista/componentes/crear_etiqueta.cpp
     src/vista/componentes/etiqueta.cpp
     src/vista/enlace_vista.cpp
@@ -157,10 +157,10 @@ add_executable(
     src/vista/botones_despachar.cpp
     src/vista/botones_encargar.cpp
     src/vista/cadenas.cpp
-    src/vista/componente.cpp
     src/vista/componentes/barra_progreso.cpp
     src/vista/componentes/boton_con_texto.cpp
     src/vista/componentes/botones.cpp
+    src/vista/componentes/componente.cpp
     src/vista/componentes/crear_etiqueta.cpp
     src/vista/componentes/etiqueta.cpp
     src/vista/enlace_vista.cpp

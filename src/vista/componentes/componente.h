@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../shared/font.h"
+#include "../../shared/font.h"
 #include <SFML/Graphics/Drawable.hpp>
 #include <cassert>
 #include <memory>

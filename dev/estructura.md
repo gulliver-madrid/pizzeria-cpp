@@ -202,7 +202,7 @@
     - vista/cadenas.h
 
 - tests/test_componente.cpp:
-    - vista/componente.h
+    - vista/componentes/componente.h
 
 - tests/test_main.cpp:
     - shared/log_init.h
@@ -225,6 +225,7 @@
     - modelo_amplio/comandos.h
     - motor_nivel.h
     - setup_juego.h
+    - vista/basicos_vista.h
     - vista/vista.h
 
 - textos.cpp:
@@ -267,8 +268,8 @@
 
 - vista/botones_app.h:
     - modelo/dominio.h
-    - vista/componente.h
     - vista/componentes/boton_con_texto.h
+    - vista/componentes/componente.h
     - vista/vista_shared.h
 
 - vista/botones_despachar.cpp:
@@ -298,12 +299,6 @@
 - vista/cadenas.cpp:
     - vista/cadenas.h
 
-- vista/componente.cpp:
-    - vista/componente.h
-
-- vista/componente.h:
-    - shared/font.h
-
 - vista/componentes/barra_progreso.cpp:
     - vista/componentes/barra_progreso.h
     - templates/dibujar_elementos.h
@@ -312,7 +307,7 @@
 
 - vista/componentes/barra_progreso.h:
     - shared/font.h
-    - vista/componente.h
+    - vista/componentes/componente.h
 
 - vista/componentes/boton_con_texto.cpp:
     - vista/componentes/boton_con_texto.h
@@ -322,8 +317,8 @@
     - vista/componentes/etiqueta.h
 
 - vista/componentes/boton_con_texto.h:
-    - vista/componente.h
     - vista/componentes/boton_data.h
+    - vista/componentes/componente.h
 
 - vista/componentes/boton_data.h:
     - shared/font.h
@@ -335,6 +330,12 @@
 - vista/componentes/botones.h:
     - vista/componentes/boton_con_texto.h
     - vista/vista_shared.h
+
+- vista/componentes/componente.cpp:
+    - vista/componentes/componente.h
+
+- vista/componentes/componente.h:
+    - shared/font.h
 
 - vista/componentes/crear_etiqueta.cpp:
     - vista/componentes/crear_etiqueta.h
@@ -349,7 +350,7 @@
     - shared/font.h
 
 - vista/componentes/etiqueta.h:
-    - vista/componente.h
+    - vista/componentes/componente.h
 
 - vista/enlace_vista.cpp:
     - vista/enlace_vista.h
@@ -372,12 +373,11 @@
     - vista/componentes/etiqueta.h
     - vista/etiquetas/etiquetas_barra_estado.h
     - vista/etiquetas/etiquetas_info.h
-    - vista/etiquetas/etiquetas_pedidos.h
     - vista/presentacion_vista.h
 
 - vista/etiquetas/etiquetas.h:
     - modelo/modelo_shared.h
-    - vista/componente.h
+    - vista/componentes/componente.h
     - vista/presentacion_vista.h
     - vista/vista_shared.h
 
@@ -392,7 +392,7 @@
 
 - vista/etiquetas/etiquetas_barra_estado.h:
     - shared/font.h
-    - vista/componente.h
+    - vista/componentes/componente.h
 
 - vista/etiquetas/etiquetas_info.cpp:
     - vista/etiquetas/etiquetas_info.h
@@ -405,7 +405,7 @@
 - vista/etiquetas/etiquetas_info.h:
     - shared/font.h
     - shared/num_nivel.h
-    - vista/componente.h
+    - vista/componentes/componente.h
     - vista/presentacion_vista.h
 
 - vista/etiquetas/etiquetas_pedidos.cpp:
@@ -419,7 +419,8 @@
     - vista/presentador.h
 
 - vista/etiquetas/etiquetas_pedidos.h:
-    - vista/componente.h
+    - vista/componentes/componente.h
+    - vista/vista_shared.h
 
 - vista/etiquetas/etiquetas_preparadas.cpp:
     - vista/etiquetas/etiquetas_preparadas.h
@@ -432,7 +433,7 @@
 
 - vista/etiquetas/etiquetas_preparadas.h:
     - modelo/control_pizzas.h
-    - vista/componente.h
+    - vista/componentes/componente.h
     - vista/vista_shared.h
 
 - vista/etiquetas/fabrica_etiquetas_preparadas.cpp:
@@ -455,6 +456,7 @@
     - vista/componentes/boton_con_texto.h
     - vista/componentes/etiqueta.h
     - vista/etiquetas/etiquetas.h
+    - vista/etiquetas/etiquetas_pedidos.h
 
 - vista/paneles.h:
     - modelo/modelo.h

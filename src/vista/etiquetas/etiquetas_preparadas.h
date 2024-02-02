@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../../modelo/control_pizzas.h"
-#include "../componente.h"
+#include "../componentes/componente.h"
 #include "../vista_shared.h"
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Text.hpp>

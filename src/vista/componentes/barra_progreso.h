@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../../shared/font.h"
-#include "../componente.h"
+#include "componente.h"
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/System/Vector2.hpp>

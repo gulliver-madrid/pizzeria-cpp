@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../../shared/font.h"
-#include "../componente.h"
+#include "../componentes/componente.h"
 #include <SFML/Graphics/Drawable.hpp>
 
 namespace sf {

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../componente.h"
 #include "boton_data.h"
+#include "componente.h"
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <memory>
 #include <optional>

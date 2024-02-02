@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../../modelo/modelo_shared.h"
-#include "../componente.h"
+#include "../componentes/componente.h"
 #include "../presentacion_vista.h"
 #include "../vista_shared.h"
 #include <SFML/System/Vector2.hpp>

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../componente.h"
+#include "componente.h"
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Text.hpp>
 

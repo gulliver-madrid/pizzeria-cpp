@@ -1,4 +1,4 @@
-#include "../vista/componente.h"
+#include "../vista/componentes/componente.h"
 #include <SFML/Graphics/Font.hpp>
 #include <gtest/gtest.h>
 
