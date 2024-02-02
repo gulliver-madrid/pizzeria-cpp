@@ -4,9 +4,9 @@
 #include <memory>
 
 class Globales;
+class Grid;
 class MotorNivel;
 struct DatosNivel;
-struct Grid;
 enum class AccionGeneral;
 
 struct Nivel {

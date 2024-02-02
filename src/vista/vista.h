@@ -8,9 +8,9 @@
 
 class BotonesApp;
 class EtiquetasGenerales;
-struct Grid;
-class PanelesObservables;
+class Grid;
 class Paneles;
+class PanelesObservables;
 
 namespace sf {
     class Time;

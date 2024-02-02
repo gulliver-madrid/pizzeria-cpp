@@ -8,11 +8,13 @@
 #define GRID_SIZE 40
 #define GRID_TONE 100
 
-struct Grid {
+class Grid {
+  private:
+    bool construido = false;
     sf::Sprite sprite;
     sf::Texture texture;
     sf::RenderTexture render_texture;
-    bool construido = false;
-    void
-    draw(sf::RenderTarget &target, int distancia = 50, int tono_gris = 60);
+
+  public:
+    void draw(sf::RenderTarget &, int distancia = 50, int tono_gris = 60);
 };
