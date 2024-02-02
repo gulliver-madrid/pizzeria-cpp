@@ -191,26 +191,31 @@ Paneles::Paneles(const dominio::TiposDePizza &tp_disponibles) {
     const FabricaEtiquetasTituloPanel fabrica;
     LOG(debug) << "A punto de crear los paneles";
     for (auto indice : paneles_posibles) {
-        std::shared_ptr<Panel> panel = nullptr;
+        std::shared_ptr<Panel> panel;
         auto titulo = fabrica.crearEtiquetaTituloPanel(
             basicos_vista::obtener_posicion_panel(indice), //
             texto_titulos_paneles.at(indice)
         );
-
-        if (indice == IndicePanel::PANEL_ENCARGAR) {
-            panel = std::make_shared<PanelEncargar>( //
-                indice, titulo, tp_disponibles
-            );
-        } else if (indice == IndicePanel::PANEL_EN_PREPARACION) {
-            panel = std::make_shared<PanelEnPreparacion>(indice, titulo);
-        } else if (indice == IndicePanel::PANEL_PREPARADAS) {
-            panel = std::make_shared<PanelPreparadas>(
-                indice, titulo, tp_disponibles
-            );
-        } else if (indice == IndicePanel::PANEL_PEDIDOS) {
-            panel = std::make_shared<PanelPedidos>(indice, titulo);
-        } else {
-            assert(false && "Panel desconocido");
+        switch (indice) {
+            case IndicePanel::PANEL_ENCARGAR:
+                panel = std::make_shared<PanelEncargar>( //
+                    indice, titulo, tp_disponibles
+                );
+                break;
+            case IndicePanel::PANEL_EN_PREPARACION:
+                panel = std::make_shared<PanelEnPreparacion>(indice, titulo);
+                break;
+            case IndicePanel::PANEL_PREPARADAS:
+                panel = std::make_shared<PanelPreparadas>(
+                    indice, titulo, tp_disponibles
+                );
+                break;
+            case IndicePanel::PANEL_PEDIDOS:
+                panel = std::make_shared<PanelPedidos>(indice, titulo);
+                break;
+            default:
+                assert(false && "Panel desconocido");
+                break;
         }
 
         _paneles.emplace(indice, panel);
