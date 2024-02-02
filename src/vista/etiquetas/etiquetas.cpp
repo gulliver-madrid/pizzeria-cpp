@@ -6,7 +6,6 @@
 #include "../presentacion_vista.h"
 #include "etiquetas_barra_estado.h"
 #include "etiquetas_info.h"
-#include "etiquetas_pedidos.h"
 #include <SFML/Graphics/RenderTarget.hpp>
 
 namespace medidas {
@@ -24,10 +23,8 @@ namespace estilos {
 //////////////////////////////////////////
 
 EtiquetasGenerales::EtiquetasGenerales() {
-    etiquetas_pedidos = std::make_shared<EtiquetasPedidos>();
     info = std::make_shared<EtiquetasInfo>();
     barra_estado = std::make_shared<EtiquetasBarraEstado>();
-    add_child(etiquetas_pedidos);
     add_child(info);
     add_child(barra_estado);
 }
@@ -47,20 +44,10 @@ void EtiquetasGenerales::set_presentacion_vista(
     info->set_presentacion_vista(presentacion_vista);
 }
 
-void EtiquetasGenerales::actualizar_pedidos(
-    const PresentacionPedidos &presentacion_pedidos //
-) {
-    etiquetas_pedidos->actualizar(presentacion_pedidos);
-}
-
 void EtiquetasGenerales::actualizar_barra_estado(
     const sf::Time &tiempo_real_actual, const sf::Time &tiempo_juego_actual
 ) {
     barra_estado->actualizar(tiempo_real_actual, tiempo_juego_actual);
-}
-
-void EtiquetasGenerales::dibujar_pedidos(sf::RenderTarget &target) const {
-    target.draw(*etiquetas_pedidos);
 }
 
 void EtiquetasGenerales::dibujar_barra_estado(sf::RenderTarget &target) {

@@ -7,6 +7,7 @@
 #include "componentes/boton_con_texto.h"
 #include "componentes/etiqueta.h"
 #include "etiquetas/etiquetas.h"
+#include "etiquetas/etiquetas_pedidos.h"
 #include <cassert>
 
 namespace medidas {
@@ -119,6 +120,10 @@ void PanelEnPreparacion::draw(
     }
 }
 
+///////////////////////////////////////////
+// PanelPreparadas (public)
+/////////////////////////////////////////
+
 PanelPreparadas::PanelPreparadas(
     IndicePanel indice, std::shared_ptr<Etiqueta> etiqueta,
     const dominio::TiposDePizza &tp_disponibles
@@ -157,6 +162,32 @@ void PanelPreparadas::draw(
 }
 
 ///////////////////////////////////////////
+// PanelPedidos (public)
+/////////////////////////////////////////
+
+PanelPedidos::PanelPedidos(
+    IndicePanel indice, std::shared_ptr<Etiqueta> etiqueta
+
+)
+    : Panel(indice, etiqueta) {
+    etiquetas_pedidos = std::make_shared<EtiquetasPedidos>();
+    add_child(etiquetas_pedidos);
+}
+
+void PanelPedidos::actualizar(const PresentacionPedidos &presentacion_pedidos //
+) {
+    etiquetas_pedidos->actualizar(presentacion_pedidos);
+}
+
+void PanelPedidos::draw(
+    sf::RenderTarget &target, //
+    sf::RenderStates states   //
+) const {
+    Panel::draw(target, states);
+    target.draw(*etiquetas_pedidos);
+}
+
+///////////////////////////////////////////
 // Paneles (public)
 /////////////////////////////////////////
 // TODO: ver si es necesario pasar etiqueta a los paneles
@@ -182,8 +213,10 @@ Paneles::Paneles(const dominio::TiposDePizza &tp_disponibles) {
             );
             auto &panel_preparadas = dynamic_cast<PanelPreparadas &>(*panel);
             panel_preparadas.setup(tp_disponibles);
+        } else if (indice == IndicePanel::PANEL_PEDIDOS) {
+            panel = std::make_shared<PanelPedidos>(indice, titulo);
         } else {
-            panel = std::make_shared<Panel>(indice, titulo);
+            assert(false && "Panel desconocido");
         }
 
         _paneles.emplace(indice, panel);
@@ -206,9 +239,10 @@ std::shared_ptr<PanelPreparadas> Paneles::get_panel_preparadas() {
     return panel_preparadas;
 }
 
-void Paneles::actualizar(                                  //
+void Paneles::actualizar(
     const PresentacionPreparacionPizzas &info_preparacion, //
-    const PizzasToStrings &info_preparadas                 //
+    const PizzasToStrings &info_preparadas,                //
+    const PresentacionPedidos &info_pedidos                //
 ) {
     if (!visible)
         return;
@@ -225,6 +259,12 @@ void Paneles::actualizar(                                  //
         auto *panel = dynamic_cast<PanelPreparadas *>(panel_);
         assert(panel);
         panel->actualizar(info_preparadas);
+    }
+    {
+        panel_ = _paneles.at(IndicePanel::PANEL_PEDIDOS).get();
+        auto *panel = dynamic_cast<PanelPedidos *>(panel_);
+        assert(panel);
+        panel->actualizar(info_pedidos);
     }
 }
 

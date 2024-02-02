@@ -11,6 +11,7 @@ std::vector<std::shared_ptr<BarraProgresoConNombre>> crear_barras_progreso(
     const PresentacionPreparacionPizzas &presentacion,
     const sf::Vector2f &pos_panel
 ) {
+    // TODO: simplificar funcion
     constexpr float ancho = 300;
     constexpr float largo = 40;
     static const auto dimensiones = sf::Vector2f(ancho, largo);

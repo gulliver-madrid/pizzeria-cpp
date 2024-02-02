@@ -51,8 +51,7 @@ namespace {
     }
 
     void actualizar_tarjetas_pedidos(
-        const PresentacionPedidos
-            &presentacion_pedidos,                            //
+        const PresentacionPedidos &presentacion_pedidos,      //
         std::vector<std::shared_ptr<TarjetaPedido>> &tarjetas //
     ) {
         // TODO:actualizar solo si cambian

@@ -40,27 +40,27 @@ namespace {
 // TODO:  ir pasando a enlace_vista la logica que deba conocer el modelo
 /* Actualiza las etiquetas */
 void Vista::_actualizar_etiquetas(
-    std::optional<const PresentacionPedidos> &info_pedidos, //
-    const sf::Time &tiempo_real_actual,                     //
-    const sf::Time &tiempo_juego_actual                     //
+    const sf::Time &tiempo_real_actual, //
+    const sf::Time &tiempo_juego_actual //
 ) {
-    if (info_pedidos) {
-        etiquetas->actualizar_pedidos(info_pedidos.value());
-    }
-
-    _deben_dibujarse_etiquetas_pedidos = info_pedidos.has_value();
     etiquetas->actualizar_barra_estado(tiempo_real_actual, tiempo_juego_actual);
 }
 
 void Vista::_actualizar_vista_paneles(
     const std::optional<PresentacionPreparacionPizzas> &info_preparacion,
-    const std::optional<PizzasToStrings> &info_preparadas
+    const std::optional<PizzasToStrings> &info_preparadas,
+    const std::optional<const PresentacionPedidos> &info_pedidos
 ) {
     paneles->visible = info_preparacion.has_value();
     if (info_preparacion) {
-        // Estaran definidas las dos o ninguna
+        // Estaran definidas las tres o ninguna
         assert(info_preparacion);
-        paneles->actualizar(info_preparacion.value(), info_preparadas.value());
+        assert(info_preparadas);
+        assert(info_pedidos);
+        paneles->actualizar(
+            info_preparacion.value(), info_preparadas.value(),
+            info_pedidos.value()
+        );
     }
 }
 
@@ -117,16 +117,14 @@ void Vista::actualizar_interfaz_grafico(
     bool mostrando_grid,                                                  //
     FaseNivel fase_actual,                                                //
     const std::optional<PresentacionPreparacionPizzas> &info_preparacion, //
-    std::optional<PizzasToStrings> &info_preparadas,                      //
-    std::optional<const PresentacionPedidos> &info_pedidos,               //
+    const std::optional<PizzasToStrings> &info_preparadas,                //
+    const std::optional<const PresentacionPedidos> &info_pedidos,         //
     const sf::Time &tiempo_real_actual,                                   //
     const sf::Time &tiempo_juego_actual                                   //
 ) {
     _mostrando_grid = mostrando_grid;
-    _actualizar_vista_paneles(info_preparacion, info_preparadas);
-    _actualizar_etiquetas(
-        info_pedidos, tiempo_real_actual, tiempo_juego_actual
-    );
+    _actualizar_vista_paneles(info_preparacion, info_preparadas, info_pedidos);
+    _actualizar_etiquetas(tiempo_real_actual, tiempo_juego_actual);
 }
 
 void Vista::mostrar_elementos_fase_activa() {
@@ -164,11 +162,9 @@ void Vista::draw(
         assert(grid);
         grid->draw(target, GRID_SIZE, GRID_TONE);
     }
+    // TODO:  etiquetas debe saber lo que debe dibujar por si misma
     etiquetas->dibujar_barra_estado(target);
     target.draw(*paneles);
     etiquetas->dibujar_info(target);
-    if (_deben_dibujarse_etiquetas_pedidos) {
-        etiquetas->dibujar_pedidos(target);
-    }
     target.draw(*botones);
 }

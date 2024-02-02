@@ -18,8 +18,6 @@ namespace sf {
 class Etiqueta;
 class EtiquetasBarraEstado;
 class EtiquetasInfo;
-class EtiquetasPreparadas;
-class EtiquetasPedidos;
 class NumNivelOpcional;
 class Globales;
 
@@ -30,7 +28,6 @@ class Globales;
 /* Agrupa las etiquetas principales para un nivel determinado */
 struct EtiquetasGenerales : public ComponenteConFont {
   private:
-    std::shared_ptr<EtiquetasPedidos> etiquetas_pedidos;
     std::shared_ptr<EtiquetasInfo> info;
     std::shared_ptr<EtiquetasBarraEstado> barra_estado;
 
@@ -48,15 +45,11 @@ struct EtiquetasGenerales : public ComponenteConFont {
     void set_presentacion_vista(
         std::shared_ptr<PresentacionVista> presentacion_vista //
     );
-    void actualizar_pedidos( //
-        const PresentacionPedidos &presentacion_pedidos
-    );
 
     void actualizar_barra_estado(
         const sf::Time &tiempo_real_actual, const sf::Time &tiempo_juego_actual
     );
 
-    void dibujar_pedidos(sf::RenderTarget &target) const;
     void dibujar_barra_estado(sf::RenderTarget &target);
     void dibujar_info(sf::RenderTarget &target) const;
     virtual void draw(sf::RenderTarget &, sf::RenderStates) const override;

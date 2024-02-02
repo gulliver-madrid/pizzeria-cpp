@@ -11,6 +11,7 @@
 
 class BotonConTexto;
 class Etiqueta;
+class EtiquetasPedidos;
 enum class IndicePanel;
 
 ///////////////////////////////////////////
@@ -72,6 +73,25 @@ class PanelPreparadas : public Panel {
 };
 
 ///////////////////////////////////////////
+// PanelPedidos
+/////////////////////////////////////////
+
+class PanelPedidos : public Panel {
+  public:
+    std::shared_ptr<EtiquetasPedidos> etiquetas_pedidos;
+
+    PanelPedidos::PanelPedidos(
+        IndicePanel indice, std::shared_ptr<Etiqueta> etiqueta
+    );
+    void setup(const dominio::TiposDePizza &tp_disponibles);
+
+    void actualizar( //
+        const PresentacionPedidos &presentacion_pedidos
+    );
+    virtual void draw(sf::RenderTarget &, sf::RenderStates) const override;
+};
+
+///////////////////////////////////////////
 // Paneles
 /////////////////////////////////////////
 
@@ -86,9 +106,10 @@ class Paneles : public ComponenteConFont, public PanelesObservables {
 
     std::shared_ptr<PanelEncargar> get_panel_encargar();
     std::shared_ptr<PanelPreparadas> get_panel_preparadas();
-    void actualizar(                                       //
+    void actualizar(
         const PresentacionPreparacionPizzas &presentacion, //
-        const PizzasToStrings &info_preparadas             //
+        const PizzasToStrings &info_preparadas,            //
+        const PresentacionPedidos &info_pedidos            //
     );
     virtual bool get_visibilidad() const override;
     virtual void draw(sf::RenderTarget &, sf::RenderStates) const override;

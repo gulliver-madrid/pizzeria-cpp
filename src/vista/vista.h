@@ -30,19 +30,17 @@ class VistaObservable {
 
 class Vista : public ComponenteConFont, public VistaObservable {
   private:
-    // provisional
-    bool _deben_dibujarse_etiquetas_pedidos;
     bool _mostrando_grid = false;
 
     void _actualizar_etiquetas(
-        std::optional<const PresentacionPedidos> &info_pedidos, //
-        const sf::Time &tiempo_real_actual,                     //
-        const sf::Time &tiempo_juego_actual                     //
+        const sf::Time &tiempo_real_actual, //
+        const sf::Time &tiempo_juego_actual //
     );
 
     void _actualizar_vista_paneles( //
         const std::optional<PresentacionPreparacionPizzas> &info_preparacion,
-        const std::optional<PizzasToStrings> &info_preparadas
+        const std::optional<PizzasToStrings> &info_preparadas,
+        const std::optional<const PresentacionPedidos> &info_pedidos
     );
 
   public:
@@ -66,12 +64,12 @@ class Vista : public ComponenteConFont, public VistaObservable {
 
     void actualizar_interfaz_grafico(
         bool mostrando_grid,
-        FaseNivel fase_actual,                                  //
-        const std::optional<PresentacionPreparacionPizzas> &,   //
-        std::optional<PizzasToStrings> &info_preparadas,        //
-        std::optional<const PresentacionPedidos> &info_pedidos, //
-        const sf::Time &tiempo_real_actual,                     //
-        const sf::Time &tiempo_juego_actual                     //
+        FaseNivel fase_actual,                                 //
+        const std::optional<PresentacionPreparacionPizzas> &,  //
+        const std::optional<PizzasToStrings> &info_preparadas, //
+        const std::optional<const PresentacionPedidos> &,      //
+        const sf::Time &tiempo_real_actual,                    //
+        const sf::Time &tiempo_juego_actual                    //
     );
 
     void mostrar_elementos_fase_activa();
