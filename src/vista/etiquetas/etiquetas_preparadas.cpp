@@ -13,9 +13,9 @@
 // EtiquetasPreparadas (public)
 //////////////////////////////////////////
 
-EtiquetasPreparadas::EtiquetasPreparadas() {}
-
-void EtiquetasPreparadas::setup(const dominio::TiposDePizza &tp_disponibles) {
+EtiquetasPreparadas::EtiquetasPreparadas(
+    const dominio::TiposDePizza &tp_disponibles
+) {
     LOG(debug) << "Tipos de pizza disponibles: " << tp_disponibles.size();
     FabricaEtiquetasPreparadas fabrica;
     size_t i = 0;
@@ -27,7 +27,7 @@ void EtiquetasPreparadas::setup(const dominio::TiposDePizza &tp_disponibles) {
     }
 
     LOG(debug) << "etiquetas_preparadas: " << tp_disponibles.size();
-};
+}
 
 void EtiquetasPreparadas::actualizar(const PizzasToStrings &info_preparadas) {
     for (auto &[tp, linea] : info_preparadas) {

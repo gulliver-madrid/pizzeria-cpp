@@ -67,7 +67,6 @@ class PanelPreparadas : public Panel {
         IndicePanel indice, std::shared_ptr<Etiqueta> etiqueta,
         const dominio::TiposDePizza &tp_disponibles
     );
-    void setup(const dominio::TiposDePizza &tp_disponibles);
     void actualizar(const PizzasToStrings &info_preparadas);
     virtual void draw(sf::RenderTarget &, sf::RenderStates) const override;
 };
@@ -83,7 +82,6 @@ class PanelPedidos : public Panel {
     PanelPedidos::PanelPedidos(
         IndicePanel indice, std::shared_ptr<Etiqueta> etiqueta
     );
-    void setup(const dominio::TiposDePizza &tp_disponibles);
 
     void actualizar( //
         const PresentacionPedidos &presentacion_pedidos

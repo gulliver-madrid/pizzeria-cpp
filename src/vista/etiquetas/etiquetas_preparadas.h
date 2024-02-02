@@ -22,9 +22,8 @@ class EtiquetasPreparadas : public ComponenteConFont {
   public:
     PizzasToLabels etiquetas_preparadas;
 
-    EtiquetasPreparadas();
-    void setup(const dominio::TiposDePizza &tp_disponibles);
-    void actualizar(const PizzasToStrings &info_preparadas //
-    );
+    EtiquetasPreparadas(const dominio::TiposDePizza &tp_disponibles);
+
+    void actualizar(const PizzasToStrings &info_preparadas);
     virtual void draw(sf::RenderTarget &, sf::RenderStates) const override;
 };

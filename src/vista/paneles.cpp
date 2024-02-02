@@ -130,16 +130,12 @@ PanelPreparadas::PanelPreparadas(
 )
     : Panel(indice, etiqueta),
       despachar(crear_botones_despachar(tp_disponibles)) {
-    etiquetas_preparadas = std::make_shared<EtiquetasPreparadas>();
+    etiquetas_preparadas =
+        std::make_shared<EtiquetasPreparadas>(tp_disponibles);
     add_child(etiquetas_preparadas);
     for (auto [_, btn] : despachar) {
         add_child(btn);
     }
-}
-
-void PanelPreparadas::setup(const dominio::TiposDePizza &tp_disponibles) {
-    assert(etiquetas_preparadas);
-    etiquetas_preparadas->setup(tp_disponibles);
 }
 
 void PanelPreparadas::actualizar(          //
@@ -211,8 +207,6 @@ Paneles::Paneles(const dominio::TiposDePizza &tp_disponibles) {
             panel = std::make_shared<PanelPreparadas>(
                 indice, titulo, tp_disponibles
             );
-            auto &panel_preparadas = dynamic_cast<PanelPreparadas &>(*panel);
-            panel_preparadas.setup(tp_disponibles);
         } else if (indice == IndicePanel::PANEL_PEDIDOS) {
             panel = std::make_shared<PanelPedidos>(indice, titulo);
         } else {
