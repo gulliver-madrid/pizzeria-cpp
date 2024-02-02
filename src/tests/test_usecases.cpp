@@ -6,6 +6,7 @@
 #include "../motor_nivel.h"
 #include "../setup_juego.h"
 #include "../vista/basicos_vista.h"
+#include "../vista/paneles.h"
 #include "../vista/vista.h"
 #include <gtest/gtest.h>
 

@@ -34,6 +34,7 @@
     - fase_nivel.h
     - shared/log_init.h
     - templates/helpers.h
+    - vista/paneles.h
 
 - enlace_vista/enlace_vista.h:
     - modelo_amplio/modelo_amplio.h
@@ -253,6 +254,7 @@
     - motor_nivel.h
     - setup_juego.h
     - vista/basicos_vista.h
+    - vista/paneles.h
     - vista/vista.h
 
 - textos.cpp:
@@ -489,16 +491,19 @@
     - fase_nivel.h
     - shared/dev.h
     - shared/log_init.h
-    - shared/num_nivel.h
     - templates/helpers.h
     - vista/basicos_vista.h
+    - vista/botones/botones_app.h
     - vista/componentes/boton_con_texto.h
+    - vista/etiquetas/etiquetas.h
     - vista/grid.h
+    - vista/paneles.h
     - vista/vista_data.h
 
 - vista/vista.h:
-    - vista/botones/botones_app.h
-    - vista/etiquetas/etiquetas.h
-    - vista/paneles.h
+    - shared/num_nivel.h
+    - vista/componentes/componente.h
     - vista/presentacion_vista.h
+    - vista/presentaciones.h
+    - vista/vista_shared.h
 

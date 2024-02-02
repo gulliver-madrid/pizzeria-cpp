@@ -1,16 +1,19 @@
 #pragma once
 
-// TODO: reducir dependencias
-#include "botones/botones_app.h"
-#include "etiquetas/etiquetas.h"
-#include "paneles.h"
+#include "../shared/num_nivel.h"
+#include "componentes/componente.h"
 #include "presentacion_vista.h"
+#include "presentaciones.h"
+#include "vista_shared.h"
 
+class BotonesApp;
+class EtiquetasGenerales;
 enum class FaseNivel;
 struct Grid;
+class PanelesObservables;
+class Paneles;
 
 namespace sf {
-    class RenderTarget;
     class Time;
 } // namespace sf
 
@@ -59,7 +62,7 @@ class Vista : public ComponenteConFont, public VistaObservable {
     void set_presentacion_vista(           //
         std::shared_ptr<PresentacionVista> //
     );
-
+    // TODO: revisar si este metodo necesita FaseNivel
     void actualizar_interfaz_grafico(
         bool mostrando_grid,
         FaseNivel fase_actual,                                 //

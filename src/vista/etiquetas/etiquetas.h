@@ -25,7 +25,7 @@ class Globales;
 //////////////////////////////////////////
 
 /* Agrupa las etiquetas principales para un nivel determinado */
-struct EtiquetasGenerales : public ComponenteConFont {
+class EtiquetasGenerales : public ComponenteConFont {
   private:
     std::shared_ptr<EtiquetasInfo> info;
     std::shared_ptr<EtiquetasBarraEstado> barra_estado;

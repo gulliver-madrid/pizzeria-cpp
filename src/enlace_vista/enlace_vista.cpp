@@ -2,6 +2,7 @@
 #include "../fase_nivel.h"
 #include "../shared/log_init.h"
 #include "../templates/helpers.h"
+#include "../vista/paneles.h"
 #include "presentador.h"
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/System/Time.hpp>

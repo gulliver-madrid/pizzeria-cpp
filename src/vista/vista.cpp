@@ -2,11 +2,13 @@
 #include "../fase_nivel.h"
 #include "../shared/dev.h"
 #include "../shared/log_init.h"
-#include "../shared/num_nivel.h"
 #include "../templates/helpers.h"
 #include "basicos_vista.h"
+#include "botones/botones_app.h"
 #include "componentes/boton_con_texto.h"
+#include "etiquetas/etiquetas.h"
 #include "grid.h"
+#include "paneles.h"
 #include "vista_data.h"
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <cassert>
