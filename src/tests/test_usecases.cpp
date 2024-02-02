@@ -43,7 +43,7 @@ TEST(Usecases, AlEmpezarJuegoSeMuestranLosPaneles) { //
     nivel.establecer_fase(FaseNivel::MostrandoInstrucciones);
     nivel.setup();
 
-    nivel.aplica_y_procesa_posible_cambio_fase(Comando::Empezar());
+    nivel.aplica_comando(Comando::Empezar());
 
     // en este caso el tiempo es irrelevante
     nivel.actualizar_interfaz_grafico(sf::Time::Zero);
@@ -56,11 +56,11 @@ TEST(Usecases, AlEncargarUnaPizzaApareceUnaBarraDeProgreso) { //
     nivel.establecer_fase(FaseNivel::MostrandoInstrucciones);
     nivel.setup();
 
-    nivel.aplica_y_procesa_posible_cambio_fase(Comando::Empezar());
+    nivel.aplica_comando(Comando::Empezar());
     nivel.actualizar_interfaz_grafico(sf::Time::Zero);
     ASSERT_EQ(obtener_numero_barras_progreso(nivel), 0);
 
-    nivel.aplica_y_procesa_posible_cambio_fase(
+    nivel.aplica_comando(
         Comando::Encargar{dominio::TipoPizza::Margarita}
     );
 

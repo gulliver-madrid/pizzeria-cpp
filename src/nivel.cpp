@@ -49,11 +49,14 @@ AccionGeneral Nivel::ejecutar() {
 
         const auto tiempo_real_actual = tiempo::obtener_tiempo_actual();
         const auto transcurrido = tiempo_real_actual - previo;
-
+        // TODO: con hacer el tick deberia bastar para tener el tiempo real
         motor_nivel->gestor_tiempo_general.tick(transcurrido);
         motor_nivel->actualizar_interfaz_grafico(tiempo_real_actual);
 
         previo = tiempo_real_actual;
+
+        // TODO:unificando estas dos llamadas, globales y enlace_vista pueden
+        // ser privadas
         motor_nivel->enlace_vista->dibujar_vista(motor_nivel->globales->window);
         motor_nivel->globales->window.display();
     }

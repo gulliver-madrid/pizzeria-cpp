@@ -170,13 +170,32 @@ std::optional<AccionGeneral> MotorNivel::_procesar_evento(
             LOG(info) << "Tipo de evento: " << evento.type;
             break;
     }
-    if (comando) {
-        assert(modelo_amplio);
-        LOG(info) << "Antes de aplicar comando";
-        return aplica_y_procesa_posible_cambio_fase(comando.value());
+    if (!comando) {
+        return std::nullopt;
     }
-    return std::nullopt;
+    assert(modelo_amplio);
+    LOG(info) << "Antes de aplicar comando";
+    return aplica_comando(comando.value());
 };
+
+/* Procesa un cambio de fase reciente */
+std::optional<AccionGeneral>
+MotorNivel::_procesa_cambio_de_fase(FaseNivel nueva_fase) {
+    // Cambio de fase reciente
+    const auto fase_previa = modelo_amplio->get_fase_actual();
+    CambioFase cambio_fase = {fase_previa, nueva_fase};
+    establecer_fase(nueva_fase);
+    assert(ejecucion_en_proceso);
+    return impl_procesa_cambio_de_fase(*ejecucion_en_proceso, cambio_fase);
+}
+
+void MotorNivel::establecer_fase(FaseNivel nueva_fase) {
+    modelo_amplio->set_fase_actual(nueva_fase);
+}
+
+std::shared_ptr<VistaObservable> MotorNivel::get_vista() const { //
+    return enlace_vista->get_vista();
+}
 
 ///////////////////////////////////////////
 // MotorNivel (public)
@@ -227,12 +246,12 @@ void MotorNivel::setup() {
         ejecucion_en_proceso->gestor_tiempo_juego;
 }
 
-std::optional<AccionGeneral>
-MotorNivel::aplica_y_procesa_posible_cambio_fase(const Comando &comando) {
+std::optional<AccionGeneral> MotorNivel::aplica_comando(const Comando &comando
+) {
     std::optional<AccionGeneral> accion;
     auto result = aplica_comando_a_modelo(modelo_amplio.value(), comando);
     if (result.has_value()) {
-        accion = procesa_cambio_de_fase(result.value());
+        accion = _procesa_cambio_de_fase(result.value());
     };
     return accion;
 }
@@ -288,23 +307,4 @@ void MotorNivel::actualizar_interfaz_grafico(const sf::Time tiempo_real_actual
     enlace_vista->actualizar_interfaz_grafico(
         modelo_amplio.value(), tiempo_real_actual
     );
-}
-
-/* Procesa un cambio de fase reciente */
-std::optional<AccionGeneral>
-MotorNivel::procesa_cambio_de_fase(FaseNivel nueva_fase) {
-    // Cambio de fase reciente
-    const auto fase_previa = modelo_amplio->get_fase_actual();
-    CambioFase cambio_fase = {fase_previa, nueva_fase};
-    establecer_fase(nueva_fase);
-    assert(ejecucion_en_proceso);
-    return impl_procesa_cambio_de_fase(*ejecucion_en_proceso, cambio_fase);
-}
-
-void MotorNivel::establecer_fase(FaseNivel nueva_fase) {
-    modelo_amplio->set_fase_actual(nueva_fase);
-}
-
-std::shared_ptr<VistaObservable> MotorNivel::get_vista() const { //
-    return enlace_vista->get_vista();
 }

@@ -27,8 +27,12 @@ using CambioFase = std::pair<FaseNivel, FaseNivel>;
 
 class MotorNivel {
   private:
+    std::optional<ModeloAmplio> modelo_amplio;
+    std::shared_ptr<ControladorClicks> controlador_clicks;
     std::shared_ptr<EjecucionEnProceso> ejecucion_en_proceso;
     std::shared_ptr<GestorTimer> timer_espera_antes_de_resultado;
+    const std::shared_ptr<DatosNivel> datos_nivel;
+    const std::shared_ptr<Grid> grid;
     sf::Sound sound;
 
     std::optional<Comando> _procesa_click(
@@ -42,15 +46,12 @@ class MotorNivel {
         sf::Event,                              //
         const std::shared_ptr<const BotonesApp> //
     );
+    std::optional<AccionGeneral> _procesa_cambio_de_fase(FaseNivel nueva_fase);
 
   public:
     GestorTiempoGeneral gestor_tiempo_general;
-    std::optional<ModeloAmplio> modelo_amplio;
     const std::shared_ptr<Globales> globales;
-    const std::shared_ptr<DatosNivel> datos_nivel;
     const NumNivelOpcional &num_nivel;
-    const std::shared_ptr<Grid> grid;
-    std::shared_ptr<ControladorClicks> controlador_clicks;
     std::shared_ptr<EnlaceVista> enlace_vista;
 
     MotorNivel(
@@ -60,13 +61,10 @@ class MotorNivel {
         std::shared_ptr<Grid> grid = nullptr                   //
     );
     void setup();
-
-    std::optional<AccionGeneral>
-    aplica_y_procesa_posible_cambio_fase(const Comando &);
+    std::optional<AccionGeneral> aplica_comando(const Comando &);
     std::optional<AccionGeneral> procesar_evento(sf::Event);
     std::optional<AccionGeneral> procesar_ciclo();
     void actualizar_interfaz_grafico(const sf::Time tiempo_real_actual);
-    std::optional<AccionGeneral> procesa_cambio_de_fase(FaseNivel nueva_fase);
     void establecer_fase(FaseNivel);
     std::shared_ptr<VistaObservable> get_vista() const;
 };
