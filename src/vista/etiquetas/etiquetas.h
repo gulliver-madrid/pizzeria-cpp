@@ -11,8 +11,6 @@
 
 namespace sf {
     class Text;
-    class RenderTarget;
-    class RenderTarget;
     class Time;
 } // namespace sf
 
