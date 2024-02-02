@@ -28,6 +28,33 @@
 - debug_sfml.cpp:
     - debug_sfml.h
 
+- enlace_vista/enlace_vista.cpp:
+    - enlace_vista/enlace_vista.h
+    - enlace_vista/presentador.h
+    - fase_nivel.h
+    - shared/log_init.h
+    - templates/helpers.h
+
+- enlace_vista/enlace_vista.h:
+    - modelo_amplio/modelo_amplio.h
+    - observador_fase.h
+    - vista/presentacion_vista.h
+    - vista/vista.h
+
+- enlace_vista/presentador.cpp:
+    - enlace_vista/presentador.h
+    - modelo/dominio.h
+    - templates/helpers.h
+    - tiempo.h
+    - vista/cadenas.h
+    - vista/vista_shared.h
+
+- enlace_vista/presentador.h:
+    - modelo/modelo.h
+    - modelo/modelo_shared.h
+    - vista/presentaciones.h
+    - vista/vista_shared.h
+
 - globales.cpp:
     - globales.h
     - vista/componentes/boton_con_texto.h
@@ -132,12 +159,12 @@
     - shared/num_nivel.h
 
 - motor_nivel.h:
+    - enlace_vista/enlace_vista.h
     - globales.h
     - modelo_amplio/modelo_amplio.h
     - shared/font.h
     - shared/num_nivel.h
     - tiempo.h
-    - vista/enlace_vista.h
     - vista/grid.h
     - vista/vista.h
 
@@ -183,19 +210,19 @@
     - modelo_amplio/modelo_amplio.h
 
 - tests/presentador/test_activacion_botones.cpp:
+    - enlace_vista/enlace_vista.h
     - modelo/datos_modelo_interno.h
     - modelo/dominio.h
     - modelo/modelo_interno.h
-    - vista/enlace_vista.h
     - vista/vista.h
 
 - tests/presentador/test_enlace_vista.cpp:
-    - vista/enlace_vista.h
+    - enlace_vista/enlace_vista.h
 
 - tests/presentador/test_presentador.cpp:
+    - enlace_vista/presentador.h
     - modelo/datos_modelo_interno.h
     - modelo/dominio.h
-    - vista/presentador.h
     - vista/vista.h
 
 - tests/test_cadenas.cpp:
@@ -352,19 +379,6 @@
 - vista/componentes/etiqueta.h:
     - vista/componentes/componente.h
 
-- vista/enlace_vista.cpp:
-    - vista/enlace_vista.h
-    - fase_nivel.h
-    - shared/log_init.h
-    - templates/helpers.h
-    - vista/presentador.h
-
-- vista/enlace_vista.h:
-    - modelo_amplio/modelo_amplio.h
-    - observador_fase.h
-    - vista/presentacion_vista.h
-    - vista/vista.h
-
 - vista/etiquetas/etiquetas.cpp:
     - vista/etiquetas/etiquetas.h
     - vista/basicos_vista.h
@@ -383,12 +397,12 @@
 
 - vista/etiquetas/etiquetas_barra_estado.cpp:
     - vista/etiquetas/etiquetas_barra_estado.h
+    - enlace_vista/presentador.h
     - tiempo.h
     - vista/basicos_vista.h
     - vista/cadenas.h
     - vista/componentes/crear_etiqueta.h
     - vista/componentes/etiqueta.h
-    - vista/presentador.h
 
 - vista/etiquetas/etiquetas_barra_estado.h:
     - shared/font.h
@@ -410,13 +424,13 @@
 
 - vista/etiquetas/etiquetas_pedidos.cpp:
     - vista/etiquetas/etiquetas_pedidos.h
+    - enlace_vista/presentador.h
     - shared/log_init.h
     - templates/dibujar_elementos.h
     - templates/helpers.h
     - vista/basicos_vista.h
     - vista/componentes/crear_etiqueta.h
     - vista/componentes/etiqueta.h
-    - vista/presentador.h
 
 - vista/etiquetas/etiquetas_pedidos.h:
     - vista/componentes/componente.h
@@ -466,20 +480,6 @@
     - vista/etiquetas/etiquetas_preparadas.h
     - vista/paneles_observables.h
 
-- vista/presentador.cpp:
-    - vista/presentador.h
-    - modelo/dominio.h
-    - templates/helpers.h
-    - tiempo.h
-    - vista/cadenas.h
-    - vista/vista_shared.h
-
-- vista/presentador.h:
-    - modelo/modelo.h
-    - modelo/modelo_shared.h
-    - vista/presentaciones.h
-    - vista/vista_shared.h
-
 - vista/vista.cpp:
     - vista/vista.h
     - fase_nivel.h
@@ -489,7 +489,6 @@
     - templates/helpers.h
     - vista/basicos_vista.h
     - vista/grid.h
-    - vista/presentador.h
     - vista/vista_data.h
 
 - vista/vista.h:

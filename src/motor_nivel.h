@@ -1,11 +1,11 @@
 #pragma once
 
+#include "enlace_vista/enlace_vista.h"
 #include "globales.h"
 #include "modelo_amplio/modelo_amplio.h"
 #include "shared/font.h"
 #include "shared/num_nivel.h"
 #include "tiempo.h"
-#include "vista/enlace_vista.h"
 #include "vista/grid.h"
 #include "vista/vista.h"
 

@@ -41,6 +41,8 @@ add_executable(pizzeria
     src/controlador_clicks.cpp
     src/datos_niveles.cpp
     src/debug_sfml.cpp
+    src/enlace_vista/enlace_vista.cpp
+    src/enlace_vista/presentador.cpp
     src/globales.cpp
     src/juego.cpp
     src/modelo/control_pizzas.cpp
@@ -69,7 +71,6 @@ add_executable(pizzeria
     src/vista/componentes/componente.cpp
     src/vista/componentes/crear_etiqueta.cpp
     src/vista/componentes/etiqueta.cpp
-    src/vista/enlace_vista.cpp
     src/vista/etiquetas/etiquetas.cpp
     src/vista/etiquetas/etiquetas_barra_estado.cpp
     src/vista/etiquetas/etiquetas_pedidos.cpp
@@ -78,7 +79,6 @@ add_executable(pizzeria
     src/vista/etiquetas/fabrica_etiquetas_preparadas.cpp
     src/vista/grid.cpp
     src/vista/paneles.cpp
-    src/vista/presentador.cpp
     src/vista/vista.cpp
     src/vista/basicos_vista.cpp
     src/demos/boost_log.cpp
@@ -135,6 +135,8 @@ add_executable(
     src/controlador_clicks.cpp
     src/datos_niveles.cpp
     src/debug_sfml.cpp
+    src/enlace_vista/enlace_vista.cpp
+    src/enlace_vista/presentador.cpp
     src/globales.cpp
     src/juego.cpp
     src/modelo/control_pizzas.cpp
@@ -163,7 +165,6 @@ add_executable(
     src/vista/componentes/componente.cpp
     src/vista/componentes/crear_etiqueta.cpp
     src/vista/componentes/etiqueta.cpp
-    src/vista/enlace_vista.cpp
     src/vista/etiquetas/etiquetas.cpp
     src/vista/etiquetas/etiquetas_barra_estado.cpp
     src/vista/etiquetas/etiquetas_pedidos.cpp
@@ -172,7 +173,6 @@ add_executable(
     src/vista/etiquetas/fabrica_etiquetas_preparadas.cpp
     src/vista/grid.cpp
     src/vista/paneles.cpp
-    src/vista/presentador.cpp
     src/vista/vista.cpp
     src/vista/basicos_vista.cpp
     src/demos/boost_log.cpp

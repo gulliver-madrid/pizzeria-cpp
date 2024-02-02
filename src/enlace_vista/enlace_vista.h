@@ -2,8 +2,8 @@
 
 #include "../modelo_amplio/modelo_amplio.h"
 #include "../observador_fase.h"
-#include "presentacion_vista.h"
-#include "vista.h"
+#include "../vista/presentacion_vista.h"
+#include "../vista/vista.h"
 #include <memory>
 
 struct ActivacionBotones;

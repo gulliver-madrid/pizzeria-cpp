@@ -1,6 +1,6 @@
+#include "../../enlace_vista/presentador.h"
 #include "../../modelo/datos_modelo_interno.h"
 #include "../../modelo/dominio.h"
-#include "../../vista/presentador.h"
 #include "../../vista/vista.h"
 #include <SFML/System/Time.hpp>
 #include <gtest/gtest.h>

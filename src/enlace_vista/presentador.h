@@ -2,8 +2,8 @@
 
 #include "../modelo/modelo.h"
 #include "../modelo/modelo_shared.h"
-#include "presentaciones.h"
-#include "vista_shared.h"
+#include "../vista/presentaciones.h"
+#include "../vista/vista_shared.h"
 #include <string>
 #include <vector>
 

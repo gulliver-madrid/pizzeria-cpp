@@ -6,7 +6,6 @@
 #include "../templates/helpers.h"
 #include "basicos_vista.h"
 #include "grid.h"
-#include "presentador.h"
 #include "vista_data.h"
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <cassert>

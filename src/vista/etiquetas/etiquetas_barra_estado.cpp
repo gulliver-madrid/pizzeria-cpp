@@ -1,15 +1,17 @@
 #pragma once
 
 #include "etiquetas_barra_estado.h"
+#include "../../enlace_vista/presentador.h"
 #include "../../tiempo.h"
 #include "../basicos_vista.h"
 #include "../cadenas.h"
 #include "../componentes/crear_etiqueta.h"
 #include "../componentes/etiqueta.h"
-#include "../presentador.h"
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/System/Time.hpp>
+
+// TODO: eliminar dependencia de presentador
 
 const auto crear_texto = presentador::crea_texto_etiqueta_barra_estado;
 

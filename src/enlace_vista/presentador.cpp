@@ -2,8 +2,8 @@
 #include "../modelo/dominio.h"
 #include "../templates/helpers.h"
 #include "../tiempo.h"
-#include "cadenas.h"
-#include "vista_shared.h"
+#include "../vista/cadenas.h"
+#include "../vista/vista_shared.h"
 #include <algorithm>
 #include <cassert>
 #include <iterator>
