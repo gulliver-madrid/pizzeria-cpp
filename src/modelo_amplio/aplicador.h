@@ -18,7 +18,7 @@ namespace aplicador {
     );
 } // namespace aplicador
 
-std::optional<FaseNivel> aplica_comando(
+std::optional<FaseNivel> aplica_comando_a_modelo(
     ModeloAmplio &, //
     const Comando & //
 );

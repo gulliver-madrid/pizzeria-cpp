@@ -31,14 +31,14 @@ class MotorNivel {
     std::shared_ptr<GestorTimer> timer_espera_antes_de_resultado;
     sf::Sound sound;
 
-    std::optional<FaseNivel> _procesa_click(
+    std::optional<Comando> _procesa_click(
         const std::shared_ptr<const BotonesApp>, //
         const FaseNivel fase_actual              //
     );
     std::shared_ptr<EnlaceVista> MotorNivel::_crear_enlace_vista( //
-        const modelo::ControlPizzas &control_pizzas
+        const modelo::ControlPizzas &
     );
-    std::optional<FaseNivel> _procesarEvento(
+    std::optional<AccionGeneral> _procesar_evento(
         sf::Event,                              //
         const std::shared_ptr<const BotonesApp> //
     );
@@ -61,7 +61,9 @@ class MotorNivel {
     );
     void setup();
 
-    std::optional<AccionGeneral> MotorNivel::procesar_evento(sf::Event);
+    std::optional<AccionGeneral>
+    aplica_y_procesa_posible_cambio_fase(const Comando &);
+    std::optional<AccionGeneral> procesar_evento(sf::Event);
     std::optional<AccionGeneral> procesar_ciclo();
     void actualizar_interfaz_grafico(const sf::Time tiempo_real_actual);
     std::optional<AccionGeneral> procesa_cambio_de_fase(FaseNivel nueva_fase);

@@ -10,16 +10,6 @@
 #include "../vista/vista.h"
 #include <gtest/gtest.h>
 
-void aplica_y_procesa_posible_cambio_fase(
-    MotorNivel &nivel, const Comando &comando
-) {
-    // TODO: simplificar MotorNivel para que sea automatico el cambio de fase
-    auto result = aplica_comando(nivel.modelo_amplio.value(), comando);
-    if (result.has_value()) {
-        nivel.procesa_cambio_de_fase(result.value());
-    };
-}
-
 int obtener_numero_barras_progreso(MotorNivel &nivel) {
     auto vista = nivel.get_vista();
     auto vista_ = std::dynamic_pointer_cast<Vista>(vista);
@@ -53,7 +43,7 @@ TEST(Usecases, AlEmpezarJuegoSeMuestranLosPaneles) { //
     nivel.establecer_fase(FaseNivel::MostrandoInstrucciones);
     nivel.setup();
 
-    aplica_y_procesa_posible_cambio_fase(nivel, Comando::Empezar());
+    nivel.aplica_y_procesa_posible_cambio_fase(Comando::Empezar());
 
     // en este caso el tiempo es irrelevante
     nivel.actualizar_interfaz_grafico(sf::Time::Zero);
@@ -66,12 +56,12 @@ TEST(Usecases, AlEncargarUnaPizzaApareceUnaBarraDeProgreso) { //
     nivel.establecer_fase(FaseNivel::MostrandoInstrucciones);
     nivel.setup();
 
-    aplica_y_procesa_posible_cambio_fase(nivel, Comando::Empezar());
+    nivel.aplica_y_procesa_posible_cambio_fase(Comando::Empezar());
     nivel.actualizar_interfaz_grafico(sf::Time::Zero);
     ASSERT_EQ(obtener_numero_barras_progreso(nivel), 0);
 
-    aplica_y_procesa_posible_cambio_fase(
-        nivel, Comando::Encargar{dominio::TipoPizza::Margarita}
+    nivel.aplica_y_procesa_posible_cambio_fase(
+        Comando::Encargar{dominio::TipoPizza::Margarita}
     );
 
     nivel.actualizar_interfaz_grafico(sf::Time::Zero);

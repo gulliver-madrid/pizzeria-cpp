@@ -41,7 +41,7 @@ std::optional<FaseNivel> aplicador::aplicar_comando( //
 #undef SWITCH
 #undef CASE
 
-std::optional<FaseNivel> aplica_comando( //
+std::optional<FaseNivel> aplica_comando_a_modelo( //
     ModeloAmplio &modelo_amplio,
     const Comando &comando //
 ) {

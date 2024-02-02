@@ -19,7 +19,7 @@ TEST(ModeloAmplio, ModeloAmplioAplicaComandoSalir) {
     const std::string instrucciones = "test instrucciones";
     const DatosNivel datos_nivel;
     ModeloAmplio modelo_amplio(datos_nivel.datos_modelo_interno);
-    const auto result = aplica_comando(modelo_amplio, Comando::Salir{});
+    const auto result = aplica_comando_a_modelo(modelo_amplio, Comando::Salir{});
     EXPECT_EQ(result, FaseNivel::Saliendo);
 }
 
@@ -30,6 +30,6 @@ TEST(ModeloAmplio, ModeloAmplioAplicaComandoEncargarPizza) {
     ModeloAmplio modelo_amplio(datos_nivel.datos_modelo_interno);
     modelo_amplio.set_fase_actual(FaseNivel::Activa);
     const std::optional<FaseNivel> result =
-        aplica_comando(modelo_amplio, Comando::Encargar{TipoPizza::Margarita});
+        aplica_comando_a_modelo(modelo_amplio, Comando::Encargar{TipoPizza::Margarita});
     EXPECT_EQ(modelo_amplio.modelo_interno.encargos.total(), 1);
 }

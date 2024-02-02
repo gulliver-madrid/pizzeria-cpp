@@ -78,6 +78,7 @@ namespace {
         }
         return posible_accion;
     }
+
 } // namespace
 
 void on_cambio_a_fase_mostrar_resultado(
@@ -99,7 +100,7 @@ void on_cambio_a_fase_mostrar_resultado(
 // MotorNivel (private)
 //////////////////////////////////////////
 
-std::optional<FaseNivel> MotorNivel::_procesa_click(
+std::optional<Comando> MotorNivel::_procesa_click(
     const std::shared_ptr<const BotonesApp> botones,
     const FaseNivel fase_actual //
 ) {
@@ -109,14 +110,7 @@ std::optional<FaseNivel> MotorNivel::_procesa_click(
         globales, botones, fase_actual, mouse_pos
     );
     LOG(info) << "Click procesado" << std::endl;
-    if (!comando) {
-        return std::nullopt;
-    }
-    assert(modelo_amplio);
-    LOG(info) << "Antes de aplicar comando" << std::endl;
-    auto nueva_fase = aplica_comando(*modelo_amplio, comando.value());
-    LOG(info) << "Comando aplicado" << std::endl;
-    return nueva_fase;
+    return comando;
 }
 
 std::shared_ptr<EnlaceVista> MotorNivel::_crear_enlace_vista( //
@@ -154,27 +148,32 @@ std::shared_ptr<EnlaceVista> MotorNivel::_crear_enlace_vista( //
  * Incluye toda la logica para procesar un evento. Devuelve la nueva fase,
  * en caso de que debiera cambiar.
  */
-std::optional<FaseNivel> MotorNivel::_procesarEvento(
+std::optional<AccionGeneral> MotorNivel::_procesar_evento(
     sf::Event evento, //
     const std::shared_ptr<const BotonesApp> botones
-
 ) {
     auto &ventana = globales->window;
-    std::optional<FaseNivel> siguiente_fase;
+    std::optional<Comando> comando;
     switch (evento.type) {
         case sf::Event::Closed:
-            return FaseNivel::Saliendo;
+            comando = Comando::Salir{};
+            break;
         case sf::Event::Resized:
             update_view_on_window_resize(evento.size, ventana);
             break;
         case sf::Event::MouseButtonPressed:
             LOG(info) << "Antes de procesar click" << std::endl;
-            return _procesa_click(botones, modelo_amplio->get_fase_actual());
+            comando = _procesa_click(botones, modelo_amplio->get_fase_actual());
         default:
             /* Eventos ignorados */
-            LOG(info) << "Evento ignorado" << std::endl;
-            LOG(info) << "Tipo de evento: " << evento.type << std::endl;
+            LOG(info) << "Evento ignorado";
+            LOG(info) << "Tipo de evento: " << evento.type;
             break;
+    }
+    if (comando) {
+        assert(modelo_amplio);
+        LOG(info) << "Antes de aplicar comando";
+        return aplica_y_procesa_posible_cambio_fase(comando.value());
     }
     return std::nullopt;
 };
@@ -228,17 +227,23 @@ void MotorNivel::setup() {
         ejecucion_en_proceso->gestor_tiempo_juego;
 }
 
+std::optional<AccionGeneral>
+MotorNivel::aplica_y_procesa_posible_cambio_fase(const Comando &comando) {
+    std::optional<AccionGeneral> accion;
+    auto result = aplica_comando_a_modelo(modelo_amplio.value(), comando);
+    if (result.has_value()) {
+        accion = procesa_cambio_de_fase(result.value());
+    };
+    return accion;
+}
+
 std::optional<AccionGeneral> MotorNivel::procesar_evento(sf::Event event) {
     LOG(info) << "Antes de procesar evento";
-    auto siguiente_fase = _procesarEvento( //
+    auto accion = _procesar_evento( //
         event, enlace_vista->get_botones()
     );
     LOG(info) << "Despues de procesar evento";
-    if (!siguiente_fase.has_value()) {
-        return std::nullopt;
-    }
-
-    return procesa_cambio_de_fase(siguiente_fase.value());
+    return accion;
 }
 
 std::optional<AccionGeneral> MotorNivel::procesar_ciclo() {
