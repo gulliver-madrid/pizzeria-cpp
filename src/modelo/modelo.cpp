@@ -18,6 +18,10 @@ namespace debug {
     }
 } // namespace debug
 
+///////////////////////////////////////////
+// EstadoPreparacionPizzas
+//////////////////////////////////////////
+
 EstadoPreparacionPizzas::EstadoPreparacionPizzas(
     const Encargos &encargos,     //
     const sf::Time &tiempo_actual //
@@ -31,7 +35,9 @@ EstadoPreparacionPizzas::EstadoPreparacionPizzas(
     }
 }
 
-//////// PedidoTipoPizza
+///////////////////////////////////////////
+// PedidoTipoPizza
+//////////////////////////////////////////
 
 PedidoTipoPizza::PedidoTipoPizza() {}
 PedidoTipoPizza::PedidoTipoPizza(UInt objetivo) : objetivo(objetivo) {
@@ -49,7 +55,9 @@ bool PedidoTipoPizza::cubierto() const {
     return servido == objetivo;
 }
 
-//////// Pedido
+///////////////////////////////////////////
+// Pedido
+//////////////////////////////////////////
 
 Pedido::Pedido(ContenidoPedido contenido) : contenido(contenido) {}
 
@@ -92,6 +100,10 @@ bool Pedido::intentar_servir(const dominio::TipoPizza tp) {
     return true;
 }
 
+///////////////////////////////////////////
+// evaluar_preparacion()
+//////////////////////////////////////////
+
 /* Ordena el iterable segun el criterio proporcionado */
 template <typename Iterable, typename Condicion>
 void ordenar_por_criterio(Iterable iterable, Condicion condicion) {
@@ -100,7 +112,7 @@ void ordenar_por_criterio(Iterable iterable, Condicion condicion) {
 
 /* Guarda el indice de la pizza junto con el tiempo que lleva preparada */
 struct PizzaConTiempo {
-    size_t indice;
+    EncargoACocinaPtr indice;
     sf::Int32 milisegundos;
 };
 
@@ -110,11 +122,12 @@ std::vector<PizzaConTiempo> obtener_pizzas_listas_con_tiempo(
 ) {
     size_t i = 0;
     std::vector<PizzaConTiempo> preparadas_con_tiempo;
-    for (auto &encargo : encargos) {
+    for (const auto &encargo : encargos) {
         sf::Time exceso_tiempo =
             (tiempo_actual - encargo->tiempo_preparacion.finalizacion);
         if (exceso_tiempo >= sf::Time::Zero) {
-            preparadas_con_tiempo.push_back({i, exceso_tiempo.asMilliseconds()}
+            preparadas_con_tiempo.push_back(
+                {encargo, exceso_tiempo.asMilliseconds()}
             );
         }
         i++;
@@ -159,21 +172,19 @@ void evaluar_preparacion(
 
     ordenar_y_limitar_preparadas(pizzas_listas_con_tiempo, preparables);
 
-    std::unordered_set<size_t> indices_para_pasar;
+    std::unordered_set<EncargoACocinaPtr> indices_para_pasar;
     for (const auto &[indice, _] : pizzas_listas_con_tiempo) {
         indices_para_pasar.insert(indice);
     }
 
     // Segunda ronda para actualizar contadores y lista de encargos
     Encargos restantes;
-    size_t i = 0;
     for (auto &encargo : encargos) {
-        if (indices_para_pasar.find(i) != indices_para_pasar.end()) {
+        if (indices_para_pasar.find(encargo) != indices_para_pasar.end()) {
             contadores[encargo->tipo].preparadas++;
         } else {
             restantes.anadir(encargo);
         }
-        i++;
     }
 
     encargos = std::move(restantes);
