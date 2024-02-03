@@ -35,9 +35,9 @@ struct Timer {
 
 struct TiempoPreparacion {
     // Tiempo en el que la pizza estara lista
-    sf::Time finalizacion;
+    const sf::Time finalizacion;
     // Tiempo total de preparacion en milisegundos
-    sf::Time total;
+    const sf::Time total;
     int obtener_porcentaje(const sf::Time &tiempo_actual) const;
 };
 
