@@ -15,7 +15,7 @@ TEST(Presentador, LineaCompletitudPizza) {
 }
 
 TEST(Presentador, PedidoToString) {
-    std::map<TipoPizza, PedidoTipoPizza> contenido(
+    std::map<TipoPizza, LineaPedido> contenido(
         {{TipoPizza::Margarita, {2, 5}}, {TipoPizza::Pepperoni, {1, 4}}}
     );
     Pedido pedido(std::move(contenido));

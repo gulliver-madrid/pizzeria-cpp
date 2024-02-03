@@ -29,19 +29,19 @@ namespace debug {
 }
 
 /* Parte de un pedido relativa a un tipo de pizza */
-struct PedidoTipoPizza {
+struct LineaPedido {
     UInt servido = 0;
     UInt objetivo = 0;
 
     // para usarlo en maps
-    PedidoTipoPizza();
+    LineaPedido();
 
-    PedidoTipoPizza(UInt objetivo);
-    PedidoTipoPizza(UInt servido, UInt objetivo);
-    bool cubierto() const;
+    LineaPedido(UInt objetivo);
+    LineaPedido(UInt servido, UInt objetivo);
+    bool esta_cubierto() const;
 };
 
-using ContenidoPedido = std::map<dominio::TipoPizza, PedidoTipoPizza>;
+using ContenidoPedido = std::map<dominio::TipoPizza, LineaPedido>;
 
 /* Pedido completo, puede incluir varios tipos de pizza */
 class Pedido {

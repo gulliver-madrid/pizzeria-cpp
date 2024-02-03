@@ -7,12 +7,12 @@ using dominio::TipoPizza;
 using modelo::Pedidos;
 
 Pedido crear_pedido(std::map<TipoPizza, int> data) {
-    std::map<TipoPizza, PedidoTipoPizza> contenido;
+    std::map<TipoPizza, LineaPedido> contenido;
     for (const auto &par : data) {
         try {
             // Intenta convertir y asignar el valor
             const UInt value = UInt(par.second);
-            contenido[par.first] = PedidoTipoPizza(value.to_int());
+            contenido[par.first] = LineaPedido(value.to_int());
         } catch (const std::exception &e) {
             std::cerr << "Error en la conversión: " << e.what()
                       << " para la pizza " << static_cast<int>(par.first)

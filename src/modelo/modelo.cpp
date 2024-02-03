@@ -36,21 +36,21 @@ EstadoPreparacionPizzas::EstadoPreparacionPizzas(
 }
 
 ///////////////////////////////////////////
-// PedidoTipoPizza
+// LineaPedido
 //////////////////////////////////////////
 
-PedidoTipoPizza::PedidoTipoPizza() {}
-PedidoTipoPizza::PedidoTipoPizza(UInt objetivo) : objetivo(objetivo) {
+LineaPedido::LineaPedido() {}
+LineaPedido::LineaPedido(UInt objetivo) : objetivo(objetivo) {
     assert(objetivo >= 0);
 }
-PedidoTipoPizza::PedidoTipoPizza(UInt servido, UInt objetivo)
+LineaPedido::LineaPedido(UInt servido, UInt objetivo)
     : servido(servido), objetivo(objetivo) {
     assert(objetivo >= 0);
     assert(servido >= 0);
     assert(servido <= objetivo);
 }
 
-bool PedidoTipoPizza::cubierto() const {
+bool LineaPedido::esta_cubierto() const {
     assert(servido <= objetivo);
     return servido == objetivo;
 }
@@ -65,7 +65,7 @@ Pedido::Pedido(ContenidoPedido contenido) : contenido(contenido) {}
 void Pedido::evaluar() {
     bool faltan = false;
     for (auto &[_, pedido_tp] : contenido) {
-        if (!pedido_tp.cubierto()) {
+        if (!pedido_tp.esta_cubierto()) {
             faltan = true;
             break;
         }
@@ -92,7 +92,7 @@ bool Pedido::intentar_servir(const dominio::TipoPizza tp) {
     }
     assert(has_key(contenido, tp));
     auto &pedido_tp = contenido.at(tp);
-    if (pedido_tp.cubierto()) {
+    if (pedido_tp.esta_cubierto()) {
         return false;
     }
     pedido_tp.servido++;
