@@ -92,6 +92,51 @@ bool Pedido::intentar_servir(const dominio::TipoPizza tp) {
     return true;
 }
 
+/* Ordena el iterable segun el criterio proporcionado */
+template <typename Iterable, typename Condicion>
+void ordenar_por_criterio(Iterable iterable, Condicion condicion) {
+    std::sort(iterable.begin(), iterable.end(), condicion);
+}
+
+/* Guarda el indice de la pizza junto con el tiempo que lleva preparada */
+struct PizzaConTiempo {
+    size_t indice;
+    sf::Int32 milisegundos;
+};
+
+/* Identifica las pizzas listas con el tiempo que llevan preparadas */
+std::vector<PizzaConTiempo> obtener_pizzas_listas_con_tiempo(
+    const Encargos &encargos, const sf::Time &tiempo_actual
+) {
+    size_t i = 0;
+    std::vector<PizzaConTiempo> preparadas_con_tiempo;
+    for (auto &encargo : encargos) {
+        sf::Time exceso_tiempo =
+            (tiempo_actual - encargo.tiempo_preparacion.finalizacion);
+        if (exceso_tiempo >= sf::Time::Zero) {
+            preparadas_con_tiempo.push_back({i, exceso_tiempo.asMilliseconds()}
+            );
+        }
+        i++;
+    }
+    return preparadas_con_tiempo;
+}
+/* Ordenar y limitar las pizzas que pueden salir de cocina */
+void ordenar_y_limitar_preparadas(
+    std::vector<PizzaConTiempo> &preparadas, const UInt &maximo_uint
+) {
+    int maximo = maximo_uint.to_int();
+    if (preparadas.size() > maximo) {
+        // Ordenamos la lista de manera descendente para que
+        // las que llevan mas tiempo preparadas salgan antes
+        ordenar_por_criterio(
+            preparadas, [](const PizzaConTiempo &a, const PizzaConTiempo &b
+                        ) { return a.milisegundos > b.milisegundos; }
+        );
+        preparadas.resize(maximo);
+    }
+}
+
 /*
  * Evalua si hay pizzas ya preparadas y actualiza encargos y contadores en
  * consecuencia. Las pizzas que lleven mas tiempo preparadas pasan antes.
@@ -108,33 +153,10 @@ void evaluar_preparacion(
     const UInt preparables,                //
     const sf::Time &tiempo_actual          //
 ) {
-    size_t i = 0;
-    std::vector<std::pair<size_t, int>> pizzas_listas_con_tiempo;
-    Encargos restantes;
+    std::vector<PizzaConTiempo> pizzas_listas_con_tiempo =
+        obtener_pizzas_listas_con_tiempo(encargos, tiempo_actual);
 
-    // Primera ronda para identificar pizzas listas
-    i = 0;
-    for (auto &encargo : encargos) {
-        sf::Time exceso_tiempo =
-            (tiempo_actual - encargo.tiempo_preparacion.finalizacion);
-        if (exceso_tiempo >= sf::Time::Zero) {
-            pizzas_listas_con_tiempo.push_back(
-                {i, exceso_tiempo.asMilliseconds()}
-            );
-        }
-        i++;
-    }
-
-    // Ordenar y limitar las pizzas que pueden salir
-    if (pizzas_listas_con_tiempo.size() > preparables.to_int()) {
-        // Ordenamos la lista de manera descendente para que
-        // las que llevan mas tiempo preparadas salgan antes
-        std::sort(
-            pizzas_listas_con_tiempo.begin(), pizzas_listas_con_tiempo.end(),
-            [](const auto &a, const auto &b) { return a.second > b.second; }
-        );
-        pizzas_listas_con_tiempo.resize(preparables.to_int());
-    }
+    ordenar_y_limitar_preparadas(pizzas_listas_con_tiempo, preparables);
 
     std::unordered_set<size_t> indices_para_pasar;
     for (const auto &[indice, _] : pizzas_listas_con_tiempo) {
@@ -142,7 +164,8 @@ void evaluar_preparacion(
     }
 
     // Segunda ronda para actualizar contadores y lista de encargos
-    i = 0;
+    Encargos restantes;
+    size_t i = 0;
     for (auto &encargo : encargos) {
         if (indices_para_pasar.find(i) != indices_para_pasar.end()) {
             contadores[encargo.tipo].preparadas++;
