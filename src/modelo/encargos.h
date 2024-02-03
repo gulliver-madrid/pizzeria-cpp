@@ -18,16 +18,18 @@ struct EncargoACocina {
     );
 };
 
+using EncargoACocinaPtr = std::shared_ptr<const EncargoACocina>;
+
 /* Gestiona la lista de encargos realizados a cocina */
 struct Encargos {
   private:
-    std::vector<EncargoACocina> _datos;
+    std::vector<EncargoACocinaPtr> _datos;
 
   public:
     UInt del_tipo(dominio::TipoPizza) const;
-    void anadir(const EncargoACocina);
-    std::vector<EncargoACocina>::const_iterator begin() const;
-    std::vector<EncargoACocina>::const_iterator end() const;
+    void anadir(EncargoACocinaPtr);
+    std::vector<EncargoACocinaPtr>::const_iterator begin() const;
+    std::vector<EncargoACocinaPtr>::const_iterator end() const;
     size_t total() const;
-    EncargoACocina por_indice(int i) const;
+    EncargoACocinaPtr por_indice(int i) const;
 };

@@ -15,7 +15,7 @@ ModeloInterno::ModeloInterno(const std::optional<DatosModeloInterno> datos_nivel
 
 /* Encarga una pizza de tipo tp */
 void ModeloInterno::anadir_encargo(dominio::TipoPizza tp) {
-    auto encargo = EncargoACocina( //
+    auto encargo = std::make_shared<EncargoACocina>(
         tp, gestor_tiempo->obtener_tiempo_juego()
     );
     encargos.anadir(encargo);

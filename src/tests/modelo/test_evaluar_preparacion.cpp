@@ -18,13 +18,17 @@ TEST(EvaluarPreparacion, NoHayPizzasEncargadas) {
     EXPECT_EQ(contadores[TipoPizza::Margarita].preparadas, 0);
 }
 
+EncargoACocinaPtr crear_encargo(TipoPizza tp, sf::Time tiempo) {
+    return std::make_shared<EncargoACocina>(tp, tiempo);
+}
+
 TEST(EvaluarPreparacion, VariasPizzasPreparadas) {
     // 2 de los 3 encargos estan listos
     PizzasAContadores contadores;
     Encargos encargos;
-    encargos.anadir(EncargoACocina(TipoPizza::Margarita, sf::Time::Zero));
-    encargos.anadir(EncargoACocina(TipoPizza::Pepperoni, sf::Time::Zero));
-    encargos.anadir(EncargoACocina(TipoPizza::Pepperoni, sf::seconds(2)));
+    encargos.anadir(crear_encargo(TipoPizza::Margarita, sf::Time::Zero));
+    encargos.anadir(crear_encargo(TipoPizza::Pepperoni, sf::Time::Zero));
+    encargos.anadir(crear_encargo(TipoPizza::Pepperoni, sf::seconds(2)));
     const auto tiempo_actual = sf::seconds(5);
 
     evaluar_preparacion(encargos, contadores, 3, tiempo_actual);
@@ -45,7 +49,7 @@ TEST(EvaluarPreparacion, LimiteMaximoDePizzas) {
     };
     for (const auto &encargo : data) {
         encargos.anadir(
-            EncargoACocina(encargo.first, sf::seconds(encargo.second))
+            crear_encargo(encargo.first, sf::seconds(encargo.second))
         );
     }
     const auto tiempo_actual = sf::seconds(10);
@@ -58,5 +62,5 @@ TEST(EvaluarPreparacion, LimiteMaximoDePizzas) {
     EXPECT_EQ(contadores[TipoPizza::CuatroQuesos].preparadas, 0);
 
     EXPECT_EQ(encargos.total(), 1);
-    EXPECT_EQ(encargos.por_indice(0).tipo, TipoPizza::CuatroQuesos);
+    EXPECT_EQ(encargos.por_indice(0)->tipo, TipoPizza::CuatroQuesos);
 }

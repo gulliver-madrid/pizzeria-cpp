@@ -42,23 +42,21 @@ EncargoACocina::EncargoACocina(
 
 UInt Encargos::del_tipo(TipoPizza tp) const {
     UInt contador = 0;
-    for (auto &encargo : _datos) {
-        if (encargo.tipo == tp) {
+    for (const auto &encargo : _datos) {
+        if (encargo->tipo == tp) {
             contador++;
         }
     }
     return contador;
 }
 
-void Encargos::anadir(const EncargoACocina encargo) {
-    _datos.push_back(encargo);
-}
+void Encargos::anadir(EncargoACocinaPtr encargo) { _datos.push_back(encargo); }
 
-std::vector<EncargoACocina>::const_iterator Encargos::begin() const {
+std::vector<EncargoACocinaPtr>::const_iterator Encargos::begin() const {
     return _datos.cbegin();
 }
 
-std::vector<EncargoACocina>::const_iterator Encargos::end() const {
+std::vector<EncargoACocinaPtr>::const_iterator Encargos::end() const {
     return _datos.cend();
 }
 
@@ -66,7 +64,7 @@ size_t Encargos::total() const { //
     return _datos.size();
 }
 
-EncargoACocina Encargos::por_indice(int i) const { // fmt
+EncargoACocinaPtr Encargos::por_indice(int i) const { // fmt
     return _datos.at(i);
 }
 

@@ -25,8 +25,8 @@ EstadoPreparacionPizzas::EstadoPreparacionPizzas(
     assert(datos.empty());
     for (auto &encargo : encargos) {
         datos.push_back(EstadoPreparacionPizzaIndividual{
-            encargo.tiempo_preparacion.obtener_porcentaje(tiempo_actual),
-            encargo.tipo
+            encargo->tiempo_preparacion.obtener_porcentaje(tiempo_actual),
+            encargo->tipo
         });
     }
 }
@@ -112,7 +112,7 @@ std::vector<PizzaConTiempo> obtener_pizzas_listas_con_tiempo(
     std::vector<PizzaConTiempo> preparadas_con_tiempo;
     for (auto &encargo : encargos) {
         sf::Time exceso_tiempo =
-            (tiempo_actual - encargo.tiempo_preparacion.finalizacion);
+            (tiempo_actual - encargo->tiempo_preparacion.finalizacion);
         if (exceso_tiempo >= sf::Time::Zero) {
             preparadas_con_tiempo.push_back({i, exceso_tiempo.asMilliseconds()}
             );
@@ -121,6 +121,7 @@ std::vector<PizzaConTiempo> obtener_pizzas_listas_con_tiempo(
     }
     return preparadas_con_tiempo;
 }
+
 /* Ordenar y limitar las pizzas que pueden salir de cocina */
 void ordenar_y_limitar_preparadas(
     std::vector<PizzaConTiempo> &preparadas, const UInt &maximo_uint
@@ -168,7 +169,7 @@ void evaluar_preparacion(
     size_t i = 0;
     for (auto &encargo : encargos) {
         if (indices_para_pasar.find(i) != indices_para_pasar.end()) {
-            contadores[encargo.tipo].preparadas++;
+            contadores[encargo->tipo].preparadas++;
         } else {
             restantes.anadir(encargo);
         }

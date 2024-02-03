@@ -15,12 +15,16 @@ TEST(Encargadas, EncargadasDelTipoConVectorVacio) {
     EXPECT_EQ(result, 0);
 }
 
+EncargoACocinaPtr crear_encargo(TipoPizza tp) {
+    return std::make_shared<EncargoACocina>(tp);
+}
+
 TEST(Encargadas, EncargadasDelTipoConDosMargaritasYUnaPepperoni) {
     Encargos encargos;
-    EncargoACocina data[] = {
-        {TipoPizza::Margarita},
-        {TipoPizza::Margarita},
-        {TipoPizza::Pepperoni},
+    EncargoACocinaPtr data[] = {
+        crear_encargo(TipoPizza::Margarita),
+        crear_encargo(TipoPizza::Margarita),
+        crear_encargo(TipoPizza::Pepperoni),
     };
     for (const auto &encargo : data) {
         encargos.anadir(encargo);
