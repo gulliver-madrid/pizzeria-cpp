@@ -14,5 +14,6 @@ struct VistaBarraEstado {
 };
 
 struct VistaPedido {
-    std::pair<std::string, size_t> presentacion;
+    std::string cadena_completa;
+    size_t num_items;
 };

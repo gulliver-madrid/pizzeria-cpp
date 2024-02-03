@@ -50,7 +50,7 @@ namespace presentador {
         VistaPedido pedido_to_vista(const Pedido &pedido) {
             std::string s = pedido_to_string(pedido);
             const size_t num_items = pedido.contenido.size();
-            return {std::make_pair(s, num_items)};
+            return {s, num_items};
         }
     } // namespace impl
 
