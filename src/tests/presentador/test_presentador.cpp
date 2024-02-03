@@ -8,9 +8,10 @@
 using dominio::TipoPizza;
 
 TEST(Presentador, LineaCompletitudPizza) {
-    auto result = presentador::impl::crea_linea_completitud_pizza(
+    auto vista_linea = presentador::impl::crea_vista_linea(
         TipoPizza::Margarita, 2, 5 //
     );
+    auto result = vista_linea.cadena;
     ASSERT_EQ(result, "Margarita: 2/5");
 }
 
@@ -19,8 +20,10 @@ TEST(Presentador, PedidoToString) {
         {{TipoPizza::Margarita, {2, 5}}, {TipoPizza::Pepperoni, {1, 4}}}
     );
     Pedido pedido(std::move(contenido));
-    auto result = presentador::impl::pedido_to_strings(pedido);
-    ASSERT_EQ(unir_cadenas(result, "\n"), "Margarita: 2/5\nPepperoni: 1/4");
+    auto result = presentador::impl::pedido_to_vista(pedido);
+    ASSERT_EQ(
+        result.obtener_cadena_completa(), "Margarita: 2/5\nPepperoni: 1/4"
+    );
 }
 
 TEST(Presentador, ContadoresToPreparadasString) {

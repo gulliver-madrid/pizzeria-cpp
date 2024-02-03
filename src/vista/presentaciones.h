@@ -13,7 +13,19 @@ struct VistaBarraEstado {
     CadenaJuego texto;
 };
 
+struct VistaLinea {
+    std::string cadena;
+    bool esta_cubierta;
+};
+
 struct VistaPedido {
-    std::vector<std::string> cadenas;
+    std::vector<VistaLinea> lineas;
     size_t num_items;
+    std::string obtener_cadena_completa() const {
+        std::vector<std::string> v;
+        for (auto linea : lineas) {
+            v.push_back(linea.cadena);
+        }
+        return unir_cadenas(v, "\n");
+    }
 };

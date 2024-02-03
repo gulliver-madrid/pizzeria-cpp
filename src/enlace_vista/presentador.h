@@ -9,10 +9,10 @@
 
 namespace presentador {
     namespace impl {
-        std::string crea_linea_completitud_pizza(
+        VistaLinea crea_vista_linea( //
             const dominio::TipoPizza tp, UInt parte, UInt todo
         );
-        std::vector<std::string> pedido_to_strings(const Pedido &pedido);
+        VistaPedido pedido_to_vista(const Pedido &pedido);
     } // namespace impl
 
     PresentacionPedidos crear_presentacion_pedidos( //

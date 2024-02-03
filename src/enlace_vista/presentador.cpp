@@ -12,7 +12,7 @@
 namespace presentador {
 
     namespace impl {
-        std::string crea_linea_completitud_pizza(
+        VistaLinea crea_vista_linea( //
             const dominio::TipoPizza tp, UInt parte, UInt todo
         ) {
             assert(has_key(tipo_pizza_to_string, tp));
@@ -23,20 +23,20 @@ namespace presentador {
                 std::string("/") +    //
                 todo.to_string()      //
             );
-            return s;
+            return {s, parte == todo};
         }
 
         /* Crea una string representando un pedido. Una linea por tipo de pizza,
          * con el formato TipoPizza: actual/objetivo
          */
-        std::vector<std::string> pedido_to_strings(const Pedido &pedido) {
-            std::vector<std::string> s;
+        std::vector<VistaLinea> pedido_to_vista_lineas(const Pedido &pedido) {
+            std::vector<VistaLinea> s;
             size_t ultimo = pedido.contenido.size() - 1;
             size_t i = 0;
             for (auto &[tp, pedido_tp] : pedido.contenido) {
-                s.push_back(crea_linea_completitud_pizza(
-                    tp, pedido_tp.servido, pedido_tp.objetivo
-                ));
+                s.push_back(
+                    crea_vista_linea(tp, pedido_tp.servido, pedido_tp.objetivo)
+                );
                 i++;
             }
             return s;
@@ -45,7 +45,7 @@ namespace presentador {
          * numero de items.
          */
         VistaPedido pedido_to_vista(const Pedido &pedido) {
-            std::vector<std::string> s = pedido_to_strings(pedido);
+            auto s = pedido_to_vista_lineas(pedido);
             const size_t num_items = pedido.contenido.size();
             return {s, num_items};
         }
