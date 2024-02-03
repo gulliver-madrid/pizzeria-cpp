@@ -16,3 +16,14 @@ V get_or(const std::map<K, V> &m, const K &key, const V &defaultValue) {
         return it->second;
     }
 }
+
+template <typename Contenedor, typename Elemento>
+bool contiene(Contenedor contenedor, Elemento elemento) {
+    return contenedor.find(elemento) != contenedor.end();
+}
+
+/* Ordena el iterable segun el criterio proporcionado */
+template <typename Iterable, typename Condicion>
+void ordenar_por_criterio(Iterable iterable, Condicion condicion) {
+    std::sort(iterable.begin(), iterable.end(), condicion);
+}
