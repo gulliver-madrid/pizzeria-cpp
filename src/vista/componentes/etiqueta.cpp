@@ -46,6 +46,9 @@ void Etiqueta::set_font(const OptionalFont &new_font) {
     ComponenteConFont::set_font(new_font);
     etiqueta.setFont(*new_font.get_pointer());
 }
+void Etiqueta::set_color(const sf::Color &color) {
+    etiqueta.setFillColor(color);
+}
 void Etiqueta::draw(
     sf::RenderTarget &target, //
     sf::RenderStates          //

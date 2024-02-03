@@ -42,5 +42,6 @@ class Etiqueta : public ComponenteConFont {
     sf::FloatRect get_global_bounds();
     void set_position(float x, float y);
     virtual void set_font(const OptionalFont &new_font) override;
+    void set_color(const sf::Color &);
     virtual void draw(sf::RenderTarget &, sf::RenderStates) const override;
 };

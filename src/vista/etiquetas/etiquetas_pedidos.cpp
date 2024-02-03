@@ -50,6 +50,9 @@ namespace {
         for (auto &linea : vista_pedido.lineas) {
             const auto etiqueta =
                 crear_etiqueta(linea.cadena, tamano_fuente, "etiqueta pedidos");
+            if (linea.esta_cubierta) {
+                etiqueta->set_color(sf::Color::Green);
+            }
             etiquetas.push_back(etiqueta);
         }
         const auto shape = build_card_pedido_shape(num_items);
