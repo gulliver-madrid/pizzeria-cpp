@@ -9,8 +9,10 @@ struct VistaPreparacionPizza {
     int porcentaje;
 };
 
-using PresentacionPreparacionPizzas = std::vector<VistaPreparacionPizza>;
-
 struct VistaBarraEstado {
     CadenaJuego texto;
+};
+
+struct VistaPedido {
+    std::pair<std::string, size_t> presentacion;
 };

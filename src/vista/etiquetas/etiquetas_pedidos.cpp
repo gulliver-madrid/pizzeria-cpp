@@ -5,6 +5,8 @@
 #include "../basicos_vista.h"
 #include "../componentes/crear_etiqueta.h"
 #include "../componentes/etiqueta.h"
+#include "../presentaciones.h"
+#include "../vista_shared.h"
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <cassert>
 
@@ -56,9 +58,9 @@ namespace {
         // TODO:actualizar solo si cambian
         // Creamos las tarjetas de los pedidos
         tarjetas.clear();
-        for (auto &presentacion_pedido : presentacion_pedidos) {
-            const auto texto = presentacion_pedido.first;
-            const size_t num_items = presentacion_pedido.second;
+        for (auto &vista_pedido : presentacion_pedidos) {
+            const auto texto = vista_pedido.presentacion.first;
+            const size_t num_items = vista_pedido.presentacion.second;
             const auto tarjeta = std::make_shared<TarjetaPedido>(
                 construye_tarjeta_pedido(texto, num_items)
             );

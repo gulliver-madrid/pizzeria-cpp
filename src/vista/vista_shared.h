@@ -6,6 +6,8 @@
 #include <vector>
 
 class BotonConTexto;
+struct VistaPedido;
+struct VistaPreparacionPizza;
 
 namespace dominio {
     enum class TipoPizza;
@@ -18,8 +20,11 @@ using PizzasToStrings = std::map<dominio::TipoPizza, std::string>;
 using TipoPizzaToBoton =
     std::map<dominio::TipoPizza, std::shared_ptr<BotonConTexto>>;
 using Botones = std::vector<std::shared_ptr<BotonConTexto>>;
-using PresentacionPedidos = std::vector<std::pair<std::string, size_t>>;
 
 namespace sf {
     class RenderTarget;
 }
+
+// presentaciones
+using PresentacionPreparacionPizzas = std::vector<VistaPreparacionPizza>;
+using PresentacionPedidos = std::vector<VistaPedido>;

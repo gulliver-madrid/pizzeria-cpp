@@ -281,6 +281,7 @@
 - vista/barras_progreso.h:
     - vista/componentes/barra_progreso.h
     - vista/presentaciones.h
+    - vista/vista_shared.h
 
 - vista/basicos_vista.cpp:
     - vista/basicos_vista.h
@@ -434,6 +435,8 @@
     - vista/basicos_vista.h
     - vista/componentes/crear_etiqueta.h
     - vista/componentes/etiqueta.h
+    - vista/presentaciones.h
+    - vista/vista_shared.h
 
 - vista/etiquetas/etiquetas_pedidos.h:
     - vista/componentes/componente.h
