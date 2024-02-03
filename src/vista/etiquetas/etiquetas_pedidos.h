@@ -14,10 +14,10 @@ class Etiqueta;
 
 class TarjetaPedido : public ComponenteConFont {
   public:
-    std::shared_ptr<Etiqueta> etiqueta;
+    std::vector<std::shared_ptr<Etiqueta>> etiquetas;
     sf::RectangleShape shape;
 
-    TarjetaPedido(std::shared_ptr<Etiqueta>, sf::RectangleShape);
+    TarjetaPedido(std::vector<std::shared_ptr<Etiqueta>>, sf::RectangleShape);
     void set_position(float pos_x, float pos_y);
     virtual void draw(sf::RenderTarget &, sf::RenderStates) const override;
 };
