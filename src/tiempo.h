@@ -29,6 +29,7 @@ struct TiempoPreparacion {
 // Clase base para gestores de tiempo que usan tick()
 struct GestorTiempo {
     virtual void tick(sf::Time tiempo) = 0;
+    virtual sf::Time obtener_tiempo_transcurrido() const = 0;
 };
 
 ///////////////////////////////////////////
@@ -43,8 +44,8 @@ struct GestorTiempoJuego : public GestorTiempo {
     bool en_pausa = true;
 
   public:
-    sf::Time obtener_tiempo_juego() const;
     virtual void tick(sf::Time tiempo) override;
+    virtual sf::Time obtener_tiempo_transcurrido() const override;
     void activar();
     void pausar();
     void reiniciar();
@@ -61,7 +62,7 @@ struct GestorTimer : public GestorTiempo {
   private:
     GestorTiempoJuego _gestor_interno;
     std::optional<sf::Time> finalizacion = std::nullopt;
-    sf::Time obtener_tiempo_transcurrido();
+    virtual sf::Time obtener_tiempo_transcurrido() const override;
 
   public:
     void start(sf::Time finalizacion);
@@ -75,7 +76,7 @@ enum class GestorTiempoKey {
     gestor_tiempo_juego,
 };
 
-struct GestorTiempoGeneral : public GestorTiempo {
+struct GestorTiempoGeneral {
     std::map<GestorTiempoKey, std::shared_ptr<GestorTiempo>> gestores;
     void tick(sf::Time tiempo) {
         for (auto &[_, gestor] : gestores) {

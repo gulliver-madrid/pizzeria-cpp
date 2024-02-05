@@ -232,7 +232,8 @@ MotorNivel::MotorNivel(
 // Inicializa elementos antes de la ejecucion
 void MotorNivel::setup() {
     assert(modelo_amplio);
-    auto &gestor_tiempo_juego = modelo_amplio->modelo_interno.gestor_tiempo;
+    auto &gestor_tiempo_juego =
+        modelo_amplio->modelo_interno.gestor_tiempo_juego;
     timer_espera_antes_de_resultado = std::make_shared<GestorTimer>();
     assert(timer_espera_antes_de_resultado);
     ejecucion_en_proceso = std::make_shared<EjecucionEnProceso>(

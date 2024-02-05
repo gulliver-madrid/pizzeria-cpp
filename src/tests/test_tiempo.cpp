@@ -9,13 +9,13 @@ TEST(Tiempo, RestarTiempo) { //
     EXPECT_EQ(t2 - t1, sf::milliseconds(2));
 }
 TEST(Tiempo, GestorTiempoJuegoTick) { //
-    GestorTiempoJuego gestor_tiempo;
-    gestor_tiempo.activar();
-    gestor_tiempo.tick(sf::milliseconds(40));
-    EXPECT_EQ(gestor_tiempo.obtener_tiempo_juego().asMilliseconds(), 40);
+    GestorTiempoJuego gtj;
+    gtj.activar();
+    gtj.tick(sf::milliseconds(40));
+    EXPECT_EQ(gtj.obtener_tiempo_transcurrido().asMilliseconds(), 40);
 }
 TEST(Tiempo, GestorTiempoJuegoTickSinActivar) { //
-    GestorTiempoJuego gestor_tiempo;
-    gestor_tiempo.tick(sf::milliseconds(40));
-    EXPECT_EQ(gestor_tiempo.obtener_tiempo_juego().asMilliseconds(), 0);
+    GestorTiempoJuego gtj;
+    gtj.tick(sf::milliseconds(40));
+    EXPECT_EQ(gtj.obtener_tiempo_transcurrido().asMilliseconds(), 0);
 }
