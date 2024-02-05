@@ -49,7 +49,6 @@ class MotorNivel {
     std::optional<AccionGeneral> _procesa_cambio_de_fase(FaseNivel nueva_fase);
 
   public:
-    GestorTiempoGeneral gestor_tiempo_general;
     const std::shared_ptr<Globales> globales;
     const NumNivelOpcional &num_nivel;
     std::shared_ptr<EnlaceVista> enlace_vista;
@@ -67,4 +66,5 @@ class MotorNivel {
     void actualizar_interfaz_grafico(const sf::Time tiempo_real_actual);
     void establecer_fase(FaseNivel);
     std::shared_ptr<VistaObservable> get_vista() const;
+    void tick(sf::Time transcurrido);
 };

@@ -15,6 +15,7 @@ class ModeloAmplio {
   public:
     std::vector<std::shared_ptr<ObservadorFase>> observadores_fase;
     ModeloInterno modelo_interno;
+    GestorTiempoGeneral gestor_tiempo_general;
 
     bool establecido = false;
     bool mostrando_grid = false;

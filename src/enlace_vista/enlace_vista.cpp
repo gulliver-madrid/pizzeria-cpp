@@ -123,6 +123,7 @@ void EnlaceVista::on_cambio_de_fase(FaseNivel nueva_fase) {
 
 void EnlaceVista::esconder_paneles() const { vista->paneles->visible = false; }
 
+// TODO: hacer que ModeloAmplio incluya el tiempo real
 void EnlaceVista::actualizar_interfaz_grafico(
     const ModeloAmplio &modelo_amplio, //
     const sf::Time &tiempo_real        //

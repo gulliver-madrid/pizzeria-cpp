@@ -51,7 +51,7 @@ TEST(Usecases, AlEmpezarJuegoSeMuestranLosPaneles) { //
     ASSERT_EQ(paneles->get_visibilidad(), true);
 }
 
-TEST(Usecases, AlEncargarUnaPizzaApareceUnaBarraDeProgreso) { //
+TEST(Usecases, AlEncargarUnaPizzaApareceUnaBarraDeProgreso) {
     MotorNivel nivel;
     nivel.establecer_fase(FaseNivel::MostrandoInstrucciones);
     nivel.setup();
@@ -60,10 +60,10 @@ TEST(Usecases, AlEncargarUnaPizzaApareceUnaBarraDeProgreso) { //
     nivel.actualizar_interfaz_grafico(sf::Time::Zero);
     ASSERT_EQ(obtener_numero_barras_progreso(nivel), 0);
 
-    nivel.aplica_comando(
-        Comando::Encargar{dominio::TipoPizza::Margarita}
-    );
+    nivel.aplica_comando(Comando::Encargar{dominio::TipoPizza::Margarita});
 
     nivel.actualizar_interfaz_grafico(sf::Time::Zero);
     ASSERT_EQ(obtener_numero_barras_progreso(nivel), 1);
 }
+
+// TODO: crear test de que las lineas de los pedidos muestren si estan completas

@@ -231,6 +231,7 @@ MotorNivel::MotorNivel(
 
 // Inicializa elementos antes de la ejecucion
 void MotorNivel::setup() {
+    assert(modelo_amplio);
     auto &gestor_tiempo_juego = modelo_amplio->modelo_interno.gestor_tiempo;
     timer_espera_antes_de_resultado = std::make_shared<GestorTimer>();
     assert(timer_espera_antes_de_resultado);
@@ -238,11 +239,16 @@ void MotorNivel::setup() {
         modelo_amplio, enlace_vista, gestor_tiempo_juego,
         timer_espera_antes_de_resultado
     );
-    gestor_tiempo_general.gestores["timer_espera_antes_de_resultado"] =
+    // TODO: add method anade_gestor a gestor_tiempo_general
+    modelo_amplio->gestor_tiempo_general
+        .gestores[GestorTiempoKey::timer_espera_antes_de_resultado] =
         timer_espera_antes_de_resultado;
-    gestor_tiempo_general.gestores["timer_fin_nivel"] =
+
+    modelo_amplio->gestor_tiempo_general
+        .gestores[GestorTiempoKey::timer_fin_nivel] =
         std::make_shared<GestorTimer>();
-    gestor_tiempo_general.gestores["gestor_tiempo_juego"] =
+    modelo_amplio->gestor_tiempo_general
+        .gestores[GestorTiempoKey::gestor_tiempo_juego] =
         ejecucion_en_proceso->gestor_tiempo_juego;
 }
 
@@ -266,10 +272,12 @@ std::optional<AccionGeneral> MotorNivel::procesar_evento(sf::Event event) {
 }
 
 std::optional<AccionGeneral> MotorNivel::procesar_ciclo() {
+    assert(modelo_amplio);
     modelo_amplio->modelo_interno.evaluar_preparacion_pizzas();
     const auto fase_previa = modelo_amplio->get_fase_actual();
 
-    auto timer_fin_nivel_ = gestor_tiempo_general.gestores["timer_fin_nivel"];
+    auto timer_fin_nivel_ = modelo_amplio->gestor_tiempo_general
+                                .gestores[GestorTiempoKey::timer_fin_nivel];
     auto timer_fin_nivel =
         std::dynamic_pointer_cast<GestorTimer>(timer_fin_nivel_);
     assert(timer_fin_nivel);
@@ -307,4 +315,9 @@ void MotorNivel::actualizar_interfaz_grafico(const sf::Time tiempo_real_actual
     enlace_vista->actualizar_interfaz_grafico(
         modelo_amplio.value(), tiempo_real_actual
     );
+}
+
+void MotorNivel::tick(sf::Time transcurrido) {
+    assert(modelo_amplio);
+    modelo_amplio.value().gestor_tiempo_general.tick(transcurrido);
 }

@@ -80,12 +80,18 @@ struct GestorTimer : public GestorTiempo {
 
   public:
     void start(sf::Time finalizacion);
-    void tick(sf::Time tiempo);
+    virtual void tick(sf::Time tiempo) override;
     bool termino();
 };
 
+enum class GestorTiempoKey {
+    timer_espera_antes_de_resultado,
+    timer_fin_nivel,
+    gestor_tiempo_juego,
+};
+
 struct GestorTiempoGeneral : public GestorTiempo {
-    std::map<std::string, std::shared_ptr<GestorTiempo>> gestores;
+    std::map<GestorTiempoKey, std::shared_ptr<GestorTiempo>> gestores;
     void tick(sf::Time tiempo) {
         for (auto &[_, gestor] : gestores) {
             gestor->tick(tiempo);
