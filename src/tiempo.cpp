@@ -139,8 +139,7 @@ GestorTiempoGeneral::get_timer(TipoGestorTiempo clave) {
 std::shared_ptr<const GestorTimer>
 GestorTiempoGeneral::get_const_timer(TipoGestorTiempo clave) const {
     auto g = gestores.at(clave);
-    const std::shared_ptr<const GestorTimer> gestor =
-        std::dynamic_pointer_cast<GestorTimer>(g);
+    const auto gestor = std::dynamic_pointer_cast<const GestorTimer>(g);
     assert(gestor);
     return gestor;
 }
