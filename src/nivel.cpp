@@ -51,7 +51,7 @@ AccionGeneral Nivel::ejecutar() {
         const auto transcurrido = tiempo_real_actual - previo;
         // TODO: con hacer el tick deberia bastar para tener el tiempo real
         motor_nivel->tick(transcurrido);
-        motor_nivel->actualizar_interfaz_grafico(tiempo_real_actual);
+        motor_nivel->actualizar_interfaz_grafico();
 
         previo = tiempo_real_actual;
 

@@ -248,6 +248,12 @@ void MotorNivel::setup() {
     modelo_amplio->gestor_tiempo_general
         .gestores[GestorTiempoKey::timer_fin_nivel] =
         std::make_shared<GestorTimer>();
+
+    auto gestor_tiempo_real = std::make_shared<GestorTiempoControlable>();
+    modelo_amplio->gestor_tiempo_general
+        .gestores[GestorTiempoKey::gestor_tiempo_real] = gestor_tiempo_real;
+    gestor_tiempo_real->activar();
+
     modelo_amplio->gestor_tiempo_general
         .gestores[GestorTiempoKey::gestor_tiempo_juego] =
         ejecucion_en_proceso->gestor_tiempo_juego;
@@ -311,11 +317,8 @@ std::optional<AccionGeneral> MotorNivel::procesar_ciclo() {
     return std::nullopt;
 }
 
-void MotorNivel::actualizar_interfaz_grafico(const sf::Time tiempo_real_actual
-) {
-    enlace_vista->actualizar_interfaz_grafico(
-        modelo_amplio.value(), tiempo_real_actual
-    );
+void MotorNivel::actualizar_interfaz_grafico() {
+    enlace_vista->actualizar_interfaz_grafico(modelo_amplio.value());
 }
 
 void MotorNivel::tick(sf::Time transcurrido) {

@@ -74,13 +74,10 @@ enum class GestorTiempoKey {
     timer_espera_antes_de_resultado,
     timer_fin_nivel,
     gestor_tiempo_juego,
+    gestor_tiempo_real
 };
 
 struct GestorTiempoGeneral {
     std::map<GestorTiempoKey, std::shared_ptr<GestorTiempo>> gestores;
-    void tick(sf::Time tiempo) {
-        for (auto &[_, gestor] : gestores) {
-            gestor->tick(tiempo);
-        }
-    }
+    void tick(sf::Time tiempo);
 };

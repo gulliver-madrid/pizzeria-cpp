@@ -106,3 +106,13 @@ bool GestorTimer::termino() {
     juego_assert(this->finalizacion.has_value(), "Timer no inicializado");
     return obtener_tiempo_transcurrido() > finalizacion;
 }
+
+///////////////////////////////////////////
+// GestorTiempoGeneral
+//////////////////////////////////////////
+
+void GestorTiempoGeneral::tick(sf::Time tiempo) {
+    for (auto &[_, gestor] : gestores) {
+        gestor->tick(tiempo);
+    }
+}

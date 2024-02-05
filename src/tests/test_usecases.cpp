@@ -46,7 +46,7 @@ TEST(Usecases, AlEmpezarJuegoSeMuestranLosPaneles) { //
     nivel.aplica_comando(Comando::Empezar());
 
     // en este caso el tiempo es irrelevante
-    nivel.actualizar_interfaz_grafico(sf::Time::Zero);
+    nivel.actualizar_interfaz_grafico();
     auto paneles = nivel.get_vista()->get_paneles();
     ASSERT_EQ(paneles->get_visibilidad(), true);
 }
@@ -57,12 +57,12 @@ TEST(Usecases, AlEncargarUnaPizzaApareceUnaBarraDeProgreso) {
     nivel.setup();
 
     nivel.aplica_comando(Comando::Empezar());
-    nivel.actualizar_interfaz_grafico(sf::Time::Zero);
+    nivel.actualizar_interfaz_grafico();
     ASSERT_EQ(obtener_numero_barras_progreso(nivel), 0);
 
     nivel.aplica_comando(Comando::Encargar{dominio::TipoPizza::Margarita});
 
-    nivel.actualizar_interfaz_grafico(sf::Time::Zero);
+    nivel.actualizar_interfaz_grafico();
     ASSERT_EQ(obtener_numero_barras_progreso(nivel), 1);
 }
 

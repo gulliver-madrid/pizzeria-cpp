@@ -63,7 +63,7 @@ class MotorNivel {
     std::optional<AccionGeneral> aplica_comando(const Comando &);
     std::optional<AccionGeneral> procesar_evento(sf::Event);
     std::optional<AccionGeneral> procesar_ciclo();
-    void actualizar_interfaz_grafico(const sf::Time tiempo_real_actual);
+    void actualizar_interfaz_grafico();
     void establecer_fase(FaseNivel);
     std::shared_ptr<VistaObservable> get_vista() const;
     void tick(sf::Time transcurrido);

@@ -123,11 +123,13 @@ void EnlaceVista::on_cambio_de_fase(FaseNivel nueva_fase) {
 
 void EnlaceVista::esconder_paneles() const { vista->paneles->visible = false; }
 
-// TODO: hacer que ModeloAmplio incluya el tiempo real
 void EnlaceVista::actualizar_interfaz_grafico(
-    const ModeloAmplio &modelo_amplio, //
-    const sf::Time &tiempo_real        //
+    const ModeloAmplio &modelo_amplio //
 ) {
+
+    const sf::Time tiempo_real = modelo_amplio.gestor_tiempo_general.gestores
+                                     .at(GestorTiempoKey::gestor_tiempo_real)
+                                     ->obtener_tiempo_transcurrido();
     const auto activacion_botones =
         enlace_vista_impl::obtener_activacion_botones(
             modelo_amplio.modelo_interno
