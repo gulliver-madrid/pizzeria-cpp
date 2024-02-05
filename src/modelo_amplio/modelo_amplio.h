@@ -8,6 +8,11 @@
 class ObservadorFase;
 class Comando;
 
+namespace tiempos {
+    const auto RETARDO_ANTES_DE_RESULTADO = sf::seconds(2.5);
+    const auto ESPERA_ENTRE_NIVELES = sf::seconds(3);
+} // namespace tiempos
+
 class ModeloAmplio {
   private:
     FaseNivel fase_actual = FaseNivel::None;
@@ -27,4 +32,9 @@ class ModeloAmplio {
 
     void set_fase_actual(FaseNivel);
     FaseNivel get_fase_actual() const;
+    sf::Time obtener_tiempo_transcurrido() const;
+    void activar_tiempo_juego();
+    void iniciar_espera_antes_resultado();
+    void iniciar_espera_entre_niveles();
+    bool termino_timer(GestorTiempoKey) const;
 };

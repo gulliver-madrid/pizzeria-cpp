@@ -70,7 +70,7 @@ struct GestorTimer : public GestorTiempo {
 };
 
 enum class GestorTiempoKey {
-    timer_espera_antes_de_resultado,
+    timer_antes_resultado,
     timer_fin_nivel,
     gestor_tiempo_juego,
     gestor_tiempo_real
@@ -81,6 +81,7 @@ struct GestorTiempoGeneral {
     void anade_gestor(GestorTiempoKey, std::shared_ptr<GestorTiempo>);
     void tick(sf::Time tiempo);
     std::shared_ptr<GestorTimer> get_timer(GestorTiempoKey);
+    std::shared_ptr<GestorTimer> get_const_timer(GestorTiempoKey) const;
     std::shared_ptr<GestorTiempoControlable>
         get_gestor_tiempo_controlable(GestorTiempoKey);
 };

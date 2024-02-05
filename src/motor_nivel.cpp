@@ -15,23 +15,12 @@
 struct EjecucionEnProceso {
     std::optional<ModeloAmplio> &modelo_amplio;
     std::shared_ptr<EnlaceVista> enlace_vista;
-    std::shared_ptr<GestorTiempoControlable> gestor_tiempo_juego;
-    std::shared_ptr<GestorTimer> timer_espera_antes_de_resultado;
     EjecucionEnProceso(
         std::optional<ModeloAmplio> &modelo_amplio_,
-        std::shared_ptr<EnlaceVista> enlace_vista_,
-        std::shared_ptr<GestorTiempoControlable> gestor_tiempo_juego_,
-        std::shared_ptr<GestorTimer> timer_espera_antes_de_resultado_
+        std::shared_ptr<EnlaceVista> enlace_vista_
     )
-        : modelo_amplio(modelo_amplio_), enlace_vista(enlace_vista_),
-          gestor_tiempo_juego(gestor_tiempo_juego_),
-          timer_espera_antes_de_resultado(timer_espera_antes_de_resultado_) {}
+        : modelo_amplio(modelo_amplio_), enlace_vista(enlace_vista_) {}
 };
-
-namespace tiempos {
-    const auto RETARDO_ANTES_DE_RESULTADO = sf::seconds(2.5);
-    const auto ESPERA_ENTRE_NIVELES = sf::seconds(3);
-} // namespace tiempos
 
 namespace {
 
@@ -57,14 +46,11 @@ namespace {
         switch (nueva_fase) {
             case FaseNivel::Activa:
                 assert(fase_previa == FaseNivel::MostrandoInstrucciones);
-                ejecucion.gestor_tiempo_juego->activar();
+                ejecucion.modelo_amplio->activar_tiempo_juego();
                 break;
             case FaseNivel::EsperaAntesDeResultado:
                 assert(fase_previa == FaseNivel::Activa);
-                ejecucion.gestor_tiempo_juego->pausar();
-                ejecucion.timer_espera_antes_de_resultado->start(
-                    tiempos::RETARDO_ANTES_DE_RESULTADO
-                );
+                ejecucion.modelo_amplio->iniciar_espera_antes_resultado();
                 break;
             case FaseNivel::Reiniciando:
                 posible_accion = AccionGeneral::Reiniciar;
@@ -82,17 +68,16 @@ namespace {
 } // namespace
 
 void on_cambio_a_fase_mostrar_resultado(
-    const std::shared_ptr<Globales> globales,     //
-    const ModeloAmplio &modelo_amplio,            //
-    std::shared_ptr<EnlaceVista> enlace_vista,    //
-    std::shared_ptr<GestorTimer> timer_fin_nivel, //
-    sf::Sound &sound                              //
+    const std::shared_ptr<Globales> globales,  //
+    ModeloAmplio &modelo_amplio,               //
+    std::shared_ptr<EnlaceVista> enlace_vista, //
+    sf::Sound &sound                           //
 ) {
     if (globales->success_buffer) {
         sound.setBuffer(globales->success_buffer.value());
         sound.play();
     }
-    timer_fin_nivel->start(tiempos::ESPERA_ENTRE_NIVELES);
+    modelo_amplio.iniciar_espera_entre_niveles();
     enlace_vista->esconder_paneles();
 }
 
@@ -233,17 +218,13 @@ MotorNivel::MotorNivel(
 void MotorNivel::setup() {
     using Key = GestorTiempoKey;
     assert(modelo_amplio);
-    auto gestor_tiempo_juego =
-        modelo_amplio->modelo_interno.gestor_tiempo_juego;
-    timer_antes_resultado = std::make_shared<GestorTimer>();
-    assert(timer_antes_resultado);
-    ejecucion_en_proceso = std::make_shared<EjecucionEnProceso>(
-        modelo_amplio, enlace_vista, gestor_tiempo_juego, timer_antes_resultado
-    );
+
+    ejecucion_en_proceso =
+        std::make_shared<EjecucionEnProceso>(modelo_amplio, enlace_vista);
     auto &gtg = modelo_amplio->gestor_tiempo_general;
 
     gtg.anade_gestor(
-        Key::timer_espera_antes_de_resultado, timer_antes_resultado
+        Key::timer_antes_resultado, std::make_shared<GestorTimer>()
     );
 
     gtg.anade_gestor(Key::timer_fin_nivel, std::make_shared<GestorTimer>());
@@ -252,7 +233,10 @@ void MotorNivel::setup() {
     gtg.anade_gestor(Key::gestor_tiempo_real, gestor_tiempo_real);
     gestor_tiempo_real->activar();
 
-    gtg.anade_gestor(Key::gestor_tiempo_juego, gestor_tiempo_juego);
+    gtg.anade_gestor(
+        Key::gestor_tiempo_juego,
+        modelo_amplio->modelo_interno.gestor_tiempo_juego
+    );
 }
 
 std::optional<AccionGeneral> MotorNivel::aplica_comando(const Comando &comando
@@ -274,40 +258,35 @@ std::optional<AccionGeneral> MotorNivel::procesar_evento(sf::Event event) {
     return accion;
 }
 
+/* Procesamiento de cada ciclo tras procesar los eventos */
 std::optional<AccionGeneral> MotorNivel::procesar_ciclo() {
     assert(modelo_amplio);
     modelo_amplio->modelo_interno.evaluar_preparacion_pizzas();
     const auto fase_previa = modelo_amplio->get_fase_actual();
 
-    auto timer_fin_nivel_ = modelo_amplio->gestor_tiempo_general
-                                .gestores[GestorTiempoKey::timer_fin_nivel];
-    auto timer_fin_nivel =
-        std::dynamic_pointer_cast<GestorTimer>(timer_fin_nivel_);
-    assert(timer_fin_nivel);
-
     // En funcion de la fase actual (no necesariamente recien iniciada)
     switch (modelo_amplio->get_fase_actual()) {
         case FaseNivel::EsperaAntesDeResultado:
-            if (timer_antes_resultado->termino()) {
+            if (modelo_amplio->termino_timer(
+                    GestorTiempoKey::timer_antes_resultado
+                )) {
                 LOG(info) << "Se debe mostrar el resultado";
                 establecer_fase(FaseNivel::MostrandoResultado);
             }
             break;
         case FaseNivel::MostrandoResultado:
-            {
-                if (timer_fin_nivel->termino()) {
-                    LOG(info) << "Se debe pasar al siguiente nivel";
-                    return AccionGeneral::SiguienteNivel;
-                };
-            }
+            if (modelo_amplio->termino_timer(GestorTiempoKey::timer_fin_nivel
+                )) {
+                LOG(info) << "Se debe pasar al siguiente nivel";
+                return AccionGeneral::SiguienteNivel;
+            };
             break;
     }
     const auto fase_actual = modelo_amplio->get_fase_actual();
     if (fase_actual != fase_previa &&
         fase_actual == FaseNivel::MostrandoResultado) {
         on_cambio_a_fase_mostrar_resultado(
-            globales, modelo_amplio.value(), enlace_vista, timer_fin_nivel,
-            sound
+            globales, modelo_amplio.value(), enlace_vista, sound
         );
     }
     return std::nullopt;
