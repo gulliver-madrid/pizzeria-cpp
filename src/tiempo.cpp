@@ -128,3 +128,18 @@ void GestorTiempoGeneral::tick(sf::Time tiempo) {
         gestor->tick(tiempo);
     }
 }
+
+std::shared_ptr<GestorTimer>
+GestorTiempoGeneral::get_timer(GestorTiempoKey clave) {
+    auto g = gestores[clave];
+    auto gestor = std::dynamic_pointer_cast<GestorTimer>(g);
+    assert(gestor);
+    return gestor;
+}
+std::shared_ptr<GestorTiempoControlable>
+GestorTiempoGeneral::get_gestor_tiempo_controlable(GestorTiempoKey clave) {
+    auto g = gestores[clave];
+    auto gestor = std::dynamic_pointer_cast<GestorTiempoControlable>(g);
+    assert(gestor);
+    return gestor;
+}
