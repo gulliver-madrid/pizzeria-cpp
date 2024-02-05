@@ -15,21 +15,6 @@ namespace tiempo {
 std::string time_to_string(sf::Time time);
 
 ///////////////////////////////////////////
-// Timer
-//////////////////////////////////////////
-
-struct Timer {
-  private:
-    std::optional<sf::Clock> clock;
-    std::optional<sf::Time> finalizacion = std::nullopt;
-    sf::Time obtener_tiempo_transcurrido();
-
-  public:
-    void start(sf::Time finalizacion);
-    bool termino();
-};
-
-///////////////////////////////////////////
 // TiempoPreparacion
 //////////////////////////////////////////
 

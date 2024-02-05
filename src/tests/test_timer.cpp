@@ -8,7 +8,7 @@
 #define EXCEPCION std::bad_optional_access
 #endif
 
-TEST(Timer, TimerNoIniciadoGeneraExcepcionAlTerminarlo) { //
-    Timer t;
+TEST(GestorTimer, GestorTimerNoIniciadoGeneraExcepcionAlTerminarlo) { //
+    GestorTimer t;
     EXPECT_THROW(t.termino(), EXCEPCION);
 }

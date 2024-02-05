@@ -29,27 +29,6 @@ int calcular_porcentaje(const sf::Time &parte, const sf::Time &total) {
 }
 
 ///////////////////////////////////////////
-// Timer
-//////////////////////////////////////////
-
-sf::Time Timer::obtener_tiempo_transcurrido() {
-    assert(clock.has_value());
-    return clock.value().getElapsedTime();
-}
-
-void Timer::start(sf::Time finalizacion_) {
-    assert(finalizacion_ > sf::Time::Zero);
-    assert(!this->finalizacion.has_value());
-    this->finalizacion.emplace(finalizacion_);
-    clock.emplace();
-}
-
-bool Timer::termino() {
-    juego_assert(this->finalizacion.has_value(), "Timer no inicializado");
-    return obtener_tiempo_transcurrido() > finalizacion;
-}
-
-///////////////////////////////////////////
 // TiempoPreparacion
 //////////////////////////////////////////
 
