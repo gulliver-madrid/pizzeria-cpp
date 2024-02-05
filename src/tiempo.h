@@ -66,7 +66,7 @@ struct GestorTimer : public GestorTiempo {
   public:
     void start(sf::Time finalizacion);
     virtual void tick(sf::Time tiempo) override;
-    bool termino();
+    bool termino() const;
 };
 
 enum class TipoGestorTiempo {
@@ -81,7 +81,7 @@ struct GestorTiempoGeneral {
     void anade_gestor(TipoGestorTiempo, std::shared_ptr<GestorTiempo>);
     void tick(sf::Time tiempo);
     std::shared_ptr<GestorTimer> get_timer(TipoGestorTiempo);
-    std::shared_ptr<GestorTimer> get_const_timer(TipoGestorTiempo) const;
+    std::shared_ptr<const GestorTimer> get_const_timer(TipoGestorTiempo) const;
     std::shared_ptr<GestorTiempoControlable>
         get_gestor_tiempo_controlable(TipoGestorTiempo);
 };

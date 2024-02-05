@@ -108,7 +108,7 @@ void GestorTimer::tick(sf::Time transcurrido) {
     _gestor_interno.tick(transcurrido);
 }
 
-bool GestorTimer::termino() {
+bool GestorTimer::termino() const {
     juego_assert(this->finalizacion.has_value(), "Timer no inicializado");
     return obtener_tiempo_transcurrido() > finalizacion;
 }
@@ -136,10 +136,11 @@ GestorTiempoGeneral::get_timer(TipoGestorTiempo clave) {
     assert(gestor);
     return gestor;
 }
-std::shared_ptr<GestorTimer>
+std::shared_ptr<const GestorTimer>
 GestorTiempoGeneral::get_const_timer(TipoGestorTiempo clave) const {
     auto g = gestores.at(clave);
-    auto gestor = std::dynamic_pointer_cast<GestorTimer>(g);
+    const std::shared_ptr<const GestorTimer> gestor =
+        std::dynamic_pointer_cast<GestorTimer>(g);
     assert(gestor);
     return gestor;
 }
