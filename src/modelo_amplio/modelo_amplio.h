@@ -36,5 +36,5 @@ class ModeloAmplio {
     void activar_tiempo_juego();
     void iniciar_espera_antes_resultado();
     void iniciar_espera_entre_niveles();
-    bool termino_timer(GestorTiempoKey) const;
+    bool termino_timer(TipoGestorTiempo) const;
 };

@@ -216,7 +216,7 @@ MotorNivel::MotorNivel(
 
 // Inicializa elementos antes de la ejecucion
 void MotorNivel::setup() {
-    using Key = GestorTiempoKey;
+    using Tipo = TipoGestorTiempo;
     assert(modelo_amplio);
 
     ejecucion_en_proceso =
@@ -224,17 +224,17 @@ void MotorNivel::setup() {
     auto &gtg = modelo_amplio->gestor_tiempo_general;
 
     gtg.anade_gestor(
-        Key::timer_antes_resultado, std::make_shared<GestorTimer>()
+        Tipo::timer_antes_resultado, std::make_shared<GestorTimer>()
     );
 
-    gtg.anade_gestor(Key::timer_fin_nivel, std::make_shared<GestorTimer>());
+    gtg.anade_gestor(Tipo::timer_fin_nivel, std::make_shared<GestorTimer>());
 
     auto gestor_tiempo_real = std::make_shared<GestorTiempoControlable>();
-    gtg.anade_gestor(Key::gestor_tiempo_real, gestor_tiempo_real);
+    gtg.anade_gestor(Tipo::gestor_tiempo_real, gestor_tiempo_real);
     gestor_tiempo_real->activar();
 
     gtg.anade_gestor(
-        Key::gestor_tiempo_juego,
+        Tipo::gestor_tiempo_juego,
         modelo_amplio->modelo_interno.gestor_tiempo_juego
     );
 }
@@ -268,14 +268,15 @@ std::optional<AccionGeneral> MotorNivel::procesar_ciclo() {
     switch (modelo_amplio->get_fase_actual()) {
         case FaseNivel::EsperaAntesDeResultado:
             if (modelo_amplio->termino_timer(
-                    GestorTiempoKey::timer_antes_resultado
+                    TipoGestorTiempo::timer_antes_resultado
                 )) {
                 LOG(info) << "Se debe mostrar el resultado";
                 establecer_fase(FaseNivel::MostrandoResultado);
             }
             break;
         case FaseNivel::MostrandoResultado:
-            if (modelo_amplio->termino_timer(GestorTiempoKey::timer_fin_nivel
+            if (modelo_amplio->termino_timer( //
+                    TipoGestorTiempo::timer_fin_nivel
                 )) {
                 LOG(info) << "Se debe pasar al siguiente nivel";
                 return AccionGeneral::SiguienteNivel;

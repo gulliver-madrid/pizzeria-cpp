@@ -117,7 +117,7 @@ bool GestorTimer::termino() {
 // GestorTiempoGeneral
 //////////////////////////////////////////
 void GestorTiempoGeneral::anade_gestor(
-    GestorTiempoKey clave, std::shared_ptr<GestorTiempo> gestor
+    TipoGestorTiempo clave, std::shared_ptr<GestorTiempo> gestor
 ) {
     assert(!has_key(gestores, clave));
     gestores[clave] = gestor;
@@ -130,14 +130,14 @@ void GestorTiempoGeneral::tick(sf::Time tiempo) {
 }
 
 std::shared_ptr<GestorTimer>
-GestorTiempoGeneral::get_timer(GestorTiempoKey clave) {
+GestorTiempoGeneral::get_timer(TipoGestorTiempo clave) {
     auto g = gestores.at(clave);
     auto gestor = std::dynamic_pointer_cast<GestorTimer>(g);
     assert(gestor);
     return gestor;
 }
 std::shared_ptr<GestorTimer>
-GestorTiempoGeneral::get_const_timer(GestorTiempoKey clave) const {
+GestorTiempoGeneral::get_const_timer(TipoGestorTiempo clave) const {
     auto g = gestores.at(clave);
     auto gestor = std::dynamic_pointer_cast<GestorTimer>(g);
     assert(gestor);
@@ -146,7 +146,7 @@ GestorTiempoGeneral::get_const_timer(GestorTiempoKey clave) const {
 
 std::shared_ptr<GestorTiempoControlable>
 GestorTiempoGeneral::get_gestor_tiempo_controlable( //
-    GestorTiempoKey clave
+    TipoGestorTiempo clave
 ) {
     auto g = gestores.at(clave);
     auto gestor = std::dynamic_pointer_cast<GestorTiempoControlable>(g);
