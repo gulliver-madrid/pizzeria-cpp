@@ -3,30 +3,48 @@
 #include <cassert>
 #include <chrono>
 
-std::string pad_with_zeroes(int n) {
-    assert(n >= 0);
-    if (n > 59) {
-        n = n % 60;
+namespace {
+    std::string pad_with_zeroes(int n) {
+        assert(n >= 0);
+        if (n > 59) {
+            n = n % 60;
+        }
+        auto cadena = std::to_string(n);
+        if (cadena.length() == 1) {
+            cadena.insert(0, "0");
+        }
+        return cadena;
     }
-    auto cadena = std::to_string(n);
-    if (cadena.length() == 1) {
-        cadena.insert(0, "0");
+
+    int calcular_porcentaje(const sf::Time &parte, const sf::Time &total) {
+        return static_cast<int>((parte / total) * 100);
     }
-    return cadena;
-}
+} // namespace
 
-std::string time_to_string(sf::Time time) {
-    int ms = time.asMilliseconds();
-    const int segundos_brutos = ms / 1000;
-    const auto minutos = segundos_brutos / 60;
-    const auto segundos = segundos_brutos % 60;
-    assert(segundos < 60);
-    return pad_with_zeroes(minutos) + ":" + pad_with_zeroes(segundos);
-}
+namespace tiempo {
+    std::string time_to_string(sf::Time time) {
+        int ms = time.asMilliseconds();
+        const int segundos_brutos = ms / 1000;
+        const auto minutos = segundos_brutos / 60;
+        const auto segundos = segundos_brutos % 60;
+        assert(segundos < 60);
+        return pad_with_zeroes(minutos) + ":" + pad_with_zeroes(segundos);
+    }
 
-int calcular_porcentaje(const sf::Time &parte, const sf::Time &total) {
-    return static_cast<int>((parte / total) * 100);
-}
+    /* Devuelve un objeto tiempo que cuenta el tiempo de manera circular por
+     * periodos de 10_000 segundos
+     */
+    sf::Time obtener_tiempo_actual() {
+        auto ahora = std::chrono::system_clock::now();
+        auto duracion = ahora.time_since_epoch();
+        auto ms =
+            std::chrono::duration_cast<std::chrono::milliseconds>(duracion) //
+                .count() %
+            10'000'000;
+        const static auto inicial = sf::milliseconds((int)ms);
+        return sf::milliseconds((int)ms) - inicial;
+    };
+} // namespace tiempo
 
 ///////////////////////////////////////////
 // TiempoPreparacion
@@ -41,19 +59,6 @@ int TiempoPreparacion::obtener_porcentaje(const sf::Time &tiempo_actual) const {
     }
     assert(porcentaje >= 0);
     return porcentaje;
-};
-
-/* Devuelve un objeto tiempo que cuenta el tiempo de manera circular por
- * periodos de 10_000 segundos
- */
-sf::Time tiempo::obtener_tiempo_actual() {
-    auto ahora = std::chrono::system_clock::now();
-    auto duracion = ahora.time_since_epoch();
-    auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(duracion) //
-                  .count() %
-              10'000'000;
-    const static auto inicial = sf::milliseconds((int)ms);
-    return sf::milliseconds((int)ms) - inicial;
 };
 
 ///////////////////////////////////////////

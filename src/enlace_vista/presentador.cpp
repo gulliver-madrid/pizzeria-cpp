@@ -107,10 +107,10 @@ namespace presentador {
         return VistaBarraEstado{
             cadena
                 .interpolar_por_clave(
-                    "tiempo_juego", time_to_string(tiempo_juego)
+                    "tiempo_juego", tiempo::time_to_string(tiempo_juego)
                 )
                 .interpolar_por_clave(
-                    "tiempo_real", time_to_string(tiempo_real)
+                    "tiempo_real", tiempo::time_to_string(tiempo_real)
                 )
         };
     }

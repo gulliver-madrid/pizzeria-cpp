@@ -10,9 +10,8 @@
 
 namespace tiempo {
     sf::Time obtener_tiempo_actual();
-}
-
-std::string time_to_string(sf::Time time);
+    std::string time_to_string(sf::Time time);
+} // namespace tiempo
 
 ///////////////////////////////////////////
 // TiempoPreparacion
