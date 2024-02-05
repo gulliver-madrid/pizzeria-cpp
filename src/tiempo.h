@@ -33,10 +33,10 @@ struct GestorTiempo {
 };
 
 ///////////////////////////////////////////
-// GestorTiempoJuego
+// GestorTiempoControlable
 //////////////////////////////////////////
 
-struct GestorTiempoJuego : public GestorTiempo {
+struct GestorTiempoControlable : public GestorTiempo {
     // Debe activarse para poder utilizarlo
 
   private:
@@ -60,7 +60,7 @@ struct GestorTiempoJuego : public GestorTiempo {
 
 struct GestorTimer : public GestorTiempo {
   private:
-    GestorTiempoJuego _gestor_interno;
+    GestorTiempoControlable _gestor_interno;
     std::optional<sf::Time> finalizacion = std::nullopt;
     virtual sf::Time obtener_tiempo_transcurrido() const override;
 

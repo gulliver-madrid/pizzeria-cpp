@@ -6,7 +6,7 @@
 
 class ModeloInterno {
   public:
-    std::shared_ptr<GestorTiempoJuego> gestor_tiempo_juego;
+    std::shared_ptr<GestorTiempoControlable> gestor_tiempo_juego;
     modelo::ControlPizzas control_pizzas;
     Encargos encargos;
 

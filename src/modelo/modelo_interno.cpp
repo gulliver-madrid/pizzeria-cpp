@@ -9,7 +9,7 @@ ModeloInterno::ModeloInterno(const std::optional<DatosModeloInterno> datos_nivel
         control_pizzas.add_pedidos(datos_nivel->pedidos);
     }
     assert(encargos.total() == 0);
-    gestor_tiempo_juego = std::make_shared<GestorTiempoJuego>();
+    gestor_tiempo_juego = std::make_shared<GestorTiempoControlable>();
     gestor_tiempo_juego->reiniciar();
 }
 

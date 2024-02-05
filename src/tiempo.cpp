@@ -60,25 +60,25 @@ sf::Time tiempo::obtener_tiempo_actual() {
 // GestorTiempoJuego
 //////////////////////////////////////////
 
-sf::Time GestorTiempoJuego::obtener_tiempo_transcurrido() const {
+sf::Time GestorTiempoControlable::obtener_tiempo_transcurrido() const {
     return _actual;
 }
 
-void GestorTiempoJuego::tick(sf::Time transcurrido) {
+void GestorTiempoControlable::tick(sf::Time transcurrido) {
     if (en_pausa)
         return;
     _actual = _actual + transcurrido;
 }
-void GestorTiempoJuego::activar() {
+void GestorTiempoControlable::activar() {
     assert(en_pausa);
     en_pausa = false;
 }
 
-void GestorTiempoJuego::pausar() {
+void GestorTiempoControlable::pausar() {
     assert(!en_pausa);
     en_pausa = true;
 }
-void GestorTiempoJuego::reiniciar() {
+void GestorTiempoControlable::reiniciar() {
     en_pausa = true;
     _actual = sf::Time::Zero;
 }

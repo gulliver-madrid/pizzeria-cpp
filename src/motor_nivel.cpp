@@ -15,12 +15,12 @@
 struct EjecucionEnProceso {
     std::optional<ModeloAmplio> &modelo_amplio;
     std::shared_ptr<EnlaceVista> enlace_vista;
-    std::shared_ptr<GestorTiempoJuego> gestor_tiempo_juego;
+    std::shared_ptr<GestorTiempoControlable> gestor_tiempo_juego;
     std::shared_ptr<GestorTimer> timer_espera_antes_de_resultado;
     EjecucionEnProceso(
         std::optional<ModeloAmplio> &modelo_amplio_,
         std::shared_ptr<EnlaceVista> enlace_vista_,
-        std::shared_ptr<GestorTiempoJuego> gestor_tiempo_juego_,
+        std::shared_ptr<GestorTiempoControlable> gestor_tiempo_juego_,
         std::shared_ptr<GestorTimer> timer_espera_antes_de_resultado_
     )
         : modelo_amplio(modelo_amplio_), enlace_vista(enlace_vista_),
