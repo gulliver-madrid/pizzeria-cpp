@@ -78,5 +78,6 @@ enum class GestorTiempoKey {
 
 struct GestorTiempoGeneral {
     std::map<GestorTiempoKey, std::shared_ptr<GestorTiempo>> gestores;
+    void anade_gestor(GestorTiempoKey, std::shared_ptr<GestorTiempo>);
     void tick(sf::Time tiempo);
 };

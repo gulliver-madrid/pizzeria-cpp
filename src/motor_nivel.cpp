@@ -231,32 +231,28 @@ MotorNivel::MotorNivel(
 
 // Inicializa elementos antes de la ejecucion
 void MotorNivel::setup() {
+    using Key = GestorTiempoKey;
     assert(modelo_amplio);
-    auto &gestor_tiempo_juego =
+    auto gestor_tiempo_juego =
         modelo_amplio->modelo_interno.gestor_tiempo_juego;
-    timer_espera_antes_de_resultado = std::make_shared<GestorTimer>();
-    assert(timer_espera_antes_de_resultado);
+    timer_antes_resultado = std::make_shared<GestorTimer>();
+    assert(timer_antes_resultado);
     ejecucion_en_proceso = std::make_shared<EjecucionEnProceso>(
-        modelo_amplio, enlace_vista, gestor_tiempo_juego,
-        timer_espera_antes_de_resultado
+        modelo_amplio, enlace_vista, gestor_tiempo_juego, timer_antes_resultado
     );
-    // TODO: add method anade_gestor a gestor_tiempo_general
-    modelo_amplio->gestor_tiempo_general
-        .gestores[GestorTiempoKey::timer_espera_antes_de_resultado] =
-        timer_espera_antes_de_resultado;
+    auto &gtg = modelo_amplio->gestor_tiempo_general;
 
-    modelo_amplio->gestor_tiempo_general
-        .gestores[GestorTiempoKey::timer_fin_nivel] =
-        std::make_shared<GestorTimer>();
+    gtg.anade_gestor(
+        Key::timer_espera_antes_de_resultado, timer_antes_resultado
+    );
+
+    gtg.anade_gestor(Key::timer_fin_nivel, std::make_shared<GestorTimer>());
 
     auto gestor_tiempo_real = std::make_shared<GestorTiempoControlable>();
-    modelo_amplio->gestor_tiempo_general
-        .gestores[GestorTiempoKey::gestor_tiempo_real] = gestor_tiempo_real;
+    gtg.anade_gestor(Key::gestor_tiempo_real, gestor_tiempo_real);
     gestor_tiempo_real->activar();
 
-    modelo_amplio->gestor_tiempo_general
-        .gestores[GestorTiempoKey::gestor_tiempo_juego] =
-        ejecucion_en_proceso->gestor_tiempo_juego;
+    gtg.anade_gestor(Key::gestor_tiempo_juego, gestor_tiempo_juego);
 }
 
 std::optional<AccionGeneral> MotorNivel::aplica_comando(const Comando &comando
@@ -292,7 +288,7 @@ std::optional<AccionGeneral> MotorNivel::procesar_ciclo() {
     // En funcion de la fase actual (no necesariamente recien iniciada)
     switch (modelo_amplio->get_fase_actual()) {
         case FaseNivel::EsperaAntesDeResultado:
-            if (timer_espera_antes_de_resultado->termino()) {
+            if (timer_antes_resultado->termino()) {
                 LOG(info) << "Se debe mostrar el resultado";
                 establecer_fase(FaseNivel::MostrandoResultado);
             }

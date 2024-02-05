@@ -1,5 +1,6 @@
 #include "tiempo.h"
 #include "juego_assert.h"
+#include "templates/helpers.h"
 #include <cassert>
 #include <chrono>
 
@@ -115,6 +116,12 @@ bool GestorTimer::termino() {
 ///////////////////////////////////////////
 // GestorTiempoGeneral
 //////////////////////////////////////////
+void GestorTiempoGeneral::anade_gestor(
+    GestorTiempoKey clave, std::shared_ptr<GestorTiempo> gestor
+) {
+    assert(!has_key(gestores, clave));
+    gestores[clave] = gestor;
+}
 
 void GestorTiempoGeneral::tick(sf::Time tiempo) {
     for (auto &[_, gestor] : gestores) {

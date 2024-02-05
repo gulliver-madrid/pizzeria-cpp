@@ -30,7 +30,7 @@ class MotorNivel {
     std::optional<ModeloAmplio> modelo_amplio;
     std::shared_ptr<ControladorClicks> controlador_clicks;
     std::shared_ptr<EjecucionEnProceso> ejecucion_en_proceso;
-    std::shared_ptr<GestorTimer> timer_espera_antes_de_resultado;
+    std::shared_ptr<GestorTimer> timer_antes_resultado;
     const std::shared_ptr<DatosNivel> datos_nivel;
     const std::shared_ptr<Grid> grid;
     sf::Sound sound;

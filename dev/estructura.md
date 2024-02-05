@@ -269,6 +269,7 @@
 - tiempo.cpp:
     - tiempo.h
     - juego_assert.h
+    - templates/helpers.h
 
 - tiempo.h:
     - templates/comparable.h
