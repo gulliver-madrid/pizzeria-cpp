@@ -29,17 +29,14 @@ namespace presentador {
         /* Crea una string representando un pedido. Una linea por tipo de pizza,
          * con el formato TipoPizza: actual/objetivo
          */
-        std::string pedido_to_string(const Pedido &pedido) {
-            std::string s;
+        std::vector<std::string> pedido_to_strings(const Pedido &pedido) {
+            std::vector<std::string> s;
             size_t ultimo = pedido.contenido.size() - 1;
             size_t i = 0;
             for (auto &[tp, pedido_tp] : pedido.contenido) {
-                s.append(
-                    crea_linea_completitud_pizza(
-                        tp, pedido_tp.servido, pedido_tp.objetivo
-                    ) +
-                    ((i < ultimo) ? "\n" : "")
-                );
+                s.push_back(crea_linea_completitud_pizza(
+                    tp, pedido_tp.servido, pedido_tp.objetivo
+                ));
                 i++;
             }
             return s;
@@ -48,7 +45,7 @@ namespace presentador {
          * numero de items.
          */
         VistaPedido pedido_to_vista(const Pedido &pedido) {
-            std::string s = pedido_to_string(pedido);
+            std::vector<std::string> s = pedido_to_strings(pedido);
             const size_t num_items = pedido.contenido.size();
             return {s, num_items};
         }

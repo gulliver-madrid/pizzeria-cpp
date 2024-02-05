@@ -59,7 +59,7 @@ namespace {
         // Creamos las tarjetas de los pedidos
         tarjetas.clear();
         for (auto &vista_pedido : presentacion_pedidos) {
-            const auto texto = vista_pedido.cadena_completa;
+            const auto texto = unir_cadenas(vista_pedido.cadenas, "\n");
             const size_t num_items = vista_pedido.num_items;
             const auto tarjeta = std::make_shared<TarjetaPedido>(
                 construye_tarjeta_pedido(texto, num_items)

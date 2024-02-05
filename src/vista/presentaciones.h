@@ -14,6 +14,6 @@ struct VistaBarraEstado {
 };
 
 struct VistaPedido {
-    std::string cadena_completa;
+    std::vector<std::string> cadenas;
     size_t num_items;
 };

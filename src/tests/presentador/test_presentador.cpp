@@ -19,8 +19,8 @@ TEST(Presentador, PedidoToString) {
         {{TipoPizza::Margarita, {2, 5}}, {TipoPizza::Pepperoni, {1, 4}}}
     );
     Pedido pedido(std::move(contenido));
-    auto result = presentador::impl::pedido_to_string(pedido);
-    ASSERT_EQ(result, "Margarita: 2/5\nPepperoni: 1/4");
+    auto result = presentador::impl::pedido_to_strings(pedido);
+    ASSERT_EQ(unir_cadenas(result, "\n"), "Margarita: 2/5\nPepperoni: 1/4");
 }
 
 TEST(Presentador, ContadoresToPreparadasString) {

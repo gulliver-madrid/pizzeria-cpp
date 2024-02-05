@@ -12,7 +12,7 @@ namespace presentador {
         std::string crea_linea_completitud_pizza(
             const dominio::TipoPizza tp, UInt parte, UInt todo
         );
-        std::string pedido_to_string(const Pedido &pedido);
+        std::vector<std::string> pedido_to_strings(const Pedido &pedido);
     } // namespace impl
 
     PresentacionPedidos crear_presentacion_pedidos( //
