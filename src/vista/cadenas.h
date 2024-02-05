@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <vector>
 
 #define A_ACUTE "\u00E1"
 #define E_ACUTE "\u00E9"
@@ -27,3 +28,7 @@ struct CadenaJuego {
     // Operador para convertir implicitamente a std::string
     operator std::string() const { return value; }
 };
+
+std::string unir_cadenas(
+    const std::vector<std::string> &strings, const std::string &separator //
+);

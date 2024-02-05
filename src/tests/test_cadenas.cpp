@@ -14,3 +14,7 @@ TEST(Cadenas, Interpolar) { //
         std::string(N_TILDE) + START_EXCLAMATION + "!" + START_QUESTION + "?"
     );
 }
+
+TEST(Cadenas, UnirCadenas) { //
+    EXPECT_EQ(unir_cadenas({"hola", "mundo"}, " "), "hola mundo");
+}

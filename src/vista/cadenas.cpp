@@ -50,3 +50,16 @@ CadenaJuego &CadenaJuego::interpolar_por_clave(
     }
     return *this;
 }
+
+std::string unir_cadenas(
+    const std::vector<std::string> &strings, const std::string &separator //
+) {
+    std::string result;
+    for (size_t i = 0; i < strings.size(); ++i) {
+        result += strings[i];
+        if (i < strings.size() - 1) {
+            result += separator;
+        }
+    }
+    return result;
+}
