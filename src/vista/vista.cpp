@@ -110,16 +110,14 @@ void Vista::set_presentacion_vista(
 /*
  * Actualiza el interfaz grafico
  */
-void Vista::actualizar_interfaz_grafico(
-    bool mostrando_grid, //                                            //
-    const std::optional<PresentacionPreparacionPizzas> &info_preparacion, //
-    const std::optional<PizzasToStrings> &info_preparadas,                //
-    const std::optional<const PresentacionPedidos> &info_pedidos,         //
-    const VistaBarraEstado &info_barra_estado                             //
+void Vista::actualizar_interfaz_grafico(const PresentacionGeneral &presentacion
 ) {
-    _mostrando_grid = mostrando_grid;
-    _actualizar_vista_paneles(info_preparacion, info_preparadas, info_pedidos);
-    _actualizar_etiquetas(info_barra_estado);
+    _mostrando_grid = presentacion.mostrando_grid;
+    _actualizar_vista_paneles(
+        presentacion.preparacion_pizzas, presentacion.preparadas,
+        presentacion.pedidos
+    );
+    _actualizar_etiquetas(presentacion.barra_estado);
 }
 
 void Vista::mostrar_elementos_fase_activa() {

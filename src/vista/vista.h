@@ -22,6 +22,14 @@ struct ActivacionBotones {
     std::map<dominio::TipoPizza, bool> despachar;
 };
 
+struct PresentacionGeneral {
+    bool mostrando_grid;
+    std::optional<PresentacionPreparacionPizzas> &preparacion_pizzas;
+    std::optional<PizzasToStrings> &preparadas;
+    std::optional<const PresentacionPedidos> &pedidos;
+    VistaBarraEstado &barra_estado;
+};
+
 class VistaObservable {
   public:
     virtual std::shared_ptr<PanelesObservables> get_paneles() const = 0;
@@ -62,13 +70,7 @@ class Vista : public ComponenteConFont, public VistaObservable {
         std::shared_ptr<PresentacionVista> //
     );
 
-    void actualizar_interfaz_grafico(
-        bool mostrando_grid,                                   //
-        const std::optional<PresentacionPreparacionPizzas> &,  //
-        const std::optional<PizzasToStrings> &info_preparadas, //
-        const std::optional<const PresentacionPedidos> &,      //
-        const VistaBarraEstado &info_barra_estado              //
-    );
+    void actualizar_interfaz_grafico(const PresentacionGeneral &);
 
     void mostrar_elementos_fase_activa();
     void esconder_botones_gestion_pizzeria();

@@ -150,12 +150,13 @@ void EnlaceVista::actualizar_interfaz_grafico(
     const auto tiempo_juego =
         modelo_amplio.modelo_interno.obtener_tiempo_juego();
 
-    const auto info_barra_estado =
+    auto info_barra_estado =
         presentador::crea_vista_barra_estado(tiempo_real, tiempo_juego);
-    vista->actualizar_interfaz_grafico(
+    PresentacionGeneral presentacion{
         mostrando_grid, info_preparacion, info_preparadas, info_pedidos,
         info_barra_estado
-    );
+    };
+    vista->actualizar_interfaz_grafico(presentacion);
 }
 
 PresentacionVista EnlaceVista::get_presentacion_vista() const { //
