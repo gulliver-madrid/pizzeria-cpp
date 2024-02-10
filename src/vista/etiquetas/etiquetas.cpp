@@ -42,6 +42,7 @@ void EtiquetasGenerales::setup(
 void EtiquetasGenerales::set_presentacion_vista(
     std::shared_ptr<PresentacionVista> presentacion_vista
 ) {
+    assert(presentacion_vista);
     info->set_presentacion_vista(presentacion_vista);
 }
 

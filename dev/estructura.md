@@ -217,9 +217,6 @@
     - modelo/modelo_interno.h
     - vista/vista.h
 
-- tests/presentador/test_enlace_vista.cpp:
-    - enlace_vista/enlace_vista.h
-
 - tests/presentador/test_presentador.cpp:
     - enlace_vista/presentador.h
     - modelo/datos_modelo_interno.h
@@ -255,6 +252,9 @@
     - setup_juego.h
     - vista/basicos_vista.h
     - vista/paneles.h
+    - vista/vista.h
+
+- tests/test_vista.cpp:
     - vista/vista.h
 
 - textos.cpp:

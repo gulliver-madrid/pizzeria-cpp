@@ -73,48 +73,32 @@ ActivacionBotones enlace_vista_impl::obtener_activacion_botones( //
 }
 
 ///////////////////////////////////////////
-// EnlaceVista (private)
-//////////////////////////////////////////
-
-void EnlaceVista::cambiar_visibilidad_instrucciones(bool nueva) {
-    presentacion_vista->visibilidad.instrucciones = nueva;
-}
-void EnlaceVista::cambiar_visibilidad_resultado(bool nueva) {
-    presentacion_vista->visibilidad.resultado = nueva;
-}
-
-///////////////////////////////////////////
 // EnlaceVista (public)
 //////////////////////////////////////////
 
-EnlaceVista::EnlaceVista() {
-    presentacion_vista = std::make_shared<PresentacionVista>();
-}
+EnlaceVista::EnlaceVista() {}
 
-void EnlaceVista::set_vista(std::shared_ptr<Vista> vista_) {
-    vista = vista_;
-    vista->set_presentacion_vista(presentacion_vista);
-}
+void EnlaceVista::set_vista(std::shared_ptr<Vista> vista_) { vista = vista_; }
 
 void EnlaceVista::on_cambio_de_fase(FaseNivel nueva_fase) {
     LOG(info) << "Cambio de fase en EnlaceVista: "
               << static_cast<int>(nueva_fase);
     switch (nueva_fase) {
         case FaseNivel::MostrandoInstrucciones:
-            cambiar_visibilidad_instrucciones(true);
+            vista->cambiar_visibilidad_instrucciones(true);
             break;
         case FaseNivel::Activa:
-            cambiar_visibilidad_instrucciones(false);
+            vista->cambiar_visibilidad_instrucciones(false);
             vista->mostrar_elementos_fase_activa();
             break;
         case FaseNivel::EsperaAntesDeResultado:
             vista->esconder_botones_gestion_pizzeria();
             break;
         case FaseNivel::MostrandoResultado:
-            cambiar_visibilidad_resultado(true);
+            vista->cambiar_visibilidad_resultado(true);
             break;
         case FaseNivel::Reiniciando:
-            cambiar_visibilidad_resultado(false);
+            vista->cambiar_visibilidad_resultado(false);
             break;
         default:
             break;
@@ -157,10 +141,6 @@ void EnlaceVista::actualizar_interfaz_grafico(
         info_barra_estado
     };
     vista->actualizar_interfaz_grafico(presentacion);
-}
-
-PresentacionVista EnlaceVista::get_presentacion_vista() const { //
-    return *presentacion_vista;
 }
 
 const std::shared_ptr<const BotonesApp> EnlaceVista::get_botones() const {

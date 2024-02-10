@@ -66,18 +66,17 @@ class Vista : public ComponenteConFont, public VistaObservable {
         const std::string &instrucciones,            //
         const NumNivelOpcional &                     //
     );
-    void set_presentacion_vista(           //
-        std::shared_ptr<PresentacionVista> //
-    );
 
     void actualizar_interfaz_grafico(const PresentacionGeneral &);
-
+    void cambiar_visibilidad_instrucciones(bool);
+    void cambiar_visibilidad_resultado(bool);
     void mostrar_elementos_fase_activa();
     void esconder_botones_gestion_pizzeria();
     void activar_botones_condicionalmente(
         const ActivacionBotones &activacion_botones //
     );
 
+    std::shared_ptr<const PresentacionVista> get_presentacion_vista() const;
     virtual std::shared_ptr<PanelesObservables> get_paneles() const override;
 
     virtual void draw(sf::RenderTarget &, sf::RenderStates) const override;

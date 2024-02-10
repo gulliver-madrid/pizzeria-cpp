@@ -107,9 +107,9 @@ std::shared_ptr<EnlaceVista> MotorNivel::_crear_enlace_vista( //
         assert(globales->font);
         font.set_pointer(globales->font);
     }
-    LOG(info) << "Creando vista" << std::endl;
+    LOG(info) << "Antes de crear vista";
     const auto vista_ptr = std::make_shared<Vista>();
-    LOG(info) << "Vista creada" << std::endl;
+    LOG(info) << "Vista creada";
     std::string instrucciones;
     if (datos_nivel == nullptr) {
         instrucciones = "No hay instrucciones";
@@ -123,7 +123,7 @@ std::shared_ptr<EnlaceVista> MotorNivel::_crear_enlace_vista( //
         instrucciones,                          //
         num_nivel                               //
     );
-    LOG(info) << "Vista inicializada" << std::endl;
+    LOG(info) << "Vista inicializada";
     auto enlace_vista_ = std::make_shared<EnlaceVista>();
     enlace_vista_->set_vista(vista_ptr);
     return enlace_vista_;
@@ -204,13 +204,13 @@ MotorNivel::MotorNivel(
         modelo_amplio.emplace();
     };
     assert(modelo_amplio);
-    LOG(info) << "modelo amplio creado" << std::endl;
+    LOG(info) << "modelo amplio creado";
     assert(modelo_amplio->establecido);
-    LOG(info) << "modelo amplio establecido" << std::endl;
+    LOG(info) << "modelo amplio establecido";
     auto &control_pizzas = modelo_amplio->modelo_interno.control_pizzas;
-    LOG(info) << "tenemos control piezas" << std::endl;
+    LOG(info) << "control piezas disponible para enlace_vista";
     enlace_vista = _crear_enlace_vista(control_pizzas);
-    LOG(info) << "enlace_vista creado" << std::endl;
+    LOG(info) << "enlace_vista creado";
     modelo_amplio->observadores_fase.push_back(enlace_vista);
 }
 

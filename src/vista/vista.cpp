@@ -65,7 +65,11 @@ void Vista::_actualizar_vista_paneles(
 // Vista (public)
 //////////////////////////////////////////
 
-Vista::Vista() {}
+Vista::Vista() {
+    LOG(info) << "start constructor de Vista";
+    presentacion_vista = std::make_shared<PresentacionVista>();
+    LOG(info) << "end constructor de vista";
+}
 
 void Vista::setup(
     std::shared_ptr<Grid> grid_,                 //
@@ -88,6 +92,7 @@ void Vista::setup(
         instrucciones, //
         num_nivel      //
     );
+    etiquetas->set_presentacion_vista(presentacion_vista);
     add_child(botones);
     add_child(paneles);
     add_child(etiquetas);
@@ -98,13 +103,6 @@ void Vista::setup(
     botones->generales.reiniciar->visible = true;
     botones->generales.salir->visible = true;
     botones->empezar->visible = true;
-}
-
-void Vista::set_presentacion_vista(
-    std::shared_ptr<PresentacionVista> presentacion_vista_ //
-) {
-    this->presentacion_vista = presentacion_vista_;
-    etiquetas->set_presentacion_vista(presentacion_vista);
 }
 
 /*
@@ -118,6 +116,13 @@ void Vista::actualizar_interfaz_grafico(const PresentacionGeneral &presentacion
         presentacion.pedidos
     );
     _actualizar_etiquetas(presentacion.barra_estado);
+}
+
+void Vista::cambiar_visibilidad_instrucciones(bool nueva) {
+    presentacion_vista->visibilidad.instrucciones = nueva;
+}
+void Vista::cambiar_visibilidad_resultado(bool nueva) {
+    presentacion_vista->visibilidad.resultado = nueva;
 }
 
 void Vista::mostrar_elementos_fase_activa() {
@@ -139,6 +144,11 @@ void Vista::activar_botones_condicionalmente(
     for (auto &[_, boton] : botones->encargar) {
         boton->activacion_condicional(activacion_botones.encargar);
     }
+}
+
+std::shared_ptr<const PresentacionVista>
+Vista::get_presentacion_vista() const { //
+    return presentacion_vista;
 }
 
 std::shared_ptr<PanelesObservables> Vista::get_paneles() const { //

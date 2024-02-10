@@ -24,11 +24,7 @@ namespace enlace_vista_impl {
 class EnlaceVista : public ObservadorFase {
     // TODO: implementar los metodos que faltan
   private:
-    std::shared_ptr<PresentacionVista> presentacion_vista;
     std::shared_ptr<Vista> vista;
-
-    void cambiar_visibilidad_instrucciones(bool);
-    void cambiar_visibilidad_resultado(bool);
 
   public:
     EnlaceVista();
@@ -36,7 +32,7 @@ class EnlaceVista : public ObservadorFase {
     void on_cambio_de_fase(FaseNivel);
     void esconder_paneles() const;
     void actualizar_interfaz_grafico(const ModeloAmplio &);
-    PresentacionVista get_presentacion_vista() const;
+
     const std::shared_ptr<const BotonesApp> get_botones() const;
     std::shared_ptr<VistaObservable> get_vista() const;
     void dibujar_vista(sf::RenderTarget &);
