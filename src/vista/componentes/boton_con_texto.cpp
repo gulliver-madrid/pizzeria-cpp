@@ -27,15 +27,18 @@ namespace medidas {
  */
 struct Posicionamiento {
   private:
-    float _obtener_pos_abs_x(float ancho_forma) const;
+    float _obtener_pos_abs_x(
+        const float ancho_forma, const sf::Vector2f &pos_relativa
+    ) const;
 
   public:
     sf::FloatRect contenedor;
     sf::Vector2f posicion_relativa;
     Align alineamiento = Align::Left;
 
-    std::pair<sf::Vector2f, sf::Vector2f>
-    calcular_posicion_absoluta(float escala, float ancho_forma) const;
+    std::pair<sf::Vector2f, sf::Vector2f> calcular_posicion_absoluta(
+        float escala, float ancho_forma, sf::Vector2f &pos_relativa
+    ) const;
 };
 
 ///////////////////////////////////////////
@@ -43,16 +46,18 @@ struct Posicionamiento {
 //////////////////////////////////////////
 
 /** Devuelve la posicion absoluta del lado izquierdo del elemento UI */
-float Posicionamiento::_obtener_pos_abs_x(const float ancho_forma) const {
+float Posicionamiento::_obtener_pos_abs_x(
+    const float ancho_forma, const sf::Vector2f &pos_relativa
+) const {
     switch (alineamiento) {
         case Align::Left:
-            return contenedor.left + posicion_relativa.x;
+            return contenedor.left + pos_relativa.x;
         case Align::Right:
             {
                 // clang-format off
                 // Aqui la posicion relativa es desde el lado derecho del padre
                 const auto contenedor_derecha = contenedor.left + contenedor.width;
-                const auto pos_abs_derecha = contenedor_derecha + posicion_relativa.x;
+                const auto pos_abs_derecha = contenedor_derecha + pos_relativa.x;
                 return pos_abs_derecha - ancho_forma;
                 // clang-format on
             }
@@ -75,12 +80,12 @@ float Posicionamiento::_obtener_pos_abs_x(const float ancho_forma) const {
  */
 std::pair<sf::Vector2f, sf::Vector2f>
 Posicionamiento::calcular_posicion_absoluta(
-    const float escala, const float ancho_forma
+    const float escala, const float ancho_forma, sf::Vector2f &pos_relativa
 ) const {
     const auto margen = medidas::MARGEN_BOTON * (escala * escala);
     const auto margen_corregido = margen * 0.7f;
-    const auto x = _obtener_pos_abs_x(ancho_forma);
-    const auto y = contenedor.getPosition().y + posicion_relativa.y;
+    const auto x = _obtener_pos_abs_x(ancho_forma, pos_relativa);
+    const auto y = contenedor.getPosition().y + pos_relativa.y;
     // Ajustamos para evitar un margen excesivo arriba y a la izquierda
     return {
         sf::Vector2f(x, y),
@@ -124,7 +129,8 @@ void BotonConTexto::_asignar_id() {
 void BotonConTexto::_actualizar_posicion_absoluta() {
     const auto [pos_forma, pos_etiqueta] =
         posicionamiento->calcular_posicion_absoluta(
-            _escala, _forma.getGlobalBounds().width
+            _escala, _forma.getGlobalBounds().width,
+            posicionamiento->posicion_relativa
         );
 
     _forma.setPosition(pos_forma);
@@ -206,7 +212,7 @@ BotonConTexto::BotonConTexto(
     float escala                  //
 )
     : BotonConTexto(boton_data, escala) {
-    establecer_posicion(posicion, align);
+    establecer_posicion_relativa(posicion, align);
 };
 
 BotonConTexto &BotonConTexto::operator=(BotonConTexto &&) noexcept = default;
@@ -238,7 +244,7 @@ void BotonConTexto::establecer_contenedor(const sf::FloatRect &rect) {
  * @param posicion Nueva posicion relativa del boton.
  * @param align Alineamiento del boton con respecto a su posicion relativa.
  */
-void BotonConTexto::establecer_posicion(
+void BotonConTexto::establecer_posicion_relativa(
     const sf::Vector2f &posicion, //
     const Align align             //
 ) {

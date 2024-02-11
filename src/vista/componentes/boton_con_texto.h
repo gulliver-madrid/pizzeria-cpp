@@ -69,7 +69,7 @@ class BotonConTexto : public ComponenteConFont {
     void establecer_contenedor(const sf::FloatRect &);
 
     /* Establece la posicion relativa */
-    void establecer_posicion(
+    void establecer_posicion_relativa(
         const sf::Vector2f &posicion, //
         Align align = Align::Left     //
     );

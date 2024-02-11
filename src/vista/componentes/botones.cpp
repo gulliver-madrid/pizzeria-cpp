@@ -39,7 +39,7 @@ void alinear_botones_derecha(
     auto next_pos_x = posicion_inicial.x;
     for (auto &boton : botones) {
         const auto posicion = sf::Vector2f(next_pos_x, posicion_inicial.y);
-        boton->establecer_posicion(posicion, Align::Right);
+        boton->establecer_posicion_relativa(posicion, Align::Right);
         const auto anterior_izquierda = boton->get_rect().left;
         next_pos_x = anterior_izquierda - separacion;
     }
@@ -93,6 +93,6 @@ void colocar_botones_en_vertical(
     size_t i = 0;
     for (auto &boton : botones) {
         const auto posicion = _mover_vertical(pos_inicial, (diferencia * i++));
-        boton->establecer_posicion(posicion);
+        boton->establecer_posicion_relativa(posicion);
     }
 }
