@@ -53,15 +53,17 @@ add_executable(pizzeria
     src/modelo_amplio/aplicador.cpp
     src/modelo_amplio/modelo_amplio.cpp
     src/modelo_amplio/realizador.cpp
-    src/nivel.cpp
     src/motor_nivel.cpp
-    src/shared/font.cpp
+    src/nivel.cpp
     src/setup_juego.cpp
+    src/shared/font.cpp
+    src/shared/log_init.cpp
     src/textos.cpp
     src/tiempo.cpp
-    src/shared/log_init.cpp
     src/vista/barras_progreso.cpp
+    src/vista/basicos_vista.cpp
     src/vista/botones/botones_app.cpp
+    src/vista/botones/botones_generales.cpp
     src/vista/botones/botones_despachar.cpp
     src/vista/botones/botones_encargar.cpp
     src/vista/cadenas.cpp
@@ -80,7 +82,6 @@ add_executable(pizzeria
     src/vista/grid.cpp
     src/vista/paneles.cpp
     src/vista/vista.cpp
-    src/vista/basicos_vista.cpp
     src/demos/boost_log.cpp
     src/demos/demo_nivel.cpp
     src/demos/map.cpp
@@ -147,15 +148,17 @@ add_executable(
     src/modelo_amplio/aplicador.cpp
     src/modelo_amplio/modelo_amplio.cpp
     src/modelo_amplio/realizador.cpp
-    src/nivel.cpp
     src/motor_nivel.cpp
+    src/nivel.cpp
     src/setup_juego.cpp
     src/shared/font.cpp
+    src/shared/log_init.cpp
     src/textos.cpp
     src/tiempo.cpp
-    src/shared/log_init.cpp
     src/vista/barras_progreso.cpp
+    src/vista/basicos_vista.cpp
     src/vista/botones/botones_app.cpp
+    src/vista/botones/botones_generales.cpp
     src/vista/botones/botones_despachar.cpp
     src/vista/botones/botones_encargar.cpp
     src/vista/cadenas.cpp
@@ -174,7 +177,6 @@ add_executable(
     src/vista/grid.cpp
     src/vista/paneles.cpp
     src/vista/vista.cpp
-    src/vista/basicos_vista.cpp
     src/demos/boost_log.cpp
     src/demos/demo_nivel.cpp
     src/demos/map.cpp

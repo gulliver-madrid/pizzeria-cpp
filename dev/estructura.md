@@ -300,6 +300,7 @@
 
 - vista/botones/botones_app.h:
     - modelo/dominio.h
+    - vista/botones/botones_generales.h
     - vista/componentes/componente.h
     - vista/vista_shared.h
 
@@ -325,6 +326,14 @@
     - vista/componentes/botones.h
 
 - vista/botones/botones_encargar.h:
+    - vista/vista_shared.h
+
+- vista/botones/botones_generales.cpp:
+    - vista/botones/botones_generales.h
+    - vista/basicos_vista.h
+    - vista/componentes/botones.h
+
+- vista/botones/botones_generales.h:
     - vista/vista_shared.h
 
 - vista/cadenas.cpp:
