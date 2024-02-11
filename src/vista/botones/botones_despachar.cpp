@@ -38,13 +38,12 @@ crear_botones_despachar(const dominio::TiposDePizza &tp_disponibles //
         );
         botones.insert(std::make_pair(tp, boton));
         assert(has_key(botones, tp));
-        botones.at(tp)->establecer_contenedor(rect_panel);
         ordenados.push_back(botones.at(tp));
     }
 
     // Posiciona los botones
     colocar_botones_en_vertical(
-        ordenados, pos_inicial_relativa_al_panel, dif_vertical
+        ordenados, pos_inicial_relativa_al_panel, dif_vertical, rect_panel
     );
     return botones;
 }

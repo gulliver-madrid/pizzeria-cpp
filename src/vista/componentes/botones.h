@@ -19,5 +19,6 @@ Botones crear_botones_alineados_derecha(
 void colocar_botones_en_vertical(
     const std::vector<std::shared_ptr<BotonConTexto>> &botones, //
     const sf::Vector2f &pos_inicial,                            //
-    float diferencia                                            //
+    float diferencia,                                           //
+    const sf::FloatRect &contenedor                             //
 );

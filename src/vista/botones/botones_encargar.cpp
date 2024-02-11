@@ -39,14 +39,13 @@ TipoPizzaToBoton crear_botones_encargar(        //
         const BotonData boton_data = crear_boton_data(tp);
         BotonData data = {boton_data};
         botones[tp] = std::make_shared<BotonConTexto>(data);
-        botones.at(tp)->establecer_contenedor(rect_panel);
         ordenados.push_back(botones.at(tp));
     }
 
     // Posiciona los botones
     const int dif_vertical = medidas::DIF_VERTICAL_BOTONES_ENCARGAR;
     colocar_botones_en_vertical(
-        ordenados, pos_inicial_relativa_al_panel, dif_vertical
+        ordenados, pos_inicial_relativa_al_panel, dif_vertical, rect_panel
     );
     return botones;
 }
