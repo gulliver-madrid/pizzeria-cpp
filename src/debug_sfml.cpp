@@ -8,10 +8,10 @@ namespace debug {
              << rect.getPosition().y << endl;
         cout << name << ".getLocalBounds(): " << rect.getLocalBounds().left
              << ", " << rect.getLocalBounds().top << endl;
-        cout << name << ".getGlobalBounds(): " << rect.getGlobalBounds().left
-             << ", " << rect.getGlobalBounds().top << ", "
-             << rect.getGlobalBounds().width << ", "
-             << rect.getGlobalBounds().height << endl;
+        cout << rect_to_string(
+                    rect.getGlobalBounds(), name + ".getGlobalBounds()"
+                )
+             << endl;
     }
 
     void debug_float_rect(sf::FloatRect rect) {
@@ -23,5 +23,12 @@ namespace debug {
         cout << "width: " << rect.width << endl;
         cout << "height: " << rect.height << endl;
         cout << endl;
+    }
+
+    std::string rect_to_string(const sf::FloatRect &rect, std::string name) {
+        return name + ": left " + std::to_string(rect.left) + ", top " +
+               std::to_string(rect.top) + ", width " +
+               std::to_string(rect.width) + ", height" +
+               std::to_string(rect.height);
     }
 } // namespace debug

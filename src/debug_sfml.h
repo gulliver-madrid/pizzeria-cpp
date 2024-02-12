@@ -11,6 +11,8 @@ namespace sf {
 namespace debug {
     void debug_rect(sf::RectangleShape &rect, std::string name);
     void debug_float_rect(sf::FloatRect rect);
+    std::string
+    rect_to_string(const sf::FloatRect &rect, std::string name = ": ");
 } // namespace debug
 
 /*
