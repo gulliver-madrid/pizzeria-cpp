@@ -37,8 +37,7 @@ crear_botones_despachar(const dominio::TiposDePizza &tp_disponibles //
             boton_data_botones_despachar, escala
         );
         botones.insert(std::make_pair(tp, boton));
-        assert(has_key(botones, tp));
-        ordenados.push_back(botones.at(tp));
+        ordenados.push_back(boton);
     }
 
     // Posiciona los botones

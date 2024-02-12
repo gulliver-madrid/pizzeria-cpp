@@ -16,15 +16,14 @@ TipoPizzaToBoton crear_botones_encargar(        //
     const auto rect_panel = basicos_vista::obtener_rect_panel( //
         IndicePanel::PANEL_ENCARGAR
     );
-    const sf::Vector2f pos_panel = rect_panel.getPosition();
+    const auto pos_panel = rect_panel.getPosition();
     const auto pos_inicial_relativa_al_panel = PosicionRelativa{sf::Vector2f(
         medidas::MARGEN_IZQ_ETIQUETAS, medidas::FILA_CONTENIDO_PANEL
     )};
 
     // Lambda para crear boton data
     const auto crear_boton_data = [](dominio::TipoPizza tp) {
-        assert(has_key(tipo_pizza_to_string, tp));
-        const std::string pizza_str = tipo_pizza_to_string.at(tp);
+        const auto pizza_str = get_value(tipo_pizza_to_string, tp);
         return BotonData{
             pizza_str,                        //
             colores::botones_encargar::FONDO, //
@@ -38,8 +37,9 @@ TipoPizzaToBoton crear_botones_encargar(        //
     for (auto tp : tp_disponibles) {
         const BotonData boton_data = crear_boton_data(tp);
         BotonData data = {boton_data};
-        botones[tp] = std::make_shared<BotonConTexto>(data);
-        ordenados.push_back(botones.at(tp));
+        auto boton = std::make_shared<BotonConTexto>(data);
+        botones[tp] = boton;
+        ordenados.push_back(boton);
     }
 
     // Posiciona los botones

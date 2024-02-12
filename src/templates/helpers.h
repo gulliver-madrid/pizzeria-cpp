@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cassert>
 #include <map>
 
 template <typename Key, typename Value>
@@ -15,6 +16,12 @@ V get_or(const std::map<K, V> &m, const K &key, const V &defaultValue) {
     } else {
         return it->second;
     }
+}
+
+template <typename K, typename V>
+V get_value(const std::map<K, V> &m, const K &key) {
+    assert(has_key(m, key));
+    return m.at(key);
 }
 
 template <typename Contenedor, typename Elemento>
