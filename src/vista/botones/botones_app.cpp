@@ -23,8 +23,8 @@ namespace {
 
     std::shared_ptr<BotonConTexto> _crear_boton_empezar() {
         return std::make_shared<BotonConTexto>(
-            boton_data_empezar,             //
-            medidas::POSICION_BOTON_EMPEZAR //
+            boton_data_empezar,                               //
+            PosicionRelativa{medidas::POSICION_BOTON_EMPEZAR} //
         );
     }
 

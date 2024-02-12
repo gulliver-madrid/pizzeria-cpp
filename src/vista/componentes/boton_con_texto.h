@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../posiciones.h"
 #include "boton_data.h"
 #include "componente.h"
 #include <SFML/Graphics/RectangleShape.hpp>
@@ -17,6 +18,11 @@ struct Posicionamiento;
 enum class Align { //
     Left,
     Right
+};
+
+struct PosicionFormaYEtiqueta {
+    sf::Vector2f posicion_forma;
+    sf::Vector2f posicion_etiqueta;
 };
 
 ///////////////////////////////////////////
@@ -50,10 +56,10 @@ class BotonConTexto : public ComponenteConFont {
         float escala = 1            //
     );
     BotonConTexto(
-        const BotonData boton_data,   //
-        const sf::Vector2f &posicion, //
-        Align align = Align::Left,    //
-        float escala = 1              //
+        const BotonData boton_data,       //
+        const PosicionRelativa &posicion, //
+        Align align = Align::Left,        //
+        float escala = 1                  //
     );
 
     // Eliminamos operadores de copia y asignacion
@@ -70,8 +76,8 @@ class BotonConTexto : public ComponenteConFont {
 
     /* Establece la posicion relativa */
     void establecer_posicion_relativa(
-        const sf::Vector2f &posicion, //
-        Align align = Align::Left     //
+        const PosicionRelativa &posicion, //
+        Align align = Align::Left         //
     );
     bool colisiona(const sf::Vector2i &mousePos) const;
     void activar();

@@ -25,10 +25,10 @@ crear_botones_despachar(const dominio::TiposDePizza &tp_disponibles //
         IndicePanel::PANEL_PREPARADAS
     );
 
-    const auto pos_inicial_relativa_al_panel = sf::Vector2f(
+    const auto pos_inicial_relativa_al_panel = PosicionRelativa{sf::Vector2f(
         medidas::MARGEN_IZQ_ETIQUETAS + (medidas::ANCHO_PANEL * 0.55f),
         (medidas::FILA_CONTENIDO_PANEL + pequeno_ajuste)
-    );
+    )};
 
     // Crea los botones
     std::vector<std::shared_ptr<BotonConTexto>> ordenados;

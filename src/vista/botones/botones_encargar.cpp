@@ -17,9 +17,9 @@ TipoPizzaToBoton crear_botones_encargar(        //
         IndicePanel::PANEL_ENCARGAR
     );
     const sf::Vector2f pos_panel = rect_panel.getPosition();
-    const auto pos_inicial_relativa_al_panel = sf::Vector2f(
+    const auto pos_inicial_relativa_al_panel = PosicionRelativa{sf::Vector2f(
         medidas::MARGEN_IZQ_ETIQUETAS, medidas::FILA_CONTENIDO_PANEL
-    );
+    )};
 
     // Lambda para crear boton data
     const auto crear_boton_data = [](dominio::TipoPizza tp) {

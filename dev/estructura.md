@@ -355,10 +355,12 @@
     - templates/dibujar_elementos.h
     - vista/componentes/crear_etiqueta.h
     - vista/componentes/etiqueta.h
+    - vista/posiciones.h
 
 - vista/componentes/boton_con_texto.h:
     - vista/componentes/boton_data.h
     - vista/componentes/componente.h
+    - vista/posiciones.h
 
 - vista/componentes/boton_data.h:
     - shared/font.h
@@ -366,6 +368,7 @@
 - vista/componentes/botones.cpp:
     - vista/componentes/botones.h
     - vista/componentes/crear_etiqueta.h
+    - vista/posiciones.h
 
 - vista/componentes/botones.h:
     - vista/componentes/boton_con_texto.h

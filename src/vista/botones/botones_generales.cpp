@@ -23,12 +23,45 @@ namespace {
         );
     }
 
+    /*
+     * Crea un grupo de botones en un contenedor.
+     */
+    Botones _crear_botones( //
+        const std::vector<BotonData> &datos_botones,
+        const sf::FloatRect &contenedor
+    ) {
+        // Crea los botones
+        Botones botones;
+        for (auto &dato : datos_botones) {
+            botones.push_back(std::make_shared<BotonConTexto>(dato));
+            botones.back()->establecer_contenedor(contenedor);
+        }
+        return botones;
+    }
+
 } // namespace
+
+/*
+ * Crea una hilera de botones alienados a la derecha. El orden en el que se
+ * reciben los datos y se anaden al vector de botones es de derecha a izquierda.
+ */
+Botones crear_botones_alineados_derecha(
+    const PosicionRelativa &posicion_inicial,    //
+    const std::vector<BotonData> &datos_botones, //
+    const sf::FloatRect &contenedor,             //
+    float separacion                             //
+) {
+    auto botones = _crear_botones(datos_botones, contenedor);
+    alinear_botones_derecha(botones, posicion_inicial, separacion);
+    return botones;
+}
 
 BotonesGenerales crear_botones_generales() {
     const auto pos_derecha = _obtener_pos_dcha_botones_generales();
+    // Aunque es una posicion absoluta, la pasamos como relativa al
+    // rect (0,0)
     auto botones = crear_botones_alineados_derecha(
-        pos_derecha,                                           //
+        PosicionRelativa{pos_derecha},                         //
         datos_botones_generales,                               //
         sf::FloatRect(),                                       //
         medidas::SEPARACION_HORIZONTAL_ENTRE_BOTONES_GENERALES //
@@ -55,6 +88,7 @@ void BotonesGenerales::alinear() {
     const auto separacion =
         medidas::SEPARACION_HORIZONTAL_ENTRE_BOTONES_GENERALES;
     alinear_botones_derecha(
-        {alternar_grid, reiniciar, salir}, pos_derecha, separacion
+        {alternar_grid, reiniciar, salir}, PosicionRelativa{pos_derecha},
+        separacion
     );
 }
