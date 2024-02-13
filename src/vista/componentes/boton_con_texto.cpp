@@ -270,8 +270,16 @@ void BotonConTexto::establecer_posicion_relativa(
 bool BotonConTexto::colisiona(const sf::Vector2i &pos_raton) const {
     if (!visible || !_activo)
         return false;
-    const auto rect_absoluto = _forma.getGlobalBounds();
-    return rect_absoluto.contains(
+    auto rect_boton = _forma.getGlobalBounds();
+    if (usar_posicion_relativa_para_dibujo) {
+        // hay que rectificar la posicion
+        auto desplazamiento = posicionamiento->posicion_absoluta -
+                              posicionamiento->posicion_relativa.valor;
+        rect_boton.left = rect_boton.left + desplazamiento.x;
+        rect_boton.top = rect_boton.top + desplazamiento.y;
+    }
+
+    return rect_boton.contains(
         static_cast<float>(pos_raton.x), static_cast<float>(pos_raton.y)
     );
 }
