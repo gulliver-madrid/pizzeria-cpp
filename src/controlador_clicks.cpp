@@ -4,6 +4,7 @@
 #include "modelo_amplio/modelo_amplio.h"
 #include "vista/botones/botones_app.h"
 
+// TODO: filtrar por paneles
 std::optional<Comando> ControladorClicks::genera_comando(
     const std::function<bool(const std::shared_ptr<BotonConTexto> boton)>
         &pulsado,                                     //
