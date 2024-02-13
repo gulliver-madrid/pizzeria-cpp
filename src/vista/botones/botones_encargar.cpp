@@ -38,6 +38,7 @@ TipoPizzaToBoton crear_botones_encargar(        //
         const BotonData boton_data = crear_boton_data(tp);
         BotonData data = {boton_data};
         auto boton = std::make_shared<BotonConTexto>(data);
+        boton->usar_posicion_relativa_para_dibujo = true;
         botones[tp] = boton;
         ordenados.push_back(boton);
     }

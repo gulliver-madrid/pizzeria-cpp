@@ -8,6 +8,7 @@
 #include "componentes/etiqueta.h"
 #include "etiquetas/etiquetas.h"
 #include "etiquetas/etiquetas_pedidos.h"
+#include <SFML/Graphics/Sprite.hpp>
 #include <cassert>
 
 namespace medidas {
@@ -70,6 +71,10 @@ PanelEncargar::PanelEncargar(
     for (auto [_, btn] : encargar) {
         add_child(btn);
     }
+    render_texture = std::make_shared<sf::RenderTexture>();
+    assert(render_texture->create(
+        forma.getGlobalBounds().width, forma.getGlobalBounds().height
+    ));
 }
 
 void PanelEncargar::draw(
@@ -77,11 +82,21 @@ void PanelEncargar::draw(
     sf::RenderStates states   //
 ) const {
     Panel::draw(target, states);
+    // Dibuja los botones dentro de la render texture
+    assert(render_texture);
+    render_texture->clear(sf::Color::Transparent);
     for (auto &[_, boton_ptr] : encargar) {
         assert(boton_ptr != nullptr);
         boton_ptr->actualizar();
-        target.draw(*boton_ptr);
+        render_texture->draw(*boton_ptr);
     }
+    render_texture->display();
+    // Crea un sprite con la textura de la renderTexture
+    sf::Sprite sprite(render_texture->getTexture());
+    sprite.setPosition(
+        forma.getGlobalBounds().left, forma.getGlobalBounds().top
+    ); // Posiciona el sprite en el render target segun sea necesario
+    target.draw(sprite);
 }
 
 ///////////////////////////////////////////

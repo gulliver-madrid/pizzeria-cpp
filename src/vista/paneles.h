@@ -6,6 +6,7 @@
 #include "componentes/crear_etiqueta.h"
 #include "etiquetas/etiquetas_preparadas.h"
 #include "paneles_observables.h"
+#include <SFML/Graphics/RenderTexture.hpp>
 #include <memory>
 #include <vector>
 
@@ -32,6 +33,9 @@ class Panel : public ComponenteConFont {
 /////////////////////////////////////////
 
 class PanelEncargar : public Panel {
+  private:
+    std::shared_ptr<sf::RenderTexture> render_texture;
+
   public:
     TipoPizzaToBoton encargar;
     PanelEncargar(
