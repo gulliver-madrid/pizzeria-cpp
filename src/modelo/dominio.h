@@ -10,7 +10,10 @@
     OP(Pepperoni)                                                              \
     OP(CuatroQuesos)                                                           \
     OP(Funghi)                                                                 \
-    OP(Vegetariana)
+    OP(Vegetariana)                                                            \
+    OP(Primavera)                                                              \
+    OP(Barbacoa)                                                               \
+    OP(Hawaiana)
 
 namespace dominio {
     enum class TipoPizza {

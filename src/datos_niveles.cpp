@@ -74,6 +74,45 @@ const DatosNivel datos_niveles[] = {
             ),
         }}
     },
+    DatosNivel{
+        INSTRUCCIONES_NIVEL_DINAMICO, //
+        Pedidos{{
+            crear_pedido({{TipoPizza::Margarita, 2}}),
+            crear_pedido(
+                {{TipoPizza::Margarita, 1},
+                 {TipoPizza::CuatroQuesos, 1},
+                 {TipoPizza::Pepperoni, 1}}
+            ),
+            crear_pedido(
+                {{TipoPizza::Margarita, 1},
+                 {TipoPizza::CuatroQuesos, 1},
+                 {TipoPizza::Funghi, 2},
+                 {TipoPizza::Vegetariana, 1},
+                 {TipoPizza::Pepperoni, 1}}
+            ),
+            crear_pedido(
+                {{TipoPizza::Margarita, 2}, //
+                 {TipoPizza::Barbacoa, 1}}
+            ),
+            crear_pedido({{TipoPizza::Margarita, 2}}),
+            crear_pedido(
+                {{TipoPizza::Margarita, 1},
+                 {TipoPizza::CuatroQuesos, 1},
+                 {TipoPizza::Primavera, 1}}
+            ),
+            crear_pedido(
+                {{TipoPizza::Margarita, 1},
+                 {TipoPizza::CuatroQuesos, 1},
+                 {TipoPizza::Funghi, 2},
+                 {TipoPizza::Hawaiana, 1},
+                 {TipoPizza::Pepperoni, 1}}
+            ),
+            crear_pedido(
+                {{TipoPizza::Margarita, 2}, //
+                 {TipoPizza::Pepperoni, 1}}
+            ),
+        }}
+    },
     {INSTRUCCIONES_NIVEL_DINAMICO, //
      Pedidos{{
          crear_pedido({
