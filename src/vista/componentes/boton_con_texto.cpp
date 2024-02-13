@@ -27,23 +27,26 @@ namespace medidas {
  * rectangulo y el alineamiento (izquierda o derecha).
  */
 struct Posicionamiento {
+    friend class BotonConTexto;
+
   private:
+    sf::FloatRect contenedor;
+    sf::Vector2f posicion_absoluta;
+    PosicionRelativa posicion_relativa;
+    Align alineamiento = Align::Left;
+
     float _obtener_pos_abs_x(
         const float ancho_forma, const PosicionRelativa &pos_relativa
     ) const;
 
   public:
-    sf::FloatRect contenedor;
-    PosicionRelativa posicion_relativa;
-    Align alineamiento = Align::Left;
-
-    PosicionFormaYEtiqueta calcular_posicion_absoluta(
-        float escala, float ancho_forma, PosicionRelativa &pos_relativa
-    ) const;
+    void actualizar_posicion_absoluta(
+        const float ancho_forma, PosicionRelativa &pos_relativa
+    );
 };
 
 ///////////////////////////////////////////
-// Posicionamiento: implementacion
+// Posicionamiento: private
 //////////////////////////////////////////
 
 /** Devuelve la posicion absoluta del lado izquierdo del elemento UI */
@@ -67,6 +70,10 @@ float Posicionamiento::_obtener_pos_abs_x(
     }
 }
 
+///////////////////////////////////////////
+// Posicionamiento: public
+//////////////////////////////////////////
+
 /**
  * @brief Calcula la posicion absoluta del elemento UI en la ventana.
  *
@@ -79,18 +86,13 @@ float Posicionamiento::_obtener_pos_abs_x(
  * @return Un par de sf::Vector2f que representan la nueva posicion del elemento
  * y su etiqueta ajustada, respectivamente.
  */
-PosicionFormaYEtiqueta Posicionamiento::calcular_posicion_absoluta(
-    const float escala, const float ancho_forma, PosicionRelativa &pos_relativa
-) const {
-    const auto margen = medidas::MARGEN_BOTON * (escala * escala);
-    const auto margen_corregido = margen * 0.7f;
+void Posicionamiento::actualizar_posicion_absoluta(
+    const float ancho_forma, PosicionRelativa &pos_relativa
+) {
+
     const auto x = _obtener_pos_abs_x(ancho_forma, pos_relativa);
     const auto y = contenedor.getPosition().y + pos_relativa.valor.y;
-    // Ajustamos para evitar un margen excesivo arriba y a la izquierda
-    return {
-        sf::Vector2f(x, y),
-        sf::Vector2f(x + margen_corregido, y + margen_corregido)
-    };
+    posicion_absoluta = sf::Vector2f(x, y);
 }
 
 ///////////////////////////////////////////
@@ -127,14 +129,10 @@ void BotonConTexto::_asignar_id() {
  * izquierda del boton de acuerdo con el alineamiento.
  */
 void BotonConTexto::_actualizar_posicion_absoluta() {
-    const auto [pos_forma, pos_etiqueta] =
-        posicionamiento->calcular_posicion_absoluta(
-            _escala, _forma.getGlobalBounds().width,
-            posicionamiento->posicion_relativa
-        );
-
-    _forma.setPosition(pos_forma);
-    _etiqueta->set_position(pos_etiqueta.x, pos_etiqueta.y);
+    posicionamiento->actualizar_posicion_absoluta(
+        _forma.getGlobalBounds().width, posicionamiento->posicion_relativa
+    );
+    establecer_posicion_de_dibujo(posicionamiento->posicion_absoluta, _escala);
 }
 
 /* Actualiza el tamano (por ejemplo tras un cambio de la fuente)*/
@@ -266,7 +264,8 @@ void BotonConTexto::establecer_posicion_relativa(
 bool BotonConTexto::colisiona(const sf::Vector2i &pos_raton) const {
     if (!visible || !_activo)
         return false;
-    return _forma.getGlobalBounds().contains(
+    const auto rect_absoluto = _forma.getGlobalBounds();
+    return rect_absoluto.contains(
         static_cast<float>(pos_raton.x), static_cast<float>(pos_raton.y)
     );
 }
@@ -346,6 +345,18 @@ void BotonConTexto::actualizar() {
 void BotonConTexto::set_font(const OptionalFont &new_font) {
     ComponenteConFont::set_font(new_font);
     _resize();
+}
+
+void BotonConTexto::establecer_posicion_de_dibujo(
+    const sf::Vector2f posicion, const float escala
+) {
+    const auto margen = medidas::MARGEN_BOTON * (escala * escala);
+    // Ajustamos para evitar un margen excesivo arriba y a la izquierda
+    const auto margen_corregido = margen * 0.7f;
+    _forma.setPosition(posicion);
+    _etiqueta->set_position(
+        posicion.x + margen_corregido, posicion.y + margen_corregido
+    );
 }
 
 /**

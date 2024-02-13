@@ -20,11 +20,6 @@ enum class Align { //
     Right
 };
 
-struct PosicionFormaYEtiqueta {
-    sf::Vector2f posicion_forma;
-    sf::Vector2f posicion_etiqueta;
-};
-
 ///////////////////////////////////////////
 // BotonConTexto
 //////////////////////////////////////////
@@ -88,5 +83,8 @@ class BotonConTexto : public ComponenteConFont {
     sf::FloatRect get_rect() const;
     void actualizar();
     virtual void set_font(const OptionalFont &new_font) override;
+    void establecer_posicion_de_dibujo(
+        const sf::Vector2f posicion, const float escala
+    );
     virtual void draw(sf::RenderTarget &, sf::RenderStates) const override;
 };
