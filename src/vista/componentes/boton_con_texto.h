@@ -42,7 +42,9 @@ class BotonConTexto : public ComponenteConFont {
     void _asignar_id();
     void _actualizar_posicionamiento();
     void _resize();
+    float _obtener_margen_escalado();
     float _get_margen_ambos_lados();
+    void _establecer_posicion_de_dibujo(const sf::Vector2f posicion);
 
   public:
     bool visible = false;
@@ -84,8 +86,5 @@ class BotonConTexto : public ComponenteConFont {
     sf::FloatRect get_rect() const;
     void actualizar();
     virtual void set_font(const OptionalFont &new_font) override;
-    void establecer_posicion_de_dibujo(
-        const sf::Vector2f posicion, const float escala
-    );
     virtual void draw(sf::RenderTarget &, sf::RenderStates) const override;
 };

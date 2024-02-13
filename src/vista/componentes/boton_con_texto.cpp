@@ -35,14 +35,10 @@ struct Posicionamiento {
     PosicionRelativa posicion_relativa;
     Align alineamiento = Align::Left;
 
-    float _obtener_pos_abs_x(
-        const float ancho_forma, const PosicionRelativa &pos_relativa
-    ) const;
+    float _obtener_pos_abs_x(const float ancho_forma) const;
 
   public:
-    void actualizar_posicion_absoluta(
-        const float ancho_forma, PosicionRelativa &pos_relativa
-    );
+    void actualizar_posicion_absoluta(const float ancho_forma);
 };
 
 ///////////////////////////////////////////
@@ -50,18 +46,16 @@ struct Posicionamiento {
 //////////////////////////////////////////
 
 /** Devuelve la posicion absoluta del lado izquierdo del elemento UI */
-float Posicionamiento::_obtener_pos_abs_x(
-    const float ancho_forma, const PosicionRelativa &pos_relativa
-) const {
+float Posicionamiento::_obtener_pos_abs_x(const float ancho_forma) const {
     switch (alineamiento) {
         case Align::Left:
-            return contenedor.left + pos_relativa.valor.x;
+            return contenedor.left + posicion_relativa.valor.x;
         case Align::Right:
             {
                 // clang-format off
                 // Aqui la posicion relativa es desde el lado derecho del padre
                 const auto contenedor_derecha = contenedor.left + contenedor.width;
-                const auto pos_abs_derecha = contenedor_derecha + pos_relativa.valor.x;
+                const auto pos_abs_derecha = contenedor_derecha + posicion_relativa.valor.x;
                 return pos_abs_derecha - ancho_forma;
                 // clang-format on
             }
@@ -86,12 +80,9 @@ float Posicionamiento::_obtener_pos_abs_x(
  * @return Un par de sf::Vector2f que representan la nueva posicion del elemento
  * y su etiqueta ajustada, respectivamente.
  */
-void Posicionamiento::actualizar_posicion_absoluta(
-    const float ancho_forma, PosicionRelativa &pos_relativa
-) {
-
-    const auto x = _obtener_pos_abs_x(ancho_forma, pos_relativa);
-    const auto y = contenedor.getPosition().y + pos_relativa.valor.y;
+void Posicionamiento::actualizar_posicion_absoluta(const float ancho_forma) {
+    const auto x = _obtener_pos_abs_x(ancho_forma);
+    const auto y = contenedor.getPosition().y + posicion_relativa.valor.y;
     posicion_absoluta = sf::Vector2f(x, y);
 }
 
@@ -129,8 +120,7 @@ void BotonConTexto::_asignar_id() {
  * izquierda del boton de acuerdo con el alineamiento.
  */
 void BotonConTexto::_actualizar_posicionamiento() {
-    posicionamiento->actualizar_posicion_absoluta(
-        _forma.getGlobalBounds().width, posicionamiento->posicion_relativa
+    posicionamiento->actualizar_posicion_absoluta(_forma.getGlobalBounds().width
     );
     sf::Vector2f nueva_posicion_dibujo;
     if (usar_posicion_relativa_para_dibujo) {
@@ -138,7 +128,7 @@ void BotonConTexto::_actualizar_posicionamiento() {
     } else {
         nueva_posicion_dibujo = posicionamiento->posicion_absoluta;
     }
-    establecer_posicion_de_dibujo(nueva_posicion_dibujo, _escala);
+    _establecer_posicion_de_dibujo(nueva_posicion_dibujo);
 }
 
 /* Actualiza el tamano (por ejemplo tras un cambio de la fuente)*/
@@ -152,12 +142,27 @@ void BotonConTexto::_resize() {
     ));
 }
 
+float BotonConTexto::_obtener_margen_escalado() {
+    const auto escala = this->_escala;
+    return medidas::MARGEN_BOTON * (escala * escala);
+}
+
 float BotonConTexto::_get_margen_ambos_lados() {
     // La escala del margen es proporcional al cuadrado de la escala del boton
-    const auto escala = this->_escala;
-    const auto margen = medidas::MARGEN_BOTON * (escala * escala);
+    const auto margen = _obtener_margen_escalado();
     const auto margen_ambos_lados = margen * 2;
     return margen_ambos_lados;
+}
+
+void BotonConTexto::_establecer_posicion_de_dibujo(const sf::Vector2f posicion
+) {
+    const auto margen = _obtener_margen_escalado();
+    // Ajustamos para evitar un margen excesivo arriba y a la izquierda
+    const auto margen_corregido = margen * 0.7f;
+    _forma.setPosition(posicion);
+    _etiqueta->set_position(
+        posicion.x + margen_corregido, posicion.y + margen_corregido
+    );
 }
 
 ///////////////////////////////////////////
@@ -180,15 +185,14 @@ BotonConTexto::BotonConTexto(
     float escala                //
 )
     : BotonConTexto() {
-    this->_escala = escala;
-
     // Primero creamos la etiqueta para usar sus limites en el Rect
+    this->_escala = escala;
     _etiqueta = crear_etiqueta(
-        boton_data.texto,                                         //
-        static_cast<int>(medidas::TAMANO_TEXTO_BOTONES * escala), //
-        boton_data.color_texto,                                   //
-        Vector2f_CERO,                                            //
-        "etiqueta boton con texto " + boton_data.texto            //
+        boton_data.texto,                                          //
+        static_cast<int>(medidas::TAMANO_TEXTO_BOTONES * _escala), //
+        boton_data.color_texto,                                    //
+        Vector2f_CERO,                                             //
+        "etiqueta boton con texto " + boton_data.texto             //
     );
     _forma.setFillColor(boton_data.color_fondo);
     add_child(_etiqueta);
@@ -361,18 +365,6 @@ void BotonConTexto::set_font(const OptionalFont &new_font) {
     _resize();
 }
 
-void BotonConTexto::establecer_posicion_de_dibujo(
-    const sf::Vector2f posicion, const float escala
-) {
-    const auto margen = medidas::MARGEN_BOTON * (escala * escala);
-    // Ajustamos para evitar un margen excesivo arriba y a la izquierda
-    const auto margen_corregido = margen * 0.7f;
-    _forma.setPosition(posicion);
-    _etiqueta->set_position(
-        posicion.x + margen_corregido, posicion.y + margen_corregido
-    );
-}
-
 /**
  * @brief Dibuja el boton en el target de renderizado proporcionado.
  *
@@ -390,6 +382,6 @@ void BotonConTexto::draw(
     if (!visible)
         return;
     LOG(debug) << "Dibujando boton con texto cuya etiqueta es "
-               << _etiqueta->nombre << std::endl;
+               << _etiqueta->nombre;
     dibujar_elementos(target, std::make_tuple(_forma, *_etiqueta));
 }
