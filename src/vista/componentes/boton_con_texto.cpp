@@ -52,12 +52,13 @@ float Posicionamiento::_obtener_pos_abs_x(const float ancho_forma) const {
             return contenedor.left + posicion_relativa.valor.x;
         case Align::Right:
             {
-                // clang-format off
-                // Aqui la posicion relativa es desde el lado derecho del padre
-                const auto contenedor_derecha = contenedor.left + contenedor.width;
-                const auto pos_abs_derecha = contenedor_derecha + posicion_relativa.valor.x;
+                // No implementado para el uso de contenedores
+                // La posicion relativa, por tanto, es la posicion absoluta
+                // del lado derecho del boton
+                assert(contenedor.left == 0);
+                assert(contenedor.width == 0);
+                const auto pos_abs_derecha = posicion_relativa.valor.x;
                 return pos_abs_derecha - ancho_forma;
-                // clang-format on
             }
         default:
             throw std::out_of_range("Valor no manejado");
