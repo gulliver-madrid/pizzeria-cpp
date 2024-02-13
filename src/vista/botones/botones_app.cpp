@@ -45,10 +45,6 @@ void BotonesApp::_establecer_todos() {
         LOG(info) << "Anadiendo boton despachar con id " << boton->get_id();
         todos.push_back(boton);
     }
-    for (auto [_, boton] : encargar) {
-        LOG(info) << "Anadiendo boton encargar con id " << boton->get_id();
-        todos.push_back(boton);
-    }
 }
 
 /* Crea todos los botones */
