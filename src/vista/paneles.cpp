@@ -177,10 +177,10 @@ void PanelPreparadas::draw(
 /////////////////////////////////////////
 
 PanelPedidos::PanelPedidos(
-    IndicePanel indice, std::shared_ptr<Etiqueta> etiqueta
+    IndicePanel indice, std::shared_ptr<Etiqueta> etiqueta_titulo
 
 )
-    : Panel(indice, etiqueta) {
+    : Panel(indice, etiqueta_titulo) {
     etiquetas_pedidos = std::make_shared<EtiquetasPedidos>();
     add_child(etiquetas_pedidos);
 }

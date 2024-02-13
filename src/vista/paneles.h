@@ -84,7 +84,7 @@ class PanelPedidos : public Panel {
     std::shared_ptr<EtiquetasPedidos> etiquetas_pedidos;
 
     PanelPedidos::PanelPedidos(
-        IndicePanel indice, std::shared_ptr<Etiqueta> etiqueta
+        IndicePanel indice, std::shared_ptr<Etiqueta> etiqueta_titulo
     );
 
     void actualizar( //
