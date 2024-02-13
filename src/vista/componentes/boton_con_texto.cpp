@@ -128,11 +128,17 @@ void BotonConTexto::_asignar_id() {
  * dimensiones del rectangulo padre. Esta posicion estara a la derecha o a la
  * izquierda del boton de acuerdo con el alineamiento.
  */
-void BotonConTexto::_actualizar_posicion_absoluta() {
+void BotonConTexto::_actualizar_posicionamiento() {
     posicionamiento->actualizar_posicion_absoluta(
         _forma.getGlobalBounds().width, posicionamiento->posicion_relativa
     );
-    establecer_posicion_de_dibujo(posicionamiento->posicion_absoluta, _escala);
+    sf::Vector2f nueva_posicion_dibujo;
+    if (usar_posicion_relativa_para_dibujo) {
+        nueva_posicion_dibujo = posicionamiento->posicion_relativa.valor;
+    } else {
+        nueva_posicion_dibujo = posicionamiento->posicion_absoluta;
+    }
+    establecer_posicion_de_dibujo(nueva_posicion_dibujo, _escala);
 }
 
 /* Actualiza el tamano (por ejemplo tras un cambio de la fuente)*/
@@ -229,7 +235,7 @@ BotonConTexto::~BotonConTexto() = default;
  */
 void BotonConTexto::establecer_contenedor(const sf::FloatRect &rect) {
     posicionamiento->contenedor = rect;
-    _actualizar_posicion_absoluta();
+    _actualizar_posicionamiento();
 }
 
 /**
@@ -248,7 +254,7 @@ void BotonConTexto::establecer_posicion_relativa(
 ) {
     posicionamiento->alineamiento = align;
     posicionamiento->posicion_relativa = posicion;
-    _actualizar_posicion_absoluta();
+    _actualizar_posicionamiento();
 }
 
 /**

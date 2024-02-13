@@ -40,12 +40,13 @@ class BotonConTexto : public ComponenteConFont {
 
     BotonConTexto();
     void _asignar_id();
-    void _actualizar_posicion_absoluta();
+    void _actualizar_posicionamiento();
     void _resize();
     float _get_margen_ambos_lados();
 
   public:
     bool visible = false;
+    bool usar_posicion_relativa_para_dibujo = false;
     BotonConTexto(
         const BotonData boton_data, //
         float escala = 1            //
