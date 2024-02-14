@@ -3,6 +3,18 @@
 #include "crear_etiqueta.h"
 #include <cassert>
 
+namespace {
+    /*
+     * Devuelve un nuevo Vector2f como consecuencia de
+     * desplazar verticalmente el proporcionado
+     */
+    sf::Vector2f mover_vertical( //
+        const sf::Vector2f &inicial, float desplazamiento
+    ) {
+        return inicial + sf::Vector2f(0, desplazamiento);
+    }
+} // namespace
+
 /*
  * Alinea una hilera de botones a la derecha desde una posicion inicial.
  * Los botones se posicionan de derecha a izquierda basandose en la
@@ -25,22 +37,10 @@ void alinear_botones_derecha(
     auto next_pos_x = posicion_inicial.valor.x;
     for (auto &boton : botones) {
         const auto posicion =
-            PosicionRelativa{sf::Vector2f(next_pos_x, posicion_inicial.valor.y)
-            };
+            PosicionRelativa{{next_pos_x, posicion_inicial.valor.y}};
         boton->establecer_posicion_relativa(posicion, Align::Right);
-        const auto anterior_izquierda = boton->get_rect().left;
-        next_pos_x = anterior_izquierda - separacion;
+        next_pos_x = boton->get_rect().left - separacion;
     }
-}
-
-/*
- * Devuelve un nuevo Vector2f como consecuencia de
- * desplazar verticalmente el proporcionado
- */
-sf::Vector2f _mover_vertical( //
-    const sf::Vector2f &inicial, float desplazamiento
-) {
-    return inicial + sf::Vector2f(0, desplazamiento);
 }
 
 /*
@@ -67,7 +67,7 @@ void colocar_botones_en_vertical(
     size_t i = 0;
     for (auto &boton : botones) {
         const auto posicion = PosicionRelativa{
-            _mover_vertical(pos_inicial.valor, (diferencia * i++))
+            mover_vertical(pos_inicial.valor, (diferencia * i++))
         };
         boton->establecer_contenedor(contenedor);
         boton->establecer_posicion_relativa(posicion);
