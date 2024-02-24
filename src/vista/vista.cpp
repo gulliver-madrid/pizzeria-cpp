@@ -110,6 +110,7 @@ void Vista::actualizar_interfaz_grafico(const PresentacionGeneral &presentacion
     _mostrando_grid = presentacion.mostrando_grid;
     _actualizar_vista_paneles(presentacion.vistas);
     _actualizar_etiquetas(presentacion.barra_estado);
+    activar_botones_condicionalmente(presentacion.activacion_botones);
 }
 
 void Vista::cambiar_visibilidad_instrucciones(bool nueva) {

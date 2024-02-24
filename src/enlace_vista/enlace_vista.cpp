@@ -152,11 +152,11 @@ void EnlaceVista::actualizar_interfaz_grafico(
     const auto info_barra_estado = obtener_vista_barra_estado(modelo_amplio);
 
     PresentacionGeneral presentacion{
-        mostrando_grid,   //
-        vistas_juego,     //
-        info_barra_estado //
+        mostrando_grid,    //
+        vistas_juego,      //
+        info_barra_estado, //
+        activacion_botones //
     };
-    vista->activar_botones_condicionalmente(activacion_botones);
     vista->actualizar_interfaz_grafico(presentacion);
 }
 
