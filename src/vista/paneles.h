@@ -15,7 +15,7 @@ class Etiqueta;
 class EtiquetasPedidos;
 enum class IndicePanel;
 
-struct VistasJuego {
+struct VistasPaneles {
     PresentacionPreparacionPizzas info_preparacion;
     PizzasToStrings info_preparadas;
     PresentacionPedidos info_pedidos;
@@ -114,7 +114,7 @@ class Paneles : public ComponenteConFont, public PanelesObservables {
 
     std::shared_ptr<PanelEncargar> get_panel_encargar();
     std::shared_ptr<PanelPreparadas> get_panel_preparadas();
-    void actualizar(const std::shared_ptr<const VistasJuego>);
+    void actualizar(const std::shared_ptr<const VistasPaneles>);
     virtual bool get_visibilidad() const override;
     virtual void draw(sf::RenderTarget &, sf::RenderStates) const override;
     std::shared_ptr<Panel> getPanel(IndicePanel indice) {

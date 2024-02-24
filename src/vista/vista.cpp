@@ -56,7 +56,7 @@ void Vista::_actualizar_etiquetas(const VistaBarraEstado &info_barra_estado) {
 }
 
 void Vista::_actualizar_vista_paneles(
-    std::optional<const std::shared_ptr<const VistasJuego>> opt_vistas
+    std::optional<const std::shared_ptr<const VistasPaneles>> opt_vistas
 ) {
     paneles->visible = opt_vistas.has_value();
     if (!opt_vistas) {

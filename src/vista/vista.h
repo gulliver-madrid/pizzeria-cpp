@@ -11,7 +11,7 @@ class EtiquetasGenerales;
 class Grid;
 class Paneles;
 class PanelesObservables;
-struct VistasJuego;
+struct VistasPaneles;
 
 namespace sf {
     class Time;
@@ -25,7 +25,7 @@ struct ActivacionBotones {
 
 struct PresentacionGeneral {
     bool mostrando_grid;
-    std::optional<std::shared_ptr<const VistasJuego>> vistas;
+    std::optional<std::shared_ptr<const VistasPaneles>> vistas;
     const VistaBarraEstado &barra_estado;
     const ActivacionBotones &activacion_botones;
 };
@@ -48,7 +48,7 @@ class Vista : public ComponenteConFont, public VistaObservable {
     );
     void _actualizar_etiquetas(const VistaBarraEstado &);
     void Vista::_actualizar_vista_paneles(std::optional<const std::shared_ptr<
-                                              const VistasJuego>>);
+                                              const VistasPaneles>>);
     void _activar_botones_condicionalmente(const ActivacionBotones &);
 
   public:

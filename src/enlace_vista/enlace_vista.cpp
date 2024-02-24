@@ -51,19 +51,20 @@ namespace {
         return presentacion_pedidos;
     }
 
-    std::shared_ptr<VistasJuego> generar_vistas_juego(const ModeloAmplio &modelo
+    std::shared_ptr<VistasPaneles> generar_vistas_juego( //
+        const ModeloAmplio &modelo
     ) {
-        auto vistas = std::make_shared<VistasJuego>();
+        auto vistas = std::make_shared<VistasPaneles>();
         vistas->info_preparacion = obtener_vista_preparacion(modelo);
         vistas->info_preparadas = obtener_vista_preparadas(modelo);
         vistas->info_pedidos = obtener_presentacion_pedidos(modelo);
         return vistas;
     }
 
-    std::optional<std::shared_ptr<VistasJuego>>
+    std::optional<std::shared_ptr<VistasPaneles>>
     obtener_vistas_juego(const ModeloAmplio &modelo_amplio //
     ) {
-        std::optional<std::shared_ptr<VistasJuego>> vistas_juego;
+        std::optional<std::shared_ptr<VistasPaneles>> vistas_juego;
         const auto fase_actual = modelo_amplio.get_fase_actual();
 
         if (fase_actual == FaseNivel::Activa ||              //

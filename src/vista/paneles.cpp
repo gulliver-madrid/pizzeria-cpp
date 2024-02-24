@@ -253,7 +253,7 @@ std::shared_ptr<PanelPreparadas> Paneles::get_panel_preparadas() {
     return panel_preparadas;
 }
 
-void Paneles::actualizar(const std::shared_ptr<const VistasJuego> vistas) {
+void Paneles::actualizar(const std::shared_ptr<const VistasPaneles> vistas) {
     if (!visible)
         return;
 
