@@ -57,10 +57,13 @@
     - vista/presentaciones.h
     - vista/vista_shared.h
 
-- enlace_vista/presentador_paneles.h:
+- enlace_vista/presentador_paneles.cpp:
+    - enlace_vista/presentador_paneles.h
     - enlace_vista/presentador.h
-    - modelo/modelo.h
     - modelo/modelo_interno.h
+
+- enlace_vista/presentador_paneles.h:
+    - vista/vista_shared.h
 
 - globales.cpp:
     - globales.h

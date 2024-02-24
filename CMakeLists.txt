@@ -43,6 +43,7 @@ add_executable(pizzeria
     src/debug_sfml.cpp
     src/enlace_vista/enlace_vista.cpp
     src/enlace_vista/presentador.cpp
+    src/enlace_vista/presentador_paneles.cpp
     src/globales.cpp
     src/juego.cpp
     src/modelo/control_pizzas.cpp
@@ -138,6 +139,7 @@ add_executable(
     src/debug_sfml.cpp
     src/enlace_vista/enlace_vista.cpp
     src/enlace_vista/presentador.cpp
+    src/enlace_vista/presentador_paneles.cpp
     src/globales.cpp
     src/juego.cpp
     src/modelo/control_pizzas.cpp
