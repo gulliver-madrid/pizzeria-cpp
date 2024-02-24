@@ -21,7 +21,7 @@ namespace {
     /*
      * Activa o desactiva cada boton despachar segun proceda.
      */
-    void activar_botones_despachar_si_procede(
+    void activar_botones_despachar_condicionalmente(
         TipoPizzaToBoton &botones_despachar,
         const ActivacionBotones &activacion_botones
     ) {
@@ -55,6 +55,17 @@ void Vista::_actualizar_vista_paneles(const VistasJuego &vistas) {
             vistas.info_preparadas.value(),  //
             vistas.info_pedidos.value()      //
         );
+    }
+}
+
+void Vista::_activar_botones_condicionalmente(
+    const ActivacionBotones &activacion_botones
+) {
+    activar_botones_despachar_condicionalmente(
+        botones->despachar, activacion_botones
+    );
+    for (auto &[_, boton] : botones->encargar) {
+        boton->activacion_condicional(activacion_botones.encargar);
     }
 }
 
@@ -110,7 +121,7 @@ void Vista::actualizar_interfaz_grafico(const PresentacionGeneral &presentacion
     _mostrando_grid = presentacion.mostrando_grid;
     _actualizar_vista_paneles(presentacion.vistas);
     _actualizar_etiquetas(presentacion.barra_estado);
-    activar_botones_condicionalmente(presentacion.activacion_botones);
+    _activar_botones_condicionalmente(presentacion.activacion_botones);
 }
 
 void Vista::cambiar_visibilidad_instrucciones(bool nueva) {
@@ -128,17 +139,6 @@ void Vista::mostrar_elementos_fase_activa() {
 
 void Vista::esconder_botones_gestion_pizzeria() { //
     botones->mostrar_botones_nivel(false);
-}
-
-void Vista::activar_botones_condicionalmente(
-    const ActivacionBotones &activacion_botones
-) {
-    activar_botones_despachar_si_procede(
-        botones->despachar, activacion_botones
-    );
-    for (auto &[_, boton] : botones->encargar) {
-        boton->activacion_condicional(activacion_botones.encargar);
-    }
 }
 
 std::shared_ptr<const PresentacionVista>

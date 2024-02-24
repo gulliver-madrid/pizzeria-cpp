@@ -49,8 +49,8 @@ class Vista : public ComponenteConFont, public VistaObservable {
     bool _mostrando_grid = false;
 
     void _actualizar_etiquetas(const VistaBarraEstado &);
-
     void _actualizar_vista_paneles(const VistasJuego &);
+    void _activar_botones_condicionalmente(const ActivacionBotones &);
 
   public:
     std::shared_ptr<PresentacionVista> presentacion_vista;
@@ -73,9 +73,6 @@ class Vista : public ComponenteConFont, public VistaObservable {
     void cambiar_visibilidad_resultado(bool);
     void mostrar_elementos_fase_activa();
     void esconder_botones_gestion_pizzeria();
-    void activar_botones_condicionalmente(
-        const ActivacionBotones &activacion_botones //
-    );
 
     std::shared_ptr<const PresentacionVista> get_presentacion_vista() const;
     virtual std::shared_ptr<PanelesObservables> get_paneles() const override;
