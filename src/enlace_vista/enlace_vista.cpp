@@ -10,6 +10,29 @@
 #include <iostream>
 
 namespace {
+    class PresentadorPaneles {
+      public:
+        const ModeloInterno &modelo;
+
+        PresentacionPreparacionPizzas obtener_vista_preparacion() {
+            const auto preparacion = modelo.obtener_estado_preparacion_pizzas();
+            return presentador::estado_preparacion_pizzas_to_vista(preparacion);
+        }
+
+        PizzasToStrings obtener_vista_preparadas() {
+            const modelo::PizzasAContadores &contadores =
+                modelo.control_pizzas.contadores;
+            return presentador::contadores_to_preparadas(contadores);
+        }
+
+        PresentacionPedidos obtener_presentacion_pedidos() {
+            const auto &pedidos = modelo.control_pizzas.pedidos;
+            const auto presentacion_pedidos =
+                presentador::crear_presentacion_pedidos(pedidos);
+            return presentacion_pedidos;
+        }
+    };
+
     /*
      * Preparara la activacion o desactivacion de cada boton despachar
      * dependiendo de si hay pizzas preparadas de ese tipo.
@@ -25,51 +48,32 @@ namespace {
         }
     }
 
-    PresentacionPreparacionPizzas obtener_vista_preparacion( //
-        const ModeloInterno &modelo
-    ) {
-        const auto preparacion = modelo.obtener_estado_preparacion_pizzas();
-        return presentador::estado_preparacion_pizzas_to_vista(preparacion);
-    }
-
-    PizzasToStrings obtener_vista_preparadas( //
-        const ModeloInterno &modelo
-    ) {
-        const modelo::PizzasAContadores &contadores =
-            modelo.control_pizzas.contadores;
-        return presentador::contadores_to_preparadas(contadores);
-    }
-
-    PresentacionPedidos obtener_presentacion_pedidos( //
-        const ModeloInterno &modelo
-    ) {
-        const auto &pedidos = modelo.control_pizzas.pedidos;
-        const auto presentacion_pedidos =
-            presentador::crear_presentacion_pedidos(pedidos);
-        return presentacion_pedidos;
-    }
-
     std::shared_ptr<VistasPaneles> generar_vistas_paneles( //
         const ModeloAmplio &modelo_amplio
     ) {
         auto vistas = std::make_shared<VistasPaneles>();
         const auto modelo = modelo_amplio.modelo_interno;
-        vistas->info_preparacion = obtener_vista_preparacion(modelo);
-        vistas->info_preparadas = obtener_vista_preparadas(modelo);
-        vistas->info_pedidos = obtener_presentacion_pedidos(modelo);
+        PresentadorPaneles presentador{modelo};
+        vistas->info_preparacion = presentador.obtener_vista_preparacion();
+        vistas->info_preparadas = presentador.obtener_vista_preparadas();
+        vistas->info_pedidos = presentador.obtener_presentacion_pedidos();
         return vistas;
     }
 
-    std::optional<std::shared_ptr<VistasPaneles>>
-    obtener_vistas_paneles(const ModeloAmplio &modelo_amplio //
+    bool deben_mostrarse_los_paneles(const ModeloAmplio &modelo) {
+        const auto fase_actual = modelo.get_fase_actual();
+        return (
+            fase_actual == FaseNivel::Activa ||
+            fase_actual == FaseNivel::EsperaAntesDeResultado
+        );
+    }
+
+    std::optional<std::shared_ptr<VistasPaneles>> obtener_vistas_paneles( //
+        const ModeloAmplio &modelo
     ) {
         std::optional<std::shared_ptr<VistasPaneles>> vistas;
-        const auto fase_actual = modelo_amplio.get_fase_actual();
-
-        if (fase_actual == FaseNivel::Activa ||              //
-            fase_actual == FaseNivel::EsperaAntesDeResultado //
-        ) {
-            vistas.emplace(generar_vistas_paneles(modelo_amplio));
+        if (deben_mostrarse_los_paneles(modelo)) {
+            vistas.emplace(generar_vistas_paneles(modelo));
         }
         return vistas;
     }
