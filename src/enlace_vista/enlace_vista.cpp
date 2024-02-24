@@ -51,24 +51,25 @@ namespace {
         return presentacion_pedidos;
     }
 
-    void
-    incorporar_datos(const ModeloAmplio &modelo_amplio, VistasJuego &vistas) {
-        vistas.info_preparacion.emplace(obtener_vista_preparacion(modelo_amplio)
-        );
-        vistas.info_preparadas.emplace(obtener_vista_preparadas(modelo_amplio));
-        vistas.info_pedidos.emplace(obtener_presentacion_pedidos(modelo_amplio)
-        );
+    std::shared_ptr<VistasJuego> generar_vistas_juego(const ModeloAmplio &modelo
+    ) {
+        auto vistas = std::make_shared<VistasJuego>();
+        vistas->info_preparacion.emplace(obtener_vista_preparacion(modelo));
+        vistas->info_preparadas.emplace(obtener_vista_preparadas(modelo));
+        vistas->info_pedidos.emplace(obtener_presentacion_pedidos(modelo));
+        return vistas;
     }
 
-    VistasJuego obtener_vistas_juego(const ModeloAmplio &modelo_amplio //
+    std::optional<std::shared_ptr<VistasJuego>>
+    obtener_vistas_juego(const ModeloAmplio &modelo_amplio //
     ) {
-        VistasJuego vistas_juego;
+        std::optional<std::shared_ptr<VistasJuego>> vistas_juego;
         const auto fase_actual = modelo_amplio.get_fase_actual();
 
         if (fase_actual == FaseNivel::Activa ||              //
             fase_actual == FaseNivel::EsperaAntesDeResultado //
         ) {
-            incorporar_datos(modelo_amplio, vistas_juego);
+            vistas_juego.emplace(generar_vistas_juego(modelo_amplio));
         }
         return vistas_juego;
     }
@@ -146,7 +147,7 @@ void EnlaceVista::actualizar_interfaz_grafico(
             modelo_amplio.modelo_interno
         );
 
-    const VistasJuego vistas_juego = obtener_vistas_juego(modelo_amplio);
+    const auto vistas_juego = obtener_vistas_juego(modelo_amplio);
     const auto mostrando_grid = modelo_amplio.mostrando_grid;
 
     const auto info_barra_estado = obtener_vista_barra_estado(modelo_amplio);

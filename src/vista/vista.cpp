@@ -55,17 +55,20 @@ void Vista::_actualizar_etiquetas(const VistaBarraEstado &info_barra_estado) {
     etiquetas->actualizar_barra_estado(info_barra_estado);
 }
 
-void Vista::_actualizar_vista_paneles(const VistasJuego &vistas) {
-    paneles->visible = vistas.info_preparacion.has_value();
-    if (vistas.info_preparacion) {
+void Vista::_actualizar_vista_paneles(
+    std::optional<const std::shared_ptr<const VistasJuego>> opt_vistas
+) {
+    paneles->visible = opt_vistas.has_value();
+    if (opt_vistas) {
+        const auto vistas = opt_vistas.value();
         // Estaran definidas las tres o ninguna
-        assert(vistas.info_preparacion);
-        assert(vistas.info_preparadas);
-        assert(vistas.info_pedidos);
+        assert(vistas->info_preparacion);
+        assert(vistas->info_preparadas);
+        assert(vistas->info_pedidos);
         paneles->actualizar(
-            vistas.info_preparacion.value(), //
-            vistas.info_preparadas.value(),  //
-            vistas.info_pedidos.value()      //
+            vistas->info_preparacion.value(), //
+            vistas->info_preparadas.value(),  //
+            vistas->info_pedidos.value()      //
         );
     }
 }
@@ -128,6 +131,7 @@ void Vista::actualizar_interfaz_grafico(const PresentacionGeneral &presentacion
 ) {
     _mostrando_grid = presentacion.mostrando_grid;
     _actualizar_vista_paneles(presentacion.vistas);
+
     _actualizar_etiquetas(presentacion.barra_estado);
     _activar_botones_condicionalmente(presentacion.activacion_botones);
 }

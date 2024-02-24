@@ -30,7 +30,7 @@ struct VistasJuego {
 
 struct PresentacionGeneral {
     bool mostrando_grid;
-    const VistasJuego &vistas;
+    std::optional<std::shared_ptr<const VistasJuego>> vistas;
     const VistaBarraEstado &barra_estado;
     const ActivacionBotones &activacion_botones;
 };
@@ -52,7 +52,8 @@ class Vista : public ComponenteConFont, public VistaObservable {
         const dominio::TiposDePizza &tp_disponibles
     );
     void _actualizar_etiquetas(const VistaBarraEstado &);
-    void _actualizar_vista_paneles(const VistasJuego &);
+    void Vista::_actualizar_vista_paneles(std::optional<const std::shared_ptr<
+                                              const VistasJuego>>);
     void _activar_botones_condicionalmente(const ActivacionBotones &);
 
   public:
