@@ -31,6 +31,7 @@
 - enlace_vista/enlace_vista.cpp:
     - enlace_vista/enlace_vista.h
     - enlace_vista/presentador.h
+    - enlace_vista/presentador_paneles.h
     - fase_nivel.h
     - shared/log_init.h
     - templates/helpers.h
@@ -55,6 +56,11 @@
     - modelo/modelo_shared.h
     - vista/presentaciones.h
     - vista/vista_shared.h
+
+- enlace_vista/presentador_paneles.h:
+    - enlace_vista/presentador.h
+    - modelo/modelo.h
+    - modelo/modelo_interno.h
 
 - globales.cpp:
     - globales.h
