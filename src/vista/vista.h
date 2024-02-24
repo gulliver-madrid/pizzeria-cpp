@@ -16,17 +16,21 @@ namespace sf {
     class Time;
 } // namespace sf
 
-// ActivacionBotones
+/* Contiene la informacion relativa a que botones deben estar activados */
 struct ActivacionBotones {
     bool encargar;
     std::map<dominio::TipoPizza, bool> despachar;
 };
 
+struct VistasJuego {
+    std::optional<PresentacionPreparacionPizzas> info_preparacion;
+    std::optional<PizzasToStrings> info_preparadas;
+    std::optional<const PresentacionPedidos> info_pedidos;
+};
+
 struct PresentacionGeneral {
     bool mostrando_grid;
-    std::optional<PresentacionPreparacionPizzas> &preparacion_pizzas;
-    std::optional<PizzasToStrings> &preparadas;
-    std::optional<const PresentacionPedidos> &pedidos;
+    VistasJuego &vistas;
     VistaBarraEstado &barra_estado;
 };
 
@@ -43,13 +47,9 @@ class Vista : public ComponenteConFont, public VistaObservable {
   private:
     bool _mostrando_grid = false;
 
-    void _actualizar_etiquetas(const VistaBarraEstado &info_barra_estado);
+    void _actualizar_etiquetas(const VistaBarraEstado &);
 
-    void _actualizar_vista_paneles( //
-        const std::optional<PresentacionPreparacionPizzas> &info_preparacion,
-        const std::optional<PizzasToStrings> &info_preparadas,
-        const std::optional<const PresentacionPedidos> &info_pedidos
-    );
+    void _actualizar_vista_paneles(const VistasJuego &);
 
   public:
     std::shared_ptr<PresentacionVista> presentacion_vista;

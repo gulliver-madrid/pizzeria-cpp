@@ -107,6 +107,12 @@ void EnlaceVista::on_cambio_de_fase(FaseNivel nueva_fase) {
 
 void EnlaceVista::esconder_paneles() const { vista->paneles->visible = false; }
 
+void incorporar_datos(const ModeloAmplio &modelo_amplio, VistasJuego &vistas) {
+    vistas.info_preparacion.emplace(obtener_vista_preparacion(modelo_amplio));
+    vistas.info_preparadas.emplace(obtener_vista_preparadas(modelo_amplio));
+    vistas.info_pedidos.emplace(obtener_presentacion_pedidos(modelo_amplio));
+}
+
 void EnlaceVista::actualizar_interfaz_grafico(
     const ModeloAmplio &modelo_amplio //
 ) {
@@ -116,9 +122,8 @@ void EnlaceVista::actualizar_interfaz_grafico(
             modelo_amplio.modelo_interno
         );
     vista->activar_botones_condicionalmente(activacion_botones);
-    std::optional<PresentacionPreparacionPizzas> info_preparacion;
-    std::optional<PizzasToStrings> info_preparadas;
-    std::optional<const PresentacionPedidos> info_pedidos;
+
+    VistasJuego vistas_juego;
 
     const auto fase_actual = modelo_amplio.get_fase_actual();
 
@@ -126,9 +131,7 @@ void EnlaceVista::actualizar_interfaz_grafico(
         fase_actual == FaseNivel::Activa ||
         fase_actual == FaseNivel::EsperaAntesDeResultado
     ) {
-        info_preparacion.emplace(obtener_vista_preparacion(modelo_amplio));
-        info_preparadas.emplace(obtener_vista_preparadas(modelo_amplio));
-        info_pedidos.emplace(obtener_presentacion_pedidos(modelo_amplio));
+        incorporar_datos(modelo_amplio, vistas_juego);
     }
     const auto mostrando_grid = modelo_amplio.mostrando_grid;
     const auto tiempo_juego =
@@ -137,8 +140,9 @@ void EnlaceVista::actualizar_interfaz_grafico(
     auto info_barra_estado =
         presentador::crea_vista_barra_estado(tiempo_real, tiempo_juego);
     PresentacionGeneral presentacion{
-        mostrando_grid, info_preparacion, info_preparadas, info_pedidos,
-        info_barra_estado
+        mostrando_grid,   //
+        vistas_juego,     //
+        info_barra_estado //
     };
     vista->actualizar_interfaz_grafico(presentacion);
 }
