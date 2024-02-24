@@ -40,6 +40,7 @@ namespace {
             modelo_amplio.modelo_interno.control_pizzas.contadores;
         return presentador::contadores_to_preparadas(contadores);
     }
+
     PresentacionPedidos obtener_presentacion_pedidos( //
         const ModeloAmplio &modelo_amplio
     ) {
@@ -48,6 +49,28 @@ namespace {
         const auto presentacion_pedidos =
             presentador::crear_presentacion_pedidos(pedidos);
         return presentacion_pedidos;
+    }
+
+    void
+    incorporar_datos(const ModeloAmplio &modelo_amplio, VistasJuego &vistas) {
+        vistas.info_preparacion.emplace(obtener_vista_preparacion(modelo_amplio)
+        );
+        vistas.info_preparadas.emplace(obtener_vista_preparadas(modelo_amplio));
+        vistas.info_pedidos.emplace(obtener_presentacion_pedidos(modelo_amplio)
+        );
+    }
+
+    VistasJuego obtener_vistas_juego(const ModeloAmplio &modelo_amplio //
+    ) {
+        VistasJuego vistas_juego;
+        const auto fase_actual = modelo_amplio.get_fase_actual();
+
+        if (fase_actual == FaseNivel::Activa ||              //
+            fase_actual == FaseNivel::EsperaAntesDeResultado //
+        ) {
+            incorporar_datos(modelo_amplio, vistas_juego);
+        }
+        return vistas_juego;
     }
 
 } // namespace
@@ -107,12 +130,6 @@ void EnlaceVista::on_cambio_de_fase(FaseNivel nueva_fase) {
 
 void EnlaceVista::esconder_paneles() const { vista->paneles->visible = false; }
 
-void incorporar_datos(const ModeloAmplio &modelo_amplio, VistasJuego &vistas) {
-    vistas.info_preparacion.emplace(obtener_vista_preparacion(modelo_amplio));
-    vistas.info_preparadas.emplace(obtener_vista_preparadas(modelo_amplio));
-    vistas.info_pedidos.emplace(obtener_presentacion_pedidos(modelo_amplio));
-}
-
 void EnlaceVista::actualizar_interfaz_grafico(
     const ModeloAmplio &modelo_amplio //
 ) {
@@ -123,16 +140,7 @@ void EnlaceVista::actualizar_interfaz_grafico(
         );
     vista->activar_botones_condicionalmente(activacion_botones);
 
-    VistasJuego vistas_juego;
-
-    const auto fase_actual = modelo_amplio.get_fase_actual();
-
-    if ( //
-        fase_actual == FaseNivel::Activa ||
-        fase_actual == FaseNivel::EsperaAntesDeResultado
-    ) {
-        incorporar_datos(modelo_amplio, vistas_juego);
-    }
+    const VistasJuego vistas_juego = obtener_vistas_juego(modelo_amplio);
     const auto mostrando_grid = modelo_amplio.mostrando_grid;
     const auto tiempo_juego =
         modelo_amplio.modelo_interno.obtener_tiempo_juego();

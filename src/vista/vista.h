@@ -30,7 +30,7 @@ struct VistasJuego {
 
 struct PresentacionGeneral {
     bool mostrando_grid;
-    VistasJuego &vistas;
+    const VistasJuego &vistas;
     VistaBarraEstado &barra_estado;
 };
 
