@@ -23,9 +23,9 @@ struct ActivacionBotones {
 };
 
 struct VistasJuego {
-    std::optional<PresentacionPreparacionPizzas> info_preparacion;
-    std::optional<PizzasToStrings> info_preparadas;
-    std::optional<const PresentacionPedidos> info_pedidos;
+    PresentacionPreparacionPizzas info_preparacion;
+    PizzasToStrings info_preparadas;
+    PresentacionPedidos info_pedidos;
 };
 
 struct PresentacionGeneral {

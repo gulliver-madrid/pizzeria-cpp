@@ -59,18 +59,17 @@ void Vista::_actualizar_vista_paneles(
     std::optional<const std::shared_ptr<const VistasJuego>> opt_vistas
 ) {
     paneles->visible = opt_vistas.has_value();
-    if (opt_vistas) {
-        const auto vistas = opt_vistas.value();
-        // Estaran definidas las tres o ninguna
-        assert(vistas->info_preparacion);
-        assert(vistas->info_preparadas);
-        assert(vistas->info_pedidos);
-        paneles->actualizar(
-            vistas->info_preparacion.value(), //
-            vistas->info_preparadas.value(),  //
-            vistas->info_pedidos.value()      //
-        );
+    if (!opt_vistas) {
+        return;
     }
+    assert(opt_vistas);
+    const auto vistas = opt_vistas.value();
+    assert(vistas);
+    paneles->actualizar(
+        vistas->info_preparacion, //
+        vistas->info_preparadas,  //
+        vistas->info_pedidos      //
+    );
 }
 
 void Vista::_activar_botones_condicionalmente(

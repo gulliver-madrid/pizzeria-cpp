@@ -54,9 +54,9 @@ namespace {
     std::shared_ptr<VistasJuego> generar_vistas_juego(const ModeloAmplio &modelo
     ) {
         auto vistas = std::make_shared<VistasJuego>();
-        vistas->info_preparacion.emplace(obtener_vista_preparacion(modelo));
-        vistas->info_preparadas.emplace(obtener_vista_preparadas(modelo));
-        vistas->info_pedidos.emplace(obtener_presentacion_pedidos(modelo));
+        vistas->info_preparacion = obtener_vista_preparacion(modelo);
+        vistas->info_preparadas = obtener_vista_preparadas(modelo);
+        vistas->info_pedidos = obtener_presentacion_pedidos(modelo);
         return vistas;
     }
 
