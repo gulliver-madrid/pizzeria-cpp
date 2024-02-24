@@ -37,7 +37,7 @@ namespace {
      * Preparara la activacion o desactivacion de cada boton despachar
      * dependiendo de si hay pizzas preparadas de ese tipo.
      */
-    void obtener_activacion_botones_dependiendo_de_si_hay_preparadas(
+    void obtener_activacion_botones_despachar(
         const modelo::PizzasAContadores &contadores,
         ActivacionBotones &activacion_botones
     ) {
@@ -83,12 +83,10 @@ namespace {
 ActivacionBotones enlace_vista_impl::obtener_activacion_botones( //
     const ModeloInterno &modelo
 ) {
-    const auto &control_pizzas = modelo.control_pizzas;
     // Activacion botones despachar
-    const modelo::PizzasAContadores &contadores = control_pizzas.contadores;
     ActivacionBotones activacion_botones;
-    obtener_activacion_botones_dependiendo_de_si_hay_preparadas(
-        contadores, activacion_botones
+    obtener_activacion_botones_despachar(
+        modelo.control_pizzas.contadores, activacion_botones
     );
 
     // Activacion botones encargar
