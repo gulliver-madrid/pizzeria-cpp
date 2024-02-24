@@ -65,11 +65,7 @@ void Vista::_actualizar_vista_paneles(
     assert(opt_vistas);
     const auto vistas = opt_vistas.value();
     assert(vistas);
-    paneles->actualizar(
-        vistas->info_preparacion, //
-        vistas->info_preparadas,  //
-        vistas->info_pedidos      //
-    );
+    paneles->actualizar(vistas);
 }
 
 void Vista::_activar_botones_condicionalmente(

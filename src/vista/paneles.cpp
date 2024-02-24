@@ -253,13 +253,13 @@ std::shared_ptr<PanelPreparadas> Paneles::get_panel_preparadas() {
     return panel_preparadas;
 }
 
-void Paneles::actualizar(
-    const PresentacionPreparacionPizzas &info_preparacion, //
-    const PizzasToStrings &info_preparadas,                //
-    const PresentacionPedidos &info_pedidos                //
-) {
+void Paneles::actualizar(const std::shared_ptr<const VistasJuego> vistas) {
     if (!visible)
         return;
+
+    const auto info_preparacion = vistas->info_preparacion;
+    const auto info_preparadas = vistas->info_preparadas;
+    const auto info_pedidos = vistas->info_pedidos;
 
     Panel *panel_;
     {

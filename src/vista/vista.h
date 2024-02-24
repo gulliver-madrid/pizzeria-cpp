@@ -11,6 +11,7 @@ class EtiquetasGenerales;
 class Grid;
 class Paneles;
 class PanelesObservables;
+struct VistasJuego;
 
 namespace sf {
     class Time;
@@ -20,12 +21,6 @@ namespace sf {
 struct ActivacionBotones {
     bool encargar;
     std::map<dominio::TipoPizza, bool> despachar;
-};
-
-struct VistasJuego {
-    PresentacionPreparacionPizzas info_preparacion;
-    PizzasToStrings info_preparadas;
-    PresentacionPedidos info_pedidos;
 };
 
 struct PresentacionGeneral {
