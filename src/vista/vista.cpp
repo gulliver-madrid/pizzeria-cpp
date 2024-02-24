@@ -38,6 +38,18 @@ namespace {
 // Vista (private)
 //////////////////////////////////////////
 
+std::shared_ptr<BotonesApp> Vista::_crear_botones_app( //
+    const dominio::TiposDePizza &tp_disponibles
+) {
+    auto panel_encargar = paneles->get_panel_encargar();
+    auto panel_preparadas = paneles->get_panel_preparadas();
+    auto &botones_encargar = panel_encargar->encargar;
+    auto &botones_despachar = panel_preparadas->despachar;
+    return std::make_shared<BotonesApp>(
+        tp_disponibles, botones_encargar, botones_despachar
+    );
+}
+
 /* Actualiza las etiquetas */
 void Vista::_actualizar_etiquetas(const VistaBarraEstado &info_barra_estado) {
     etiquetas->actualizar_barra_estado(info_barra_estado);
@@ -87,13 +99,8 @@ void Vista::setup(
 ) {
     this->grid = grid_;
     paneles = std::make_shared<Paneles>(tp_disponibles);
-    auto panel_encargar = paneles->get_panel_encargar();
-    auto panel_preparadas = paneles->get_panel_preparadas();
-    auto &botones_encargar = panel_encargar->encargar;
-    auto &botones_despachar = panel_preparadas->despachar;
-    botones = std::make_shared<BotonesApp>(
-        tp_disponibles, botones_encargar, botones_despachar
-    );
+    botones = _crear_botones_app(tp_disponibles);
+
     LOG(info) << "Inicializando etiquetas" << std::endl;
     etiquetas = std::make_shared<EtiquetasGenerales>();
     etiquetas->setup(
@@ -101,11 +108,12 @@ void Vista::setup(
         num_nivel      //
     );
     etiquetas->set_presentacion_vista(presentacion_vista);
+    LOG(info) << "Etiquetas inicializadas" << std::endl;
+
     add_child(botones);
     add_child(paneles);
     add_child(etiquetas);
 
-    LOG(info) << "Etiquetas inicializadas" << std::endl;
     // Mostrar botones iniciales
     botones->generales.alternar_grid->visible = MODO_DESARROLLO;
     botones->generales.reiniciar->visible = true;

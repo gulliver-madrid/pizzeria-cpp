@@ -48,6 +48,9 @@ class Vista : public ComponenteConFont, public VistaObservable {
   private:
     bool _mostrando_grid = false;
 
+    std::shared_ptr<BotonesApp> _crear_botones_app( //
+        const dominio::TiposDePizza &tp_disponibles
+    );
     void _actualizar_etiquetas(const VistaBarraEstado &);
     void _actualizar_vista_paneles(const VistasJuego &);
     void _activar_botones_condicionalmente(const ActivacionBotones &);
