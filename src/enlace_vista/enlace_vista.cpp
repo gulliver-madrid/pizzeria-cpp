@@ -26,35 +26,34 @@ namespace {
     }
 
     PresentacionPreparacionPizzas obtener_vista_preparacion( //
-        const ModeloAmplio &modelo_amplio
+        const ModeloInterno &modelo
     ) {
-        const auto preparacion =
-            modelo_amplio.modelo_interno.obtener_estado_preparacion_pizzas();
+        const auto preparacion = modelo.obtener_estado_preparacion_pizzas();
         return presentador::estado_preparacion_pizzas_to_vista(preparacion);
     }
 
     PizzasToStrings obtener_vista_preparadas( //
-        const ModeloAmplio &modelo_amplio
+        const ModeloInterno &modelo
     ) {
         const modelo::PizzasAContadores &contadores =
-            modelo_amplio.modelo_interno.control_pizzas.contadores;
+            modelo.control_pizzas.contadores;
         return presentador::contadores_to_preparadas(contadores);
     }
 
     PresentacionPedidos obtener_presentacion_pedidos( //
-        const ModeloAmplio &modelo_amplio
+        const ModeloInterno &modelo
     ) {
-        const auto &pedidos =
-            modelo_amplio.modelo_interno.control_pizzas.pedidos;
+        const auto &pedidos = modelo.control_pizzas.pedidos;
         const auto presentacion_pedidos =
             presentador::crear_presentacion_pedidos(pedidos);
         return presentacion_pedidos;
     }
 
-    std::shared_ptr<VistasPaneles> generar_vistas_juego( //
-        const ModeloAmplio &modelo
+    std::shared_ptr<VistasPaneles> generar_vistas_paneles( //
+        const ModeloAmplio &modelo_amplio
     ) {
         auto vistas = std::make_shared<VistasPaneles>();
+        const auto modelo = modelo_amplio.modelo_interno;
         vistas->info_preparacion = obtener_vista_preparacion(modelo);
         vistas->info_preparadas = obtener_vista_preparadas(modelo);
         vistas->info_pedidos = obtener_presentacion_pedidos(modelo);
@@ -62,17 +61,17 @@ namespace {
     }
 
     std::optional<std::shared_ptr<VistasPaneles>>
-    obtener_vistas_juego(const ModeloAmplio &modelo_amplio //
+    obtener_vistas_paneles(const ModeloAmplio &modelo_amplio //
     ) {
-        std::optional<std::shared_ptr<VistasPaneles>> vistas_juego;
+        std::optional<std::shared_ptr<VistasPaneles>> vistas;
         const auto fase_actual = modelo_amplio.get_fase_actual();
 
         if (fase_actual == FaseNivel::Activa ||              //
             fase_actual == FaseNivel::EsperaAntesDeResultado //
         ) {
-            vistas_juego.emplace(generar_vistas_juego(modelo_amplio));
+            vistas.emplace(generar_vistas_paneles(modelo_amplio));
         }
-        return vistas_juego;
+        return vistas;
     }
 
 } // namespace
@@ -148,14 +147,14 @@ void EnlaceVista::actualizar_interfaz_grafico(
             modelo_amplio.modelo_interno
         );
 
-    const auto vistas_juego = obtener_vistas_juego(modelo_amplio);
+    const auto vistas_paneles = obtener_vistas_paneles(modelo_amplio);
     const auto mostrando_grid = modelo_amplio.mostrando_grid;
 
     const auto info_barra_estado = obtener_vista_barra_estado(modelo_amplio);
 
     PresentacionGeneral presentacion{
         mostrando_grid,    //
-        vistas_juego,      //
+        vistas_paneles,    //
         info_barra_estado, //
         activacion_botones //
     };
