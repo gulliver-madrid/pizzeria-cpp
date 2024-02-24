@@ -32,4 +32,5 @@ struct Encargos {
     std::vector<EncargoACocinaPtr>::const_iterator end() const;
     size_t total() const;
     EncargoACocinaPtr por_indice(int i) const;
+    bool se_pueden_encargar_mas() const;
 };

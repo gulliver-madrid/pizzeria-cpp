@@ -81,9 +81,9 @@ namespace {
 } // namespace
 
 ActivacionBotones enlace_vista_impl::obtener_activacion_botones( //
-    const ModeloInterno &modelo_interno
+    const ModeloInterno &modelo
 ) {
-    const auto &control_pizzas = modelo_interno.control_pizzas;
+    const auto &control_pizzas = modelo.control_pizzas;
     // Activacion botones despachar
     const modelo::PizzasAContadores &contadores = control_pizzas.contadores;
     ActivacionBotones activacion_botones;
@@ -92,11 +92,7 @@ ActivacionBotones enlace_vista_impl::obtener_activacion_botones( //
     );
 
     // Activacion botones encargar
-    constexpr int maximo = modelo_info::MAXIMO_PIZZAS_EN_PREPARACION;
-    const auto en_preparacion = modelo_interno.encargos.total();
-    assert(en_preparacion <= maximo);
-    const bool se_pueden_preparar_mas = en_preparacion < maximo;
-    activacion_botones.encargar = se_pueden_preparar_mas;
+    activacion_botones.encargar = modelo.encargos.se_pueden_encargar_mas();
     return activacion_botones;
 }
 

@@ -1,7 +1,8 @@
 #include "modelo_interno.h"
 #include "datos_modelo_interno.h"
+#include "modelo_info.h"
 
-//////// ModeloInterno
+//////// ModeloInterno public
 
 ModeloInterno::ModeloInterno(const std::optional<DatosModeloInterno> datos_nivel
 ) {

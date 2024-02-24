@@ -3,6 +3,7 @@
 #include "../shared/types.h"
 #include "../templates/helpers.h"
 #include "dominio.h"
+#include "modelo_info.h"
 #include <cassert>
 
 using dominio::TipoPizza;
@@ -66,6 +67,13 @@ size_t Encargos::total() const { //
 
 EncargoACocinaPtr Encargos::por_indice(int i) const { // fmt
     return _datos.at(i);
+}
+
+bool Encargos::se_pueden_encargar_mas() const {
+    constexpr int maximo = modelo_info::MAXIMO_PIZZAS_EN_PREPARACION;
+    const auto en_preparacion = total();
+    assert(en_preparacion <= maximo);
+    return en_preparacion < maximo;
 }
 
 // Fin metodos Encargos

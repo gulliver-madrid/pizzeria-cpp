@@ -4,11 +4,6 @@
 #include "modelo.h"
 #include <vector>
 
-namespace modelo_info {
-    const auto MAXIMO_PIZZAS_EN_PREPARACION = 3;
-    const auto MAXIMO_PIZZAS_PREPARADAS = 4;
-} // namespace modelo_info
-
 namespace modelo {
     /* Una lista de pedidos */
     using Pedidos = std::vector<Pedido>;

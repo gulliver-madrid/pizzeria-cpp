@@ -1,6 +1,7 @@
 #include "../../enlace_vista/enlace_vista.h"
 #include "../../modelo/datos_modelo_interno.h"
 #include "../../modelo/dominio.h"
+#include "../../modelo/modelo_info.h"
 #include "../../modelo/modelo_interno.h"
 #include "../../vista/vista.h"
 #include <cassert>

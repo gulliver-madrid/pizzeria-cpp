@@ -89,6 +89,7 @@
 - modelo/encargos.cpp:
     - modelo/encargos.h
     - modelo/dominio.h
+    - modelo/modelo_info.h
     - shared/log_init.h
     - shared/types.h
     - templates/helpers.h
@@ -110,6 +111,7 @@
 - modelo/modelo_interno.cpp:
     - modelo/modelo_interno.h
     - modelo/datos_modelo_interno.h
+    - modelo/modelo_info.h
 
 - modelo/modelo_interno.h:
     - modelo/control_pizzas.h
@@ -214,6 +216,7 @@
     - enlace_vista/enlace_vista.h
     - modelo/datos_modelo_interno.h
     - modelo/dominio.h
+    - modelo/modelo_info.h
     - modelo/modelo_interno.h
     - vista/vista.h
 
