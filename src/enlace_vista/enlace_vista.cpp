@@ -130,28 +130,33 @@ void EnlaceVista::on_cambio_de_fase(FaseNivel nueva_fase) {
 
 void EnlaceVista::esconder_paneles() const { vista->paneles->visible = false; }
 
+VistaBarraEstado obtener_vista_barra_estado(const ModeloAmplio &modelo_amplio //
+) {
+    const sf::Time tiempo_real = modelo_amplio.obtener_tiempo_transcurrido();
+    const auto tiempo_juego =
+        modelo_amplio.modelo_interno.obtener_tiempo_juego();
+    return presentador::crea_vista_barra_estado(tiempo_real, tiempo_juego);
+}
+
 void EnlaceVista::actualizar_interfaz_grafico(
     const ModeloAmplio &modelo_amplio //
 ) {
-    const sf::Time tiempo_real = modelo_amplio.obtener_tiempo_transcurrido();
     const auto activacion_botones =
         enlace_vista_impl::obtener_activacion_botones(
             modelo_amplio.modelo_interno
         );
-    vista->activar_botones_condicionalmente(activacion_botones);
 
     const VistasJuego vistas_juego = obtener_vistas_juego(modelo_amplio);
     const auto mostrando_grid = modelo_amplio.mostrando_grid;
-    const auto tiempo_juego =
-        modelo_amplio.modelo_interno.obtener_tiempo_juego();
 
-    auto info_barra_estado =
-        presentador::crea_vista_barra_estado(tiempo_real, tiempo_juego);
+    const auto info_barra_estado = obtener_vista_barra_estado(modelo_amplio);
+
     PresentacionGeneral presentacion{
         mostrando_grid,   //
         vistas_juego,     //
         info_barra_estado //
     };
+    vista->activar_botones_condicionalmente(activacion_botones);
     vista->actualizar_interfaz_grafico(presentacion);
 }
 

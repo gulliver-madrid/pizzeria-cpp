@@ -31,7 +31,7 @@ struct VistasJuego {
 struct PresentacionGeneral {
     bool mostrando_grid;
     const VistasJuego &vistas;
-    VistaBarraEstado &barra_estado;
+    const VistaBarraEstado &barra_estado;
 };
 
 class VistaObservable {
