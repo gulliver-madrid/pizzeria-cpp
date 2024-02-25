@@ -86,6 +86,9 @@ class PanelPreparadas : public Panel {
 /////////////////////////////////////////
 
 class PanelPedidos : public Panel {
+  private:
+    std::shared_ptr<sf::RenderTexture> render_texture;
+
   public:
     std::shared_ptr<TarjetasPedidos> tarjetas_pedidos;
 

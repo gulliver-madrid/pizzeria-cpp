@@ -100,11 +100,8 @@ namespace {
 
     sf::Vector2f obtener_posicion_inicial() {
         // Calcula la posicion del primer pedido
-        const auto pos_panel = basicos_vista::obtener_posicion_panel( //
-            IndicePanel::PANEL_PEDIDOS
-        );
-        float pos_x = pos_panel.x + medidas::MARGEN_IZQ_ETIQUETAS;
-        float pos_y = pos_panel.y + medidas::FILA_CONTENIDO_PANEL;
+        float pos_x = medidas::MARGEN_IZQ_ETIQUETAS;
+        float pos_y = medidas::FILA_CONTENIDO_PANEL;
         return {pos_x, pos_y};
     }
 

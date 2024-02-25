@@ -183,6 +183,11 @@ PanelPedidos::PanelPedidos(
     : Panel(indice, etiqueta_titulo) {
     tarjetas_pedidos = std::make_shared<TarjetasPedidos>();
     add_child(tarjetas_pedidos);
+
+    render_texture = std::make_shared<sf::RenderTexture>();
+    assert(render_texture->create(
+        forma.getGlobalBounds().width, forma.getGlobalBounds().height
+    ));
 }
 
 void PanelPedidos::actualizar(const VistaPedidos &presentacion_pedidos //
@@ -195,7 +200,15 @@ void PanelPedidos::draw(
     sf::RenderStates states   //
 ) const {
     Panel::draw(target, states);
-    target.draw(*tarjetas_pedidos);
+    assert(render_texture);
+    render_texture->clear(sf::Color::Transparent);
+    render_texture->draw(*tarjetas_pedidos);
+    render_texture->display();
+    sf::Sprite sprite(render_texture->getTexture());
+    sprite.setPosition(
+        forma.getGlobalBounds().left, forma.getGlobalBounds().top
+    );
+    target.draw(sprite);
 }
 
 ///////////////////////////////////////////
