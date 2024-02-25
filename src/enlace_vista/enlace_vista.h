@@ -26,8 +26,6 @@ class EnlaceVista : public ObservadorFase {
   private:
     std::shared_ptr<Vista> vista;
 
-    void esconder_paneles() const;
-
   public:
     EnlaceVista();
     void set_vista(std::shared_ptr<Vista>);

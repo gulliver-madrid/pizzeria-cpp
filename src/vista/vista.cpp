@@ -141,7 +141,6 @@ void Vista::cambiar_visibilidad_resultado(bool nueva) {
 void Vista::mostrar_elementos_fase_activa() {
     botones->empezar->visible = false;
     botones->mostrar_botones_nivel(true);
-    paneles->visible = true;
 }
 
 void Vista::esconder_botones_gestion_pizzeria() { //
