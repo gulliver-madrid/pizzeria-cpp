@@ -11,11 +11,13 @@ class BotonConTexto;
 class BotonesApp;
 class Globales;
 
+using FuncionPulsado =
+    std::function<bool(const std::shared_ptr<BotonConTexto> boton)>;
+
 class ControladorClicks {
   private:
     std::optional<Comando> genera_comando(
-        const std::function<bool(const std::shared_ptr<BotonConTexto> boton)>
-            &pulsado,                              //
+        const FuncionPulsado &,                    //
         const std::shared_ptr<const BotonesApp> &, //
         const FaseNivel fase_actual                //
     );

@@ -6,8 +6,7 @@
 
 // TODO: filtrar por paneles
 std::optional<Comando> ControladorClicks::genera_comando(
-    const std::function<bool(const std::shared_ptr<BotonConTexto> boton)>
-        &pulsado,                                     //
+    const FuncionPulsado &pulsado,                    //
     const std::shared_ptr<const BotonesApp> &botones, //
     const FaseNivel fase_actual                       //
 ) {
