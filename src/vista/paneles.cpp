@@ -73,7 +73,8 @@ PanelEncargar::PanelEncargar(
     }
     render_texture = std::make_shared<sf::RenderTexture>();
     assert(render_texture->create(
-        forma.getGlobalBounds().width, forma.getGlobalBounds().height
+        forma.getGlobalBounds().width - forma.getOutlineThickness(),
+        forma.getGlobalBounds().height - forma.getOutlineThickness()
     ));
 }
 
@@ -186,7 +187,8 @@ PanelPedidos::PanelPedidos(
 
     render_texture = std::make_shared<sf::RenderTexture>();
     assert(render_texture->create(
-        forma.getGlobalBounds().width, forma.getGlobalBounds().height
+        forma.getGlobalBounds().width - forma.getOutlineThickness(),
+        forma.getGlobalBounds().height - forma.getOutlineThickness()
     ));
 }
 
