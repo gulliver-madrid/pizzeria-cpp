@@ -12,7 +12,7 @@ TEST(Presentador, LineaCompletitudPizza) {
         TipoPizza::Margarita, 2, 5 //
     );
     auto result = vista_linea.cadena;
-    ASSERT_EQ(result, "Margarita: 2/5");
+    ASSERT_EQ("Margarita: 2/5", result);
 }
 
 TEST(Presentador, PedidoToString) {
@@ -20,27 +20,26 @@ TEST(Presentador, PedidoToString) {
         {{TipoPizza::Margarita, {2, 5}}, {TipoPizza::Pepperoni, {1, 4}}}
     );
     Pedido pedido(std::move(contenido));
-    auto result = presentador::impl::pedido_to_vista(pedido);
-    ASSERT_EQ(
-        result.obtener_cadena_completa(), "Margarita: 2/5\nPepperoni: 1/4"
-    );
+    const auto vista_pedido = presentador::impl::pedido_to_vista(pedido);
+    const auto &result = vista_pedido.obtener_cadena_completa();
+    ASSERT_EQ("Margarita: 2/5\nPepperoni: 1/4", result);
 }
 
 TEST(Presentador, ContadoresToPreparadasString) {
-    modelo::PizzasAContadores contadores;
-
-    contadores.emplace(TipoPizza::Margarita, Contadores{});
+    modelo::PizzasAContadores contadores = {{TipoPizza::Margarita, Contadores{}}
+    };
     contadores.at(TipoPizza::Margarita).preparadas++;
-    auto info_preparadas = presentador::contadores_to_preparadas(contadores);
-    ASSERT_EQ(info_preparadas.at(TipoPizza::Margarita), "Margarita: 1");
+    const auto info_preparadas =
+        presentador::contadores_to_preparadas(contadores);
+    const auto &result = info_preparadas.at(TipoPizza::Margarita);
+    ASSERT_EQ("Margarita: 1", result);
 }
 
 TEST(Presentador, CreaTextoEtiquetaBarraEstado) {
     const auto tiempo_real = sf::seconds(62);
     const auto tiempo_juego = sf::seconds(35);
-    const auto result =
+    const auto vista_barra_estado =
         presentador::crea_vista_barra_estado(tiempo_real, tiempo_juego);
-    ASSERT_EQ(
-        "Tiempo Juego: 00:35       Tiempo Real: 01:02", result.texto.value
-    );
+    const auto &result = vista_barra_estado.texto.value;
+    ASSERT_EQ("Tiempo Juego: 00:35       Tiempo Real: 01:02", result);
 }
