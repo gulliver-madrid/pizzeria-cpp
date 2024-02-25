@@ -28,7 +28,8 @@ namespace {
     const float top_left_padding = 5;
 
     /* Builds the shape of TarjetaPedido */
-    sf::RectangleShape build_card_pedido_shape(size_t num_lineas) {
+    sf::RectangleShape
+    build_card_pedido_shape(size_t num_lineas, bool esta_cubierto) {
         assert(num_lineas > 0);
         const auto height = 30 + 26 * (static_cast<int>(num_lineas) - 1);
         const auto size = sf::Vector2f(
@@ -37,7 +38,11 @@ namespace {
         );
         auto shape = sf::RectangleShape{};
         shape.setOutlineThickness(5);
-        shape.setOutlineColor(colores::CardOutlineColor);
+        if (esta_cubierto) {
+            shape.setOutlineColor(sf::Color::Green);
+        } else {
+            shape.setOutlineColor(colores::CardOutlineColor);
+        }
         shape.setFillColor(colores::CardFillColor);
         shape.setSize(size);
         return shape;
@@ -58,7 +63,8 @@ namespace {
             }
             etiquetas.push_back(etiqueta);
         }
-        const auto shape = build_card_pedido_shape(num_lineas);
+        const auto shape =
+            build_card_pedido_shape(num_lineas, vista_pedido.esta_cubierto());
         return {etiquetas, shape};
     }
 
