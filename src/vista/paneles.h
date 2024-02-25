@@ -18,7 +18,7 @@ enum class IndicePanel;
 struct VistasPaneles {
     PresentacionPreparacionPizzas info_preparacion;
     PizzasToStrings info_preparadas;
-    PresentacionPedidos info_pedidos;
+    VistaPedidos info_pedidos;
 };
 
 ///////////////////////////////////////////
@@ -94,7 +94,7 @@ class PanelPedidos : public Panel {
     );
 
     void actualizar( //
-        const PresentacionPedidos &presentacion_pedidos
+        const VistaPedidos &presentacion_pedidos
     );
     virtual void draw(sf::RenderTarget &, sf::RenderStates) const override;
 };

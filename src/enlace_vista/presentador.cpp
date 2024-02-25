@@ -52,11 +52,10 @@ namespace presentador {
         }
     } // namespace impl
 
-    PresentacionPedidos
-    crear_presentacion_pedidos(const modelo::Pedidos &pedidos //
+    VistaPedidos crear_presentacion_pedidos(const modelo::Pedidos &pedidos //
     ) {
         // Creamos las tarjetas de los pedidos
-        PresentacionPedidos presentacion_pedidos;
+        VistaPedidos presentacion_pedidos;
         for (auto &pedido : pedidos) {
             presentacion_pedidos.emplace_back(impl::pedido_to_vista(pedido));
         }

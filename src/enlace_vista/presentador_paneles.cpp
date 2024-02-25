@@ -14,7 +14,7 @@ PizzasToStrings PresentadorPaneles::obtener_vista_preparadas() {
     return presentador::contadores_to_preparadas(contadores);
 }
 
-PresentacionPedidos PresentadorPaneles::obtener_presentacion_pedidos() {
+VistaPedidos PresentadorPaneles::obtener_presentacion_pedidos() {
     const auto &pedidos = modelo.control_pizzas.pedidos;
     const auto presentacion_pedidos =
         presentador::crear_presentacion_pedidos(pedidos);

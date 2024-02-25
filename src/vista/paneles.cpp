@@ -185,7 +185,7 @@ PanelPedidos::PanelPedidos(
     add_child(tarjetas_pedidos);
 }
 
-void PanelPedidos::actualizar(const PresentacionPedidos &presentacion_pedidos //
+void PanelPedidos::actualizar(const VistaPedidos &presentacion_pedidos //
 ) {
     tarjetas_pedidos->actualizar(presentacion_pedidos);
 }

@@ -27,4 +27,4 @@ namespace sf {
 
 // presentaciones
 using PresentacionPreparacionPizzas = std::vector<VistaPreparacionPizza>;
-using PresentacionPedidos = std::vector<VistaPedido>;
+using VistaPedidos = std::vector<VistaPedido>;

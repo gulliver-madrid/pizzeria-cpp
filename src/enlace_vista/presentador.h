@@ -15,7 +15,7 @@ namespace presentador {
         VistaPedido pedido_to_vista(const Pedido &pedido);
     } // namespace impl
 
-    PresentacionPedidos crear_presentacion_pedidos( //
+    VistaPedidos crear_presentacion_pedidos( //
         const modelo::Pedidos &pedidos
     );
 

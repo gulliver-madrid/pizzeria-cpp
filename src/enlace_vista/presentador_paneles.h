@@ -10,5 +10,5 @@ class PresentadorPaneles {
 
     PresentacionPreparacionPizzas obtener_vista_preparacion();
     PizzasToStrings obtener_vista_preparadas();
-    PresentacionPedidos obtener_presentacion_pedidos();
+    VistaPedidos obtener_presentacion_pedidos();
 };
