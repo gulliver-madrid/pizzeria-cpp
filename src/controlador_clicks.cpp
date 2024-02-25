@@ -19,28 +19,25 @@ std::optional<Comando> ControladorClicks::genera_comando(
     } else if (pulsado(botones->generales.alternar_grid)) {
         return Comando::AlternarGrid{};
     }
+
     // Dependientes de la fase
-    switch (fase_actual) {
-        case FaseNivel::MostrandoInstrucciones:
-            if (pulsado(botones->empezar)) {
-                return Comando::Empezar{};
-            }
-            break;
-        case FaseNivel::Activa:
-            for (const auto &[tp, boton] : botones->encargar) {
-                if (pulsado(boton)) {
-                    return Comando::Encargar{tp};
-                }
-            }
-            for (const auto &[tp, boton] : botones->despachar) {
-                if (pulsado(boton)) {
-                    return Comando::Despachar{tp};
-                }
-            }
-            break;
-        default:
-            break;
+    if (pulsado(botones->empezar)) {
+        assert(fase_actual == FaseNivel::MostrandoInstrucciones);
+        return Comando::Empezar{};
     }
+    for (const auto &[tp, boton] : botones->encargar) {
+        if (pulsado(boton)) {
+            assert(fase_actual == FaseNivel::Activa);
+            return Comando::Encargar{tp};
+        }
+    }
+    for (const auto &[tp, boton] : botones->despachar) {
+        if (pulsado(boton)) {
+            assert(fase_actual == FaseNivel::Activa);
+            return Comando::Despachar{tp};
+        }
+    }
+
     return std::nullopt;
 }
 
