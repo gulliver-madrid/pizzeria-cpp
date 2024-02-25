@@ -181,13 +181,13 @@ PanelPedidos::PanelPedidos(
 
 )
     : Panel(indice, etiqueta_titulo) {
-    etiquetas_pedidos = std::make_shared<EtiquetasPedidos>();
-    add_child(etiquetas_pedidos);
+    tarjetas_pedidos = std::make_shared<TarjetasPedidos>();
+    add_child(tarjetas_pedidos);
 }
 
 void PanelPedidos::actualizar(const PresentacionPedidos &presentacion_pedidos //
 ) {
-    etiquetas_pedidos->actualizar(presentacion_pedidos);
+    tarjetas_pedidos->actualizar(presentacion_pedidos);
 }
 
 void PanelPedidos::draw(
@@ -195,7 +195,7 @@ void PanelPedidos::draw(
     sf::RenderStates states   //
 ) const {
     Panel::draw(target, states);
-    target.draw(*etiquetas_pedidos);
+    target.draw(*tarjetas_pedidos);
 }
 
 ///////////////////////////////////////////

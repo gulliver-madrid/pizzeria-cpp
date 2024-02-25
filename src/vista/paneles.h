@@ -12,7 +12,7 @@
 
 class BotonConTexto;
 class Etiqueta;
-class EtiquetasPedidos;
+class TarjetasPedidos;
 enum class IndicePanel;
 
 struct VistasPaneles {
@@ -87,7 +87,7 @@ class PanelPreparadas : public Panel {
 
 class PanelPedidos : public Panel {
   public:
-    std::shared_ptr<EtiquetasPedidos> etiquetas_pedidos;
+    std::shared_ptr<TarjetasPedidos> tarjetas_pedidos;
 
     PanelPedidos::PanelPedidos(
         IndicePanel indice, std::shared_ptr<Etiqueta> etiqueta_titulo

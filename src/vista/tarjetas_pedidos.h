@@ -23,13 +23,13 @@ class TarjetaPedido : public ComponenteConFont {
 };
 
 ///////////////////////////////////////////
-// EtiquetasPedidos
+// TarjetasPedidos
 //////////////////////////////////////////
 
 /*
  * Contiene los elementos visuales que muestran los pedidos.
  */
-class EtiquetasPedidos : public ComponenteConFont {
+class TarjetasPedidos : public ComponenteConFont {
 
   private:
     void _actualizar_vista_pedidos( //
@@ -39,7 +39,7 @@ class EtiquetasPedidos : public ComponenteConFont {
   public:
     std::vector<std::shared_ptr<TarjetaPedido>> tarjetas_pedidos;
 
-    EtiquetasPedidos();
+    TarjetasPedidos();
     void actualizar(const PresentacionPedidos &);
     virtual void draw(sf::RenderTarget &, sf::RenderStates) const override;
 };

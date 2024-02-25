@@ -162,10 +162,10 @@ void TarjetaPedido::draw(
 }
 
 ///////////////////////////////////////////
-// EtiquetasPedidos (private)
+// TarjetasPedidos (private)
 //////////////////////////////////////////
 
-void EtiquetasPedidos::_actualizar_vista_pedidos( //
+void TarjetasPedidos::_actualizar_vista_pedidos( //
     const PresentacionPedidos &presentacion_pedidos
 ) {
     for (auto tarjeta : tarjetas_pedidos) {
@@ -179,18 +179,17 @@ void EtiquetasPedidos::_actualizar_vista_pedidos( //
 }
 
 ///////////////////////////////////////////
-// EtiquetasPedidos (public)
+// TarjetasPedidos (public)
 //////////////////////////////////////////
 
-EtiquetasPedidos::EtiquetasPedidos() {}
+TarjetasPedidos::TarjetasPedidos() {}
 
-void EtiquetasPedidos::actualizar(
-    const PresentacionPedidos &presentacion_pedidos
+void TarjetasPedidos::actualizar(const PresentacionPedidos &presentacion_pedidos
 ) {
     _actualizar_vista_pedidos(presentacion_pedidos);
 }
 
-void EtiquetasPedidos::draw(
+void TarjetasPedidos::draw(
     sf::RenderTarget &target, //
     sf::RenderStates          //
 ) const {
