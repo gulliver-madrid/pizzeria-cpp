@@ -31,9 +31,10 @@ class TarjetaPedido : public ComponenteConFont {
  */
 class TarjetasPedidos : public ComponenteConFont {
 
-  public:
-    std::vector<std::shared_ptr<TarjetaPedido>> tarjetas_pedidos;
+  private:
+    std::vector<std::shared_ptr<TarjetaPedido>> _tarjetas;
 
+  public:
     TarjetasPedidos();
     void actualizar(const VistaPedidos &);
     virtual void draw(sf::RenderTarget &, sf::RenderStates) const override;

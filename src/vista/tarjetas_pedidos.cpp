@@ -168,19 +168,19 @@ void TarjetaPedido::draw(
 TarjetasPedidos::TarjetasPedidos() {}
 
 void TarjetasPedidos::actualizar(const VistaPedidos &presentacion_pedidos) {
-    for (auto tarjeta : tarjetas_pedidos) {
+    for (auto tarjeta : _tarjetas) {
         remove_child(tarjeta);
     }
-    actualizar_tarjetas_pedidos(presentacion_pedidos, tarjetas_pedidos);
-    for (auto tarjeta : tarjetas_pedidos) {
+    actualizar_tarjetas_pedidos(presentacion_pedidos, _tarjetas);
+    for (auto tarjeta : _tarjetas) {
         add_child(tarjeta);
     }
-    establece_posicion_tarjetas(tarjetas_pedidos);
+    establece_posicion_tarjetas(_tarjetas);
 }
 
 void TarjetasPedidos::draw(
     sf::RenderTarget &target, //
     sf::RenderStates          //
 ) const {
-    dibujar_elementos(target, tarjetas_pedidos);
+    dibujar_elementos(target, _tarjetas);
 }
