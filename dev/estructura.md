@@ -8,11 +8,9 @@
     - controlador_clicks.h
     - fase_nivel.h
     - globales.h
+    - modelo_amplio/comandos.h
     - modelo_amplio/modelo_amplio.h
     - vista/botones/botones_app.h
-
-- controlador_clicks.h:
-    - modelo_amplio/comandos.h
 
 - datos_nivel.h:
     - modelo/datos_modelo_interno.h
@@ -167,6 +165,7 @@
     - datos_nivel.h
     - fase_nivel.h
     - modelo_amplio/aplicador.h
+    - modelo_amplio/comandos.h
     - shared/log_init.h
     - shared/num_nivel.h
 

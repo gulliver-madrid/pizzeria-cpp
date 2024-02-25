@@ -1,6 +1,5 @@
 #pragma once
 
-#include "modelo_amplio/comandos.h"
 #include <SFML/System/Vector2.hpp>
 #include <functional>
 #include <memory>
@@ -10,6 +9,7 @@ enum class FaseNivel;
 class BotonConTexto;
 class BotonesApp;
 class Globales;
+class Comando;
 
 using FuncionPulsado =
     std::function<bool(const std::shared_ptr<BotonConTexto> boton)>;

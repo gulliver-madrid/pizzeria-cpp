@@ -3,12 +3,12 @@
 #include "datos_nivel.h"
 #include "fase_nivel.h"
 #include "modelo_amplio/aplicador.h"
+#include "modelo_amplio/comandos.h"
 #include "shared/log_init.h"
 #include "shared/num_nivel.h"
 #include <SFML/System/Time.hpp>
 #include <SFML/Window/Event.hpp>
 #include <cassert>
-#include <iostream>
 #include <memory>
 #include <optional>
 
