@@ -31,11 +31,6 @@ class TarjetaPedido : public ComponenteConFont {
  */
 class TarjetasPedidos : public ComponenteConFont {
 
-  private:
-    void _actualizar_vista_pedidos( //
-        const VistaPedidos &presentacion_pedidos
-    );
-
   public:
     std::vector<std::shared_ptr<TarjetaPedido>> tarjetas_pedidos;
 

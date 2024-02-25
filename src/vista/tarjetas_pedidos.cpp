@@ -162,12 +162,12 @@ void TarjetaPedido::draw(
 }
 
 ///////////////////////////////////////////
-// TarjetasPedidos (private)
+// TarjetasPedidos (public)
 //////////////////////////////////////////
 
-void TarjetasPedidos::_actualizar_vista_pedidos( //
-    const VistaPedidos &presentacion_pedidos
-) {
+TarjetasPedidos::TarjetasPedidos() {}
+
+void TarjetasPedidos::actualizar(const VistaPedidos &presentacion_pedidos) {
     for (auto tarjeta : tarjetas_pedidos) {
         remove_child(tarjeta);
     }
@@ -176,16 +176,6 @@ void TarjetasPedidos::_actualizar_vista_pedidos( //
         add_child(tarjeta);
     }
     establece_posicion_tarjetas(tarjetas_pedidos);
-}
-
-///////////////////////////////////////////
-// TarjetasPedidos (public)
-//////////////////////////////////////////
-
-TarjetasPedidos::TarjetasPedidos() {}
-
-void TarjetasPedidos::actualizar(const VistaPedidos &presentacion_pedidos) {
-    _actualizar_vista_pedidos(presentacion_pedidos);
 }
 
 void TarjetasPedidos::draw(
