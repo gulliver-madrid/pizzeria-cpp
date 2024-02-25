@@ -45,9 +45,10 @@ namespace presentador {
          * numero de items.
          */
         VistaPedido pedido_to_vista(const Pedido &pedido) {
-            auto s = pedido_to_vista_lineas(pedido);
+            auto vista_lineas = pedido_to_vista_lineas(pedido);
             const size_t num_items = pedido.contenido.size();
-            return {s, num_items};
+            assert(num_items == vista_lineas.size());
+            return {vista_lineas};
         }
     } // namespace impl
 

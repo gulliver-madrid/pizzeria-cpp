@@ -20,7 +20,6 @@ struct VistaLinea {
 
 struct VistaPedido {
     std::vector<VistaLinea> lineas;
-    size_t num_items;
     std::string obtener_cadena_completa() const {
         std::vector<std::string> v;
         for (auto linea : lineas) {
@@ -28,4 +27,5 @@ struct VistaPedido {
         }
         return unir_cadenas(v, "\n");
     }
+    size_t get_num_lineas() const { return lineas.size(); }
 };

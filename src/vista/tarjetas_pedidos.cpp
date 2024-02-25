@@ -28,9 +28,9 @@ namespace {
     const float top_left_padding = 5;
 
     /* Builds the shape of TarjetaPedido */
-    sf::RectangleShape build_card_pedido_shape(size_t num_items) {
-        assert(num_items > 0);
-        const auto height = 30 + 26 * (static_cast<int>(num_items) - 1);
+    sf::RectangleShape build_card_pedido_shape(size_t num_lineas) {
+        assert(num_lineas > 0);
+        const auto height = 30 + 26 * (static_cast<int>(num_lineas) - 1);
         const auto size = sf::Vector2f(
             static_cast<float>(250 + top_left_padding),   //
             static_cast<float>(height + top_left_padding) //
@@ -45,7 +45,7 @@ namespace {
 
     /* Construye una TarjetaPedido */
     TarjetaPedido construye_tarjeta_pedido(
-        const VistaPedido &vista_pedido, size_t num_items //
+        const VistaPedido &vista_pedido, size_t num_lineas //
     ) {
         //  TODO: extraer tamano_fuente a una constante
         static const auto tamano_fuente = 22;
@@ -58,7 +58,7 @@ namespace {
             }
             etiquetas.push_back(etiqueta);
         }
-        const auto shape = build_card_pedido_shape(num_items);
+        const auto shape = build_card_pedido_shape(num_lineas);
         return {etiquetas, shape};
     }
 
@@ -70,9 +70,9 @@ namespace {
         // Creamos las tarjetas de los pedidos
         tarjetas.clear();
         for (auto &vista_pedido : presentacion_pedidos) {
-            const size_t num_items = vista_pedido.num_items;
+            const size_t num_lineas = vista_pedido.get_num_lineas();
             const auto tarjeta = std::make_shared<TarjetaPedido>(
-                construye_tarjeta_pedido(vista_pedido, num_items)
+                construye_tarjeta_pedido(vista_pedido, num_lineas)
             );
             tarjetas.emplace_back(tarjeta);
         }
