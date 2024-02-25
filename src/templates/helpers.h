@@ -2,6 +2,7 @@
 
 #include <cassert>
 #include <map>
+#include <vector>
 
 template <typename Key, typename Value>
 bool has_key(const std::map<Key, Value> &mapeo, Key clave_a_buscar) {
@@ -33,4 +34,9 @@ bool contiene(Contenedor contenedor, Elemento elemento) {
 template <typename Iterable, typename Condicion>
 void ordenar_por_criterio(Iterable iterable, Condicion condicion) {
     std::sort(iterable.begin(), iterable.end(), condicion);
+}
+
+/* Devuelve una referencia al ultimo elemento de un vector */
+template <typename T> T &obtener_ultimo(std::vector<T> &elementos) {
+    return elementos.at(elementos.size() - 1);
 }

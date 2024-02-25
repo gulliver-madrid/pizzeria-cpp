@@ -111,8 +111,7 @@ namespace {
     ) {
         static const auto separacion_vertical =
             medidas::SEPARACION_VERTICAL_ENTRE_PEDIDOS;
-        const auto num_etiquetas = tarjeta->etiquetas.size();
-        const auto &ultima_etiqueta = tarjeta->etiquetas.at(num_etiquetas - 1);
+        const auto &ultima_etiqueta = obtener_ultimo(tarjeta->etiquetas);
         const auto g_bounds = ultima_etiqueta->get_global_bounds();
         return get_bottom(g_bounds) + separacion_vertical;
     }
