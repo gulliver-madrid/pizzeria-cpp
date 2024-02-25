@@ -78,7 +78,6 @@ void on_cambio_a_fase_mostrar_resultado(
         sound.play();
     }
     modelo_amplio.iniciar_espera_entre_niveles();
-    enlace_vista->esconder_paneles();
 }
 
 ///////////////////////////////////////////

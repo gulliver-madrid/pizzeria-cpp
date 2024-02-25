@@ -26,11 +26,12 @@ class EnlaceVista : public ObservadorFase {
   private:
     std::shared_ptr<Vista> vista;
 
+    void esconder_paneles() const;
+
   public:
     EnlaceVista();
     void set_vista(std::shared_ptr<Vista>);
     void on_cambio_de_fase(FaseNivel);
-    void esconder_paneles() const;
     void actualizar_interfaz_grafico(const ModeloAmplio &);
 
     const std::shared_ptr<const BotonesApp> get_botones() const;

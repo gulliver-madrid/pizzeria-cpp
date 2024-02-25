@@ -72,6 +72,14 @@ ActivacionBotones enlace_vista_impl::obtener_activacion_botones( //
 }
 
 ///////////////////////////////////////////
+// EnlaceVista (private)
+//////////////////////////////////////////
+
+void EnlaceVista::esconder_paneles() const { //
+    vista->paneles->visible = false;
+}
+
+///////////////////////////////////////////
 // EnlaceVista (public)
 //////////////////////////////////////////
 
@@ -94,6 +102,7 @@ void EnlaceVista::on_cambio_de_fase(FaseNivel nueva_fase) {
             vista->esconder_botones_gestion_pizzeria();
             break;
         case FaseNivel::MostrandoResultado:
+            esconder_paneles();
             vista->cambiar_visibilidad_resultado(true);
             break;
         case FaseNivel::Reiniciando:
@@ -103,8 +112,6 @@ void EnlaceVista::on_cambio_de_fase(FaseNivel nueva_fase) {
             break;
     }
 }
-
-void EnlaceVista::esconder_paneles() const { vista->paneles->visible = false; }
 
 VistaBarraEstado obtener_vista_barra_estado(const ModeloAmplio &modelo_amplio //
 ) {
