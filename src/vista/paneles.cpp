@@ -15,6 +15,35 @@ namespace medidas {
     constexpr float GROSOR_BORDE_PANEL = 3;
 } // namespace medidas
 
+namespace {
+    std::shared_ptr<sf::RenderTexture>
+    crear_render_texture_interior(const sf::Shape &forma) {
+        const auto thickness = forma.getOutlineThickness();
+        const auto bounds = forma.getGlobalBounds();
+        auto texture = std::make_shared<sf::RenderTexture>();
+        assert(texture->create(
+            bounds.width - thickness * 2, //
+            bounds.height - thickness * 2 //
+        ));
+        return texture;
+    }
+
+    sf::Sprite crear_sprite_interior(
+        std::shared_ptr<sf::RenderTexture> render_texture,
+        const sf::Shape &forma
+    ) {
+        const auto thickness = forma.getOutlineThickness();
+        const auto bounds = forma.getGlobalBounds();
+        // Crea un sprite con la textura de la renderTexture
+        sf::Sprite sprite(render_texture->getTexture());
+        sprite.setPosition(
+            bounds.left + thickness, //
+            bounds.top + thickness   //
+        );
+        return sprite;
+    }
+} // namespace
+
 const std::map<IndicePanel, std::string> texto_titulos_paneles = {
     {IndicePanel::PANEL_ENCARGAR, "Encargar"},
     {IndicePanel::PANEL_EN_PREPARACION, "En preparaci%on"},
@@ -71,11 +100,7 @@ PanelEncargar::PanelEncargar(
     for (auto [_, btn] : encargar) {
         add_child(btn);
     }
-    render_texture = std::make_shared<sf::RenderTexture>();
-    assert(render_texture->create(
-        forma.getGlobalBounds().width - forma.getOutlineThickness(),
-        forma.getGlobalBounds().height - forma.getOutlineThickness()
-    ));
+    render_texture = crear_render_texture_interior(forma);
 }
 
 void PanelEncargar::draw(
@@ -92,11 +117,8 @@ void PanelEncargar::draw(
         render_texture->draw(*boton_ptr);
     }
     render_texture->display();
-    // Crea un sprite con la textura de la renderTexture
-    sf::Sprite sprite(render_texture->getTexture());
-    sprite.setPosition(
-        forma.getGlobalBounds().left, forma.getGlobalBounds().top
-    ); // Posiciona el sprite en el render target segun sea necesario
+
+    sf::Sprite sprite = crear_sprite_interior(render_texture, forma);
     target.draw(sprite);
 }
 
@@ -185,11 +207,7 @@ PanelPedidos::PanelPedidos(
     tarjetas_pedidos = std::make_shared<TarjetasPedidos>();
     add_child(tarjetas_pedidos);
 
-    render_texture = std::make_shared<sf::RenderTexture>();
-    assert(render_texture->create(
-        forma.getGlobalBounds().width - forma.getOutlineThickness(),
-        forma.getGlobalBounds().height - forma.getOutlineThickness()
-    ));
+    render_texture = crear_render_texture_interior(forma);
 }
 
 void PanelPedidos::actualizar(const VistaPedidos &presentacion_pedidos //
@@ -206,10 +224,7 @@ void PanelPedidos::draw(
     render_texture->clear(sf::Color::Transparent);
     render_texture->draw(*tarjetas_pedidos);
     render_texture->display();
-    sf::Sprite sprite(render_texture->getTexture());
-    sprite.setPosition(
-        forma.getGlobalBounds().left, forma.getGlobalBounds().top
-    );
+    sf::Sprite sprite = crear_sprite_interior(render_texture, forma);
     target.draw(sprite);
 }
 
