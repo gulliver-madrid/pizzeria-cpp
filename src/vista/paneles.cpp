@@ -7,7 +7,7 @@
 #include "componentes/boton_con_texto.h"
 #include "componentes/etiqueta.h"
 #include "etiquetas/etiquetas.h"
-#include "etiquetas/etiquetas_pedidos.h"
+#include "tarjetas_pedidos.h"
 #include <SFML/Graphics/Sprite.hpp>
 #include <cassert>
 

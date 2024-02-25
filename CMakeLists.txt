@@ -76,12 +76,12 @@ add_executable(pizzeria
     src/vista/componentes/etiqueta.cpp
     src/vista/etiquetas/etiquetas.cpp
     src/vista/etiquetas/etiquetas_barra_estado.cpp
-    src/vista/etiquetas/etiquetas_pedidos.cpp
     src/vista/etiquetas/etiquetas_preparadas.cpp
     src/vista/etiquetas/etiquetas_info.cpp
     src/vista/etiquetas/fabrica_etiquetas_preparadas.cpp
     src/vista/grid.cpp
     src/vista/paneles.cpp
+    src/vista/tarjetas_pedidos.cpp
     src/vista/vista.cpp
     src/demos/boost_log.cpp
     src/demos/demo_nivel.cpp
@@ -172,12 +172,12 @@ add_executable(
     src/vista/componentes/etiqueta.cpp
     src/vista/etiquetas/etiquetas.cpp
     src/vista/etiquetas/etiquetas_barra_estado.cpp
-    src/vista/etiquetas/etiquetas_pedidos.cpp
     src/vista/etiquetas/etiquetas_preparadas.cpp
     src/vista/etiquetas/etiquetas_info.cpp
     src/vista/etiquetas/fabrica_etiquetas_preparadas.cpp
     src/vista/grid.cpp
     src/vista/paneles.cpp
+    src/vista/tarjetas_pedidos.cpp
     src/vista/vista.cpp
     src/demos/boost_log.cpp
     src/demos/demo_nivel.cpp

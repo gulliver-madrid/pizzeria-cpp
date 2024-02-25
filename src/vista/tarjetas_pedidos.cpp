@@ -1,18 +1,23 @@
-#include "etiquetas_pedidos.h"
-#include "../../shared/log_init.h"
-#include "../../templates/dibujar_elementos.h"
-#include "../../templates/helpers.h"
-#include "../basicos_vista.h"
-#include "../componentes/crear_etiqueta.h"
-#include "../componentes/etiqueta.h"
-#include "../presentaciones.h"
-#include "../vista_shared.h"
+#include "tarjetas_pedidos.h"
+#include "../shared/log_init.h"
+#include "../templates/dibujar_elementos.h"
+#include "../templates/helpers.h"
+#include "basicos_vista.h"
+#include "componentes/crear_etiqueta.h"
+#include "componentes/etiqueta.h"
+#include "presentaciones.h"
+#include "vista_shared.h"
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <cassert>
 
 namespace medidas {
     constexpr float SEPARACION_VERTICAL_ENTRE_PEDIDOS = 24;
 } // namespace medidas
+
+namespace colores {
+    const sf::Color CardFillColor = {46, 134, 193};
+    const sf::Color CardOutlineColor = sf::Color::Blue;
+} // namespace colores
 
 namespace {
 
@@ -30,13 +35,11 @@ namespace {
             static_cast<float>(250 + top_left_padding),   //
             static_cast<float>(height + top_left_padding) //
         );
-        static const auto outline_color = sf::Color::Blue;
-        static const auto fill_color = sf::Color(46, 134, 193);
         auto shape = sf::RectangleShape{};
-        shape.setOutlineColor(outline_color);
         shape.setOutlineThickness(5);
+        shape.setOutlineColor(colores::CardOutlineColor);
+        shape.setFillColor(colores::CardFillColor);
         shape.setSize(size);
-        shape.setFillColor(fill_color);
         return shape;
     }
 

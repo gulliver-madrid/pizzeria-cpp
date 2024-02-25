@@ -452,8 +452,8 @@
     - vista/componentes/componente.h
     - vista/presentacion_vista.h
 
-- vista/etiquetas/etiquetas_pedidos.cpp:
-    - vista/etiquetas/etiquetas_pedidos.h
+- vista/etiquetas/tarjetas_pedidos.cpp:
+    - vista/etiquetas/tarjetas_pedidos.h
     - shared/log_init.h
     - templates/dibujar_elementos.h
     - templates/helpers.h
@@ -463,7 +463,7 @@
     - vista/presentaciones.h
     - vista/vista_shared.h
 
-- vista/etiquetas/etiquetas_pedidos.h:
+- vista/etiquetas/tarjetas_pedidos.h:
     - vista/componentes/componente.h
     - vista/vista_shared.h
 
@@ -501,7 +501,7 @@
     - vista/componentes/boton_con_texto.h
     - vista/componentes/etiqueta.h
     - vista/etiquetas/etiquetas.h
-    - vista/etiquetas/etiquetas_pedidos.h
+    - vista/etiquetas/tarjetas_pedidos.h
 
 - vista/paneles.h:
     - modelo/modelo.h
@@ -533,4 +533,3 @@
     - vista/presentacion_vista.h
     - vista/presentaciones.h
     - vista/vista_shared.h
-
