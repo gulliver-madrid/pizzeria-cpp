@@ -11,8 +11,10 @@
 #include <cassert>
 
 namespace medidas {
-    constexpr float SEPARACION_VERTICAL_ENTRE_PEDIDOS = 24;
-    constexpr int TAMANO_FUENTE_TARJETA_PEDIDO = 22;
+    namespace pedidos {
+        constexpr float SEPARACION_VERTICAL = 30;
+        constexpr int TAMANO_FUENTE = 22;
+    } // namespace pedidos
 } // namespace medidas
 
 namespace colores {
@@ -62,7 +64,7 @@ namespace {
     TarjetaPedido construye_tarjeta_pedido(
         const VistaPedido &vista_pedido, size_t num_lineas //
     ) {
-        static const auto tamano_fuente = medidas::TAMANO_FUENTE_TARJETA_PEDIDO;
+        static const auto tamano_fuente = medidas::pedidos::TAMANO_FUENTE;
         std::vector<std::shared_ptr<Etiqueta>> etiquetas;
         for (auto &linea : vista_pedido.lineas) {
             const auto etiqueta = crear_etiqueta( //
@@ -110,7 +112,7 @@ namespace {
         std::shared_ptr<TarjetaPedido> tarjeta
     ) {
         static const auto separacion_vertical =
-            medidas::SEPARACION_VERTICAL_ENTRE_PEDIDOS;
+            medidas::pedidos::SEPARACION_VERTICAL;
         const auto &ultima_etiqueta = obtener_ultimo(tarjeta->etiquetas);
         const auto g_bounds = ultima_etiqueta->get_global_bounds();
         return get_bottom(g_bounds) + separacion_vertical;
@@ -143,8 +145,7 @@ TarjetaPedido::TarjetaPedido(
 
 void TarjetaPedido::set_position(float pos_x, float pos_y) {
     assert(etiquetas.size() > 0);
-    // TODO: obtencion correcta del tamano de fuente
-    auto font_size = 24;
+    static const auto font_size = medidas::pedidos::TAMANO_FUENTE;
     for (size_t i = 0; i < etiquetas.size(); ++i) {
         etiquetas.at(i)->set_position(pos_x, pos_y + font_size * i);
     }
