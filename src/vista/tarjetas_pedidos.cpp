@@ -12,11 +12,15 @@
 
 namespace medidas {
     constexpr float SEPARACION_VERTICAL_ENTRE_PEDIDOS = 24;
+    constexpr int TAMANO_FUENTE_TARJETA_PEDIDO = 22;
 } // namespace medidas
 
 namespace colores {
     const sf::Color CardFillColor = {46, 134, 193};
-    const sf::Color CardOutlineColor = sf::Color::Blue;
+    namespace card_outline {
+        const sf::Color no_completo = sf::Color::Blue;
+        const sf::Color completo = sf::Color::Green;
+    } // namespace card_outline
 } // namespace colores
 
 namespace {
@@ -27,24 +31,30 @@ namespace {
 
     const float top_left_padding = 5;
 
+    sf::Color get_outline_color(bool completo) {
+        if (completo) {
+            return colores::card_outline::completo;
+        }
+        return colores::card_outline::no_completo;
+    }
+
+    sf::Vector2f get_size(size_t num_lineas) {
+        const auto height = 30 + 26 * (static_cast<int>(num_lineas) - 1);
+        return {
+            static_cast<float>(250 + top_left_padding),   //
+            static_cast<float>(height + top_left_padding) //
+        };
+    }
+
     /* Builds the shape of TarjetaPedido */
     sf::RectangleShape
     build_card_pedido_shape(size_t num_lineas, bool esta_cubierto) {
         assert(num_lineas > 0);
-        const auto height = 30 + 26 * (static_cast<int>(num_lineas) - 1);
-        const auto size = sf::Vector2f(
-            static_cast<float>(250 + top_left_padding),   //
-            static_cast<float>(height + top_left_padding) //
-        );
         auto shape = sf::RectangleShape{};
         shape.setOutlineThickness(5);
-        if (esta_cubierto) {
-            shape.setOutlineColor(sf::Color::Green);
-        } else {
-            shape.setOutlineColor(colores::CardOutlineColor);
-        }
+        shape.setOutlineColor(get_outline_color(esta_cubierto));
         shape.setFillColor(colores::CardFillColor);
-        shape.setSize(size);
+        shape.setSize(get_size(num_lineas));
         return shape;
     }
 
@@ -52,19 +62,20 @@ namespace {
     TarjetaPedido construye_tarjeta_pedido(
         const VistaPedido &vista_pedido, size_t num_lineas //
     ) {
-        //  TODO: extraer tamano_fuente a una constante
-        static const auto tamano_fuente = 22;
+        static const auto tamano_fuente = medidas::TAMANO_FUENTE_TARJETA_PEDIDO;
         std::vector<std::shared_ptr<Etiqueta>> etiquetas;
         for (auto &linea : vista_pedido.lineas) {
-            const auto etiqueta =
-                crear_etiqueta(linea.cadena, tamano_fuente, "etiqueta pedidos");
+            const auto etiqueta = crear_etiqueta( //
+                linea.cadena, tamano_fuente, "etiqueta pedido"
+            );
             if (linea.esta_cubierta) {
                 etiqueta->set_color(sf::Color::Green);
             }
-            etiquetas.push_back(etiqueta);
+            etiquetas.emplace_back(etiqueta);
         }
-        const auto shape =
-            build_card_pedido_shape(num_lineas, vista_pedido.esta_cubierto());
+        const auto shape = build_card_pedido_shape( //
+            num_lineas, vista_pedido.esta_cubierto()
+        );
         return {etiquetas, shape};
     }
 
@@ -85,25 +96,34 @@ namespace {
         assert(tarjetas.size() == presentacion_pedidos.size());
     }
 
-    void reposiciona_tarjetas(
-        std::vector<std::shared_ptr<TarjetaPedido>> &tarjetas //
-    ) {
-        const auto separacion_vertical =
-            medidas::SEPARACION_VERTICAL_ENTRE_PEDIDOS;
+    sf::Vector2f obtener_posicion_inicial() {
         // Calcula la posicion del primer pedido
         const auto pos_panel = basicos_vista::obtener_posicion_panel( //
             IndicePanel::PANEL_PEDIDOS
         );
         float pos_x = pos_panel.x + medidas::MARGEN_IZQ_ETIQUETAS;
         float pos_y = pos_panel.y + medidas::FILA_CONTENIDO_PANEL;
+        return {pos_x, pos_y};
+    }
 
+    float calcular_posicion_vertical_siguiente_tarjeta( //
+        std::shared_ptr<TarjetaPedido> tarjeta
+    ) {
+        static const auto separacion_vertical =
+            medidas::SEPARACION_VERTICAL_ENTRE_PEDIDOS;
+        const auto num_etiquetas = tarjeta->etiquetas.size();
+        const auto &ultima_etiqueta = tarjeta->etiquetas.at(num_etiquetas - 1);
+        const auto g_bounds = ultima_etiqueta->get_global_bounds();
+        return get_bottom(g_bounds) + separacion_vertical;
+    }
+
+    void establece_posicion_tarjetas(
+        std::vector<std::shared_ptr<TarjetaPedido>> &tarjetas //
+    ) {
+        auto [pos_x, pos_y] = obtener_posicion_inicial();
         for (auto &tarjeta : tarjetas) {
             tarjeta->set_position(pos_x, pos_y);
-            //  Calcula la posicion del siguiente pedido
-            const auto num_etiquetas = tarjeta->etiquetas.size();
-            const auto g_bounds =
-                tarjeta->etiquetas.at(num_etiquetas - 1)->get_global_bounds();
-            pos_y = get_bottom(g_bounds) + separacion_vertical;
+            pos_y = calcular_posicion_vertical_siguiente_tarjeta(tarjeta);
         }
     }
 
@@ -156,7 +176,7 @@ void EtiquetasPedidos::_actualizar_vista_pedidos( //
     for (auto tarjeta : tarjetas_pedidos) {
         add_child(tarjeta);
     }
-    reposiciona_tarjetas(tarjetas_pedidos);
+    establece_posicion_tarjetas(tarjetas_pedidos);
 }
 
 ///////////////////////////////////////////
