@@ -28,4 +28,12 @@ struct VistaPedido {
         return unir_cadenas(v, "\n");
     }
     size_t get_num_lineas() const { return lineas.size(); }
+    bool esta_cubierto() const {
+        for (auto linea : lineas) {
+            if (!linea.esta_cubierta) {
+                return false;
+            }
+        }
+        return true;
+    }
 };
