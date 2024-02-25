@@ -269,6 +269,10 @@
 - tests/test_vista.cpp:
     - vista/vista.h
 
+- tests/vistas/test_vista_pedido.cpp:
+    - enlace_vista/presentador.h
+    - modelo/dominio.h
+
 - textos.cpp:
     - textos.h
     - shared/log_init.h
@@ -452,21 +456,6 @@
     - vista/componentes/componente.h
     - vista/presentacion_vista.h
 
-- vista/etiquetas/tarjetas_pedidos.cpp:
-    - vista/etiquetas/tarjetas_pedidos.h
-    - shared/log_init.h
-    - templates/dibujar_elementos.h
-    - templates/helpers.h
-    - vista/basicos_vista.h
-    - vista/componentes/crear_etiqueta.h
-    - vista/componentes/etiqueta.h
-    - vista/presentaciones.h
-    - vista/vista_shared.h
-
-- vista/etiquetas/tarjetas_pedidos.h:
-    - vista/componentes/componente.h
-    - vista/vista_shared.h
-
 - vista/etiquetas/etiquetas_preparadas.cpp:
     - vista/etiquetas/etiquetas_preparadas.h
     - modelo/dominio.h
@@ -501,7 +490,7 @@
     - vista/componentes/boton_con_texto.h
     - vista/componentes/etiqueta.h
     - vista/etiquetas/etiquetas.h
-    - vista/etiquetas/tarjetas_pedidos.h
+    - vista/tarjetas_pedidos.h
 
 - vista/paneles.h:
     - modelo/modelo.h
@@ -513,6 +502,21 @@
 
 - vista/presentaciones.h:
     - vista/cadenas.h
+
+- vista/tarjetas_pedidos.cpp:
+    - vista/tarjetas_pedidos.h
+    - shared/log_init.h
+    - templates/dibujar_elementos.h
+    - templates/helpers.h
+    - vista/basicos_vista.h
+    - vista/componentes/crear_etiqueta.h
+    - vista/componentes/etiqueta.h
+    - vista/presentaciones.h
+    - vista/vista_shared.h
+
+- vista/tarjetas_pedidos.h:
+    - vista/componentes/componente.h
+    - vista/vista_shared.h
 
 - vista/vista.cpp:
     - vista/vista.h
@@ -533,3 +537,4 @@
     - vista/presentacion_vista.h
     - vista/presentaciones.h
     - vista/vista_shared.h
+

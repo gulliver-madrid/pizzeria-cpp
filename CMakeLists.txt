@@ -125,6 +125,7 @@ add_executable(
     src/tests/modelo/test_modelo_amplio.cpp
     src/tests/presentador/test_presentador.cpp
     src/tests/presentador/test_activacion_botones.cpp
+    src/tests/vistas/test_vista_pedido.cpp
     src/tests/test_cadenas.cpp
     src/tests/test_componente.cpp
     src/tests/test_num_nivel.cpp
