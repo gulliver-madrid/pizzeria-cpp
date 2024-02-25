@@ -12,7 +12,7 @@
 
 namespace medidas {
     namespace pedidos {
-        constexpr float SEPARACION_VERTICAL = 30;
+        constexpr float SEPARACION_VERTICAL = 18;
         constexpr int TAMANO_FUENTE = 22;
     } // namespace pedidos
 } // namespace medidas
@@ -113,8 +113,7 @@ namespace {
     ) {
         static const auto separacion_vertical =
             medidas::pedidos::SEPARACION_VERTICAL;
-        const auto &ultima_etiqueta = obtener_ultimo(tarjeta->etiquetas);
-        const auto g_bounds = ultima_etiqueta->get_global_bounds();
+        const auto g_bounds = tarjeta->shape.getGlobalBounds();
         return get_bottom(g_bounds) + separacion_vertical;
     }
 
