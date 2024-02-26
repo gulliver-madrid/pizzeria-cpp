@@ -1,25 +1,19 @@
 #pragma once
 
-#include <cassert>
 #include <optional>
 #include <string>
 
 /* NewType para el numero de nivel del juego */
-class NumNivelOpcional {
+class NumNivel {
   private:
-    const std::optional<int> valor;
+    const int valor;
 
   public:
-    NumNivelOpcional() {}
-    explicit NumNivelOpcional(int v) : valor(v) { //
-        assert(valor > 0);
-    }
-    std::string to_string() const { //
-        if (!valor)
-            return "-";
-        return std::to_string(valor.value());
-    }
-    int get_valor() const { //
-        return valor.value();
-    }
+    explicit NumNivel(int v);
+    std::string to_string() const;
+    int get_valor() const;
 };
+
+using NumNivelOpcional = std::optional<NumNivel>;
+
+std::string to_string(NumNivelOpcional opt_num_nivel);

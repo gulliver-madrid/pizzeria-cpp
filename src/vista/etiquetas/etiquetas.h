@@ -17,8 +17,10 @@ namespace sf {
 class Etiqueta;
 class EtiquetasBarraEstado;
 class EtiquetasInfo;
-class NumNivelOpcional;
 class Globales;
+class NumNivel;
+
+using NumNivelOpcional = std::optional<NumNivel>;
 
 ///////////////////////////////////////////
 // EtiquetasGenerales

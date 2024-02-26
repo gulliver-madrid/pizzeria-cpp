@@ -196,7 +196,7 @@ MotorNivel::MotorNivel(
 
     controlador_clicks = std::shared_ptr<ControladorClicks>();
 
-    LOG(info) << "Creando nivel " << num_nivel.to_string() << std::endl;
+    LOG(info) << "Creando nivel " << to_string(num_nivel) << std::endl;
     if (datos_nivel) {
         modelo_amplio.emplace(datos_nivel->datos_modelo_interno);
     } else {

@@ -9,6 +9,7 @@
 #include "shared/dev.h"
 #include "shared/font.h"
 #include "shared/log_init.h"
+#include "shared/num_nivel.h"
 #include <cassert>
 #include <iostream>
 #include <map>
@@ -82,7 +83,7 @@ int _main(int argc, char *argv[]) {
                     write_line("El numero de nivel debe ser mayor que 0");
                     return USER_ERROR;
                 }
-                return demo_nivel(NumNivelOpcional(num_nivel_introducido));
+                return demo_nivel(NumNivel(num_nivel_introducido));
             }
             break;
         case AppNombrada::Visual:

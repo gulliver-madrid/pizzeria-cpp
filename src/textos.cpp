@@ -11,7 +11,7 @@ std::string construir_texto_instrucciones(
     const NumNivelOpcional &num_nivel //
 ) {
     CadenaJuego cadena = interpolar_unicode(plantilla);
-    return cadena.interpolar_por_clave("num_nivel", num_nivel.to_string());
+    return cadena.interpolar_por_clave("num_nivel", to_string(num_nivel));
 }
 
 std::string construir_resultado() { //

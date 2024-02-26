@@ -59,6 +59,7 @@ add_executable(pizzeria
     src/setup_juego.cpp
     src/shared/font.cpp
     src/shared/log_init.cpp
+    src/shared/num_nivel.cpp
     src/textos.cpp
     src/tiempo.cpp
     src/vista/barras_progreso.cpp
@@ -156,6 +157,7 @@ add_executable(
     src/setup_juego.cpp
     src/shared/font.cpp
     src/shared/log_init.cpp
+    src/shared/num_nivel.cpp
     src/textos.cpp
     src/tiempo.cpp
     src/vista/barras_progreso.cpp

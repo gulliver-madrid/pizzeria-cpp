@@ -21,7 +21,7 @@ int juego() {
     while (true) {
         bool reiniciar = false;
         for (int i = 0; i < NUM_DATOS_NIVELES; i++) {
-            auto num_nivel = NumNivelOpcional(i + 1);
+            auto num_nivel = NumNivel(i + 1);
             auto datos_nivel = std::make_shared<DatosNivel>(datos_niveles[i]);
             assert(datos_nivel);
             LOG(info) << "A punto de crear Nivel " << num_nivel.to_string();

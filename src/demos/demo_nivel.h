@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../shared/num_nivel.h"
 #include <memory>
+class NumNivel;
 
-int demo_nivel(NumNivelOpcional numero_nivel);
+int demo_nivel(NumNivel numero_nivel);

@@ -3,6 +3,7 @@
     - shared/dev.h
     - shared/font.h
     - shared/log_init.h
+    - shared/num_nivel.h
 
 - controlador_clicks.cpp:
     - controlador_clicks.h
@@ -203,6 +204,9 @@
 
 - shared/log_init.cpp:
     - shared/log_init.h
+
+- shared/num_nivel.cpp:
+    - shared/num_nivel.h
 
 - tests/modelo/test_encargadas.cpp:
     - modelo/encargos.h
