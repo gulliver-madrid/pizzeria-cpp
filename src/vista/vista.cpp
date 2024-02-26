@@ -152,7 +152,7 @@ Vista::get_presentacion_vista() const { //
     return presentacion_vista;
 }
 
-std::shared_ptr<PanelesObservables> Vista::get_paneles() const { //
+std::shared_ptr<const PanelesObservables> Vista::get_paneles() const { //
     return paneles;
 };
 

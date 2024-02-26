@@ -324,3 +324,12 @@ void Paneles::draw(
         return;
     dibujar_elementos(target, _paneles);
 }
+
+bool Paneles::colisiona(IndicePanel indice, const sf::Vector2i &posicion)
+    const {
+    const auto panel = getPanel(indice);
+    const auto bounds = panel->forma.getGlobalBounds();
+    return bounds.contains(
+        static_cast<float>(posicion.x), static_cast<float>(posicion.y)
+    );
+}

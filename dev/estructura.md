@@ -11,7 +11,9 @@
     - globales.h
     - modelo_amplio/comandos.h
     - modelo_amplio/modelo_amplio.h
+    - vista/basicos_vista.h
     - vista/botones/botones_app.h
+    - vista/paneles_observables.h
 
 - datos_nivel.h:
     - modelo/datos_modelo_interno.h

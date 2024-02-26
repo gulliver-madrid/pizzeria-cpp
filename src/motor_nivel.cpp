@@ -91,7 +91,8 @@ std::optional<Comando> MotorNivel::_procesa_click(
     auto &ventana = globales->window;
     const sf::Vector2i mouse_pos = sf::Mouse::getPosition(ventana);
     const auto comando = controlador_clicks->procesa_click(
-        globales, botones, fase_actual, mouse_pos
+        globales, botones, fase_actual, mouse_pos,
+        enlace_vista->get_vista()->get_paneles()
     );
     LOG(info) << "Click procesado" << std::endl;
     return comando;

@@ -32,7 +32,7 @@ struct PresentacionGeneral {
 
 class VistaObservable {
   public:
-    virtual std::shared_ptr<PanelesObservables> get_paneles() const = 0;
+    virtual std::shared_ptr<const PanelesObservables> get_paneles() const = 0;
 };
 
 ///////////////////////////////////////////
@@ -74,7 +74,8 @@ class Vista : public ComponenteConFont, public VistaObservable {
     void esconder_botones_gestion_pizzeria();
 
     std::shared_ptr<const PresentacionVista> get_presentacion_vista() const;
-    virtual std::shared_ptr<PanelesObservables> get_paneles() const override;
+    virtual std::shared_ptr<const PanelesObservables>
+    get_paneles() const override;
 
     virtual void draw(sf::RenderTarget &, sf::RenderStates) const override;
 };

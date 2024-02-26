@@ -15,7 +15,7 @@ int obtener_numero_barras_progreso(MotorNivel &nivel) {
     auto vista_ = std::dynamic_pointer_cast<Vista>(vista);
     assert(vista_);
     auto paneles = vista_->get_paneles();
-    auto paneles_ = std::dynamic_pointer_cast<Paneles>(paneles);
+    auto paneles_ = std::dynamic_pointer_cast<const Paneles>(paneles);
     assert(paneles_);
     auto panel_en_preparacion =
         paneles_->getPanel(IndicePanel::PANEL_EN_PREPARACION);

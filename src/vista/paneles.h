@@ -120,7 +120,8 @@ class Paneles : public ComponenteConFont, public PanelesObservables {
     void actualizar(const std::shared_ptr<const VistasPaneles>);
     virtual bool get_visibilidad() const override;
     virtual void draw(sf::RenderTarget &, sf::RenderStates) const override;
-    std::shared_ptr<Panel> getPanel(IndicePanel indice) {
+    std::shared_ptr<Panel> getPanel(IndicePanel indice) const {
         return _paneles.at(indice);
     }
+    virtual bool colisiona(IndicePanel, const sf::Vector2i &) const;
 };
